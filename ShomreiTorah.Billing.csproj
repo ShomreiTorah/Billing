@@ -74,11 +74,11 @@
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=02dc3180f6753ff5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\3rd-Party Source\WindowsAPICodePack\WindowsAPICodePack\Shell\bin\Release\Microsoft.WindowsAPICodePack.dll</HintPath>
+      <HintPath>..\..\..\..\3rd-Party Source\WindowsAPICodePack\WindowsAPICodePack\Shell\bin\Release\Microsoft.WindowsAPICodePack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.0.0.0, Culture=neutral, PublicKeyToken=02dc3180f6753ff5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\3rd-Party Source\WindowsAPICodePack\WindowsAPICodePack\Shell\bin\Release\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+      <HintPath>..\..\..\..\3rd-Party Source\WindowsAPICodePack\WindowsAPICodePack\Shell\bin\Release\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -317,7 +317,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
+    <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
     <None Include="EmailPages\Standard Bill.aspx">
@@ -397,13 +397,13 @@
     <None Include="Resources\Ribbon Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ShomreiTorah.Common\ShomreiTorah.Common.csproj">
+    <ProjectReference Include="..\..\Libraries\ShomreiTorah.Common\ShomreiTorah.Common.csproj">
       <Project>{1308A6E1-7787-49F6-A19C-8AF327DAF9B5}</Project>
       <Name>ShomreiTorah.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ShomreiTorah.Controls\ShomreiTorah.Controls.csproj">
+    <ProjectReference Include="..\..\Libraries\ShomreiTorah.WinForms\ShomreiTorah.WinForms.csproj">
       <Project>{0B927F97-8CDD-47CB-B775-CA1E0AB2409C}</Project>
-      <Name>ShomreiTorah.Controls</Name>
+      <Name>ShomreiTorah.WinForms</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
