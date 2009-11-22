@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C81B5ED2-22CB-4BD9-A1E4-C839FA974F1D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ShomreiTorah.Billing</RootNamespace>
+    <AssemblyName>ShomreiTorah.Billing</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Perforce Project</SccProjectName>
+    <SccLocalPath>..\..</SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>MSSCCI:Perforce SCM</SccProvider>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Shul.pfx</AssemblyOriginatorKeyFile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v9.2, Version=9.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v9.2, Version=9.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v9.2, Version=9.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v9.2, Version=9.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGrid.v9.2, Version=9.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=02dc3180f6753ff5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\3rd-Party Source\WindowsAPICodePack\WindowsAPICodePack\Shell\bin\Release\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.0.0.0, Culture=neutral, PublicKeyToken=02dc3180f6753ff5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\3rd-Party Source\WindowsAPICodePack\WindowsAPICodePack\Shell\bin\Release\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BillingData.cs">
+      <DependentUpon>BillingData.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="BillingData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BillingData.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BaseGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\BaseGrid.Designer.cs">
+      <DependentUpon>BaseGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CommitButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\HebrewCalendarEdit.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\NewPerson.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\NewPerson.Designer.cs">
+      <DependentUpon>NewPerson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PaymentEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PaymentEdit.Designer.cs">
+      <DependentUpon>PaymentEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PersonDataEntry.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PersonDataEntry.designer.cs">
+      <DependentUpon>PersonDataEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PersonSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PersonSelector.Designer.cs">
+      <DependentUpon>PersonSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PledgeEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PledgeEdit.Designer.cs">
+      <DependentUpon>PledgeEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Forms\CalendarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CalendarForm.Designer.cs">
+      <DependentUpon>CalendarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MasterDirectoryGridForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MasterDirectoryGridForm.Designer.cs">
+      <DependentUpon>MasterDirectoryGridForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PaymentViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PaymentViewer.Designer.cs">
+      <DependentUpon>PaymentViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PledgeViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PledgeViewer.Designer.cs">
+      <DependentUpon>PledgeViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Splash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Splash.Designer.cs">
+      <DependentUpon>Splash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="PersonData.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\BaseGrid.resx">
+      <DependentUpon>BaseGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\NewPerson.resx">
+      <DependentUpon>NewPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PaymentEdit.resx">
+      <DependentUpon>PaymentEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PersonDataEntry.resx">
+      <DependentUpon>PersonDataEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PersonSelector.resx">
+      <DependentUpon>PersonSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PledgeEdit.resx">
+      <DependentUpon>PledgeEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Export\EmailExporter.resx">
+      <DependentUpon>EmailExporter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Export\WordExporter.resx">
+      <DependentUpon>WordExporter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AutoPledgePrompt.resx">
+      <DependentUpon>AutoPledgePrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CalendarForm.resx">
+      <DependentUpon>CalendarForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DepositAdder.resx">
+      <DependentUpon>DepositAdder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DepositViewer.resx">
+      <DependentUpon>DepositViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ErrorForm.resx">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MasterDirectoryGridForm.resx">
+      <DependentUpon>MasterDirectoryGridForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PaymentViewer.resx">
+      <DependentUpon>PaymentViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PersonDetails.resx">
+      <DependentUpon>PersonDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PledgeViewer.resx">
+      <DependentUpon>PledgeViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Splash.resx">
+      <DependentUpon>Splash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Import\YKImporter.resx">
+      <DependentUpon>YKImporter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="BillingData.xsc">
+      <DependentUpon>BillingData.xsd</DependentUpon>
+    </None>
+    <None Include="BillingData.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>BillingData.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="BillingData.xss">
+      <DependentUpon>BillingData.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Shul.pfx" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
+      <Link>CustomDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+    <None Include="EmailPages\Standard Bill.aspx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>ASPXCodeBehind</SubType>
+    </None>
+    <Compile Include="Controls\DepositDateEdit.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Export\EmailExporter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Export\EmailExporter.Designer.cs">
+      <DependentUpon>EmailExporter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Export\PageBuilder.cs" />
+    <Compile Include="Export\EmailPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Export\WordExporter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Export\WordExporter.Designer.cs">
+      <DependentUpon>WordExporter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AutoPledgePrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AutoPledgePrompt.Designer.cs">
+      <DependentUpon>AutoPledgePrompt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DepositAdder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DepositAdder.Designer.cs">
+      <DependentUpon>DepositAdder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DepositViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DepositViewer.Designer.cs">
+      <DependentUpon>DepositViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ErrorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ErrorForm.Designer.cs">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PersonDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PersonDetails.Designer.cs">
+      <DependentUpon>PersonDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Import\Resolver.cs" />
+    <Compile Include="Import\YKImporter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Import\YKImporter.Designer.cs">
+      <DependentUpon>YKImporter.cs</DependentUpon>
+    </Compile>
+    <Content Include="Icon.ico" />
+    <None Include="Resources\UserGrid.png" />
+    <None Include="Resources\Refresh16.png" />
+    <None Include="Resources\WebPreview.png" />
+    <None Include="Resources\SendPreview.png" />
+    <None Include="EmailPages\Web.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\ImportExcel32.png" />
+    <None Include="Resources\ExportWord32.png" />
+    <None Include="Resources\SendMail32.png" />
+    <None Include="Resources\Calendar16.png" />
+    <None Include="Resources\Save16.png" />
+    <None Include="Resources\Add16.png" />
+    <None Include="Resources\Ribbon Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ShomreiTorah.Common\ShomreiTorah.Common.csproj">
+      <Project>{1308A6E1-7787-49F6-A19C-8AF327DAF9B5}</Project>
+      <Name>ShomreiTorah.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShomreiTorah.Controls\ShomreiTorah.Controls.csproj">
+      <Project>{0B927F97-8CDD-47CB-B775-CA1E0AB2409C}</Project>
+      <Name>ShomreiTorah.Controls</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>attrib -r "$(TargetDir)EmailPages\Web.config"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
