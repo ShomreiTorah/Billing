@@ -251,14 +251,14 @@ namespace ShomreiTorah.Billing.Controls {
 			this.person.Location = new System.Drawing.Point(0, 0);
 			this.person.Name = "person";
 			this.person.PopupOpen = false;
-			this.person.ResultsLocation = ShomreiTorah.Controls.ResultsLocation.Bottom;
+			this.person.ResultsLocation = ShomreiTorah.WinForms.Controls.ResultsLocation.Bottom;
 			this.person.ScrollPosition = 0;
 			this.person.SearchTable = null;
 			this.person.SelectedIndex = -1;
 			this.person.Size = new System.Drawing.Size(347, 20);
 			this.person.TabIndex = 0;
 			this.person.TabStop = false;
-			this.person.ItemSelected += new System.EventHandler<ShomreiTorah.Controls.ItemSelectionEventArgs>(this.person_ItemSelected);
+			this.person.ItemSelected += new System.EventHandler<ShomreiTorah.WinForms.Controls.ItemSelectionEventArgs>(this.person_ItemSelected);
 			// 
 			// PaymentEdit
 			// 

@@ -9,8 +9,8 @@ using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using ShomreiTorah.Common;
-using ShomreiTorah.Controls;
-using ShomreiTorah.Forms;
+using ShomreiTorah.WinForms.Controls;
+using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Controls {
 	partial class PaymentEdit : XtraUserControl {

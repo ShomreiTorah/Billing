@@ -12,7 +12,7 @@ using System.IO;
 using System.Data.OleDb;
 using System.Data.Common;
 using System.Globalization;
-using ShomreiTorah.Forms;
+using ShomreiTorah.WinForms.Forms;
 using System.Reflection;
 using DevExpress.XtraGrid.Views.Base;
 using System.Diagnostics.CodeAnalysis;

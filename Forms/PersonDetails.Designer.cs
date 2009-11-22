@@ -38,7 +38,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colEmail = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colPersonId = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.details = new DevExpress.XtraEditors.MemoEdit();
-			this.map = new ShomreiTorah.Controls.GoogleMapControl();
+			this.map = new ShomreiTorah.WinForms.Controls.GoogleMapControl();
 			this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
 			this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
 			this.splitContainerControl2 = new DevExpress.XtraEditors.SplitContainerControl();
@@ -599,7 +599,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraGrid.Columns.GridColumn colEmail;
 		private DevExpress.XtraGrid.Columns.GridColumn colPersonId;
 		private DevExpress.XtraEditors.MemoEdit details;
-		private ShomreiTorah.Controls.GoogleMapControl map;
+		private ShomreiTorah.WinForms.Controls.GoogleMapControl map;
 		private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
 		private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
 		private DevExpress.XtraEditors.SplitContainerControl splitContainerControl2;

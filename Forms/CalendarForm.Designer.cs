@@ -1,4 +1,4 @@
-using ShomreiTorah.Controls;
+using ShomreiTorah.WinForms.Controls;
 namespace ShomreiTorah.Billing.Forms {
 	partial class CalendarForm {
 		/// <summary>
@@ -25,7 +25,7 @@ namespace ShomreiTorah.Billing.Forms {
 		/// </summary>
 		private void InitializeComponent() {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalendarForm));
-			this.calendar = new ShomreiTorah.Controls.HebrewCalendar();
+			this.calendar = new ShomreiTorah.WinForms.Controls.HebrewCalendar();
 			this.SuspendLayout();
 			// 
 			// calendar

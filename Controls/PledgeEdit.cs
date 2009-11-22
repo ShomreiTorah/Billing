@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using ShomreiTorah.Controls;
+using ShomreiTorah.WinForms.Controls;
 using System.Diagnostics.CodeAnalysis;
-using ShomreiTorah.Forms;
+using ShomreiTorah.WinForms.Forms;
 using System.Globalization;
 
 namespace ShomreiTorah.Billing.Controls {

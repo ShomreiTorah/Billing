@@ -9,7 +9,7 @@ using ShomreiTorah.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Web;
-using ShomreiTorah.Forms;
+using ShomreiTorah.WinForms.Forms;
 using DevExpress.Skins;
 using System.Data;
 

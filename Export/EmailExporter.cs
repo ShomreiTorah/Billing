@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using System.Collections.ObjectModel;
 using ShomreiTorah.Common;
-using ShomreiTorah.Forms;
+using ShomreiTorah.WinForms.Forms;
 using System.IO;
 using System.Net.Mail;
 using DevExpress.XtraGrid.Views.Grid;

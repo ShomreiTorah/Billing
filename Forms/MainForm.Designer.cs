@@ -54,7 +54,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-			this.lookup = new ShomreiTorah.Controls.Lookup();
+			this.lookup = new ShomreiTorah.WinForms.Controls.Lookup();
 			this.dockManager = new DevExpress.XtraBars.Docking.DockManager(this.components);
 			this.addPledgePanel = new DevExpress.XtraBars.Docking.DockPanel();
 			this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
@@ -297,14 +297,14 @@ namespace ShomreiTorah.Billing.Forms {
 			this.lookup.MaxPopupHeight = 200;
 			this.lookup.Name = "lookup";
 			this.lookup.PopupOpen = false;
-			this.lookup.ResultsLocation = ShomreiTorah.Controls.ResultsLocation.Bottom;
+			this.lookup.ResultsLocation = ShomreiTorah.WinForms.Controls.ResultsLocation.Bottom;
 			this.lookup.ScrollPosition = 0;
 			this.lookup.SearchTable = null;
 			this.lookup.SelectedIndex = -1;
 			this.lookup.Size = new System.Drawing.Size(858, 20);
 			this.lookup.TabIndex = 5;
 			this.lookup.TabStop = false;
-			this.lookup.ItemSelected += new System.EventHandler<ShomreiTorah.Controls.ItemSelectionEventArgs>(this.lookup_ItemSelected);
+			this.lookup.ItemSelected += new System.EventHandler<ShomreiTorah.WinForms.Controls.ItemSelectionEventArgs>(this.lookup_ItemSelected);
 			// 
 			// dockManager
 			// 
@@ -730,7 +730,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
 		private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
-		private ShomreiTorah.Controls.Lookup lookup;
+		private ShomreiTorah.WinForms.Controls.Lookup lookup;
 		private DevExpress.XtraBars.Docking.DockManager dockManager;
 		private DevExpress.XtraBars.Docking.DockPanel addPledgePanel;
 		private DevExpress.XtraBars.Docking.ControlContainer dockPanel1_Container;

@@ -13,7 +13,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraTabbedMdi;
-using ShomreiTorah.Controls;
+using ShomreiTorah.WinForms.Controls;
 
 namespace ShomreiTorah.Billing.Forms {
 	partial class MainForm : RibbonForm {

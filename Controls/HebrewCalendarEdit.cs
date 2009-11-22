@@ -10,7 +10,7 @@ using DevExpress.XtraEditors.Drawing;
 using DevExpress.XtraEditors.Registrator;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraEditors.ViewInfo;
-using ShomreiTorah.Controls;
+using ShomreiTorah.WinForms.Controls;
 using DevExpress.XtraEditors.Mask;
 using DevExpress.Utils;
 using ShomreiTorah.Common.Calendar;

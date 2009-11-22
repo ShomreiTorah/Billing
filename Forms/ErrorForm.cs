@@ -13,7 +13,7 @@ using ShomreiTorah.Common;
 using System.Reflection;
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Compression;
-using ShomreiTorah.Forms;
+using ShomreiTorah.WinForms.Forms;
 using System.Net.Mime;
 
 namespace ShomreiTorah.Billing.Forms {
