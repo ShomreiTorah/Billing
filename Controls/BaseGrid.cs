@@ -14,6 +14,7 @@ using System.Data;
 using System.Globalization;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.Data.Filtering;
+using DevExpress.Utils.Menu;
 
 namespace ShomreiTorah.Billing.Controls {
 	partial class BaseGrid : GridControl {
@@ -54,6 +55,7 @@ namespace ShomreiTorah.Billing.Controls {
 
 			var view = gv as GridView;
 			if (view != null) {
+				view.ShowGridMenu += view_ShowGridMenu;
 				view.BestFitColumns();	//For detail clones
 				CheckColumns(view);
 
@@ -72,6 +74,21 @@ namespace ShomreiTorah.Billing.Controls {
 					prevColumn = view.FocusedColumn;
 					prevRow = view.FocusedRowHandle;
 				};
+			}
+		}
+
+		void view_ShowGridMenu(object sender, GridMenuEventArgs e) {
+			if (e.MenuType == GridMenuType.Column) {
+				var grid = (GridView)sender;
+				var modifier = grid.Columns.ColumnByFieldName("Modifier");
+				var modified = grid.Columns.ColumnByFieldName("Modified");
+				if (modifier != null && modified != null) {
+					var item = new DXMenuCheckItem("Show Modifier Columns", modifier.Visible, null, delegate {
+						modifier.Visible = !modifier.Visible;
+						modified.Visible = !modified.Visible;
+					});
+					e.Menu.Items.Add(item);
+				}
 			}
 		}
 		protected override void OnLoaded() {
