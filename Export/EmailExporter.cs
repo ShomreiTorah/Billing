@@ -82,6 +82,7 @@ namespace ShomreiTorah.Billing.Export {
 						page.Person = person;
 						var html = page.RenderPage();
 
+						if (ui.WasCanceled) return;
 						foreach (var address in person.GetEmailListRows())
 							Email.Hosted.Send(BillingAddress, address.MailAddress, page.EmailSubject, html, true);
 					}
