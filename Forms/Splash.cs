@@ -56,12 +56,12 @@ namespace ShomreiTorah.Billing.Forms {
 			captionForm.Bounds = RectangleToScreen(captionArea);
 			shownEvent.Set();
 			if (TaskbarManager.IsPlatformSupported)
-				TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.Indeterminate);
+				TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.Indeterminate, Handle);
 		}
 		protected override void OnClosed(EventArgs e) {
 			base.OnClosed(e);
 			if (TaskbarManager.IsPlatformSupported)
-				TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress);
+				TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress, Handle);
 		}
 		protected override CreateParams CreateParams {
 			get {
