@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-using System.Threading;
-using DevExpress.LookAndFeel;
-using System.IO;
-using ShomreiTorah.Common;
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
-using System.Web;
-using ShomreiTorah.WinForms.Forms;
-using DevExpress.Skins;
+using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Web;
+using System.Windows.Forms;
+using DevExpress.LookAndFeel;
+using DevExpress.Skins;
+using ShomreiTorah.Common;
+using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing {
 	class Program : MarshalByRefObject {
@@ -23,7 +24,7 @@ namespace ShomreiTorah.Billing {
 		public static string AspxPath { get { return Path.Combine(AppDirectory, "EmailPages"); } }
 		public static BillingData Data { get; private set; }
 
-		public static SynchronizationContext SyncContext { get; set; }
+		public static ISynchronizeInvoke UIInvoker{ get; set; }
 
 		public static void DoReload() {
 			Data.Save();

@@ -61,7 +61,7 @@ namespace ShomreiTorah.Billing.Forms {
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
 			Program.CloseSplash();
-			Program.SyncContext = SynchronizationContext.Current;
+			Program.UIInvoker = this;
 		}
 
 		private void refreshData_ItemClick(object sender, ItemClickEventArgs e) { Program.DoReload(); }
