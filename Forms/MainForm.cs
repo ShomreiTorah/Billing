@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using DevExpress.Data.Filtering;
 using DevExpress.XtraBars;
@@ -60,6 +61,7 @@ namespace ShomreiTorah.Billing.Forms {
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
 			Program.CloseSplash();
+			Program.SyncContext = SynchronizationContext.Current;
 		}
 
 		private void refreshData_ItemClick(object sender, ItemClickEventArgs e) { Program.DoReload(); }

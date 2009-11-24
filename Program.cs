@@ -23,6 +23,8 @@ namespace ShomreiTorah.Billing {
 		public static string AspxPath { get { return Path.Combine(AppDirectory, "EmailPages"); } }
 		public static BillingData Data { get; private set; }
 
+		public static SynchronizationContext SyncContext { get; set; }
+
 		public static void DoReload() {
 			Data.Save();
 			using (BillingData newData = new BillingData()) {
