@@ -14,6 +14,7 @@ using DevExpress.Skins;
 using ShomreiTorah.Common;
 using ShomreiTorah.Common.Updates;
 using ShomreiTorah.WinForms.Forms;
+using System.Diagnostics;
 
 namespace ShomreiTorah.Billing {
 	class Program : MarshalByRefObject {
@@ -50,18 +51,26 @@ namespace ShomreiTorah.Billing {
 				AppDirectory = Path.GetDirectoryName(new Uri(typeof(Program).Assembly.CodeBase).LocalPath);
 				Splash.Caption = "Loading assemblies";
 
-				//Calling CreateAspxDomain will load other assemblies after showing the splash.
+				//Calling these methods will load other assemblies after showing the splash.
+
+				//This method loads the config file in the original AppDomain.
+				//It is loaded in the ASP.Net AppDomain in PostInitAspxDomain.
+				LoadConfig();
 				if (CheckForUpdate()) return;
 				CreateAspxDomain();
 			} catch (Exception ex) { CloseSplash(); new Forms.ErrorForm(ex).ShowDialog(); }
 		}
-		///<summary>Called in the original (non-ASP.Net) AppDomain to apply updates on launch.</summary>
-		static bool CheckForUpdate() {
-			//This method loads the config file in the original AppDomain.
-			//It is loaded in the ASP.Net AppDomain in PostInitAspxDomain.
+		///<summary>Called in both AppDomains to load a specific ShomreiTorahConfig.xml, if one is present.</summary>
+		///<remarks>This method must be called before JITing any methods that use ShomreiTorahConfig.</remarks>
+		static void LoadConfig() {
+			Debug.Assert(!Config.Loaded, "ShomreiTorahConfig was already loaded!");
+
 			var configPath = Path.Combine(AppDirectory, "ShomreiTorah.Billing.Config.xml");
 			if (File.Exists(configPath))
 				Config.FilePath = configPath;
+		}
+		///<summary>Called in the original (non-ASP.Net) AppDomain to apply updates on launch.</summary>
+		static bool CheckForUpdate() {
 
 			Splash.Caption = "Checking for updates";
 			var update = Updater.Checker.FindUpdate();
@@ -117,10 +126,8 @@ namespace ShomreiTorah.Billing {
 		///<remarks>This is called by InitAspxDomain after the AssemblyResolve handler has been added.
 		///Any code that requires assembly resolution must be placed here.</remarks>
 		static void PostInitAspxDomain() {
-			//The config file is loaded in the original AppDomain in CheckForUpdate
-			var configPath = Path.Combine(AppDirectory, "ShomreiTorah.Billing.Config.xml");
-			if (File.Exists(configPath))
-				Config.FilePath = configPath;
+			//The config file is loaded in the original AppDomain in Main
+			LoadConfig();
 		}
 
 		///<summary>Executes the program.</summary>
