@@ -130,6 +130,13 @@ namespace ShomreiTorah.Billing.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Update16 {
+            get {
+                object obj = ResourceManager.GetObject("Update16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap UserGrid {
             get {
                 object obj = ResourceManager.GetObject("UserGrid", resourceCulture);

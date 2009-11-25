@@ -24,16 +24,16 @@ namespace ShomreiTorah.Billing.Forms {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.addPledge = new DevExpress.XtraBars.BarButtonItem();
@@ -47,6 +47,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.refreshData = new DevExpress.XtraBars.BarButtonItem();
 			this.viewDeposits = new DevExpress.XtraBars.BarButtonItem();
 			this.addDeposit = new DevExpress.XtraBars.BarListItem();
+			this.checkUpdate = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -83,12 +84,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.checkNumberEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.colAccount = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colDepositDateSql = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colComments = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.paymentEdit = new ShomreiTorah.Billing.Controls.PaymentEdit();
 			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
-			this.colDepositDateSql = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
 			this.addPledgePanel.SuspendLayout();
@@ -119,11 +120,13 @@ namespace ShomreiTorah.Billing.Forms {
             this.importYK,
             this.refreshData,
             this.viewDeposits,
-            this.addDeposit});
+            this.addDeposit,
+            this.checkUpdate});
 			this.ribbon.Location = new System.Drawing.Point(0, 0);
-			this.ribbon.MaxItemId = 12;
+			this.ribbon.MaxItemId = 14;
 			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
 			this.ribbon.Name = "ribbon";
+			this.ribbon.PageHeaderItemLinks.Add(this.checkUpdate);
 			this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1,
             this.ribbonPage2});
@@ -154,12 +157,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.saveDb.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Save16;
 			this.saveDb.Id = 2;
 			this.saveDb.Name = "saveDb";
-			toolTipTitleItem4.Text = "Save";
-			toolTipItem4.LeftIndent = 6;
-			toolTipItem4.Text = "Saves your changes to SQL Server.";
-			superToolTip4.Items.Add(toolTipTitleItem4);
-			superToolTip4.Items.Add(toolTipItem4);
-			this.saveDb.SuperTip = superToolTip4;
+			toolTipTitleItem1.Text = "Save";
+			toolTipItem1.LeftIndent = 6;
+			toolTipItem1.Text = "Saves your changes to SQL Server.";
+			superToolTip1.Items.Add(toolTipTitleItem1);
+			superToolTip1.Items.Add(toolTipItem1);
+			this.saveDb.SuperTip = superToolTip1;
 			this.saveDb.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.saveDb_ItemClick);
 			// 
 			// showCalendar
@@ -168,12 +171,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showCalendar.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Calendar16;
 			this.showCalendar.Id = 3;
 			this.showCalendar.Name = "showCalendar";
-			toolTipTitleItem5.Text = "Show Calendar";
-			toolTipItem5.LeftIndent = 6;
-			toolTipItem5.Text = "Displays a Hebrew calendar";
-			superToolTip5.Items.Add(toolTipTitleItem5);
-			superToolTip5.Items.Add(toolTipItem5);
-			this.showCalendar.SuperTip = superToolTip5;
+			toolTipTitleItem2.Text = "Show Calendar";
+			toolTipItem2.LeftIndent = 6;
+			toolTipItem2.Text = "Displays a Hebrew calendar";
+			superToolTip2.Items.Add(toolTipTitleItem2);
+			superToolTip2.Items.Add(toolTipItem2);
+			this.showCalendar.SuperTip = superToolTip2;
 			this.showCalendar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showCalendar_ItemClick);
 			// 
 			// addPayment
@@ -211,12 +214,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.refreshData.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Refresh16;
 			this.refreshData.Id = 8;
 			this.refreshData.Name = "refreshData";
-			toolTipTitleItem6.Text = "Reload From Database";
-			toolTipItem6.LeftIndent = 6;
-			toolTipItem6.Text = "Saves your changes, then reloads the data from the SQL Server.";
-			superToolTip6.Items.Add(toolTipTitleItem6);
-			superToolTip6.Items.Add(toolTipItem6);
-			this.refreshData.SuperTip = superToolTip6;
+			toolTipTitleItem3.Text = "Reload From Database";
+			toolTipItem3.LeftIndent = 6;
+			toolTipItem3.Text = "Saves your changes, then reloads the data from the SQL Server.";
+			superToolTip3.Items.Add(toolTipTitleItem3);
+			superToolTip3.Items.Add(toolTipItem3);
+			this.refreshData.SuperTip = superToolTip3;
 			this.refreshData.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.refreshData_ItemClick);
 			// 
 			// viewDeposits
@@ -232,6 +235,14 @@ namespace ShomreiTorah.Billing.Forms {
 			this.addDeposit.Id = 11;
 			this.addDeposit.Name = "addDeposit";
 			this.addDeposit.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.addDeposit_ListItemClick);
+			// 
+			// checkUpdate
+			// 
+			this.checkUpdate.Caption = "Check for updates";
+			this.checkUpdate.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Update16;
+			this.checkUpdate.Id = 12;
+			this.checkUpdate.Name = "checkUpdate";
+			this.checkUpdate.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.checkUpdate_ItemClick);
 			// 
 			// ribbonPage1
 			// 
@@ -394,7 +405,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.personRefEdit.AutoHeight = false;
 			this.personRefEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Show Person", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -639,6 +650,18 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colAmount.Visible = true;
 			this.colAmount.VisibleIndex = 5;
 			// 
+			// colDepositDateSql
+			// 
+			this.colDepositDateSql.Caption = "Date Deposited";
+			this.colDepositDateSql.FieldName = "DepositDateSql";
+			this.colDepositDateSql.Name = "colDepositDateSql";
+			this.colDepositDateSql.OptionsColumn.AllowEdit = false;
+			this.colDepositDateSql.OptionsColumn.AllowFocus = false;
+			this.colDepositDateSql.OptionsColumn.ReadOnly = true;
+			this.colDepositDateSql.OptionsFilter.FilterPopupMode = DevExpress.XtraGrid.Columns.FilterPopupMode.DateSmart;
+			this.colDepositDateSql.Visible = true;
+			this.colDepositDateSql.VisibleIndex = 6;
+			// 
 			// colComments
 			// 
 			this.colComments.FieldName = "Comments";
@@ -647,7 +670,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colComments.OptionsColumn.AllowFocus = false;
 			this.colComments.OptionsColumn.ReadOnly = true;
 			this.colComments.Visible = true;
-			this.colComments.VisibleIndex = 6;
+			this.colComments.VisibleIndex = 7;
 			// 
 			// colModified
 			// 
@@ -681,17 +704,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.mdiManager.ClosePageButtonShowMode = DevExpress.XtraTab.ClosePageButtonShowMode.InAllTabPagesAndTabControlHeader;
 			this.mdiManager.MdiParent = this;
 			this.mdiManager.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mdiManager_MouseDown);
-			// 
-			// colDepositDateSql
-			// 
-			this.colDepositDateSql.Caption = "Date Deposited";
-			this.colDepositDateSql.FieldName = "DepositDateSql";
-			this.colDepositDateSql.Name = "colDepositDateSql";
-			this.colDepositDateSql.OptionsColumn.AllowEdit = false;
-			this.colDepositDateSql.OptionsColumn.AllowFocus = false;
-			this.colDepositDateSql.OptionsColumn.ReadOnly = true;
-			this.colDepositDateSql.Visible = true;
-			this.colDepositDateSql.VisibleIndex = 6;
 			// 
 			// MainForm
 			// 
@@ -780,5 +792,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.BarButtonItem viewDeposits;
 		private DevExpress.XtraBars.BarListItem addDeposit;
 		private DevExpress.XtraGrid.Columns.GridColumn colDepositDateSql;
+		private DevExpress.XtraBars.BarButtonItem checkUpdate;
 	}
 }

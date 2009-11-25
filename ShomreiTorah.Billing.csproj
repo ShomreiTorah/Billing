@@ -391,6 +391,7 @@
     </Compile>
     <Compile Include="Updater.cs" />
     <Content Include="Icon.ico" />
+    <None Include="Resources\Update16.png" />
     <None Include="Resources\UserGrid.png" />
     <None Include="Resources\Refresh16.png" />
     <None Include="Resources\WebPreview.png" />

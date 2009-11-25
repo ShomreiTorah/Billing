@@ -126,5 +126,9 @@ namespace ShomreiTorah.Billing.Forms {
 		}
 
 		private void viewDeposits_ItemClick(object sender, ItemClickEventArgs e) { new DepositViewer { MdiParent = this }.Show(); }
+
+		private void checkUpdate_ItemClick(object sender, ItemClickEventArgs e) {
+			ThreadPool.QueueUserWorkItem(delegate { Updater.RunCheck(); });
+		}
 	}
 }
