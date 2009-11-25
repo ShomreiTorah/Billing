@@ -44,7 +44,7 @@ namespace ShomreiTorah.Billing {
 				Application.SetCompatibleTextRenderingDefault(false);
 
 				Splash = new Forms.Splash();
-				new Thread(delegate() { Splash.ShowDialog(); }) { ApartmentState = ApartmentState.STA }.Start();
+				new Thread(delegate() { Splash.ShowDialog(); }) { ApartmentState = ApartmentState.STA, IsBackground = true }.Start();
 
 				AppDirectory = Path.GetDirectoryName(new Uri(typeof(Program).Assembly.CodeBase).LocalPath);
 				Splash.Caption = "Loading assemblies";
@@ -105,6 +105,7 @@ namespace ShomreiTorah.Billing {
 			Splash.Caption = "Checking for updates";
 			var update = Updater.Checker.FindUpdate();
 			if (update != null) {
+				Splash.Caption = "Update found";
 				if (Updater.ApplyUpdate(update))
 					return;
 			}
