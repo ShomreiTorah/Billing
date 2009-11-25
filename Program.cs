@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using DevExpress.LookAndFeel;
 using DevExpress.Skins;
 using ShomreiTorah.Common;
+using ShomreiTorah.Common.Updates;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing {
@@ -50,8 +51,31 @@ namespace ShomreiTorah.Billing {
 				Splash.Caption = "Loading assemblies";
 
 				//Calling CreateAspxDomain will load other assemblies after showing the splash.
+				if (CheckForUpdate()) return;
 				CreateAspxDomain();
 			} catch (Exception ex) { CloseSplash(); new Forms.ErrorForm(ex).ShowDialog(); }
+		}
+		///<summary>Called in the original (non-ASP.Net) AppDomain to apply updates on launch.</summary>
+		static bool CheckForUpdate() {
+			//This method loads the config file in the original AppDomain.
+			//It is loaded in the ASP.Net AppDomain in PostInitAspxDomain.
+			var configPath = Path.Combine(AppDirectory, "ShomreiTorah.Billing.Config.xml");
+			if (File.Exists(configPath))
+				Config.FilePath = configPath;
+
+			Splash.Caption = "Checking for updates";
+			var update = Updater.Checker.FindUpdate();
+			if (update != null) {
+				//All launch-time UI must be shown in the splash thread
+				//or it'll be covered by the splash. Therefore, it must
+				//be run in the original AppDomain unless everything is
+				//serializable.
+
+				Splash.Caption = "Update found";
+				if ((bool)Splash.Invoke(new Func<UpdateInfo, bool>(Updater.ApplyUpdate), update))
+					return true;
+			}
+			return false;
 		}
 
 		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error message")]
@@ -86,6 +110,17 @@ namespace ShomreiTorah.Billing {
 
 			AppDomain.CurrentDomain.AssemblyResolve += (sender, e) =>	//GetAssemblyName stores the path
 				Assembly.Load(AssemblyName.GetAssemblyName(Path.Combine(AppDirectory, new AssemblyName(e.Name).Name + ".dll")));
+
+			PostInitAspxDomain();	//This must be called after handling AssemblyResolve
+		}
+		///<summary>Continues preparing the ASP.Net AppDomain to run the program.</summary>
+		///<remarks>This is called by InitAspxDomain after the AssemblyResolve handler has been added.
+		///Any code that requires assembly resolution must be placed here.</remarks>
+		static void PostInitAspxDomain() {
+			//The config file is loaded in the original AppDomain in CheckForUpdate
+			var configPath = Path.Combine(AppDirectory, "ShomreiTorah.Billing.Config.xml");
+			if (File.Exists(configPath))
+				Config.FilePath = configPath;
 		}
 
 		///<summary>Executes the program.</summary>
@@ -97,18 +132,6 @@ namespace ShomreiTorah.Billing {
 			LaunchTime = DateTime.Now;
 			Splash = splash;
 			Application.ThreadException += Application_ThreadException;
-
-			var configPath = Path.Combine(AppDirectory, "ShomreiTorah.Billing.Config.xml");
-			if (File.Exists(configPath))
-				Config.FilePath = configPath;
-
-			Splash.Caption = "Checking for updates";
-			var update = Updater.Checker.FindUpdate();
-			if (update != null) {
-				Splash.Caption = "Update found";
-				if (Updater.ApplyUpdate(update))
-					return;
-			}
 
 			Splash.Caption = "Reading database";
 			Data = new BillingData();

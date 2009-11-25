@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Timers;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using ShomreiTorah.Common;
 using ShomreiTorah.Common.Updates;
 using ShomreiTorah.WinForms.Forms;
-using ShomreiTorah.Common;
-using System.Diagnostics;
+using DevExpress.LookAndFeel;
 
 namespace ShomreiTorah.Billing {
 	static class Updater {
@@ -42,6 +43,7 @@ namespace ShomreiTorah.Billing {
 		///<summary>Called on the UI thread to download and apply an update.</summary>
 		///<returns>True if the update was downloaded.</returns>
 		public static bool ApplyUpdate(UpdateInfo update) {
+			UserLookAndFeel.Default.SkinName = "Lilian";	//This must be set here in case we're on the splash thread at launch time.
 			if (DialogResult.No == XtraMessageBox.Show("An update is available.  Do you want to install it?\r\n\r\n" + update.Description,
 													   "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
 				return false;
@@ -51,6 +53,7 @@ namespace ShomreiTorah.Billing {
 				if (!ProgressWorker.Execute(ui => {
 					ui.Caption = "Downloading update...";
 					updatePath = update.ExtractFiles(ui);
+					ui.Caption = "Applying update";
 				}, true))
 					return false;
 			} catch (TargetInvocationException tex) {
