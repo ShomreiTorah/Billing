@@ -57,11 +57,12 @@ namespace ShomreiTorah.Billing {
 				//It is loaded in the ASP.Net AppDomain in PostInitAspxDomain.
 				LoadConfig();
 				if (CheckForUpdate()) return;
-				CreateAspxDomain();
+
+				CreateAspxDomain();	//This call executes the program in the ASP.Net AppDomain
 			} catch (Exception ex) { CloseSplash(); new Forms.ErrorForm(ex).ShowDialog(); }
 		}
 		///<summary>Called in both AppDomains to load a specific ShomreiTorahConfig.xml, if one is present.</summary>
-		///<remarks>This method must be called before JITing any methods that use ShomreiTorahConfig.</remarks>
+		///<remarks>This method must be called before JITing any methods that use ShomreiTorahConfig in static initializers (eg, UpdateChecker).</remarks>
 		static void LoadConfig() {
 			Debug.Assert(!Config.Loaded, "ShomreiTorahConfig was already loaded!");
 
@@ -70,8 +71,8 @@ namespace ShomreiTorah.Billing {
 				Config.FilePath = configPath;
 		}
 		///<summary>Called in the original (non-ASP.Net) AppDomain to apply updates on launch.</summary>
+		///<returns>True if an update was applied (in which case the program should be restarted)</returns>
 		static bool CheckForUpdate() {
-
 			Splash.Caption = "Checking for updates";
 			var update = Updater.Checker.FindUpdate();
 			if (update != null) {
@@ -87,11 +88,15 @@ namespace ShomreiTorah.Billing {
 			return false;
 		}
 
+		///<summary>Called in the original AppDomain to create the ASP.Net AppDomain and launch the program in it.</summary>
+		///<remarks>If the ASP.Net AppDomain couldn't be created, this method will launch the program in the original AppDomain.</remarks>
 		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error message")]
 		[SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
 		static void CreateAspxDomain() {
 			Splash.Caption = "Initializing ASP.Net";
 
+			//ASP.Net loads assemblies from the bin folder; I need to copy 
+			//our exe their so that I can run my code in the new AppDomain.
 			var binCopyPath = Path.Combine(AspxPath, @"Bin\" + Path.GetFileName(typeof(Program).Assembly.Location));
 			Directory.CreateDirectory(Path.GetDirectoryName(binCopyPath));
 			//GetLastWriteTime return 1/1/1601 for non-existant files
@@ -126,14 +131,14 @@ namespace ShomreiTorah.Billing {
 		///<remarks>This is called by InitAspxDomain after the AssemblyResolve handler has been added.
 		///Any code that requires assembly resolution must be placed here.</remarks>
 		static void PostInitAspxDomain() {
-			//The config file is loaded in the original AppDomain in Main
+			//The config file is loaded in the original AppDomain by Main.
 			LoadConfig();
 		}
 
 		///<summary>Executes the program.</summary>
 		///<param name="splash">The splash form from the initial AppDomain.</param>
 		///<remarks>This method is called in the ASP.Net AppDomain by CreateAspxDomain.
-		///If PageBuilder.CreateHost failed, it will be executed in the initial AppDomain.</remarks>
+		///If PageBuilder.CreateHost failed, it will be called in the original AppDomain.</remarks>
 		[SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Cross-domain calls")]
 		void Execute(Forms.Splash splash) {
 			LaunchTime = DateTime.Now;
