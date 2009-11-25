@@ -44,16 +44,19 @@ namespace ShomreiTorah.Billing {
 		///<returns>True if the update was downloaded.</returns>
 		public static bool ApplyUpdate(UpdateInfo update) {
 			UserLookAndFeel.Default.SkinName = "Lilian";	//This must be set here in case we're on the splash thread at launch time.
-			if (DialogResult.No == XtraMessageBox.Show("An update is available.  Do you want to install it?\r\n\r\n" + update.Description,
+			var parent = (IWin32Window)Program.UIInvoker;	//For some reason, I must set the parent to MainForm or it won't be properly modal.
+
+			if (DialogResult.No == XtraMessageBox.Show(parent, "An update is available.  Do you want to install it?\r\n\r\n" + update.Description,
 													   "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
 				return false;
 
 			string updatePath;
 			try {
-				if (!ProgressWorker.Execute(ui => {
+				if (!ProgressWorker.Execute(parent, ui => {
 					ui.Caption = "Downloading update...";
 					updatePath = update.ExtractFiles(ui);
-					ui.Caption = "Applying update";
+					if (!ui.WasCanceled)
+						ui.Caption = "Applying update";
 				}, true))
 					return false;
 			} catch (TargetInvocationException tex) {
@@ -62,7 +65,7 @@ namespace ShomreiTorah.Billing {
 				if (!Debugger.IsAttached)
 					Email.Warn("Billing Update Error", "New Version: " + update.NewVersion + "\r\nDescription: \r\n" + update.Description + "\r\n\r\n" + ex);
 
-				XtraMessageBox.Show("An error occurred while downloading the update.\r\n" + ex,
+				XtraMessageBox.Show(parent, "An error occurred while downloading the update.\r\n" + ex,
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 				return false;
