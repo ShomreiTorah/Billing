@@ -24,7 +24,7 @@ namespace ShomreiTorah.Billing {
 		public static string AspxPath { get { return Path.Combine(AppDirectory, "EmailPages"); } }
 		public static BillingData Data { get; private set; }
 
-		public static ISynchronizeInvoke UIInvoker{ get; set; }
+		public static ISynchronizeInvoke UIInvoker { get; set; }
 
 		public static void DoReload() {
 			Data.Save();
@@ -101,6 +101,14 @@ namespace ShomreiTorah.Billing {
 			var configPath = Path.Combine(AppDirectory, "ShomreiTorah.Billing.Config.xml");
 			if (File.Exists(configPath))
 				Config.FilePath = configPath;
+
+			Splash.Caption = "Checking for updates";
+			var update = Updater.Checker.FindUpdate();
+			if (update != null) {
+				if (Updater.ApplyUpdate(update))
+					return;
+			}
+
 			Splash.Caption = "Reading database";
 			Data = new BillingData();
 			Data.Load();

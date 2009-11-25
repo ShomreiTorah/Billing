@@ -62,6 +62,7 @@ namespace ShomreiTorah.Billing.Forms {
 			base.OnShown(e);
 			Program.CloseSplash();
 			Program.UIInvoker = this;
+			Updater.RunBackground();
 		}
 
 		private void refreshData_ItemClick(object sender, ItemClickEventArgs e) { Program.DoReload(); }

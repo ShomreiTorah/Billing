@@ -42,7 +42,7 @@ namespace ShomreiTorah.Billing.Forms {
 				ProgressWorker.Execute(ui => {
 					ui.Caption = "Creating error report";
 					using (var message = new MailMessage(Email.AlertsAddress, Email.AdminAddress)) {
-						message.Subject = "ShomreiTorah.Billing Error from " + Environment.MachineName + "\\" + Environment.UserName;
+						message.Subject = "ShomreiTorah.Billing v" + Updater.Checker.CurrentVersion + " Error from " + Environment.MachineName + "\\" + Environment.UserName;
 						message.Body = exception.ToString();
 
 						try {

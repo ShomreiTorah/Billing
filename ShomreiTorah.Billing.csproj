@@ -389,6 +389,7 @@
     <Compile Include="Import\YKImporter.Designer.cs">
       <DependentUpon>YKImporter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Updater.cs" />
     <Content Include="Icon.ico" />
     <None Include="Resources\UserGrid.png" />
     <None Include="Resources\Refresh16.png" />
