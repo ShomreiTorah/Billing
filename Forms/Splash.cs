@@ -60,7 +60,7 @@ namespace ShomreiTorah.Billing.Forms {
 		}
 		protected override void OnClosed(EventArgs e) {
 			base.OnClosed(e);
-			if (TaskbarManager.IsPlatformSupported)
+			if (!IsDisposed && TaskbarManager.IsPlatformSupported)
 				TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress, Handle);
 		}
 		protected override CreateParams CreateParams {
