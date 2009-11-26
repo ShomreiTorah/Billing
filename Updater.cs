@@ -83,6 +83,7 @@ namespace ShomreiTorah.Billing {
 			}
 			if (updatePath == null) return false;
 
+			Program.Data.Save();
 			UpdateChecker.ApplyUpdate(updatePath, Program.AppDirectory);
 
 			timer.Stop();	//In case we were called by the Update button in MainForm
