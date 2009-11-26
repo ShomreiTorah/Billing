@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Timers;
 using System.Windows.Forms;
+using DevExpress.LookAndFeel;
 using DevExpress.XtraEditors;
 using ShomreiTorah.Common;
 using ShomreiTorah.Common.Updates;
 using ShomreiTorah.WinForms.Forms;
-using DevExpress.LookAndFeel;
-using System.ComponentModel;
-using System.IO;
 
 namespace ShomreiTorah.Billing {
 	static class Updater {
@@ -89,7 +89,8 @@ namespace ShomreiTorah.Billing {
 			if (!File.Exists(Path.Combine(Program.AppDirectory, "ShomreiTorah.Billing.Config.xml")))
 				File.Delete(Path.Combine(updatePath, "ShomreiTorah.Billing.Config.xml"));	//File.Delete doesn't throw FileNotFound
 
-			Program.Data.Save();
+			if (Program.Data != null)	//If an update was applied at launch, the DB will not have been loaded yet.
+				Program.Data.Save();
 			UpdateChecker.ApplyUpdate(updatePath, Program.AppDirectory);
 
 			timer.Stop();	//In case we were called by the Update button in MainForm
