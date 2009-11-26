@@ -12,6 +12,7 @@ using ShomreiTorah.Common.Updates;
 using ShomreiTorah.WinForms.Forms;
 using DevExpress.LookAndFeel;
 using System.ComponentModel;
+using System.IO;
 
 namespace ShomreiTorah.Billing {
 	static class Updater {
@@ -82,6 +83,11 @@ namespace ShomreiTorah.Billing {
 				return false;
 			}
 			if (updatePath == null) return false;
+
+			//Updates will (usually) include a billing config file,
+			//but I don't want a billing config file at home.
+			if (!File.Exists(Path.Combine(Program.AppDirectory, "ShomreiTorah.Billing.Config.xml")))
+				File.Delete(Path.Combine(updatePath, "ShomreiTorah.Billing.Config.xml"));	//File.Delete doesn't throw FileNotFound
 
 			Program.Data.Save();
 			UpdateChecker.ApplyUpdate(updatePath, Program.AppDirectory);
