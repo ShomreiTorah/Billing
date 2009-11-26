@@ -11,6 +11,7 @@ using ShomreiTorah.Common;
 using ShomreiTorah.Common.Updates;
 using ShomreiTorah.WinForms.Forms;
 using DevExpress.LookAndFeel;
+using System.ComponentModel;
 
 namespace ShomreiTorah.Billing {
 	static class Updater {
@@ -50,7 +51,7 @@ namespace ShomreiTorah.Billing {
 													   "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
 				return false;
 
-			string updatePath;
+			string updatePath = null;
 			try {
 				if (!ProgressWorker.Execute(parent, ui => {
 					ui.Caption = "Downloading update...";
@@ -70,7 +71,15 @@ namespace ShomreiTorah.Billing {
 
 				return false;
 			}
-			//TODO: UpdateApplier
+			if (updatePath == null) return false;
+
+			UpdateChecker.ApplyUpdate(updatePath, Program.AppDirectory);
+			var cea = new CancelEventArgs();
+			Application.Exit(cea);
+			if (cea.Cancel) {
+				XtraMessageBox.Show(parent, "The update will be applied after you exit the program.", "Shomrei Torah Billing");
+				return false;
+			}
 			return true;
 		}
 
