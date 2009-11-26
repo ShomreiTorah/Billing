@@ -95,6 +95,11 @@ namespace ShomreiTorah.Billing {
 				Program.Data.Save();
 			UpdateChecker.ApplyUpdate(updatePath, Program.AppDirectory);
 
+			Email.Warn(Environment.UserName + " updated ShomreiTorah.Billing on " + Environment.MachineName,
+				"Old version: " + Checker.CurrentVersion + "\r\n"
+			  + "New version: " + update.NewVersion + " (Published on " + update.PublishDate.ToString("F") + ")\r\n"
+			  + update.Description
+			);
 			timer.Stop();	//In case we were called by the Update button in MainForm
 			RestartPending = true;
 
