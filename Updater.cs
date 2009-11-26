@@ -17,18 +17,22 @@ namespace ShomreiTorah.Billing {
 	static class Updater {
 		public static readonly UpdateChecker Checker = new UpdateChecker();
 		static readonly System.Timers.Timer timer = new System.Timers.Timer(TimeSpan.FromMinutes(30).TotalMilliseconds) { AutoReset = false };
+		///<summary>If true, an update has been downloaded and will be applied after the prgoram exits.</summary>
+		public static bool RestartPending { get; private set; }
 
 		public static void RunBackground() {
+			if (RestartPending) return;
 			timer.Elapsed += timer_Elapsed;
 			timer.Start();
 		}
 
 		static void timer_Elapsed(object sender, ElapsedEventArgs e) {
 			RunCheck();
-			timer.Start();
 		}
 
 		public static void RunCheck() {
+			if (RestartPending) return;
+
 			UpdateInfo update = null;
 			if (Program.UIInvoker != null && Program.UIInvoker.InvokeRequired) {
 				update = Checker.FindUpdate();
@@ -38,12 +42,18 @@ namespace ShomreiTorah.Billing {
 					update = Checker.FindUpdate();
 				}, false);
 			}
-			if (update != null)
-				UIInvoke(delegate { ApplyUpdate(update); });
+			if (update == null || !UIInvoke(() => ApplyUpdate(update)))
+				timer.Start();	//If we didn't find an update, or if the update wasn't applied, check again later
 		}
 		///<summary>Called on the UI thread to download and apply an update.</summary>
-		///<returns>True if the update was downloaded.</returns>
+		///<returns>True if the update was downloaded and applied.</returns>
 		public static bool ApplyUpdate(UpdateInfo update) {
+			if (Updater.RestartPending) {
+				if (DialogResult.Yes == XtraMessageBox.Show("An update has already been downloaded.\r\nDo you want to restart the program and apply the update?",
+															"Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+					Application.Exit();
+				return true;
+			}
 			UserLookAndFeel.Default.SkinName = "Lilian";	//This must be set here in case we're on the splash thread at launch time.
 			var parent = (IWin32Window)Program.UIInvoker;	//For some reason, I must set the parent to MainForm or it won't be properly modal.
 
@@ -74,20 +84,22 @@ namespace ShomreiTorah.Billing {
 			if (updatePath == null) return false;
 
 			UpdateChecker.ApplyUpdate(updatePath, Program.AppDirectory);
+
+			timer.Stop();	//In case we were called by the Update button in MainForm
+			RestartPending = true;
+
 			var cea = new CancelEventArgs();
 			Application.Exit(cea);
-			if (cea.Cancel) {
+			if (cea.Cancel)
 				XtraMessageBox.Show(parent, "The update will be applied after you exit the program.", "Shomrei Torah Billing");
-				return false;
-			}
 			return true;
 		}
 
-		static void UIInvoke(Action method) {
+		static T UIInvoke<T>(Func<T> method) {
 			if (Program.UIInvoker != null && Program.UIInvoker.InvokeRequired)
-				Program.UIInvoker.Invoke(method, null);
+				return (T)Program.UIInvoker.Invoke(method, null);
 			else
-				method();
+				return method();
 		}
 	}
 }

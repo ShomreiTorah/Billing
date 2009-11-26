@@ -128,6 +128,12 @@ namespace ShomreiTorah.Billing.Forms {
 		private void viewDeposits_ItemClick(object sender, ItemClickEventArgs e) { new DepositViewer { MdiParent = this }.Show(); }
 
 		private void checkUpdate_ItemClick(object sender, ItemClickEventArgs e) {
+			if (Updater.RestartPending) {
+				if (DialogResult.Yes == XtraMessageBox.Show("An update has already been downloaded.\r\nDo you want to restart the program and apply the update?",
+															"Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+					Application.Exit();
+				return;
+			}
 			ThreadPool.QueueUserWorkItem(delegate { Updater.RunCheck(); });
 		}
 	}
