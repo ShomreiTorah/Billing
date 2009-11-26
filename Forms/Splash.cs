@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.WindowsAPICodePack.Taskbar;
 using ShomreiTorah.Common;
 
 namespace ShomreiTorah.Billing.Forms {
@@ -55,13 +54,6 @@ namespace ShomreiTorah.Billing.Forms {
 			captionForm.Show(this);
 			captionForm.Bounds = RectangleToScreen(captionArea);
 			shownEvent.Set();
-			if (TaskbarManager.IsPlatformSupported)
-				TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.Indeterminate, Handle);
-		}
-		protected override void OnClosed(EventArgs e) {
-			base.OnClosed(e);
-			if (!IsDisposed && TaskbarManager.IsPlatformSupported)
-				TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress, Handle);
 		}
 		protected override CreateParams CreateParams {
 			get {
