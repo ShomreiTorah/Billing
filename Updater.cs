@@ -14,6 +14,7 @@ using ShomreiTorah.Common;
 using ShomreiTorah.Common.Updates;
 using ShomreiTorah.WinForms.Forms;
 using DevExpress.Skins;
+using System.Globalization;
 
 namespace ShomreiTorah.Billing {
 	static class Updater {
@@ -97,7 +98,7 @@ namespace ShomreiTorah.Billing {
 
 			Email.Warn(Environment.UserName + " updated ShomreiTorah.Billing on " + Environment.MachineName,
 				"Old version: " + Checker.CurrentVersion + "\r\n"
-			  + "New version: " + update.NewVersion + " (Published on " + update.PublishDate.ToString("F") + ")\r\n"
+			  + "New version: " + update.NewVersion + " (Published on " + update.PublishDate.ToString("F", CultureInfo.CurrentUICulture) + ")\r\n"
 			  + update.Description
 			);
 			timer.Stop();	//In case we were called by the Update button in MainForm
