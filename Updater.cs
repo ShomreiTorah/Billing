@@ -13,6 +13,7 @@ using DevExpress.XtraEditors;
 using ShomreiTorah.Common;
 using ShomreiTorah.Common.Updates;
 using ShomreiTorah.WinForms.Forms;
+using DevExpress.Skins;
 
 namespace ShomreiTorah.Billing {
 	static class Updater {
@@ -56,6 +57,7 @@ namespace ShomreiTorah.Billing {
 				return true;
 			}
 			UserLookAndFeel.Default.SkinName = "Lilian";	//This must be set here in case we're on the splash thread at launch time.
+			SkinManager.EnableFormSkins();
 			var parent = (IWin32Window)Program.UIInvoker;	//For some reason, I must set the parent to MainForm or it won't be properly modal.
 
 			if (DialogResult.No == XtraMessageBox.Show(parent, "An update is available.  Do you want to install it?\r\n\r\n" + update.Description,
