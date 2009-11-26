@@ -63,6 +63,9 @@ namespace ShomreiTorah.Billing.Forms {
 			Program.CloseSplash();
 			Program.UIInvoker = this;
 			Updater.RunBackground();
+			if (Environment.GetCommandLineArgs().Contains("Updated"))
+				XtraMessageBox.Show("Congratulations!\r\nYou have successfully updated to version " + Updater.Checker.CurrentVersion,
+									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 		private void refreshData_ItemClick(object sender, ItemClickEventArgs e) { Program.DoReload(); }
