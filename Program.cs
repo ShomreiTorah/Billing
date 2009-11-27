@@ -67,8 +67,13 @@ namespace ShomreiTorah.Billing {
 			Debug.Assert(!Config.Loaded, "ShomreiTorahConfig was already loaded!");
 
 			var configPath = Path.Combine(AppDirectory, "ShomreiTorah.Billing.Config.xml");
-			if (File.Exists(configPath))
+			if (File.Exists(configPath)) {
+				try {
+					File.Encrypt(configPath);
+				} catch (PlatformNotSupportedException) { } catch (NotSupportedException) { }
+
 				Config.FilePath = configPath;
+			}
 		}
 		///<summary>Called in the original (non-ASP.Net) AppDomain to apply updates on launch.</summary>
 		///<returns>True if an update was applied (in which case the program should be restarted)</returns>
