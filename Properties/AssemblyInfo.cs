@@ -5,17 +5,17 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using ShomreiTorah.Common.Updates;
 
-[assembly: Updatable("ShomreiTorah.Billing", "1.0")]
+[assembly: Updatable("ShomreiTorah.Billing", "1.5")]
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ShomreiTorah.Billing")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Manages payments and pledges")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Shomrei Torah")]
+[assembly: AssemblyCompany("Congregation Shomrei Torah")]
 [assembly: AssemblyProduct("ShomreiTorah.Billing")]
-[assembly: AssemblyCopyright("Copyright © Shomrei Torah 2009")]
+[assembly: AssemblyCopyright("Copyright © Congregation Shomrei Torah 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
