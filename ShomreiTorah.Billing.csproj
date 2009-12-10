@@ -409,6 +409,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>attrib -r "$(TargetDir)EmailPages\Web.config"</PostBuildEvent>
+    <PostBuildEvent>attrib -r "$(TargetDir)EmailPages\Web.config"
+copy "$(TargetPath)" "$(ProjectDir)EmailPages\Bin\"</PostBuildEvent>
   </PropertyGroup>
 </Project>
