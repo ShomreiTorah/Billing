@@ -1,15 +1,16 @@
 using System;
-using System.Text;
-using System.Linq;
-using ShomreiTorah.Billing.BillingDataTableAdapters;
-using System.Data.SqlClient;
-using ShomreiTorah.Common;
-using System.Data;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Net.Mail;
+using System.Text;
+using ShomreiTorah.Billing.BillingDataTableAdapters;
+using ShomreiTorah.Common;
+
 namespace ShomreiTorah.Billing {
-
-
 	partial class BillingData {
 		public static readonly ReadOnlyCollection<string> AccountNames = new ReadOnlyCollection<string>(new[] { "Operating Fund", "Building Fund" });
 		internal TableAdapterManager AdapterManager { get; private set; }
@@ -99,14 +100,26 @@ namespace ShomreiTorah.Billing {
 			}
 		}
 		partial class MasterDirectoryRow {
+			public IEnumerable<ITransaction> Transactions { get { return GetPledgesRows().Cast<ITransaction>().Concat(GetPaymentsRows()); } }
+
+			///<summary>Gets the accounts in which this person has outstanding balance.</summary>
+			public IEnumerable<string> OpenAccounts {
+				get {
+					return from t in Transactions
+						   group t by t.Account into a
+						   where a.Sum(t => t.SignedAmount) != 0
+						   select a.Key;
+				}
+			}
+
 			public decimal GetBalance(DateTime until) {
-				return GetPledgesRows().Where(p => p.Date < until).Sum(p => p.Amount) - GetPaymentsRows().Where(p => p.Date < until).Sum(p => p.Amount);
+				return Transactions.Where(p => p.Date < until).Sum(p => p.SignedAmount);
 			}
 			public decimal GetBalance(string account) {
-				return GetPledgesRows().Where(p => p.Account == account).Sum(p => p.Amount) - GetPaymentsRows().Where(p => p.Account == account).Sum(p => p.Amount);
+				return Transactions.Where(p => p.Account == account).Sum(p => p.SignedAmount);
 			}
 			public decimal GetBalance(DateTime until, string account) {
-				return GetPledgesRows().Where(p => p.Date < until && p.Account == account).Sum(p => p.Amount) - GetPaymentsRows().Where(p => p.Date < until && p.Account == account).Sum(p => p.Amount);
+				return Transactions.Where(p => p.Date < until && p.Account == account).Sum(p => p.SignedAmount);
 			}
 			public string VeryFullName {
 				get {
@@ -131,7 +144,11 @@ namespace ShomreiTorah.Billing {
 		public partial class EmailListRow {
 			public MailAddress MailAddress { get { return new MailAddress(Email, Name); } }
 		}
-		public partial class PaymentsRow {
+		public partial class PledgesRow : ITransaction {
+			public decimal SignedAmount { get { return Amount; } }
+		}
+
+		public partial class PaymentsRow : ITransaction {
 			public DateTime? DepositDate {
 				get { return IsDepositDateSqlNull() ? new DateTime?() : DepositDateSql.Date; }
 				set {
@@ -141,7 +158,18 @@ namespace ShomreiTorah.Billing {
 						DepositDateSql = value.Value.Date;
 				}
 			}
+
+
+			public decimal SignedAmount { get { return -Amount; } }
 		}
+	}
+	public interface ITransaction {
+		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Date", Justification = "For internal consumption")]
+		DateTime Date { get; }
+		string Account { get; }
+		//decimal Amount { get; }
+		///<summary>Gets the amount with the sign as reflected in the balance due.</summary>
+		decimal SignedAmount { get; }
 	}
 }
 
