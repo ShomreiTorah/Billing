@@ -93,17 +93,18 @@ namespace ShomreiTorah.Billing.Controls {
 				var row1 = e.Column.View.GetDataRow(e.Column.View.GetRowHandle(e.ListSourceRowIndex1));
 				var row2 = e.Column.View.GetDataRow(e.Column.View.GetRowHandle(e.ListSourceRowIndex2));
 
-				string lastName1, lastName2;
-				if (row1.Table.Columns.Contains("LastName")) {
-					lastName1 = row1.Field<string>("LastName");
-					lastName2 = row2.Field<string>("LastName");
-				} else {
+				if (!row1.Table.Columns.Contains("LastName")) {
 					var relation=row1.Table.ParentRelations[0];
-					lastName1 = row1.GetParentRow(relation).Field<string>("LastName");
-					lastName2 = row2.GetParentRow(relation).Field<string>("LastName");
+
+					row1 = row1.GetParentRow(relation);
+					row2 = row2.GetParentRow(relation);
 				}
 
-				e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(lastName1, lastName2);
+				e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("LastName"), row2.Field<string>("LastName"));
+				if (e.Result == 0)
+					e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("HisName"), row2.Field<string>("HisName"));
+				if (e.Result == 0)
+					e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("HerName"), row2.Field<string>("HerName"));
 				e.Handled = true;
 			}
 		}
