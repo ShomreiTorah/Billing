@@ -40,6 +40,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colDepositDateSql = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.repositoryItemDepositDateEdit1 = new ShomreiTorah.Billing.Controls.RepositoryItemDepositDateEdit();
 			this.colComments = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.pledgesView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colPledgeId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -51,6 +53,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colNote = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colComments1 = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colAccount1 = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colModified1 = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colModifier1 = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.emailView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colID1 = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -85,10 +89,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colModified1 = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colModifier1 = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethodEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
@@ -244,6 +244,24 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colComments.Visible = true;
 			this.colComments.VisibleIndex = 6;
 			// 
+			// colModified
+			// 
+			this.colModified.DisplayFormat.FormatString = "g";
+			this.colModified.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+			this.colModified.FieldName = "Modified";
+			this.colModified.Name = "colModified";
+			this.colModified.OptionsColumn.AllowEdit = false;
+			this.colModified.OptionsColumn.AllowFocus = false;
+			this.colModified.OptionsColumn.ReadOnly = true;
+			// 
+			// colModifier
+			// 
+			this.colModifier.FieldName = "Modifier";
+			this.colModifier.Name = "colModifier";
+			this.colModifier.OptionsColumn.AllowEdit = false;
+			this.colModifier.OptionsColumn.AllowFocus = false;
+			this.colModifier.OptionsColumn.ReadOnly = true;
+			// 
 			// grid
 			// 
 			this.grid.DataMember = "MasterDirectory";
@@ -358,6 +376,24 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colAccount1.Name = "colAccount1";
 			this.colAccount1.Visible = true;
 			this.colAccount1.VisibleIndex = 3;
+			// 
+			// colModified1
+			// 
+			this.colModified1.DisplayFormat.FormatString = "g";
+			this.colModified1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+			this.colModified1.FieldName = "Modified";
+			this.colModified1.Name = "colModified1";
+			this.colModified1.OptionsColumn.AllowEdit = false;
+			this.colModified1.OptionsColumn.AllowFocus = false;
+			this.colModified1.OptionsColumn.ReadOnly = true;
+			// 
+			// colModifier1
+			// 
+			this.colModifier1.FieldName = "Modifier";
+			this.colModifier1.Name = "colModifier1";
+			this.colModifier1.OptionsColumn.AllowEdit = false;
+			this.colModifier1.OptionsColumn.AllowFocus = false;
+			this.colModifier1.OptionsColumn.ReadOnly = true;
 			// 
 			// emailView
 			// 
@@ -496,7 +532,9 @@ namespace ShomreiTorah.Billing.Forms {
 			// colFullName
 			// 
 			this.colFullName.FieldName = "FullName";
+			this.colFullName.GroupInterval = DevExpress.XtraGrid.ColumnGroupInterval.Alphabetical;
 			this.colFullName.Name = "colFullName";
+			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 3;
 			// 
@@ -728,42 +766,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPageGroup2.Name = "ribbonPageGroup2";
 			this.ribbonPageGroup2.ShowCaptionButton = false;
 			this.ribbonPageGroup2.Text = "Word Documents";
-			// 
-			// colModified
-			// 
-			this.colModified.DisplayFormat.FormatString = "g";
-			this.colModified.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-			this.colModified.FieldName = "Modified";
-			this.colModified.Name = "colModified";
-			this.colModified.OptionsColumn.AllowEdit = false;
-			this.colModified.OptionsColumn.AllowFocus = false;
-			this.colModified.OptionsColumn.ReadOnly = true;
-			// 
-			// colModifier
-			// 
-			this.colModifier.FieldName = "Modifier";
-			this.colModifier.Name = "colModifier";
-			this.colModifier.OptionsColumn.AllowEdit = false;
-			this.colModifier.OptionsColumn.AllowFocus = false;
-			this.colModifier.OptionsColumn.ReadOnly = true;
-			// 
-			// colModified1
-			// 
-			this.colModified1.DisplayFormat.FormatString = "g";
-			this.colModified1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-			this.colModified1.FieldName = "Modified";
-			this.colModified1.Name = "colModified1";
-			this.colModified1.OptionsColumn.AllowEdit = false;
-			this.colModified1.OptionsColumn.AllowFocus = false;
-			this.colModified1.OptionsColumn.ReadOnly = true;
-			// 
-			// colModifier1
-			// 
-			this.colModifier1.FieldName = "Modifier";
-			this.colModifier1.Name = "colModifier1";
-			this.colModifier1.OptionsColumn.AllowEdit = false;
-			this.colModifier1.OptionsColumn.AllowFocus = false;
-			this.colModifier1.OptionsColumn.ReadOnly = true;
 			// 
 			// MasterDirectoryGridForm
 			// 

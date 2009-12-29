@@ -52,8 +52,9 @@ namespace ShomreiTorah.Billing.Forms {
 		}
 
 		private void gridView_DoubleClick(object sender, EventArgs e) {
-			if (gridView.FocusedRowHandle >= 0)
-				new PersonDetails((BillingData.MasterDirectoryRow)gridView.GetFocusedDataRow()) { MdiParent = MdiParent }.Show();
+			var rowHandle = gridView.CalcHitInfo(grid.PointToClient(MousePosition)).RowHandle;
+			if (rowHandle >= 0)
+				new PersonDetails((BillingData.MasterDirectoryRow)gridView.GetDataRow(rowHandle)) { MdiParent = MdiParent }.Show();
 		}
 	}
 }
