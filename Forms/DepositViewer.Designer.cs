@@ -14,8 +14,8 @@ namespace ShomreiTorah.Billing.Forms {
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DepositViewer));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
 			this.paymentsView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colFullName1 = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.personRefEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
@@ -78,7 +78,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.paymentsView.Name = "paymentsView";
 			this.paymentsView.OptionsView.ShowGroupPanel = false;
 			this.paymentsView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
-            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colModified, DevExpress.Data.ColumnSortOrder.Descending)});
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colFullName1, DevExpress.Data.ColumnSortOrder.Ascending)});
 			// 
 			// colFullName1
 			// 
@@ -93,7 +93,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.personRefEdit.AutoHeight = false;
 			this.personRefEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject4, "Show Person", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -186,10 +186,10 @@ namespace ShomreiTorah.Billing.Forms {
 			// grid
 			// 
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-			gridLevelNode2.LevelTemplate = this.paymentsView;
-			gridLevelNode2.RelationName = "Payments";
+			gridLevelNode1.LevelTemplate = this.paymentsView;
+			gridLevelNode1.RelationName = "Payments";
 			this.grid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode2});
+            gridLevelNode1});
 			this.grid.Location = new System.Drawing.Point(0, 0);
 			this.grid.MainView = this.depositsView;
 			this.grid.Name = "grid";
