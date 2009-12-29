@@ -26,7 +26,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "Splash";
 			this.Text = "Shomrei Torah Billing - Loading";
-			this.TopMost = true;
 			this.ResumeLayout(false);
 
 		}
