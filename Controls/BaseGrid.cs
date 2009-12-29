@@ -30,15 +30,15 @@ namespace ShomreiTorah.Billing.Controls {
 			accountEdit.Items.AddRange(BillingData.AccountNames);
 		}
 
-		//Both our initComponent and our parent's initComponent call begin/end init.
-		//I hide the first endInit and the second beginInit.
-		public override void BeginInit() {
-			if (!initComponentFinished)
-				base.BeginInit();
-		}
+		//Both our initComponent and our parent form's InitComponent call begin/end init.
+		//I suppress the first EndInit and the second BeginInit.
 		public override void EndInit() {
 			if (initComponentFinished)
 				base.EndInit();
+		}
+		public override void BeginInit() {
+			if (!initComponentFinished)
+				base.BeginInit();
 		}
 
 		[Browsable(false)]
@@ -46,6 +46,14 @@ namespace ShomreiTorah.Billing.Controls {
 		public override object DataSource {
 			get { return base.DataSource; }
 			set { base.DataSource = value; }
+		}
+		protected override void OnHandleCreated(EventArgs e) {
+			base.OnHandleCreated(e);
+			if (!DesignMode) {
+				var gridView = MainView as GridView;
+				if (gridView != null)
+					gridView.BestFitColumns();
+			}
 		}
 		protected override void RegisterView(BaseView gv) {
 			base.RegisterView(gv);
@@ -55,7 +63,10 @@ namespace ShomreiTorah.Billing.Controls {
 
 			var view = gv as GridView;
 			if (view != null) {
+				view.CustomColumnSort += view_CustomColumnSort;
+
 				view.ShowGridMenu += view_ShowGridMenu;
+
 				view.BestFitColumns();	//For detail clones
 				CheckColumns(view);
 
@@ -77,6 +88,27 @@ namespace ShomreiTorah.Billing.Controls {
 			}
 		}
 
+		void view_CustomColumnSort(object sender, CustomColumnSortEventArgs e) {
+			if (e.Column.FieldName == "FullName") {
+				var row1 = e.Column.View.GetDataRow(e.Column.View.GetRowHandle(e.ListSourceRowIndex1));
+				var row2 = e.Column.View.GetDataRow(e.Column.View.GetRowHandle(e.ListSourceRowIndex2));
+
+				string lastName1, lastName2;
+				if (row1.Table.Columns.Contains("LastName")) {
+					lastName1 = row1.Field<string>("LastName");
+					lastName2 = row2.Field<string>("LastName");
+				} else {
+					var relation=row1.Table.ParentRelations[0];
+					lastName1 = row1.GetParentRow(relation).Field<string>("LastName");
+					lastName2 = row2.GetParentRow(relation).Field<string>("LastName");
+				}
+
+				e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(lastName1, lastName2);
+				e.Handled = true;
+			}
+		}
+
+
 		void view_ShowGridMenu(object sender, GridMenuEventArgs e) {
 			if (e.MenuType == GridMenuType.Column) {
 				var grid = (GridView)sender;
@@ -91,24 +123,6 @@ namespace ShomreiTorah.Billing.Controls {
 				}
 			}
 		}
-		protected override void OnLoaded() {
-			base.OnLoaded();
-			foreach (var view in Views.OfType<ColumnView>())	//MainView will have no columns in RegisterView, so I need to do this here
-				CheckColumns(view);
-		}
-		void CheckColumns(ColumnView view) {
-			if (view.Columns.Count == 0) return;
-			if (!view.IsDetailView && view != MainView)
-				return;	//Skip pattern views. I do each clone individually; otherwise, the event handler won't be added to the clone.
-
-			var depDateCol = view.Columns.ColumnByFieldName("DepositDateSql");
-
-			if (depDateCol != null && depDateCol.OptionsFilter.FilterPopupMode == FilterPopupMode.Default) {
-				depDateCol.OptionsFilter.FilterPopupMode = FilterPopupMode.DateSmart;
-				view.ShowFilterPopupDate += view_ShowFilterPopupDate;
-			}
-		}
-
 		void view_ShowFilterPopupDate(object sender, FilterPopupDateEventArgs e) {
 			if (e.Column.FieldName != "DepositDateSql") return;
 			e.List.Clear();
@@ -122,15 +136,6 @@ namespace ShomreiTorah.Billing.Controls {
 					.Distinct()
 					.Select(d => new FilterDateElement(d.ToLongDateString(), "Show payments deposited on " + d.ToLongDateString(), new OperandProperty("DepositDateSql") < d))
 			);
-		}
-
-		protected override void OnHandleCreated(EventArgs e) {
-			base.OnHandleCreated(e);
-			if (!DesignMode) {
-				var gridView = MainView as GridView;
-				if (gridView != null)
-					gridView.BestFitColumns();
-			}
 		}
 		void view_KeyUp(object sender, KeyEventArgs e) {
 			var view = sender as GridView;
@@ -160,6 +165,31 @@ namespace ShomreiTorah.Billing.Controls {
 				}
 				if (DialogResult.Yes == XtraMessageBox.Show(message, "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
 					view.DeleteSelectedRows();
+			}
+		}
+
+		protected override void OnLoaded() {
+			base.OnLoaded();
+			foreach (var view in Views.OfType<ColumnView>())	//MainView will have no columns in RegisterView, so I need to do this here
+				CheckColumns(view);
+		}
+		void CheckColumns(ColumnView view) {
+			if (view.Columns.Count == 0) return;
+			if (!view.IsDetailView && view != MainView)
+				return;	//Skip pattern views. I do each clone individually; otherwise, the event handler won't be added to the clone.
+
+
+			var fullNameCol = view.Columns.ColumnByFieldName("FullName");
+			if (fullNameCol != null) {
+				fullNameCol.SortMode = ColumnSortMode.Custom;
+				fullNameCol.GroupInterval = ColumnGroupInterval.Alphabetical;
+			}
+
+			var depDateCol = view.Columns.ColumnByFieldName("DepositDateSql");
+
+			if (depDateCol != null && depDateCol.OptionsFilter.FilterPopupMode == FilterPopupMode.Default) {
+				depDateCol.OptionsFilter.FilterPopupMode = FilterPopupMode.DateSmart;
+				view.ShowFilterPopupDate += view_ShowFilterPopupDate;
 			}
 		}
 	}
