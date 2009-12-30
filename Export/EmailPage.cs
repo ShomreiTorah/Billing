@@ -10,10 +10,10 @@ using System.Web.Hosting;
 
 namespace ShomreiTorah.Billing.Export {
 	public abstract class EmailPage : Page {
-		public BillingData.MasterDirectoryRow Person { get; internal set; }
-		public DateTime StartDate { get; internal set; }
+		public BillInfo Info { get; internal set; }
 
 		public abstract string EmailSubject { get; }
+		public abstract BillKind Kind { get; }
 
 		internal string RenderPage() {
 			var request = new SimpleWorkerRequest("", null, null);

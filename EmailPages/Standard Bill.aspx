@@ -2,9 +2,11 @@
 
 <%@ Assembly Name="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" %>
 <%@ Import Namespace="System.Linq" %>
+<%@ Import Namespace="ShomreiTorah.Billing.Export" %>
 
 <script runat="server">
 	public override string EmailSubject { get { return "Shomrei Torah Bill"; } }
+	public override BillKind Kind { get { return BillKind.Bill; } }
 </script>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -58,7 +60,7 @@
 	<body>
 		<p>
 			Dear
-			<%=Person.FullName %>,</p>
+			<%=Info.Person.FullName %>,</p>
 		<p>
 			On behalf of Rabbi Weinberger and Congregation Shomrei Torah, we would like to express
 			our gratitude for your financial support and valued participation in our davening
@@ -71,28 +73,27 @@
 		</p>
 		<p>
 			תזכו למצות</p>
-		<%foreach (var account in Person.OpenAccounts) {%>
+		<%foreach (var account in Info.Accounts) {%>
 		<h1>
-			<%=Server.HtmlEncode(account) %></h1>
+			<%=Server.HtmlEncode(account.AccountName) %></h1>
 		<h3>
 			Balance due: <span class="Amount">
-				<%=Math.Max(0, Person.GetBalance(account)).ToString("c")%></span>
+				<%=account.BalanceDue.ToString("c")%></span>
 		</h3>
-		<%var pledges = Person.GetPledgesRows().Where(p => p.Date >= StartDate && p.Account == account).OrderBy(p => p.Date).ToArray();%>
 		<table cellspacing="0" class="Pledges">
 			<thead>
 				<tr>
 					<th colspan="3">Pledges</th>
 				</tr>
 			</thead>
-			<%if (Person.GetBalance(StartDate, account) != 0) { %>
+			<%if (account.OutstandingBalance > 0) { %>
 			<tr class="OutstandingBalance">
 				<td class="Description" colspan="2">Outstanding Balance:</td>
 				<td class="Amount">
-					<%=Person.GetBalance(StartDate, account).ToString("c")%></td>
+					<%=account.OutstandingBalance.ToString("c")%></td>
 			</tr>
 			<%} %>
-			<%foreach (var pledge in pledges) {%>
+			<%foreach (var pledge in account.Pledges) {%>
 			<tr>
 				<td class="Date">
 					<%= pledge.Date.ToShortDateString() %></td>
@@ -108,13 +109,12 @@
 			<tr class="Total">
 				<td class="Description" colspan="2">Total:</td>
 				<td class="Amount">
-					<%=pledges.Sum(p=>p.Amount).ToString("c") %></td>
+					<%=account.Pledges.Sum(p => p.Amount).ToString("c")%></td>
 			</tr>
 		</table>
-		<%var payments = Person.GetPaymentsRows().Where(p => p.Date >= StartDate && p.Account == account).OrderBy(p => p.Date).ToArray(); %>
-		<%if (payments.Length == 0) { %><div class="NoPayments">You have no payments on record
-			after
-			<%=StartDate.ToLongDateString() %></div>
+		<%if (account.Payments.Count == 0) { %><div class="NoPayments">You have no payments
+			on record after
+			<%=Info.StartDate.ToLongDateString() %></div>
 		<%} %>
 		<table cellspacing="0" class="Payments">
 			<thead>
@@ -122,7 +122,7 @@
 					<th colspan="3">Payments</th>
 				</tr>
 			</thead>
-			<%foreach (var payment in payments) {%>
+			<%foreach (var payment in account.Payments) {%>
 			<tr>
 				<td class="Date">
 					<%=payment.Date.ToShortDateString() %></td>
@@ -136,7 +136,7 @@
 			<tr class="Total">
 				<td class="Description" colspan="2">Total:</td>
 				<td class="Amount">
-					<%=payments.Sum(p => p.Amount).ToString("c")%></td>
+					<%=account.Payments.Sum(p => p.Amount).ToString("c")%></td>
 			</tr>
 		</table>
 		<%} %>

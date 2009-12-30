@@ -96,8 +96,8 @@ namespace ShomreiTorah.Billing.Export {
 					ui.Progress++;
 
 					using (var page = PageBuilder.CreatePage<EmailPage>("/" + emailTemplate.EditValue + ".aspx")) {
-						page.StartDate = startDate.DateTime;
-						page.Person = person;
+						page.Info = new BillInfo(person, startDate.DateTime, page.Kind);
+
 						var html = page.RenderPage();
 
 						if (ui.WasCanceled) return;
@@ -135,8 +135,7 @@ namespace ShomreiTorah.Billing.Export {
 
 			string html, subject;
 			using (var page = PageBuilder.CreatePage<EmailPage>("/" + emailTemplate.EditValue + ".aspx")) {
-				page.StartDate = startDate.DateTime;
-				page.Person = row;
+				page.Info = new BillInfo(row, startDate.DateTime, page.Kind);
 				html = page.RenderPage();
 				subject = page.EmailSubject;
 			}

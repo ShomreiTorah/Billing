@@ -319,6 +319,7 @@
     <Compile Include="Controls\DepositDateEdit.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Export\BillInfo.cs" />
     <Compile Include="Export\EmailExporter.cs">
       <SubType>Form</SubType>
     </Compile>
