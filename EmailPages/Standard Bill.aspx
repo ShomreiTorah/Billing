@@ -1,4 +1,5 @@
 <%@ Page Language="C#" Inherits="ShomreiTorah.Billing.Export.EmailPage, ShomreiTorah.Billing" %>
+
 <%@ Assembly Name="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" %>
 <%@ Import Namespace="System.Linq" %>
 
@@ -22,8 +23,11 @@
 			for your financial support and valued participation in our davening and learning.
 			Through your generosity, support, and participation our Shul will continue to grow
 			and thrive as a special place of Torah and Avodah.</p>
+		<%foreach (var account in Person.OpenAccounts) {%>
+		<h1>
+			<%=Server.HtmlEncode(account) %></h1>
 		<table>
-			<%if (Person.GetBalance(StartDate) != 0) { %>
+			<%if (Person.GetBalance(StartDate, account) != 0) { %>
 			<tr>
 				<td></td>
 				<td>Outstanding Balance:</td>
@@ -31,7 +35,7 @@
 					<%=Person.GetBalance(StartDate)%></td>
 			</tr>
 			<%} %>
-			<%foreach (var pledge in Person.GetPledgesRows().Where(p => p.Date >= StartDate)) {%>
+			<%foreach (var pledge in Person.GetPledgesRows().Where(p => p.Date >= StartDate && p.Account == account)) {%>
 			<tr>
 				<td>
 					<%=pledge.Date%></td>
@@ -42,7 +46,7 @@
 			</tr>
 			<%} %></table>
 		<table>
-			<%foreach (var payment in Person.GetPaymentsRows().Where(p => p.Date >= StartDate)) {%>
+			<%foreach (var payment in Person.GetPaymentsRows().Where(p => p.Date >= StartDate&& p.Account == account)) {%>
 			<tr>
 				<td>
 					<%=payment.Date %></td>
@@ -51,7 +55,9 @@
 				<td>
 					<%=payment.Amount.ToString("c") %></td>
 			</tr>
-			<%} %></table>
+			<%} %>
+		</table>
+		<%} %>
 	</body>
 
 </html>
