@@ -21,6 +21,9 @@
 				text-align: center;
 				border-bottom: solid blue 1px;
 			}
+			h3 .Amount {
+				padding-left: 15px;
+			}
 			td {
 				border-bottom: solid 1px navy;
 			}
@@ -43,11 +46,11 @@
 				border-top: solid 2px black;
 				padding-top: 10px;
 			}
-			.Total td.Amount {
+			.Total .Amount {
 				font-weight: bold;
 			}
-			.Payments {
-				margin-top: 20px;
+			.Payments th {
+				padding-top: 25px;
 			}
 		</style>
 	</head>
@@ -57,13 +60,24 @@
 			Dear
 			<%=Person.FullName %>,</p>
 		<p>
-			On behalf of Rabbi Weinberger and the Shul, I would like to express our gratitude
-			for your financial support and valued participation in our davening and learning.
-			Through your generosity, support, and participation our Shul will continue to grow
-			and thrive as a special place of Torah and Avodah.</p>
+			On behalf of Rabbi Weinberger and Congregation Shomrei Torah, we would like to express
+			our gratitude for your financial support and valued participation in our davening
+			and learning. Through your generosity, support, and participation our Shul will
+			continue to grow and thrive as a special place of Torah and Avodah.</p>
+		<p>
+			Please review the summary below. If you have any questions regarding any of the
+			pledges or payments contained herein, please contact Yaacov Gitstein at 732-516-5583.
+			Thank you.
+		</p>
+		<p>
+			תזכו למצות</p>
 		<%foreach (var account in Person.OpenAccounts) {%>
 		<h1>
 			<%=Server.HtmlEncode(account) %></h1>
+		<h3>
+			Balance due: <span class="Amount">
+				<%=Math.Max(0, Person.GetBalance(account)).ToString("c")%></span>
+		</h3>
 		<%var pledges = Person.GetPledgesRows().Where(p => p.Date >= StartDate && p.Account == account).OrderBy(p => p.Date).ToArray();%>
 		<table cellspacing="0" class="Pledges">
 			<thead>
@@ -113,7 +127,7 @@
 				<td class="Date">
 					<%=payment.Date.ToShortDateString() %></td>
 				<td class="Description">
-					<%=payment.Method %>
+					<%=payment.Method.Replace("Unknown", "?")%>
 					<%if (!payment.IsCheckNumberNull()) {%>#<%=payment.CheckNumber %><%} %></td>
 				<td class="Amount">
 					<%=payment.Amount.ToString("c") %></td>
