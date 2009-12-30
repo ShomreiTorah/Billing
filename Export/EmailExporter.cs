@@ -49,6 +49,9 @@ namespace ShomreiTorah.Billing.Export {
 			InitializeComponent();
 			this.people = people;
 
+			startDate.DateTime = new DateTime(DateTime.Today.AddDays(-20).Year, 1, 1);
+			startDate.Properties.MaxValue = DateTime.Today;
+
 			sendPreviewButton = buttonEdit.Buttons[1];
 			showPreviewButton = buttonEdit.Buttons[0];
 			CheckPreviewAddress();

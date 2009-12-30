@@ -23,6 +23,8 @@ namespace ShomreiTorah.Billing.Export {
 		WordExporter(BillingData.MasterDirectoryRow[] people) {
 			InitializeComponent();
 			this.people = people;
+			startDate.DateTime = new DateTime(DateTime.Today.AddDays(-20).Year, 1, 1);
+			startDate.Properties.MaxValue = DateTime.Today;
 
 			grid.DataSource = people;
 			gridView.BestFitColumns();

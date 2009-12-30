@@ -202,6 +202,7 @@ namespace ShomreiTorah.Billing.Export {
 			this.startDate.EditValue = null;
 			this.startDate.Location = new System.Drawing.Point(105, 38);
 			this.startDate.Name = "startDate";
+			this.startDate.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
 			this.startDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.startDate.Properties.DisplayFormat.FormatString = "D";
@@ -210,6 +211,7 @@ namespace ShomreiTorah.Billing.Export {
 			this.startDate.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
 			this.startDate.Properties.Mask.EditMask = "D";
 			this.startDate.Properties.NullValuePrompt = "Please select a date";
+			this.startDate.Properties.ShowToday = false;
 			this.startDate.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.True;
 			this.startDate.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});

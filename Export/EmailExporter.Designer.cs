@@ -24,8 +24,8 @@ namespace ShomreiTorah.Billing.Export {
 		/// </summary>
 		private void InitializeComponent() {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmailExporter));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
 			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
 			this.emailTemplate = new DevExpress.XtraEditors.ComboBoxEdit();
 			this.startDate = new DevExpress.XtraEditors.DateEdit();
@@ -84,6 +84,7 @@ namespace ShomreiTorah.Billing.Export {
 			this.startDate.EditValue = null;
 			this.startDate.Location = new System.Drawing.Point(105, 38);
 			this.startDate.Name = "startDate";
+			this.startDate.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
 			this.startDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.startDate.Properties.DisplayFormat.FormatString = "D";
@@ -92,6 +93,7 @@ namespace ShomreiTorah.Billing.Export {
 			this.startDate.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
 			this.startDate.Properties.Mask.EditMask = "D";
 			this.startDate.Properties.NullValuePrompt = "Please select a date";
+			this.startDate.Properties.ShowToday = false;
 			this.startDate.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.True;
 			this.startDate.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
@@ -183,8 +185,8 @@ namespace ShomreiTorah.Billing.Export {
 			// 
 			this.buttonEdit.AutoHeight = false;
 			this.buttonEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Show Preview", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("buttonEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject3, "Show Preview", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Send Preview", -1, false, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("buttonEdit.Buttons1"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject4, "Send Preview", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Show Preview", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("buttonEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Preview", null, null, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Send Preview", -1, false, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("buttonEdit.Buttons1"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Send Preview", null, null, true)});
 			this.buttonEdit.Name = "buttonEdit";
 			this.buttonEdit.ReadOnly = true;
 			this.buttonEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
