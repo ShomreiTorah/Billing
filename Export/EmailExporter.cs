@@ -150,7 +150,7 @@ namespace ShomreiTorah.Billing.Export {
 					StartPosition = FormStartPosition.CenterParent,
 					Icon = this.Icon
 				};
-				var browser = new WebBrowser {
+				var browser = new CopyableWebBrowser {
 					Dock = DockStyle.Fill,
 					AllowNavigation = false,
 					AllowWebBrowserDrop = false,
@@ -162,7 +162,21 @@ namespace ShomreiTorah.Billing.Export {
 				form.Show(this);
 			}
 		}
-
+		class CopyableWebBrowser : WebBrowser {
+			public override bool PreProcessMessage(ref Message msg) {
+				if (msg.Msg == 0x101	//WM_KEYUP
+				 && msg.WParam.ToInt32() == (int)Keys.C && ModifierKeys == Keys.Control) {
+					DoCopy();
+					return true;
+				}
+				return base.PreProcessMessage(ref msg);
+			}
+			void DoCopy() {
+				Document.ExecCommand("SelectAll", false, null);
+				Document.ExecCommand("Copy", false, null);
+				Document.ExecCommand("Unselect", false, null);
+			}
+		}
 		private void previewAddress_AddingMRUItem(object sender, AddingMRUItemEventArgs e) {
 			if (e.Item is MailAddress) return;
 			try {
