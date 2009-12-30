@@ -1,21 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
+using System.Web;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using System.Collections.ObjectModel;
-using ShomreiTorah.Common;
-using ShomreiTorah.WinForms.Forms;
-using System.IO;
-using System.Net.Mail;
-using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Base;
-using System.Web;
+using DevExpress.XtraGrid.Views.Grid;
+using Microsoft.Win32;
+using ShomreiTorah.Common;
+using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Export {
 	partial class EmailExporter : XtraForm {
@@ -45,15 +46,23 @@ namespace ShomreiTorah.Billing.Export {
 				form.SendBills();
 			}
 		}
+
+		const string SettingsPath = @"HKEY_CURRENT_USER\Software\Shomrei Torah\Billing\";
 		EmailExporter(BillingData.MasterDirectoryRow[] people, string[] fileNames) {
 			InitializeComponent();
 			this.people = people;
 
+			sendPreviewButton = buttonEdit.Buttons[1];
+			showPreviewButton = buttonEdit.Buttons[0];
+
 			startDate.DateTime = new DateTime(DateTime.Today.AddDays(-20).Year, 1, 1);
 			startDate.Properties.MaxValue = DateTime.Today;
 
-			sendPreviewButton = buttonEdit.Buttons[1];
-			showPreviewButton = buttonEdit.Buttons[0];
+			var recentEmails = (string[])Registry.GetValue(SettingsPath, "RecentPreviewEmails", null);
+			if (recentEmails != null)
+				previewAddress.Properties.Items.AddRange(recentEmails);
+			previewAddress.Text = Registry.GetValue(SettingsPath, "LastPreviewEmail", null) as string;
+
 			CheckPreviewAddress();
 
 			grid.DataSource = people;
@@ -64,13 +73,19 @@ namespace ShomreiTorah.Billing.Export {
 			SetEnabled();
 		}
 
+		protected override void OnClosed(EventArgs e) {
+			base.OnClosed(e);
+			if (previewAddress.Properties.Items.Count > 0)
+				Registry.SetValue(SettingsPath, "RecentPreviewEmails", previewAddress.Properties.Items.OfType<string>().ToArray(), RegistryValueKind.MultiString);
+			if (!String.IsNullOrEmpty(previewAddress.Text))
+				Registry.SetValue(SettingsPath, "LastPreviewEmail", previewAddress.Text, RegistryValueKind.String);
+		}
+
 		private void EditValueChanged(object sender, EventArgs e) { SetEnabled(); }
 		void SetEnabled() {
 			showPreviewButton.Enabled = sendBills.Enabled = emailTemplate.EditValue != null && startDate.EditValue != null;
 			sendPreviewButton.Enabled = showPreviewButton.Enabled && previewMailAddress != null;
 		}
-
-
 
 		static readonly MailAddress BillingAddress = new MailAddress("Billing@ShomreiTorah.us", "Shomrei Torah Billing");
 		void SendBills() {
@@ -111,7 +126,7 @@ namespace ShomreiTorah.Billing.Export {
 					previewMailAddress = new MailAddress(previewAddress.Text, Environment.UserName);
 				} catch (FormatException) { previewMailAddress = null; }
 			}
-			sendPreviewButton.Enabled = showPreviewButton.Enabled && previewMailAddress != null;
+			SetEnabled();
 		}
 
 		private void buttonEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
@@ -132,7 +147,8 @@ namespace ShomreiTorah.Billing.Export {
 					Text = "Email Preview: " + subject,
 					FormBorderStyle = FormBorderStyle.SizableToolWindow,
 					Size = new Size(600, 400),
-					StartPosition = FormStartPosition.CenterParent
+					StartPosition = FormStartPosition.CenterParent,
+					Icon = this.Icon
 				};
 				var browser = new WebBrowser {
 					Dock = DockStyle.Fill,
@@ -147,5 +163,17 @@ namespace ShomreiTorah.Billing.Export {
 			}
 		}
 
+		private void previewAddress_AddingMRUItem(object sender, AddingMRUItemEventArgs e) {
+			if (e.Item is MailAddress) return;
+			try {
+				new MailAddress(e.Item as string).ToString();
+			} catch (FormatException) { e.Cancel = true; }
+		}
+
+		private void previewAddress_Validating(object sender, CancelEventArgs e) {
+			CheckPreviewAddress();
+			e.Cancel = !String.IsNullOrEmpty(previewAddress.Text) && previewMailAddress == null;
+			previewAddress.ErrorText = e.Cancel ? "Invalid email address" : null;
+		}
 	}
 }

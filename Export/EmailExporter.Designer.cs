@@ -43,7 +43,7 @@ namespace ShomreiTorah.Billing.Export {
 			this.colTotalPaid = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colBalanceDue = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colEmails = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.previewAddress = new DevExpress.XtraEditors.TextEdit();
+			this.previewAddress = new DevExpress.XtraEditors.MRUEdit();
 			this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
 			((System.ComponentModel.ISupportInitialize)(this.emailTemplate.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties.VistaTimeProperties)).BeginInit();
@@ -258,8 +258,12 @@ namespace ShomreiTorah.Billing.Export {
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.previewAddress.Location = new System.Drawing.Point(105, 65);
 			this.previewAddress.Name = "previewAddress";
+			this.previewAddress.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.DropDown)});
 			this.previewAddress.Size = new System.Drawing.Size(479, 20);
 			this.previewAddress.TabIndex = 7;
+			this.previewAddress.AddingMRUItem += new DevExpress.XtraEditors.Controls.AddingMRUItemEventHandler(this.previewAddress_AddingMRUItem);
+			this.previewAddress.Validating += new System.ComponentModel.CancelEventHandler(this.previewAddress_Validating);
 			this.previewAddress.TextChanged += new System.EventHandler(this.previewAddress_TextChanged);
 			// 
 			// labelControl4
@@ -320,7 +324,7 @@ namespace ShomreiTorah.Billing.Export {
 		private DevExpress.XtraGrid.Columns.GridColumn colTotalPaid;
 		private DevExpress.XtraGrid.Columns.GridColumn colBalanceDue;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit buttonEdit;
-		private DevExpress.XtraEditors.TextEdit previewAddress;
+		private DevExpress.XtraEditors.MRUEdit previewAddress;
 		private DevExpress.XtraEditors.LabelControl labelControl4;
 		private DevExpress.XtraGrid.Columns.GridColumn colEmails;
 	}
