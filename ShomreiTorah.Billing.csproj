@@ -131,7 +131,6 @@
       <DependentUpon>PersonDataEntry.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PersonSelector.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\PersonSelector.Designer.cs">
       <DependentUpon>PersonSelector.cs</DependentUpon>
@@ -374,6 +373,10 @@
       <DependentUpon>YKImporter.cs</DependentUpon>
     </Compile>
     <Compile Include="Updater.cs" />
+    <None Include="EmailPages\Standard Receipt.aspx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>ASPXCodeBehind</SubType>
+    </None>
     <Content Include="Icon.ico" />
     <None Include="Resources\Update16.png" />
     <None Include="Resources\UserGrid.png" />
