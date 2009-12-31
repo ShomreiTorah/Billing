@@ -19,10 +19,11 @@
 				font-family: Verdana;
 			}
 			td {
-				border-bottom: solid 1px navy;
+				border-bottom: solid 1px gray;
 			}
 			.Total td {
-				border-top: solid 2px black;
+				border-top: solid 1px black;
+				border-bottom: solid 2px black;
 				padding-top: 10px;
 			}
 		</style>
@@ -44,25 +45,24 @@
 		</p>
 		<p>
 			תזכו למצות</p>
-		<%foreach (var account in Info.Accounts) {%>
-		<h1 style="font-size: large; text-align: center; border-bottom: solid blue 1px;">
-			<%=Server.HtmlEncode(account.AccountName) %></h1>
-		<h3>
-			Balance due: <span class="Amount" style="font-weight: bold; padding-left: 15px;">
-				<%=account.BalanceDue.ToString("c")%></span>
-		</h3>
-		<table cellspacing="0" class="Pledges">
-			<thead>
-				<tr>
-					<th colspan="3" style="border-bottom: solid 2px black;">Pledges</th>
-				</tr>
-			</thead>
+		<table cellspacing="0">
+			<%foreach (var account in Info.Accounts) {%>
+			
+			<tr>
+				<th colspan="3" style="font-size: large; text-align: center; border-bottom: solid blue 1px;"><%=Server.HtmlEncode(account.AccountName) %></th>
+			</tr>
+			<tr>
+				<td colspan="2">Balance due:</td>
+				<td class="Amount" style="text-align: right; font-weight: bold;">
+					<%=account.BalanceDue.ToString("c")%></td>
+			</tr>
+			<tr>
+				<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Pledges</th>
+			</tr>
 			<%if (account.OutstandingBalance > 0) { %>
 			<tr class="OutstandingBalance">
-				<td class="Description" colspan="2" style="padding-bottom: 7px;">Outstanding Balance:
-				</td>
-				<td class="Amount" style="text-align: right; padding-bottom: 7px;">
-					<%=account.OutstandingBalance.ToString("c")%></td>
+				<td class="Description" colspan="2" style="padding-bottom: 7px;">Outstanding Balance:</td>
+				<td class="Amount" style="text-align: right; padding-bottom: 7px;"><%=account.OutstandingBalance.ToString("c")%></td>
 			</tr>
 			<%} %>
 			<%foreach (var pledge in account.Pledges) {%>
@@ -80,22 +80,19 @@
 			</tr>
 			<%} %>
 			<tr class="Total">
-				<td class="Description" colspan="2">Total:</td>
+				<td class="Description" colspan="2">Total: </td>
 				<td class="Amount" style="text-align: right; font-weight: bold;">
 					<%=account.Pledges.Sum(p => p.Amount).ToString("c")%></td>
 			</tr>
-		</table>
-		<%if (account.Payments.Count == 0) { %><div class="NoPayments">You have no payments
-			on record after
-			<%=Info.StartDate.ToLongDateString() %></div>
-		<%} %>
-		<table cellspacing="0" class="Payments">
-			<thead>
-				<tr>
-					<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Payments
-					</th>
-				</tr>
-			</thead>
+			<%if (account.Payments.Count == 0) { %><tr>
+				<td colspan="3">You have no payments on record after
+					<%=Info.StartDate.ToLongDateString() %></td>
+			</tr>
+			<%} %>
+			<tr>
+				<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Payments
+				</th>
+			</tr>
 			<%foreach (var payment in account.Payments) {%>
 			<tr>
 				<td class="Date" style="padding-right: 8px;">
@@ -108,12 +105,12 @@
 			</tr>
 			<%} %>
 			<tr class="Total">
-				<td class="Description" colspan="2">Total:</td>
+				<td class="Description" colspan="2">Total: </td>
 				<td class="Amount" style="text-align: right; font-weight: bold;">
 					<%=account.Payments.Sum(p => p.Amount).ToString("c")%></td>
 			</tr>
+			<%} %>
 		</table>
-		<%} %>
 	</body>
 
 </html>
