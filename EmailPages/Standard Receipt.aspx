@@ -19,36 +19,37 @@
 				font-family: Verdana;
 			}
 			td {
-				border-bottom: solid 1px navy;
+				border-bottom: solid 1px gray;
 			}
 			.Total td {
-				border-top: solid 2px black;
+				border-top: solid 1px black;
+				border-bottom: solid 2px black;
 				padding-top: 10px;
 			}
 		</style>
 	</head>
 
 	<body>
+		<h1 style="font-size: large; text-align: center;">
+			Congregation Shomrei Torah Annual Contributions Summary</h1>
 		<p>
-			Dear
-			<%=Info.Person.FullName %>,</p>
+			On behalf of Rabbi Weinberger and Congregation Shomrei Torah of Passaic Clifton,
+			I would like to express my sincere gratitude and appreciation for your generous
+			contribution(s) to our shul. Below please review your
+			<%=DateTime.Today.AddMonths(-2).Year %>
+			annual contributions summary. If you have any questions, please reply to this email
+			or call me at (732) 516 - 5583.</p>
 		<p>
-			On behalf of Rabbi Weinberger and Congregation Shomrei Torah, we would like to express
-			our gratitude for your financial support and valued participation in our davening
-			and learning. Through your generosity, support, and participation our Shul will
-			continue to grow and thrive as a special place of Torah and Avodah.</p>
-		<p>
-			Please review the summary below. If you have any questions regarding any of the
-			payments contained herein, please reply to this email or contact Yaacov Gitstein
-			at (732) 516 - 5583. Thank you.
+			May your support of our Shul bring you ברכה and הצלה in all of your endeavors.
 		</p>
 		<p>
-			תזכו למצות</p>
+			No goods or services have been provided.</p>
 		<table cellspacing="0" class="Payments">
 			<%foreach (var account in Info.Accounts) {%>
 			<thead>
 				<tr>
-					<th colspan="3" style="font-size: large; text-align: center; padding: 25px 0 7px 0; border-bottom: solid 2px black;">
+					<th colspan="3" style="font-size: large; text-align: center; padding: 25px 0 7px 0;
+						border-bottom: solid 2px black;">
 						<%=Server.HtmlEncode(account.AccountName) %></th>
 				</tr>
 			</thead>
