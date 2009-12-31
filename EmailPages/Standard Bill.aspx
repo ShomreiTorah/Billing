@@ -1,12 +1,18 @@
 <%@ Page Language="C#" Inherits="ShomreiTorah.Billing.Export.EmailPage, ShomreiTorah.Billing" %>
 
 <%@ Assembly Name="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" %>
+<%@ Import Namespace="System.Collections.Generic" %>
 <%@ Import Namespace="System.Linq" %>
 <%@ Import Namespace="ShomreiTorah.Billing.Export" %>
 
 <script runat="server">
 	public override string EmailSubject { get { return "Shomrei Torah Bill"; } }
 	public override BillKind Kind { get { return BillKind.Bill; } }
+	public override IEnumerable<string> ImageNames {
+		get {
+			yield return "Logo.gif";
+		}
+	}
 </script>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -30,6 +36,10 @@
 	</head>
 
 	<body>
+		<h1 style="font-size: large; text-align: center;">
+			<img src="<%=ImagePrefix %>Logo.gif" alt="Shomrei Torah Logo" /><br />
+			Congregation Shomrei Torah Billing Statement</h1>
+		<div style="text-align: center">Federal Tax ID: 47-0953005</div>
 		<p>
 			Dear
 			<%=Info.Person.FullName %>,</p>
@@ -47,9 +57,9 @@
 			תזכו למצות</p>
 		<table cellspacing="0">
 			<%foreach (var account in Info.Accounts) {%>
-			
 			<tr>
-				<th colspan="3" style="font-size: large; text-align: center; border-bottom: solid blue 1px;"><%=Server.HtmlEncode(account.AccountName) %></th>
+				<th colspan="3" style="font-size: large; text-align: center; border-bottom: solid blue 1px;">
+					<%=Server.HtmlEncode(account.AccountName) %></th>
 			</tr>
 			<tr>
 				<td colspan="2">Balance due:</td>
@@ -57,12 +67,15 @@
 					<%=account.BalanceDue.ToString("c")%></td>
 			</tr>
 			<tr>
-				<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Pledges</th>
+				<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Pledges
+				</th>
 			</tr>
 			<%if (account.OutstandingBalance > 0) { %>
 			<tr class="OutstandingBalance">
-				<td class="Description" colspan="2" style="padding-bottom: 7px;">Outstanding Balance:</td>
-				<td class="Amount" style="text-align: right; padding-bottom: 7px;"><%=account.OutstandingBalance.ToString("c")%></td>
+				<td class="Description" colspan="2" style="padding-bottom: 7px;">Outstanding Balance:
+				</td>
+				<td class="Amount" style="text-align: right; padding-bottom: 7px;">
+					<%=account.OutstandingBalance.ToString("c")%></td>
 			</tr>
 			<%} %>
 			<%foreach (var pledge in account.Pledges) {%>

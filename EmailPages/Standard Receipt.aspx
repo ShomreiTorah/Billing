@@ -40,6 +40,7 @@
 		<h1 style="font-size: large; text-align: center;">
 			<img src="<%=ImagePrefix %>Logo.gif" alt="Shomrei Torah Logo" /><br />
 			Congregation Shomrei Torah Annual Contributions Summary</h1>
+		<div style="text-align: center">Federal Tax ID: 47-0953005</div>
 		<p>
 			On behalf of Rabbi Weinberger and Congregation Shomrei Torah of Passaic Clifton,
 			I would like to express my sincere gratitude and appreciation for your generous
