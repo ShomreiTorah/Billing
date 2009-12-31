@@ -68,8 +68,8 @@
 			continue to grow and thrive as a special place of Torah and Avodah.</p>
 		<p>
 			Please review the summary below. If you have any questions regarding any of the
-			pledges or payments contained herein, please contact Yaacov Gitstein at 732-516-5583.
-			Thank you.
+			pledges or payments contained herein, please reply to this email or contact Yaacov
+			Gitstein at (732) 516 - 5583. Thank you.
 		</p>
 		<p>
 			תזכו למצות</p>
