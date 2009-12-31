@@ -39,19 +39,17 @@
 			continue to grow and thrive as a special place of Torah and Avodah.</p>
 		<p>
 			Please review the summary below. If you have any questions regarding any of the
-			pledges or payments contained herein, please reply to this email or contact Yaacov
-			Gitstein at (732) 516 - 5583. Thank you.
+			payments contained herein, please reply to this email or contact Yaacov Gitstein
+			at (732) 516 - 5583. Thank you.
 		</p>
 		<p>
 			תזכו למצות</p>
-		<%foreach (var account in Info.Accounts) {%>
-		<h1 style="font-size: large; text-align: center; border-bottom: solid blue 1px;">
-			<%=Server.HtmlEncode(account.AccountName) %></h1>
 		<table cellspacing="0" class="Payments">
+			<%foreach (var account in Info.Accounts) {%>
 			<thead>
 				<tr>
-					<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Payments
-					</th>
+					<th colspan="3" style="font-size: large; text-align: center; padding: 25px 0 7px 0; border-bottom: solid 2px black;">
+						<%=Server.HtmlEncode(account.AccountName) %></th>
 				</tr>
 			</thead>
 			<%foreach (var payment in account.Payments) {%>
@@ -70,8 +68,8 @@
 				<td class="Amount" style="text-align: right; font-weight: bold;">
 					<%=account.Payments.Sum(p => p.Amount).ToString("c")%></td>
 			</tr>
+			<%} %>
 		</table>
-		<%} %>
 	</body>
 
 </html>
