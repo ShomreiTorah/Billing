@@ -40,7 +40,7 @@
 			annual contributions summary. If you have any questions, please reply to this email
 			or call me at (732) 516 - 5583.</p>
 		<p>
-			May your support of our Shul bring you ברכה and הצלה in all of your endeavors.
+			May your support of our Shul bring you ברכה and הצלחה in all of your endeavors.
 		</p>
 		<p>
 			No goods or services have been provided.</p>
