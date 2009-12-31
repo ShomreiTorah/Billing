@@ -88,6 +88,36 @@ namespace ShomreiTorah.Billing.Export {
 		}
 
 		static readonly MailAddress BillingAddress = new MailAddress("Billing@ShomreiTorah.us", "Shomrei Torah Billing");
+
+		static readonly Dictionary<string, string> MediaTypes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {
+			{ ".png",	"image/png"		},
+			{ ".gif",	"image/gif"		},
+			{ ".jpeg",	"image/jpeg"	},
+			{ ".jpg",	"image/jpeg"	},
+		};
+		static readonly string ImagesPath = Path.Combine(Program.AspxPath, @"Images\");
+		MailMessage CreateMessage(BillingData.MasterDirectoryRow person) {
+			using (var page = PageBuilder.CreatePage<EmailPage>("/" + emailTemplate.EditValue + ".aspx")) {
+				page.ImagePrefix = "cid:";
+				page.Info = new BillInfo(person, startDate.DateTime, page.Kind);
+
+				var message = new MailMessage { From = BillingAddress, SubjectEncoding = Email.DefaultEncoding };
+
+				var htmlContent = AlternateView.CreateAlternateViewFromString(page.RenderPage(), Email.DefaultEncoding, "text/html");
+
+				htmlContent.TransferEncoding = System.Net.Mime.TransferEncoding.QuotedPrintable;
+				htmlContent.LinkedResources.AddRange(page.ImageNames.Select(i =>
+					new LinkedResource(Path.Combine(ImagesPath, i), MediaTypes[Path.GetExtension(i)]) { ContentId = i }
+				));
+
+				message.AlternateViews.Add(htmlContent);
+
+				message.Subject = page.EmailSubject;
+
+				return message;
+			}
+		}
+
 		void SendBills() {
 			ProgressWorker.Execute(ui => {
 				ui.Maximum = people.Length;
@@ -95,53 +125,33 @@ namespace ShomreiTorah.Billing.Export {
 					ui.Caption = "Emailing " + person.VeryFullName;
 					ui.Progress++;
 
-					using (var page = PageBuilder.CreatePage<EmailPage>("/" + emailTemplate.EditValue + ".aspx")) {
-						page.Info = new BillInfo(person, startDate.DateTime, page.Kind);
+					if (ui.WasCanceled) return;
 
-						var html = page.RenderPage();
-
-						if (ui.WasCanceled) return;
-						foreach (var address in person.GetEmailListRows())
-							Email.Hosted.Send(BillingAddress, address.MailAddress, page.EmailSubject, html, true);
+					using (var message = CreateMessage(person)) {
+						message.To.AddRange(person.GetEmailListRows().Select(e => e.MailAddress));
+						Email.Hosted.Send(message);
 					}
 				}
 			}, true);
 		}
-
-		private void gridView_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
-			if (e.Column == colEmails) {
-				var row = (BillingData.MasterDirectoryRow)gridView.GetRow(e.RowHandle);
-				if (row != null)
-					e.Value = String.Join(", ", Array.ConvertAll(row.GetEmailListRows(), m => m.Email));
-			}
-		}
-
-		MailAddress previewMailAddress;
-		private void previewAddress_TextChanged(object sender, EventArgs e) { CheckPreviewAddress(); }
-		void CheckPreviewAddress() {
-			if (String.IsNullOrEmpty(previewAddress.Text)) {
-				previewMailAddress = null;
-			} else {
-				try {
-					previewMailAddress = new MailAddress(previewAddress.Text, Environment.UserName);
-				} catch (FormatException) { previewMailAddress = null; }
-			}
-			SetEnabled();
-		}
-
 		private void buttonEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
 			var row = (BillingData.MasterDirectoryRow)gridView.GetFocusedRow();
 			if (row == null) return;
 
-			string html, subject;
-			using (var page = PageBuilder.CreatePage<EmailPage>("/" + emailTemplate.EditValue + ".aspx")) {
-				page.Info = new BillInfo(row, startDate.DateTime, page.Kind);
-				html = page.RenderPage();
-				subject = page.EmailSubject;
-			}
 			if (e.Button.Caption == sendPreviewButton.Caption) {
-				Email.Hosted.Send(BillingAddress, previewMailAddress, subject, html, true);
+				using (var message = CreateMessage(row)) {
+					message.To.Add(previewMailAddress);
+					Email.Hosted.Send(message);
+				}
 			} else {
+				string html, subject;
+				using (var page = PageBuilder.CreatePage<EmailPage>("/" + emailTemplate.EditValue + ".aspx")) {
+					page.ImagePrefix = ImagesPath;
+					page.Info = new BillInfo(row, startDate.DateTime, page.Kind);
+
+					html = page.RenderPage();
+					subject = page.EmailSubject;
+				}
 				var form = new XtraForm {
 					Text = "Email Preview: " + subject,
 					FormBorderStyle = FormBorderStyle.SizableToolWindow,
@@ -176,6 +186,28 @@ namespace ShomreiTorah.Billing.Export {
 				Document.ExecCommand("Unselect", false, null);
 			}
 		}
+
+		private void gridView_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
+			if (e.Column == colEmails) {
+				var row = (BillingData.MasterDirectoryRow)gridView.GetRow(e.RowHandle);
+				if (row != null)
+					e.Value = String.Join(", ", Array.ConvertAll(row.GetEmailListRows(), m => m.Email));
+			}
+		}
+
+		MailAddress previewMailAddress;
+		private void previewAddress_TextChanged(object sender, EventArgs e) { CheckPreviewAddress(); }
+		void CheckPreviewAddress() {
+			if (String.IsNullOrEmpty(previewAddress.Text)) {
+				previewMailAddress = null;
+			} else {
+				try {
+					previewMailAddress = new MailAddress(previewAddress.Text, Environment.UserName);
+				} catch (FormatException) { previewMailAddress = null; }
+			}
+			SetEnabled();
+		}
+
 		private void previewAddress_AddingMRUItem(object sender, AddingMRUItemEventArgs e) {
 			if (e.Item is MailAddress) return;
 			try {

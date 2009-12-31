@@ -11,9 +11,12 @@ using System.Web.Hosting;
 namespace ShomreiTorah.Billing.Export {
 	public abstract class EmailPage : Page {
 		public BillInfo Info { get; internal set; }
+		public string ImagePrefix { get; internal set; }
 
 		public abstract string EmailSubject { get; }
 		public abstract BillKind Kind { get; }
+
+		public virtual IEnumerable<string> ImageNames { get { yield break; } }
 
 		internal string RenderPage() {
 			var request = new SimpleWorkerRequest("", null, null);

@@ -1,12 +1,19 @@
 <%@ Page Language="C#" Inherits="ShomreiTorah.Billing.Export.EmailPage, ShomreiTorah.Billing" %>
 
 <%@ Assembly Name="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" %>
+<%@ Import Namespace="System.Collections.Generic" %>
 <%@ Import Namespace="System.Linq" %>
 <%@ Import Namespace="ShomreiTorah.Billing.Export" %>
 
 <script runat="server">
 	public override string EmailSubject { get { return "Shomrei Torah Receipt"; } }
 	public override BillKind Kind { get { return BillKind.Receipt; } }
+
+	public override IEnumerable<string> ImageNames {
+		get {
+			yield return "Logo.gif";
+		}
+	}
 </script>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -31,6 +38,7 @@
 
 	<body>
 		<h1 style="font-size: large; text-align: center;">
+			<img src="<%=ImagePrefix %>Logo.gif" alt="Shomrei Torah Logo" /><br />
 			Congregation Shomrei Torah Annual Contributions Summary</h1>
 		<p>
 			On behalf of Rabbi Weinberger and Congregation Shomrei Torah of Passaic Clifton,
