@@ -314,7 +314,7 @@
     <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
-    <None Include="EmailPages\Standard Bill.aspx">
+    <None Include="Email Templates\Standard Bill.aspx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>ASPXCodeBehind</SubType>
     </None>
@@ -377,11 +377,11 @@
       <DependentUpon>YKImporter.cs</DependentUpon>
     </Compile>
     <Compile Include="Updater.cs" />
-    <None Include="EmailPages\Standard Receipt.aspx">
+    <None Include="Email Templates\Standard Receipt.aspx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>ASPXCodeBehind</SubType>
     </None>
-    <None Include="EmailPages\Images\Logo.gif">
+    <None Include="Email Templates\Images\Logo.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="Icon.ico" />
@@ -390,7 +390,7 @@
     <None Include="Resources\Refresh16.png" />
     <None Include="Resources\WebPreview.png" />
     <None Include="Resources\SendPreview.png" />
-    <None Include="EmailPages\Web.config">
+    <None Include="Email Templates\Web.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\ImportExcel32.png" />
@@ -423,7 +423,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>attrib -r "$(TargetDir)EmailPages\Web.config"
-copy "$(TargetPath)" "$(ProjectDir)EmailPages\Bin\"</PostBuildEvent>
+    <PostBuildEvent>attrib -r "$(TargetDir)Email Templates\Web.config"
+mkdir "$(ProjectDir)Email Templates\Bin\"
+copy "$(TargetPath)" "$(ProjectDir)Email Templates\Bin\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

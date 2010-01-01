@@ -23,7 +23,7 @@ namespace ShomreiTorah.Billing {
 
 		public static DateTime LaunchTime { get; private set; }
 		public static string AppDirectory { get; private set; }
-		public static string AspxPath { get { return Path.Combine(AppDirectory, "EmailPages"); } }
+		public static string AspxPath { get { return Path.Combine(AppDirectory, "Email Templates"); } }
 		public static BillingData Data { get; private set; }
 
 		public static ISynchronizeInvoke UIInvoker { get; set; }
