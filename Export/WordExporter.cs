@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using DevExpress.XtraBars;
+using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Export {
 	partial class WordExporter : XtraForm {
@@ -35,5 +37,11 @@ namespace ShomreiTorah.Billing.Export {
 		void CreateDocument() {
 			XtraMessageBox.Show(this, "I haven't written the Word exporter yet.\r\nSorry.", "Shomrei Torah Billing");
 		}
+
+		private void createDoc_Click(object sender, EventArgs e) { CreateDocument(); }
+
+		private void createEnvelopes_ItemClick(object sender, ItemClickEventArgs e) { ProgressWorker.Execute(ui => WordExport.CreateEnvelopes(people, ui), true); }
+
+		private void createLabels_ItemClick(object sender, ItemClickEventArgs e) { ProgressWorker.Execute(ui => WordExport.CreateLabels(people, "8160", ui), true); }
 	}
 }
