@@ -23,8 +23,9 @@ namespace ShomreiTorah.Billing.Export {
 			if (templateName == null) throw new ArgumentNullException("templateName");
 			var templatePath = Path.Combine(TemplateFolder, templateName);
 			if (!File.Exists(templatePath)) throw new ArgumentException("Template does not exist", "templateName", new FileNotFoundException("Template does not exist", templatePath));
+			progress = progress ?? new EmptyProgressReporter();
 
-			if (progress != null) progress.Caption = "Creating " + Path.GetFileNameWithoutExtension(templateName);
+			progress.Caption = "Creating " + Path.GetFileNameWithoutExtension(templateName);
 
 			Document sourceDoc = null;
 			try {
@@ -57,11 +58,11 @@ namespace ShomreiTorah.Billing.Export {
 				doc = Word.Documents.Add();
 
 				int pageCount = (int)Math.Ceiling(people.Count / (float)pageSize);
-				if (progress != null) progress.Maximum = pageCount;
+				progress.Maximum = pageCount;
 				range = doc.Range();
 				for (int i = 0; i < pageCount; i++) {
-					if (progress != null && progress.WasCanceled) return null;
-					if (progress != null) progress.Progress = i;
+					if (progress.WasCanceled) return null;
+					progress.Progress = i;
 					range.Collapse(WdCollapseDirection.wdCollapseEnd);
 					range.Paste();
 				}
@@ -69,8 +70,8 @@ namespace ShomreiTorah.Billing.Export {
 
 			var placeholderCount = doc.ContentControls.Count;
 			for (int i = 0; i < placeholderCount; i++) {
-				if (progress != null && progress.WasCanceled) return null;
-				if (progress != null) progress.Progress = i;
+				if (progress.WasCanceled) return null;
+				progress.Progress = i;
 
 				var cc = doc.ContentControls.Item(1);	//I remove them as we go along
 				range = cc.Range;
