@@ -55,6 +55,10 @@
 		</p>
 		<p>
 			תזכו למצות</p>
+		<p>Sincerely,</p>
+		<p>Jason P. (Yaacov) Gitstein<br />
+			Treasurer
+		</p>
 		<table cellspacing="0">
 			<%foreach (var account in Info.Accounts) {%>
 			<tr>
@@ -68,6 +72,7 @@
 			</tr>
 			<tr>
 				<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Pledges
+				
 				</th>
 			</tr>
 			<%if (account.OutstandingBalance > 0) { %>

@@ -53,6 +53,12 @@
 		</p>
 		<p>
 			No goods or services have been provided.</p>
+		<p>
+			Sincerely,</p>
+		<p>
+			Jason P. (Yaacov) Gitstein<br />
+			Treasurer
+		</p>
 		<table cellspacing="0" class="Payments">
 			<%foreach (var account in Info.Accounts) {%>
 			<thead>
