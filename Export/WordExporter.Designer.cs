@@ -23,10 +23,9 @@ namespace ShomreiTorah.Billing.Export {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WordExporter));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject9 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject10 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
 			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
 			this.grid = new DevExpress.XtraGrid.GridControl();
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -38,27 +37,17 @@ namespace ShomreiTorah.Billing.Export {
 			this.colBalanceDue = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.buttonEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
 			this.cancel = new DevExpress.XtraEditors.SimpleButton();
+			this.createDoc = new DevExpress.XtraEditors.SimpleButton();
 			this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
 			this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
 			this.startDate = new DevExpress.XtraEditors.DateEdit();
 			this.docType = new DevExpress.XtraEditors.ComboBoxEdit();
-			this.createDoc = new DevExpress.XtraEditors.DropDownButton();
-			this.mailingMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-			this.createEnvelopes = new DevExpress.XtraBars.BarButtonItem();
-			this.createLabels = new DevExpress.XtraBars.BarButtonItem();
-			this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
-			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
-			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
-			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
-			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.buttonEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties.VistaTimeProperties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.docType.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.mailingMenu)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// labelControl1
@@ -163,8 +152,8 @@ namespace ShomreiTorah.Billing.Export {
 			// 
 			this.buttonEdit.AutoHeight = false;
 			this.buttonEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Show Preview", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("buttonEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject9, "Show Preview", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Send Preview", -1, false, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("buttonEdit.Buttons1"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject10, "Send Preview", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Show Preview", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("buttonEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Preview", null, null, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Send Preview", -1, false, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("buttonEdit.Buttons1"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Send Preview", null, null, true)});
 			this.buttonEdit.Name = "buttonEdit";
 			this.buttonEdit.ReadOnly = true;
 			this.buttonEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -178,6 +167,17 @@ namespace ShomreiTorah.Billing.Export {
 			this.cancel.Size = new System.Drawing.Size(75, 23);
 			this.cancel.TabIndex = 15;
 			this.cancel.Text = "Cancel";
+			// 
+			// createDoc
+			// 
+			this.createDoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.createDoc.Enabled = false;
+			this.createDoc.Location = new System.Drawing.Point(407, 337);
+			this.createDoc.Name = "createDoc";
+			this.createDoc.Size = new System.Drawing.Size(97, 23);
+			this.createDoc.TabIndex = 13;
+			this.createDoc.Text = "Create Document";
+			this.createDoc.Click += new System.EventHandler(this.createDoc_Click);
 			// 
 			// labelControl3
 			// 
@@ -234,51 +234,6 @@ namespace ShomreiTorah.Billing.Export {
 			this.docType.TabIndex = 9;
 			this.docType.EditValueChanged += new System.EventHandler(this.EditValueChanged);
 			// 
-			// createDoc
-			// 
-			this.createDoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.createDoc.DropDownControl = this.mailingMenu;
-			this.createDoc.Location = new System.Drawing.Point(369, 337);
-			this.createDoc.Name = "createDoc";
-			this.createDoc.Size = new System.Drawing.Size(135, 23);
-			this.createDoc.TabIndex = 17;
-			this.createDoc.Text = "Create Document";
-			this.createDoc.Click += new System.EventHandler(this.createDoc_Click);
-			// 
-			// mailingMenu
-			// 
-			this.mailingMenu.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.createEnvelopes),
-            new DevExpress.XtraBars.LinkPersistInfo(this.createLabels)});
-			this.mailingMenu.Manager = this.barManager1;
-			this.mailingMenu.Name = "mailingMenu";
-			// 
-			// createEnvelopes
-			// 
-			this.createEnvelopes.Caption = "Create Envelopes";
-			this.createEnvelopes.Id = 0;
-			this.createEnvelopes.Name = "createEnvelopes";
-			this.createEnvelopes.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.createEnvelopes_ItemClick);
-			// 
-			// createLabels
-			// 
-			this.createLabels.Caption = "Create Mailing Labels";
-			this.createLabels.Id = 1;
-			this.createLabels.Name = "createLabels";
-			this.createLabels.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.createLabels_ItemClick);
-			// 
-			// barManager1
-			// 
-			this.barManager1.DockControls.Add(this.barDockControlTop);
-			this.barManager1.DockControls.Add(this.barDockControlBottom);
-			this.barManager1.DockControls.Add(this.barDockControlLeft);
-			this.barManager1.DockControls.Add(this.barDockControlRight);
-			this.barManager1.Form = this;
-			this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.createEnvelopes,
-            this.createLabels});
-			this.barManager1.MaxItemId = 2;
-			// 
 			// WordExporter
 			// 
 			this.AcceptButton = this.createDoc;
@@ -286,18 +241,14 @@ namespace ShomreiTorah.Billing.Export {
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancel;
 			this.ClientSize = new System.Drawing.Size(597, 372);
-			this.Controls.Add(this.createDoc);
 			this.Controls.Add(this.labelControl1);
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.cancel);
+			this.Controls.Add(this.createDoc);
 			this.Controls.Add(this.labelControl3);
 			this.Controls.Add(this.labelControl2);
 			this.Controls.Add(this.startDate);
 			this.Controls.Add(this.docType);
-			this.Controls.Add(this.barDockControlLeft);
-			this.Controls.Add(this.barDockControlRight);
-			this.Controls.Add(this.barDockControlBottom);
-			this.Controls.Add(this.barDockControlTop);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "WordExporter";
 			this.Text = "Create Word Document";
@@ -307,8 +258,6 @@ namespace ShomreiTorah.Billing.Export {
 			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties.VistaTimeProperties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.docType.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.mailingMenu)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -327,18 +276,10 @@ namespace ShomreiTorah.Billing.Export {
 		private DevExpress.XtraGrid.GridControl grid;
 		private DevExpress.XtraGrid.Views.Grid.GridView gridView;
 		private DevExpress.XtraEditors.SimpleButton cancel;
+		private DevExpress.XtraEditors.SimpleButton createDoc;
 		private DevExpress.XtraEditors.LabelControl labelControl3;
 		private DevExpress.XtraEditors.LabelControl labelControl2;
 		private DevExpress.XtraEditors.DateEdit startDate;
 		private DevExpress.XtraEditors.ComboBoxEdit docType;
-		private DevExpress.XtraEditors.DropDownButton createDoc;
-		private DevExpress.XtraBars.PopupMenu mailingMenu;
-		private DevExpress.XtraBars.BarButtonItem createEnvelopes;
-		private DevExpress.XtraBars.BarButtonItem createLabels;
-		private DevExpress.XtraBars.BarManager barManager1;
-		private DevExpress.XtraBars.BarDockControl barDockControlTop;
-		private DevExpress.XtraBars.BarDockControl barDockControlBottom;
-		private DevExpress.XtraBars.BarDockControl barDockControlLeft;
-		private DevExpress.XtraBars.BarDockControl barDockControlRight;
 	}
 }
