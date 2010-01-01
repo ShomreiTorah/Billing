@@ -40,8 +40,8 @@ namespace ShomreiTorah.Billing.Export {
 
 		private void createDoc_Click(object sender, EventArgs e) { CreateDocument(); }
 
-		private void createEnvelopes_ItemClick(object sender, ItemClickEventArgs e) { ProgressWorker.Execute(ui => WordExport.CreateEnvelopes(people, ui), true); }
+		private void createEnvelopes_ItemClick(object sender, ItemClickEventArgs e) { ProgressWorker.Execute(ui => WordExport.CreateMailing(people, "Envelopes.docx", ui), true); }
 
-		private void createLabels_ItemClick(object sender, ItemClickEventArgs e) { ProgressWorker.Execute(ui => WordExport.CreateLabels(people, "8160", ui), true); }
+		private void createLabels_ItemClick(object sender, ItemClickEventArgs e) { ProgressWorker.Execute(ui => WordExport.CreateMailing(people, "Labels.docx", ui), true); }
 	}
 }

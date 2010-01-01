@@ -400,6 +400,12 @@
     <None Include="Resources\Save16.png" />
     <None Include="Resources\Add16.png" />
     <None Include="Resources\Ribbon Icon.png" />
+    <None Include="Word Templates\Envelopes.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Word Templates\Labels.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\ShomreiTorah.Common\ShomreiTorah.Common.csproj">
@@ -410,9 +416,6 @@
       <Project>{0B927F97-8CDD-47CB-B775-CA1E0AB2409C}</Project>
       <Name>ShomreiTorah.WinForms</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Word Templates\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
