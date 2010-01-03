@@ -42,6 +42,9 @@
 			Congregation Shomrei Torah Annual Contributions Summary</h1>
 		<div style="text-align: center">Federal Tax ID: 47-0953005</div>
 		<p>
+			Dear
+			<%=Info.Person.FullName %>,</p>
+		<p>
 			On behalf of Rabbi Weinberger and Congregation Shomrei Torah of Passaic Clifton,
 			I would like to express my sincere gratitude and appreciation for your generous
 			<%= Info.Accounts.Sum(a => a.Payments.Count) == 1 ? "contribution" : "contributions" %>
@@ -60,7 +63,7 @@
 			Jason P. (Yaacov) Gitstein<br />
 			Treasurer
 		</p>
-		<table cellspacing="0" class="Payments">
+		<table cellspacing="0" style="margin: 0 auto;">
 			<%foreach (var account in Info.Accounts) {%>
 			<thead>
 				<tr>
@@ -69,15 +72,19 @@
 						<%=Server.HtmlEncode(account.AccountName) %></th>
 				</tr>
 			</thead>
-			<%foreach (var payment in account.Payments) {%>
+			<%
+				const string StripeStyle = "background: #E8EBFF;";
+				string curStyle = "";
+				foreach (var payment in account.Payments) {
+					curStyle = curStyle == "" ? StripeStyle : "";%>
 			<tr>
-				<td class="Date" style="padding-right: 8px;">
-					<%=payment.Date.ToShortDateString() %></td>
-				<td class="Description">
+				<td class="Date" style="padding-right: 8px; <%=curStyle%>">
+					<%=payment.Date.ToShortDateString()%></td>
+				<td class="Description" style="<%=curStyle%>">
 					<%=payment.Method.Replace("Unknown", "?")%>
-					<%if (!payment.IsCheckNumberNull()) {%>#<%=payment.CheckNumber %><%} %></td>
-				<td class="Amount" style="text-align: right;">
-					<%=payment.Amount.ToString("c") %></td>
+					<%if (!payment.IsCheckNumberNull()) {%>#<%=payment.CheckNumber%><%} %></td>
+				<td class="Amount" style="text-align: right; <%=curStyle%>">
+					<%=payment.Amount.ToString("c")%></td>
 			</tr>
 			<%} %>
 			<tr class="Total">

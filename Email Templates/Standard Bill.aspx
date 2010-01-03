@@ -55,14 +55,21 @@
 		</p>
 		<p>
 			תזכו למצות</p>
-		<p>Sincerely,</p>
-		<p>Jason P. (Yaacov) Gitstein<br />
+		<p>
+			Sincerely,</p>
+		<p>
+			Jason P. (Yaacov) Gitstein<br />
 			Treasurer
 		</p>
-		<table cellspacing="0">
+		<%
+			const string StripeStyle = "background: #E8EBFF;";
+			string curStyle = "";
+		%>
+		<table cellspacing="0" style="margin: 0 auto;">
 			<%foreach (var account in Info.Accounts) {%>
 			<tr>
-				<th colspan="3" style="font-size: large; text-align: center; border-bottom: solid blue 1px;">
+				<th colspan="3" style="font-size: large; text-align: center; border-bottom: solid blue 1px;
+					padding-top: 30px">
 					<%=Server.HtmlEncode(account.AccountName) %></th>
 			</tr>
 			<tr>
@@ -83,17 +90,18 @@
 					<%=account.OutstandingBalance.ToString("c")%></td>
 			</tr>
 			<%} %>
-			<%foreach (var pledge in account.Pledges) {%>
+			<%curStyle = ""; foreach (var pledge in account.Pledges) {
+		 curStyle = curStyle == "" ? StripeStyle : "";%>
 			<tr>
-				<td class="Date" style="padding-right: 8px;">
+				<td class="Date" style="padding-right: 8px; <%=curStyle%>">
 					<%= pledge.Date.ToShortDateString() %></td>
-				<td class="Description">
+				<td class="Description" style="<%=curStyle%>">
 					<%= pledge.Type %><%if (!String.IsNullOrEmpty(pledge.Note)) {%><div class="Note"
 						style="font-style: italic;">
 						<%=pledge.Note %></div>
 					<%} %>
 				</td>
-				<td class="Amount" style="text-align: right;">
+				<td class="Amount" style="text-align: right; <%=curStyle%>">
 					<%= pledge.Amount.ToString("c") %></td>
 			</tr>
 			<%} %>
@@ -111,14 +119,15 @@
 				<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Payments
 				</th>
 			</tr>
-			<%foreach (var payment in account.Payments) {%>
+			<%curStyle = ""; foreach (var payment in account.Payments) {
+		 curStyle = curStyle == "" ? StripeStyle : "";%>
 			<tr>
-				<td class="Date" style="padding-right: 8px;">
+				<td class="Date" style="padding-right: 8px; <%=curStyle%>">
 					<%=payment.Date.ToShortDateString() %></td>
-				<td class="Description">
+				<td class="Description" style="<%=curStyle%>">
 					<%=payment.Method.Replace("Unknown", "?")%>
 					<%if (!payment.IsCheckNumberNull()) {%>#<%=payment.CheckNumber %><%} %></td>
-				<td class="Amount" style="text-align: right;">
+				<td class="Amount" style="text-align: right; <%=curStyle%>">
 					<%=payment.Amount.ToString("c") %></td>
 			</tr>
 			<%} %>
