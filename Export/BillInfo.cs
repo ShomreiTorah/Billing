@@ -38,12 +38,14 @@ namespace ShomreiTorah.Billing.Export {
 			OutstandingBalance = Parent.Person.GetBalance(Parent.StartDate, AccountName);
 			BalanceDue = Math.Max(0, Parent.Person.GetBalance(AccountName));
 
-			Pledges = new ReadOnlyCollection<BillingData.PledgesRow>(
-				Parent.Person.GetPledgesRows().Where(p => p.Date >= Parent.StartDate && p.Account == AccountName).OrderBy(p => p.Date).ToArray()
-			);
-			Payments = new ReadOnlyCollection<BillingData.PaymentsRow>(
-				Parent.Person.GetPaymentsRows().Where(p => p.Date >= Parent.StartDate && p.Account == AccountName).OrderBy(p => p.Date).ToArray()
-			);
+			Func<ITransaction, bool> filter;
+			if (parent.Kind == BillKind.Receipt)
+				filter = t => t.Date.Year == Parent.StartDate.Year && t.Account == AccountName;
+			else
+				filter = t => t.Date >= Parent.StartDate && t.Account == AccountName;
+
+			Pledges = new ReadOnlyCollection<BillingData.PledgesRow>(Parent.Person.GetPledgesRows().Where(p => filter(p)).OrderBy(p => p.Date).ToArray());
+			Payments = new ReadOnlyCollection<BillingData.PaymentsRow>(Parent.Person.GetPaymentsRows().Where(p => filter(p)).OrderBy(p => p.Date).ToArray());
 		}
 
 		public BillInfo Parent { get; private set; }
