@@ -18,14 +18,16 @@ namespace ShomreiTorah.Billing.Export {
 		public DateTime StartDate { get; private set; }
 		public BillKind Kind { get; private set; }
 
+		public bool ShouldSend { get { return Accounts.Count > 0; } }
+
 		public void Recalculate() {
 			TotalBalance = Math.Max(0, Person.BalanceDue);
 
 			Accounts = new ReadOnlyCollection<BillAccount>(
-				(from t in Kind == BillKind.Receipt ? Person.GetPaymentsRows() : Person.Transactions
-				 group t by t.Account into a
-				 where a.Sum(t => t.SignedAmount) != 0
-				 select new BillAccount(this, a.Key)).ToArray());
+				BillingData.AccountNames.Select(a => new BillAccount(this, a))
+										.Where(ba => ba.Payments.Any() || ba.Pledges.Any())
+										.ToArray()
+			);
 		}
 
 		public decimal TotalBalance { get; private set; }
