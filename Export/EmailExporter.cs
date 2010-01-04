@@ -89,33 +89,8 @@ namespace ShomreiTorah.Billing.Export {
 
 		static readonly MailAddress BillingAddress = new MailAddress("Billing@ShomreiTorah.us", "Shomrei Torah Billing");
 
-		static readonly Dictionary<string, string> MediaTypes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {
-			{ ".png",	"image/png"		},
-			{ ".gif",	"image/gif"		},
-			{ ".jpeg",	"image/jpeg"	},
-			{ ".jpg",	"image/jpeg"	},
-		};
-		static readonly string ImagesPath = Path.Combine(Program.AspxPath, @"Images\");
 		MailMessage CreateMessage(BillingData.MasterDirectoryRow person) {
-			using (var page = PageBuilder.CreatePage<EmailPage>("/" + emailTemplate.EditValue + ".aspx")) {
-				page.ImagePrefix = "cid:";
-				page.Info = new BillInfo(person, startDate.DateTime, page.Kind);
-
-				var message = new MailMessage { From = BillingAddress, SubjectEncoding = Email.DefaultEncoding };
-
-				var htmlContent = AlternateView.CreateAlternateViewFromString(page.RenderPage(), Email.DefaultEncoding, "text/html");
-
-				htmlContent.TransferEncoding = System.Net.Mime.TransferEncoding.QuotedPrintable;
-				htmlContent.LinkedResources.AddRange(page.ImageNames.Select(i =>
-					new LinkedResource(Path.Combine(ImagesPath, i), MediaTypes[Path.GetExtension(i)]) { ContentId = i }
-				));
-
-				message.AlternateViews.Add(htmlContent);
-
-				message.Subject = page.EmailSubject;
-
-				return message;
-			}
+			return PageBuilder.CreateMessage(person, "/" + emailTemplate.EditValue + ".aspx", startDate.DateTime);
 		}
 
 		void SendBills() {
@@ -128,6 +103,8 @@ namespace ShomreiTorah.Billing.Export {
 					if (ui.WasCanceled) return;
 
 					using (var message = CreateMessage(person)) {
+						if (message == null) continue;
+
 						message.To.AddRange(person.GetEmailListRows().Select(e => e.MailAddress));
 						Email.Hosted.Send(message);
 					}
@@ -140,14 +117,23 @@ namespace ShomreiTorah.Billing.Export {
 
 			if (e.Button.Caption == sendPreviewButton.Caption) {
 				using (var message = CreateMessage(row)) {
+					if (message == null) {
+						XtraMessageBox.Show(row.FullName + " does not have any relevant data and will not receive an email.");
+						return;
+					}
 					message.To.Add(previewMailAddress);
 					Email.Hosted.Send(message);
 				}
 			} else {
 				string html, subject;
 				using (var page = PageBuilder.CreatePage<EmailPage>("/" + emailTemplate.EditValue + ".aspx")) {
-					page.ImagePrefix = ImagesPath;
+					page.ImagePrefix = PageBuilder.ImagesPath;
 					page.Info = new BillInfo(row, startDate.DateTime, page.Kind);
+					if (!page.Info.ShouldSend) {
+						XtraMessageBox.Show(row.FullName + " do not have any relevant data and will not receive an email.",
+											"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
+						return;
+					}
 
 					html = page.RenderPage();
 					subject = page.EmailSubject;
