@@ -36,13 +36,28 @@
 	</head>
 
 	<body>
-		<h1 style="font-size: large; text-align: center;">
-			<img src="<%=ImagePrefix %>Logo.gif" alt="Shomrei Torah Logo" /><br />
-			Congregation Shomrei Torah Billing Statement</h1>
-		<div style="text-align: center">Federal Tax ID: 47-0953005</div>
+		<div style="border-bottom: solid 2px navy; clear: both">
+			<img src="<%=ImagePrefix %>Logo.gif" alt="Shomrei Torah Logo" style="float: left;" />
+			<div style="float: right;">
+				<p>
+					Federal Tax ID: 47-0953005</p>
+				Congregation Shomrei Torah<br />
+				of Passaic Clifton<br />
+				1360 Clifton Ave. #908<br />
+				Clifton, NJ 07012 </div>
+			<h1 style="font-size: large; text-align: center; padding-top: 20px;">
+				Congregation Shomrei Torah<br />
+				<%=Info.StartDate.Year %>
+				Contributions Summary</h1>
+			<div style="clear: both; font-size: 1px">&nbsp;</div>
+		</div>
+			<div style="float:right;padding-top:1em;">
+				<%=DateTime.Today.ToLongDateString() %></div>
+		<p>
+			<%=Server.HtmlEncode(Info.Person.AddressString).Replace(Environment.NewLine,"<br />") %></p>
 		<p>
 			Dear
-			<%=Info.Person.FullName %>,</p>
+			<%=Server.HtmlEncode( Info.Person.FullName )%>,</p>
 		<p>
 			On behalf of Rabbi Weinberger and Congregation Shomrei Torah, we would like to express
 			our gratitude for your financial support and valued participation in our davening
@@ -98,7 +113,7 @@
 				<td class="Description" style="<%=curStyle%>">
 					<%= pledge.Type %><%if (!String.IsNullOrEmpty(pledge.Note)) {%><div class="Note"
 						style="font-style: italic;">
-						<%=pledge.Note %></div>
+						<%=Server.HtmlEncode( pledge.Note )%></div>
 					<%} %>
 				</td>
 				<td class="Amount" style="text-align: right; <%=curStyle%>">
@@ -125,7 +140,7 @@
 				<td class="Date" style="padding-right: 8px; <%=curStyle%>">
 					<%=payment.Date.ToShortDateString() %></td>
 				<td class="Description" style="<%=curStyle%>">
-					<%=payment.Method.Replace("Unknown", "?")%>
+					<%=Server.HtmlEncode(payment.Method.Replace("Unknown", "?")) %>
 					<%if (!payment.IsCheckNumberNull()) {%>#<%=payment.CheckNumber %><%} %></td>
 				<td class="Amount" style="text-align: right; <%=curStyle%>">
 					<%=payment.Amount.ToString("c") %></td>
