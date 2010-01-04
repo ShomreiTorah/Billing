@@ -102,6 +102,20 @@ namespace ShomreiTorah.Billing {
 		partial class MasterDirectoryRow {
 			public IEnumerable<ITransaction> Transactions { get { return GetPledgesRows().Cast<ITransaction>().Concat(GetPaymentsRows()); } }
 
+			public string MailingAddress {
+				get {
+					var retVal = new StringBuilder();
+					if (!String.IsNullOrEmpty(FullName)) retVal.AppendLine(FullName);
+					if (!String.IsNullOrEmpty(Address)) retVal.AppendLine(Address);
+					if (!String.IsNullOrEmpty(City)
+					 && !String.IsNullOrEmpty(State)) {
+						retVal.Append(City).Append(", ").Append(State);
+						if (!String.IsNullOrEmpty(Zip)) retVal.Append(" ").Append(Zip);
+					}
+					return retVal.ToString();
+				}
+			}
+
 			///<summary>Gets the accounts in which this person has outstanding balance.</summary>
 			public IEnumerable<string> OpenAccounts {
 				get {

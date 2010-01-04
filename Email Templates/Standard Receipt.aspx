@@ -52,10 +52,10 @@
 				Contributions Summary</h1>
 			<div style="clear: both; font-size: 1px">&nbsp;</div>
 		</div>
-			<div style="float:right;padding-top:1em;">
-				<%=DateTime.Today.ToLongDateString() %></div>
+		<div style="float: right; padding-top: 1em;">
+			<%=DateTime.Today.ToLongDateString() %></div>
 		<p>
-			<%=Server.HtmlEncode(Info.Person.AddressString).Replace(Environment.NewLine,"<br />") %></p>
+			<%=Server.HtmlEncode(Info.Person.MailingAddress).Replace(Environment.NewLine, "<br />")%></p>
 		<p>
 			Dear
 			<%=Server.HtmlEncode( Info.Person.FullName )%>,</p>
