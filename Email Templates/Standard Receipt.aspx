@@ -62,7 +62,7 @@
 			<%=Server.HtmlEncode(Info.Person.MailingAddress).Replace(Environment.NewLine, "<br />")%></p>
 		<p>
 			Dear
-			<%=Server.HtmlEncode( Info.Person.FullName )%>,</p>
+			<%=Server.HtmlEncode(Info.Person.FullName)%>,</p>
 		<p>
 			On behalf of Rabbi Weinberger and Congregation Shomrei Torah of Passaic Clifton,
 			I would like to express my sincere gratitude and appreciation for your generous

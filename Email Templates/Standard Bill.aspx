@@ -60,7 +60,7 @@
 			<%=Server.HtmlEncode(Info.Person.MailingAddress).Replace(Environment.NewLine, "<br />")%></p>
 		<p>
 			Dear
-			<%=Server.HtmlEncode( Info.Person.FullName )%>,</p>
+			<%=Server.HtmlEncode(Info.Person.FullName)%>,</p>
 		<p>
 			On behalf of Rabbi Weinberger and Congregation Shomrei Torah, we would like to express
 			our gratitude for your financial support and valued participation in our davening
@@ -96,7 +96,8 @@
 					<%=account.BalanceDue.ToString("c")%></td>
 			</tr>
 			<tr>
-				<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Pledges</th>
+				<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Pledges
+				</th>
 			</tr>
 			<%if (account.OutstandingBalance > 0) { %>
 			<tr class="OutstandingBalance">
