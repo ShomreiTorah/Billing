@@ -8,11 +8,6 @@
 			body {
 				font-family: Verdana;
 			}
-			.Total td {
-				border-top: solid 1px black;
-				border-bottom: solid 2px black;
-				padding-top: 10px;
-			}
 		</style>
 	</head>
 

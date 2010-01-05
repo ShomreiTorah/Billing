@@ -71,18 +71,20 @@
 			foreach (var payment in account.Payments) {
 				curStyle = curStyle == "" ? StripeStyle : "";%>
 		<tr>
-			<td class="Date" style="padding-right: 8px; <%=curStyle%>">
+			<td style="padding-right: 8px; <%=curStyle%>">
 				<%=payment.Date.ToShortDateString()%></td>
-			<td class="Description" style="<%=curStyle%>">
+			<td style="<%=curStyle%>">
 				<%=Server.HtmlEncode(payment.Method.Replace("Unknown", "?")) %>
 				<%if (!payment.IsCheckNumberNull()) {%>#<%=payment.CheckNumber%><%} %></td>
-			<td class="Amount" style="text-align: right; <%=curStyle%>">
+			<td style="text-align: right; <%=curStyle%>">
 				<%=payment.Amount.ToString("c")%></td>
 		</tr>
 		<%} %>
-		<tr class="Total">
-			<td class="Description" colspan="2">Total:</td>
-			<td class="Amount" style="text-align: right; font-weight: bold;">
+		<tr>
+			<td colspan="2" style="border-top: solid 1px black; border-bottom: solid 2px black;
+				padding-top: 10px;">Total:</td>
+			<td style="text-align: right; font-weight: bold; border-top: solid 1px black; border-bottom: solid 2px black;
+				padding-top: 10px;">
 				<%=account.Payments.Sum(p => p.Amount).ToString("c")%></td>
 		</tr>
 		<%} %>

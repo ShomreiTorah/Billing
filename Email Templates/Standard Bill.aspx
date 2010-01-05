@@ -33,7 +33,6 @@
 				<%=DateTime.Today.ToLongDateString() %></td>
 		</tr>
 	</table>
-
 	<p>
 		Dear
 		<%=Server.HtmlEncode(Info.Person.FullName)%>,</p>
@@ -68,38 +67,38 @@
 		</tr>
 		<tr>
 			<td colspan="2">Balance due:</td>
-			<td class="Amount" style="text-align: right; font-weight: bold;">
+			<td style="text-align: right; font-weight: bold;">
 				<%=account.BalanceDue.ToString("c")%></td>
 		</tr>
 		<tr>
 			<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Pledges</th>
 		</tr>
 		<%if (account.OutstandingBalance > 0) { %>
-		<tr class="OutstandingBalance">
-			<td class="Description" colspan="2" style="padding-bottom: 7px;">Outstanding Balance:
-			</td>
-			<td class="Amount" style="text-align: right; padding-bottom: 7px;">
+		<tr>
+			<td colspan="2" style="padding-bottom: 7px;">Outstanding Balance: </td>
+			<td style="text-align: right; padding-bottom: 7px;">
 				<%=account.OutstandingBalance.ToString("c")%></td>
 		</tr>
 		<%} %>
 		<%curStyle = ""; foreach (var pledge in account.Pledges) {
 		curStyle = curStyle == "" ? StripeStyle : "";%>
 		<tr>
-			<td class="Date" style="padding-right: 8px; <%=curStyle%>">
+			<td style="padding-right: 8px; <%=curStyle%>">
 				<%= pledge.Date.ToShortDateString() %></td>
-			<td class="Description" style="<%=curStyle%>">
-				<%= pledge.Type %><%if (!String.IsNullOrEmpty(pledge.Note)) {%><div class="Note"
-					style="font-style: italic;">
+			<td style="<%=curStyle%>">
+				<%= pledge.Type %><%if (!String.IsNullOrEmpty(pledge.Note)) {%><div style="font-style: italic;">
 					<%=Server.HtmlEncode( pledge.Note )%></div>
 				<%} %>
 			</td>
-			<td class="Amount" style="text-align: right; <%=curStyle%>">
+			<td style="text-align: right; <%=curStyle%>">
 				<%= pledge.Amount.ToString("c") %></td>
 		</tr>
 		<%} %>
-		<tr class="Total">
-			<td class="Description" colspan="2">Total: </td>
-			<td class="Amount" style="text-align: right; font-weight: bold;">
+		<tr>
+			<td colspan="2" style="border-top: solid 1px black; border-bottom: solid 2px black;
+				padding-top: 10px;">Total: </td>
+			<td style="text-align: right; font-weight: bold; border-top: solid 1px black; border-bottom: solid 2px black;
+				padding-top: 10px;">
 				<%=account.Pledges.Sum(p => p.Amount).ToString("c")%></td>
 		</tr>
 		<%if (account.Payments.Count == 0) { %><tr>
@@ -114,18 +113,20 @@
 		<%curStyle = ""; foreach (var payment in account.Payments) {
 		curStyle = curStyle == "" ? StripeStyle : "";%>
 		<tr>
-			<td class="Date" style="padding-right: 8px; <%=curStyle%>">
+			<td style="padding-right: 8px; <%=curStyle%>">
 				<%=payment.Date.ToShortDateString() %></td>
-			<td class="Description" style="<%=curStyle%>">
+			<td style="<%=curStyle%>">
 				<%=Server.HtmlEncode(payment.Method.Replace("Unknown", "?")) %>
 				<%if (!payment.IsCheckNumberNull()) {%>#<%=payment.CheckNumber %><%} %></td>
-			<td class="Amount" style="text-align: right; <%=curStyle%>">
+			<td style="text-align: right; <%=curStyle%>">
 				<%=payment.Amount.ToString("c") %></td>
 		</tr>
 		<%} %>
-		<tr class="Total">
-			<td class="Description" colspan="2">Total: </td>
-			<td class="Amount" style="text-align: right; font-weight: bold;">
+		<tr>
+			<td colspan="2" style="border-top: solid 1px black; border-bottom: solid 2px black;
+				padding-top: 10px;">Total: </td>
+			<td style="text-align: right; font-weight: bold; border-top: solid 1px black; border-bottom: solid 2px black;
+				padding-top: 10px;">
 				<%=account.Payments.Sum(p => p.Amount).ToString("c")%></td>
 		</tr>
 		<%} %>
