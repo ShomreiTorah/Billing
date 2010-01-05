@@ -87,8 +87,6 @@ namespace ShomreiTorah.Billing.Export {
 			sendPreviewButton.Enabled = showPreviewButton.Enabled && previewMailAddress != null;
 		}
 
-		static readonly MailAddress BillingAddress = new MailAddress("Billing@ShomreiTorah.us", "Shomrei Torah Billing");
-
 		MailMessage CreateMessage(BillingData.MasterDirectoryRow person) {
 			return PageBuilder.CreateMessage(person, "/" + emailTemplate.EditValue + ".aspx", startDate.DateTime);
 		}
