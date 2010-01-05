@@ -9,6 +9,8 @@ using System.Runtime.InteropServices;
 using ShomreiTorah.WinForms;
 using System.IO;
 using System.Reflection;
+using System.Data;
+using System.Globalization;
 
 namespace ShomreiTorah.Billing.Export {
 	static class WordExport {
@@ -33,8 +35,8 @@ namespace ShomreiTorah.Billing.Export {
 				sourceDoc = Word.Documents.Open(new DocumentsOpenArgs { FileName = templatePath, ReadOnly = true, Visible = false, AddToRecentFiles = false });
 
 				object subjectProp = sourceDoc.BuiltInDocumentProperties.GetType().InvokeMember("Item",
-						   BindingFlags.Default | BindingFlags.GetProperty, null, sourceDoc.BuiltInDocumentProperties, new object[] { WdBuiltInProperty.wdPropertySubject });
-				var type = (string)subjectProp.GetType().InvokeMember("Value", BindingFlags.Default | BindingFlags.GetProperty, null, subjectProp, new object[0]).ToString();
+						   BindingFlags.Default | BindingFlags.GetProperty, null, sourceDoc.BuiltInDocumentProperties, new object[] { WdBuiltInProperty.wdPropertySubject }, CultureInfo.InvariantCulture);
+				var type = (string)subjectProp.GetType().InvokeMember("Value", BindingFlags.Default | BindingFlags.GetProperty, null, subjectProp, new object[0], CultureInfo.InvariantCulture).ToString();
 
 				switch (type.ToUpperInvariant()) {
 					case "MAILING": return CreateMailing(people, sourceDoc, progress);
@@ -86,6 +88,18 @@ namespace ShomreiTorah.Billing.Export {
 
 			doc.Activate();
 			return doc;
+		}
+
+		static void SubstituteColumnFields(Range range, DataRow row) {
+			for (int i = range.ContentControls.Count; i > 0; i--) {
+				var cc = range.ContentControls.Item(i);
+				var targetRange = cc.Range;
+
+				var fieldName = targetRange.Text;
+				if (!row.Table.Columns.Contains(fieldName)) continue;
+				cc.Delete(false);
+				targetRange.Text = row[fieldName].ToString();
+			}
 		}
 	}
 }

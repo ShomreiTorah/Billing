@@ -400,6 +400,9 @@
     <None Include="Resources\Save16.png" />
     <None Include="Resources\Add16.png" />
     <None Include="Resources\Ribbon Icon.png" />
+    <None Include="Word Templates\Bill Template.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Word Templates\Envelopes.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
