@@ -24,9 +24,6 @@
 			body {
 				font-family: Verdana;
 			}
-			td {
-				border-bottom: solid 1px gray;
-			}
 			.Total td {
 				border-top: solid 1px black;
 				border-bottom: solid 2px black;
@@ -36,23 +33,29 @@
 	</head>
 
 	<body>
-		<div style="border-bottom: solid 2px navy; clear: both">
-			<img src="<%=ImagePrefix %>Logo.gif" alt="Shomrei Torah Logo" style="float: left;" />
-			<div style="float: right;">
-				<p>
-					Federal Tax ID: 47-0953005</p>
-				Congregation Shomrei Torah<br />
-				of Passaic Clifton<br />
-				1360 Clifton Ave. #908<br />
-				Clifton, NJ 07012 </div>
-			<h1 style="font-size: large; text-align: center; padding-top: 20px;">
-				Congregation Shomrei Torah<br />
-				<%=Info.StartDate.Year %>
-				Contributions Summary</h1>
-			<div style="clear: both; font-size: 1px">&nbsp;</div>
+		<div style="border-bottom: solid 2px navy">
+			<table cellspacing="0" width="100%">
+				<tr>
+					<td>
+						<img src="<%=ImagePrefix %>Logo.gif" alt="Shomrei Torah Logo" style="float: left;" />
+					</td>
+					<td>
+						<h1 style="font-size: large; text-align: center; padding-top: 20px;">
+							Congregation Shomrei Torah<br />
+							Billing Statement</h1>
+					</td>
+					<td style="width: 250px">
+						<p>
+							Federal Tax ID: 47-0953005</p>
+						Congregation Shomrei Torah<br />
+						of Passaic Clifton<br />
+						1360 Clifton Ave. #908<br />
+						Clifton, NJ 07012 </td>
+				</tr>
+			</table>
 		</div>
-			<div style="float:right;padding-top:1em;">
-				<%=DateTime.Today.ToLongDateString() %></div>
+		<div style="padding-top: 1em; text-align: right; float: right;">
+			<%=DateTime.Today.ToLongDateString() %></div>
 		<p>
 			<%=Server.HtmlEncode(Info.Person.MailingAddress).Replace(Environment.NewLine, "<br />")%></p>
 		<p>
@@ -93,9 +96,7 @@
 					<%=account.BalanceDue.ToString("c")%></td>
 			</tr>
 			<tr>
-				<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Pledges
-				
-				</th>
+				<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Pledges</th>
 			</tr>
 			<%if (account.OutstandingBalance > 0) { %>
 			<tr class="OutstandingBalance">
