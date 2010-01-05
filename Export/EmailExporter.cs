@@ -159,10 +159,15 @@ namespace ShomreiTorah.Billing.Export {
 		}
 		class CopyableWebBrowser : WebBrowser {
 			public override bool PreProcessMessage(ref Message msg) {
-				if (msg.Msg == 0x101	//WM_KEYUP
-				 && msg.WParam.ToInt32() == (int)Keys.C && ModifierKeys == Keys.Control) {
-					DoCopy();
-					return true;
+				if (msg.Msg == 0x101) {	//WM_KEYUP
+					var key = (Keys)msg.WParam.ToInt32();
+					if (key == Keys.C && ModifierKeys == Keys.Control) {
+						DoCopy();
+						return true;
+					} else if (key == Keys.Escape) {
+						FindForm().Close();
+						return true;
+					}
 				}
 				return base.PreProcessMessage(ref msg);
 			}
