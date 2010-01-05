@@ -36,7 +36,7 @@
 		<div style="border-bottom: solid 2px navy">
 			<table cellspacing="0" width="100%">
 				<tr>
-					<td>
+					<td style="width:210px">
 						<img src="<%=ImagePrefix %>Logo.gif" alt="Shomrei Torah Logo" style="float: left;" />
 					</td>
 					<td>
