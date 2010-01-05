@@ -30,7 +30,7 @@
 			<td style="padding-top: 15px;">
 				<%=Server.HtmlEncode(Info.Person.MailingAddress).Replace(Environment.NewLine, "<br />")%>
 			</td>
-			<td style="padding-top: 15px; text-align: right; vertical-align: top;">
+			<td style="padding-top: 15px; width: 250px; vertical-align: top;">
 				<%=DateTime.Today.ToLongDateString() %></td>
 		</tr>
 	</table>

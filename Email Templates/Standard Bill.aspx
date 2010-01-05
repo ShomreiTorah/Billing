@@ -29,7 +29,7 @@
 			<td style="padding-top: 15px;">
 				<%=Server.HtmlEncode(Info.Person.MailingAddress).Replace(Environment.NewLine, "<br />")%>
 			</td>
-			<td style="padding-top: 15px; text-align: right; vertical-align: top;">
+			<td style="padding-top: 15px; width: 250px; vertical-align: top;">
 				<%=DateTime.Today.ToLongDateString() %></td>
 		</tr>
 	</table>
@@ -71,7 +71,8 @@
 				<%=account.BalanceDue.ToString("c")%></td>
 		</tr>
 		<tr>
-			<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Pledges</th>
+			<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Pledges
+			</th>
 		</tr>
 		<%if (account.OutstandingBalance > 0) { %>
 		<tr>
