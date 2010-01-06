@@ -148,7 +148,8 @@ namespace ShomreiTorah.Billing {
 		void Execute(Forms.Splash splash) {
 			LaunchTime = DateTime.Now;
 			Splash = splash;
-			Application.ThreadException += Application_ThreadException;
+			if (!Debugger.IsAttached)
+				Application.ThreadException += Application_ThreadException;
 
 			Splash.Caption = "Reading database";
 			Data = new BillingData();
