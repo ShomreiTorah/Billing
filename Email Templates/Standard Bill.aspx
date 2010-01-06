@@ -76,7 +76,7 @@
 		</tr>
 		<%if (account.OutstandingBalance != 0) { %>
 		<tr>
-			<td colspan="2" style="padding-bottom: 7px;">Starting Balance: </td>
+			<td colspan="2" style="padding-bottom: 7px;">Starting Balance (as of <%=Info.StartDate.ToShortDateString() %>): </td>
 			<td style="text-align: right; padding-bottom: 7px;">
 				<%=account.OutstandingBalance.ToString("c")%></td>
 		</tr>
