@@ -23,10 +23,10 @@ namespace ShomreiTorah.Billing.Export {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WordExporter));
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
 			this.grid = new DevExpress.XtraGrid.GridControl();
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colLastName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -37,39 +37,32 @@ namespace ShomreiTorah.Billing.Export {
 			this.colBalanceDue = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.buttonEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
 			this.cancel = new DevExpress.XtraEditors.SimpleButton();
-			this.createDoc = new DevExpress.XtraEditors.SimpleButton();
-			this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
-			this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
-			this.startDate = new DevExpress.XtraEditors.DateEdit();
-			this.docType = new DevExpress.XtraEditors.ComboBoxEdit();
+			this.createDoc = new DevExpress.XtraEditors.DropDownButton();
+			this.mailingDocuments = new DevExpress.XtraBars.PopupMenu(this.components);
+			this.barManager = new DevExpress.XtraBars.BarManager(this.components);
+			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
+			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
+			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
+			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.buttonEdit)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties.VistaTimeProperties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.docType.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.mailingDocuments)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.barManager)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// labelControl1
-			// 
-			this.labelControl1.Location = new System.Drawing.Point(12, 15);
-			this.labelControl1.Name = "labelControl1";
-			this.labelControl1.Size = new System.Drawing.Size(77, 13);
-			this.labelControl1.TabIndex = 10;
-			this.labelControl1.Text = "Document type:";
 			// 
 			// grid
 			// 
 			this.grid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.grid.Location = new System.Drawing.Point(12, 83);
+			this.grid.Location = new System.Drawing.Point(12, 12);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.buttonEdit});
 			this.grid.ShowOnlyPredefinedDetails = true;
-			this.grid.Size = new System.Drawing.Size(572, 248);
+			this.grid.Size = new System.Drawing.Size(563, 290);
 			this.grid.TabIndex = 16;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -162,7 +155,7 @@ namespace ShomreiTorah.Billing.Export {
 			// 
 			this.cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cancel.Location = new System.Drawing.Point(510, 337);
+			this.cancel.Location = new System.Drawing.Point(501, 308);
 			this.cancel.Name = "cancel";
 			this.cancel.Size = new System.Drawing.Size(75, 23);
 			this.cancel.TabIndex = 15;
@@ -171,102 +164,56 @@ namespace ShomreiTorah.Billing.Export {
 			// createDoc
 			// 
 			this.createDoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.createDoc.Enabled = false;
-			this.createDoc.Location = new System.Drawing.Point(407, 337);
+			this.createDoc.DropDownControl = this.mailingDocuments;
+			this.createDoc.Location = new System.Drawing.Point(360, 308);
 			this.createDoc.Name = "createDoc";
-			this.createDoc.Size = new System.Drawing.Size(97, 23);
-			this.createDoc.TabIndex = 13;
-			this.createDoc.Text = "Create Document";
+			this.createDoc.Size = new System.Drawing.Size(135, 23);
+			this.createDoc.TabIndex = 17;
+			this.createDoc.Text = "Create Documents";
 			this.createDoc.Click += new System.EventHandler(this.createDoc_Click);
 			// 
-			// labelControl3
+			// mailingDocuments
 			// 
-			this.labelControl3.Location = new System.Drawing.Point(12, 64);
-			this.labelControl3.Name = "labelControl3";
-			this.labelControl3.Size = new System.Drawing.Size(189, 13);
-			this.labelControl3.TabIndex = 14;
-			this.labelControl3.Text = "The following people will receive emails:";
+			this.mailingDocuments.Manager = this.barManager;
+			this.mailingDocuments.Name = "mailingDocuments";
 			// 
-			// labelControl2
+			// barManager
 			// 
-			this.labelControl2.Location = new System.Drawing.Point(12, 41);
-			this.labelControl2.Name = "labelControl2";
-			this.labelControl2.Size = new System.Drawing.Size(53, 13);
-			this.labelControl2.TabIndex = 12;
-			this.labelControl2.Text = "Start date:";
-			// 
-			// startDate
-			// 
-			this.startDate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.startDate.EditValue = null;
-			this.startDate.Location = new System.Drawing.Point(105, 38);
-			this.startDate.Name = "startDate";
-			this.startDate.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-			this.startDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.startDate.Properties.DisplayFormat.FormatString = "D";
-			this.startDate.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-			this.startDate.Properties.EditFormat.FormatString = "D";
-			this.startDate.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-			this.startDate.Properties.Mask.EditMask = "D";
-			this.startDate.Properties.NullValuePrompt = "Please select a date";
-			this.startDate.Properties.ShowToday = false;
-			this.startDate.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.True;
-			this.startDate.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.startDate.Size = new System.Drawing.Size(480, 20);
-			this.startDate.TabIndex = 11;
-			this.startDate.EditValueChanged += new System.EventHandler(this.EditValueChanged);
-			// 
-			// docType
-			// 
-			this.docType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.docType.Location = new System.Drawing.Point(105, 12);
-			this.docType.Name = "docType";
-			this.docType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.docType.Properties.HighlightedItemStyle = DevExpress.XtraEditors.HighlightStyle.Skinned;
-			this.docType.Properties.NullValuePrompt = "Please select a document type";
-			this.docType.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-			this.docType.Size = new System.Drawing.Size(480, 20);
-			this.docType.TabIndex = 9;
-			this.docType.EditValueChanged += new System.EventHandler(this.EditValueChanged);
+			this.barManager.DockControls.Add(this.barDockControlTop);
+			this.barManager.DockControls.Add(this.barDockControlBottom);
+			this.barManager.DockControls.Add(this.barDockControlLeft);
+			this.barManager.DockControls.Add(this.barDockControlRight);
+			this.barManager.Form = this;
+			this.barManager.MaxItemId = 0;
 			// 
 			// WordExporter
 			// 
-			this.AcceptButton = this.createDoc;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancel;
-			this.ClientSize = new System.Drawing.Size(597, 372);
-			this.Controls.Add(this.labelControl1);
+			this.ClientSize = new System.Drawing.Size(588, 343);
+			this.Controls.Add(this.createDoc);
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.cancel);
-			this.Controls.Add(this.createDoc);
-			this.Controls.Add(this.labelControl3);
-			this.Controls.Add(this.labelControl2);
-			this.Controls.Add(this.startDate);
-			this.Controls.Add(this.docType);
+			this.Controls.Add(this.barDockControlLeft);
+			this.Controls.Add(this.barDockControlRight);
+			this.Controls.Add(this.barDockControlBottom);
+			this.Controls.Add(this.barDockControlTop);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "WordExporter";
-			this.Text = "Create Word Document";
+			this.Text = "Create Word Documents";
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.buttonEdit)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties.VistaTimeProperties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.docType.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.mailingDocuments)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.barManager)).EndInit();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
 
 		private DevExpress.XtraGrid.Columns.GridColumn colHerName;
-		private DevExpress.XtraEditors.LabelControl labelControl1;
 		private DevExpress.XtraGrid.Columns.GridColumn colAddress;
 		private DevExpress.XtraGrid.Columns.GridColumn colHisName;
 		private DevExpress.XtraGrid.Columns.GridColumn colTotalPaid;
@@ -276,10 +223,12 @@ namespace ShomreiTorah.Billing.Export {
 		private DevExpress.XtraGrid.GridControl grid;
 		private DevExpress.XtraGrid.Views.Grid.GridView gridView;
 		private DevExpress.XtraEditors.SimpleButton cancel;
-		private DevExpress.XtraEditors.SimpleButton createDoc;
-		private DevExpress.XtraEditors.LabelControl labelControl3;
-		private DevExpress.XtraEditors.LabelControl labelControl2;
-		private DevExpress.XtraEditors.DateEdit startDate;
-		private DevExpress.XtraEditors.ComboBoxEdit docType;
+		private DevExpress.XtraEditors.DropDownButton createDoc;
+		private DevExpress.XtraBars.PopupMenu mailingDocuments;
+		private DevExpress.XtraBars.BarManager barManager;
+		private DevExpress.XtraBars.BarDockControl barDockControlTop;
+		private DevExpress.XtraBars.BarDockControl barDockControlBottom;
+		private DevExpress.XtraBars.BarDockControl barDockControlLeft;
+		private DevExpress.XtraBars.BarDockControl barDockControlRight;
 	}
 }
