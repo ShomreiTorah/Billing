@@ -91,6 +91,7 @@ namespace ShomreiTorah.Billing.Export {
 				Word.ScreenUpdating = false;
 				foreach (var kind in kinds) {
 					var sd = Word.Documents.Open(new DocumentsOpenArgs { FileName = Path.Combine(TemplateFolder, kind.ToString() + ".docx"), ReadOnly = true, Visible = false, AddToRecentFiles = false });
+					sourceDocs.Add(sd);
 					sourceRanges.Add(kind, sd.Range());
 				}
 
@@ -110,13 +111,16 @@ namespace ShomreiTorah.Billing.Export {
 							sourceRanges[kind].Copy();
 							range.Paste();
 							FillBill(range, info);
+							foreach (Shape shape in range.ShapeRange) {
+								FillBill(shape.TextFrame.TextRange, info);
+							}
 							range.Collapse(WdCollapseDirection.wdCollapseEnd);
 							range.InsertBreak(WdBreakType.wdPageBreak);
 						}
 
 						i++;
 					}
-					doc.Characters.Last.Delete();		//Delete the last page break
+					doc.Characters.Items().Last(r => r.Text == "\f").Delete();
 				}
 				Word.Activate();
 				doc.Activate();
