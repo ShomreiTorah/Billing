@@ -74,9 +74,9 @@
 			<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Pledges
 			</th>
 		</tr>
-		<%if (account.OutstandingBalance > 0) { %>
+		<%if (account.OutstandingBalance != 0) { %>
 		<tr>
-			<td colspan="2" style="padding-bottom: 7px;">Outstanding Balance: </td>
+			<td colspan="2" style="padding-bottom: 7px;">Starting Balance: </td>
 			<td style="text-align: right; padding-bottom: 7px;">
 				<%=account.OutstandingBalance.ToString("c")%></td>
 		</tr>
@@ -87,7 +87,8 @@
 			<td style="padding-right: 8px; <%=curStyle%>">
 				<%= pledge.Date.ToShortDateString() %></td>
 			<td style="<%=curStyle%>">
-				<%= pledge.Type %><%if (!String.IsNullOrEmpty(pledge.Note)) {%><div style="font-style: italic;">
+				<%= pledge.Type+(String.IsNullOrEmpty(pledge.SubType)?"":", "+pledge.SubType) %>
+				<%if (!String.IsNullOrEmpty(pledge.Note)) {%><div style="font-style: italic;">
 					<%=Server.HtmlEncode( pledge.Note )%></div>
 				<%} %>
 			</td>
@@ -100,13 +101,9 @@
 				padding-top: 10px;">Total: </td>
 			<td style="text-align: right; font-weight: bold; border-top: solid 1px black; border-bottom: solid 2px black;
 				padding-top: 10px;">
-				<%=account.Pledges.Sum(p => p.Amount).ToString("c")%></td>
+				<%=account.TotalPledged.ToString("c")%>
+			</td>
 		</tr>
-		<%if (account.Payments.Count == 0) { %><tr>
-			<td colspan="3">You have no payments on record after
-				<%=Info.StartDate.ToLongDateString() %></td>
-		</tr>
-		<%} %>
 		<tr>
 			<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Payments
 			</th>
@@ -123,13 +120,21 @@
 				<%=payment.Amount.ToString("c") %></td>
 		</tr>
 		<%} %>
+		<%if (account.Payments.Count == 0) { %><tr>
+			<td colspan="3">You have no
+				<%=account.AccountName.ToLower() %>
+				payments on record after
+				<%=Info.StartDate.ToLongDateString() %></td>
+		</tr>
+		<%} else { %>
 		<tr>
 			<td colspan="2" style="border-top: solid 1px black; border-bottom: solid 2px black;
 				padding-top: 10px;">Total: </td>
 			<td style="text-align: right; font-weight: bold; border-top: solid 1px black; border-bottom: solid 2px black;
 				padding-top: 10px;">
-				<%=account.Payments.Sum(p => p.Amount).ToString("c")%></td>
+				<%=account.TotalPaid.ToString("c")%></td>
 		</tr>
-		<%} %>
+		<%}
+	}%>
 	</table>
 </asp:Content>

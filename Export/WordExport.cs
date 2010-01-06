@@ -110,6 +110,7 @@ namespace ShomreiTorah.Billing.Export {
 							range.Paste();
 							FillBill(range, info);
 							range.Collapse(WdCollapseDirection.wdCollapseEnd);
+							range.InsertBreak(WdBreakType.wdPageBreak);
 						}
 
 						i++;
@@ -132,8 +133,8 @@ namespace ShomreiTorah.Billing.Export {
 		};
 
 		static void FillBill(Range range, BillInfo info) {
-			for (int i = range.ContentControls.Count; i > 0; i--) {
-				var cc = range.ContentControls.Item(i);
+			while (range.ContentControls.Count > 0) {
+				var cc = range.ContentControls.Item(1);	//I remove them as we go along
 				var targetRange = cc.Range;
 
 				var fieldName = targetRange.Text;
@@ -145,7 +146,7 @@ namespace ShomreiTorah.Billing.Export {
 					throw new InvalidDataException("Unknown ContentControl: " + fieldName);
 				cc.Delete(false);
 				if (customField != null)
-					customField(range, info);
+					customField(targetRange, info);
 				else
 					targetRange.Text = info.Person[fieldName].ToString();
 			}
@@ -154,31 +155,35 @@ namespace ShomreiTorah.Billing.Export {
 		static readonly CultureInfo Culture = CultureInfo.CurrentCulture;
 		//Receipts are the same as bills except that they don't have
 		//Balance Due, the Pledges section, and the Payments header.
-		static void CreateTable(Range parentRange, BillInfo info) {
-			var table = parentRange.Tables.Add(parentRange, 0, 3);
+		static void CreateTable(Range targetRange, BillInfo info) {
+			var table = targetRange.Tables.Add(targetRange, 2, 3);
 
+			table.Rows.Alignment = WdRowAlignment.wdAlignRowCenter;
+			table.Range.ParagraphFormat.SpaceAfter = 0;
+			table.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
 			Range range;
 			Row row;
 			foreach (var account in info.Accounts) {
-				row = table.Rows.Add().MakeHeader(2);
+				row = table.AddRow().MakeHeader(2);
 				row.Range.Text = account.AccountName;
 
 				if (info.Kind == BillKind.Bill) {
-					row = table.Rows.Add().MergeFirstCells();
+					row = table.AddRow().MergeFirstCells().StyleAmount();
 					row.Cells[1].Range.Text = "Balance Due:";
 					row.Cells[2].Range.Text = account.BalanceDue.ToString("c", Culture);
+					row.Cells[2].Range.Font.Bold = 1;
 
-					row = table.Rows.Add().MakeHeader(1);
+					row = table.AddRow().MakeHeader(1);
 					row.Range.Text = "Pledges";
 
 					if (account.OutstandingBalance != 0) {
-						row = table.Rows.Add().MergeFirstCells().StyleAmount();
+						row = table.AddRow().MergeFirstCells().StyleAmount();
 						row.Cells[1].Range.Text = "Starting Balance:";
 						row.Cells[2].Range.Text = account.OutstandingBalance.ToString("c", Culture);
 					}
 
 					foreach (var pledge in account.Pledges) {
-						row = table.Rows.Add().StyleAmount();
+						row = table.AddRow().StyleAmount();
 						row.Cells[1].Range.Text = pledge.Date.ToShortDateString();
 						row.Cells[2].Range.Text = pledge.Type + (String.IsNullOrEmpty(pledge.SubType) ? "" : ", " + pledge.SubType);
 						if (!String.IsNullOrEmpty(pledge.Note)) {
@@ -190,36 +195,47 @@ namespace ShomreiTorah.Billing.Export {
 						row.Cells[3].Range.Text = pledge.Amount.ToString("c", Culture);
 					}
 
-					row = table.Rows.Add().MergeFirstCells().StyleAmount();
+					row = table.AddRow().MergeFirstCells().StyleAmount().StyleTotal();
 					row.Cells[1].Range.Text = "Total:";
-					row.Cells[2].Range.Text = (account.OutstandingBalance + account.Pledges.Sum(p => p.Amount)).ToString("c", Culture);
+					row.Cells[2].Range.Text = account.TotalPledged.ToString("c", Culture);
 
-					row = table.Rows.Add().MakeHeader(1);
+					row = table.AddRow().MakeHeader(1);
 					row.Range.Text = "Payments";
 					if (account.Payments.Count == 0) {
-						row = table.Rows.Add().MakeHeader(0);
+						row = table.AddRow().MakeHeader(0);
 						row.Range.Text = "You have no " + account.AccountName.ToLower(Culture) + " payments on record after " + info.StartDate.ToLongDateString();
 					}
 				}
 
 				foreach (var payment in account.Payments) {
-					row = table.Rows.Add().StyleAmount();
+					row = table.AddRow().StyleAmount();
 					row.Cells[1].Range.Text = payment.Date.ToShortDateString();
 					row.Cells[2].Range.Text = payment.Method + (payment.IsCheckNumberNull() ? "" : " #" + payment.CheckNumber.ToString(Culture));
 					row.Cells[3].Range.Text = payment.Amount.ToString("c", Culture);
 				}
 
-				row = table.Rows.Add().MergeFirstCells().StyleAmount();
-				row.Cells[1].Range.Text = "Total:";
-				row.Cells[2].Range.Text = (account.Payments.Sum(p => p.Amount)).ToString("c", Culture);
+				if (account.TotalPaid != 0) {
+					row = table.AddRow().MergeFirstCells().StyleAmount().StyleTotal();
+					row.Cells[1].Range.Text = "Total:";
+					row.Cells[2].Range.Text = account.TotalPaid.ToString("c", Culture);
+				}
 			}
+			table.Rows[table.Rows.Count].Delete();
+			table.Rows[table.Rows.Count].Delete();
+			table.AutoFitBehavior(WdAutoFitBehavior.wdAutoFitContent);
 		}
-		static object One = 1, Cells = WdUnits.wdCell;
+
+		///<summary>Adds a row to a table, returning the third-to-last row.</summary>
+		///<returns>Two rows before the one that was just added.</returns>
+		///<remarks>This prevents unwanted formatting and bottom borders from copying downwards.</remarks>
+		static Row AddRow(this Table table) {
+			table.Rows.Add();
+			return table.Rows[table.Rows.Count - 2];
+		}
+
 		///<summary>Merges the first two cells of a row.</summary>
 		static Row MergeFirstCells(this Row row) {
-			var range = row.Cells[1].Range;
-			range.MoveEnd(ref Cells, ref One);
-			range.Cells.Merge();
+			row.Cells[1].Merge(row.Cells[2]);
 			return row;
 		}
 		///<summary>Formats a row as a header row and merges the row's cells.</summary>
@@ -227,9 +243,38 @@ namespace ShomreiTorah.Billing.Export {
 		///<param name="level">If 0, no formatting will be applied.  Otherwise, the size will ramp up.</param>
 		static Row MakeHeader(this Row row, int level) {
 			row.Cells.Merge();
+			row.Shading.BackgroundPatternColor = WdColor.wdColorWhite;
 			row.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
 			row.Range.Font.Bold = Math.Sign(level);
 			row.Range.Font.Size += level * 2;
+
+			if (level > 0) {
+				row.Range.ParagraphFormat.SpaceBefore = 4 + 6 * level;
+				var border = row.Borders[WdBorderType.wdBorderBottom];
+				border.Visible = true;
+
+				if (level == 2) {
+					border.Color = WdColor.wdColorDarkBlue;
+					border.LineStyle = WdLineStyle.wdLineStyleEmboss3D;
+					border.LineWidth = WdLineWidth.wdLineWidth225pt;
+				} else
+					border.LineWidth = WdLineWidth.wdLineWidth150pt;
+			}
+
+			return row;
+		}
+		static Row StyleTotal(this Row row) {
+			row.Cells[row.Cells.Count].Range.Font.Bold = 1;
+			row.Range.ParagraphFormat.SpaceBefore = 6;
+
+			var border = row.Borders[WdBorderType.wdBorderBottom];
+			border.Visible = true;
+			border.LineWidth = WdLineWidth.wdLineWidth150pt;
+
+			border = row.Borders[WdBorderType.wdBorderTop];
+			border.Visible = true;
+			border.LineWidth = WdLineWidth.wdLineWidth050pt;
+
 			return row;
 		}
 		static Row StyleAmount(this Row row) {

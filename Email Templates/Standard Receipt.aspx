@@ -85,7 +85,7 @@
 				padding-top: 10px;">Total:</td>
 			<td style="text-align: right; font-weight: bold; border-top: solid 1px black; border-bottom: solid 2px black;
 				padding-top: 10px;">
-				<%=account.Payments.Sum(p => p.Amount).ToString("c")%></td>
+				<%=account.TotalPaid.ToString("c")%></td>
 		</tr>
 		<%} %>
 	</table>

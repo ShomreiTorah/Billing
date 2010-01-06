@@ -48,6 +48,9 @@ namespace ShomreiTorah.Billing.Export {
 
 			Pledges = new ReadOnlyCollection<BillingData.PledgesRow>(Parent.Person.GetPledgesRows().Where(p => filter(p)).OrderBy(p => p.Date).ToArray());
 			Payments = new ReadOnlyCollection<BillingData.PaymentsRow>(Parent.Person.GetPaymentsRows().Where(p => filter(p)).OrderBy(p => p.Date).ToArray());
+
+			TotalPledged = OutstandingBalance + Pledges.Sum(p => p.Amount);
+			TotalPaid = Payments.Sum(p => p.Amount);
 		}
 
 		public BillInfo Parent { get; private set; }
@@ -55,6 +58,9 @@ namespace ShomreiTorah.Billing.Export {
 
 		public decimal OutstandingBalance { get; private set; }
 		public decimal BalanceDue { get; private set; }
+
+		public decimal TotalPledged { get; private set; }
+		public decimal TotalPaid { get; private set; }
 
 		public ReadOnlyCollection<BillingData.PledgesRow> Pledges { get; private set; }
 		public ReadOnlyCollection<BillingData.PaymentsRow> Payments { get; private set; }
