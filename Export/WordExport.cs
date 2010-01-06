@@ -67,6 +67,7 @@ namespace ShomreiTorah.Billing.Export {
 					range.Text = i >= people.Count ? "" : people[i].MailingAddress;
 				}
 
+				Word.Activate();
 				doc.Activate();
 				return doc;
 			} finally {
@@ -115,7 +116,9 @@ namespace ShomreiTorah.Billing.Export {
 
 						i++;
 					}
+					doc.Characters.Last.Delete();		//Delete the last page break
 				}
+				Word.Activate();
 				doc.Activate();
 				return doc;
 			} finally {
@@ -159,6 +162,7 @@ namespace ShomreiTorah.Billing.Export {
 			var table = targetRange.Tables.Add(targetRange, 2, 3);
 
 			table.Rows.Alignment = WdRowAlignment.wdAlignRowCenter;
+			table.Range.Cells.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
 			table.Range.ParagraphFormat.SpaceAfter = 0;
 			table.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
 			Range range;
@@ -178,7 +182,7 @@ namespace ShomreiTorah.Billing.Export {
 
 					if (account.OutstandingBalance != 0) {
 						row = table.AddRow().MergeFirstCells().StyleAmount();
-						row.Cells[1].Range.Text = "Starting Balance:";
+						row.Cells[1].Range.Text = "Starting Balance (as of " + info.StartDate.ToShortDateString() + "):";
 						row.Cells[2].Range.Text = account.OutstandingBalance.ToString("c", Culture);
 					}
 
@@ -188,9 +192,10 @@ namespace ShomreiTorah.Billing.Export {
 						row.Cells[2].Range.Text = pledge.Type + (String.IsNullOrEmpty(pledge.SubType) ? "" : ", " + pledge.SubType);
 						if (!String.IsNullOrEmpty(pledge.Note)) {
 							range = row.Cells[2].Range;
-							range.Collapse(WdCollapseDirection.wdCollapseEnd);
-							range.Font.Italic = 1;
+							range.Start = range.End - 1;
+
 							range.Text = Environment.NewLine + pledge.Note;
+							range.Font.Italic = 1;
 						}
 						row.Cells[3].Range.Text = pledge.Amount.ToString("c", Culture);
 					}
