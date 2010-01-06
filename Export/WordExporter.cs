@@ -61,6 +61,10 @@ namespace ShomreiTorah.Billing.Export {
 			grid.DataSource = people;
 			gridView.BestFitColumns();
 		}
+		protected override void OnShown(EventArgs e) {
+			base.OnShown(e);
+			createDoc.Focus();
+		}
 
 		private void MailingExport_ItemClick(object sender, ItemClickEventArgs e) {
 			ProgressWorker.Execute(ui => WordExport.CreateMailing(people, e.Item.Caption + ".docx", ui), true);
