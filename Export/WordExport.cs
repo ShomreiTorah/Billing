@@ -132,6 +132,7 @@ namespace ShomreiTorah.Billing.Export {
 		}
 
 		static readonly Dictionary<string, Action<Range, BillInfo>> CustomFields = new Dictionary<string, Action<Range, BillInfo>>(StringComparer.CurrentCultureIgnoreCase){
+			{ "BalanceDue",		(range, info) => range.Text = info.Person.BalanceDue.ToString("c", Culture) },
 			{ "Year",			(range, info) => range.Text = info.StartDate.Year.ToString(CultureInfo.CurrentCulture) },
 			{ "StartDate",		(range, info) => range.Text = info.StartDate.ToShortDateString() },
 			{ "MailingAddress",	(range, info) => range.Text = info.Person.MailingAddress },
@@ -172,23 +173,13 @@ namespace ShomreiTorah.Billing.Export {
 			Range range;
 			Row row;
 			foreach (var account in info.Accounts) {
-				row = table.AddRow().MakeHeader(2);
-				row.Range.Text = account.AccountName;
-
 				if (info.Kind == BillKind.Bill) {
-					row = table.AddRow().MergeFirstCells().StyleAmount();
-					row.Cells[1].Range.Text = "Balance Due:";
-					row.Cells[2].Range.Text = account.BalanceDue.ToString("c", Culture);
-					row.Cells[2].Range.Font.Bold = 1;
-
 					row = table.AddRow().MakeHeader(1);
-					row.Range.Text = "Pledges";
+					row.Range.Text = account.AccountName + " Pledges";
 
-					if (account.OutstandingBalance != 0) {
-						row = table.AddRow().MergeFirstCells().StyleAmount();
-						row.Cells[1].Range.Text = "Starting Balance (as of " + info.StartDate.ToShortDateString() + "):";
-						row.Cells[2].Range.Text = account.OutstandingBalance.ToString("c", Culture);
-					}
+					row = table.AddRow().MergeFirstCells().StyleAmount();
+					row.Cells[1].Range.Text = "Starting Balance (as of " + info.StartDate.ToShortDateString() + "):";
+					row.Cells[2].Range.Text = account.OutstandingBalance.ToString("c", Culture);
 
 					foreach (var pledge in account.Pledges) {
 						row = table.AddRow().StyleAmount();
@@ -207,13 +198,13 @@ namespace ShomreiTorah.Billing.Export {
 					row = table.AddRow().MergeFirstCells().StyleAmount().StyleTotal();
 					row.Cells[1].Range.Text = "Total:";
 					row.Cells[2].Range.Text = account.TotalPledged.ToString("c", Culture);
+				}
 
-					row = table.AddRow().MakeHeader(1);
-					row.Range.Text = "Payments";
-					if (account.Payments.Count == 0) {
-						row = table.AddRow().MakeHeader(0);
-						row.Range.Text = "You have no " + account.AccountName.ToLower(Culture) + " payments on record after " + info.StartDate.ToLongDateString();
-					}
+				row = table.AddRow().MakeHeader(1);
+				row.Range.Text = account.AccountName + " Payments";
+				if (account.Payments.Count == 0) {
+					row = table.AddRow().MakeHeader(0);
+					row.Range.Text = "You have no " + account.AccountName.ToLower(Culture) + " payments on record after " + info.StartDate.ToLongDateString();
 				}
 
 				foreach (var payment in account.Payments) {
@@ -228,7 +219,22 @@ namespace ShomreiTorah.Billing.Export {
 					row.Cells[1].Range.Text = "Total:";
 					row.Cells[2].Range.Text = account.TotalPaid.ToString("c", Culture);
 				}
+
 			}
+			row = table.AddRow().MergeFirstCells().StyleAmount();
+			row.Range.ParagraphFormat.SpaceBefore = 10;
+			row.Cells[1].Range.Text = "Total Pledged:";
+			row.Cells[2].Range.Text = info.Person.TotalPledged.ToString("c", Culture);
+
+			row = table.AddRow().MergeFirstCells().StyleAmount();
+			row.Cells[1].Range.Text = "Total Paid:";
+			row.Cells[2].Range.Text = "-" + info.Person.TotalPaid.ToString("c", Culture);
+
+			row = table.AddRow().MergeFirstCells().StyleAmount().StyleTotal();
+			row.Cells[1].Range.Text = "Balance due:";
+			row.Cells[2].Range.Text = info.Person.BalanceDue.ToString("c", Culture);
+			row.Cells[2].Range.Font.Bold = 1;
+
 			table.Rows[table.Rows.Count].Delete();
 			table.Rows[table.Rows.Count].Delete();
 			table.AutoFitBehavior(WdAutoFitBehavior.wdAutoFitContent);
