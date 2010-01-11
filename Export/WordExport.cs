@@ -174,15 +174,17 @@ namespace ShomreiTorah.Billing.Export {
 			Row row;
 			foreach (var account in info.Accounts) {
 				if (info.Kind == BillKind.Bill) {
-					row = table.AddRow().MakeHeader(1);
+					row = table.AddRow().MakeHeader();
 					row.Range.Text = account.AccountName + " Pledges";
 
-					row = table.AddRow().MergeFirstCells().StyleAmount();
+					shadingIndex = 0;
+
+					row = table.AddRow().MergeFirstCells().StyleAmount().Stripe();
 					row.Cells[1].Range.Text = "Starting Balance (as of " + info.StartDate.ToShortDateString() + "):";
 					row.Cells[2].Range.Text = account.OutstandingBalance.ToString("c", Culture);
 
 					foreach (var pledge in account.Pledges) {
-						row = table.AddRow().StyleAmount();
+						row = table.AddRow().StyleAmount().Stripe();
 						row.Cells[1].Range.Text = pledge.Date.ToShortDateString();
 						row.Cells[2].Range.Text = pledge.Type + (String.IsNullOrEmpty(pledge.SubType) ? "" : ", " + pledge.SubType);
 						if (!String.IsNullOrEmpty(pledge.Note)) {
@@ -200,15 +202,16 @@ namespace ShomreiTorah.Billing.Export {
 					row.Cells[2].Range.Text = account.TotalPledged.ToString("c", Culture);
 				}
 
-				row = table.AddRow().MakeHeader(1);
+				row = table.AddRow().MakeHeader();
 				row.Range.Text = account.AccountName + " Payments";
 				if (account.Payments.Count == 0) {
-					row = table.AddRow().MakeHeader(0);
+					row = table.AddRow().MergeRow();
 					row.Range.Text = "You have no " + account.AccountName.ToLower(Culture) + " payments on record after " + info.StartDate.ToLongDateString();
 				}
 
+				shadingIndex = 0;
 				foreach (var payment in account.Payments) {
-					row = table.AddRow().StyleAmount();
+					row = table.AddRow().StyleAmount().Stripe();
 					row.Cells[1].Range.Text = payment.Date.ToShortDateString();
 					row.Cells[2].Range.Text = payment.Method + (payment.IsCheckNumberNull() ? "" : " #" + payment.CheckNumber.ToString(Culture));
 					row.Cells[3].Range.Text = payment.Amount.ToString("c", Culture);
@@ -219,7 +222,6 @@ namespace ShomreiTorah.Billing.Export {
 					row.Cells[1].Range.Text = "Total:";
 					row.Cells[2].Range.Text = account.TotalPaid.ToString("c", Culture);
 				}
-
 			}
 			row = table.AddRow().MergeFirstCells().StyleAmount();
 			row.Range.ParagraphFormat.SpaceBefore = 10;
@@ -240,6 +242,16 @@ namespace ShomreiTorah.Billing.Export {
 			table.AutoFitBehavior(WdAutoFitBehavior.wdAutoFitContent);
 		}
 
+		[ThreadStatic]
+		static int shadingIndex;
+
+		static Row Stripe(this Row row) {
+			shadingIndex++;
+			if (shadingIndex % 2 == 0)
+				row.Shading.BackgroundPatternColor = (WdColor)(-553582797);
+			return row;
+		}
+
 		///<summary>Adds a row to a table, returning the third-to-last row.</summary>
 		///<returns>Two rows before the one that was just added.</returns>
 		///<remarks>This prevents unwanted formatting and bottom borders from copying downwards.</remarks>
@@ -253,28 +265,29 @@ namespace ShomreiTorah.Billing.Export {
 			row.Cells[1].Merge(row.Cells[2]);
 			return row;
 		}
-		///<summary>Formats a row as a header row and merges the row's cells.</summary>
-		///<param name="row">The row to format.</param>
-		///<param name="level">If 0, no formatting will be applied.  Otherwise, the size will ramp up.</param>
-		static Row MakeHeader(this Row row, int level) {
+
+		///<summary>Merges the cells of a row.</summary>
+		static Row MergeRow(this Row row) {
 			row.Cells.Merge();
 			row.Shading.BackgroundPatternColor = WdColor.wdColorWhite;
 			row.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-			row.Range.Font.Bold = Math.Sign(level);
-			row.Range.Font.Size += level * 2;
+			return row;
+		}
+		///<summary>Formats a row as a header row and merges the row's cells.</summary>
+		///<param name="row">The row to format.</param>
+		///<param name="level">If 0, no formatting will be applied.  Otherwise, the size will ramp up.</param>
+		static Row MakeHeader(this Row row) {
+			row.MergeRow();
 
-			if (level > 0) {
-				row.Range.ParagraphFormat.SpaceBefore = 4 + 6 * level;
-				var border = row.Borders[WdBorderType.wdBorderBottom];
-				border.Visible = true;
+			row.Range.Font.Color = (WdColor)(-553582593);
+			row.Range.Font.Bold = 1;
+			row.Range.Font.Size += 2;
 
-				if (level == 2) {
-					border.Color = WdColor.wdColorDarkBlue;
-					border.LineStyle = WdLineStyle.wdLineStyleEmboss3D;
-					border.LineWidth = WdLineWidth.wdLineWidth225pt;
-				} else
-					border.LineWidth = WdLineWidth.wdLineWidth150pt;
-			}
+			row.Range.ParagraphFormat.SpaceBefore = 10;
+
+			var border = row.Borders[WdBorderType.wdBorderBottom];
+			border.Visible = true;
+			border.LineWidth = WdLineWidth.wdLineWidth150pt;
 
 			return row;
 		}
