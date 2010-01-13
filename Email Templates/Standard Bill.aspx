@@ -37,23 +37,18 @@
 		Dear
 		<%=Server.HtmlEncode(Info.Person.FullName)%>,</p>
 	<p>
-		On behalf of Rabbi Weinberger and Congregation Shomrei Torah, we would like to express
-		our gratitude for your financial support and valued participation in our davening
-		and learning. Through your generosity, support, and participation our Shul will
-		continue to grow and thrive as a special place of Torah and Avodah.</p>
+		On behalf of Rabbi Weinberger and Congregation Shomrei Torah, I would like to express
+		my sincere gratitude and appreciation for your financial support and valued participation
+		in our davening and learning. Through your generosity, support, and participation
+		our Shul will continue to grow and thrive as a special place of Torah and Avodah.</p>
 	<p>
-		Please review the summary below. If you have any questions regarding any of the
-		pledges or payments contained herein, please reply to this email or contact Yaacov
-		Gitstein at (732) 516 - 5583. Thank you.
+		Your total balance due is <b>
+			<%=Info.TotalBalance.ToString("c") %></b>. Please review the summary below.
+		If you have any questions regarding the pledges or payments contained herein, please
+		reply to this email or contact Yaacov Gitstein at (732) 516 - 5583.
 	</p>
 	<p>
-		תזכו למצות</p>
-	<p>
-		Sincerely,</p>
-	<p>
-		Jason P. (Yaacov) Gitstein<br />
-		Treasurer
-	</p>
+		Thank you.</p>
 	<%
 		const string StripeStyle = "background: #E8EBFF;";
 		string curStyle = "";
@@ -61,22 +56,14 @@
 	<table cellspacing="0" style="margin: 0 auto;">
 		<%foreach (var account in Info.Accounts) {%>
 		<tr>
-			<th colspan="3" style="font-size: large; text-align: center; border-bottom: solid blue 1px;
-				padding-top: 30px">
-				<%=Server.HtmlEncode(account.AccountName) %></th>
-		</tr>
-		<tr>
-			<td colspan="2">Balance due:</td>
-			<td style="text-align: right; font-weight: bold;">
-				<%=account.BalanceDue.ToString("c")%></td>
-		</tr>
-		<tr>
-			<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Pledges
-			</th>
+			<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">
+				<%=Server.HtmlEncode(account.AccountName) %>
+				Pledges</th>
 		</tr>
 		<%if (account.OutstandingBalance != 0) { %>
 		<tr>
-			<td colspan="2" style="padding-bottom: 7px;">Starting Balance (as of <%=Info.StartDate.ToShortDateString() %>): </td>
+			<td colspan="2" style="padding-bottom: 7px;">Starting Balance (as of
+				<%=Info.StartDate.ToShortDateString() %>): </td>
 			<td style="text-align: right; padding-bottom: 7px;">
 				<%=account.OutstandingBalance.ToString("c")%></td>
 		</tr>
@@ -105,8 +92,9 @@
 			</td>
 		</tr>
 		<tr>
-			<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">Payments
-			</th>
+			<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">
+				<%=Server.HtmlEncode(account.AccountName) %>
+				Payments </th>
 		</tr>
 		<%curStyle = ""; foreach (var payment in account.Payments) {
 		curStyle = curStyle == "" ? StripeStyle : "";%>
@@ -136,5 +124,34 @@
 		</tr>
 		<%}
 	}%>
+		<tr>
+			<td colspan="2" style="padding-top: 15px">Total Pledged:</td>
+			<td style="padding-top: 15px; text-align: right;">
+				<%=Info.Person.TotalPledged.ToString("c") %></td>
+		</tr>
+		<tr>
+			<td colspan="2">Total Paid:</td>
+			<td style="text-align: right;">-<%=Info.Person.TotalPaid.ToString("c") %></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="padding-top: 5px; border-top: solid 1px black; border-bottom: solid 2px black;">
+				Balance due: </td>
+			<td style="padding-top: 5px; text-align: right; border-top: solid 1px black; border-bottom: solid 2px black;">
+				<%=Info.TotalBalance.ToString("c") %></td>
+		</tr>
 	</table>
+	<p>
+		Mail your remittance to:</p>
+	<blockquote>
+		<p>
+			Congregation Shomrei Torah of Passaic-Clifton<br />
+			1360 Clifton Ave. # 908<br />
+			Clifton, NJ 07012</p>
+	</blockquote>
+	<p>
+		Sincerely,</p>
+	<p>
+		Jason P. (Yaacov) Gitstein<br />
+		Treasurer
+	</p>
 </asp:Content>
