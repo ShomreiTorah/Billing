@@ -88,6 +88,13 @@ namespace ShomreiTorah.Billing.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ImportJournal32 {
+            get {
+                object obj = ResourceManager.GetObject("ImportJournal32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Refresh16 {
             get {
                 object obj = ResourceManager.GetObject("Refresh16", resourceCulture);

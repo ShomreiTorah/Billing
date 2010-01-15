@@ -139,5 +139,9 @@ namespace ShomreiTorah.Billing.Forms {
 			}
 			ThreadPool.QueueUserWorkItem(delegate { Updater.RunCheck(); });
 		}
+
+		private void importJournal_ItemClick(object sender, ItemClickEventArgs e) {
+			Import.Journal.JournalImporter.Execute();
+		}
 	}
 }

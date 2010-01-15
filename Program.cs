@@ -59,7 +59,7 @@ namespace ShomreiTorah.Billing {
 				if (CheckForUpdate()) return;
 
 				CreateAspxDomain();	//This call executes the program in the ASP.Net AppDomain
-			} catch (Exception ex) { CloseSplash(); new Forms.ErrorForm(ex).ShowDialog(); }
+			} catch (Exception ex) { CloseSplash();if (!Debugger.IsAttached) new Forms.ErrorForm(ex).ShowDialog(); }
 		}
 		///<summary>Called in both AppDomains to load a specific ShomreiTorahConfig.xml, if one is present.</summary>
 		///<remarks>This method must be called before JITing any methods that use ShomreiTorahConfig in static initializers (eg, UpdateChecker).</remarks>

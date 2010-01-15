@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace ShomreiTorah.Billing {
 	static class Extensions {
@@ -17,5 +18,13 @@ namespace ShomreiTorah.Billing {
 			return match.Result("($1) $2 - $3");
 		}
 		public static bool IsInvalidAddress(this string address) { return address.Contains("**"); }
+		public static int EqualPart(this string str, string substr) {
+			int i;
+			for (i = 0; i < str.Length 
+				&& i < substr.Length && Char.ToUpper(str[i], CultureInfo.InvariantCulture) == Char.ToUpper(substr[i], CultureInfo.InvariantCulture); 
+				i++) {
+			}
+			return i;
+		}
 	}
 }

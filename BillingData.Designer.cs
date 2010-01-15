@@ -433,6 +433,10 @@ namespace ShomreiTorah.Billing {
             
             private global::System.Data.DataColumn columnDepositDateSql;
             
+            private global::System.Data.DataColumn columnExternalSource;
+            
+            private global::System.Data.DataColumn columnExternalID;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public PaymentsDataTable() : 
                     this(false) {
@@ -556,6 +560,20 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn ExternalSourceColumn {
+                get {
+                    return this.columnExternalSource;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn ExternalIDColumn {
+                get {
+                    return this.columnExternalID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -584,7 +602,7 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public PaymentsRow AddPaymentsRow(System.Guid PaymentId, MasterDirectoryRow parentMasterDirectoryRowByPayments, string FullName, System.DateTime Date, string Method, int CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, System.DateTime DepositDateSql) {
+            public PaymentsRow AddPaymentsRow(System.Guid PaymentId, MasterDirectoryRow parentMasterDirectoryRowByPayments, string FullName, System.DateTime Date, string Method, int CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, System.DateTime DepositDateSql, string ExternalSource, int ExternalID) {
                 PaymentsRow rowPaymentsRow = ((PaymentsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         PaymentId,
@@ -598,7 +616,9 @@ namespace ShomreiTorah.Billing {
                         Comments,
                         Modified,
                         Modifier,
-                        DepositDateSql};
+                        DepositDateSql,
+                        ExternalSource,
+                        ExternalID};
                 if ((parentMasterDirectoryRowByPayments != null)) {
                     columnValuesArray[1] = parentMasterDirectoryRowByPayments[0];
                 }
@@ -608,7 +628,7 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public PaymentsRow AddPaymentsRow(System.Guid PaymentId, MasterDirectoryRow parentMasterDirectoryRowByPayments, System.DateTime Date, string Method, int CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, System.DateTime DepositDateSql) {
+            public PaymentsRow AddPaymentsRow(System.Guid PaymentId, MasterDirectoryRow parentMasterDirectoryRowByPayments, System.DateTime Date, string Method, int CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, System.DateTime DepositDateSql, string ExternalSource, int ExternalID) {
                 PaymentsRow rowPaymentsRow = ((PaymentsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         PaymentId,
@@ -622,7 +642,9 @@ namespace ShomreiTorah.Billing {
                         Comments,
                         Modified,
                         Modifier,
-                        DepositDateSql};
+                        DepositDateSql,
+                        ExternalSource,
+                        ExternalID};
                 if ((parentMasterDirectoryRowByPayments != null)) {
                     columnValuesArray[1] = parentMasterDirectoryRowByPayments[0];
                 }
@@ -663,6 +685,8 @@ namespace ShomreiTorah.Billing {
                 this.columnModified = base.Columns["Modified"];
                 this.columnModifier = base.Columns["Modifier"];
                 this.columnDepositDateSql = base.Columns["DepositDateSql"];
+                this.columnExternalSource = base.Columns["ExternalSource"];
+                this.columnExternalID = base.Columns["ExternalID"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -691,6 +715,10 @@ namespace ShomreiTorah.Billing {
                 base.Columns.Add(this.columnModifier);
                 this.columnDepositDateSql = new global::System.Data.DataColumn("DepositDateSql", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDepositDateSql);
+                this.columnExternalSource = new global::System.Data.DataColumn("ExternalSource", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnExternalSource);
+                this.columnExternalID = new global::System.Data.DataColumn("ExternalID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnExternalID);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnPaymentId}, true));
                 this.columnPaymentId.AllowDBNull = false;
@@ -708,6 +736,7 @@ namespace ShomreiTorah.Billing {
                 this.columnModified.DateTimeMode = global::System.Data.DataSetDateTime.Utc;
                 this.columnModifier.AllowDBNull = false;
                 this.columnDepositDateSql.Caption = "DepositDate";
+                this.columnExternalSource.MaxLength = 32;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1336,6 +1365,10 @@ namespace ShomreiTorah.Billing {
             
             private global::System.Data.DataColumn columnModifier;
             
+            private global::System.Data.DataColumn columnExternalSource;
+            
+            private global::System.Data.DataColumn columnExternalID;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public PledgesDataTable() : 
                     this(false) {
@@ -1459,6 +1492,20 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn ExternalSourceColumn {
+                get {
+                    return this.columnExternalSource;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn ExternalIDColumn {
+                get {
+                    return this.columnExternalID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1487,7 +1534,7 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public PledgesRow AddPledgesRow(System.Guid PledgeId, MasterDirectoryRow parentMasterDirectoryRowByPledges, string FullName, System.DateTime Date, string Type, string SubType, string Account, decimal Amount, string Note, string Comments, System.DateTime Modified, string Modifier) {
+            public PledgesRow AddPledgesRow(System.Guid PledgeId, MasterDirectoryRow parentMasterDirectoryRowByPledges, string FullName, System.DateTime Date, string Type, string SubType, string Account, decimal Amount, string Note, string Comments, System.DateTime Modified, string Modifier, string ExternalSource, int ExternalID) {
                 PledgesRow rowPledgesRow = ((PledgesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         PledgeId,
@@ -1501,7 +1548,9 @@ namespace ShomreiTorah.Billing {
                         Note,
                         Comments,
                         Modified,
-                        Modifier};
+                        Modifier,
+                        ExternalSource,
+                        ExternalID};
                 if ((parentMasterDirectoryRowByPledges != null)) {
                     columnValuesArray[1] = parentMasterDirectoryRowByPledges[0];
                 }
@@ -1511,7 +1560,7 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public PledgesRow AddPledgesRow(System.Guid PledgeId, MasterDirectoryRow parentMasterDirectoryRowByPledges, System.DateTime Date, string Type, string SubType, string Account, decimal Amount, string Note, string Comments, System.DateTime Modified, string Modifier) {
+            public PledgesRow AddPledgesRow(System.Guid PledgeId, MasterDirectoryRow parentMasterDirectoryRowByPledges, System.DateTime Date, string Type, string SubType, string Account, decimal Amount, string Note, string Comments, System.DateTime Modified, string Modifier, string ExternalSource, int ExternalID) {
                 PledgesRow rowPledgesRow = ((PledgesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         PledgeId,
@@ -1525,7 +1574,9 @@ namespace ShomreiTorah.Billing {
                         Note,
                         Comments,
                         Modified,
-                        Modifier};
+                        Modifier,
+                        ExternalSource,
+                        ExternalID};
                 if ((parentMasterDirectoryRowByPledges != null)) {
                     columnValuesArray[1] = parentMasterDirectoryRowByPledges[0];
                 }
@@ -1566,6 +1617,8 @@ namespace ShomreiTorah.Billing {
                 this.columnComments = base.Columns["Comments"];
                 this.columnModified = base.Columns["Modified"];
                 this.columnModifier = base.Columns["Modifier"];
+                this.columnExternalSource = base.Columns["ExternalSource"];
+                this.columnExternalID = base.Columns["ExternalID"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1594,6 +1647,10 @@ namespace ShomreiTorah.Billing {
                 base.Columns.Add(this.columnModified);
                 this.columnModifier = new global::System.Data.DataColumn("Modifier", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnModifier);
+                this.columnExternalSource = new global::System.Data.DataColumn("ExternalSource", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnExternalSource);
+                this.columnExternalID = new global::System.Data.DataColumn("ExternalID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnExternalID);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnPledgeId}, true));
                 this.columnPledgeId.AllowDBNull = false;
@@ -1616,6 +1673,7 @@ namespace ShomreiTorah.Billing {
                 this.columnModified.DateTimeMode = global::System.Data.DataSetDateTime.Utc;
                 this.columnModifier.AllowDBNull = false;
                 this.columnModifier.MaxLength = 32;
+                this.columnExternalSource.MaxLength = 32;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2222,6 +2280,36 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string ExternalSource {
+                get {
+                    if (this.IsExternalSourceNull()) {
+                        return null;
+                    }
+                    else {
+                        return ((string)(this[this.tablePayments.ExternalSourceColumn]));
+                    }
+                }
+                set {
+                    this[this.tablePayments.ExternalSourceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int ExternalID {
+                get {
+                    try {
+                        return ((int)(this[this.tablePayments.ExternalIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ExternalID\' in table \'Payments\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePayments.ExternalIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public MasterDirectoryRow MasterDirectoryRow {
                 get {
                     return ((MasterDirectoryRow)(this.GetParentRow(this.Table.ParentRelations["Payments"])));
@@ -2269,6 +2357,26 @@ namespace ShomreiTorah.Billing {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public void SetDepositDateSqlNull() {
                 this[this.tablePayments.DepositDateSqlColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsExternalSourceNull() {
+                return this.IsNull(this.tablePayments.ExternalSourceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetExternalSourceNull() {
+                this[this.tablePayments.ExternalSourceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsExternalIDNull() {
+                return this.IsNull(this.tablePayments.ExternalIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetExternalIDNull() {
+                this[this.tablePayments.ExternalIDColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2737,6 +2845,36 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string ExternalSource {
+                get {
+                    if (this.IsExternalSourceNull()) {
+                        return null;
+                    }
+                    else {
+                        return ((string)(this[this.tablePledges.ExternalSourceColumn]));
+                    }
+                }
+                set {
+                    this[this.tablePledges.ExternalSourceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int ExternalID {
+                get {
+                    try {
+                        return ((int)(this[this.tablePledges.ExternalIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ExternalID\' in table \'Pledges\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePledges.ExternalIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public MasterDirectoryRow MasterDirectoryRow {
                 get {
                     return ((MasterDirectoryRow)(this.GetParentRow(this.Table.ParentRelations["Pledges"])));
@@ -2774,6 +2912,26 @@ namespace ShomreiTorah.Billing {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public void SetCommentsNull() {
                 this[this.tablePledges.CommentsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsExternalSourceNull() {
+                return this.IsNull(this.tablePledges.ExternalSourceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetExternalSourceNull() {
+                this[this.tablePledges.ExternalSourceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsExternalIDNull() {
+                return this.IsNull(this.tablePledges.ExternalIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetExternalIDNull() {
+                this[this.tablePledges.ExternalIDColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3171,10 +3329,12 @@ namespace ShomreiTorah.Billing.BillingDataTableAdapters {
             tableMapping.ColumnMappings.Add("Modifier", "Modifier");
             tableMapping.ColumnMappings.Add("Account", "Account");
             tableMapping.ColumnMappings.Add("DepositDate", "DepositDateSql");
+            tableMapping.ColumnMappings.Add("ExternalSource", "ExternalSource");
+            tableMapping.ColumnMappings.Add("ExternalID", "ExternalID");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Billing].[Payments] WHERE (([PaymentId] = @Original_PaymentId) AND ([PersonId] = @Original_PersonId) AND ([Date] = @Original_Date) AND ([Method] = @Original_Method) AND ((@IsNull_CheckNumber = 1 AND [CheckNumber] IS NULL) OR ([CheckNumber] = @Original_CheckNumber)) AND ([Account] = @Original_Account) AND ([Amount] = @Original_Amount) AND ((@IsNull_Comments = 1 AND [Comments] IS NULL) OR ([Comments] = @Original_Comments)) AND ([Modified] = @Original_Modified) AND ([Modifier] = @Original_Modifier) AND ((@IsNull_DepositDate = 1 AND [DepositDate] IS NULL) OR ([DepositDate] = @Original_DepositDate)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Billing].[Payments] WHERE (([PaymentId] = @Original_PaymentId) AND ([PersonId] = @Original_PersonId) AND ([Date] = @Original_Date) AND ([Method] = @Original_Method) AND ((@IsNull_CheckNumber = 1 AND [CheckNumber] IS NULL) OR ([CheckNumber] = @Original_CheckNumber)) AND ([Account] = @Original_Account) AND ([Amount] = @Original_Amount) AND ((@IsNull_Comments = 1 AND [Comments] IS NULL) OR ([Comments] = @Original_Comments)) AND ([Modified] = @Original_Modified) AND ([Modifier] = @Original_Modifier) AND ((@IsNull_DepositDate = 1 AND [DepositDate] IS NULL) OR ([DepositDate] = @Original_DepositDate)) AND ((@IsNull_ExternalSource = 1 AND [ExternalSource] IS NULL) OR ([ExternalSource] = @Original_ExternalSource)) AND ((@IsNull_ExternalID = 1 AND [ExternalID] IS NULL) OR ([ExternalID] = @Original_ExternalID)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PaymentId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PaymentId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PersonId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -3190,10 +3350,14 @@ namespace ShomreiTorah.Billing.BillingDataTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Modifier", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modifier", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_DepositDate", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositDateSql", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DepositDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositDateSql", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExternalSource", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Billing].[Payments] ([PaymentId], [PersonId], [Date], [Method], [CheckNumber], [Account], [Amount], [Comments], [Modified], [Modifier], [DepositDate]) VALUES (@PaymentId, @PersonId, @Date, @Method, @CheckNumber, @Account, @Amount, @Comments, @Modified, @Modifier, @DepositDate);
-SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments, Modified, Modifier, DepositDate FROM Billing.Payments WHERE (PaymentId = @PaymentId)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Billing].[Payments] ([PaymentId], [PersonId], [Date], [Method], [CheckNumber], [Account], [Amount], [Comments], [Modified], [Modifier], [DepositDate], [ExternalSource], [ExternalID]) VALUES (@PaymentId, @PersonId, @Date, @Method, @CheckNumber, @Account, @Amount, @Comments, @Modified, @Modifier, @DepositDate, @ExternalSource, @ExternalID);
+SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments, Modified, Modifier, DepositDate, ExternalSource, ExternalID FROM Billing.Payments WHERE (PaymentId = @PaymentId)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PaymentId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PaymentId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PersonId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -3206,10 +3370,12 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Modified", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modified", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Modifier", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modifier", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DepositDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositDateSql", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [Billing].[Payments] SET [PaymentId] = @PaymentId, [PersonId] = @PersonId, [Date] = @Date, [Method] = @Method, [CheckNumber] = @CheckNumber, [Account] = @Account, [Amount] = @Amount, [Comments] = @Comments, [Modified] = @Modified, [Modifier] = @Modifier, [DepositDate] = @DepositDate WHERE (([PaymentId] = @Original_PaymentId) AND ([PersonId] = @Original_PersonId) AND ([Date] = @Original_Date) AND ([Method] = @Original_Method) AND ((@IsNull_CheckNumber = 1 AND [CheckNumber] IS NULL) OR ([CheckNumber] = @Original_CheckNumber)) AND ([Account] = @Original_Account) AND ([Amount] = @Original_Amount) AND ((@IsNull_Comments = 1 AND [Comments] IS NULL) OR ([Comments] = @Original_Comments)) AND ([Modified] = @Original_Modified) AND ([Modifier] = @Original_Modifier) AND ((@IsNull_DepositDate = 1 AND [DepositDate] IS NULL) OR ([DepositDate] = @Original_DepositDate)));
-SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments, Modified, Modifier, DepositDate FROM Billing.Payments WHERE (PaymentId = @PaymentId)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Billing].[Payments] SET [PaymentId] = @PaymentId, [PersonId] = @PersonId, [Date] = @Date, [Method] = @Method, [CheckNumber] = @CheckNumber, [Account] = @Account, [Amount] = @Amount, [Comments] = @Comments, [Modified] = @Modified, [Modifier] = @Modifier, [DepositDate] = @DepositDate, [ExternalSource] = @ExternalSource, [ExternalID] = @ExternalID WHERE (([PaymentId] = @Original_PaymentId) AND ([PersonId] = @Original_PersonId) AND ([Date] = @Original_Date) AND ([Method] = @Original_Method) AND ((@IsNull_CheckNumber = 1 AND [CheckNumber] IS NULL) OR ([CheckNumber] = @Original_CheckNumber)) AND ([Account] = @Original_Account) AND ([Amount] = @Original_Amount) AND ((@IsNull_Comments = 1 AND [Comments] IS NULL) OR ([Comments] = @Original_Comments)) AND ([Modified] = @Original_Modified) AND ([Modifier] = @Original_Modifier) AND ((@IsNull_DepositDate = 1 AND [DepositDate] IS NULL) OR ([DepositDate] = @Original_DepositDate)) AND ((@IsNull_ExternalSource = 1 AND [ExternalSource] IS NULL) OR ([ExternalSource] = @Original_ExternalSource)) AND ((@IsNull_ExternalID = 1 AND [ExternalID] IS NULL) OR ([ExternalID] = @Original_ExternalID)));
+SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments, Modified, Modifier, DepositDate, ExternalSource, ExternalID FROM Billing.Payments WHERE (PaymentId = @PaymentId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PaymentId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PaymentId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PersonId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -3222,6 +3388,8 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Modified", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modified", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Modifier", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modifier", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DepositDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositDateSql", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PaymentId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PaymentId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PersonId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Date", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -3236,6 +3404,10 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Modifier", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modifier", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_DepositDate", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositDateSql", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DepositDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositDateSql", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExternalSource", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3303,7 +3475,7 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(System.Guid Original_PaymentId, System.Guid Original_PersonId, System.DateTime Original_Date, string Original_Method, global::System.Nullable<int> Original_CheckNumber, string Original_Account, decimal Original_Amount, string Original_Comments, System.DateTime Original_Modified, string Original_Modifier, global::System.Nullable<global::System.DateTime> Original_DepositDate) {
+        public virtual int Delete(System.Guid Original_PaymentId, System.Guid Original_PersonId, System.DateTime Original_Date, string Original_Method, global::System.Nullable<int> Original_CheckNumber, string Original_Account, decimal Original_Amount, string Original_Comments, System.DateTime Original_Modified, string Original_Modifier, global::System.Nullable<global::System.DateTime> Original_DepositDate, string Original_ExternalSource, global::System.Nullable<int> Original_ExternalID) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((System.Guid)(Original_PaymentId));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((System.Guid)(Original_PersonId));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((System.DateTime)(Original_Date));
@@ -3351,6 +3523,22 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
                 this.Adapter.DeleteCommand.Parameters[12].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[13].Value = global::System.DBNull.Value;
             }
+            if ((Original_ExternalSource == null)) {
+                this.Adapter.DeleteCommand.Parameters[14].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[15].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[14].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[15].Value = ((string)(Original_ExternalSource));
+            }
+            if ((Original_ExternalID.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[16].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[17].Value = ((int)(Original_ExternalID.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[16].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[17].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -3370,7 +3558,7 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(System.Guid PaymentId, System.Guid PersonId, System.DateTime Date, string Method, global::System.Nullable<int> CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, global::System.Nullable<global::System.DateTime> DepositDate) {
+        public virtual int Insert(System.Guid PaymentId, System.Guid PersonId, System.DateTime Date, string Method, global::System.Nullable<int> CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, global::System.Nullable<global::System.DateTime> DepositDate, string ExternalSource, global::System.Nullable<int> ExternalID) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((System.Guid)(PaymentId));
             this.Adapter.InsertCommand.Parameters[1].Value = ((System.Guid)(PersonId));
             this.Adapter.InsertCommand.Parameters[2].Value = ((System.DateTime)(Date));
@@ -3412,6 +3600,18 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             else {
                 this.Adapter.InsertCommand.Parameters[10].Value = global::System.DBNull.Value;
             }
+            if ((ExternalSource == null)) {
+                this.Adapter.InsertCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[11].Value = ((string)(ExternalSource));
+            }
+            if ((ExternalID.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[12].Value = ((int)(ExternalID.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[12].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -3443,6 +3643,8 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
                     System.DateTime Modified, 
                     string Modifier, 
                     global::System.Nullable<global::System.DateTime> DepositDate, 
+                    string ExternalSource, 
+                    global::System.Nullable<int> ExternalID, 
                     System.Guid Original_PaymentId, 
                     System.Guid Original_PersonId, 
                     System.DateTime Original_Date, 
@@ -3453,7 +3655,9 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
                     string Original_Comments, 
                     System.DateTime Original_Modified, 
                     string Original_Modifier, 
-                    global::System.Nullable<global::System.DateTime> Original_DepositDate) {
+                    global::System.Nullable<global::System.DateTime> Original_DepositDate, 
+                    string Original_ExternalSource, 
+                    global::System.Nullable<int> Original_ExternalID) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((System.Guid)(PaymentId));
             this.Adapter.UpdateCommand.Parameters[1].Value = ((System.Guid)(PersonId));
             this.Adapter.UpdateCommand.Parameters[2].Value = ((System.DateTime)(Date));
@@ -3495,52 +3699,80 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             else {
                 this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[11].Value = ((System.Guid)(Original_PaymentId));
-            this.Adapter.UpdateCommand.Parameters[12].Value = ((System.Guid)(Original_PersonId));
-            this.Adapter.UpdateCommand.Parameters[13].Value = ((System.DateTime)(Original_Date));
+            if ((ExternalSource == null)) {
+                this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(ExternalSource));
+            }
+            if ((ExternalID.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((int)(ExternalID.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[12].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[13].Value = ((System.Guid)(Original_PaymentId));
+            this.Adapter.UpdateCommand.Parameters[14].Value = ((System.Guid)(Original_PersonId));
+            this.Adapter.UpdateCommand.Parameters[15].Value = ((System.DateTime)(Original_Date));
             if ((Original_Method == null)) {
                 throw new global::System.ArgumentNullException("Original_Method");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((string)(Original_Method));
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((string)(Original_Method));
             }
             if ((Original_CheckNumber.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[16].Value = ((int)(Original_CheckNumber.Value));
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[18].Value = ((int)(Original_CheckNumber.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[16].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[18].Value = global::System.DBNull.Value;
             }
             if ((Original_Account == null)) {
                 throw new global::System.ArgumentNullException("Original_Account");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[17].Value = ((string)(Original_Account));
+                this.Adapter.UpdateCommand.Parameters[19].Value = ((string)(Original_Account));
             }
-            this.Adapter.UpdateCommand.Parameters[18].Value = ((decimal)(Original_Amount));
+            this.Adapter.UpdateCommand.Parameters[20].Value = ((decimal)(Original_Amount));
             if ((Original_Comments == null)) {
-                this.Adapter.UpdateCommand.Parameters[19].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[20].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[21].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[22].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[19].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[20].Value = ((string)(Original_Comments));
+                this.Adapter.UpdateCommand.Parameters[21].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((string)(Original_Comments));
             }
-            this.Adapter.UpdateCommand.Parameters[21].Value = ((System.DateTime)(Original_Modified));
+            this.Adapter.UpdateCommand.Parameters[23].Value = ((System.DateTime)(Original_Modified));
             if ((Original_Modifier == null)) {
                 throw new global::System.ArgumentNullException("Original_Modifier");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[22].Value = ((string)(Original_Modifier));
+                this.Adapter.UpdateCommand.Parameters[24].Value = ((string)(Original_Modifier));
             }
             if ((Original_DepositDate.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[24].Value = ((System.DateTime)(Original_DepositDate.Value));
+                this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[26].Value = ((System.DateTime)(Original_DepositDate.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[24].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[26].Value = global::System.DBNull.Value;
+            }
+            if ((Original_ExternalSource == null)) {
+                this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[28].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[28].Value = ((string)(Original_ExternalSource));
+            }
+            if ((Original_ExternalID.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[29].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[30].Value = ((int)(Original_ExternalID.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[29].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[30].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -3572,6 +3804,8 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
                     System.DateTime Modified, 
                     string Modifier, 
                     global::System.Nullable<global::System.DateTime> DepositDate, 
+                    string ExternalSource, 
+                    global::System.Nullable<int> ExternalID, 
                     System.Guid Original_PaymentId, 
                     System.Guid Original_PersonId, 
                     System.DateTime Original_Date, 
@@ -3582,8 +3816,10 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
                     string Original_Comments, 
                     System.DateTime Original_Modified, 
                     string Original_Modifier, 
-                    global::System.Nullable<global::System.DateTime> Original_DepositDate) {
-            return this.Update(Original_PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments, Modified, Modifier, DepositDate, Original_PaymentId, Original_PersonId, Original_Date, Original_Method, Original_CheckNumber, Original_Account, Original_Amount, Original_Comments, Original_Modified, Original_Modifier, Original_DepositDate);
+                    global::System.Nullable<global::System.DateTime> Original_DepositDate, 
+                    string Original_ExternalSource, 
+                    global::System.Nullable<int> Original_ExternalID) {
+            return this.Update(Original_PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments, Modified, Modifier, DepositDate, ExternalSource, ExternalID, Original_PaymentId, Original_PersonId, Original_Date, Original_Method, Original_CheckNumber, Original_Account, Original_Amount, Original_Comments, Original_Modified, Original_Modifier, Original_DepositDate, Original_ExternalSource, Original_ExternalID);
         }
     }
     
@@ -4386,10 +4622,12 @@ SELECT Id, YKID, LastName, HisName, HerName, FullName, Address, City, State, Zip
             tableMapping.ColumnMappings.Add("Modified", "Modified");
             tableMapping.ColumnMappings.Add("Modifier", "Modifier");
             tableMapping.ColumnMappings.Add("Account", "Account");
+            tableMapping.ColumnMappings.Add("ExternalSource", "ExternalSource");
+            tableMapping.ColumnMappings.Add("ExternalID", "ExternalID");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Billing].[Pledges] WHERE (([PledgeId] = @Original_PledgeId) AND ([PersonId] = @Original_PersonId) AND ([Date] = @Original_Date) AND ([Type] = @Original_Type) AND ([SubType] = @Original_SubType) AND ([Account] = @Original_Account) AND ([Amount] = @Original_Amount) AND ((@IsNull_Note = 1 AND [Note] IS NULL) OR ([Note] = @Original_Note)) AND ((@IsNull_Comments = 1 AND [Comments] IS NULL) OR ([Comments] = @Original_Comments)) AND ([Modified] = @Original_Modified) AND ([Modifier] = @Original_Modifier))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Billing].[Pledges] WHERE (([PledgeId] = @Original_PledgeId) AND ([PersonId] = @Original_PersonId) AND ([Date] = @Original_Date) AND ([Type] = @Original_Type) AND ([SubType] = @Original_SubType) AND ([Account] = @Original_Account) AND ([Amount] = @Original_Amount) AND ((@IsNull_Note = 1 AND [Note] IS NULL) OR ([Note] = @Original_Note)) AND ((@IsNull_Comments = 1 AND [Comments] IS NULL) OR ([Comments] = @Original_Comments)) AND ([Modified] = @Original_Modified) AND ([Modifier] = @Original_Modifier) AND ((@IsNull_ExternalSource = 1 AND [ExternalSource] IS NULL) OR ([ExternalSource] = @Original_ExternalSource)) AND ((@IsNull_ExternalID = 1 AND [ExternalID] IS NULL) OR ([ExternalID] = @Original_ExternalID)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PledgeId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PledgeId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PersonId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -4404,10 +4642,14 @@ SELECT Id, YKID, LastName, HisName, HerName, FullName, Address, City, State, Zip
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Comments", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Comments", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Modified", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modified", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Modifier", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modifier", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExternalSource", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Billing].[Pledges] ([PledgeId], [PersonId], [Date], [Type], [SubType], [Account], [Amount], [Note], [Comments], [Modified], [Modifier]) VALUES (@PledgeId, @PersonId, @Date, @Type, @SubType, @Account, @Amount, @Note, @Comments, @Modified, @Modifier);
-SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments, Modified, Modifier FROM Billing.Pledges WHERE (PledgeId = @PledgeId)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Billing].[Pledges] ([PledgeId], [PersonId], [Date], [Type], [SubType], [Account], [Amount], [Note], [Comments], [Modified], [Modifier], [ExternalSource], [ExternalID]) VALUES (@PledgeId, @PersonId, @Date, @Type, @SubType, @Account, @Amount, @Note, @Comments, @Modified, @Modifier, @ExternalSource, @ExternalID);
+SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments, Modified, Modifier, ExternalSource, ExternalID FROM Billing.Pledges WHERE (PledgeId = @PledgeId)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PledgeId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PledgeId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PersonId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -4420,10 +4662,12 @@ SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments,
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Comments", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Comments", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Modified", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modified", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Modifier", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modifier", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [Billing].[Pledges] SET [PledgeId] = @PledgeId, [PersonId] = @PersonId, [Date] = @Date, [Type] = @Type, [SubType] = @SubType, [Account] = @Account, [Amount] = @Amount, [Note] = @Note, [Comments] = @Comments, [Modified] = @Modified, [Modifier] = @Modifier WHERE (([PledgeId] = @Original_PledgeId) AND ([PersonId] = @Original_PersonId) AND ([Date] = @Original_Date) AND ([Type] = @Original_Type) AND ([SubType] = @Original_SubType) AND ([Account] = @Original_Account) AND ([Amount] = @Original_Amount) AND ((@IsNull_Note = 1 AND [Note] IS NULL) OR ([Note] = @Original_Note)) AND ((@IsNull_Comments = 1 AND [Comments] IS NULL) OR ([Comments] = @Original_Comments)) AND ([Modified] = @Original_Modified) AND ([Modifier] = @Original_Modifier));
-SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments, Modified, Modifier FROM Billing.Pledges WHERE (PledgeId = @PledgeId)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Billing].[Pledges] SET [PledgeId] = @PledgeId, [PersonId] = @PersonId, [Date] = @Date, [Type] = @Type, [SubType] = @SubType, [Account] = @Account, [Amount] = @Amount, [Note] = @Note, [Comments] = @Comments, [Modified] = @Modified, [Modifier] = @Modifier, [ExternalSource] = @ExternalSource, [ExternalID] = @ExternalID WHERE (([PledgeId] = @Original_PledgeId) AND ([PersonId] = @Original_PersonId) AND ([Date] = @Original_Date) AND ([Type] = @Original_Type) AND ([SubType] = @Original_SubType) AND ([Account] = @Original_Account) AND ([Amount] = @Original_Amount) AND ((@IsNull_Note = 1 AND [Note] IS NULL) OR ([Note] = @Original_Note)) AND ((@IsNull_Comments = 1 AND [Comments] IS NULL) OR ([Comments] = @Original_Comments)) AND ([Modified] = @Original_Modified) AND ([Modifier] = @Original_Modifier) AND ((@IsNull_ExternalSource = 1 AND [ExternalSource] IS NULL) OR ([ExternalSource] = @Original_ExternalSource)) AND ((@IsNull_ExternalID = 1 AND [ExternalID] IS NULL) OR ([ExternalID] = @Original_ExternalID)));
+SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments, Modified, Modifier, ExternalSource, ExternalID FROM Billing.Pledges WHERE (PledgeId = @PledgeId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PledgeId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PledgeId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PersonId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -4436,6 +4680,8 @@ SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments,
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Comments", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Comments", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Modified", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modified", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Modifier", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modifier", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PledgeId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PledgeId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PersonId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Date", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -4449,6 +4695,10 @@ SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments,
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Comments", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Comments", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Modified", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modified", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Modifier", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modifier", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExternalSource", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4516,7 +4766,7 @@ SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments,
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(System.Guid Original_PledgeId, System.Guid Original_PersonId, System.DateTime Original_Date, string Original_Type, string Original_SubType, string Original_Account, decimal Original_Amount, string Original_Note, string Original_Comments, System.DateTime Original_Modified, string Original_Modifier) {
+        public virtual int Delete(System.Guid Original_PledgeId, System.Guid Original_PersonId, System.DateTime Original_Date, string Original_Type, string Original_SubType, string Original_Account, decimal Original_Amount, string Original_Note, string Original_Comments, System.DateTime Original_Modified, string Original_Modifier, string Original_ExternalSource, global::System.Nullable<int> Original_ExternalID) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((System.Guid)(Original_PledgeId));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((System.Guid)(Original_PersonId));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((System.DateTime)(Original_Date));
@@ -4562,6 +4812,22 @@ SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments,
             else {
                 this.Adapter.DeleteCommand.Parameters[12].Value = ((string)(Original_Modifier));
             }
+            if ((Original_ExternalSource == null)) {
+                this.Adapter.DeleteCommand.Parameters[13].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[14].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[13].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[14].Value = ((string)(Original_ExternalSource));
+            }
+            if ((Original_ExternalID.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[15].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[16].Value = ((int)(Original_ExternalID.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[15].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[16].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -4581,7 +4847,7 @@ SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments,
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(System.Guid PledgeId, System.Guid PersonId, System.DateTime Date, string Type, string SubType, string Account, decimal Amount, string Note, string Comments, System.DateTime Modified, string Modifier) {
+        public virtual int Insert(System.Guid PledgeId, System.Guid PersonId, System.DateTime Date, string Type, string SubType, string Account, decimal Amount, string Note, string Comments, System.DateTime Modified, string Modifier, string ExternalSource, global::System.Nullable<int> ExternalID) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((System.Guid)(PledgeId));
             this.Adapter.InsertCommand.Parameters[1].Value = ((System.Guid)(PersonId));
             this.Adapter.InsertCommand.Parameters[2].Value = ((System.DateTime)(Date));
@@ -4623,6 +4889,18 @@ SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments,
             else {
                 this.Adapter.InsertCommand.Parameters[10].Value = ((string)(Modifier));
             }
+            if ((ExternalSource == null)) {
+                this.Adapter.InsertCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[11].Value = ((string)(ExternalSource));
+            }
+            if ((ExternalID.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[12].Value = ((int)(ExternalID.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[12].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -4654,6 +4932,8 @@ SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments,
                     string Comments, 
                     System.DateTime Modified, 
                     string Modifier, 
+                    string ExternalSource, 
+                    global::System.Nullable<int> ExternalID, 
                     System.Guid Original_PledgeId, 
                     System.Guid Original_PersonId, 
                     System.DateTime Original_Date, 
@@ -4664,7 +4944,9 @@ SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments,
                     string Original_Note, 
                     string Original_Comments, 
                     System.DateTime Original_Modified, 
-                    string Original_Modifier) {
+                    string Original_Modifier, 
+                    string Original_ExternalSource, 
+                    global::System.Nullable<int> Original_ExternalID) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((System.Guid)(PledgeId));
             this.Adapter.UpdateCommand.Parameters[1].Value = ((System.Guid)(PersonId));
             this.Adapter.UpdateCommand.Parameters[2].Value = ((System.DateTime)(Date));
@@ -4706,50 +4988,78 @@ SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments,
             else {
                 this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Modifier));
             }
-            this.Adapter.UpdateCommand.Parameters[11].Value = ((System.Guid)(Original_PledgeId));
-            this.Adapter.UpdateCommand.Parameters[12].Value = ((System.Guid)(Original_PersonId));
-            this.Adapter.UpdateCommand.Parameters[13].Value = ((System.DateTime)(Original_Date));
+            if ((ExternalSource == null)) {
+                this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(ExternalSource));
+            }
+            if ((ExternalID.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((int)(ExternalID.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[12].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[13].Value = ((System.Guid)(Original_PledgeId));
+            this.Adapter.UpdateCommand.Parameters[14].Value = ((System.Guid)(Original_PersonId));
+            this.Adapter.UpdateCommand.Parameters[15].Value = ((System.DateTime)(Original_Date));
             if ((Original_Type == null)) {
                 throw new global::System.ArgumentNullException("Original_Type");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((string)(Original_Type));
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((string)(Original_Type));
             }
             if ((Original_SubType == null)) {
                 throw new global::System.ArgumentNullException("Original_SubType");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((string)(Original_SubType));
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((string)(Original_SubType));
             }
             if ((Original_Account == null)) {
                 throw new global::System.ArgumentNullException("Original_Account");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[16].Value = ((string)(Original_Account));
+                this.Adapter.UpdateCommand.Parameters[18].Value = ((string)(Original_Account));
             }
-            this.Adapter.UpdateCommand.Parameters[17].Value = ((decimal)(Original_Amount));
+            this.Adapter.UpdateCommand.Parameters[19].Value = ((decimal)(Original_Amount));
             if ((Original_Note == null)) {
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[19].Value = ((string)(Original_Note));
-            }
-            if ((Original_Comments == null)) {
                 this.Adapter.UpdateCommand.Parameters[20].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[21].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[20].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[21].Value = ((string)(Original_Comments));
+                this.Adapter.UpdateCommand.Parameters[21].Value = ((string)(Original_Note));
             }
-            this.Adapter.UpdateCommand.Parameters[22].Value = ((System.DateTime)(Original_Modified));
+            if ((Original_Comments == null)) {
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[23].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[23].Value = ((string)(Original_Comments));
+            }
+            this.Adapter.UpdateCommand.Parameters[24].Value = ((System.DateTime)(Original_Modified));
             if ((Original_Modifier == null)) {
                 throw new global::System.ArgumentNullException("Original_Modifier");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((string)(Original_Modifier));
+                this.Adapter.UpdateCommand.Parameters[25].Value = ((string)(Original_Modifier));
+            }
+            if ((Original_ExternalSource == null)) {
+                this.Adapter.UpdateCommand.Parameters[26].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[27].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[26].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[27].Value = ((string)(Original_ExternalSource));
+            }
+            if ((Original_ExternalID.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[28].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[29].Value = ((int)(Original_ExternalID.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[28].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[29].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -4781,6 +5091,8 @@ SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments,
                     string Comments, 
                     System.DateTime Modified, 
                     string Modifier, 
+                    string ExternalSource, 
+                    global::System.Nullable<int> ExternalID, 
                     System.Guid Original_PledgeId, 
                     System.Guid Original_PersonId, 
                     System.DateTime Original_Date, 
@@ -4791,8 +5103,10 @@ SELECT PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments,
                     string Original_Note, 
                     string Original_Comments, 
                     System.DateTime Original_Modified, 
-                    string Original_Modifier) {
-            return this.Update(Original_PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments, Modified, Modifier, Original_PledgeId, Original_PersonId, Original_Date, Original_Type, Original_SubType, Original_Account, Original_Amount, Original_Note, Original_Comments, Original_Modified, Original_Modifier);
+                    string Original_Modifier, 
+                    string Original_ExternalSource, 
+                    global::System.Nullable<int> Original_ExternalID) {
+            return this.Update(Original_PledgeId, PersonId, Date, Type, SubType, Account, Amount, Note, Comments, Modified, Modifier, ExternalSource, ExternalID, Original_PledgeId, Original_PersonId, Original_Date, Original_Type, Original_SubType, Original_Account, Original_Amount, Original_Note, Original_Comments, Original_Modified, Original_Modifier, Original_ExternalSource, Original_ExternalID);
         }
     }
     

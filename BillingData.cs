@@ -88,7 +88,7 @@ namespace ShomreiTorah.Billing {
 			e.Row["Modifier"] = Environment.UserName;
 		}
 
-		public void Save() {
+		internal void Save() {
 			AdapterManager.UpdateAll(this);
 		}
 
@@ -100,6 +100,50 @@ namespace ShomreiTorah.Billing {
 			}
 		}
 		partial class MasterDirectoryRow {
+			#region PersonData Operations
+			///<summary>Updates the data of this row from the given PersonData.</summary>
+			///<param name="newData">The data to set to.  Empty fields are ignored.</param>
+			internal void Update(PersonData newData) {
+				if (!String.IsNullOrEmpty(newData.FullName))
+					FullName = newData.FullName;
+
+				if (!String.IsNullOrEmpty(newData.HisName))
+					HisName = newData.HisName;
+				if (!String.IsNullOrEmpty(newData.HerName))
+					HerName = newData.HerName;
+				if (!String.IsNullOrEmpty(newData.LastName))
+					LastName = newData.LastName;
+
+				if (!String.IsNullOrEmpty(newData.Address) && !Address.IsInvalidAddress())
+					Address = newData.Address;
+				if (!String.IsNullOrEmpty(newData.City))
+					City = newData.City;
+				if (!String.IsNullOrEmpty(newData.State))
+					State = newData.State;
+				if (!String.IsNullOrEmpty(newData.Zip))
+					Zip = newData.Zip;
+
+				if (!String.IsNullOrEmpty(newData.Phone))
+					Phone = newData.Phone;
+			}
+			///<summary>Sets the data of this row to the given PersonData.</summary>
+			///<param name="data">The data to set to.  Fields that are empty in data will be emptied in the row.</param>
+			internal void Set(PersonData data) {
+				FullName = data.FullName;
+
+				HisName = data.HisName;
+				HerName = data.HerName;
+				LastName = data.LastName;
+
+				Address = data.Address;
+				City = data.City;
+				State = data.State;
+				Zip = data.Zip;
+
+				Phone = data.Phone;
+			}
+			#endregion
+
 			public IEnumerable<ITransaction> Transactions { get { return GetPledgesRows().Cast<ITransaction>().Concat(GetPaymentsRows()); } }
 
 			public string MailingAddress {
