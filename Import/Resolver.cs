@@ -35,6 +35,8 @@ namespace ShomreiTorah.Billing.Import {
 				 || (!String.IsNullOrEmpty(m.State) && !String.IsNullOrEmpty(data.State) && m.State != data.State)
 				)) {
 				retVal.SetAddNew(retVal.Data);
+				if (String.IsNullOrEmpty(retVal.Data.FullName))
+					retVal.ResolvedRow.FullName = retVal.ResolvedRow.VeryFullName;
 
 				//using (var form = new Forms.ResolveAdd(retVal))
 				//    form.ShowDialog();
@@ -141,12 +143,12 @@ namespace ShomreiTorah.Billing.Import {
 
 		public Resolver Resolver { get; private set; }
 
-		public ResolvedPerson(Resolver resolver, PersonData data) : this(resolver, data, new BillingData.MasterDirectoryRow[0]) { }
+		//public ResolvedPerson(Resolver resolver, PersonData data) : this(resolver, data, new BillingData.MasterDirectoryRow[0]) { }
 		public ResolvedPerson(Resolver resolver, PersonData data, IList<BillingData.MasterDirectoryRow> matches) { Resolver = resolver; Data = data; Matches = new ReadOnlyCollection<BillingData.MasterDirectoryRow>(matches); }
 
 		//public void AskUser() { Resolver.Disambiguate(this); }
 
-		public void SetSkip() { UndoAction(); }
+		//public void SetSkip() { UndoAction(); }
 		public void SetAddNew(PersonData newData) {
 			UndoAction();
 			ResolvedRow = Program.Data.MasterDirectory.AddMasterDirectoryRow(newData, "Imported from " + Resolver.Source);

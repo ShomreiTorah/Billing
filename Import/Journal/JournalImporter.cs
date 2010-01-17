@@ -15,6 +15,10 @@ using DevExpress.XtraGrid.Views.Grid;
 using PowerPointJournal;
 using ShomreiTorah.Common;
 using ShomreiTorah.WinForms.Forms;
+using DevExpress.XtraGrid;
+using ShomreiTorah.Billing.Controls;
+using ShomreiTorah.WinForms.Controls;
+using DevExpress.XtraLayout.Utils;
 
 namespace ShomreiTorah.Billing.Import.Journal {
 	partial class JournalImporter : XtraForm {
@@ -162,7 +166,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 				#endregion
 			}
 		}
-		struct ImportState : IComparable {
+		class ImportState : IComparable {
 			public static readonly ImportState ExistingIdentical = new ImportState { Color = Color.Green, Name = "Already imported" };
 			public static readonly ImportState ExistingChanged = new ImportState { Color = Color.DarkOrange, Name = "Already imported, but changed" };
 			public static readonly ImportState Added = new ImportState { Color = Color.LightBlue, Name = "Not imported yet" };
@@ -170,7 +174,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			Color color;
 			public Color Color {
 				get { return color; }
-				set {
+				private set {
 					color = value;
 					BackColor1 = ControlPaint.LightLight(value);
 					BackColor2 = ControlPaint.Light(value);
@@ -181,14 +185,9 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			public string Name { get; private set; }
 			public override string ToString() { return Name; }
 
-			public int CompareTo(object obj) { return String.Compare(Name, ((ImportState)obj).Name, StringComparison.CurrentCultureIgnoreCase); }
+			public int CompareTo(object obj) { return String.Compare(Name, (obj ?? "").ToString(), StringComparison.CurrentCultureIgnoreCase); }
 
-			public override bool Equals(object obj) { return obj is ImportState && ((ImportState)obj) == this; }
-			public override int GetHashCode() { return Name.GetHashCode(); }
-			public static bool operator ==(ImportState a, ImportState b) { return a.Name == b.Name; }
-			public static bool operator !=(ImportState a, ImportState b) { return !(a == b); }
 		}
-
 
 		readonly AdCollection ads;
 		JournalImporter(AdCollection ads, JournalDB.AdsDataTable table) {
@@ -198,7 +197,19 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.ads = ads;
 			adsGrid.DataSource = table;
 
+			accountEdit1.Properties.Items.AddRange(BillingData.AccountNames);
+			accountEdit2.Properties.Items.AddRange(BillingData.AccountNames);
+
+			accountEdit1.Properties.DropDownRows = accountEdit2.Properties.DropDownRows = BillingData.AccountNames.Count;
+
+			methodEdit.Properties.Items.AddRange(BillingData.PaymentMethods);
+			methodEdit.Properties.DropDownRows = BillingData.PaymentMethods.Count;
+
+			pledgesBindingSource.DataSource = Program.Data.Pledges;
+			paymentsBindingSource.DataSource = Program.Data.Payments;
+
 			adsView.BestFitColumns();
+			CheckSelection();
 		}
 
 		private void adsView_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
@@ -209,6 +220,8 @@ namespace ShomreiTorah.Billing.Import.Journal {
 				e.Value = ad.Status.Name;
 			else if (e.Column == colImportState)
 				e.Value = ads[ad].State;
+			else if (e.Column == colResolveType)
+				e.Value = ads[ad].Person.Action;
 		}
 
 		private void adsView_RowStyle(object sender, RowStyleEventArgs e) {
@@ -233,6 +246,49 @@ namespace ShomreiTorah.Billing.Import.Journal {
 
 				e.Appearance.BorderColor = type.Color;
 			}
+		}
+
+		private void adsView_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e) { CheckSelection(); }
+		void CheckSelection() {
+			if (adsView.FocusedRowHandle == GridControl.InvalidRowHandle) {
+				splitContainerControl1.PanelVisibility = SplitPanelVisibility.Panel1;
+				return;
+			}
+			var iad = ads[(JournalDB.AdsRow)adsView.GetFocusedDataRow()];
+			personSelector.ResolvedPerson = iad.Person;
+			personDetails.Text = "Action: " + iad.Person.Action + "\r\n" + new PersonData(iad.Person.ResolvedRow).ToFullString();
+
+			pledgesBindingSource.Position = paymentsBindingSource.IndexOf(iad.Pledge);
+			importPayment.Checked = iad.Payment != null;	//TODO: Save
+			paymentsBindingSource.Position = paymentsBindingSource.IndexOf(iad.Payment);
+
+			splitContainerControl1.PanelVisibility = SplitPanelVisibility.Both;
+		}
+
+		class ResolvingPersonSelector : PersonSelector {
+			ResolvedPerson resolvedPerson;
+			[Browsable(false)]
+			[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+			public ResolvedPerson ResolvedPerson {
+				get { return resolvedPerson; }
+				set {
+					resolvedPerson = value;
+					SelectedPerson = value.ResolvedRow;
+				}
+			}
+
+			protected override void OnItemSelected(ItemSelectionEventArgs e) {
+				ResolvedPerson.SetUseExisting((BillingData.MasterDirectoryRow)e.SelectedRow);
+			}
+			protected override void OnAddNew() {
+				using (var dialog = new NewPerson(p => { ResolvedPerson.SetAddNew(p); return ResolvedPerson.ResolvedRow; })) {
+					dialog.ShowDialog(FindForm());
+				}
+			}
+		}
+
+		private void importPayment_CheckedChanged(object sender, EventArgs e) {
+			paymentGroup.Visibility = importPayment.Checked ? LayoutVisibility.Always : LayoutVisibility.Never;
 		}
 	}
 }
