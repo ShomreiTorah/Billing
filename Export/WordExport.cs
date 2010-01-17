@@ -80,6 +80,7 @@ namespace ShomreiTorah.Billing.Export {
 			if (people == null) throw new ArgumentNullException("people");
 			if (kinds == null) throw new ArgumentNullException("kinds");
 			if (kinds.Length == 0) return null;
+			kinds = kinds.OrderBy(k => (int)k).ToArray();
 
 			progress = progress ?? new EmptyProgressReporter();
 
