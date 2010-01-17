@@ -129,7 +129,7 @@ namespace ShomreiTorah.Billing.Export {
 			this.MinimumSize = new System.Drawing.Size(188, 221);
 			this.Name = "ExportOptions";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-			this.Text = "Create Word Documents";
+			this.Text = "Create Word Statements";
 			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties.VistaTimeProperties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.docTypes)).EndInit();

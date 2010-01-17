@@ -129,7 +129,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
 			this.ribbonPage1.Name = "ribbonPage1";
-			this.ribbonPage1.Text = "Export";
+			this.ribbonPage1.Text = "Statements";
 			// 
 			// ribbonPageGroup1
 			// 
@@ -535,6 +535,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colDepositDateSql.ColumnEdit = this.repositoryItemDepositDateEdit1;
 			this.colDepositDateSql.FieldName = "DepositDateSql";
 			this.colDepositDateSql.Name = "colDepositDateSql";
+			this.colDepositDateSql.OptionsFilter.FilterPopupMode = DevExpress.XtraGrid.Columns.FilterPopupMode.DateSmart;
 			this.colDepositDateSql.Visible = true;
 			this.colDepositDateSql.VisibleIndex = 5;
 			// 

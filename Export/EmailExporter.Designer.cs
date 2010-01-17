@@ -293,7 +293,7 @@ namespace ShomreiTorah.Billing.Export {
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(269, 269);
 			this.Name = "EmailExporter";
-			this.Text = "Send Emails";
+			this.Text = "Send Email Statements";
 			((System.ComponentModel.ISupportInitialize)(this.emailTemplate.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties.VistaTimeProperties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties)).EndInit();

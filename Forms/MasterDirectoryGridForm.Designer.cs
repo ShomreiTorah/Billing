@@ -749,7 +749,7 @@ namespace ShomreiTorah.Billing.Forms {
             this.ribbonPageGroup1,
             this.ribbonPageGroup2});
 			this.ribbonPage1.Name = "ribbonPage1";
-			this.ribbonPage1.Text = "Export";
+			this.ribbonPage1.Text = "Statements";
 			// 
 			// ribbonPageGroup1
 			// 

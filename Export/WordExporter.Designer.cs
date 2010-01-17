@@ -202,7 +202,7 @@ namespace ShomreiTorah.Billing.Export {
 			this.Controls.Add(this.barDockControlTop);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "WordExporter";
-			this.Text = "Create Word Documents";
+			this.Text = "Create Word Statements";
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.buttonEdit)).EndInit();
