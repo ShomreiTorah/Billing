@@ -49,7 +49,7 @@
 		May your support of our Shul bring you ברכה and הצלחה in all of your endeavors.
 	</p>
 	<p>
-		No goods or services have been provided.</p>
+		<%=Server.HtmlEncode(Info.Deductibility)%></p>
 	<p>
 		Sincerely,</p>
 	<p>

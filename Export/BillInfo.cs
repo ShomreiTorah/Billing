@@ -28,10 +28,17 @@ namespace ShomreiTorah.Billing.Export {
 										.Where(ba => ba.Payments.Any() || ba.Pledges.Any())
 										.ToArray()
 			);
+
+			if (Accounts.Any(a => a.Pledges.Any(p => p.Type.StartsWith("Melave Malka", StringComparison.CurrentCultureIgnoreCase)))) {
+				Deductibility = "No goods or services have been provided.  If you attended the Melave Malka, $25 per reservation is not tax deductible.";
+			} else
+				Deductibility = "No goods or services have been provided.";
+
 		}
 
 		public decimal TotalBalance { get; private set; }
 		public ReadOnlyCollection<BillAccount> Accounts { get; private set; }
+		public string Deductibility { get; private set; }
 	}
 	public class BillAccount {
 		internal BillAccount(BillInfo parent, string accountName) {

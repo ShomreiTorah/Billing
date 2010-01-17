@@ -136,6 +136,7 @@ namespace ShomreiTorah.Billing.Export {
 			{ "Year",			(range, info) => range.Text = info.StartDate.Year.ToString(CultureInfo.CurrentCulture) },
 			{ "StartDate",		(range, info) => range.Text = info.StartDate.ToShortDateString() },
 			{ "MailingAddress",	(range, info) => range.Text = info.Person.MailingAddress },
+			{ "Deductibility",	(range, info) => range.Text = info.Deductibility },
 			{ "contributions",	(range, info) => range.Text = info.Accounts.Sum(a => a.Payments.Count) == 1 ? "contribution" : "contributions" },
 			{ "Table",			 CreateTable },
 		};
