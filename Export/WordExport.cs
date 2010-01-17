@@ -223,20 +223,21 @@ namespace ShomreiTorah.Billing.Export {
 					row.Cells[2].Range.Text = account.TotalPaid.ToString("c", Culture);
 				}
 			}
-			row = table.AddRow().MergeFirstCells().StyleAmount();
-			row.Range.ParagraphFormat.SpaceBefore = 10;
-			row.Cells[1].Range.Text = "Total Pledged:";
-			row.Cells[2].Range.Text = info.Person.TotalPledged.ToString("c", Culture);
+			if (info.Kind == BillKind.Bill) {
+				row = table.AddRow().MergeFirstCells().StyleAmount();
+				row.Range.ParagraphFormat.SpaceBefore = 10;
+				row.Cells[1].Range.Text = "Total Pledged:";
+				row.Cells[2].Range.Text = info.Person.TotalPledged.ToString("c", Culture);
 
-			row = table.AddRow().MergeFirstCells().StyleAmount();
-			row.Cells[1].Range.Text = "Total Paid:";
-			row.Cells[2].Range.Text = "-" + info.Person.TotalPaid.ToString("c", Culture);
+				row = table.AddRow().MergeFirstCells().StyleAmount();
+				row.Cells[1].Range.Text = "Total Paid:";
+				row.Cells[2].Range.Text = "-" + info.Person.TotalPaid.ToString("c", Culture);
 
-			row = table.AddRow().MergeFirstCells().StyleAmount().StyleTotal();
-			row.Cells[1].Range.Text = "Balance due:";
-			row.Cells[2].Range.Text = info.Person.BalanceDue.ToString("c", Culture);
-			row.Cells[2].Range.Font.Bold = 1;
-
+				row = table.AddRow().MergeFirstCells().StyleAmount().StyleTotal();
+				row.Cells[1].Range.Text = "Balance due:";
+				row.Cells[2].Range.Text = info.Person.BalanceDue.ToString("c", Culture);
+				row.Cells[2].Range.Font.Bold = 1;
+			}
 			table.Rows[table.Rows.Count].Delete();
 			table.Rows[table.Rows.Count].Delete();
 			table.AutoFitBehavior(WdAutoFitBehavior.wdAutoFitContent);
