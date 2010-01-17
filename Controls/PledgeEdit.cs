@@ -17,6 +17,10 @@ namespace ShomreiTorah.Billing.Controls {
 		public PledgeEdit() {
 			InitializeComponent();
 
+			account.Properties.Items.Clear();
+			account.Properties.Items.AddRange(BillingData.AccountNames);
+			account.Properties.DropDownRows = BillingData.AccountNames.Count;
+
 			if (Program.Data != null)	//Bugfix for nested designer
 				pledgesBindingSource.DataSource = Program.Data;
 		}
