@@ -13,6 +13,7 @@ using ShomreiTorah.Common;
 namespace ShomreiTorah.Billing {
 	partial class BillingData {
 		public static readonly ReadOnlyCollection<string> AccountNames = new ReadOnlyCollection<string>(new[] { "Operating Fund", "Building Fund" });
+		public static readonly ReadOnlyCollection<string> PaymentMethods = new ReadOnlyCollection<string>(new[] { "Cash", "Check" });
 		internal TableAdapterManager AdapterManager { get; private set; }
 		internal void Load() {
 			AdapterManager = new TableAdapterManager {

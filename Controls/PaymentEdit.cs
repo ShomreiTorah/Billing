@@ -19,6 +19,8 @@ namespace ShomreiTorah.Billing.Controls {
 
 			account.Properties.Items.Clear();
 			account.Properties.Items.AddRange(BillingData.AccountNames);
+			method.Properties.Items.Clear();
+			method.Properties.Items.AddRange(BillingData.PaymentMethods);
 
 			if (Program.Data != null)	//Bugfix for nested designer
 				paymentsBindingSource.DataSource = Program.Data;
