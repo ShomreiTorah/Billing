@@ -11,7 +11,12 @@ using ShomreiTorah.Common;
 namespace ShomreiTorah.Billing.Controls {
 	partial class NewPerson : XtraForm {
 		DataView mdView;
-		public NewPerson() {
+		Func<PersonData, BillingData.MasterDirectoryRow> creator;
+		public NewPerson() : this(p => Program.Data.MasterDirectory.AddMasterDirectoryRow(p, "Manually Added")) { }
+		public NewPerson(Func<PersonData, BillingData.MasterDirectoryRow> creator) {
+			if (creator == null) throw new ArgumentNullException("creator");
+
+			this.creator = creator;
 			InitializeComponent();
 			mdView = new DataView(Program.Data.MasterDirectory);
 			grid.DataSource = mdView;
@@ -40,7 +45,7 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 
 		private void create_Click(object sender, EventArgs e) {
-			SelectedPerson = Program.Data.MasterDirectory.AddMasterDirectoryRow(newData.Data, "Manually Added");
+			SelectedPerson = creator(newData.Data);
 		}
 	}
 }

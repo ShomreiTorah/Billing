@@ -37,12 +37,14 @@ namespace ShomreiTorah.Billing.Controls {
 			PopupOpen = false;
 			base.OnItemSelected(e);
 		}
-		private void addNew_Click(object sender, EventArgs e) {
+		private void addNew_Click(object sender, EventArgs e) { OnAddNew(); }
+		protected virtual void OnAddNew() {
 			using (var dialog = new NewPerson()) {
 				SelectedPerson = (dialog.ShowDialog() == DialogResult.OK) ? dialog.SelectedPerson : null;
-				base.OnItemSelected(new ItemSelectionEventArgs(SelectedPerson));
+				RaiseItemSelected(new ItemSelectionEventArgs(SelectedPerson));
 			}
 		}
+		protected void RaiseItemSelected(ItemSelectionEventArgs e) { base.OnItemSelected(e); }
 
 		///<summary>Gets or sets the ID of the selected person.  Used for databinding.</summary>
 		[DefaultValue(null)]
