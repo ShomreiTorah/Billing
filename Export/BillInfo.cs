@@ -25,7 +25,7 @@ namespace ShomreiTorah.Billing.Export {
 
 			Accounts = new ReadOnlyCollection<BillAccount>(
 				BillingData.AccountNames.Select(a => new BillAccount(this, a))
-										.Where(ba => ba.Payments.Any() || ba.Pledges.Any())
+										.Where(ba => (Kind == BillKind.Bill && ba.Pledges.Any()) || ba.Payments.Any())
 										.ToArray()
 			);
 
