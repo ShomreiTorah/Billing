@@ -136,7 +136,7 @@ namespace ShomreiTorah.Billing.Export {
 			this.sendBills.Name = "sendBills";
 			this.sendBills.Size = new System.Drawing.Size(75, 23);
 			this.sendBills.TabIndex = 3;
-			this.sendBills.Text = "Send Bills";
+			this.sendBills.Text = "Send Emails";
 			// 
 			// grid
 			// 

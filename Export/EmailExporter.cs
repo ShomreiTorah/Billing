@@ -116,7 +116,8 @@ namespace ShomreiTorah.Billing.Export {
 			if (e.Button.Caption == sendPreviewButton.Caption) {
 				using (var message = CreateMessage(row)) {
 					if (message == null) {
-						XtraMessageBox.Show(row.FullName + " does not have any relevant data and will not receive an email.");
+						XtraMessageBox.Show(row.FullName + " do not have any relevant data and will not receive an email.",
+											"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
 						return;
 					}
 					message.To.Add(previewMailAddress);
