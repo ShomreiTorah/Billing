@@ -58,7 +58,7 @@ namespace ShomreiTorah.Billing.Export {
 			barManager.Items.AddRange(barItems);
 			mailingDocuments.ItemLinks.AddRange(barItems);
 
-			grid.DataSource = people;
+			grid.DataSource = Program.Data.MasterDirectory.Where(people.Contains).AsDataView();
 			gridView.BestFitColumns();
 		}
 		protected override void OnShown(EventArgs e) {

@@ -65,7 +65,7 @@ namespace ShomreiTorah.Billing.Export {
 
 			CheckPreviewAddress();
 
-			grid.DataSource = people;
+			grid.DataSource = Program.Data.MasterDirectory.Where(people.Contains).AsDataView();
 			gridView.BestFitColumns();
 
 			emailTemplate.Properties.Items.AddRange(fileNames);
@@ -117,7 +117,7 @@ namespace ShomreiTorah.Billing.Export {
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 		private void buttonEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
-			var row = (BillingData.MasterDirectoryRow)gridView.GetFocusedRow();
+			var row = (BillingData.MasterDirectoryRow)gridView.GetFocusedDataRow();
 			if (row == null) return;
 
 			if (e.Button.Caption == sendPreviewButton.Caption) {
@@ -186,7 +186,7 @@ namespace ShomreiTorah.Billing.Export {
 
 		private void gridView_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
 			if (e.Column == colEmails) {
-				var row = (BillingData.MasterDirectoryRow)gridView.GetRow(e.RowHandle);
+				var row = (BillingData.MasterDirectoryRow)gridView.GetDataRow(e.RowHandle);
 				if (row != null)
 					e.Value = String.Join(", ", Array.ConvertAll(row.GetEmailListRows(), m => m.Email));
 			}
