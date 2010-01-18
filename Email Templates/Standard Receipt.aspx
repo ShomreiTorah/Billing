@@ -50,12 +50,6 @@
 	</p>
 	<p>
 		<%=Server.HtmlEncode(Info.Deductibility)%></p>
-	<p>
-		Sincerely,</p>
-	<p>
-		Jason P. (Yaacov) Gitstein<br />
-		Treasurer
-	</p>
 	<table cellspacing="0" style="margin: 0 auto;">
 		<%foreach (var account in Info.Accounts) {%>
 		<thead>
@@ -89,4 +83,10 @@
 		</tr>
 		<%} %>
 	</table>
+	<p>
+		Sincerely,</p>
+	<p>
+		Jason P. (Yaacov) Gitstein<br />
+		Treasurer
+	</p>
 </asp:Content>
