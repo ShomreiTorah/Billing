@@ -92,6 +92,7 @@ namespace ShomreiTorah.Billing.Export {
 		}
 
 		void SendBills() {
+			var exceptions = new List<KeyValuePair<BillingData.MasterDirectoryRow, SmtpException>>();
 			ProgressWorker.Execute(ui => {
 				ui.Maximum = people.Length;
 				foreach (var person in people) {
@@ -104,10 +105,16 @@ namespace ShomreiTorah.Billing.Export {
 						if (message == null) continue;
 
 						message.To.AddRange(person.GetEmailListRows().Select(e => e.MailAddress));
-						Email.Hosted.Send(message);
+						try {
+							Email.Hosted.Send(message);
+						} catch (SmtpException ex) { exceptions.Add(new KeyValuePair<BillingData.MasterDirectoryRow, SmtpException>(person, ex)); }
 					}
 				}
 			}, true);
+			if (exceptions.Any())
+				XtraMessageBox.Show("The following errors occurred while sending the emails:\r\n\r\n  • "
+					+ exceptions.Join("\r\n\r\n  • ", kvp => kvp.Key.FullName + ": " + kvp.Value.Message),
+									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 		private void buttonEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
 			var row = (BillingData.MasterDirectoryRow)gridView.GetFocusedRow();
