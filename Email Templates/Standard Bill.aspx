@@ -60,14 +60,12 @@
 				<%=Server.HtmlEncode(account.AccountName) %>
 				Pledges</th>
 		</tr>
-		<%if (account.OutstandingBalance != 0) { %>
 		<tr>
 			<td colspan="2" style="padding-bottom: 7px;">Starting Balance (as of
 				<%=Info.StartDate.ToShortDateString() %>): </td>
 			<td style="text-align: right; padding-bottom: 7px;">
 				<%=account.OutstandingBalance.ToString("c")%></td>
 		</tr>
-		<%} %>
 		<%curStyle = ""; foreach (var pledge in account.Pledges) {
 		curStyle = curStyle == "" ? StripeStyle : "";%>
 		<tr>
@@ -136,17 +134,19 @@
 		<tr>
 			<td colspan="2" style="padding-top: 5px; border-top: solid 1px black; border-bottom: solid 2px black;">
 				Balance due: </td>
-			<td style="padding-top: 5px; text-align: right; border-top: solid 1px black; border-bottom: solid 2px black;">
-				<%=Info.TotalBalance.ToString("c") %></td>
+			<td style="padding-top: 5px; text-align: right; border-top: solid 1px black; border-bottom: solid 2px black;"><b>
+				<%=Info.TotalBalance.ToString("c") %></b></td>
 		</tr>
 	</table>
-	<p>
-		Mail your remittance to:</p>
+	<%if (Info.TotalBalance > 0) { %><p>
+		Please make your checks payable to <b>Congregation Shomrei Torah of Passaic-Clifton</b>,
+		and mail your remittance to:</p>
 	<blockquote>
 		<p>
 			Congregation Shomrei Torah of Passaic-Clifton<br />
 			1360 Clifton Ave. # 908<br />
 			Clifton, NJ 07012</p>
+		<%} %>
 	</blockquote>
 	<p>
 		Sincerely,</p>
