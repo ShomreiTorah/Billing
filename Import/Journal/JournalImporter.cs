@@ -98,7 +98,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 		}
 		static string GetSubType(AdType type) {
 			if (type.Name == "Greeting")
-				return "Greeting Ad";
+				return "Greeting ad";
 			if (type.DefaultPrice > 180)
 				return type.Name + " ad";
 			else
