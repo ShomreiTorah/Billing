@@ -25,8 +25,17 @@ namespace ShomreiTorah.Billing.Export {
 
 		public static void Execute(params BillingData.MasterDirectoryRow[] people) {
 			if (people == null) throw new ArgumentNullException("people");
+			var originalPeople = people;
 			people = Array.FindAll(people, r => r.GetEmailListRows().Length > 0);
-			if (people.Length == 0) return;
+			if (people.Length == 0) {
+				if (originalPeople.Length == 1)
+					XtraMessageBox.Show(originalPeople[0].FullName + " do not have any email addresses.",
+										"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				else
+					XtraMessageBox.Show("None of the people you selected have email addresses.",
+										"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return;
+			}
 			Program.DoReload();
 
 			if (HttpRuntime.AppDomainAppVirtualPath == null) {
@@ -147,7 +156,7 @@ namespace ShomreiTorah.Billing.Export {
 				var form = new XtraForm {
 					Text = "Email Preview: " + subject,
 					FormBorderStyle = FormBorderStyle.SizableToolWindow,
-					Size = new Size(600, 400),
+					Size = new Size(800, 600),
 					StartPosition = FormStartPosition.CenterParent,
 					Icon = this.Icon
 				};
