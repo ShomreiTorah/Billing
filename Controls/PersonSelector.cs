@@ -32,6 +32,9 @@ namespace ShomreiTorah.Billing.Controls {
 														   "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
 					return;
 			}
+			var args = new SelectingPersonEventArgs(person);
+			OnSelectingPerson(args);
+			if (args.Cancel) return;
 
 			SelectedPerson = person;
 			PopupOpen = false;
@@ -40,7 +43,14 @@ namespace ShomreiTorah.Billing.Controls {
 		private void addNew_Click(object sender, EventArgs e) { OnAddNew(); }
 		protected virtual void OnAddNew() {
 			using (var dialog = new NewPerson()) {
-				SelectedPerson = (dialog.ShowDialog() == DialogResult.OK) ? dialog.SelectedPerson : null;
+				var person = (dialog.ShowDialog() == DialogResult.OK) ? dialog.SelectedPerson : null;
+				if (person == null) return;
+
+				var args = new SelectingPersonEventArgs(person);
+				OnSelectingPerson(args);
+				if (args.Cancel) return;
+
+				SelectedPerson = person;
 				RaiseItemSelected(new ItemSelectionEventArgs(SelectedPerson));
 			}
 		}
@@ -89,5 +99,17 @@ namespace ShomreiTorah.Billing.Controls {
 			if (SelectedPersonChanged != null)
 				SelectedPersonChanged(this, e);
 		}
+		///<summary>Occurs when the user is about to select a new person.</summary>
+		public event EventHandler<SelectingPersonEventArgs> SelectingPerson;
+		///<summary>Raises the SelectingPerson event.</summary>
+		///<param name="e">A CancelEventArgs object that provides the event data.</param>
+		internal protected virtual void OnSelectingPerson(SelectingPersonEventArgs e) {
+			if (SelectingPerson != null)
+				SelectingPerson(this, e);
+		}
+	}
+	class SelectingPersonEventArgs : CancelEventArgs {
+		public SelectingPersonEventArgs(BillingData.MasterDirectoryRow person) { Person = person; }
+		public BillingData.MasterDirectoryRow Person { get; private set; }
 	}
 }
