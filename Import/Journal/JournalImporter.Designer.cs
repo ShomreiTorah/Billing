@@ -49,6 +49,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.colAdType = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
 			this.colDateEntered = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
 			this.colNotes = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
+			this.repositoryItemMemoExEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit();
 			this.gridBand3 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
 			this.colAmountToBill = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
 			this.colPaymentMethod = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
@@ -132,6 +133,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			((System.ComponentModel.ISupportInitialize)(this.adsGrid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.adsDataTableBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.adsView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoExEdit1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentData)).BeginInit();
 			this.paymentData.SuspendLayout();
@@ -241,7 +243,8 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.adsGrid.MainView = this.adsView;
 			this.adsGrid.Name = "adsGrid";
 			this.adsGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.checkNumberEdit});
+            this.checkNumberEdit,
+            this.repositoryItemMemoExEdit1});
 			this.adsGrid.Size = new System.Drawing.Size(741, 659);
 			this.adsGrid.TabIndex = 0;
 			this.adsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -253,8 +256,12 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// 
 			// adsView
 			// 
+			this.adsView.Appearance.HorzLine.BackColor = System.Drawing.Color.DarkGray;
+			this.adsView.Appearance.HorzLine.Options.UseBackColor = true;
 			this.adsView.Appearance.RowSeparator.BorderColor = System.Drawing.Color.Blue;
 			this.adsView.Appearance.RowSeparator.Options.UseBorderColor = true;
+			this.adsView.Appearance.VertLine.BackColor = System.Drawing.Color.DarkGray;
+			this.adsView.Appearance.VertLine.Options.UseBackColor = true;
 			this.adsView.Bands.AddRange(new DevExpress.XtraGrid.Views.BandedGrid.GridBand[] {
             this.gridBand1,
             this.gridBand2,
@@ -288,7 +295,6 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.adsView.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "", null, "({0} ads)")});
 			this.adsView.Name = "adsView";
-			this.adsView.OptionsBehavior.Editable = false;
 			this.adsView.OptionsCustomization.AllowRowSizing = true;
 			this.adsView.RowSeparatorHeight = 24;
 			this.adsView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
@@ -428,6 +434,8 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// 
 			// colExternalID
 			// 
+			this.colExternalID.DisplayFormat.FormatString = "ID: {0}";
+			this.colExternalID.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
 			this.colExternalID.FieldName = "ExternalID";
 			this.colExternalID.Name = "colExternalID";
 			this.colExternalID.OptionsColumn.AllowFocus = false;
@@ -437,6 +445,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// colAdStatus
 			// 
 			this.colAdStatus.Caption = "Ad Status";
+			this.colAdStatus.FieldName = "Status";
 			this.colAdStatus.Name = "colAdStatus";
 			this.colAdStatus.OptionsColumn.AllowFocus = false;
 			this.colAdStatus.UnboundType = DevExpress.Data.UnboundColumnType.String;
@@ -466,6 +475,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// colAdType
 			// 
 			this.colAdType.Caption = "Ad Type";
+			this.colAdType.FieldName = "Type";
 			this.colAdType.Name = "colAdType";
 			this.colAdType.OptionsColumn.AllowFocus = false;
 			this.colAdType.RowIndex = 2;
@@ -484,12 +494,20 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// 
 			// colNotes
 			// 
+			this.colNotes.ColumnEdit = this.repositoryItemMemoExEdit1;
 			this.colNotes.FieldName = "Notes";
 			this.colNotes.Name = "colNotes";
-			this.colNotes.OptionsColumn.AllowFocus = false;
 			this.colNotes.RowIndex = 3;
 			this.colNotes.Visible = true;
 			this.colNotes.Width = 94;
+			// 
+			// repositoryItemMemoExEdit1
+			// 
+			this.repositoryItemMemoExEdit1.AutoHeight = false;
+			this.repositoryItemMemoExEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.repositoryItemMemoExEdit1.Name = "repositoryItemMemoExEdit1";
+			this.repositoryItemMemoExEdit1.ReadOnly = true;
 			// 
 			// gridBand3
 			// 
@@ -522,6 +540,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// 
 			// colCheckNumber
 			// 
+			this.colCheckNumber.AutoFillDown = true;
 			this.colCheckNumber.ColumnEdit = this.checkNumberEdit;
 			this.colCheckNumber.FieldName = "CheckNumber";
 			this.colCheckNumber.Name = "colCheckNumber";
@@ -533,8 +552,8 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// checkNumberEdit
 			// 
 			this.checkNumberEdit.AutoHeight = false;
-			this.checkNumberEdit.DisplayFormat.FormatString = "f0";
-			this.checkNumberEdit.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.checkNumberEdit.DisplayFormat.FormatString = "Check {0:f0}";
+			this.checkNumberEdit.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
 			this.checkNumberEdit.Name = "checkNumberEdit";
 			this.checkNumberEdit.NullText = "N/A";
 			// 
@@ -651,7 +670,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
             0,
             0,
             0});
-			this.CheckNumberSpinEdit.Location = new System.Drawing.Point(244, 114);
+			this.CheckNumberSpinEdit.Location = new System.Drawing.Point(265, 114);
 			this.CheckNumberSpinEdit.Name = "CheckNumberSpinEdit";
 			this.CheckNumberSpinEdit.Properties.DisplayFormat.FormatString = "f0";
 			this.CheckNumberSpinEdit.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
@@ -659,7 +678,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.CheckNumberSpinEdit.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
 			this.CheckNumberSpinEdit.Properties.IsFloatValue = false;
 			this.CheckNumberSpinEdit.Properties.Mask.EditMask = "f0";
-			this.CheckNumberSpinEdit.Size = new System.Drawing.Size(90, 20);
+			this.CheckNumberSpinEdit.Size = new System.Drawing.Size(69, 20);
 			this.CheckNumberSpinEdit.StyleController = this.paymentData;
 			this.CheckNumberSpinEdit.TabIndex = 9;
 			// 
@@ -675,7 +694,12 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.spinEdit1.Name = "spinEdit1";
 			this.spinEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.spinEdit1.Size = new System.Drawing.Size(70, 20);
+			this.spinEdit1.Properties.DisplayFormat.FormatString = "c";
+			this.spinEdit1.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.spinEdit1.Properties.EditFormat.FormatString = "c";
+			this.spinEdit1.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.spinEdit1.Properties.Mask.EditMask = "c";
+			this.spinEdit1.Size = new System.Drawing.Size(91, 20);
 			this.spinEdit1.StyleController = this.paymentData;
 			this.spinEdit1.TabIndex = 11;
 			// 
@@ -753,11 +777,11 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// methodEdit
 			// 
 			this.methodEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.paymentsBindingSource, "Method", true));
-			this.methodEdit.Location = new System.Drawing.Point(244, 90);
+			this.methodEdit.Location = new System.Drawing.Point(265, 90);
 			this.methodEdit.Name = "methodEdit";
 			this.methodEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.methodEdit.Size = new System.Drawing.Size(90, 20);
+			this.methodEdit.Size = new System.Drawing.Size(69, 20);
 			this.methodEdit.StyleController = this.paymentData;
 			this.methodEdit.TabIndex = 19;
 			// 
@@ -768,7 +792,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.accountEdit2.Name = "accountEdit2";
 			this.accountEdit2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.accountEdit2.Size = new System.Drawing.Size(70, 20);
+			this.accountEdit2.Size = new System.Drawing.Size(91, 20);
 			this.accountEdit2.StyleController = this.paymentData;
 			this.accountEdit2.TabIndex = 20;
 			// 
@@ -930,7 +954,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.layoutControlItem4.CustomizationFormText = "Account";
 			this.layoutControlItem4.Location = new System.Drawing.Point(0, 24);
 			this.layoutControlItem4.Name = "ItemForAccount";
-			this.layoutControlItem4.Size = new System.Drawing.Size(147, 24);
+			this.layoutControlItem4.Size = new System.Drawing.Size(168, 24);
 			this.layoutControlItem4.Text = "Account";
 			this.layoutControlItem4.TextSize = new System.Drawing.Size(69, 13);
 			// 
@@ -938,9 +962,9 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// 
 			this.ItemForMethod.Control = this.methodEdit;
 			this.ItemForMethod.CustomizationFormText = "Method";
-			this.ItemForMethod.Location = new System.Drawing.Point(147, 24);
+			this.ItemForMethod.Location = new System.Drawing.Point(168, 24);
 			this.ItemForMethod.Name = "ItemForMethod";
-			this.ItemForMethod.Size = new System.Drawing.Size(167, 24);
+			this.ItemForMethod.Size = new System.Drawing.Size(146, 24);
 			this.ItemForMethod.Text = "Method";
 			this.ItemForMethod.TextSize = new System.Drawing.Size(69, 13);
 			// 
@@ -950,7 +974,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.layoutControlItem5.CustomizationFormText = "Amount";
 			this.layoutControlItem5.Location = new System.Drawing.Point(0, 48);
 			this.layoutControlItem5.Name = "ItemForAmount";
-			this.layoutControlItem5.Size = new System.Drawing.Size(147, 24);
+			this.layoutControlItem5.Size = new System.Drawing.Size(168, 24);
 			this.layoutControlItem5.Text = "Amount";
 			this.layoutControlItem5.TextSize = new System.Drawing.Size(69, 13);
 			// 
@@ -958,9 +982,9 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// 
 			this.ItemForCheckNumber.Control = this.CheckNumberSpinEdit;
 			this.ItemForCheckNumber.CustomizationFormText = "Check Number";
-			this.ItemForCheckNumber.Location = new System.Drawing.Point(147, 48);
+			this.ItemForCheckNumber.Location = new System.Drawing.Point(168, 48);
 			this.ItemForCheckNumber.Name = "ItemForCheckNumber";
-			this.ItemForCheckNumber.Size = new System.Drawing.Size(167, 24);
+			this.ItemForCheckNumber.Size = new System.Drawing.Size(146, 24);
 			this.ItemForCheckNumber.Text = "Check Number";
 			this.ItemForCheckNumber.TextSize = new System.Drawing.Size(69, 13);
 			// 
@@ -1059,25 +1083,25 @@ namespace ShomreiTorah.Billing.Import.Journal {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.DateDateEdit.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.DateDateEdit.Size = new System.Drawing.Size(94, 20);
+			this.DateDateEdit.Size = new System.Drawing.Size(110, 20);
 			this.DateDateEdit.StyleController = this.pledgeData;
 			this.DateDateEdit.TabIndex = 7;
 			// 
 			// TypeTextEdit
 			// 
 			this.TypeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.pledgesBindingSource, "Type", true));
-			this.TypeTextEdit.Location = new System.Drawing.Point(218, 12);
+			this.TypeTextEdit.Location = new System.Drawing.Point(234, 12);
 			this.TypeTextEdit.Name = "TypeTextEdit";
-			this.TypeTextEdit.Size = new System.Drawing.Size(124, 20);
+			this.TypeTextEdit.Size = new System.Drawing.Size(108, 20);
 			this.TypeTextEdit.StyleController = this.pledgeData;
 			this.TypeTextEdit.TabIndex = 8;
 			// 
 			// SubTypeTextEdit
 			// 
 			this.SubTypeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.pledgesBindingSource, "SubType", true));
-			this.SubTypeTextEdit.Location = new System.Drawing.Point(218, 36);
+			this.SubTypeTextEdit.Location = new System.Drawing.Point(234, 36);
 			this.SubTypeTextEdit.Name = "SubTypeTextEdit";
-			this.SubTypeTextEdit.Size = new System.Drawing.Size(124, 20);
+			this.SubTypeTextEdit.Size = new System.Drawing.Size(108, 20);
 			this.SubTypeTextEdit.StyleController = this.pledgeData;
 			this.SubTypeTextEdit.TabIndex = 9;
 			// 
@@ -1088,7 +1112,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.accountEdit1.Name = "accountEdit1";
 			this.accountEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.accountEdit1.Size = new System.Drawing.Size(94, 20);
+			this.accountEdit1.Size = new System.Drawing.Size(110, 20);
 			this.accountEdit1.StyleController = this.pledgeData;
 			this.accountEdit1.TabIndex = 10;
 			// 
@@ -1108,16 +1132,17 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.AmountSpinEdit.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
 			this.AmountSpinEdit.Properties.EditFormat.FormatString = "c";
 			this.AmountSpinEdit.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.AmountSpinEdit.Size = new System.Drawing.Size(94, 20);
+			this.AmountSpinEdit.Properties.Mask.EditMask = "c";
+			this.AmountSpinEdit.Size = new System.Drawing.Size(110, 20);
 			this.AmountSpinEdit.StyleController = this.pledgeData;
 			this.AmountSpinEdit.TabIndex = 11;
 			// 
 			// NoteTextEdit
 			// 
 			this.NoteTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.pledgesBindingSource, "Note", true));
-			this.NoteTextEdit.Location = new System.Drawing.Point(218, 60);
+			this.NoteTextEdit.Location = new System.Drawing.Point(234, 60);
 			this.NoteTextEdit.Name = "NoteTextEdit";
-			this.NoteTextEdit.Size = new System.Drawing.Size(124, 20);
+			this.NoteTextEdit.Size = new System.Drawing.Size(108, 20);
 			this.NoteTextEdit.StyleController = this.pledgeData;
 			this.NoteTextEdit.TabIndex = 12;
 			// 
@@ -1291,9 +1316,9 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// 
 			this.ItemForType.Control = this.TypeTextEdit;
 			this.ItemForType.CustomizationFormText = "Type";
-			this.ItemForType.Location = new System.Drawing.Point(152, 0);
+			this.ItemForType.Location = new System.Drawing.Point(168, 0);
 			this.ItemForType.Name = "ItemForType";
-			this.ItemForType.Size = new System.Drawing.Size(182, 24);
+			this.ItemForType.Size = new System.Drawing.Size(166, 24);
 			this.ItemForType.Text = "Type";
 			this.ItemForType.TextSize = new System.Drawing.Size(50, 13);
 			// 
@@ -1301,9 +1326,9 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// 
 			this.ItemForSubType.Control = this.SubTypeTextEdit;
 			this.ItemForSubType.CustomizationFormText = "Sub Type";
-			this.ItemForSubType.Location = new System.Drawing.Point(152, 24);
+			this.ItemForSubType.Location = new System.Drawing.Point(168, 24);
 			this.ItemForSubType.Name = "ItemForSubType";
-			this.ItemForSubType.Size = new System.Drawing.Size(182, 24);
+			this.ItemForSubType.Size = new System.Drawing.Size(166, 24);
 			this.ItemForSubType.Text = "Sub Type";
 			this.ItemForSubType.TextSize = new System.Drawing.Size(50, 13);
 			// 
@@ -1311,9 +1336,9 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// 
 			this.ItemForNote.Control = this.NoteTextEdit;
 			this.ItemForNote.CustomizationFormText = "Note";
-			this.ItemForNote.Location = new System.Drawing.Point(152, 48);
+			this.ItemForNote.Location = new System.Drawing.Point(168, 48);
 			this.ItemForNote.Name = "ItemForNote";
-			this.ItemForNote.Size = new System.Drawing.Size(182, 24);
+			this.ItemForNote.Size = new System.Drawing.Size(166, 24);
 			this.ItemForNote.Text = "Note";
 			this.ItemForNote.TextSize = new System.Drawing.Size(50, 13);
 			// 
@@ -1323,7 +1348,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.ItemForAccount.CustomizationFormText = "Account";
 			this.ItemForAccount.Location = new System.Drawing.Point(0, 24);
 			this.ItemForAccount.Name = "ItemForAccount";
-			this.ItemForAccount.Size = new System.Drawing.Size(152, 24);
+			this.ItemForAccount.Size = new System.Drawing.Size(168, 24);
 			this.ItemForAccount.Text = "Account";
 			this.ItemForAccount.TextSize = new System.Drawing.Size(50, 13);
 			// 
@@ -1333,7 +1358,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.ItemForDate.CustomizationFormText = "Date";
 			this.ItemForDate.Location = new System.Drawing.Point(0, 0);
 			this.ItemForDate.Name = "ItemForDate";
-			this.ItemForDate.Size = new System.Drawing.Size(152, 24);
+			this.ItemForDate.Size = new System.Drawing.Size(168, 24);
 			this.ItemForDate.Text = "Date";
 			this.ItemForDate.TextSize = new System.Drawing.Size(50, 13);
 			// 
@@ -1353,7 +1378,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.ItemForAmount.CustomizationFormText = "Amount";
 			this.ItemForAmount.Location = new System.Drawing.Point(0, 48);
 			this.ItemForAmount.Name = "ItemForAmount";
-			this.ItemForAmount.Size = new System.Drawing.Size(152, 24);
+			this.ItemForAmount.Size = new System.Drawing.Size(168, 24);
 			this.ItemForAmount.Text = "Amount";
 			this.ItemForAmount.TextSize = new System.Drawing.Size(50, 13);
 			// 
@@ -1406,6 +1431,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			((System.ComponentModel.ISupportInitialize)(this.adsGrid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.adsDataTableBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.adsView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoExEdit1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentData)).EndInit();
 			this.paymentData.ResumeLayout(false);
@@ -1595,5 +1621,6 @@ namespace ShomreiTorah.Billing.Import.Journal {
 		private DevExpress.XtraEditors.ComboBoxEdit accountEdit2;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;
 		private DevExpress.XtraLayout.LayoutControlGroup paymentGroup;
+		private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit repositoryItemMemoExEdit1;
 	}
 }

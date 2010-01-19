@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -10,15 +11,15 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
-using PowerPointJournal;
-using ShomreiTorah.Common;
-using ShomreiTorah.WinForms.Forms;
-using DevExpress.XtraGrid;
-using ShomreiTorah.Billing.Controls;
-using ShomreiTorah.WinForms.Controls;
 using DevExpress.XtraLayout.Utils;
+using PowerPointJournal;
+using ShomreiTorah.Billing.Controls;
+using ShomreiTorah.Common;
+using ShomreiTorah.WinForms.Controls;
+using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Import.Journal {
 	partial class JournalImporter : XtraForm {
@@ -49,69 +50,59 @@ namespace ShomreiTorah.Billing.Import.Journal {
 				journal.ReadXml(dbPath);
 				AdCollection ads = new AdCollection();
 
-				ProgressWorker.Execute(ui => {
-					ui.Caption = "Importing journal";
+				for (int i = 0; i < journal.Ads.Count; i++) {
+					var iad = new ImportedAd(journal.Ads[i], year);
+					iad.Person = resolver.Resolve(new PersonData(iad.Ad));
 
-					ui.Maximum = journal.Ads.Count;
-					for (int i = 0; i < journal.Ads.Count; i++) {
-						ui.Progress = i;
-						if (ui.WasCanceled) return;
+					#region Pledge
+					iad.Pledge = Program.Data.Pledges.AsEnumerable().FirstOrDefault(p => p.ExternalSource == source
+																					 && !p.IsExternalIDNull()
+																					 && p.ExternalID == iad.Ad.InternalID);
+					if (iad.Pledge == null) {
+						iad.Pledge = Program.Data.Pledges.AddPledgesRow(
+							Guid.NewGuid(), iad.Person.ResolvedRow,
+							iad.Ad.DateEntered, "Melave Malka Journal", GetSubType(iad.Ad.Type),
+							Account, iad.Ad.AmountToBill,
+							null, iad.GeneratedComments,
+							DateTime.Now, modifier, source, iad.Ad.InternalID);
+						iad.Pledge.Modifier = modifier;
+						iad.State = ImportState.Added;
+					} else
+						iad.State = ImportState.ExistingIdentical;
+					#endregion
 
-						var iad = new ImportedAd(journal.Ads[i], year);
-						iad.Person = resolver.Resolve(new PersonData(iad.Ad));
-
-						#region Pledge
-						iad.Pledge = Program.Data.Pledges.AsEnumerable().FirstOrDefault(p => p.ExternalSource == source
-																						 && !p.IsExternalIDNull()
-																						 && p.ExternalID == iad.Ad.InternalID);
-						if (iad.Pledge == null) {
-							iad.Pledge = Program.Data.Pledges.AddPledgesRow(
-								Guid.NewGuid(), iad.Person.ResolvedRow,
-								iad.Ad.DateEntered, "Journal Ad", iad.Ad.Type.Name,
-								Account, iad.Ad.AmountToBill,
-								null, iad.GeneratedComments,
-								DateTime.Now, modifier, source, iad.Ad.InternalID);
-							iad.Pledge.Modifier = modifier;
-							iad.State = ImportState.Added;
-						} else
-							iad.State = ImportState.ExistingIdentical;
-						#endregion
-
-						#region Payment
-						iad.Payment = Program.Data.Payments.AsEnumerable().FirstOrDefault(p => p.ExternalSource == source
-																						   && !p.IsExternalIDNull()
-																						   && p.ExternalID == iad.Ad.InternalID);
-						if (iad.Ad.PaymentMethod == "Unpaid") {
-							if (iad.Payment != null)
-								iad.State = ImportState.ExistingChanged;	//We have a payment, but we shouldn't
-						} else {
-							if (iad.Payment == null) {
-								iad.Payment = Program.Data.Payments.AddPaymentsRow(
-									Guid.NewGuid(), iad.Person.ResolvedRow,
-									iad.Ad.DateEntered, iad.Ad.PaymentMethod, iad.Ad.IsCheckNumberNull() ? -1 : iad.Ad.CheckNumber,
-									Account, iad.Ad.AmountToBill, iad.GeneratedComments,
-									DateTime.Now, modifier, DateTime.MinValue, source, iad.Ad.InternalID);
-
-								iad.Payment.SetDepositDateSqlNull();
-								if (iad.Ad.IsCheckNumberNull())
-									iad.Payment.SetCheckNumberNull();
-								iad.Payment.Modifier = modifier;
-
-								if (iad.State == ImportState.ExistingIdentical)
-									iad.State = ImportState.ExistingChanged;
-							}
+					#region Payment
+					iad.Payment = Program.Data.Payments.AsEnumerable().FirstOrDefault(p => p.ExternalSource == source
+																					   && !p.IsExternalIDNull()
+																					   && p.ExternalID == iad.Ad.InternalID);
+					if (iad.Ad.PaymentMethod == "Unpaid") {
+						if (iad.Payment != null)
+							iad.State = ImportState.ExistingChanged;	//We have a payment, but we shouldn't
+					} else {
+						if (iad.Payment == null) {
+							iad.CreatePayment();
+							if (iad.State == ImportState.ExistingIdentical)
+								iad.State = ImportState.ExistingChanged;
 						}
-						#endregion
-
-						iad.CheckModified();
-
-						ads.Add(iad);
 					}
-				}, true);
+					#endregion
+
+					iad.CheckModified();
+
+					ads.Add(iad);
+				}
 				using (var dialog = new JournalImporter(ads, journal.Ads)) {
 					dialog.ShowDialog();
 				}
 			}
+		}
+		static string GetSubType(AdType type) {
+			if (type.Name == "Greeting")
+				return "Greeting Ad";
+			if (type.DefaultPrice > 180)
+				return type.Name + " ad";
+			else
+				return type.Name + " page ad";
 		}
 
 		class AdCollection : KeyedCollection<JournalDB.AdsRow, ImportedAd> {
@@ -119,17 +110,21 @@ namespace ShomreiTorah.Billing.Import.Journal {
 		}
 		static readonly SeatsFormatter Seats = new SeatsFormatter();
 		class ImportedAd {
+			readonly string modifier, source;
 			public ImportedAd(JournalDB.AdsRow ad, int year) {
+				modifier = "Journal " + year + " Import";
+				source = "Journal " + year;
 				Ad = ad;
 				#region Comments
 				GeneratedComments = "Imported from Journal " + year + Environment.NewLine
 								  + "Internal ID: " + Ad.InternalID + Environment.NewLine
 								  + "External ID: " + Ad.ExternalID + Environment.NewLine
 								  + "Men: " + Seats.Format(null, Ad.MensSeats, null) + ", Women: " + Seats.Format(null, Ad.WomensSeats, null) + Environment.NewLine
-								  + "Status: " + Ad.Status;
-				if (!Ad.IsEmailNull() && String.IsNullOrEmpty(Ad.Email))
+								  + "Status: " + Ad.Status.Name;
+
+				if (!Ad.IsEmailNull() && !String.IsNullOrEmpty(Ad.Email))
 					GeneratedComments += "Email: " + Ad.Email + Environment.NewLine;
-				if (!Ad.IsNotesNull() && String.IsNullOrEmpty(Ad.Notes))
+				if (!Ad.IsNotesNull() && !String.IsNullOrEmpty(Ad.Notes))
 					GeneratedComments += Environment.NewLine + Environment.NewLine + Ad.Notes;
 				#endregion
 			}
@@ -141,6 +136,19 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			public BillingData.PaymentsRow Payment { get; set; }
 
 			public ImportState State { get; set; }
+
+			public void CreatePayment() {
+				Payment = Program.Data.Payments.AddPaymentsRow(
+					Guid.NewGuid(), Person.ResolvedRow,
+					Ad.DateEntered, Ad.PaymentMethod, Ad.IsCheckNumberNull() ? -1 : Ad.CheckNumber,
+					Account, Ad.AmountToBill, GeneratedComments,
+					DateTime.Now, modifier, DateTime.MinValue, source, Ad.InternalID);
+
+				Payment.SetDepositDateSqlNull();
+				if (Ad.IsCheckNumberNull())
+					Payment.SetCheckNumberNull();
+				Payment.Modifier = modifier;
+			}
 
 			public void CheckModified() {
 				#region Check for changes
@@ -193,7 +201,8 @@ namespace ShomreiTorah.Billing.Import.Journal {
 		JournalImporter(AdCollection ads, JournalDB.AdsDataTable table) {
 			InitializeComponent();
 
-			colMensSeats.DisplayFormat.Format = colWomensSeats.DisplayFormat.Format = new SeatsFormatter();
+			colMensSeats.DisplayFormat.Format = new LabelledSeatesFormatter("Men");
+			colWomensSeats.DisplayFormat.Format = new LabelledSeatesFormatter("Women");
 			this.ads = ads;
 			adsGrid.DataSource = table;
 
@@ -210,6 +219,13 @@ namespace ShomreiTorah.Billing.Import.Journal {
 
 			adsView.BestFitColumns();
 			CheckSelection();
+		}
+		class LabelledSeatesFormatter : SeatsFormatter {
+			readonly string prefix;
+			public LabelledSeatesFormatter(string prefix) { this.prefix = prefix; }
+			public override string Format(string format, object arg, IFormatProvider formatProvider) {
+				return prefix + ": " + base.Format(format, arg, formatProvider);
+			}
 		}
 
 		private void adsView_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
@@ -239,12 +255,14 @@ namespace ShomreiTorah.Billing.Import.Journal {
 				var row = adsView.GetDataRow(e.RowHandle) as JournalDB.AdsRow;
 				if (row == null) return;
 
-				var type = ads[row].State;
+				var iad = ads[row];
+				var type = iad.State;
 				e.Appearance.BackColor = type.BackColor1;
 				e.Appearance.BackColor2 = type.BackColor2;
 				e.Appearance.GradientMode = LinearGradientMode.ForwardDiagonal;
 
-				e.Appearance.BorderColor = type.Color;
+				if (iad.Person.Action == ResolveAction.AddNew && (row.City == "Passaic" || row.City == "Clifton"))
+					e.Appearance.ForeColor = Color.Red;
 			}
 		}
 
@@ -258,9 +276,10 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			personSelector.ResolvedPerson = iad.Person;
 			personDetails.Text = "Action: " + iad.Person.Action + "\r\n" + new PersonData(iad.Person.ResolvedRow).ToFullString();
 
-			pledgesBindingSource.Position = paymentsBindingSource.IndexOf(iad.Pledge);
-			importPayment.Checked = iad.Payment != null;	//TODO: Save
-			paymentsBindingSource.Position = paymentsBindingSource.IndexOf(iad.Payment);
+			pledgesBindingSource.Position = pledgesBindingSource.Find("PledgeId", iad.Pledge.PledgeId);
+			importPayment.Checked = iad.Payment != null;
+			if (iad.Payment != null)
+				paymentsBindingSource.Position = paymentsBindingSource.Find("PaymentId", iad.Payment.PaymentId);
 
 			splitContainerControl1.PanelVisibility = SplitPanelVisibility.Both;
 		}
@@ -289,6 +308,17 @@ namespace ShomreiTorah.Billing.Import.Journal {
 
 		private void importPayment_CheckedChanged(object sender, EventArgs e) {
 			paymentGroup.Visibility = importPayment.Checked ? LayoutVisibility.Always : LayoutVisibility.Never;
+
+			var iad = ads[(JournalDB.AdsRow)adsView.GetFocusedDataRow()];
+			if (importPayment.Checked == (iad.Payment != null)) return;
+
+			if (importPayment.Checked) {
+				iad.CreatePayment();
+				paymentsBindingSource.Position = paymentsBindingSource.Find("PaymentId", iad.Payment.PaymentId);
+			} else {
+				iad.Payment.Delete();
+				iad.Payment = null;
+			}
 		}
 	}
 }
