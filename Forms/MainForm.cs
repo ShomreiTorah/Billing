@@ -35,6 +35,8 @@ namespace ShomreiTorah.Billing.Forms {
 			paymentView.ActiveFilterCriteria = new OperandProperty("Modified") > Program.LaunchTime.ToUniversalTime();
 			Program.Data.Payments.RowChanged += Payments_RowChanged;
 			Program.Data.Pledges.RowChanged += Pledges_RowChanged;
+
+			ribbon.SelectedPage = ribbon.Pages[0];
 		}
 		#region Modified grids
 		void Pledges_RowChanged(object sender, DataRowChangeEventArgs e) {
