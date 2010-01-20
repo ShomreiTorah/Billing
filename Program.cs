@@ -59,7 +59,13 @@ namespace ShomreiTorah.Billing {
 				if (CheckForUpdate()) return;
 
 				CreateAspxDomain();	//This call executes the program in the ASP.Net AppDomain
-			} catch (Exception ex) { CloseSplash();if (!Debugger.IsAttached) new Forms.ErrorForm(ex).ShowDialog(); }
+			} catch (Exception ex) {
+				CloseSplash();
+				if (Debugger.IsAttached)
+					throw;
+				else
+					new Forms.ErrorForm(ex).ShowDialog();
+			}
 		}
 		///<summary>Called in both AppDomains to load a specific ShomreiTorahConfig.xml, if one is present.</summary>
 		///<remarks>This method must be called before JITing any methods that use ShomreiTorahConfig in static initializers (eg, UpdateChecker).</remarks>
@@ -127,11 +133,23 @@ namespace ShomreiTorah.Billing {
 		void InitAspxDomain(string baseDir) {
 			AppDirectory = baseDir;
 
+			//Prevent ASP.Net from automatically unloading
+			//the AppDomain if any files or folders change
+			StopFileMonitoring();
+
 			AppDomain.CurrentDomain.AssemblyResolve += (sender, e) =>	//GetAssemblyName stores the path
 				Assembly.Load(AssemblyName.GetAssemblyName(Path.Combine(AppDirectory, new AssemblyName(e.Name).Name + ".dll")));
 
 			PostInitAspxDomain();	//This must be called after handling AssemblyResolve
 		}
+		static void StopFileMonitoring() {
+			var theRuntime = typeof(HttpRuntime).GetField("_theRuntime", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+			var fcmField = typeof(HttpRuntime).GetField("_fcm", BindingFlags.NonPublic | BindingFlags.Instance);
+
+			var fcm = fcmField.GetValue(theRuntime);
+			fcmField.FieldType.GetMethod("Stop", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(fcm, null);
+		}
+
 		///<summary>Continues preparing the ASP.Net AppDomain to run the program.</summary>
 		///<remarks>This is called by InitAspxDomain after the AssemblyResolve handler has been added.
 		///Any code that requires assembly resolution must be placed here.</remarks>
