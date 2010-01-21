@@ -238,6 +238,9 @@
     <EmbeddedResource Include="Forms\MasterDirectoryGridForm.resx">
       <DependentUpon>MasterDirectoryGridForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PaymentEditPopup.resx">
+      <DependentUpon>PaymentEditPopup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PaymentViewer.resx">
       <DependentUpon>PaymentViewer.cs</DependentUpon>
     </EmbeddedResource>
@@ -386,6 +389,12 @@
     </Compile>
     <Compile Include="Forms\ErrorForm.Designer.cs">
       <DependentUpon>ErrorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PaymentEditPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PaymentEditPopup.Designer.cs">
+      <DependentUpon>PaymentEditPopup.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PersonDetails.cs">
       <SubType>Form</SubType>

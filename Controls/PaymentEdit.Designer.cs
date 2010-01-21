@@ -24,6 +24,7 @@ namespace ShomreiTorah.Billing.Controls {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaymentEdit));
 			this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
 			this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
 			this.commit = new ShomreiTorah.Billing.Controls.CommitButton();
@@ -258,6 +259,8 @@ namespace ShomreiTorah.Billing.Controls {
 			this.person.Size = new System.Drawing.Size(347, 20);
 			this.person.TabIndex = 0;
 			this.person.TabStop = false;
+			this.person.Value = ((object)(resources.GetObject("person.Value")));
+			this.person.SelectingPerson += new System.EventHandler<ShomreiTorah.Billing.Controls.SelectingPersonEventArgs>(this.person_SelectingPerson);
 			this.person.ItemSelected += new System.EventHandler<ShomreiTorah.WinForms.Controls.ItemSelectionEventArgs>(this.person_ItemSelected);
 			// 
 			// PaymentEdit

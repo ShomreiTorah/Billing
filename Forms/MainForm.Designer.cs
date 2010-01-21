@@ -431,6 +431,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 			this.personRefEdit.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.personRefEdit_ButtonPressed);
+			this.personRefEdit.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
 			// 
 			// colDate1
 			// 
@@ -590,6 +591,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.paymentView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
 			this.paymentView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colModified, DevExpress.Data.ColumnSortOrder.Ascending)});
+			this.paymentView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
 			// 
 			// colFullName
 			// 

@@ -58,6 +58,13 @@ namespace ShomreiTorah.Billing.Forms {
 			var row = view.GetFocusedDataRow();
 			new PersonDetails((BillingData.MasterDirectoryRow)row.GetParentRow(row.Table.ParentRelations[0])) { MdiParent = this }.Show();
 		}
+		private void gridView_DoubleClick(object sender, EventArgs e) {
+			var view = (sender as GridView) ?? (GridView)((Controls.BaseGrid)((BaseEdit)sender).Parent).MainView;
+
+			var row = view.GetFocusedDataRow();
+			var payment = row as BillingData.PaymentsRow;
+			if (payment != null) new PaymentEditPopup(payment).Show(MdiParent);
+		}
 		#endregion
 
 		protected override void OnShown(EventArgs e) {
@@ -95,18 +102,18 @@ namespace ShomreiTorah.Billing.Forms {
 			new PersonDetails((BillingData.MasterDirectoryRow)e.SelectedRow) { MdiParent = this }.Show();
 		}
 
+
+		#region Show other forms
+		private void showCalendar_ItemClick(object sender, ItemClickEventArgs e) { new CalendarForm().Show(this); }
+		private void viewDeposits_ItemClick(object sender, ItemClickEventArgs e) { new DepositViewer { MdiParent = this }.Show(); }
 		private void addDeposit_ListItemClick(object sender, ListItemClickEventArgs e) { DepositAdder.Execute(addDeposit.Strings[e.Index]); }
 
-		private void showCalendar_ItemClick(object sender, ItemClickEventArgs e) {
-			new CalendarForm().Show(this);
-			if (ModifierKeys == (Keys.Alt | Keys.Control))
-				throw new InvalidExpressionException("This is a test crash!");
-		}
 		private void importYK_ItemClick(object sender, ItemClickEventArgs e) { Import.YKImporter.Execute(); }
 
 		private void viewPayments_ItemClick(object sender, ItemClickEventArgs e) { new PaymentViewer { MdiParent = this }.Show(); }
 		private void viewPledges_ItemClick(object sender, ItemClickEventArgs e) { new PledgeViewer { MdiParent = this }.Show(); }
 		private void showMasterDirectoryGrid_ItemClick(object sender, ItemClickEventArgs e) { new MasterDirectoryGridForm { MdiParent = this }.Show(); }
+		private void importJournal_ItemClick(object sender, ItemClickEventArgs e) { Import.Journal.JournalImporter.Execute(); }
 
 		private void addPayment_ItemClick(object sender, ItemClickEventArgs e) {
 			addPaymentPanel.Show();
@@ -117,7 +124,7 @@ namespace ShomreiTorah.Billing.Forms {
 			addPledgePanel.Show();
 			pledgeEdit.Focus();
 		}
-
+		#endregion
 
 		private void mdiManager_MouseDown(object sender, MouseEventArgs e) {
 			if (e.Button == MouseButtons.Middle) {
@@ -130,8 +137,6 @@ namespace ShomreiTorah.Billing.Forms {
 			}
 		}
 
-		private void viewDeposits_ItemClick(object sender, ItemClickEventArgs e) { new DepositViewer { MdiParent = this }.Show(); }
-
 		private void checkUpdate_ItemClick(object sender, ItemClickEventArgs e) {
 			if (Updater.RestartPending) {
 				if (DialogResult.Yes == XtraMessageBox.Show("An update has already been downloaded.\r\nDo you want to restart the program and apply the update?",
@@ -140,10 +145,6 @@ namespace ShomreiTorah.Billing.Forms {
 				return;
 			}
 			ThreadPool.QueueUserWorkItem(delegate { Updater.RunCheck(); });
-		}
-
-		private void importJournal_ItemClick(object sender, ItemClickEventArgs e) {
-			Import.Journal.JournalImporter.Execute();
 		}
 	}
 }

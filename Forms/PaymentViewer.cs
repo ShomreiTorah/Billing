@@ -17,5 +17,10 @@ namespace ShomreiTorah.Billing.Forms {
 			var row = gridView.GetFocusedDataRow() as BillingData.PaymentsRow;
 			new PersonDetails(row.MasterDirectoryRow) { MdiParent = MdiParent }.Show();
 		}
+
+		private void gridView_DoubleClick(object sender, EventArgs e) {
+			var row = gridView.GetFocusedDataRow() as BillingData.PaymentsRow;
+			if (row != null) new PaymentEditPopup(row).Show(MdiParent);
+		}
 	}
 }

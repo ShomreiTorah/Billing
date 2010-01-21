@@ -11,6 +11,7 @@ using DevExpress.XtraEditors;
 using ShomreiTorah.Common;
 using ShomreiTorah.WinForms.Controls;
 using ShomreiTorah.WinForms.Forms;
+using System.Diagnostics;
 
 namespace ShomreiTorah.Billing.Controls {
 	partial class PaymentEdit : XtraUserControl {
@@ -35,16 +36,26 @@ namespace ShomreiTorah.Billing.Controls {
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public BillingData.PaymentsRow CurrentPayment {
 			get { return paymentsBindingSource.Current == null ? null : (BillingData.PaymentsRow)((DataRowView)paymentsBindingSource.Current).Row; }
+			set {
+				if (value == null) return;
+				paymentsBindingSource.Position = paymentsBindingSource.Find("PaymentId", value.PaymentId);
+				commit.Hide();
+			}
 		}
 
 		public void AddNew() {
 			commit.CommitType = CommitType.Create;
+			commit.Show();
 			paymentsBindingSource.AddNew();
 			person.Focus();
 		}
 
 		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error message")]
 		private void commit_Click(object sender, EventArgs e) {
+			if (!commit.Visible) {
+				Debug.Assert(false,"How was commit clicked?");
+				return;
+			}
 			var payment = CurrentPayment;
 			if (payment == null) {
 				XtraMessageBox.Show("Something's wrong.");
@@ -147,8 +158,16 @@ Payment:	{4:c} {5} for {6} on {7:d}
 		}
 
 		private void Input_KeyDown(object sender, KeyEventArgs e) {
-			if (e.KeyData == Keys.Enter)
+			if (e.KeyData == Keys.Enter && commit.Visible)
 				commit.PerformClick();
+		}
+
+		private void person_SelectingPerson(object sender, SelectingPersonEventArgs e) {
+			if (e.Person != person.SelectedPerson
+			 && !commit.Visible
+			 && DialogResult.No == XtraMessageBox.Show("Are you sure you want to change this payment to be associated with " + e.Person.VeryFullName + "?",
+													   "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+				e.Cancel = true;
 		}
 	}
 }
