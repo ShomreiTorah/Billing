@@ -13,6 +13,11 @@ namespace ShomreiTorah.Billing.Forms {
 	partial class PledgeViewer : XtraForm {
 		public PledgeViewer() { InitializeComponent(); }
 
+		protected override void OnShown(EventArgs e) {
+			base.OnShown(e);
+			colNote.Width = 150;
+			colComments.Width = 120;
+		}
 		private void personRefEdit_ButtonPressed(object sender, ButtonPressedEventArgs e) {
 			var row = gridView.GetFocusedDataRow() as BillingData.PledgesRow;
 			new PersonDetails(row.MasterDirectoryRow) { MdiParent = MdiParent }.Show();

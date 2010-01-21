@@ -38,6 +38,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.currencyEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.colNote = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.repositoryItemMemoExEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit();
 			this.colComments = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -48,6 +49,7 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.currencyEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoExEdit1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).BeginInit();
 			this.SuspendLayout();
@@ -59,6 +61,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.grid.Location = new System.Drawing.Point(0, 0);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
+			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemMemoExEdit1});
 			this.grid.Size = new System.Drawing.Size(772, 559);
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -92,13 +96,16 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.colFullName.ColumnEdit = this.personRefEdit;
 			this.colFullName.FieldName = "FullName";
+			this.colFullName.GroupInterval = DevExpress.XtraGrid.ColumnGroupInterval.Alphabetical;
 			this.colFullName.Name = "colFullName";
 			this.colFullName.OptionsColumn.ReadOnly = true;
 			this.colFullName.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
 			this.colFullName.SummaryItem.DisplayFormat = "{0:#,0} Pledges";
 			this.colFullName.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 0;
+			this.colFullName.Width = 92;
 			// 
 			// personRefEdit
 			// 
@@ -116,6 +123,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colDate.Name = "colDate";
 			this.colDate.Visible = true;
 			this.colDate.VisibleIndex = 1;
+			this.colDate.Width = 92;
 			// 
 			// colType
 			// 
@@ -123,6 +131,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colType.Name = "colType";
 			this.colType.Visible = true;
 			this.colType.VisibleIndex = 2;
+			this.colType.Width = 92;
 			// 
 			// colSubType
 			// 
@@ -130,6 +139,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colSubType.Name = "colSubType";
 			this.colSubType.Visible = true;
 			this.colSubType.VisibleIndex = 3;
+			this.colSubType.Width = 92;
 			// 
 			// colAccount
 			// 
@@ -138,6 +148,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colAccount.Name = "colAccount";
 			this.colAccount.Visible = true;
 			this.colAccount.VisibleIndex = 4;
+			this.colAccount.Width = 92;
 			// 
 			// accountEdit
 			// 
@@ -160,6 +171,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colAmount.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
 			this.colAmount.Visible = true;
 			this.colAmount.VisibleIndex = 5;
+			this.colAmount.Width = 92;
 			// 
 			// currencyEdit
 			// 
@@ -179,17 +191,30 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// colNote
 			// 
+			this.colNote.ColumnEdit = this.repositoryItemMemoExEdit1;
 			this.colNote.FieldName = "Note";
+			this.colNote.MaxWidth = 300;
 			this.colNote.Name = "colNote";
 			this.colNote.Visible = true;
 			this.colNote.VisibleIndex = 6;
+			this.colNote.Width = 174;
+			// 
+			// repositoryItemMemoExEdit1
+			// 
+			this.repositoryItemMemoExEdit1.AutoHeight = false;
+			this.repositoryItemMemoExEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.repositoryItemMemoExEdit1.Name = "repositoryItemMemoExEdit1";
+			this.repositoryItemMemoExEdit1.ShowIcon = false;
 			// 
 			// colComments
 			// 
+			this.colComments.ColumnEdit = this.repositoryItemMemoExEdit1;
 			this.colComments.FieldName = "Comments";
 			this.colComments.Name = "colComments";
 			this.colComments.Visible = true;
 			this.colComments.VisibleIndex = 7;
+			this.colComments.Width = 175;
 			// 
 			// colModified
 			// 
@@ -232,6 +257,7 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.currencyEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoExEdit1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).EndInit();
 			this.ResumeLayout(false);
@@ -257,5 +283,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraGrid.Columns.GridColumn colModified;
 		private DevExpress.XtraGrid.Columns.GridColumn colModifier;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit personRefEdit;
+		private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit repositoryItemMemoExEdit1;
 	}
 }
