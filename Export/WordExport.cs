@@ -140,7 +140,29 @@ namespace ShomreiTorah.Billing.Export {
 			{ "Deductibility",	(range, info) => range.Text = info.Deductibility },
 			{ "contributions",	(range, info) => range.Text = info.Accounts.Sum(a => a.Payments.Count) == 1 ? "contribution" : "contributions" },
 			{ "Table",			 CreateTable },
+			{ "PayTo",			 InsertPayTo },
 		};
+		static void InsertPayTo(Range range, BillInfo info) {
+			if (info.TotalBalance == 0)
+				range.Text = "";
+			else {
+				range.Text = "Please make your checks payable to ";
+				var subRange = range.AppendText("Congregation Shomrei Torah of Passaic-Clifton");
+				range.InsertAfter(", and mail your remittance to:");
+				range.InsertParagraphAfter();
+				subRange.Font.Bold = 1;
+
+				subRange = range.AppendText("Congregation Shomrei Torah of Passaic-Clifton\v1360 Clifton Ave. # 908\vClifton, NJ 07012");
+				range.InsertParagraphAfter();
+
+				subRange.ParagraphFormat.LeftIndent = 36;
+				subRange.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
+			}
+		}
+		static Range AppendText(this Range range, string text) {
+			range.InsertAfter(text);
+			return range.Document.Range(range.End - text.Length, range.End);
+		}
 
 		static void FillBill(Range range, BillInfo info) {
 			while (range.ContentControls.Count > 0) {
