@@ -234,7 +234,7 @@ namespace ShomreiTorah.Billing.Export {
 				row.Range.Text = account.AccountName + " Payments";
 				if (account.Payments.Count == 0) {
 					row = table.AddRow().MergeRow();
-					row.Range.Text = "You have no " + account.AccountName.ToLower(Culture) + " payments on record after " + info.StartDate.ToLongDateString();
+					row.Range.Text = "You have no " + account.AccountName.ToLower(Culture) + " payments\von record after " + info.StartDate.ToLongDateString();
 				}
 
 				shadingIndex = 0;
