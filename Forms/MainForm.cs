@@ -64,9 +64,9 @@ namespace ShomreiTorah.Billing.Forms {
 			var row = view.GetFocusedDataRow();
 
 			var payment = row as BillingData.PaymentsRow;
-			if (payment != null) new PaymentEditPopup(payment).Show(MdiParent);
+			if (payment != null) new PaymentEditPopup(payment).Show(this);
 			var pledge = row as BillingData.PledgesRow;
-			if (pledge != null) new PledgeEditPopup(pledge).Show(MdiParent);
+			if (pledge != null) new PledgeEditPopup(pledge).Show(this);
 		}
 		#endregion
 
