@@ -99,6 +99,7 @@ namespace ShomreiTorah.Billing.Export {
 				Document doc = Word.Documents.Add();
 				Range range = doc.Range();
 
+				bool firstPage = true;
 				using (new ClipboardScope()) {
 					progress.Maximum = people.Count;
 					int i = 0;
@@ -109,19 +110,22 @@ namespace ShomreiTorah.Billing.Export {
 							var info = new BillInfo(person, startDate, kind);
 							if (!info.ShouldSend) continue;
 
+							range.Collapse(WdCollapseDirection.wdCollapseEnd);
+							if (firstPage)
+								firstPage = false;
+							else
+								range.InsertBreak(WdBreakType.wdPageBreak);
+
 							sourceRanges[kind].Copy();
 							range.Paste();
 							FillBill(range, info);
 							foreach (Shape shape in range.ShapeRange) {
 								FillBill(shape.TextFrame.TextRange, info);
 							}
-							range.Collapse(WdCollapseDirection.wdCollapseEnd);
-							range.InsertBreak(WdBreakType.wdPageBreak);
 						}
 
 						i++;
 					}
-					doc.Characters.Items().Last(r => r.Text == "\f").Delete();
 				}
 				Word.Activate();
 				doc.Activate();
