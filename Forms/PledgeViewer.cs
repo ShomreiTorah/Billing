@@ -22,5 +22,10 @@ namespace ShomreiTorah.Billing.Forms {
 			var row = gridView.GetFocusedDataRow() as BillingData.PledgesRow;
 			new PersonDetails(row.MasterDirectoryRow) { MdiParent = MdiParent }.Show();
 		}
+
+		private void gridView_DoubleClick(object sender, EventArgs e) {
+			var row = gridView.GetFocusedDataRow() as BillingData.PledgesRow;
+			if (row != null) new PledgeEditPopup(row).Show(MdiParent);
+		}
 	}
 }

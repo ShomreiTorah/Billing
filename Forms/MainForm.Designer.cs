@@ -407,6 +407,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.pledgeView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
 			this.pledgeView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colModified1, DevExpress.Data.ColumnSortOrder.Ascending)});
+			this.pledgeView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
 			// 
 			// colFullName1
 			// 
@@ -430,8 +431,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-			this.personRefEdit.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.personRefEdit_ButtonPressed);
 			this.personRefEdit.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
+			this.personRefEdit.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.personRefEdit_ButtonPressed);
 			// 
 			// colDate1
 			// 

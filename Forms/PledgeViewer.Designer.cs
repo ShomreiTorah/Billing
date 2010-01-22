@@ -91,6 +91,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.gridView.OptionsSelection.MultiSelect = true;
 			this.gridView.OptionsView.ShowFooter = true;
 			this.gridView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
+			this.gridView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
 			// 
 			// colFullName
 			// 
@@ -115,6 +116,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+			this.personRefEdit.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
 			this.personRefEdit.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.personRefEdit_ButtonPressed);
 			// 
 			// colDate

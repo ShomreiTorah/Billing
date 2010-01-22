@@ -247,6 +247,9 @@
     <EmbeddedResource Include="Forms\PersonDetails.resx">
       <DependentUpon>PersonDetails.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PledgeEditPopup.resx">
+      <DependentUpon>PledgeEditPopup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PledgeViewer.resx">
       <DependentUpon>PledgeViewer.cs</DependentUpon>
     </EmbeddedResource>
@@ -401,6 +404,12 @@
     </Compile>
     <Compile Include="Forms\PersonDetails.Designer.cs">
       <DependentUpon>PersonDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PledgeEditPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PledgeEditPopup.Designer.cs">
+      <DependentUpon>PledgeEditPopup.cs</DependentUpon>
     </Compile>
     <Compile Include="Import\Journal\JournalImporter.cs">
       <SubType>Form</SubType>

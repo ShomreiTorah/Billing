@@ -62,8 +62,11 @@ namespace ShomreiTorah.Billing.Forms {
 			var view = (sender as GridView) ?? (GridView)((Controls.BaseGrid)((BaseEdit)sender).Parent).MainView;
 
 			var row = view.GetFocusedDataRow();
+
 			var payment = row as BillingData.PaymentsRow;
 			if (payment != null) new PaymentEditPopup(payment).Show(MdiParent);
+			var pledge = row as BillingData.PledgesRow;
+			if (pledge != null) new PledgeEditPopup(pledge).Show(MdiParent);
 		}
 		#endregion
 
