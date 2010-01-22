@@ -123,6 +123,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.paymentsView.OptionsSelection.MultiSelect = true;
 			this.paymentsView.OptionsView.ShowFooter = true;
 			this.paymentsView.OptionsView.ShowGroupPanel = false;
+			this.paymentsView.DoubleClick += new System.EventHandler(this.paymentsView_DoubleClick);
 			// 
 			// colDate
 			// 
@@ -310,6 +311,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.pledgesView.OptionsSelection.MultiSelect = true;
 			this.pledgesView.OptionsView.ShowFooter = true;
 			this.pledgesView.OptionsView.ShowGroupPanel = false;
+			this.pledgesView.DoubleClick += new System.EventHandler(this.pledgesView_DoubleClick);
 			// 
 			// colPledgeId
 			// 

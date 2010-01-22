@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using DevExpress.Data;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Views.Grid;
 
 namespace ShomreiTorah.Billing.Forms {
 	partial class MasterDirectoryGridForm : XtraForm {
@@ -55,6 +56,15 @@ namespace ShomreiTorah.Billing.Forms {
 			var rowHandle = gridView.CalcHitInfo(grid.PointToClient(MousePosition)).RowHandle;
 			if (rowHandle >= 0)
 				new PersonDetails((BillingData.MasterDirectoryRow)gridView.GetDataRow(rowHandle)) { MdiParent = MdiParent }.Show();
+		}
+
+		private void paymentsView_DoubleClick(object sender, EventArgs e) {
+			var row = ((GridView)sender).GetFocusedDataRow() as BillingData.PaymentsRow;
+			if (row != null) new PaymentEditPopup(row).Show(MdiParent);
+		}
+		private void pledgesView_DoubleClick(object sender, EventArgs e) {
+			var row = ((GridView)sender).GetFocusedDataRow() as BillingData.PledgesRow;
+			if (row != null) new PledgeEditPopup(row).Show(MdiParent);
 		}
 	}
 }
