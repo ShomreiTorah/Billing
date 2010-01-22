@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Globalization;
@@ -11,7 +12,6 @@ using DevExpress.XtraEditors;
 using ShomreiTorah.Common;
 using ShomreiTorah.WinForms.Controls;
 using ShomreiTorah.WinForms.Forms;
-using System.Diagnostics;
 
 namespace ShomreiTorah.Billing.Controls {
 	partial class PaymentEdit : XtraUserControl {
@@ -31,6 +31,13 @@ namespace ShomreiTorah.Billing.Controls {
 			base.OnLayout(e);
 			person.MaxPopupHeight = Height - person.Bottom;
 		}
+		void SetCommentsHeight() {
+			if (commit.Visible)
+				comments.Height = method.Bottom - comments.Top;
+			else
+				comments.Height = checkNumber.Bottom - comments.Top;
+		}
+		private void commit_VisibleChanged(object sender, EventArgs e) { SetCommentsHeight(); }
 
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -40,6 +47,7 @@ namespace ShomreiTorah.Billing.Controls {
 				if (value == null) return;
 				paymentsBindingSource.Position = paymentsBindingSource.Find("PaymentId", value.PaymentId);
 				commit.Hide();
+				SetCommentsHeight();	//For some reason, VisibleChanged doesn't fire.
 			}
 		}
 

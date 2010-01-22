@@ -92,6 +92,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.commit.Name = "commit";
 			this.commit.Size = new System.Drawing.Size(75, 23);
 			this.commit.TabIndex = 6;
+			this.commit.VisibleChanged += new System.EventHandler(this.commit_VisibleChanged);
 			this.commit.Click += new System.EventHandler(this.commit_Click);
 			// 
 			// account
@@ -248,6 +249,7 @@ namespace ShomreiTorah.Billing.Controls {
 			// 
 			this.person.Caption = "Select a person:";
 			this.person.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.paymentsBindingSource, "PersonId", true));
+			this.person.DefaultText = "Please click here to select a person";
 			this.person.Dock = System.Windows.Forms.DockStyle.Top;
 			this.person.Location = new System.Drawing.Point(0, 0);
 			this.person.Name = "person";

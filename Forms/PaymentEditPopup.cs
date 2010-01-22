@@ -14,6 +14,7 @@ namespace ShomreiTorah.Billing.Forms {
 			InitializeComponent();
 			paymentEdit.CurrentPayment = this.payment = payment;
 			Program.Data.Payments.PaymentsRowDeleted += Payments_PaymentsRowDeleted;
+			ClientSize = paymentEdit.Size;
 		}
 
 		void Payments_PaymentsRowDeleted(object sender, BillingData.PaymentsRowChangeEvent e) {

@@ -18,7 +18,6 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// paymentEdit
 			// 
-			this.paymentEdit.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.paymentEdit.Location = new System.Drawing.Point(0, 0);
 			this.paymentEdit.MinimumSize = new System.Drawing.Size(347, 175);
 			this.paymentEdit.Name = "paymentEdit";
@@ -29,7 +28,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(485, 147);
+			this.ClientSize = new System.Drawing.Size(662, 334);
 			this.Controls.Add(this.paymentEdit);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
