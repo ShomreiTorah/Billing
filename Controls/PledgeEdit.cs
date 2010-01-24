@@ -15,7 +15,6 @@ using System.Diagnostics;
 
 namespace ShomreiTorah.Billing.Controls {
 	partial class PledgeEdit : XtraUserControl {
-		readonly int CommentsHeightDelta;
 		public PledgeEdit() {
 			InitializeComponent();
 
