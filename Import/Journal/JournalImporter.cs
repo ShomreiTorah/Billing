@@ -72,7 +72,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 					#endregion
 
 					#region Payment
-					iad.Payment = Program.Data.Payments.AsEnumerable().FirstOrDefault(p => p.ExternalSource == source
+					iad.Payment = Program.Data.Payments.CurrentRows().FirstOrDefault(p => p.ExternalSource == source
 																					   && !p.IsExternalIDNull()
 																					   && p.ExternalID == iad.Ad.InternalID);
 					if (iad.Ad.PaymentMethod == "Unpaid") {
@@ -142,9 +142,8 @@ namespace ShomreiTorah.Billing.Import.Journal {
 					Guid.NewGuid(), Person.ResolvedRow,
 					Ad.DateEntered, Ad.PaymentMethod, Ad.IsCheckNumberNull() ? -1 : Ad.CheckNumber,
 					Account, Ad.AmountToBill, GeneratedComments,
-					DateTime.Now, modifier, DateTime.MinValue, source, Ad.InternalID);
+					DateTime.Now, modifier, source, Ad.InternalID, null);
 
-				Payment.SetDepositDateSqlNull();
 				if (Ad.IsCheckNumberNull())
 					Payment.SetCheckNumberNull();
 				Payment.Modifier = modifier;

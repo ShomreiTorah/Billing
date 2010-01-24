@@ -94,7 +94,7 @@ namespace ShomreiTorah.Billing.Controls {
 				var row2 = e.Column.View.GetDataRow(e.Column.View.GetRowHandle(e.ListSourceRowIndex2));
 
 				if (!row1.Table.Columns.Contains("LastName")) {
-					var relation=row1.Table.ParentRelations[0];
+					var relation = row1.Table.ParentRelations[0];
 
 					row1 = row1.GetParentRow(relation);
 					row2 = row2.GetParentRow(relation);
@@ -124,32 +124,20 @@ namespace ShomreiTorah.Billing.Controls {
 				}
 			}
 		}
-		void view_ShowFilterPopupDate(object sender, FilterPopupDateEventArgs e) {
-			if (e.Column.FieldName != "DepositDateSql") return;
-			e.List.Clear();
-			e.List.Add(new FilterDateElement("Undeposited", "Show payments that have not been deposited", new OperandProperty("DepositDateSql").IsNull()));
-			e.List.Add(new FilterDateElement("All Deposited", "Show payments that have been deposited", new OperandProperty("DepositDateSql").IsNotNull()));
-
-			e.List.AddRange(
-				Program.Data.Payments
-					.Where(p => p.DepositDate.HasValue)
-					.Select(p => p.DepositDate.Value)
-					.Distinct()
-					.Select(d => new FilterDateElement(d.ToLongDateString(), "Show payments deposited on " + d.ToLongDateString(), new OperandProperty("DepositDateSql") < d))
-			);
-		}
 		void view_KeyUp(object sender, KeyEventArgs e) {
-			var view = sender as GridView;
 			if (e.KeyData == Keys.Delete) {
+				var view = sender as GridView;
+				var itemName = ListBindingHelper.GetListName(view.DataSource, null).ToLower(CultureInfo.CurrentUICulture);
 				if (view.OptionsBehavior.AllowDeleteRows == DefaultBoolean.False) {
-					XtraMessageBox.Show("You cannot delete rows from the master directory.\r\nIf you really want to delete someone, call Schabse.");
+					if (itemName == "masterdirectory")
+						XtraMessageBox.Show("You cannot delete rows from the master directory.\r\nIf you really want to delete someone, call Schabse.",
+											"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
 				}
 
 				var rows = view.GetSelectedRows().Select<int, DataRow>(view.GetDataRow).ToArray();
 
 				string message;
-				var itemName = ListBindingHelper.GetListName(view.DataSource, null).ToLower(CultureInfo.CurrentUICulture);
 
 				if (itemName == "emaillist") {
 					if (rows.Length == 1)
@@ -166,6 +154,12 @@ namespace ShomreiTorah.Billing.Controls {
 				}
 				if (DialogResult.Yes == XtraMessageBox.Show(message, "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
 					view.DeleteSelectedRows();
+			}
+		}
+		void view_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
+			if (e.Column.FieldName == "Deposit") {
+				var row = (BillingData.PaymentsRow)((GridView)sender).GetDataRow(e.RowHandle);
+				e.Value = row.DepositsRow;
 			}
 		}
 
@@ -186,12 +180,10 @@ namespace ShomreiTorah.Billing.Controls {
 				fullNameCol.GroupInterval = ColumnGroupInterval.Alphabetical;
 			}
 
-			var depDateCol = view.Columns.ColumnByFieldName("DepositDateSql");
-
-			if (depDateCol != null && depDateCol.OptionsFilter.FilterPopupMode == FilterPopupMode.Default) {
-				depDateCol.OptionsFilter.FilterPopupMode = FilterPopupMode.DateSmart;
-				view.ShowFilterPopupDate += view_ShowFilterPopupDate;
-			}
+			var depositCol = view.Columns.ColumnByFieldName("Deposit");
+			if (depositCol != null)
+				view.CustomUnboundColumnData += view_CustomUnboundColumnData;
 		}
+
 	}
 }

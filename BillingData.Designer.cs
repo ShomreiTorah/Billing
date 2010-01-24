@@ -33,11 +33,15 @@ namespace ShomreiTorah.Billing {
         
         private EmailListDataTable tableEmailList;
         
+        private DepositsDataTable tableDeposits;
+        
         private global::System.Data.DataRelation relationPayments;
         
         private global::System.Data.DataRelation relationPledges;
         
         private global::System.Data.DataRelation relationEmailAddresses;
+        
+        private global::System.Data.DataRelation relationDeposit;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -80,6 +84,9 @@ namespace ShomreiTorah.Billing {
                 }
                 if ((ds.Tables["EmailList"] != null)) {
                     base.Tables.Add(new EmailListDataTable(ds.Tables["EmailList"]));
+                }
+                if ((ds.Tables["Deposits"] != null)) {
+                    base.Tables.Add(new DepositsDataTable(ds.Tables["Deposits"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -133,6 +140,15 @@ namespace ShomreiTorah.Billing {
         public EmailListDataTable EmailList {
             get {
                 return this.tableEmailList;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public DepositsDataTable Deposits {
+            get {
+                return this.tableDeposits;
             }
         }
         
@@ -208,6 +224,9 @@ namespace ShomreiTorah.Billing {
                 if ((ds.Tables["EmailList"] != null)) {
                     base.Tables.Add(new EmailListDataTable(ds.Tables["EmailList"]));
                 }
+                if ((ds.Tables["Deposits"] != null)) {
+                    base.Tables.Add(new DepositsDataTable(ds.Tables["Deposits"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -262,9 +281,16 @@ namespace ShomreiTorah.Billing {
                     this.tableEmailList.InitVars();
                 }
             }
+            this.tableDeposits = ((DepositsDataTable)(base.Tables["Deposits"]));
+            if ((initTable == true)) {
+                if ((this.tableDeposits != null)) {
+                    this.tableDeposits.InitVars();
+                }
+            }
             this.relationPayments = this.Relations["Payments"];
             this.relationPledges = this.Relations["Pledges"];
             this.relationEmailAddresses = this.Relations["EmailAddresses"];
+            this.relationDeposit = this.Relations["Deposit"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -282,6 +308,8 @@ namespace ShomreiTorah.Billing {
             base.Tables.Add(this.tablePledges);
             this.tableEmailList = new EmailListDataTable();
             base.Tables.Add(this.tableEmailList);
+            this.tableDeposits = new DepositsDataTable(false);
+            base.Tables.Add(this.tableDeposits);
             global::System.Data.ForeignKeyConstraint fkc;
             fkc = new global::System.Data.ForeignKeyConstraint("Payments", new global::System.Data.DataColumn[] {
                         this.tableMasterDirectory.IdColumn}, new global::System.Data.DataColumn[] {
@@ -309,6 +337,10 @@ namespace ShomreiTorah.Billing {
                         this.tableMasterDirectory.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableEmailList.PersonIdColumn}, false);
             this.Relations.Add(this.relationEmailAddresses);
+            this.relationDeposit = new global::System.Data.DataRelation("Deposit", new global::System.Data.DataColumn[] {
+                        this.tableDeposits.DepositIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tablePayments.DepositIdColumn}, false);
+            this.Relations.Add(this.relationDeposit);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -328,6 +360,11 @@ namespace ShomreiTorah.Billing {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private bool ShouldSerializeEmailList() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private bool ShouldSerializeDeposits() {
             return false;
         }
         
@@ -386,11 +423,13 @@ namespace ShomreiTorah.Billing {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private void InitExpressions() {
-            this.Payments.FullNameColumn.Expression = "Parent.FullName";
+            this.Payments.FullNameColumn.Expression = "Parent(Payments).FullName";
             this.MasterDirectory.TotalPledgedColumn.Expression = "ISNULL(SUM(Child(Pledges).Amount), 0) ";
             this.MasterDirectory.TotalPaidColumn.Expression = "ISNULL(SUM(Child(Payments).Amount), 0) ";
             this.MasterDirectory.BalanceDueColumn.Expression = "TotalPledged - TotalPaid";
             this.Pledges.FullNameColumn.Expression = "Parent.FullName";
+            this.Deposits.CountColumn.Expression = "COUNT(Child(Deposit).Amount)";
+            this.Deposits.AmountColumn.Expression = "SUM(Child(Deposit).Amount)";
         }
         
         public delegate void PaymentsRowChangeEventHandler(object sender, PaymentsRowChangeEvent e);
@@ -400,6 +439,8 @@ namespace ShomreiTorah.Billing {
         public delegate void PledgesRowChangeEventHandler(object sender, PledgesRowChangeEvent e);
         
         public delegate void EmailListRowChangeEventHandler(object sender, EmailListRowChangeEvent e);
+        
+        public delegate void DepositsRowChangeEventHandler(object sender, DepositsRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -431,11 +472,11 @@ namespace ShomreiTorah.Billing {
             
             private global::System.Data.DataColumn columnModifier;
             
-            private global::System.Data.DataColumn columnDepositDateSql;
-            
             private global::System.Data.DataColumn columnExternalSource;
             
             private global::System.Data.DataColumn columnExternalID;
+            
+            private global::System.Data.DataColumn columnDepositId;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public PaymentsDataTable() : 
@@ -553,13 +594,6 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public global::System.Data.DataColumn DepositDateSqlColumn {
-                get {
-                    return this.columnDepositDateSql;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public global::System.Data.DataColumn ExternalSourceColumn {
                 get {
                     return this.columnExternalSource;
@@ -570,6 +604,13 @@ namespace ShomreiTorah.Billing {
             public global::System.Data.DataColumn ExternalIDColumn {
                 get {
                     return this.columnExternalID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn DepositIdColumn {
+                get {
+                    return this.columnDepositId;
                 }
             }
             
@@ -602,7 +643,7 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public PaymentsRow AddPaymentsRow(System.Guid PaymentId, MasterDirectoryRow parentMasterDirectoryRowByPayments, string FullName, System.DateTime Date, string Method, int CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, System.DateTime DepositDateSql, string ExternalSource, int ExternalID) {
+            public PaymentsRow AddPaymentsRow(System.Guid PaymentId, MasterDirectoryRow parentMasterDirectoryRowByPayments, string FullName, System.DateTime Date, string Method, int CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, string ExternalSource, int ExternalID, DepositsRow parentDepositsRowByDeposit) {
                 PaymentsRow rowPaymentsRow = ((PaymentsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         PaymentId,
@@ -616,11 +657,14 @@ namespace ShomreiTorah.Billing {
                         Comments,
                         Modified,
                         Modifier,
-                        DepositDateSql,
                         ExternalSource,
-                        ExternalID};
+                        ExternalID,
+                        null};
                 if ((parentMasterDirectoryRowByPayments != null)) {
                     columnValuesArray[1] = parentMasterDirectoryRowByPayments[0];
+                }
+                if ((parentDepositsRowByDeposit != null)) {
+                    columnValuesArray[13] = parentDepositsRowByDeposit[0];
                 }
                 rowPaymentsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPaymentsRow);
@@ -628,7 +672,7 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public PaymentsRow AddPaymentsRow(System.Guid PaymentId, MasterDirectoryRow parentMasterDirectoryRowByPayments, System.DateTime Date, string Method, int CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, System.DateTime DepositDateSql, string ExternalSource, int ExternalID) {
+            public PaymentsRow AddPaymentsRow(System.Guid PaymentId, MasterDirectoryRow parentMasterDirectoryRowByPayments, System.DateTime Date, string Method, int CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, string ExternalSource, int ExternalID, DepositsRow parentDepositsRowByDeposit) {
                 PaymentsRow rowPaymentsRow = ((PaymentsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         PaymentId,
@@ -642,11 +686,14 @@ namespace ShomreiTorah.Billing {
                         Comments,
                         Modified,
                         Modifier,
-                        DepositDateSql,
                         ExternalSource,
-                        ExternalID};
+                        ExternalID,
+                        null};
                 if ((parentMasterDirectoryRowByPayments != null)) {
                     columnValuesArray[1] = parentMasterDirectoryRowByPayments[0];
+                }
+                if ((parentDepositsRowByDeposit != null)) {
+                    columnValuesArray[13] = parentDepositsRowByDeposit[0];
                 }
                 rowPaymentsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPaymentsRow);
@@ -684,9 +731,9 @@ namespace ShomreiTorah.Billing {
                 this.columnComments = base.Columns["Comments"];
                 this.columnModified = base.Columns["Modified"];
                 this.columnModifier = base.Columns["Modifier"];
-                this.columnDepositDateSql = base.Columns["DepositDateSql"];
                 this.columnExternalSource = base.Columns["ExternalSource"];
                 this.columnExternalID = base.Columns["ExternalID"];
+                this.columnDepositId = base.Columns["DepositId"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -713,12 +760,12 @@ namespace ShomreiTorah.Billing {
                 base.Columns.Add(this.columnModified);
                 this.columnModifier = new global::System.Data.DataColumn("Modifier", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnModifier);
-                this.columnDepositDateSql = new global::System.Data.DataColumn("DepositDateSql", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDepositDateSql);
                 this.columnExternalSource = new global::System.Data.DataColumn("ExternalSource", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnExternalSource);
                 this.columnExternalID = new global::System.Data.DataColumn("ExternalID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnExternalID);
+                this.columnDepositId = new global::System.Data.DataColumn("DepositId", typeof(global::System.Guid), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDepositId);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnPaymentId}, true));
                 this.columnPaymentId.AllowDBNull = false;
@@ -735,7 +782,6 @@ namespace ShomreiTorah.Billing {
                 this.columnModified.AllowDBNull = false;
                 this.columnModified.DateTimeMode = global::System.Data.DataSetDateTime.Utc;
                 this.columnModifier.AllowDBNull = false;
-                this.columnDepositDateSql.Caption = "DepositDate";
                 this.columnExternalSource.MaxLength = 32;
             }
             
@@ -756,7 +802,7 @@ namespace ShomreiTorah.Billing {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             private void InitExpressions() {
-                this.FullNameColumn.Expression = "Parent.FullName";
+                this.FullNameColumn.Expression = "Parent(Payments).FullName";
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2126,6 +2172,339 @@ namespace ShomreiTorah.Billing {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class DepositsDataTable : global::System.Data.TypedTableBase<DepositsRow> {
+            
+            private global::System.Data.DataColumn columnDepositId;
+            
+            private global::System.Data.DataColumn columnDate;
+            
+            private global::System.Data.DataColumn columnNumber;
+            
+            private global::System.Data.DataColumn columnAccount;
+            
+            private global::System.Data.DataColumn columnCount;
+            
+            private global::System.Data.DataColumn columnAmount;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DepositsDataTable() : 
+                    this(false) {
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DepositsDataTable(bool initExpressions) {
+                this.TableName = "Deposits";
+                this.BeginInit();
+                this.InitClass();
+                if ((initExpressions == true)) {
+                    this.InitExpressions();
+                }
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal DepositsDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected DepositsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn DepositIdColumn {
+                get {
+                    return this.columnDepositId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn DateColumn {
+                get {
+                    return this.columnDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn NumberColumn {
+                get {
+                    return this.columnNumber;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn AccountColumn {
+                get {
+                    return this.columnAccount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn CountColumn {
+                get {
+                    return this.columnCount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn AmountColumn {
+                get {
+                    return this.columnAmount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DepositsRow this[int index] {
+                get {
+                    return ((DepositsRow)(this.Rows[index]));
+                }
+            }
+            
+            public event DepositsRowChangeEventHandler DepositsRowChanging;
+            
+            public event DepositsRowChangeEventHandler DepositsRowChanged;
+            
+            public event DepositsRowChangeEventHandler DepositsRowDeleting;
+            
+            public event DepositsRowChangeEventHandler DepositsRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void AddDepositsRow(DepositsRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DepositsRow AddDepositsRow(System.Guid DepositId, System.DateTime Date, int Number, string Account, int Count, decimal Amount) {
+                DepositsRow rowDepositsRow = ((DepositsRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        DepositId,
+                        Date,
+                        Number,
+                        Account,
+                        Count,
+                        Amount};
+                rowDepositsRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowDepositsRow);
+                return rowDepositsRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DepositsRow AddDepositsRow(System.Guid DepositId, System.DateTime Date, int Number, string Account) {
+                DepositsRow rowDepositsRow = ((DepositsRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        DepositId,
+                        Date,
+                        Number,
+                        Account,
+                        null,
+                        null};
+                rowDepositsRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowDepositsRow);
+                return rowDepositsRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DepositsRow FindByDepositId(System.Guid DepositId) {
+                return ((DepositsRow)(this.Rows.Find(new object[] {
+                            DepositId})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public override global::System.Data.DataTable Clone() {
+                DepositsDataTable cln = ((DepositsDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new DepositsDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal void InitVars() {
+                this.columnDepositId = base.Columns["DepositId"];
+                this.columnDate = base.Columns["Date"];
+                this.columnNumber = base.Columns["Number"];
+                this.columnAccount = base.Columns["Account"];
+                this.columnCount = base.Columns["Count"];
+                this.columnAmount = base.Columns["Amount"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            private void InitClass() {
+                this.columnDepositId = new global::System.Data.DataColumn("DepositId", typeof(global::System.Guid), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDepositId);
+                this.columnDate = new global::System.Data.DataColumn("Date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDate);
+                this.columnNumber = new global::System.Data.DataColumn("Number", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNumber);
+                this.columnAccount = new global::System.Data.DataColumn("Account", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAccount);
+                this.columnCount = new global::System.Data.DataColumn("Count", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCount);
+                this.columnAmount = new global::System.Data.DataColumn("Amount", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAmount);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnDepositId}, true));
+                this.columnDepositId.AllowDBNull = false;
+                this.columnDepositId.Unique = true;
+                this.columnDate.AllowDBNull = false;
+                this.columnNumber.AllowDBNull = false;
+                this.columnAccount.AllowDBNull = false;
+                this.columnAccount.MaxLength = 32;
+                this.columnCount.ReadOnly = true;
+                this.columnAmount.ReadOnly = true;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DepositsRow NewDepositsRow() {
+                return ((DepositsRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new DepositsRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Type GetRowType() {
+                return typeof(DepositsRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            private void InitExpressions() {
+                this.CountColumn.Expression = "COUNT(Child(Deposit).Amount)";
+                this.AmountColumn.Expression = "SUM(Child(Deposit).Amount)";
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.DepositsRowChanged != null)) {
+                    this.DepositsRowChanged(this, new DepositsRowChangeEvent(((DepositsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.DepositsRowChanging != null)) {
+                    this.DepositsRowChanging(this, new DepositsRowChangeEvent(((DepositsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.DepositsRowDeleted != null)) {
+                    this.DepositsRowDeleted(this, new DepositsRowChangeEvent(((DepositsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.DepositsRowDeleting != null)) {
+                    this.DepositsRowDeleting(this, new DepositsRowChangeEvent(((DepositsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void RemoveDepositsRow(DepositsRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                BillingData ds = new BillingData();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "DepositsDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
@@ -2265,21 +2644,6 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public System.DateTime DepositDateSql {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tablePayments.DepositDateSqlColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DepositDateSql\' in table \'Payments\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablePayments.DepositDateSqlColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public string ExternalSource {
                 get {
                     if (this.IsExternalSourceNull()) {
@@ -2310,12 +2674,37 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public System.Guid DepositId {
+                get {
+                    try {
+                        return ((global::System.Guid)(this[this.tablePayments.DepositIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DepositId\' in table \'Payments\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePayments.DepositIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public MasterDirectoryRow MasterDirectoryRow {
                 get {
                     return ((MasterDirectoryRow)(this.GetParentRow(this.Table.ParentRelations["Payments"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["Payments"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DepositsRow DepositsRow {
+                get {
+                    return ((DepositsRow)(this.GetParentRow(this.Table.ParentRelations["Deposit"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["Deposit"]);
                 }
             }
             
@@ -2350,16 +2739,6 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public bool IsDepositDateSqlNull() {
-                return this.IsNull(this.tablePayments.DepositDateSqlColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public void SetDepositDateSqlNull() {
-                this[this.tablePayments.DepositDateSqlColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public bool IsExternalSourceNull() {
                 return this.IsNull(this.tablePayments.ExternalSourceColumn);
             }
@@ -2377,6 +2756,16 @@ namespace ShomreiTorah.Billing {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public void SetExternalIDNull() {
                 this[this.tablePayments.ExternalIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsDepositIdNull() {
+                return this.IsNull(this.tablePayments.DepositIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetDepositIdNull() {
+                this[this.tablePayments.DepositIdColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3076,6 +3465,121 @@ namespace ShomreiTorah.Billing {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        public partial class DepositsRow : global::System.Data.DataRow {
+            
+            private DepositsDataTable tableDeposits;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal DepositsRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableDeposits = ((DepositsDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public System.Guid DepositId {
+                get {
+                    return ((global::System.Guid)(this[this.tableDeposits.DepositIdColumn]));
+                }
+                set {
+                    this[this.tableDeposits.DepositIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public System.DateTime Date {
+                get {
+                    return ((global::System.DateTime)(this[this.tableDeposits.DateColumn]));
+                }
+                set {
+                    this[this.tableDeposits.DateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int Number {
+                get {
+                    return ((int)(this[this.tableDeposits.NumberColumn]));
+                }
+                set {
+                    this[this.tableDeposits.NumberColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string Account {
+                get {
+                    return ((string)(this[this.tableDeposits.AccountColumn]));
+                }
+                set {
+                    this[this.tableDeposits.AccountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int Count {
+                get {
+                    try {
+                        return ((int)(this[this.tableDeposits.CountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Count\' in table \'Deposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeposits.CountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal Amount {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableDeposits.AmountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Amount\' in table \'Deposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeposits.AmountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsCountNull() {
+                return this.IsNull(this.tableDeposits.CountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetCountNull() {
+                this[this.tableDeposits.CountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsAmountNull() {
+                return this.IsNull(this.tableDeposits.AmountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetAmountNull() {
+                this[this.tableDeposits.AmountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public PaymentsRow[] GetPaymentsRows() {
+                if ((this.Table.ChildRelations["Deposit"] == null)) {
+                    return new PaymentsRow[0];
+                }
+                else {
+                    return ((PaymentsRow[])(base.GetChildRows(this.Table.ChildRelations["Deposit"])));
+                }
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
@@ -3186,6 +3690,37 @@ namespace ShomreiTorah.Billing {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public EmailListRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        public class DepositsRowChangeEvent : global::System.EventArgs {
+            
+            private DepositsRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DepositsRowChangeEvent(DepositsRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DepositsRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -3328,13 +3863,13 @@ namespace ShomreiTorah.Billing.BillingDataTableAdapters {
             tableMapping.ColumnMappings.Add("Modified", "Modified");
             tableMapping.ColumnMappings.Add("Modifier", "Modifier");
             tableMapping.ColumnMappings.Add("Account", "Account");
-            tableMapping.ColumnMappings.Add("DepositDate", "DepositDateSql");
             tableMapping.ColumnMappings.Add("ExternalSource", "ExternalSource");
             tableMapping.ColumnMappings.Add("ExternalID", "ExternalID");
+            tableMapping.ColumnMappings.Add("DepositId", "DepositId");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Billing].[Payments] WHERE (([PaymentId] = @Original_PaymentId) AND ([PersonId] = @Original_PersonId) AND ([Date] = @Original_Date) AND ([Method] = @Original_Method) AND ((@IsNull_CheckNumber = 1 AND [CheckNumber] IS NULL) OR ([CheckNumber] = @Original_CheckNumber)) AND ([Account] = @Original_Account) AND ([Amount] = @Original_Amount) AND ((@IsNull_Comments = 1 AND [Comments] IS NULL) OR ([Comments] = @Original_Comments)) AND ([Modified] = @Original_Modified) AND ([Modifier] = @Original_Modifier) AND ((@IsNull_DepositDate = 1 AND [DepositDate] IS NULL) OR ([DepositDate] = @Original_DepositDate)) AND ((@IsNull_ExternalSource = 1 AND [ExternalSource] IS NULL) OR ([ExternalSource] = @Original_ExternalSource)) AND ((@IsNull_ExternalID = 1 AND [ExternalID] IS NULL) OR ([ExternalID] = @Original_ExternalID)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Billing].[Payments] WHERE (([PaymentId] = @Original_PaymentId) AND ([PersonId] = @Original_PersonId) AND ([Date] = @Original_Date) AND ([Method] = @Original_Method) AND ((@IsNull_CheckNumber = 1 AND [CheckNumber] IS NULL) OR ([CheckNumber] = @Original_CheckNumber)) AND ([Account] = @Original_Account) AND ([Amount] = @Original_Amount) AND ((@IsNull_Comments = 1 AND [Comments] IS NULL) OR ([Comments] = @Original_Comments)) AND ([Modified] = @Original_Modified) AND ([Modifier] = @Original_Modifier) AND ((@IsNull_ExternalID = 1 AND [ExternalID] IS NULL) OR ([ExternalID] = @Original_ExternalID)) AND ((@IsNull_DepositId = 1 AND [DepositId] IS NULL) OR ([DepositId] = @Original_DepositId)) AND ((@IsNull_ExternalSource = 1 AND [ExternalSource] IS NULL) OR ([ExternalSource] = @Original_ExternalSource)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PaymentId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PaymentId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PersonId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -3348,16 +3883,16 @@ namespace ShomreiTorah.Billing.BillingDataTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Comments", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Comments", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Modified", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modified", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Modifier", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modifier", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_DepositDate", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositDateSql", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DepositDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositDateSql", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExternalSource", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_DepositId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DepositId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExternalSource", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Billing].[Payments] ([PaymentId], [PersonId], [Date], [Method], [CheckNumber], [Account], [Amount], [Comments], [Modified], [Modifier], [DepositDate], [ExternalSource], [ExternalID]) VALUES (@PaymentId, @PersonId, @Date, @Method, @CheckNumber, @Account, @Amount, @Comments, @Modified, @Modifier, @DepositDate, @ExternalSource, @ExternalID);
-SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments, Modified, Modifier, DepositDate, ExternalSource, ExternalID FROM Billing.Payments WHERE (PaymentId = @PaymentId)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Billing].[Payments] ([PaymentId], [PersonId], [Date], [Method], [CheckNumber], [Account], [Amount], [Comments], [Modified], [Modifier], [ExternalID], [DepositId], [ExternalSource]) VALUES (@PaymentId, @PersonId, @Date, @Method, @CheckNumber, @Account, @Amount, @Comments, @Modified, @Modifier, @ExternalID, @DepositId, @ExternalSource);
+SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments, Modified, Modifier, ExternalID, DepositId, ExternalSource FROM Billing.Payments WHERE (PaymentId = @PaymentId)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PaymentId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PaymentId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PersonId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -3369,13 +3904,13 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Comments", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Comments", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Modified", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modified", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Modifier", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modifier", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DepositDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositDateSql", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DepositId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [Billing].[Payments] SET [PaymentId] = @PaymentId, [PersonId] = @PersonId, [Date] = @Date, [Method] = @Method, [CheckNumber] = @CheckNumber, [Account] = @Account, [Amount] = @Amount, [Comments] = @Comments, [Modified] = @Modified, [Modifier] = @Modifier, [DepositDate] = @DepositDate, [ExternalSource] = @ExternalSource, [ExternalID] = @ExternalID WHERE (([PaymentId] = @Original_PaymentId) AND ([PersonId] = @Original_PersonId) AND ([Date] = @Original_Date) AND ([Method] = @Original_Method) AND ((@IsNull_CheckNumber = 1 AND [CheckNumber] IS NULL) OR ([CheckNumber] = @Original_CheckNumber)) AND ([Account] = @Original_Account) AND ([Amount] = @Original_Amount) AND ((@IsNull_Comments = 1 AND [Comments] IS NULL) OR ([Comments] = @Original_Comments)) AND ([Modified] = @Original_Modified) AND ([Modifier] = @Original_Modifier) AND ((@IsNull_DepositDate = 1 AND [DepositDate] IS NULL) OR ([DepositDate] = @Original_DepositDate)) AND ((@IsNull_ExternalSource = 1 AND [ExternalSource] IS NULL) OR ([ExternalSource] = @Original_ExternalSource)) AND ((@IsNull_ExternalID = 1 AND [ExternalID] IS NULL) OR ([ExternalID] = @Original_ExternalID)));
-SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments, Modified, Modifier, DepositDate, ExternalSource, ExternalID FROM Billing.Payments WHERE (PaymentId = @PaymentId)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Billing].[Payments] SET [PaymentId] = @PaymentId, [PersonId] = @PersonId, [Date] = @Date, [Method] = @Method, [CheckNumber] = @CheckNumber, [Account] = @Account, [Amount] = @Amount, [Comments] = @Comments, [Modified] = @Modified, [Modifier] = @Modifier, [ExternalID] = @ExternalID, [DepositId] = @DepositId, [ExternalSource] = @ExternalSource WHERE (([PaymentId] = @Original_PaymentId) AND ([PersonId] = @Original_PersonId) AND ([Date] = @Original_Date) AND ([Method] = @Original_Method) AND ((@IsNull_CheckNumber = 1 AND [CheckNumber] IS NULL) OR ([CheckNumber] = @Original_CheckNumber)) AND ([Account] = @Original_Account) AND ([Amount] = @Original_Amount) AND ((@IsNull_Comments = 1 AND [Comments] IS NULL) OR ([Comments] = @Original_Comments)) AND ([Modified] = @Original_Modified) AND ([Modifier] = @Original_Modifier) AND ((@IsNull_ExternalID = 1 AND [ExternalID] IS NULL) OR ([ExternalID] = @Original_ExternalID)) AND ((@IsNull_DepositId = 1 AND [DepositId] IS NULL) OR ([DepositId] = @Original_DepositId)) AND ((@IsNull_ExternalSource = 1 AND [ExternalSource] IS NULL) OR ([ExternalSource] = @Original_ExternalSource)));
+SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments, Modified, Modifier, ExternalID, DepositId, ExternalSource FROM Billing.Payments WHERE (PaymentId = @PaymentId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PaymentId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PaymentId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PersonId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -3387,9 +3922,9 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Comments", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Comments", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Modified", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modified", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Modifier", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modifier", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DepositDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositDateSql", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DepositId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PaymentId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PaymentId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PersonId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Date", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -3402,12 +3937,12 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Comments", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Comments", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Modified", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modified", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Modifier", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Modifier", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_DepositDate", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositDateSql", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DepositDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositDateSql", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExternalSource", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExternalID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_DepositId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DepositId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ExternalSource", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ExternalSource", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ExternalSource", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3421,7 +3956,9 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT        *\r\nFROM            Billing.Payments";
+            this._commandCollection[0].CommandText = "SELECT        PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Co" +
+                "mments, Modified, Modifier, ExternalID, DepositId, ExternalSource\r\nFROM         " +
+                "   Billing.Payments";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -3475,7 +4012,7 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(System.Guid Original_PaymentId, System.Guid Original_PersonId, System.DateTime Original_Date, string Original_Method, global::System.Nullable<int> Original_CheckNumber, string Original_Account, decimal Original_Amount, string Original_Comments, System.DateTime Original_Modified, string Original_Modifier, global::System.Nullable<global::System.DateTime> Original_DepositDate, string Original_ExternalSource, global::System.Nullable<int> Original_ExternalID) {
+        public virtual int Delete(System.Guid Original_PaymentId, System.Guid Original_PersonId, System.DateTime Original_Date, string Original_Method, global::System.Nullable<int> Original_CheckNumber, string Original_Account, decimal Original_Amount, string Original_Comments, System.DateTime Original_Modified, string Original_Modifier, global::System.Nullable<int> Original_ExternalID, global::System.Nullable<global::System.Guid> Original_DepositId, string Original_ExternalSource) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((System.Guid)(Original_PaymentId));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((System.Guid)(Original_PersonId));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((System.DateTime)(Original_Date));
@@ -3515,29 +4052,29 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             else {
                 this.Adapter.DeleteCommand.Parameters[11].Value = ((string)(Original_Modifier));
             }
-            if ((Original_DepositDate.HasValue == true)) {
+            if ((Original_ExternalID.HasValue == true)) {
                 this.Adapter.DeleteCommand.Parameters[12].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[13].Value = ((System.DateTime)(Original_DepositDate.Value));
+                this.Adapter.DeleteCommand.Parameters[13].Value = ((int)(Original_ExternalID.Value));
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[12].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[13].Value = global::System.DBNull.Value;
             }
-            if ((Original_ExternalSource == null)) {
+            if ((Original_DepositId.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[14].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[15].Value = ((System.Guid)(Original_DepositId.Value));
+            }
+            else {
                 this.Adapter.DeleteCommand.Parameters[14].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[15].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.DeleteCommand.Parameters[14].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[15].Value = ((string)(Original_ExternalSource));
-            }
-            if ((Original_ExternalID.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[16].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[17].Value = ((int)(Original_ExternalID.Value));
-            }
-            else {
+            if ((Original_ExternalSource == null)) {
                 this.Adapter.DeleteCommand.Parameters[16].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[17].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[16].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[17].Value = ((string)(Original_ExternalSource));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -3558,7 +4095,7 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(System.Guid PaymentId, System.Guid PersonId, System.DateTime Date, string Method, global::System.Nullable<int> CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, global::System.Nullable<global::System.DateTime> DepositDate, string ExternalSource, global::System.Nullable<int> ExternalID) {
+        public virtual int Insert(System.Guid PaymentId, System.Guid PersonId, System.DateTime Date, string Method, global::System.Nullable<int> CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, global::System.Nullable<int> ExternalID, global::System.Nullable<global::System.Guid> DepositId, string ExternalSource) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((System.Guid)(PaymentId));
             this.Adapter.InsertCommand.Parameters[1].Value = ((System.Guid)(PersonId));
             this.Adapter.InsertCommand.Parameters[2].Value = ((System.DateTime)(Date));
@@ -3594,23 +4131,23 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             else {
                 this.Adapter.InsertCommand.Parameters[9].Value = ((string)(Modifier));
             }
-            if ((DepositDate.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[10].Value = ((System.DateTime)(DepositDate.Value));
+            if ((ExternalID.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[10].Value = ((int)(ExternalID.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[10].Value = global::System.DBNull.Value;
             }
-            if ((ExternalSource == null)) {
+            if ((DepositId.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[11].Value = ((System.Guid)(DepositId.Value));
+            }
+            else {
                 this.Adapter.InsertCommand.Parameters[11].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.InsertCommand.Parameters[11].Value = ((string)(ExternalSource));
-            }
-            if ((ExternalID.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[12].Value = ((int)(ExternalID.Value));
-            }
-            else {
+            if ((ExternalSource == null)) {
                 this.Adapter.InsertCommand.Parameters[12].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[12].Value = ((string)(ExternalSource));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -3642,9 +4179,9 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
                     string Comments, 
                     System.DateTime Modified, 
                     string Modifier, 
-                    global::System.Nullable<global::System.DateTime> DepositDate, 
-                    string ExternalSource, 
                     global::System.Nullable<int> ExternalID, 
+                    global::System.Nullable<global::System.Guid> DepositId, 
+                    string ExternalSource, 
                     System.Guid Original_PaymentId, 
                     System.Guid Original_PersonId, 
                     System.DateTime Original_Date, 
@@ -3655,9 +4192,9 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
                     string Original_Comments, 
                     System.DateTime Original_Modified, 
                     string Original_Modifier, 
-                    global::System.Nullable<global::System.DateTime> Original_DepositDate, 
-                    string Original_ExternalSource, 
-                    global::System.Nullable<int> Original_ExternalID) {
+                    global::System.Nullable<int> Original_ExternalID, 
+                    global::System.Nullable<global::System.Guid> Original_DepositId, 
+                    string Original_ExternalSource) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((System.Guid)(PaymentId));
             this.Adapter.UpdateCommand.Parameters[1].Value = ((System.Guid)(PersonId));
             this.Adapter.UpdateCommand.Parameters[2].Value = ((System.DateTime)(Date));
@@ -3693,23 +4230,23 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             else {
                 this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(Modifier));
             }
-            if ((DepositDate.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((System.DateTime)(DepositDate.Value));
+            if ((ExternalID.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(ExternalID.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
             }
-            if ((ExternalSource == null)) {
+            if ((DepositId.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((System.Guid)(DepositId.Value));
+            }
+            else {
                 this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(ExternalSource));
-            }
-            if ((ExternalID.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[12].Value = ((int)(ExternalID.Value));
-            }
-            else {
+            if ((ExternalSource == null)) {
                 this.Adapter.UpdateCommand.Parameters[12].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((string)(ExternalSource));
             }
             this.Adapter.UpdateCommand.Parameters[13].Value = ((System.Guid)(Original_PaymentId));
             this.Adapter.UpdateCommand.Parameters[14].Value = ((System.Guid)(Original_PersonId));
@@ -3750,29 +4287,29 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             else {
                 this.Adapter.UpdateCommand.Parameters[24].Value = ((string)(Original_Modifier));
             }
-            if ((Original_DepositDate.HasValue == true)) {
+            if ((Original_ExternalID.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[26].Value = ((System.DateTime)(Original_DepositDate.Value));
+                this.Adapter.UpdateCommand.Parameters[26].Value = ((int)(Original_ExternalID.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[26].Value = global::System.DBNull.Value;
             }
-            if ((Original_ExternalSource == null)) {
+            if ((Original_DepositId.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[28].Value = ((System.Guid)(Original_DepositId.Value));
+            }
+            else {
                 this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[28].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[28].Value = ((string)(Original_ExternalSource));
-            }
-            if ((Original_ExternalID.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[29].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[30].Value = ((int)(Original_ExternalID.Value));
-            }
-            else {
+            if ((Original_ExternalSource == null)) {
                 this.Adapter.UpdateCommand.Parameters[29].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[30].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[29].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[30].Value = ((string)(Original_ExternalSource));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -3803,9 +4340,9 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
                     string Comments, 
                     System.DateTime Modified, 
                     string Modifier, 
-                    global::System.Nullable<global::System.DateTime> DepositDate, 
-                    string ExternalSource, 
                     global::System.Nullable<int> ExternalID, 
+                    global::System.Nullable<global::System.Guid> DepositId, 
+                    string ExternalSource, 
                     System.Guid Original_PaymentId, 
                     System.Guid Original_PersonId, 
                     System.DateTime Original_Date, 
@@ -3816,10 +4353,10 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
                     string Original_Comments, 
                     System.DateTime Original_Modified, 
                     string Original_Modifier, 
-                    global::System.Nullable<global::System.DateTime> Original_DepositDate, 
-                    string Original_ExternalSource, 
-                    global::System.Nullable<int> Original_ExternalID) {
-            return this.Update(Original_PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments, Modified, Modifier, DepositDate, ExternalSource, ExternalID, Original_PaymentId, Original_PersonId, Original_Date, Original_Method, Original_CheckNumber, Original_Account, Original_Amount, Original_Comments, Original_Modified, Original_Modifier, Original_DepositDate, Original_ExternalSource, Original_ExternalID);
+                    global::System.Nullable<int> Original_ExternalID, 
+                    global::System.Nullable<global::System.Guid> Original_DepositId, 
+                    string Original_ExternalSource) {
+            return this.Update(Original_PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments, Modified, Modifier, ExternalID, DepositId, ExternalSource, Original_PaymentId, Original_PersonId, Original_Date, Original_Method, Original_CheckNumber, Original_Account, Original_Amount, Original_Comments, Original_Modified, Original_Modifier, Original_ExternalID, Original_DepositId, Original_ExternalSource);
         }
     }
     
@@ -5526,6 +6063,327 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
     }
     
     /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class DepositsTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlTransaction _transaction;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public DepositsTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        internal global::System.Data.SqlClient.SqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "Deposits";
+            tableMapping.ColumnMappings.Add("DepositId", "DepositId");
+            tableMapping.ColumnMappings.Add("Date", "Date");
+            tableMapping.ColumnMappings.Add("Number", "Number");
+            tableMapping.ColumnMappings.Add("Account", "Account");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [Billing].[Deposits] WHERE (([DepositId] = @Original_DepositId) AND (" +
+                "[Date] = @Original_Date) AND ([Number] = @Original_Number) AND ([Account] = @Ori" +
+                "ginal_Account))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DepositId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Date", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Number", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Number", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Account", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Account", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [Billing].[Deposits] ([DepositId], [Date], [Number], [Account]) VALUE" +
+                "S (@DepositId, @Date, @Number, @Account);\r\nSELECT DepositId, Date, Number, Accou" +
+                "nt FROM Billing.Deposits WHERE (DepositId = @DepositId)";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DepositId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Date", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Number", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Number", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Account", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Account", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Billing].[Deposits] SET [DepositId] = @DepositId, [Date] = @Date, [Number] = @Number, [Account] = @Account WHERE (([DepositId] = @Original_DepositId) AND ([Date] = @Original_Date) AND ([Number] = @Original_Number) AND ([Account] = @Original_Account));
+SELECT DepositId, Date, Number, Account FROM Billing.Deposits WHERE (DepositId = @DepositId)";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DepositId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Date", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Number", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Number", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Account", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Account", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DepositId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DepositId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Date", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Number", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Number", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Account", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Account", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = global::ShomreiTorah.Billing.Properties.Settings.Default.ShomreiTorahConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT DepositId, Date, Number, Account FROM Billing.Deposits";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(BillingData.DepositsDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual BillingData.DepositsDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            BillingData.DepositsDataTable dataTable = new BillingData.DepositsDataTable(true);
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(BillingData.DepositsDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(BillingData dataSet) {
+            return this.Adapter.Update(dataSet, "Deposits");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(System.Guid Original_DepositId, System.DateTime Original_Date, int Original_Number, string Original_Account) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((System.Guid)(Original_DepositId));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((System.DateTime)(Original_Date));
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_Number));
+            if ((Original_Account == null)) {
+                throw new global::System.ArgumentNullException("Original_Account");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((string)(Original_Account));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
+        public virtual int Insert(System.Guid DepositId, System.DateTime Date, int Number, string Account) {
+            this.Adapter.InsertCommand.Parameters[0].Value = ((System.Guid)(DepositId));
+            this.Adapter.InsertCommand.Parameters[1].Value = ((System.DateTime)(Date));
+            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(Number));
+            if ((Account == null)) {
+                throw new global::System.ArgumentNullException("Account");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(Account));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.InsertCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(System.Guid DepositId, System.DateTime Date, int Number, string Account, System.Guid Original_DepositId, System.DateTime Original_Date, int Original_Number, string Original_Account) {
+            this.Adapter.UpdateCommand.Parameters[0].Value = ((System.Guid)(DepositId));
+            this.Adapter.UpdateCommand.Parameters[1].Value = ((System.DateTime)(Date));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(Number));
+            if ((Account == null)) {
+                throw new global::System.ArgumentNullException("Account");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Account));
+            }
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((System.Guid)(Original_DepositId));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((System.DateTime)(Original_Date));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_Number));
+            if ((Original_Account == null)) {
+                throw new global::System.ArgumentNullException("Original_Account");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_Account));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(System.DateTime Date, int Number, string Account, System.Guid Original_DepositId, System.DateTime Original_Date, int Original_Number, string Original_Account) {
+            return this.Update(Original_DepositId, Date, Number, Account, Original_DepositId, Original_Date, Original_Number, Original_Account);
+        }
+    }
+    
+    /// <summary>
     ///TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
     ///</summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
@@ -5545,6 +6403,8 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
         private PledgesTableAdapter _pledgesTableAdapter;
         
         private EmailListTableAdapter _emailListTableAdapter;
+        
+        private DepositsTableAdapter _depositsTableAdapter;
         
         private bool _backupDataSetBeforeUpdate;
         
@@ -5613,6 +6473,19 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
+            "ft.VSDesigner, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" +
+            "", "System.Drawing.Design.UITypeEditor")]
+        public DepositsTableAdapter DepositsTableAdapter {
+            get {
+                return this._depositsTableAdapter;
+            }
+            set {
+                this._depositsTableAdapter = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public bool BackupDataSetBeforeUpdate {
             get {
                 return this._backupDataSetBeforeUpdate;
@@ -5645,6 +6518,10 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
                             && (this._emailListTableAdapter.Connection != null))) {
                     return this._emailListTableAdapter.Connection;
                 }
+                if (((this._depositsTableAdapter != null) 
+                            && (this._depositsTableAdapter.Connection != null))) {
+                    return this._depositsTableAdapter.Connection;
+                }
                 return null;
             }
             set {
@@ -5669,6 +6546,9 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
                 if ((this._emailListTableAdapter != null)) {
                     count = (count + 1);
                 }
+                if ((this._depositsTableAdapter != null)) {
+                    count = (count + 1);
+                }
                 return count;
             }
         }
@@ -5685,6 +6565,24 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._masterDirectoryTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._depositsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Deposits.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._depositsTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._paymentsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Payments.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._paymentsTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -5706,15 +6604,6 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._paymentsTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Payments.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._paymentsTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             return result;
         }
         
@@ -5729,6 +6618,22 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._masterDirectoryTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._depositsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Deposits.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._depositsTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._paymentsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Payments.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._paymentsTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -5748,14 +6653,6 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._paymentsTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Payments.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._paymentsTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             return result;
         }
         
@@ -5765,14 +6662,6 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private int UpdateDeletedRows(BillingData dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._paymentsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Payments.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._paymentsTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._pledgesTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.Pledges.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -5786,6 +6675,22 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._emailListTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._paymentsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Payments.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._paymentsTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._depositsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Deposits.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._depositsTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -5851,6 +6756,11 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
             }
             if (((this._emailListTableAdapter != null) 
                         && (this.MatchTableAdapterConnection(this._emailListTableAdapter.Connection) == false))) {
+                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
+                        "tring.");
+            }
+            if (((this._depositsTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._depositsTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -5920,6 +6830,15 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
                     if (this._emailListTableAdapter.Adapter.AcceptChangesDuringUpdate) {
                         this._emailListTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
                         adaptersWithAcceptChangesDuringUpdate.Add(this._emailListTableAdapter.Adapter);
+                    }
+                }
+                if ((this._depositsTableAdapter != null)) {
+                    revertConnections.Add(this._depositsTableAdapter, this._depositsTableAdapter.Connection);
+                    this._depositsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
+                    this._depositsTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
+                    if (this._depositsTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._depositsTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._depositsTableAdapter.Adapter);
                     }
                 }
                 // 
@@ -5995,6 +6914,10 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
                 if ((this._emailListTableAdapter != null)) {
                     this._emailListTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._emailListTableAdapter]));
                     this._emailListTableAdapter.Transaction = null;
+                }
+                if ((this._depositsTableAdapter != null)) {
+                    this._depositsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._depositsTableAdapter]));
+                    this._depositsTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];

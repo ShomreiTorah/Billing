@@ -40,7 +40,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.currencyEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.colDepositDate = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.repositoryItemDepositDateEdit1 = new ShomreiTorah.Billing.Controls.RepositoryItemDepositDateEdit();
+			this.depositEdit = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
 			this.colComments = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -53,8 +53,7 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.currencyEdit)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.repositoryItemDepositDateEdit1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.repositoryItemDepositDateEdit1.VistaTimeProperties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).BeginInit();
 			this.SuspendLayout();
@@ -66,8 +65,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.grid.Location = new System.Drawing.Point(0, 0);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repositoryItemDepositDateEdit1});
 			this.grid.Size = new System.Drawing.Size(695, 437);
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -218,22 +215,23 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// colDepositDate
 			// 
-			this.colDepositDate.Caption = "Date Deposited";
-			this.colDepositDate.ColumnEdit = this.repositoryItemDepositDateEdit1;
-			this.colDepositDate.FieldName = "DepositDateSql";
+			this.colDepositDate.Caption = "Deposited?";
+			this.colDepositDate.ColumnEdit = this.depositEdit;
+			this.colDepositDate.FieldName = "Deposit";
 			this.colDepositDate.Name = "colDepositDate";
-			this.colDepositDate.OptionsFilter.FilterPopupMode = DevExpress.XtraGrid.Columns.FilterPopupMode.DateSmart;
+			this.colDepositDate.OptionsColumn.AllowEdit = false;
+			this.colDepositDate.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
+			this.colDepositDate.OptionsColumn.ReadOnly = true;
+			this.colDepositDate.UnboundType = DevExpress.Data.UnboundColumnType.Object;
 			this.colDepositDate.Visible = true;
 			this.colDepositDate.VisibleIndex = 6;
 			// 
-			// repositoryItemDepositDateEdit1
+			// depositEdit
 			// 
-			this.repositoryItemDepositDateEdit1.AutoHeight = false;
-			this.repositoryItemDepositDateEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.repositoryItemDepositDateEdit1.Name = "repositoryItemDepositDateEdit1";
-			this.repositoryItemDepositDateEdit1.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.depositEdit.AutoHeight = false;
+			this.depositEdit.Name = "depositEdit";
+			this.depositEdit.NullText = "Undeposited";
+			this.depositEdit.ReadOnly = true;
 			// 
 			// colComments
 			// 
@@ -285,8 +283,7 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.currencyEdit)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.repositoryItemDepositDateEdit1.VistaTimeProperties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.repositoryItemDepositDateEdit1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).EndInit();
 			this.ResumeLayout(false);
@@ -314,6 +311,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraGrid.Columns.GridColumn colModifier;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit personRefEdit;
 		private DevExpress.XtraGrid.Columns.GridColumn colDepositDate;
-		private ShomreiTorah.Billing.Controls.RepositoryItemDepositDateEdit repositoryItemDepositDateEdit1;
+		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
 	}
 }

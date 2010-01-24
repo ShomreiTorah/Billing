@@ -20,7 +20,8 @@ namespace ShomreiTorah.Billing {
 				MasterDirectoryTableAdapter = new MasterDirectoryTableAdapter { ClearBeforeFill = false },
 				PaymentsTableAdapter = new PaymentsTableAdapter { ClearBeforeFill = false },
 				PledgesTableAdapter = new PledgesTableAdapter { ClearBeforeFill = false },
-				EmailListTableAdapter = new EmailListTableAdapter { ClearBeforeFill = false }
+				EmailListTableAdapter = new EmailListTableAdapter { ClearBeforeFill = false },
+				DepositsTableAdapter = new DepositsTableAdapter { ClearBeforeFill = false }
 			};
 			try {
 				AdapterManager.Connection
@@ -28,6 +29,7 @@ namespace ShomreiTorah.Billing {
 					= AdapterManager.PaymentsTableAdapter.Connection
 					= AdapterManager.PledgesTableAdapter.Connection
 					= AdapterManager.EmailListTableAdapter.Connection
+					= AdapterManager.DepositsTableAdapter.Connection
 					= (SqlConnection)DB.Default.OpenConnection();
 
 				RefreshData(AdapterManager);
@@ -37,15 +39,20 @@ namespace ShomreiTorah.Billing {
 			Pledges.ColumnChanging += Table_ColumnChanging;
 			Payments.ColumnChanging += Table_ColumnChanging;
 
+			Payments.PaymentsRowDeleting += Payments_PaymentsRowDeleting;
+			Deposits.DepositsRowDeleting += Deposits_DepositsRowDeleting;
+
 			EmailList.TableNewRow += EmailList_TableNewRow;
 			//EmailList.EmailListRowChanged += EmailList_EmailListRowChanged;
 			EmailList.ColumnChanged += EmailList_ColumnChanged;
 		}
+
 		internal void RefreshData(TableAdapterManager adapters) {
 			adapters.MasterDirectoryTableAdapter.Fill(MasterDirectory);
 			adapters.PledgesTableAdapter.Fill(Pledges);
 			adapters.PaymentsTableAdapter.Fill(Payments);
 			adapters.EmailListTableAdapter.Fill(EmailList);
+			adapters.DepositsTableAdapter.Fill(Deposits);
 		}
 
 		void EmailList_TableNewRow(object sender, DataTableNewRowEventArgs e) {
@@ -77,7 +84,30 @@ namespace ShomreiTorah.Billing {
 			}
 		}
 
+		bool deletingDeposit;
+		void Deposits_DepositsRowDeleting(object sender, BillingData.DepositsRowChangeEvent e) {
+			try {
+				deletingDeposit = true;
+				foreach (var payment in e.Row.GetPaymentsRows()) {
+					payment.SetDepositIdNull();
+				}
+			} finally { deletingDeposit = false; }
+		}
+		void Payments_PaymentsRowDeleting(object sender, BillingData.PaymentsRowChangeEvent e) {
+			if (!e.Row.IsDepositIdNull() && e.Row.DepositsRow.Count == 1)
+				e.Row.DepositsRow.Delete();
+		}
 		void Table_ColumnChanging(object sender, DataColumnChangeEventArgs e) {
+			if (e.Column.ColumnName == "DepositId" && e.ProposedValue == DBNull.Value) {
+				if (deletingDeposit) return;
+				var payment = (PaymentsRow)e.Row;
+				if (!payment.IsDepositIdNull()) {
+					var deposit = payment.DepositsRow;
+					if (deposit.Count == 1)
+						deposit.Delete();
+				}
+			}
+
 			if (e.Column.ColumnName == "Amount") {
 				e.SetError((decimal)e.ProposedValue > 0 ? null : "Amount must be positive");
 			}
@@ -208,25 +238,25 @@ namespace ShomreiTorah.Billing {
 		}
 
 		public partial class PaymentsRow : ITransaction {
-			public DateTime? DepositDate {
-				get { return IsDepositDateSqlNull() ? new DateTime?() : DepositDateSql.Date; }
-				set {
-					if (value == null)
-						SetDepositDateSqlNull();
-					else
-						DepositDateSql = value.Value.Date;
-				}
-			}
-
-
 			public decimal SignedAmount { get { return -Amount; } }
+		}
+		public partial class DepositsRow : IComparable {
+
+			public override string ToString() { return Date.ToShortDateString() + " #" + Number; }
+
+			int IComparable.CompareTo(object obj) {
+				var other = obj as DepositsRow;
+				if (other == null) return 1;
+				if (this == other) return 0;
+				var result = Date.CompareTo(other.Date);
+				return result == 0 ? Number.CompareTo(other.Number) : result;
+			}
 		}
 	}
 	public interface ITransaction {
 		[SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Date", Justification = "For internal consumption")]
 		DateTime Date { get; }
 		string Account { get; }
-		//decimal Amount { get; }
 		///<summary>Gets the amount with the sign as reflected in the balance due.</summary>
 		decimal SignedAmount { get; }
 	}

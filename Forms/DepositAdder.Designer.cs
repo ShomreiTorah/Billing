@@ -41,12 +41,15 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.summary = new DevExpress.XtraEditors.LabelControl();
+			this.depositNumber = new DevExpress.XtraEditors.SpinEdit();
+			this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
 			((System.ComponentModel.ISupportInitialize)(this.depositDate.Properties.VistaTimeProperties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.depositDate.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.depositNumber.Properties)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// cancel
@@ -75,7 +78,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.depositDate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.depositDate.EditValue = null;
-			this.depositDate.Location = new System.Drawing.Point(45, 12);
+			this.depositDate.Location = new System.Drawing.Point(59, 12);
 			this.depositDate.Name = "depositDate";
 			this.depositDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -87,9 +90,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.depositDate.Properties.NullValuePrompt = "Please select the date of the deposit";
 			this.depositDate.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.depositDate.Size = new System.Drawing.Size(749, 20);
+			this.depositDate.Size = new System.Drawing.Size(735, 20);
 			this.depositDate.TabIndex = 0;
-			this.depositDate.Validating += new System.ComponentModel.CancelEventHandler(this.depositDate_Validating);
 			this.depositDate.EditValueChanged += new System.EventHandler(this.depositDate_EditValueChanged);
 			this.depositDate.DrawItem += new DevExpress.XtraEditors.Calendar.CustomDrawDayNumberCellEventHandler(this.depositDate_DrawItem);
 			// 
@@ -106,13 +108,13 @@ namespace ShomreiTorah.Billing.Forms {
 			this.grid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.grid.Location = new System.Drawing.Point(12, 70);
+			this.grid.Location = new System.Drawing.Point(12, 97);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.checkEdit,
             this.checkNumberEdit});
-			this.grid.Size = new System.Drawing.Size(782, 464);
+			this.grid.Size = new System.Drawing.Size(782, 437);
 			this.grid.TabIndex = 1;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -139,9 +141,10 @@ namespace ShomreiTorah.Billing.Forms {
 			this.gridView.OptionsView.ShowGroupPanel = false;
 			this.gridView.OptionsView.ShowIndicator = false;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
-            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colModified, DevExpress.Data.ColumnSortOrder.Ascending)});
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colFullName, DevExpress.Data.ColumnSortOrder.Ascending)});
 			this.gridView.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gridView_CustomUnboundColumnData);
 			this.gridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridView_KeyDown);
+			this.gridView.CustomColumnSort += new DevExpress.XtraGrid.Views.Base.CustomColumnSortEventHandler(this.gridView_CustomColumnSort);
 			this.gridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridView_MouseUp);
 			this.gridView.BeforeLeaveRow += new DevExpress.XtraGrid.Views.Base.RowAllowEventHandler(this.gridView_BeforeLeaveRow);
 			// 
@@ -172,6 +175,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colFullName.OptionsColumn.AllowEdit = false;
 			this.colFullName.OptionsColumn.AllowFocus = false;
 			this.colFullName.OptionsColumn.ReadOnly = true;
+			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 1;
 			this.colFullName.Width = 49;
@@ -267,11 +271,46 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// summary
 			// 
-			this.summary.Location = new System.Drawing.Point(12, 38);
+			this.summary.Location = new System.Drawing.Point(12, 65);
 			this.summary.Name = "summary";
 			this.summary.Size = new System.Drawing.Size(45, 26);
 			this.summary.TabIndex = 5;
 			this.summary.Text = "Total:\r\nSelected:";
+			// 
+			// depositNumber
+			// 
+			this.depositNumber.EditValue = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.depositNumber.Location = new System.Drawing.Point(59, 39);
+			this.depositNumber.Name = "depositNumber";
+			this.depositNumber.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.depositNumber.Properties.IsFloatValue = false;
+			this.depositNumber.Properties.Mask.EditMask = "N00";
+			this.depositNumber.Properties.MaxValue = new decimal(new int[] {
+            65536,
+            0,
+            0,
+            0});
+			this.depositNumber.Properties.MinValue = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.depositNumber.Properties.NullText = " ";
+			this.depositNumber.Size = new System.Drawing.Size(734, 20);
+			this.depositNumber.TabIndex = 6;
+			// 
+			// labelControl2
+			// 
+			this.labelControl2.Location = new System.Drawing.Point(12, 42);
+			this.labelControl2.Name = "labelControl2";
+			this.labelControl2.Size = new System.Drawing.Size(41, 13);
+			this.labelControl2.TabIndex = 7;
+			this.labelControl2.Text = "Number:";
 			// 
 			// DepositAdder
 			// 
@@ -281,6 +320,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.CancelButton = this.cancel;
 			this.ClientSize = new System.Drawing.Size(806, 575);
 			this.ControlBox = false;
+			this.Controls.Add(this.labelControl2);
+			this.Controls.Add(this.depositNumber);
 			this.Controls.Add(this.summary);
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.labelControl1);
@@ -297,6 +338,7 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.depositNumber.Properties)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -322,5 +364,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit checkEdit;
 		private DevExpress.XtraEditors.LabelControl summary;
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit checkNumberEdit;
+		private DevExpress.XtraEditors.SpinEdit depositNumber;
+		private DevExpress.XtraEditors.LabelControl labelControl2;
 	}
 }

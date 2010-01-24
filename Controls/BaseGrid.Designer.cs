@@ -33,16 +33,18 @@ namespace ShomreiTorah.Billing.Controls {
 			this.stateEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.accountEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.personRefEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.personSourceEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
+			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.depositEdit = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
 			((System.ComponentModel.ISupportInitialize)(this.currencyEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethodEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.stateEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personSourceEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -55,7 +57,8 @@ namespace ShomreiTorah.Billing.Controls {
             this.stateEdit,
             this.accountEdit,
             this.personRefEdit,
-            this.personSourceEdit});
+            this.personSourceEdit,
+            this.depositEdit});
 			// 
 			// currencyEdit
 			// 
@@ -179,11 +182,6 @@ namespace ShomreiTorah.Billing.Controls {
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 			// 
-			// gridView1
-			// 
-			this.gridView1.GridControl = this;
-			this.gridView1.Name = "gridView1";
-			// 
 			// personSourceEdit
 			// 
 			this.personSourceEdit.AutoHeight = false;
@@ -194,6 +192,18 @@ namespace ShomreiTorah.Billing.Controls {
             "YK Directory",
             "Manually Added"});
 			this.personSourceEdit.Name = "personSourceEdit";
+			// 
+			// gridView1
+			// 
+			this.gridView1.GridControl = this;
+			this.gridView1.Name = "gridView1";
+			// 
+			// depositEdit
+			// 
+			this.depositEdit.AutoHeight = false;
+			this.depositEdit.Name = "depositEdit";
+			this.depositEdit.NullText = "Undeposited";
+			this.depositEdit.ReadOnly = true;
 			// 
 			// BaseGrid
 			// 
@@ -207,8 +217,9 @@ namespace ShomreiTorah.Billing.Controls {
 			((System.ComponentModel.ISupportInitialize)(this.stateEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personSourceEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 			this.ResumeLayout(false);
 
@@ -225,5 +236,6 @@ namespace ShomreiTorah.Billing.Controls {
 		private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit personRefEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox personSourceEdit;
+		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
 	}
 }

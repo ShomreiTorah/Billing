@@ -102,11 +102,6 @@
       <DependentUpon>BillingData.xsd</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="BillingData.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BillingData.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Controls\BaseGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -342,8 +337,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>ASPXCodeBehind</SubType>
     </None>
-    <Compile Include="Controls\DepositDateEdit.cs">
-      <SubType>Component</SubType>
+    <Compile Include="BillingData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BillingData.xsd</DependentUpon>
     </Compile>
     <Compile Include="Export\BillInfo.cs" />
     <Compile Include="Export\EmailExporter.cs">

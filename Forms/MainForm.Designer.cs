@@ -87,6 +87,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colAccount = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colDepositDateSql = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.depositEdit = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
 			this.colComments = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -104,6 +105,7 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.paymentGrid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.mdiManager)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -678,13 +680,22 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// colDepositDateSql
 			// 
-			this.colDepositDateSql.Caption = "Date Deposited";
-			this.colDepositDateSql.FieldName = "DepositDateSql";
+			this.colDepositDateSql.Caption = "Deposited?";
+			// 
+			// depositEdit
+			// 
+			this.depositEdit.AutoHeight = false;
+			this.depositEdit.Name = "depositEdit";
+			this.depositEdit.NullText = "Undeposited";
+			this.depositEdit.ReadOnly = true;
+			this.colDepositDateSql.ColumnEdit = this.depositEdit;
+			this.colDepositDateSql.FieldName = "Deposit";
 			this.colDepositDateSql.Name = "colDepositDateSql";
 			this.colDepositDateSql.OptionsColumn.AllowEdit = false;
 			this.colDepositDateSql.OptionsColumn.AllowFocus = false;
+			this.colDepositDateSql.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
 			this.colDepositDateSql.OptionsColumn.ReadOnly = true;
-			this.colDepositDateSql.OptionsFilter.FilterPopupMode = DevExpress.XtraGrid.Columns.FilterPopupMode.DateSmart;
+			this.colDepositDateSql.UnboundType = DevExpress.Data.UnboundColumnType.Object;
 			this.colDepositDateSql.Visible = true;
 			this.colDepositDateSql.VisibleIndex = 6;
 			// 
@@ -757,6 +768,7 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.paymentGrid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.mdiManager)).EndInit();
 			this.ResumeLayout(false);
 
@@ -821,5 +833,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.BarButtonItem checkUpdate;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
 		private DevExpress.XtraBars.BarButtonItem importJournal;
+		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
 	}
 }
