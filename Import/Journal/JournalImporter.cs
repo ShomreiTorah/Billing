@@ -55,7 +55,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 					iad.Person = resolver.Resolve(new PersonData(iad.Ad));
 
 					#region Pledge
-					iad.Pledge = Program.Data.Pledges.AsEnumerable().FirstOrDefault(p => p.ExternalSource == source
+					iad.Pledge = Program.Data.Pledges.CurrentRows().FirstOrDefault(p => p.ExternalSource == source
 																					 && !p.IsExternalIDNull()
 																					 && p.ExternalID == iad.Ad.InternalID);
 					if (iad.Pledge == null) {
