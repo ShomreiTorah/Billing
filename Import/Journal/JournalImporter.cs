@@ -155,8 +155,8 @@ namespace ShomreiTorah.Billing.Import.Journal {
 				if (State == ImportState.ExistingIdentical) {
 					if (Pledge.Amount != Ad.AmountToBill
 					 || Pledge.Comments != GeneratedComments
-					 || Pledge.Type != "Journal Ad"
-					 || Pledge.SubType != Ad.Type.Name
+                     || Pledge.Type != "Melave Malka Journal"
+                     || Pledge.SubType != GetSubType(Ad.Type)
 					 || Pledge.Account != Account
 					 || Pledge.MasterDirectoryRow != Person.ResolvedRow
 					 )
