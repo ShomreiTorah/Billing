@@ -24,9 +24,9 @@ namespace ShomreiTorah.Billing.Forms {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			DevExpress.XtraGrid.GridLevelNode gridLevelNode4 = new DevExpress.XtraGrid.GridLevelNode();
-			DevExpress.XtraGrid.GridLevelNode gridLevelNode5 = new DevExpress.XtraGrid.GridLevelNode();
-			DevExpress.XtraGrid.GridLevelNode gridLevelNode6 = new DevExpress.XtraGrid.GridLevelNode();
+			DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
+			DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+			DevExpress.XtraGrid.GridLevelNode gridLevelNode3 = new DevExpress.XtraGrid.GridLevelNode();
 			this.paymentsView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colMethod = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -222,13 +222,6 @@ namespace ShomreiTorah.Billing.Forms {
 			// colDepositDateSql
 			// 
 			this.colDepositDateSql.Caption = "Deposited?";
-			// 
-			// depositEdit
-			// 
-			this.depositEdit.AutoHeight = false;
-			this.depositEdit.Name = "depositEdit";
-			this.depositEdit.NullText = "Undeposited";
-			this.depositEdit.ReadOnly = true;
 			this.colDepositDateSql.ColumnEdit = this.depositEdit;
 			this.colDepositDateSql.FieldName = "Deposit";
 			this.colDepositDateSql.Name = "colDepositDateSql";
@@ -238,6 +231,13 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colDepositDateSql.UnboundType = DevExpress.Data.UnboundColumnType.Object;
 			this.colDepositDateSql.Visible = true;
 			this.colDepositDateSql.VisibleIndex = 5;
+			// 
+			// depositEdit
+			// 
+			this.depositEdit.AutoHeight = false;
+			this.depositEdit.Name = "depositEdit";
+			this.depositEdit.NullText = "Undeposited";
+			this.depositEdit.ReadOnly = true;
 			// 
 			// colComments
 			// 
@@ -268,16 +268,16 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.grid.DataMember = "MasterDirectory";
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-			gridLevelNode4.LevelTemplate = this.paymentsView;
-			gridLevelNode4.RelationName = "Payments";
-			gridLevelNode5.LevelTemplate = this.pledgesView;
-			gridLevelNode5.RelationName = "Pledges";
-			gridLevelNode6.LevelTemplate = this.emailView;
-			gridLevelNode6.RelationName = "EmailAddresses";
+			gridLevelNode1.LevelTemplate = this.paymentsView;
+			gridLevelNode1.RelationName = "Payments";
+			gridLevelNode2.LevelTemplate = this.pledgesView;
+			gridLevelNode2.RelationName = "Pledges";
+			gridLevelNode3.LevelTemplate = this.emailView;
+			gridLevelNode3.RelationName = "EmailAddresses";
 			this.grid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode4,
-            gridLevelNode5,
-            gridLevelNode6});
+            gridLevelNode1,
+            gridLevelNode2,
+            gridLevelNode3});
 			this.grid.Location = new System.Drawing.Point(0, 142);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
@@ -716,14 +716,14 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// emailSelected
 			// 
-			this.emailSelected.Caption = "Email Selected Person";
+			this.emailSelected.Caption = "Selected Person";
 			this.emailSelected.Id = 0;
 			this.emailSelected.Name = "emailSelected";
 			this.emailSelected.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.emailSelected_ItemClick);
 			// 
 			// emailVisible
 			// 
-			this.emailVisible.Caption = "Email All People";
+			this.emailVisible.Caption = "Everyone in this grid";
 			this.emailVisible.Id = 1;
 			this.emailVisible.Name = "emailVisible";
 			this.emailVisible.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.emailVisible_ItemClick);
@@ -739,7 +739,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// exportWordVisible
 			// 
-			this.exportWordVisible.Caption = "All People";
+			this.exportWordVisible.Caption = "Everyone in this grid";
 			this.exportWordVisible.Id = 3;
 			this.exportWordVisible.Name = "exportWordVisible";
 			this.exportWordVisible.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportWordVisible_ItemClick);
@@ -754,19 +754,19 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// ribbonPageGroup1
 			// 
-			this.ribbonPageGroup1.ItemLinks.Add(this.emailSelected);
+			this.ribbonPageGroup1.ItemLinks.Add(this.emailSelected, true);
 			this.ribbonPageGroup1.ItemLinks.Add(this.emailVisible);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			this.ribbonPageGroup1.ShowCaptionButton = false;
-			this.ribbonPageGroup1.Text = "Email";
+			this.ribbonPageGroup1.Text = "Send Emails to";
 			// 
 			// ribbonPageGroup2
 			// 
-			this.ribbonPageGroup2.ItemLinks.Add(this.exportWordSelected);
+			this.ribbonPageGroup2.ItemLinks.Add(this.exportWordSelected, true);
 			this.ribbonPageGroup2.ItemLinks.Add(this.exportWordVisible);
 			this.ribbonPageGroup2.Name = "ribbonPageGroup2";
 			this.ribbonPageGroup2.ShowCaptionButton = false;
-			this.ribbonPageGroup2.Text = "Word Documents";
+			this.ribbonPageGroup2.Text = "Create Word Documents for";
 			// 
 			// MasterDirectoryGridForm
 			// 

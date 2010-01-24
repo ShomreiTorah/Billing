@@ -28,7 +28,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.exportEmail = new DevExpress.XtraBars.BarButtonItem();
 			this.exportWord = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.billingData = new ShomreiTorah.Billing.BillingData();
 			this.personBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
@@ -64,11 +63,13 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colCheckNumber = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.checkNumberEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.colAmount1 = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colDeposit = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.depositEdit = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
 			this.colComments1 = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModified1 = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModifier1 = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colDeposit = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.depositEdit = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personBindingSource)).BeginInit();
@@ -109,33 +110,25 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// exportEmail
 			// 
-			this.exportEmail.Caption = "Send Email";
+			this.exportEmail.Caption = "This Person";
 			this.exportEmail.Id = 0;
-			this.exportEmail.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.SendMail32;
 			this.exportEmail.Name = "exportEmail";
 			this.exportEmail.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportEmail_ItemClick);
 			// 
 			// exportWord
 			// 
-			this.exportWord.Caption = "Create Word Document";
+			this.exportWord.Caption = "This Person";
 			this.exportWord.Id = 1;
-			this.exportWord.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ExportWord32;
 			this.exportWord.Name = "exportWord";
 			this.exportWord.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportWord_ItemClick);
 			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1});
+            this.ribbonPageGroup2,
+            this.ribbonPageGroup3});
 			this.ribbonPage1.Name = "ribbonPage1";
 			this.ribbonPage1.Text = "Statements";
-			// 
-			// ribbonPageGroup1
-			// 
-			this.ribbonPageGroup1.ItemLinks.Add(this.exportEmail);
-			this.ribbonPageGroup1.ItemLinks.Add(this.exportWord);
-			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-			this.ribbonPageGroup1.ShowCaptionButton = false;
 			// 
 			// billingData
 			// 
@@ -273,7 +266,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.pledgeGrid.MainView = this.pledgeView;
 			this.pledgeGrid.MenuManager = this.ribbonControl1;
 			this.pledgeGrid.Name = "pledgeGrid";
-			this.pledgeGrid.Size = new System.Drawing.Size(653, 248);
+			this.pledgeGrid.Size = new System.Drawing.Size(653, 220);
 			this.pledgeGrid.TabIndex = 0;
 			this.pledgeGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.pledgeView});
@@ -409,7 +402,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.paymentsGrid.MainView = this.paymentsView;
 			this.paymentsGrid.MenuManager = this.ribbonControl1;
 			this.paymentsGrid.Name = "paymentsGrid";
-			this.paymentsGrid.Size = new System.Drawing.Size(653, 220);
+			this.paymentsGrid.Size = new System.Drawing.Size(653, 248);
 			this.paymentsGrid.TabIndex = 0;
 			this.paymentsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.paymentsView});
@@ -501,6 +494,26 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colAmount1.Visible = true;
 			this.colAmount1.VisibleIndex = 4;
 			// 
+			// colDeposit
+			// 
+			this.colDeposit.Caption = "Deposited?";
+			this.colDeposit.ColumnEdit = this.depositEdit;
+			this.colDeposit.FieldName = "Deposit";
+			this.colDeposit.Name = "colDeposit";
+			this.colDeposit.OptionsColumn.AllowEdit = false;
+			this.colDeposit.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
+			this.colDeposit.OptionsColumn.ReadOnly = true;
+			this.colDeposit.UnboundType = DevExpress.Data.UnboundColumnType.Object;
+			this.colDeposit.Visible = true;
+			this.colDeposit.VisibleIndex = 5;
+			// 
+			// depositEdit
+			// 
+			this.depositEdit.AutoHeight = false;
+			this.depositEdit.Name = "depositEdit";
+			this.depositEdit.NullText = "Undeposited";
+			this.depositEdit.ReadOnly = true;
+			// 
 			// colComments1
 			// 
 			this.colComments1.FieldName = "Comments";
@@ -528,25 +541,19 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colModifier1.OptionsColumn.AllowFocus = false;
 			this.colModifier1.OptionsColumn.ReadOnly = true;
 			// 
-			// colDeposit
+			// ribbonPageGroup2
 			// 
-			this.colDeposit.Caption = "Deposited?";
+			this.ribbonPageGroup2.ItemLinks.Add(this.exportEmail);
+			this.ribbonPageGroup2.Name = "ribbonPageGroup2";
+			this.ribbonPageGroup2.ShowCaptionButton = false;
+			this.ribbonPageGroup2.Text = "Send Emails to";
 			// 
-			// depositEdit
+			// ribbonPageGroup3
 			// 
-			this.depositEdit.AutoHeight = false;
-			this.depositEdit.Name = "depositEdit";
-			this.depositEdit.NullText = "Undeposited";
-			this.depositEdit.ReadOnly = true;
-			this.colDeposit.ColumnEdit = this.depositEdit;
-			this.colDeposit.FieldName = "Deposit";
-			this.colDeposit.Name = "colDeposit";
-			this.colDeposit.OptionsColumn.AllowEdit = false;
-			this.colDeposit.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
-			this.colDeposit.OptionsColumn.ReadOnly = true;
-			this.colDeposit.UnboundType = DevExpress.Data.UnboundColumnType.Object;
-			this.colDeposit.Visible = true;
-			this.colDeposit.VisibleIndex = 5;
+			this.ribbonPageGroup3.ItemLinks.Add(this.exportWord);
+			this.ribbonPageGroup3.Name = "ribbonPageGroup3";
+			this.ribbonPageGroup3.ShowCaptionButton = false;
+			this.ribbonPageGroup3.Text = "Create Word Documents for";
 			// 
 			// PersonDetails
 			// 
@@ -587,7 +594,6 @@ namespace ShomreiTorah.Billing.Forms {
 
 		private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
-		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
 		private DevExpress.XtraBars.BarButtonItem exportEmail;
 		private DevExpress.XtraBars.BarButtonItem exportWord;
 		private BillingData billingData;
@@ -630,5 +636,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraGrid.Columns.GridColumn colModifier1;
 		private DevExpress.XtraGrid.Columns.GridColumn colDeposit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
 	}
 }

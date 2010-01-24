@@ -19,16 +19,10 @@ namespace ShomreiTorah.Billing.Forms {
 			SetSelectionButtonsState();
 		}
 
-		private void gridView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-			SetSelectionButtonsState();
-		}
-
+		private void gridView_SelectionChanged(object sender, SelectionChangedEventArgs e) { SetSelectionButtonsState(); }
 		void SetSelectionButtonsState() {
-			emailSelected.Enabled = gridView.SelectedRowsCount > 0;
-			emailSelected.Caption = gridView.SelectedRowsCount == 1 ? "Email Selected Person" : "Email Selected People";
-
-			exportWordSelected.Enabled = gridView.SelectedRowsCount > 0;
-			exportWordSelected.Caption = gridView.SelectedRowsCount == 1 ? "Selected Person" : "Selected People";
+			exportWordSelected.Enabled = emailSelected.Enabled = gridView.SelectedRowsCount > 0;
+			exportWordSelected.Caption = emailSelected.Caption = gridView.SelectedRowsCount == 1 ? "Selected person" : "Selected people";
 		}
 
 		private void emailSelected_ItemClick(object sender, ItemClickEventArgs e) {

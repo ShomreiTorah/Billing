@@ -49,6 +49,10 @@ namespace ShomreiTorah.Billing.Forms {
 			this.addDeposit = new DevExpress.XtraBars.BarListItem();
 			this.checkUpdate = new DevExpress.XtraBars.BarButtonItem();
 			this.importJournal = new DevExpress.XtraBars.BarButtonItem();
+			this.emailAll = new DevExpress.XtraBars.BarButtonItem();
+			this.emailModified = new DevExpress.XtraBars.BarButtonItem();
+			this.wordAll = new DevExpress.XtraBars.BarButtonItem();
+			this.wordModified = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -56,6 +60,9 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.ribbonPage3 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+			this.ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.ribbonPageGroup7 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
 			this.lookup = new ShomreiTorah.WinForms.Controls.Lookup();
 			this.dockManager = new DevExpress.XtraBars.Docking.DockManager(this.components);
@@ -126,16 +133,21 @@ namespace ShomreiTorah.Billing.Forms {
             this.viewDeposits,
             this.addDeposit,
             this.checkUpdate,
-            this.importJournal});
+            this.importJournal,
+            this.emailAll,
+            this.emailModified,
+            this.wordAll,
+            this.wordModified});
 			this.ribbon.Location = new System.Drawing.Point(0, 0);
-			this.ribbon.MaxItemId = 15;
+			this.ribbon.MaxItemId = 19;
 			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
 			this.ribbon.Name = "ribbon";
 			this.ribbon.PageHeaderItemLinks.Add(this.checkUpdate);
 			this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1,
-            this.ribbonPage2});
-			this.ribbon.SelectedPage = this.ribbonPage2;
+            this.ribbonPage2,
+            this.ribbonPage3});
+			this.ribbon.SelectedPage = this.ribbonPage3;
 			this.ribbon.Size = new System.Drawing.Size(858, 148);
 			this.ribbon.StatusBar = this.ribbonStatusBar;
 			this.ribbon.Toolbar.ItemLinks.Add(this.saveDb);
@@ -257,6 +269,38 @@ namespace ShomreiTorah.Billing.Forms {
 			this.importJournal.Name = "importJournal";
 			this.importJournal.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.importJournal_ItemClick);
 			// 
+			// emailAll
+			// 
+			this.emailAll.Caption = "Everyone";
+			this.emailAll.Id = 15;
+			this.emailAll.Name = "emailAll";
+			this.emailAll.SmallWithTextWidth = 150;
+			this.emailAll.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.emailAll_ItemClick);
+			// 
+			// emailModified
+			// 
+			this.emailModified.Caption = "Recently updated people";
+			this.emailModified.Id = 16;
+			this.emailModified.Name = "emailModified";
+			this.emailModified.SmallWithTextWidth = 150;
+			this.emailModified.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.emailModified_ItemClick);
+			// 
+			// wordAll
+			// 
+			this.wordAll.Caption = "Everyone";
+			this.wordAll.Id = 17;
+			this.wordAll.Name = "wordAll";
+			this.wordAll.SmallWithTextWidth = 150;
+			this.wordAll.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.wordAll_ItemClick);
+			// 
+			// wordModified
+			// 
+			this.wordModified.Caption = "Recently updated people";
+			this.wordModified.Id = 18;
+			this.wordModified.Name = "wordModified";
+			this.wordModified.SmallWithTextWidth = 150;
+			this.wordModified.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.wordModified_ItemClick);
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -312,6 +356,30 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPageGroup5.Name = "ribbonPageGroup5";
 			this.ribbonPageGroup5.ShowCaptionButton = false;
 			this.ribbonPageGroup5.Text = "Transactions";
+			// 
+			// ribbonPage3
+			// 
+			this.ribbonPage3.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup6,
+            this.ribbonPageGroup7});
+			this.ribbonPage3.Name = "ribbonPage3";
+			this.ribbonPage3.Text = "Statements";
+			// 
+			// ribbonPageGroup6
+			// 
+			this.ribbonPageGroup6.ItemLinks.Add(this.emailAll);
+			this.ribbonPageGroup6.ItemLinks.Add(this.emailModified);
+			this.ribbonPageGroup6.Name = "ribbonPageGroup6";
+			this.ribbonPageGroup6.ShowCaptionButton = false;
+			this.ribbonPageGroup6.Text = "Send Emails to";
+			// 
+			// ribbonPageGroup7
+			// 
+			this.ribbonPageGroup7.ItemLinks.Add(this.wordAll);
+			this.ribbonPageGroup7.ItemLinks.Add(this.wordModified);
+			this.ribbonPageGroup7.Name = "ribbonPageGroup7";
+			this.ribbonPageGroup7.ShowCaptionButton = false;
+			this.ribbonPageGroup7.Text = "Create Word Documents for";
 			// 
 			// ribbonStatusBar
 			// 
@@ -681,13 +749,6 @@ namespace ShomreiTorah.Billing.Forms {
 			// colDepositDateSql
 			// 
 			this.colDepositDateSql.Caption = "Deposited?";
-			// 
-			// depositEdit
-			// 
-			this.depositEdit.AutoHeight = false;
-			this.depositEdit.Name = "depositEdit";
-			this.depositEdit.NullText = "Undeposited";
-			this.depositEdit.ReadOnly = true;
 			this.colDepositDateSql.ColumnEdit = this.depositEdit;
 			this.colDepositDateSql.FieldName = "Deposit";
 			this.colDepositDateSql.Name = "colDepositDateSql";
@@ -698,6 +759,13 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colDepositDateSql.UnboundType = DevExpress.Data.UnboundColumnType.Object;
 			this.colDepositDateSql.Visible = true;
 			this.colDepositDateSql.VisibleIndex = 6;
+			// 
+			// depositEdit
+			// 
+			this.depositEdit.AutoHeight = false;
+			this.depositEdit.Name = "depositEdit";
+			this.depositEdit.NullText = "Undeposited";
+			this.depositEdit.ReadOnly = true;
 			// 
 			// colComments
 			// 
@@ -834,5 +902,12 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
 		private DevExpress.XtraBars.BarButtonItem importJournal;
 		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
+		private DevExpress.XtraBars.BarButtonItem emailAll;
+		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage3;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup6;
+		private DevExpress.XtraBars.BarButtonItem emailModified;
+		private DevExpress.XtraBars.BarButtonItem wordAll;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup7;
+		private DevExpress.XtraBars.BarButtonItem wordModified;
 	}
 }

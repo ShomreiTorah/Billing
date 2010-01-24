@@ -17,6 +17,8 @@ namespace ShomreiTorah.Billing.Forms {
 			InitializeComponent();
 			this.person = person;
 
+			exportEmail.Caption = exportWord.Caption = (person.FullName ?? person.VeryFullName).Replace("&", "&&");
+
 			emailGrid.DataSource = null;
 			emailGrid.DataMember = "EmailAddresses";		//In the designer, grids are bound to the dataset itself.
 			emailGrid.DataSource = paymentsGrid.DataSource = pledgeGrid.DataSource = personBindingSource;
