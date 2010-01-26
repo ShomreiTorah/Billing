@@ -771,6 +771,7 @@ namespace ShomreiTorah.Billing {
                 this.columnPaymentId.AllowDBNull = false;
                 this.columnPaymentId.Unique = true;
                 this.columnPersonId.AllowDBNull = false;
+                this.columnFullName.AllowDBNull = false;
                 this.columnFullName.ReadOnly = true;
                 this.columnDate.AllowDBNull = false;
                 this.columnMethod.AllowDBNull = false;
@@ -1702,6 +1703,7 @@ namespace ShomreiTorah.Billing {
                 this.columnPledgeId.AllowDBNull = false;
                 this.columnPledgeId.Unique = true;
                 this.columnPersonId.AllowDBNull = false;
+                this.columnFullName.AllowDBNull = false;
                 this.columnFullName.ReadOnly = true;
                 this.columnDate.AllowDBNull = false;
                 this.columnType.AllowDBNull = false;
@@ -2379,7 +2381,9 @@ namespace ShomreiTorah.Billing {
                 this.columnNumber.AllowDBNull = false;
                 this.columnAccount.AllowDBNull = false;
                 this.columnAccount.MaxLength = 32;
+                this.columnCount.AllowDBNull = false;
                 this.columnCount.ReadOnly = true;
+                this.columnAmount.AllowDBNull = false;
                 this.columnAmount.ReadOnly = true;
             }
             
@@ -2541,12 +2545,7 @@ namespace ShomreiTorah.Billing {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public string FullName {
                 get {
-                    try {
-                        return ((string)(this[this.tablePayments.FullNameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'FullName\' in table \'Payments\' is DBNull.", e);
-                    }
+                    return ((string)(this[this.tablePayments.FullNameColumn]));
                 }
                 set {
                     this[this.tablePayments.FullNameColumn] = value;
@@ -2706,16 +2705,6 @@ namespace ShomreiTorah.Billing {
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["Deposit"]);
                 }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public bool IsFullNameNull() {
-                return this.IsNull(this.tablePayments.FullNameColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public void SetFullNameNull() {
-                this[this.tablePayments.FullNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3121,12 +3110,7 @@ namespace ShomreiTorah.Billing {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public string FullName {
                 get {
-                    try {
-                        return ((string)(this[this.tablePledges.FullNameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'FullName\' in table \'Pledges\' is DBNull.", e);
-                    }
+                    return ((string)(this[this.tablePledges.FullNameColumn]));
                 }
                 set {
                     this[this.tablePledges.FullNameColumn] = value;
@@ -3186,11 +3170,11 @@ namespace ShomreiTorah.Billing {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public string Note {
                 get {
-                    try {
-                        return ((string)(this[this.tablePledges.NoteColumn]));
+                    if (this.IsNoteNull()) {
+                        return null;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Note\' in table \'Pledges\' is DBNull.", e);
+                    else {
+                        return ((string)(this[this.tablePledges.NoteColumn]));
                     }
                 }
                 set {
@@ -3271,16 +3255,6 @@ namespace ShomreiTorah.Billing {
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["Pledges"]);
                 }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public bool IsFullNameNull() {
-                return this.IsNull(this.tablePledges.FullNameColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public void SetFullNameNull() {
-                this[this.tablePledges.FullNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3521,12 +3495,7 @@ namespace ShomreiTorah.Billing {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public int Count {
                 get {
-                    try {
-                        return ((int)(this[this.tableDeposits.CountColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Count\' in table \'Deposits\' is DBNull.", e);
-                    }
+                    return ((int)(this[this.tableDeposits.CountColumn]));
                 }
                 set {
                     this[this.tableDeposits.CountColumn] = value;
@@ -3536,36 +3505,11 @@ namespace ShomreiTorah.Billing {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public decimal Amount {
                 get {
-                    try {
-                        return ((decimal)(this[this.tableDeposits.AmountColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Amount\' in table \'Deposits\' is DBNull.", e);
-                    }
+                    return ((decimal)(this[this.tableDeposits.AmountColumn]));
                 }
                 set {
                     this[this.tableDeposits.AmountColumn] = value;
                 }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public bool IsCountNull() {
-                return this.IsNull(this.tableDeposits.CountColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public void SetCountNull() {
-                this[this.tableDeposits.CountColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public bool IsAmountNull() {
-                return this.IsNull(this.tableDeposits.AmountColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public void SetAmountNull() {
-                this[this.tableDeposits.AmountColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
