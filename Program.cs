@@ -124,6 +124,7 @@ namespace ShomreiTorah.Billing {
 			}
 			instance.Execute(Splash);
 		}
+		static readonly string[] assemblyExtensions = new[] { ".dll", ".exe" };
 
 		///<summary>Prepares the ASP.Net AppDomain to run the program.</summary>
 		///<param name="baseDir">The directory containing the initial EXE.  (As oppsoed to the one in EmailPages\Bin, which this AppDomain is running from)</param>
@@ -137,8 +138,14 @@ namespace ShomreiTorah.Billing {
 			//the AppDomain if any files or folders change
 			StopFileMonitoring();
 
-			AppDomain.CurrentDomain.AssemblyResolve += (sender, e) =>	//GetAssemblyName stores the path
-				Assembly.Load(AssemblyName.GetAssemblyName(Path.Combine(AppDirectory, new AssemblyName(e.Name).Name + ".dll")));
+			AppDomain.CurrentDomain.AssemblyResolve += (sender, e) => {	//GetAssemblyName stores the path
+				var baseName = Path.Combine(AppDirectory, new AssemblyName(e.Name).Name);
+				var extension = assemblyExtensions.FirstOrDefault(ex => File.Exists(baseName + ex));
+				if (extension == null)
+					return null;
+				else
+					return Assembly.Load(AssemblyName.GetAssemblyName(baseName + extension));
+			};
 
 			PostInitAspxDomain();	//This must be called after handling AssemblyResolve
 		}
