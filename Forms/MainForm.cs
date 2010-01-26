@@ -132,11 +132,12 @@ namespace ShomreiTorah.Billing.Forms {
 		private void addDeposit_ListItemClick(object sender, ListItemClickEventArgs e) { DepositAdder.Execute(addDeposit.Strings[e.Index]); }
 
 		private void importYK_ItemClick(object sender, ItemClickEventArgs e) { Import.YKImporter.Execute(); }
+		private void importJournal_ItemClick(object sender, ItemClickEventArgs e) { Import.Journal.JournalImporter.Execute(); }
+		private void importRaffle_ItemClick(object sender, ItemClickEventArgs e) { Import.Raffle.RaffleImporter.Execute(); }
 
 		private void viewPayments_ItemClick(object sender, ItemClickEventArgs e) { new PaymentViewer { MdiParent = this }.Show(); }
 		private void viewPledges_ItemClick(object sender, ItemClickEventArgs e) { new PledgeViewer { MdiParent = this }.Show(); }
 		private void showMasterDirectoryGrid_ItemClick(object sender, ItemClickEventArgs e) { new MasterDirectoryGridForm { MdiParent = this }.Show(); }
-		private void importJournal_ItemClick(object sender, ItemClickEventArgs e) { Import.Journal.JournalImporter.Execute(); }
 
 		private void addPayment_ItemClick(object sender, ItemClickEventArgs e) {
 			addPaymentPanel.Show();
@@ -174,5 +175,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private void wordAll_ItemClick(object sender, ItemClickEventArgs e) { Export.WordExporter.Execute(StatementsAll.ToArray()); }
 		private void wordModified_ItemClick(object sender, ItemClickEventArgs e) { ExportModified(Export.WordExporter.Execute); }
 		#endregion
+
 	}
 }

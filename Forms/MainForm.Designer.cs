@@ -53,6 +53,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.emailModified = new DevExpress.XtraBars.BarButtonItem();
 			this.wordAll = new DevExpress.XtraBars.BarButtonItem();
 			this.wordModified = new DevExpress.XtraBars.BarButtonItem();
+			this.importRaffle = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -137,17 +138,18 @@ namespace ShomreiTorah.Billing.Forms {
             this.emailAll,
             this.emailModified,
             this.wordAll,
-            this.wordModified});
+            this.wordModified,
+            this.importRaffle});
 			this.ribbon.Location = new System.Drawing.Point(0, 0);
-			this.ribbon.MaxItemId = 19;
+			this.ribbon.MaxItemId = 20;
 			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
 			this.ribbon.Name = "ribbon";
 			this.ribbon.PageHeaderItemLinks.Add(this.checkUpdate);
 			this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1,
-            this.ribbonPage2,
-            this.ribbonPage3});
-			this.ribbon.SelectedPage = this.ribbonPage3;
+            this.ribbonPage3,
+            this.ribbonPage2});
+			this.ribbon.SelectedPage = this.ribbonPage2;
 			this.ribbon.Size = new System.Drawing.Size(858, 148);
 			this.ribbon.StatusBar = this.ribbonStatusBar;
 			this.ribbon.Toolbar.ItemLinks.Add(this.saveDb);
@@ -301,6 +303,14 @@ namespace ShomreiTorah.Billing.Forms {
 			this.wordModified.SmallWithTextWidth = 150;
 			this.wordModified.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.wordModified_ItemClick);
 			// 
+			// importRaffle
+			// 
+			this.importRaffle.Caption = "Import Raffle";
+			this.importRaffle.Id = 19;
+			this.importRaffle.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ImportRaffle32;
+			this.importRaffle.Name = "importRaffle";
+			this.importRaffle.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.importRaffle_ItemClick);
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -353,6 +363,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// ribbonPageGroup5
 			// 
 			this.ribbonPageGroup5.ItemLinks.Add(this.importJournal);
+			this.ribbonPageGroup5.ItemLinks.Add(this.importRaffle);
 			this.ribbonPageGroup5.Name = "ribbonPageGroup5";
 			this.ribbonPageGroup5.ShowCaptionButton = false;
 			this.ribbonPageGroup5.Text = "Transactions";
@@ -909,5 +920,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.BarButtonItem wordAll;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup7;
 		private DevExpress.XtraBars.BarButtonItem wordModified;
+		private DevExpress.XtraBars.BarButtonItem importRaffle;
 	}
 }
