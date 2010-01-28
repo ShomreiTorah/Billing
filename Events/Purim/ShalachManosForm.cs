@@ -9,6 +9,7 @@ using DevExpress.XtraEditors;
 using DevExpress.Data.Filtering;
 using DevExpress.XtraLayout.Utils;
 using System.Globalization;
+using ShomreiTorah.WinForms.Controls;
 
 namespace ShomreiTorah.Billing.Events.Purim {
 	partial class ShalachManosForm : XtraForm {
@@ -19,7 +20,11 @@ namespace ShomreiTorah.Billing.Events.Purim {
 
 			addPanel.Hide();
 			gridView.ActiveFilterCriteria = (new OperandProperty("Type") == PledgeType) & (new FunctionOperator(FunctionOperatorType.GetYear, new OperandProperty("Date")) == year);
-			//searchLookup.Filter = "Date > #1/1/" + year + "# AND Date < #12/31/" + year + "#";
+
+			Program.Data.Pledges.AddLookupColumns();
+
+			searchLookup.SearchTable = Program.Data.Pledges;
+			searchLookup.PresetFilter = "Date > #1/1/" + year + "# AND Date < #12/31/" + year + "# AND Type='" + PledgeType + "'";
 		}
 
 		private void personSelector_SelectedPersonChanged(object sender, EventArgs e) {
@@ -67,13 +72,18 @@ namespace ShomreiTorah.Billing.Events.Purim {
 					break;
 				case "Check":
 					Program.Data.Payments.AddPaymentsRow(personSelector.SelectedPerson, checkDate.DateTime, "Check",
-								checkNumber.EditValue == null ? new int?() : Convert.ToInt32(checkNumber.EditValue,CultureInfo.CurrentUICulture), 
+								checkNumber.EditValue == null ? new int?() : Convert.ToInt32(checkNumber.EditValue, CultureInfo.CurrentUICulture),
 								Account, amount.Value, comments.Text);
 					break;
 
 			}
 
 			personSelector.SelectedPerson = null;
+		}
+
+		private void searchLookup_ItemSelected(object sender, ItemSelectionEventArgs e) {
+			gridView.FocusedRowHandle = gridView.LocateByValue(0, colPledgeId, (e.SelectedRow.Field<Guid>("PledgeId")));
+			gridView.Focus();
 		}
 	}
 }

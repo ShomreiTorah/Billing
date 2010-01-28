@@ -144,6 +144,16 @@ namespace ShomreiTorah.Billing {
 					row.SetExternalIDNull();
 				return row;
 			}
+
+			public void AddLookupColumns() {
+				if (Columns.Contains("HisName")) return;
+				Columns.Add("HisName", typeof(string), "Parent(Pledges).HisName");
+				Columns.Add("HerName", typeof(string), "Parent(Pledges).HerName");
+				Columns.Add("LastName", typeof(string), "Parent(Pledges).LastName");
+				Columns.Add("Address", typeof(string), "Parent(Pledges).Address");
+				Columns.Add("Phone", typeof(string), "Parent(Pledges).Phone");
+				Columns.Add("Zip", typeof(string), "Parent(Pledges).Zip");
+			}
 		}
 		partial class PaymentsDataTable {
 			public PaymentsRow AddPaymentsRow(MasterDirectoryRow person, DateTime date, string method, int? checkNumber, string account, decimal amount, string comments) {
