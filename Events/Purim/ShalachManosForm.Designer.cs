@@ -42,6 +42,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.colComments = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colPledgeId = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.personSelector = new ShomreiTorah.Billing.Controls.PersonSelector();
 			this.amount = new DevExpress.XtraEditors.SpinEdit();
 			this.addPanel = new DevExpress.XtraLayout.LayoutControl();
@@ -59,11 +60,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-			this.exportWord = new DevExpress.XtraBars.BarButtonItem();
-			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-			this.colPledgeId = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
@@ -86,7 +82,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// searchLookup
@@ -108,10 +103,10 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// 
 			this.grid.DataMember = "Pledges";
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.grid.Location = new System.Drawing.Point(0, 239);
+			this.grid.Location = new System.Drawing.Point(0, 97);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.Size = new System.Drawing.Size(899, 402);
+			this.grid.Size = new System.Drawing.Size(899, 544);
 			this.grid.TabIndex = 2;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -248,12 +243,18 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.colModifier.OptionsColumn.AllowEdit = false;
 			this.colModifier.OptionsColumn.ReadOnly = true;
 			// 
+			// colPledgeId
+			// 
+			this.colPledgeId.FieldName = "PledgeId";
+			this.colPledgeId.Name = "colPledgeId";
+			this.colPledgeId.OptionsColumn.ShowInCustomizationForm = false;
+			// 
 			// personSelector
 			// 
 			this.personSelector.Caption = "Select a person:";
 			this.personSelector.DefaultText = "Please click here to select a person";
 			this.personSelector.Dock = System.Windows.Forms.DockStyle.Top;
-			this.personSelector.Location = new System.Drawing.Point(0, 142);
+			this.personSelector.Location = new System.Drawing.Point(0, 0);
 			this.personSelector.Name = "personSelector";
 			this.personSelector.PopupOpen = false;
 			this.personSelector.ResultsLocation = ShomreiTorah.WinForms.Controls.ResultsLocation.Bottom;
@@ -297,7 +298,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.addPanel.Controls.Add(this.paymentMethod);
 			this.addPanel.Controls.Add(this.add);
 			this.addPanel.Dock = System.Windows.Forms.DockStyle.Top;
-			this.addPanel.Location = new System.Drawing.Point(0, 162);
+			this.addPanel.Location = new System.Drawing.Point(0, 20);
 			this.addPanel.Name = "addPanel";
 			this.addPanel.Root = this.layoutControlGroup1;
 			this.addPanel.Size = new System.Drawing.Size(899, 77);
@@ -505,46 +506,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.layoutControlItem1.Text = "Amount:";
 			this.layoutControlItem1.TextSize = new System.Drawing.Size(73, 13);
 			// 
-			// ribbonControl1
-			// 
-			this.ribbonControl1.ApplicationIcon = null;
-			this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.exportWord});
-			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl1.MaxItemId = 1;
-			this.ribbonControl1.Name = "ribbonControl1";
-			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
-            this.ribbonPage1});
-			this.ribbonControl1.SelectedPage = this.ribbonPage1;
-			this.ribbonControl1.Size = new System.Drawing.Size(899, 142);
-			// 
-			// exportWord
-			// 
-			this.exportWord.Caption = "Create Scroll";
-			this.exportWord.Id = 0;
-			this.exportWord.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ExportScroll32;
-			this.exportWord.Name = "exportWord";
-			// 
-			// ribbonPage1
-			// 
-			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1});
-			this.ribbonPage1.Name = "ribbonPage1";
-			this.ribbonPage1.Text = "Events";
-			// 
-			// ribbonPageGroup1
-			// 
-			this.ribbonPageGroup1.ItemLinks.Add(this.exportWord);
-			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-			this.ribbonPageGroup1.ShowCaptionButton = false;
-			this.ribbonPageGroup1.Text = "Purim";
-			// 
-			// colPledgeId
-			// 
-			this.colPledgeId.FieldName = "PledgeId";
-			this.colPledgeId.Name = "colPledgeId";
-			this.colPledgeId.OptionsColumn.ShowInCustomizationForm = false;
-			// 
 			// ShalachManosForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -554,7 +515,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.Controls.Add(this.addPanel);
 			this.Controls.Add(this.personSelector);
 			this.Controls.Add(this.searchLookup);
-			this.Controls.Add(this.ribbonControl1);
 			this.Name = "ShalachManosForm";
 			this.Text = "Shalach Manos";
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
@@ -579,7 +539,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -618,10 +577,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		private DevExpress.XtraLayout.LayoutControlGroup checkGroup;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
-		private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
-		private DevExpress.XtraBars.BarButtonItem exportWord;
-		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
-		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
 		private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup2;
 		private DevExpress.XtraGrid.Columns.GridColumn colPledgeId;
 	}

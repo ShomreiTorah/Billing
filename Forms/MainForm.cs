@@ -15,6 +15,7 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraTabbedMdi;
 using ShomreiTorah.WinForms.Controls;
+using ShomreiTorah.Billing.Events.Purim;
 
 namespace ShomreiTorah.Billing.Forms {
 	partial class MainForm : RibbonForm {
@@ -131,7 +132,8 @@ namespace ShomreiTorah.Billing.Forms {
 		private void viewDeposits_ItemClick(object sender, ItemClickEventArgs e) { new DepositViewer { MdiParent = this }.Show(); }
 		private void addDeposit_ListItemClick(object sender, ListItemClickEventArgs e) { DepositAdder.Execute(addDeposit.Strings[e.Index]); }
 
-		private void showShalachManos_ItemClick(object sender, ItemClickEventArgs e) { new Events.Purim.ShalachManosForm(DateTime.Today.Year) { MdiParent = this }.Show(); }
+		private void showShalachManos_ItemClick(object sender, ItemClickEventArgs e) { new ShalachManosForm(DateTime.Today.Year) { MdiParent = this }.Show(); }
+		private void shalachManosExport_ItemClick(object sender, ItemClickEventArgs e) { ShalachManosExport.CreateDocument(DateTime.Today.Year); }
 
 		private void importYK_ItemClick(object sender, ItemClickEventArgs e) { Import.YKImporter.Execute(); }
 		private void importJournal_ItemClick(object sender, ItemClickEventArgs e) { Import.Journal.JournalImporter.Execute(); }
@@ -177,7 +179,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private void wordAll_ItemClick(object sender, ItemClickEventArgs e) { Export.WordExporter.Execute(StatementsAll.ToArray()); }
 		private void wordModified_ItemClick(object sender, ItemClickEventArgs e) { ExportModified(Export.WordExporter.Execute); }
 		#endregion
-
 
 	}
 }

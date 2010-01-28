@@ -355,6 +355,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BillingData.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Events\Purim\ShalachManosExport.cs" />
     <Compile Include="Events\Purim\ShalachManosForm.cs">
       <SubType>Form</SubType>
     </Compile>

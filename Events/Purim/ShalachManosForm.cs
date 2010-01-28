@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using DevExpress.XtraEditors;
 using DevExpress.Data.Filtering;
+using DevExpress.XtraBars;
+using DevExpress.XtraEditors;
 using DevExpress.XtraLayout.Utils;
-using System.Globalization;
 using ShomreiTorah.WinForms.Controls;
 
 namespace ShomreiTorah.Billing.Events.Purim {
 	partial class ShalachManosForm : XtraForm {
-		const string PledgeType = "Shalach Manos";
+	public	const string PledgeType = "Shalach Manos";
 		const string Account = "Operating Fund";
+		readonly int year;
 		public ShalachManosForm(int year) {
 			InitializeComponent();
+
+			this.year = year;
 
 			addPanel.Hide();
 			gridView.ActiveFilterCriteria = (new OperandProperty("Type") == PledgeType) & (new FunctionOperator(FunctionOperatorType.GetYear, new OperandProperty("Date")) == year);

@@ -104,6 +104,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.paymentEdit = new ShomreiTorah.Billing.Controls.PaymentEdit();
 			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
+			this.shalachManosExport = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
 			this.addPledgePanel.SuspendLayout();
@@ -143,9 +144,10 @@ namespace ShomreiTorah.Billing.Forms {
             this.wordAll,
             this.wordModified,
             this.importRaffle,
-            this.showShalachManos});
+            this.showShalachManos,
+            this.shalachManosExport});
 			this.ribbon.Location = new System.Drawing.Point(0, 0);
-			this.ribbon.MaxItemId = 21;
+			this.ribbon.MaxItemId = 22;
 			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
 			this.ribbon.Name = "ribbon";
 			this.ribbon.PageHeaderItemLinks.Add(this.checkUpdate);
@@ -401,6 +403,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// ribbonPageGroup8
 			// 
 			this.ribbonPageGroup8.ItemLinks.Add(this.showShalachManos);
+			this.ribbonPageGroup8.ItemLinks.Add(this.shalachManosExport);
 			this.ribbonPageGroup8.Name = "ribbonPageGroup8";
 			this.ribbonPageGroup8.ShowCaptionButton = false;
 			this.ribbonPageGroup8.Text = "Purim";
@@ -848,6 +851,14 @@ namespace ShomreiTorah.Billing.Forms {
 			this.mdiManager.MdiParent = this;
 			this.mdiManager.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mdiManager_MouseDown);
 			// 
+			// shalachManosExport
+			// 
+			this.shalachManosExport.Caption = "Create Scroll";
+			this.shalachManosExport.Id = 21;
+			this.shalachManosExport.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ExportScroll32;
+			this.shalachManosExport.Name = "shalachManosExport";
+			this.shalachManosExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.shalachManosExport_ItemClick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -951,5 +962,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.BarButtonItem showShalachManos;
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage4;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup8;
+		private DevExpress.XtraBars.BarButtonItem shalachManosExport;
 	}
 }
