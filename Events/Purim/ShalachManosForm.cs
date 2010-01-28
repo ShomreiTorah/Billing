@@ -17,11 +17,9 @@ namespace ShomreiTorah.Billing.Events.Purim {
 	partial class ShalachManosForm : XtraForm {
 	public	const string PledgeType = "Shalach Manos";
 		const string Account = "Operating Fund";
-		readonly int year;
+
 		public ShalachManosForm(int year) {
 			InitializeComponent();
-
-			this.year = year;
 
 			addPanel.Hide();
 			gridView.ActiveFilterCriteria = (new OperandProperty("Type") == PledgeType) & (new FunctionOperator(FunctionOperatorType.GetYear, new OperandProperty("Date")) == year);
