@@ -130,6 +130,35 @@ namespace ShomreiTorah.Billing {
 				return retVal;
 			}
 		}
+		partial class PledgesDataTable {
+			public PledgesRow AddPledgesRow(MasterDirectoryRow person, DateTime date, string type, string subtype,
+											string note, string account, decimal amount, string comments) {
+				return AddPledgesRow(person, date, type, subtype, note, account, amount, comments, null, null);
+			}
+			public PledgesRow AddPledgesRow(MasterDirectoryRow person, DateTime date, string type, string subtype,
+											string note, string account, decimal amount, string comments,
+											string externalSource, int? externalId) {
+
+				var row = AddPledgesRow(Guid.NewGuid(), person, date, type, subtype, account, amount, note, comments, DateTime.Now, Environment.UserName, externalSource, externalId ?? -1);
+				if (externalId == null)
+					row.SetExternalIDNull();
+				return row;
+			}
+		}
+		partial class PaymentsDataTable {
+			public PaymentsRow AddPaymentsRow(MasterDirectoryRow person, DateTime date, string method, int? checkNumber, string account, decimal amount, string comments) {
+				return AddPaymentsRow(person, date, method, checkNumber, account, amount, comments, null, null);
+			}
+			public PaymentsRow AddPaymentsRow(MasterDirectoryRow person, DateTime date, string method, int? checkNumber, string account, decimal amount, string comments, string externalSource, int? externalId) {
+				var row = AddPaymentsRow(Guid.NewGuid(), person, date, method, checkNumber ?? -1, account, amount, comments, DateTime.Now, Environment.UserName, externalSource, externalId ?? -1, null);
+				if (externalId == null)
+					row.SetExternalIDNull();
+				if (checkNumber == null)
+					row.SetCheckNumberNull();
+				return row;
+			}
+		}
+
 		partial class MasterDirectoryRow {
 			#region PersonData Operations
 			///<summary>Updates the data of this row from the given PersonData.</summary>

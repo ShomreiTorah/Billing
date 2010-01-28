@@ -60,11 +60,10 @@ namespace ShomreiTorah.Billing.Import.Journal {
 																					 && p.ExternalID == iad.Ad.InternalID);
 					if (iad.Pledge == null) {
 						iad.Pledge = Program.Data.Pledges.AddPledgesRow(
-							Guid.NewGuid(), iad.Person.ResolvedRow,
+							iad.Person.ResolvedRow,
 							iad.Ad.DateEntered, "Melave Malka Journal", GetSubType(iad.Ad.Type),
-							Account, iad.Ad.AmountToBill,
-							null, iad.GeneratedComments,
-							DateTime.Now, modifier, source, iad.Ad.InternalID);
+							null, Account, iad.Ad.AmountToBill, iad.GeneratedComments,
+							source, iad.Ad.InternalID);
 						iad.Pledge.Modifier = modifier;
 						iad.State = ImportState.Added;
 					} else
@@ -139,13 +138,10 @@ namespace ShomreiTorah.Billing.Import.Journal {
 
 			public void CreatePayment() {
 				Payment = Program.Data.Payments.AddPaymentsRow(
-					Guid.NewGuid(), Person.ResolvedRow,
-					Ad.DateEntered, Ad.PaymentMethod, Ad.IsCheckNumberNull() ? -1 : Ad.CheckNumber,
+					Person.ResolvedRow,
+					Ad.DateEntered, Ad.PaymentMethod, Ad.IsCheckNumberNull() ? new int?() : Ad.CheckNumber,
 					Account, Ad.AmountToBill, GeneratedComments,
-					DateTime.Now, modifier, source, Ad.InternalID, null);
-
-				if (Ad.IsCheckNumberNull())
-					Payment.SetCheckNumberNull();
+					source, Ad.InternalID);
 				Payment.Modifier = modifier;
 			}
 
@@ -154,8 +150,8 @@ namespace ShomreiTorah.Billing.Import.Journal {
 				if (State == ImportState.ExistingIdentical) {
 					if (Pledge.Amount != Ad.AmountToBill
 					 || Pledge.Comments != GeneratedComments
-                     || Pledge.Type != "Melave Malka Journal"
-                     || Pledge.SubType != GetSubType(Ad.Type)
+					 || Pledge.Type != "Melave Malka Journal"
+					 || Pledge.SubType != GetSubType(Ad.Type)
 					 || Pledge.Account != Account
 					 || Pledge.MasterDirectoryRow != Person.ResolvedRow
 					 )

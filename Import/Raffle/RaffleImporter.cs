@@ -172,22 +172,15 @@ namespace ShomreiTorah.Billing.Import.Raffle {
 			const string Modifier = "Raffle Import";
 			public void DoImport(DateTime raffleDate) {
 				var pledge = Program.Data.Pledges.AddPledgesRow(
-						Guid.NewGuid(), Person.ResolvedRow, raffleDate,
-						Type, SubType, Account, Amount, Note, Comments,
-						DateTime.Now, Modifier, null, 0);
-				pledge.SetExternalIDNull();
+						Person.ResolvedRow, raffleDate, Type,
+						SubType, Note, Account, Amount, Comments);
 				pledge.Modifier = Modifier;
 
 				if (AmountPaid == 0)
 					return;
 				var payment = Program.Data.Payments.AddPaymentsRow(
-						Guid.NewGuid(), Person.ResolvedRow, raffleDate,
-						PaymentMethod, CheckNumber ?? -1, Account, AmountPaid,
-						Comments, DateTime.Now, Modifier, null, 0, null);
-
-				if (CheckNumber == null)
-					payment.SetCheckNumberNull();
-				payment.SetExternalIDNull();
+						Person.ResolvedRow, raffleDate, PaymentMethod,
+						CheckNumber, Account, AmountPaid, Comments);
 				payment.Modifier = Modifier;
 			}
 
