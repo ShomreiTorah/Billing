@@ -17,6 +17,7 @@ using DevExpress.Data.Filtering;
 using DevExpress.Utils.Menu;
 
 namespace ShomreiTorah.Billing.Controls {
+	[ToolboxItem(false)]
 	partial class BaseGrid : GridControl {
 		bool initComponentFinished;
 		public BaseGrid() { Init(); }
@@ -24,11 +25,16 @@ namespace ShomreiTorah.Billing.Controls {
 
 		void Init() {
 			InitializeComponent();
+
+			MainView = null;
+			ViewCollection.Clear();
+
 			initComponentFinished = true;
 			DataSource = Program.Data ?? new BillingData();
 			accountEdit.Items.Clear();
 			accountEdit.Items.AddRange(BillingData.AccountNames);
 		}
+		protected override void CreateMainView() { }//Do nothing
 
 		//Both our initComponent and our parent form's InitComponent call begin/end init.
 		//I suppress the first EndInit and the second BeginInit.
