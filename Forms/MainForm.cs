@@ -32,44 +32,8 @@ namespace ShomreiTorah.Billing.Forms {
 			paymentEdit.AddNew();
 			addPaymentPanel.Hide();
 
-			pledgeView.ActiveFilterCriteria = new OperandProperty("Modified") > Program.LaunchTime.ToUniversalTime();
-			paymentView.ActiveFilterCriteria = new OperandProperty("Modified") > Program.LaunchTime.ToUniversalTime();
-			Program.Data.Payments.RowChanged += Payments_RowChanged;
-			Program.Data.Pledges.RowChanged += Pledges_RowChanged;
-
 			ribbon.SelectedPage = ribbon.Pages[0];
 		}
-		#region Modified grids
-		void Pledges_RowChanged(object sender, DataRowChangeEventArgs e) {
-			if (e.Action != DataRowAction.Add) return;
-
-			pledgeView.BestFitColumns();
-			Program.Data.Pledges.RowChanged -= Pledges_RowChanged;
-		}
-		void Payments_RowChanged(object sender, DataRowChangeEventArgs e) {
-			if (e.Action != DataRowAction.Add) return;
-
-			paymentView.BestFitColumns();
-			Program.Data.Payments.RowChanged -= Payments_RowChanged;
-		}
-		private void personRefEdit_ButtonPressed(object sender, ButtonPressedEventArgs e) {
-			var edit = sender as ButtonEdit;
-			var grid = (Controls.BaseGrid)edit.Parent;
-			var view = (GridView)grid.MainView;
-			var row = view.GetFocusedDataRow();
-			new PersonDetails((BillingData.MasterDirectoryRow)row.GetParentRow(row.Table.ParentRelations[0])) { MdiParent = this }.Show();
-		}
-		private void gridView_DoubleClick(object sender, EventArgs e) {
-			var view = (sender as GridView) ?? (GridView)((Controls.BaseGrid)((BaseEdit)sender).Parent).MainView;
-
-			var row = view.GetFocusedDataRow();
-
-			var payment = row as BillingData.PaymentsRow;
-			if (payment != null) new PaymentEditPopup(payment).Show(this);
-			var pledge = row as BillingData.PledgesRow;
-			if (pledge != null) new PledgeEditPopup(pledge).Show(this);
-		}
-		#endregion
 
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
@@ -179,6 +143,5 @@ namespace ShomreiTorah.Billing.Forms {
 		private void wordAll_ItemClick(object sender, ItemClickEventArgs e) { Export.WordExporter.Execute(StatementsAll.ToArray()); }
 		private void wordModified_ItemClick(object sender, ItemClickEventArgs e) { ExportModified(Export.WordExporter.Execute); }
 		#endregion
-
 	}
 }

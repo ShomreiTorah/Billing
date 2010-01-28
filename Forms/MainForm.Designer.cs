@@ -24,16 +24,15 @@ namespace ShomreiTorah.Billing.Forms {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.addPledge = new DevExpress.XtraBars.BarButtonItem();
@@ -55,6 +54,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.wordModified = new DevExpress.XtraBars.BarButtonItem();
 			this.importRaffle = new DevExpress.XtraBars.BarButtonItem();
 			this.showShalachManos = new DevExpress.XtraBars.BarButtonItem();
+			this.shalachManosExport = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -72,52 +72,19 @@ namespace ShomreiTorah.Billing.Forms {
 			this.dockManager = new DevExpress.XtraBars.Docking.DockManager(this.components);
 			this.addPledgePanel = new DevExpress.XtraBars.Docking.DockPanel();
 			this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-			this.pledgeGrid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
-			this.pledgeView = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.colFullName1 = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.personRefEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-			this.colDate1 = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colType = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colSubType = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colAccount1 = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colAmount1 = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colNote = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colComments1 = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colModified1 = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colModifier1 = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.modifiedPledgesGrid = new ShomreiTorah.Billing.Controls.ModifiedPledgesGrid();
 			this.pledgeEdit = new ShomreiTorah.Billing.Controls.PledgeEdit();
 			this.addPaymentPanel = new DevExpress.XtraBars.Docking.DockPanel();
 			this.controlContainer1 = new DevExpress.XtraBars.Docking.ControlContainer();
-			this.paymentGrid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
-			this.paymentView = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colMethod = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colCheckNumber = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.checkNumberEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
-			this.colAccount = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colDepositDateSql = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.depositEdit = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
-			this.colComments = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.paymentEdit = new ShomreiTorah.Billing.Controls.PaymentEdit();
 			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
-			this.shalachManosExport = new DevExpress.XtraBars.BarButtonItem();
+			this.modifiedPaymentsGrid = new ShomreiTorah.Billing.Controls.ModifiedPaymentsGrid();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
 			this.addPledgePanel.SuspendLayout();
 			this.dockPanel1_Container.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pledgeGrid)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.pledgeView)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
 			this.addPaymentPanel.SuspendLayout();
 			this.controlContainer1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.paymentGrid)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.paymentView)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.mdiManager)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -183,12 +150,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.saveDb.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Save16;
 			this.saveDb.Id = 2;
 			this.saveDb.Name = "saveDb";
-			toolTipTitleItem1.Text = "Save";
-			toolTipItem1.LeftIndent = 6;
-			toolTipItem1.Text = "Saves your changes to SQL Server.";
-			superToolTip1.Items.Add(toolTipTitleItem1);
-			superToolTip1.Items.Add(toolTipItem1);
-			this.saveDb.SuperTip = superToolTip1;
+			toolTipTitleItem4.Text = "Save";
+			toolTipItem4.LeftIndent = 6;
+			toolTipItem4.Text = "Saves your changes to SQL Server.";
+			superToolTip4.Items.Add(toolTipTitleItem4);
+			superToolTip4.Items.Add(toolTipItem4);
+			this.saveDb.SuperTip = superToolTip4;
 			this.saveDb.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.saveDb_ItemClick);
 			// 
 			// showCalendar
@@ -197,12 +164,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showCalendar.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Calendar16;
 			this.showCalendar.Id = 3;
 			this.showCalendar.Name = "showCalendar";
-			toolTipTitleItem2.Text = "Show Calendar";
-			toolTipItem2.LeftIndent = 6;
-			toolTipItem2.Text = "Displays a Hebrew calendar";
-			superToolTip2.Items.Add(toolTipTitleItem2);
-			superToolTip2.Items.Add(toolTipItem2);
-			this.showCalendar.SuperTip = superToolTip2;
+			toolTipTitleItem5.Text = "Show Calendar";
+			toolTipItem5.LeftIndent = 6;
+			toolTipItem5.Text = "Displays a Hebrew calendar";
+			superToolTip5.Items.Add(toolTipTitleItem5);
+			superToolTip5.Items.Add(toolTipItem5);
+			this.showCalendar.SuperTip = superToolTip5;
 			this.showCalendar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showCalendar_ItemClick);
 			// 
 			// addPayment
@@ -240,12 +207,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.refreshData.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Refresh16;
 			this.refreshData.Id = 8;
 			this.refreshData.Name = "refreshData";
-			toolTipTitleItem3.Text = "Reload From Database";
-			toolTipItem3.LeftIndent = 6;
-			toolTipItem3.Text = "Saves your changes, then reloads the data from the SQL Server.";
-			superToolTip3.Items.Add(toolTipTitleItem3);
-			superToolTip3.Items.Add(toolTipItem3);
-			this.refreshData.SuperTip = superToolTip3;
+			toolTipTitleItem6.Text = "Reload From Database";
+			toolTipItem6.LeftIndent = 6;
+			toolTipItem6.Text = "Saves your changes, then reloads the data from the SQL Server.";
+			superToolTip6.Items.Add(toolTipTitleItem6);
+			superToolTip6.Items.Add(toolTipItem6);
+			this.refreshData.SuperTip = superToolTip6;
 			this.refreshData.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.refreshData_ItemClick);
 			// 
 			// viewDeposits
@@ -325,6 +292,14 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showShalachManos.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ShalachManosList32;
 			this.showShalachManos.Name = "showShalachManos";
 			this.showShalachManos.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showShalachManos_ItemClick);
+			// 
+			// shalachManosExport
+			// 
+			this.shalachManosExport.Caption = "Create Scroll";
+			this.shalachManosExport.Id = 21;
+			this.shalachManosExport.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ExportScroll32;
+			this.shalachManosExport.Name = "shalachManosExport";
+			this.shalachManosExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.shalachManosExport_ItemClick);
 			// 
 			// ribbonPage1
 			// 
@@ -476,166 +451,21 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// dockPanel1_Container
 			// 
-			this.dockPanel1_Container.Controls.Add(this.pledgeGrid);
+			this.dockPanel1_Container.Controls.Add(this.modifiedPledgesGrid);
 			this.dockPanel1_Container.Controls.Add(this.pledgeEdit);
 			this.dockPanel1_Container.Location = new System.Drawing.Point(2, 22);
 			this.dockPanel1_Container.Name = "dockPanel1_Container";
 			this.dockPanel1_Container.Size = new System.Drawing.Size(664, 497);
 			this.dockPanel1_Container.TabIndex = 0;
 			// 
-			// pledgeGrid
+			// modifiedPledgesGrid
 			// 
-			this.pledgeGrid.DataMember = "Pledges";
-			this.pledgeGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pledgeGrid.Location = new System.Drawing.Point(0, 203);
-			this.pledgeGrid.MainView = this.pledgeView;
-			this.pledgeGrid.MenuManager = this.ribbon;
-			this.pledgeGrid.Name = "pledgeGrid";
-			this.pledgeGrid.Size = new System.Drawing.Size(664, 294);
-			this.pledgeGrid.TabIndex = 1;
-			this.pledgeGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.pledgeView});
-			// 
-			// pledgeView
-			// 
-			this.pledgeView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colFullName1,
-            this.colDate1,
-            this.colType,
-            this.colSubType,
-            this.colAccount1,
-            this.colAmount1,
-            this.colNote,
-            this.colComments1,
-            this.colModified1,
-            this.colModifier1});
-			this.pledgeView.GridControl = this.pledgeGrid;
-			this.pledgeView.Name = "pledgeView";
-			this.pledgeView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
-			this.pledgeView.OptionsView.ShowFooter = true;
-			this.pledgeView.OptionsView.ShowGroupPanel = false;
-			this.pledgeView.OptionsView.ShowIndicator = false;
-			this.pledgeView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
-			this.pledgeView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
-            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colModified1, DevExpress.Data.ColumnSortOrder.Ascending)});
-			this.pledgeView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
-			// 
-			// colFullName1
-			// 
-			this.colFullName1.ColumnEdit = this.personRefEdit;
-			this.colFullName1.FieldName = "FullName";
-			this.colFullName1.GroupInterval = DevExpress.XtraGrid.ColumnGroupInterval.Alphabetical;
-			this.colFullName1.Name = "colFullName1";
-			this.colFullName1.OptionsColumn.ReadOnly = true;
-			this.colFullName1.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
-			this.colFullName1.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
-			this.colFullName1.SummaryItem.DisplayFormat = "{0} Pledges";
-			this.colFullName1.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
-			this.colFullName1.Visible = true;
-			this.colFullName1.VisibleIndex = 0;
-			// 
-			// personRefEdit
-			// 
-			this.personRefEdit.AutoHeight = false;
-			this.personRefEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
-			this.personRefEdit.Name = "personRefEdit";
-			this.personRefEdit.ReadOnly = true;
-			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-			this.personRefEdit.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
-			this.personRefEdit.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.personRefEdit_ButtonPressed);
-			// 
-			// colDate1
-			// 
-			this.colDate1.FieldName = "Date";
-			this.colDate1.Name = "colDate1";
-			this.colDate1.OptionsColumn.AllowEdit = false;
-			this.colDate1.OptionsColumn.AllowFocus = false;
-			this.colDate1.OptionsColumn.ReadOnly = true;
-			this.colDate1.Visible = true;
-			this.colDate1.VisibleIndex = 1;
-			// 
-			// colType
-			// 
-			this.colType.FieldName = "Type";
-			this.colType.Name = "colType";
-			this.colType.OptionsColumn.AllowEdit = false;
-			this.colType.OptionsColumn.AllowFocus = false;
-			this.colType.OptionsColumn.ReadOnly = true;
-			this.colType.Visible = true;
-			this.colType.VisibleIndex = 2;
-			// 
-			// colSubType
-			// 
-			this.colSubType.FieldName = "SubType";
-			this.colSubType.Name = "colSubType";
-			this.colSubType.OptionsColumn.AllowEdit = false;
-			this.colSubType.OptionsColumn.AllowFocus = false;
-			this.colSubType.OptionsColumn.ReadOnly = true;
-			this.colSubType.Visible = true;
-			this.colSubType.VisibleIndex = 3;
-			// 
-			// colAccount1
-			// 
-			this.colAccount1.FieldName = "Account";
-			this.colAccount1.Name = "colAccount1";
-			this.colAccount1.OptionsColumn.AllowEdit = false;
-			this.colAccount1.OptionsColumn.AllowFocus = false;
-			this.colAccount1.OptionsColumn.ReadOnly = true;
-			this.colAccount1.Visible = true;
-			this.colAccount1.VisibleIndex = 4;
-			// 
-			// colAmount1
-			// 
-			this.colAmount1.DisplayFormat.FormatString = "c";
-			this.colAmount1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.colAmount1.FieldName = "Amount";
-			this.colAmount1.Name = "colAmount1";
-			this.colAmount1.OptionsColumn.AllowEdit = false;
-			this.colAmount1.OptionsColumn.AllowFocus = false;
-			this.colAmount1.OptionsColumn.ReadOnly = true;
-			this.colAmount1.SummaryItem.DisplayFormat = "{0:c} Pledged Added";
-			this.colAmount1.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
-			this.colAmount1.Visible = true;
-			this.colAmount1.VisibleIndex = 5;
-			// 
-			// colNote
-			// 
-			this.colNote.FieldName = "Note";
-			this.colNote.Name = "colNote";
-			this.colNote.OptionsColumn.AllowEdit = false;
-			this.colNote.OptionsColumn.AllowFocus = false;
-			this.colNote.OptionsColumn.ReadOnly = true;
-			this.colNote.Visible = true;
-			this.colNote.VisibleIndex = 6;
-			// 
-			// colComments1
-			// 
-			this.colComments1.FieldName = "Comments";
-			this.colComments1.Name = "colComments1";
-			this.colComments1.OptionsColumn.AllowEdit = false;
-			this.colComments1.OptionsColumn.AllowFocus = false;
-			this.colComments1.OptionsColumn.ReadOnly = true;
-			this.colComments1.Visible = true;
-			this.colComments1.VisibleIndex = 7;
-			// 
-			// colModified1
-			// 
-			this.colModified1.DisplayFormat.FormatString = "g";
-			this.colModified1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-			this.colModified1.FieldName = "Modified";
-			this.colModified1.Name = "colModified1";
-			this.colModified1.OptionsColumn.AllowEdit = false;
-			this.colModified1.OptionsColumn.AllowFocus = false;
-			this.colModified1.OptionsColumn.ReadOnly = true;
-			// 
-			// colModifier1
-			// 
-			this.colModifier1.FieldName = "Modifier";
-			this.colModifier1.Name = "colModifier1";
-			this.colModifier1.OptionsColumn.AllowEdit = false;
-			this.colModifier1.OptionsColumn.AllowFocus = false;
-			this.colModifier1.OptionsColumn.ReadOnly = true;
+			this.modifiedPledgesGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.modifiedPledgesGrid.Location = new System.Drawing.Point(0, 203);
+			this.modifiedPledgesGrid.MainForm = this;
+			this.modifiedPledgesGrid.Name = "modifiedPledgesGrid";
+			this.modifiedPledgesGrid.Size = new System.Drawing.Size(664, 294);
+			this.modifiedPledgesGrid.TabIndex = 1;
 			// 
 			// pledgeEdit
 			// 
@@ -661,180 +491,12 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// controlContainer1
 			// 
-			this.controlContainer1.Controls.Add(this.paymentGrid);
+			this.controlContainer1.Controls.Add(this.modifiedPaymentsGrid);
 			this.controlContainer1.Controls.Add(this.paymentEdit);
 			this.controlContainer1.Location = new System.Drawing.Point(2, 22);
 			this.controlContainer1.Name = "controlContainer1";
 			this.controlContainer1.Size = new System.Drawing.Size(669, 497);
 			this.controlContainer1.TabIndex = 0;
-			// 
-			// paymentGrid
-			// 
-			this.paymentGrid.DataMember = "Payments";
-			this.paymentGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.paymentGrid.Location = new System.Drawing.Point(0, 175);
-			this.paymentGrid.MainView = this.paymentView;
-			this.paymentGrid.MenuManager = this.ribbon;
-			this.paymentGrid.Name = "paymentGrid";
-			this.paymentGrid.Size = new System.Drawing.Size(669, 322);
-			this.paymentGrid.TabIndex = 1;
-			this.paymentGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.paymentView});
-			// 
-			// paymentView
-			// 
-			this.paymentView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colFullName,
-            this.colDate,
-            this.colMethod,
-            this.colCheckNumber,
-            this.colAccount,
-            this.colAmount,
-            this.colDepositDateSql,
-            this.colComments,
-            this.colModified,
-            this.colModifier});
-			this.paymentView.GridControl = this.paymentGrid;
-			this.paymentView.Name = "paymentView";
-			this.paymentView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
-			this.paymentView.OptionsView.ShowFooter = true;
-			this.paymentView.OptionsView.ShowGroupPanel = false;
-			this.paymentView.OptionsView.ShowIndicator = false;
-			this.paymentView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
-			this.paymentView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
-            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colModified, DevExpress.Data.ColumnSortOrder.Ascending)});
-			this.paymentView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
-			// 
-			// colFullName
-			// 
-			this.colFullName.ColumnEdit = this.personRefEdit;
-			this.colFullName.FieldName = "FullName";
-			this.colFullName.GroupInterval = DevExpress.XtraGrid.ColumnGroupInterval.Alphabetical;
-			this.colFullName.Name = "colFullName";
-			this.colFullName.OptionsColumn.ReadOnly = true;
-			this.colFullName.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
-			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
-			this.colFullName.SummaryItem.DisplayFormat = "{0} Payments";
-			this.colFullName.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
-			this.colFullName.Visible = true;
-			this.colFullName.VisibleIndex = 0;
-			// 
-			// colDate
-			// 
-			this.colDate.FieldName = "Date";
-			this.colDate.Name = "colDate";
-			this.colDate.OptionsColumn.AllowEdit = false;
-			this.colDate.OptionsColumn.AllowFocus = false;
-			this.colDate.OptionsColumn.ReadOnly = true;
-			this.colDate.Visible = true;
-			this.colDate.VisibleIndex = 1;
-			// 
-			// colMethod
-			// 
-			this.colMethod.FieldName = "Method";
-			this.colMethod.Name = "colMethod";
-			this.colMethod.OptionsColumn.AllowEdit = false;
-			this.colMethod.OptionsColumn.AllowFocus = false;
-			this.colMethod.OptionsColumn.ReadOnly = true;
-			this.colMethod.Visible = true;
-			this.colMethod.VisibleIndex = 2;
-			// 
-			// colCheckNumber
-			// 
-			this.colCheckNumber.ColumnEdit = this.checkNumberEdit;
-			this.colCheckNumber.FieldName = "CheckNumber";
-			this.colCheckNumber.Name = "colCheckNumber";
-			this.colCheckNumber.OptionsColumn.AllowEdit = false;
-			this.colCheckNumber.OptionsColumn.AllowFocus = false;
-			this.colCheckNumber.OptionsColumn.ReadOnly = true;
-			this.colCheckNumber.Visible = true;
-			this.colCheckNumber.VisibleIndex = 3;
-			// 
-			// checkNumberEdit
-			// 
-			this.checkNumberEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.checkNumberEdit.DisplayFormat.FormatString = "f0";
-			this.checkNumberEdit.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.checkNumberEdit.EditFormat.FormatString = "f0";
-			this.checkNumberEdit.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.checkNumberEdit.IsFloatValue = false;
-			this.checkNumberEdit.Mask.EditMask = "f0";
-			this.checkNumberEdit.Name = "checkNumberEdit";
-			this.checkNumberEdit.NullText = "N/A";
-			// 
-			// colAccount
-			// 
-			this.colAccount.FieldName = "Account";
-			this.colAccount.Name = "colAccount";
-			this.colAccount.OptionsColumn.AllowEdit = false;
-			this.colAccount.OptionsColumn.AllowFocus = false;
-			this.colAccount.OptionsColumn.ReadOnly = true;
-			this.colAccount.Visible = true;
-			this.colAccount.VisibleIndex = 4;
-			// 
-			// colAmount
-			// 
-			this.colAmount.DisplayFormat.FormatString = "c";
-			this.colAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.colAmount.FieldName = "Amount";
-			this.colAmount.Name = "colAmount";
-			this.colAmount.OptionsColumn.AllowEdit = false;
-			this.colAmount.OptionsColumn.AllowFocus = false;
-			this.colAmount.OptionsColumn.ReadOnly = true;
-			this.colAmount.SummaryItem.DisplayFormat = "{0:c} Paid Added";
-			this.colAmount.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
-			this.colAmount.Visible = true;
-			this.colAmount.VisibleIndex = 5;
-			// 
-			// colDepositDateSql
-			// 
-			this.colDepositDateSql.Caption = "Deposited?";
-			this.colDepositDateSql.ColumnEdit = this.depositEdit;
-			this.colDepositDateSql.FieldName = "Deposit";
-			this.colDepositDateSql.Name = "colDepositDateSql";
-			this.colDepositDateSql.OptionsColumn.AllowEdit = false;
-			this.colDepositDateSql.OptionsColumn.AllowFocus = false;
-			this.colDepositDateSql.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
-			this.colDepositDateSql.OptionsColumn.ReadOnly = true;
-			this.colDepositDateSql.UnboundType = DevExpress.Data.UnboundColumnType.Object;
-			this.colDepositDateSql.Visible = true;
-			this.colDepositDateSql.VisibleIndex = 6;
-			// 
-			// depositEdit
-			// 
-			this.depositEdit.AutoHeight = false;
-			this.depositEdit.Name = "depositEdit";
-			this.depositEdit.NullText = "Undeposited";
-			this.depositEdit.ReadOnly = true;
-			// 
-			// colComments
-			// 
-			this.colComments.FieldName = "Comments";
-			this.colComments.Name = "colComments";
-			this.colComments.OptionsColumn.AllowEdit = false;
-			this.colComments.OptionsColumn.AllowFocus = false;
-			this.colComments.OptionsColumn.ReadOnly = true;
-			this.colComments.Visible = true;
-			this.colComments.VisibleIndex = 7;
-			// 
-			// colModified
-			// 
-			this.colModified.DisplayFormat.FormatString = "g";
-			this.colModified.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-			this.colModified.FieldName = "Modified";
-			this.colModified.Name = "colModified";
-			this.colModified.OptionsColumn.AllowEdit = false;
-			this.colModified.OptionsColumn.AllowFocus = false;
-			this.colModified.OptionsColumn.ReadOnly = true;
-			// 
-			// colModifier
-			// 
-			this.colModifier.FieldName = "Modifier";
-			this.colModifier.Name = "colModifier";
-			this.colModifier.OptionsColumn.AllowEdit = false;
-			this.colModifier.OptionsColumn.AllowFocus = false;
-			this.colModifier.OptionsColumn.ReadOnly = true;
 			// 
 			// paymentEdit
 			// 
@@ -851,13 +513,14 @@ namespace ShomreiTorah.Billing.Forms {
 			this.mdiManager.MdiParent = this;
 			this.mdiManager.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mdiManager_MouseDown);
 			// 
-			// shalachManosExport
+			// modifiedPaymentsGrid
 			// 
-			this.shalachManosExport.Caption = "Create Scroll";
-			this.shalachManosExport.Id = 21;
-			this.shalachManosExport.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ExportScroll32;
-			this.shalachManosExport.Name = "shalachManosExport";
-			this.shalachManosExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.shalachManosExport_ItemClick);
+			this.modifiedPaymentsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.modifiedPaymentsGrid.Location = new System.Drawing.Point(0, 175);
+			this.modifiedPaymentsGrid.MainForm = this;
+			this.modifiedPaymentsGrid.Name = "modifiedPaymentsGrid";
+			this.modifiedPaymentsGrid.Size = new System.Drawing.Size(669, 322);
+			this.modifiedPaymentsGrid.TabIndex = 1;
 			// 
 			// MainForm
 			// 
@@ -877,15 +540,8 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).EndInit();
 			this.addPledgePanel.ResumeLayout(false);
 			this.dockPanel1_Container.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.pledgeGrid)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.pledgeView)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).EndInit();
 			this.addPaymentPanel.ResumeLayout(false);
 			this.controlContainer1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.paymentGrid)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.paymentView)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.mdiManager)).EndInit();
 			this.ResumeLayout(false);
 
@@ -919,38 +575,11 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
 		private DevExpress.XtraBars.BarButtonItem refreshData;
-		private Controls.BaseGrid pledgeGrid;
-		private DevExpress.XtraGrid.Views.Grid.GridView pledgeView;
-		private Controls.BaseGrid paymentGrid;
-		private DevExpress.XtraGrid.Views.Grid.GridView paymentView;
-		private DevExpress.XtraGrid.Columns.GridColumn colFullName;
-		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit personRefEdit;
-		private DevExpress.XtraGrid.Columns.GridColumn colDate;
-		private DevExpress.XtraGrid.Columns.GridColumn colMethod;
-		private DevExpress.XtraGrid.Columns.GridColumn colCheckNumber;
-		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit checkNumberEdit;
-		private DevExpress.XtraGrid.Columns.GridColumn colAccount;
-		private DevExpress.XtraGrid.Columns.GridColumn colAmount;
-		private DevExpress.XtraGrid.Columns.GridColumn colComments;
-		private DevExpress.XtraGrid.Columns.GridColumn colModified;
-		private DevExpress.XtraGrid.Columns.GridColumn colModifier;
-		private DevExpress.XtraGrid.Columns.GridColumn colFullName1;
-		private DevExpress.XtraGrid.Columns.GridColumn colDate1;
-		private DevExpress.XtraGrid.Columns.GridColumn colType;
-		private DevExpress.XtraGrid.Columns.GridColumn colSubType;
-		private DevExpress.XtraGrid.Columns.GridColumn colAccount1;
-		private DevExpress.XtraGrid.Columns.GridColumn colAmount1;
-		private DevExpress.XtraGrid.Columns.GridColumn colNote;
-		private DevExpress.XtraGrid.Columns.GridColumn colComments1;
-		private DevExpress.XtraGrid.Columns.GridColumn colModified1;
-		private DevExpress.XtraGrid.Columns.GridColumn colModifier1;
 		private DevExpress.XtraBars.BarButtonItem viewDeposits;
 		private DevExpress.XtraBars.BarListItem addDeposit;
-		private DevExpress.XtraGrid.Columns.GridColumn colDepositDateSql;
 		private DevExpress.XtraBars.BarButtonItem checkUpdate;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
 		private DevExpress.XtraBars.BarButtonItem importJournal;
-		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
 		private DevExpress.XtraBars.BarButtonItem emailAll;
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage3;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup6;
@@ -963,5 +592,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage4;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup8;
 		private DevExpress.XtraBars.BarButtonItem shalachManosExport;
+		private ShomreiTorah.Billing.Controls.ModifiedPledgesGrid modifiedPledgesGrid;
+		private ShomreiTorah.Billing.Controls.ModifiedPaymentsGrid modifiedPaymentsGrid;
 	}
 }

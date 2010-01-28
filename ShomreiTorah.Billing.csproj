@@ -192,6 +192,12 @@
     <EmbeddedResource Include="Controls\BaseGrid.resx">
       <DependentUpon>BaseGrid.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ModifiedPaymentsGrid.resx">
+      <DependentUpon>ModifiedPaymentsGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ModifiedPledgesGrid.resx">
+      <DependentUpon>ModifiedPledgesGrid.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\NewPerson.resx">
       <DependentUpon>NewPerson.cs</DependentUpon>
     </EmbeddedResource>
@@ -354,6 +360,18 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BillingData.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ModifiedPaymentsGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ModifiedPaymentsGrid.Designer.cs">
+      <DependentUpon>ModifiedPaymentsGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ModifiedPledgesGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ModifiedPledgesGrid.Designer.cs">
+      <DependentUpon>ModifiedPledgesGrid.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\Purim\ShalachManosExport.cs" />
     <Compile Include="Events\Purim\ShalachManosForm.cs">
