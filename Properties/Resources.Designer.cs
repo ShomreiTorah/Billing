@@ -67,9 +67,23 @@ namespace ShomreiTorah.Billing.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Add24 {
+            get {
+                object obj = ResourceManager.GetObject("Add24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Calendar16 {
             get {
                 object obj = ResourceManager.GetObject("Calendar16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ExportScroll32 {
+            get {
+                object obj = ResourceManager.GetObject("ExportScroll32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -140,6 +154,13 @@ namespace ShomreiTorah.Billing.Properties {
         internal static System.Drawing.Bitmap SendPreview1 {
             get {
                 object obj = ResourceManager.GetObject("SendPreview1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ShalachManosList32 {
+            get {
+                object obj = ResourceManager.GetObject("ShalachManosList32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

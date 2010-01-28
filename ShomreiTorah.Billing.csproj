@@ -207,6 +207,9 @@
     <EmbeddedResource Include="Controls\PledgeEdit.resx">
       <DependentUpon>PledgeEdit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Events\Purim\ShalachManosForm.resx">
+      <DependentUpon>ShalachManosForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Export\EmailExporter.resx">
       <DependentUpon>EmailExporter.cs</DependentUpon>
     </EmbeddedResource>
@@ -352,6 +355,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BillingData.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Events\Purim\ShalachManosForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Events\Purim\ShalachManosForm.Designer.cs">
+      <DependentUpon>ShalachManosForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Export\BillInfo.cs" />
     <Compile Include="Export\EmailExporter.cs">
       <SubType>Form</SubType>
@@ -458,6 +467,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="Icon.ico" />
+    <None Include="Resources\ShalachManosList32.png" />
+    <None Include="Resources\ExportScroll32.png" />
+    <None Include="Resources\Add24.png" />
     <None Include="Resources\ImportRaffle32.png" />
     <None Include="Resources\ImportJournal32.png" />
     <None Include="Resources\Update16.png" />

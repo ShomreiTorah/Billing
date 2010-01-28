@@ -131,6 +131,8 @@ namespace ShomreiTorah.Billing.Forms {
 		private void viewDeposits_ItemClick(object sender, ItemClickEventArgs e) { new DepositViewer { MdiParent = this }.Show(); }
 		private void addDeposit_ListItemClick(object sender, ListItemClickEventArgs e) { DepositAdder.Execute(addDeposit.Strings[e.Index]); }
 
+		private void showShalachManos_ItemClick(object sender, ItemClickEventArgs e) { new Events.Purim.ShalachManosForm(DateTime.Today.Year) { MdiParent = this }.Show(); }
+
 		private void importYK_ItemClick(object sender, ItemClickEventArgs e) { Import.YKImporter.Execute(); }
 		private void importJournal_ItemClick(object sender, ItemClickEventArgs e) { Import.Journal.JournalImporter.Execute(); }
 		private void importRaffle_ItemClick(object sender, ItemClickEventArgs e) { Import.Raffle.RaffleImporter.Execute(); }
@@ -175,6 +177,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private void wordAll_ItemClick(object sender, ItemClickEventArgs e) { Export.WordExporter.Execute(StatementsAll.ToArray()); }
 		private void wordModified_ItemClick(object sender, ItemClickEventArgs e) { ExportModified(Export.WordExporter.Execute); }
 		#endregion
+
 
 	}
 }
