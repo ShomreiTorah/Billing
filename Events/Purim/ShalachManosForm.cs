@@ -10,16 +10,19 @@ using System.Windows.Forms;
 using DevExpress.Data.Filtering;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
+using ShomreiTorah.Billing.Controls;
 using ShomreiTorah.WinForms.Controls;
 
 namespace ShomreiTorah.Billing.Events.Purim {
 	partial class ShalachManosForm : XtraForm {
-	public	const string PledgeType = "Shalach Manos";
+		public const string PledgeType = "Shalach Manos";
 		const string Account = "Operating Fund";
-
+		readonly int year;
 		public ShalachManosForm(int year) {
 			InitializeComponent();
+			this.year = year;
 
 			addPanel.Hide();
 			gridView.ActiveFilterCriteria = (new OperandProperty("Type") == PledgeType) & (new FunctionOperator(FunctionOperatorType.GetYear, new OperandProperty("Date")) == year);
@@ -87,6 +90,19 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		private void searchLookup_ItemSelected(object sender, ItemSelectionEventArgs e) {
 			gridView.FocusedRowHandle = gridView.LocateByValue(0, colPledgeId, (e.SelectedRow.Field<Guid>("PledgeId")));
 			gridView.Focus();
+		}
+
+		private void personRefEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
+			var row = gridView.GetFocusedDataRow() as BillingData.PledgesRow;
+			new Forms.PersonDetails(row.MasterDirectoryRow) { MdiParent = MdiParent }.Show();
+		}
+
+		private void personSelector_SelectingPerson(object sender, SelectingPersonEventArgs e) {
+			if (Program.Data.Pledges.Any(p => p.PersonId == e.Person.Id && p.Date.Year == year && p.Type == PledgeType)) {
+				XtraMessageBox.Show(e.Person.FullName + " are already on the Shalach Manos list",
+									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				e.Cancel = true;
+			}
 		}
 	}
 }

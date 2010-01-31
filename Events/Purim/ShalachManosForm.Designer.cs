@@ -127,6 +127,9 @@ namespace ShomreiTorah.Billing.Events.Purim {
             this.colPledgeId});
 			this.gridView.GridControl = this.grid;
 			this.gridView.Name = "gridView";
+			this.gridView.OptionsView.ShowFooter = true;
+			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colFullName, DevExpress.Data.ColumnSortOrder.Ascending)});
 			// 
 			// colFullName
 			// 
@@ -137,6 +140,8 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.colFullName.OptionsColumn.ReadOnly = true;
 			this.colFullName.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
 			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
+			this.colFullName.SummaryItem.DisplayFormat = "{0} People";
+			this.colFullName.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 0;
 			// 
@@ -148,6 +153,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+			this.personRefEdit.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.personRefEdit_ButtonClick);
 			// 
 			// colDate
 			// 
@@ -195,6 +201,8 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.colAmount.ColumnEdit = this.currencyEdit;
 			this.colAmount.FieldName = "Amount";
 			this.colAmount.Name = "colAmount";
+			this.colAmount.SummaryItem.DisplayFormat = "Total: {0:c}";
+			this.colAmount.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
 			this.colAmount.Visible = true;
 			this.colAmount.VisibleIndex = 5;
 			// 
@@ -266,6 +274,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.personSelector.TabStop = false;
 			this.personSelector.Value = ((object)(resources.GetObject("personSelector.Value")));
 			this.personSelector.SelectedPersonChanged += new System.EventHandler(this.personSelector_SelectedPersonChanged);
+			this.personSelector.SelectingPerson += new System.EventHandler<ShomreiTorah.Billing.Controls.SelectingPersonEventArgs>(this.personSelector_SelectingPerson);
 			// 
 			// amount
 			// 
