@@ -106,12 +106,15 @@ namespace ShomreiTorah.Billing.Controls {
 					row2 = row2.GetParentRow(relation);
 				}
 
-				e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("LastName"), row2.Field<string>("LastName"));
-				if (e.Result == 0)
-					e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("HisName"), row2.Field<string>("HisName"));
-				if (e.Result == 0)
-					e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("HerName"), row2.Field<string>("HerName"));
-				e.Handled = true;
+				if (row1 != null && row2 != null) {
+					e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("LastName"), row2.Field<string>("LastName"));
+
+					if (e.Result == 0)
+						e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("HisName"), row2.Field<string>("HisName"));
+					if (e.Result == 0)
+						e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("HerName"), row2.Field<string>("HerName"));
+					e.Handled = true;
+				}
 			}
 		}
 
