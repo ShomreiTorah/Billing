@@ -306,7 +306,7 @@ namespace ShomreiTorah.Billing {
             base.Tables.Add(this.tableMasterDirectory);
             this.tablePledges = new PledgesDataTable(false);
             base.Tables.Add(this.tablePledges);
-            this.tableEmailList = new EmailListDataTable();
+            this.tableEmailList = new EmailListDataTable(false);
             base.Tables.Add(this.tableEmailList);
             this.tableDeposits = new DepositsDataTable(false);
             base.Tables.Add(this.tableDeposits);
@@ -428,6 +428,7 @@ namespace ShomreiTorah.Billing {
             this.MasterDirectory.TotalPaidColumn.Expression = "ISNULL(SUM(Child(Payments).Amount), 0) ";
             this.MasterDirectory.BalanceDueColumn.Expression = "TotalPledged - TotalPaid";
             this.Pledges.FullNameColumn.Expression = "Parent.FullName";
+            this.EmailList.FullNameColumn.Expression = "Parent.FullName";
             this.Deposits.CountColumn.Expression = "COUNT(Child(Deposit).Amount)";
             this.Deposits.AmountColumn.Expression = "SUM(Child(Deposit).Amount)";
         }
@@ -1866,11 +1867,21 @@ namespace ShomreiTorah.Billing {
             
             private global::System.Data.DataColumn columnPersonId;
             
+            private global::System.Data.DataColumn columnFullName;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public EmailListDataTable() {
+            public EmailListDataTable() : 
+                    this(false) {
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EmailListDataTable(bool initExpressions) {
                 this.TableName = "EmailList";
                 this.BeginInit();
                 this.InitClass();
+                if ((initExpressions == true)) {
+                    this.InitExpressions();
+                }
                 this.EndInit();
             }
             
@@ -1946,6 +1957,13 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn FullNameColumn {
+                get {
+                    return this.columnFullName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1974,6 +1992,26 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EmailListRow AddEmailListRow(string Name, string Email, string RandomCode, bool Active, System.DateTime JoinDate, MasterDirectoryRow parentMasterDirectoryRowByEmailAddresses, string FullName) {
+                EmailListRow rowEmailListRow = ((EmailListRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        Name,
+                        Email,
+                        RandomCode,
+                        Active,
+                        JoinDate,
+                        null,
+                        FullName};
+                if ((parentMasterDirectoryRowByEmailAddresses != null)) {
+                    columnValuesArray[6] = parentMasterDirectoryRowByEmailAddresses[0];
+                }
+                rowEmailListRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowEmailListRow);
+                return rowEmailListRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public EmailListRow AddEmailListRow(string Name, string Email, string RandomCode, bool Active, System.DateTime JoinDate, MasterDirectoryRow parentMasterDirectoryRowByEmailAddresses) {
                 EmailListRow rowEmailListRow = ((EmailListRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
@@ -1983,6 +2021,7 @@ namespace ShomreiTorah.Billing {
                         RandomCode,
                         Active,
                         JoinDate,
+                        null,
                         null};
                 if ((parentMasterDirectoryRowByEmailAddresses != null)) {
                     columnValuesArray[6] = parentMasterDirectoryRowByEmailAddresses[0];
@@ -2019,6 +2058,7 @@ namespace ShomreiTorah.Billing {
                 this.columnActive = base.Columns["Active"];
                 this.columnJoinDate = base.Columns["JoinDate"];
                 this.columnPersonId = base.Columns["PersonId"];
+                this.columnFullName = base.Columns["FullName"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2037,6 +2077,8 @@ namespace ShomreiTorah.Billing {
                 base.Columns.Add(this.columnJoinDate);
                 this.columnPersonId = new global::System.Data.DataColumn("PersonId", typeof(global::System.Guid), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPersonId);
+                this.columnFullName = new global::System.Data.DataColumn("FullName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFullName);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnID}, true));
                 this.columnID.AutoIncrement = true;
@@ -2056,6 +2098,7 @@ namespace ShomreiTorah.Billing {
                 this.columnJoinDate.AllowDBNull = false;
                 this.columnJoinDate.Caption = "Join_Date";
                 this.columnJoinDate.DateTimeMode = global::System.Data.DataSetDateTime.Utc;
+                this.columnFullName.ReadOnly = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2071,6 +2114,11 @@ namespace ShomreiTorah.Billing {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override global::System.Type GetRowType() {
                 return typeof(EmailListRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            private void InitExpressions() {
+                this.FullNameColumn.Expression = "Parent.FullName";
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3398,6 +3446,21 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string FullName {
+                get {
+                    if (this.IsFullNameNull()) {
+                        return null;
+                    }
+                    else {
+                        return ((string)(this[this.tableEmailList.FullNameColumn]));
+                    }
+                }
+                set {
+                    this[this.tableEmailList.FullNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public MasterDirectoryRow MasterDirectoryRow {
                 get {
                     return ((MasterDirectoryRow)(this.GetParentRow(this.Table.ParentRelations["EmailAddresses"])));
@@ -3435,6 +3498,16 @@ namespace ShomreiTorah.Billing {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public void SetPersonIdNull() {
                 this[this.tableEmailList.PersonIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsFullNameNull() {
+                return this.IsNull(this.tableEmailList.FullNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetFullNameNull() {
+                this[this.tableEmailList.FullNameColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -5797,7 +5870,7 @@ SELECT Mail_ID, Name, Email, ID_Code, Active, Join_Date, PersonId FROM tblMLMemb
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual BillingData.EmailListDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            BillingData.EmailListDataTable dataTable = new BillingData.EmailListDataTable();
+            BillingData.EmailListDataTable dataTable = new BillingData.EmailListDataTable(true);
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
