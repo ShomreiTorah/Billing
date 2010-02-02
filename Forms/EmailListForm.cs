@@ -6,8 +6,9 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
 
 namespace ShomreiTorah.Billing.Forms {
 	public partial class EmailListForm : XtraForm {
@@ -44,16 +45,23 @@ namespace ShomreiTorah.Billing.Forms {
 			}
 		}
 
-		private void personRefEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
+		private void personEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
 			if (e.Button.Caption == "Clear") {
 				SelectedRow.SetPersonIdNull();
 				gridView.RefreshRow(gridView.FocusedRowHandle);
+				gridView.FocusedColumn = null;
 				try {
 					changingRow = true;
 					personSelector.SelectedPerson = null;
 				} finally { changingRow = false; }
 			} else
 				new PersonDetails(SelectedRow.MasterDirectoryRow) { MdiParent = MdiParent }.Show();
+		}
+
+		private void gridView_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e) {
+			if (e.Column == colFullName) {
+				e.RepositoryItem = (e.CellValue == DBNull.Value) ? emptyPersonEdit : personEdit;
+			}
 		}
 	}
 }
