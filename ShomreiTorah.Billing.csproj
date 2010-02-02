@@ -237,6 +237,9 @@
     <EmbeddedResource Include="Forms\DepositViewer.resx">
       <DependentUpon>DepositViewer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EmailListForm.resx">
+      <DependentUpon>EmailListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ErrorForm.resx">
       <DependentUpon>ErrorForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -421,6 +424,12 @@
     </Compile>
     <Compile Include="Forms\DepositViewer.Designer.cs">
       <DependentUpon>DepositViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EmailListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EmailListForm.Designer.cs">
+      <DependentUpon>EmailListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ErrorForm.cs">
       <SubType>Form</SubType>

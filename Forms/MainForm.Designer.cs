@@ -24,15 +24,15 @@ namespace ShomreiTorah.Billing.Forms {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.addPledge = new DevExpress.XtraBars.BarButtonItem();
@@ -76,9 +76,10 @@ namespace ShomreiTorah.Billing.Forms {
 			this.pledgeEdit = new ShomreiTorah.Billing.Controls.PledgeEdit();
 			this.addPaymentPanel = new DevExpress.XtraBars.Docking.DockPanel();
 			this.controlContainer1 = new DevExpress.XtraBars.Docking.ControlContainer();
+			this.modifiedPaymentsGrid = new ShomreiTorah.Billing.Controls.ModifiedPaymentsGrid();
 			this.paymentEdit = new ShomreiTorah.Billing.Controls.PaymentEdit();
 			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
-			this.modifiedPaymentsGrid = new ShomreiTorah.Billing.Controls.ModifiedPaymentsGrid();
+			this.showEmailList = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
 			this.addPledgePanel.SuspendLayout();
@@ -112,9 +113,10 @@ namespace ShomreiTorah.Billing.Forms {
             this.wordModified,
             this.importRaffle,
             this.showShalachManos,
-            this.shalachManosExport});
+            this.shalachManosExport,
+            this.showEmailList});
 			this.ribbon.Location = new System.Drawing.Point(0, 0);
-			this.ribbon.MaxItemId = 22;
+			this.ribbon.MaxItemId = 23;
 			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
 			this.ribbon.Name = "ribbon";
 			this.ribbon.PageHeaderItemLinks.Add(this.checkUpdate);
@@ -123,7 +125,7 @@ namespace ShomreiTorah.Billing.Forms {
             this.ribbonPage3,
             this.ribbonPage4,
             this.ribbonPage2});
-			this.ribbon.SelectedPage = this.ribbonPage4;
+			this.ribbon.SelectedPage = this.ribbonPage1;
 			this.ribbon.Size = new System.Drawing.Size(858, 148);
 			this.ribbon.StatusBar = this.ribbonStatusBar;
 			this.ribbon.Toolbar.ItemLinks.Add(this.saveDb);
@@ -150,12 +152,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.saveDb.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Save16;
 			this.saveDb.Id = 2;
 			this.saveDb.Name = "saveDb";
-			toolTipTitleItem4.Text = "Save";
-			toolTipItem4.LeftIndent = 6;
-			toolTipItem4.Text = "Saves your changes to SQL Server.";
-			superToolTip4.Items.Add(toolTipTitleItem4);
-			superToolTip4.Items.Add(toolTipItem4);
-			this.saveDb.SuperTip = superToolTip4;
+			toolTipTitleItem1.Text = "Save";
+			toolTipItem1.LeftIndent = 6;
+			toolTipItem1.Text = "Saves your changes to SQL Server.";
+			superToolTip1.Items.Add(toolTipTitleItem1);
+			superToolTip1.Items.Add(toolTipItem1);
+			this.saveDb.SuperTip = superToolTip1;
 			this.saveDb.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.saveDb_ItemClick);
 			// 
 			// showCalendar
@@ -164,12 +166,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showCalendar.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Calendar16;
 			this.showCalendar.Id = 3;
 			this.showCalendar.Name = "showCalendar";
-			toolTipTitleItem5.Text = "Show Calendar";
-			toolTipItem5.LeftIndent = 6;
-			toolTipItem5.Text = "Displays a Hebrew calendar";
-			superToolTip5.Items.Add(toolTipTitleItem5);
-			superToolTip5.Items.Add(toolTipItem5);
-			this.showCalendar.SuperTip = superToolTip5;
+			toolTipTitleItem2.Text = "Show Calendar";
+			toolTipItem2.LeftIndent = 6;
+			toolTipItem2.Text = "Displays a Hebrew calendar";
+			superToolTip2.Items.Add(toolTipTitleItem2);
+			superToolTip2.Items.Add(toolTipItem2);
+			this.showCalendar.SuperTip = superToolTip2;
 			this.showCalendar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showCalendar_ItemClick);
 			// 
 			// addPayment
@@ -207,12 +209,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.refreshData.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Refresh16;
 			this.refreshData.Id = 8;
 			this.refreshData.Name = "refreshData";
-			toolTipTitleItem6.Text = "Reload From Database";
-			toolTipItem6.LeftIndent = 6;
-			toolTipItem6.Text = "Saves your changes, then reloads the data from the SQL Server.";
-			superToolTip6.Items.Add(toolTipTitleItem6);
-			superToolTip6.Items.Add(toolTipItem6);
-			this.refreshData.SuperTip = superToolTip6;
+			toolTipTitleItem3.Text = "Reload From Database";
+			toolTipItem3.LeftIndent = 6;
+			toolTipItem3.Text = "Saves your changes, then reloads the data from the SQL Server.";
+			superToolTip3.Items.Add(toolTipTitleItem3);
+			superToolTip3.Items.Add(toolTipItem3);
+			this.refreshData.SuperTip = superToolTip3;
 			this.refreshData.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.refreshData_ItemClick);
 			// 
 			// viewDeposits
@@ -331,6 +333,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// ribbonPageGroup3
 			// 
 			this.ribbonPageGroup3.ItemLinks.Add(this.showMasterDirectoryGrid);
+			this.ribbonPageGroup3.ItemLinks.Add(this.showEmailList);
 			this.ribbonPageGroup3.Name = "ribbonPageGroup3";
 			this.ribbonPageGroup3.ShowCaptionButton = false;
 			this.ribbonPageGroup3.Text = "People";
@@ -498,6 +501,15 @@ namespace ShomreiTorah.Billing.Forms {
 			this.controlContainer1.Size = new System.Drawing.Size(669, 497);
 			this.controlContainer1.TabIndex = 0;
 			// 
+			// modifiedPaymentsGrid
+			// 
+			this.modifiedPaymentsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.modifiedPaymentsGrid.Location = new System.Drawing.Point(0, 175);
+			this.modifiedPaymentsGrid.MainForm = this;
+			this.modifiedPaymentsGrid.Name = "modifiedPaymentsGrid";
+			this.modifiedPaymentsGrid.Size = new System.Drawing.Size(669, 322);
+			this.modifiedPaymentsGrid.TabIndex = 1;
+			// 
 			// paymentEdit
 			// 
 			this.paymentEdit.Dock = System.Windows.Forms.DockStyle.Top;
@@ -513,14 +525,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.mdiManager.MdiParent = this;
 			this.mdiManager.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mdiManager_MouseDown);
 			// 
-			// modifiedPaymentsGrid
+			// showEmailList
 			// 
-			this.modifiedPaymentsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.modifiedPaymentsGrid.Location = new System.Drawing.Point(0, 175);
-			this.modifiedPaymentsGrid.MainForm = this;
-			this.modifiedPaymentsGrid.Name = "modifiedPaymentsGrid";
-			this.modifiedPaymentsGrid.Size = new System.Drawing.Size(669, 322);
-			this.modifiedPaymentsGrid.TabIndex = 1;
+			this.showEmailList.Caption = "Show email list";
+			this.showEmailList.Id = 22;
+			this.showEmailList.Name = "showEmailList";
+			this.showEmailList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showEmailList_ItemClick);
 			// 
 			// MainForm
 			// 
@@ -594,5 +604,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.BarButtonItem shalachManosExport;
 		private ShomreiTorah.Billing.Controls.ModifiedPledgesGrid modifiedPledgesGrid;
 		private ShomreiTorah.Billing.Controls.ModifiedPaymentsGrid modifiedPaymentsGrid;
+		private DevExpress.XtraBars.BarButtonItem showEmailList;
 	}
 }

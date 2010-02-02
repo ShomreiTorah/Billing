@@ -93,7 +93,6 @@ namespace ShomreiTorah.Billing.Forms {
 
 		#region Show other forms
 		private void showCalendar_ItemClick(object sender, ItemClickEventArgs e) { new CalendarForm().Show(this); }
-		private void viewDeposits_ItemClick(object sender, ItemClickEventArgs e) { new DepositViewer { MdiParent = this }.Show(); }
 		private void addDeposit_ListItemClick(object sender, ListItemClickEventArgs e) { DepositAdder.Execute(addDeposit.Strings[e.Index]); }
 
 		private void showShalachManos_ItemClick(object sender, ItemClickEventArgs e) { new ShalachManosForm(DateTime.Today.Year) { MdiParent = this }.Show(); }
@@ -105,7 +104,9 @@ namespace ShomreiTorah.Billing.Forms {
 
 		private void viewPayments_ItemClick(object sender, ItemClickEventArgs e) { new PaymentViewer { MdiParent = this }.Show(); }
 		private void viewPledges_ItemClick(object sender, ItemClickEventArgs e) { new PledgeViewer { MdiParent = this }.Show(); }
+		private void viewDeposits_ItemClick(object sender, ItemClickEventArgs e) { new DepositViewer { MdiParent = this }.Show(); }
 		private void showMasterDirectoryGrid_ItemClick(object sender, ItemClickEventArgs e) { new MasterDirectoryGridForm { MdiParent = this }.Show(); }
+		private void showEmailList_ItemClick(object sender, ItemClickEventArgs e) { new EmailListForm { MdiParent = this }.Show(); }
 
 		private void addPayment_ItemClick(object sender, ItemClickEventArgs e) {
 			addPaymentPanel.Show();
