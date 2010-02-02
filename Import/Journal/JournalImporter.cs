@@ -48,6 +48,10 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			string source = "Journal " + year;
 			using (JournalDB journal = new JournalDB()) {
 				journal.ReadXml(dbPath);
+
+				foreach (var ad in journal.Ads.Where(a => a.AmountToBill <= 0).ToArray())
+					journal.Ads.Rows.Remove(ad);	//Don't worry; the database isn't saved.
+
 				AdCollection ads = new AdCollection();
 
 				for (int i = 0; i < journal.Ads.Count; i++) {
