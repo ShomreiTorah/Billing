@@ -41,7 +41,10 @@
 		On behalf of Rabbi Weinberger and Congregation Shomrei Torah of Passaic Clifton,
 		I would like to express my sincere gratitude and appreciation for your generous
 		<%= Info.Accounts.Sum(a => a.Payments.Count) == 1 ? "contribution" : "contributions" %>
-		to our shul. Below please review your
+		to our Shul.
+	</p>
+	<p>
+		Below is your
 		<%=Info.StartDate.Year %>
 		annual contributions summary. If you have any questions, please reply to this email
 		or call me at (732) 516 - 5583.</p>
