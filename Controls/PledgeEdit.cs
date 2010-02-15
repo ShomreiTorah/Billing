@@ -103,7 +103,7 @@ namespace ShomreiTorah.Billing.Controls {
 				node = null;
 
 			typeTree.SelectedNode = node;
-			account.Text = typeText.Text == "Building Fund" ? "Building Fund" : "Operating Fund";
+			CurrentPledge.Account = typeText.Text == "Building Fund" ? "Building Fund" : "Operating Fund";
 		}
 
 		private void typeTree_AfterSelect(object sender, TreeViewEventArgs e) {
@@ -113,12 +113,13 @@ namespace ShomreiTorah.Billing.Controls {
 			}
 			if (e.Action == TreeViewAction.Collapse || e.Action == TreeViewAction.Expand || e.Action == TreeViewAction.Unknown) return;
 			if (e.Node != null) {
+				
 				if (e.Node.Parent == null) {
-					typeText.Text = e.Node.Text;
-					subtypeText.Text = "";
+					CurrentPledge.Type = e.Node.Text;
+					CurrentPledge.SubType = "";
 				} else {
-					typeText.Text = e.Node.Parent.Text;
-					subtypeText.Text = e.Node.Text;
+					CurrentPledge.Type = e.Node.Parent.Text;
+					CurrentPledge.SubType = e.Node.Text;
 				}
 			}
 		}
