@@ -43,7 +43,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private void emailSelected_ItemClick(object sender, ItemClickEventArgs e) { Export.EmailExporter.Execute(GetSelectedPeople()); }
 		private void exportWordSelected_ItemClick(object sender, ItemClickEventArgs e) { Export.WordExporter.Execute(GetSelectedPeople()); }
 
-		BillingData.MasterDirectoryRow GetPerson(int rowHandle) { return ((BillingData.PledgesRow)gridView.GetDataRow(rowHandle)).MasterDirectoryRow; }
+		BillingData.MasterDirectoryRow GetPerson(int rowHandle) { return ((BillingData.PaymentsRow)gridView.GetDataRow(rowHandle)).MasterDirectoryRow; }
 		BillingData.MasterDirectoryRow[] GetSelectedPeople() { return Array.ConvertAll<int, BillingData.MasterDirectoryRow>(gridView.GetSelectedRows(), GetPerson); }
 		//DevExpress grid filter strings aren't completely compatible with DataTable.Select
 		BillingData.MasterDirectoryRow[] GetVisiblePeople() {
