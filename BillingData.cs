@@ -112,11 +112,12 @@ namespace ShomreiTorah.Billing {
 				e.SetError((decimal)e.ProposedValue > 0 ? null : "Amount must be positive");
 			}
 
-			if (e.Column.ColumnName.StartsWith("Modifie")
-			 || Equals(e.Row[e.Column], e.ProposedValue)) //Handle nulls and strings
-				return;
-			e.Row["Modified"] = DateTime.UtcNow;
-			e.Row["Modifier"] = Environment.UserName;
+			if (!e.Column.ColumnName.StartsWith("Modifie")
+			 && e.Column.ColumnName != "DepositId"
+			 && !Equals(e.Row[e.Column], e.ProposedValue)) { //Handle nulls and strings
+				e.Row["Modified"] = DateTime.UtcNow;
+				e.Row["Modifier"] = Environment.UserName;
+			}
 		}
 
 		internal void Save() {
@@ -278,6 +279,18 @@ namespace ShomreiTorah.Billing {
 
 		public partial class PaymentsRow : ITransaction {
 			public decimal SignedAmount { get { return -Amount; } }
+
+			public string DuplicateWarning() {
+				if (IsCheckNumberNull()) return null;
+				//Support detached rows (if the payment is being added)
+				var duplicate = Program.Data.Payments.FirstOrDefault(p => p != this
+																	   && p.PersonId == PersonId
+																	   && !p.IsCheckNumberNull()
+																	   && p.CheckNumber == CheckNumber);
+				if (duplicate == null)
+					return null;
+				return Method + " #" + CheckNumber + " for " + FullName + " has already been entered.";
+			}
 		}
 		public partial class DepositsRow : IComparable {
 
