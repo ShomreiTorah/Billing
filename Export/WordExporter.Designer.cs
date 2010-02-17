@@ -160,6 +160,7 @@ namespace ShomreiTorah.Billing.Export {
 			this.cancel.Size = new System.Drawing.Size(75, 23);
 			this.cancel.TabIndex = 15;
 			this.cancel.Text = "Cancel";
+			this.cancel.Click += new System.EventHandler(this.cancel_Click);
 			// 
 			// createDoc
 			// 

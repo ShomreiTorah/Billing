@@ -126,6 +126,7 @@ namespace ShomreiTorah.Billing.Export {
 			this.cancel.Size = new System.Drawing.Size(75, 23);
 			this.cancel.TabIndex = 5;
 			this.cancel.Text = "Cancel";
+			this.cancel.Click += new System.EventHandler(this.cancel_Click);
 			// 
 			// sendBills
 			// 
@@ -137,6 +138,7 @@ namespace ShomreiTorah.Billing.Export {
 			this.sendBills.Size = new System.Drawing.Size(75, 23);
 			this.sendBills.TabIndex = 3;
 			this.sendBills.Text = "Send Emails";
+			this.sendBills.Click += new System.EventHandler(this.sendBills_Click);
 			// 
 			// grid
 			// 

@@ -37,9 +37,7 @@ namespace ShomreiTorah.Billing.Export {
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			using (var form = new WordExporter(kinds, startDate, people)) {
-				form.ShowDialog();
-			}
+			new WordExporter(kinds, startDate, people).Show();
 		}
 		readonly DateTime startDate;
 		readonly BillKind[] kinds;
@@ -79,5 +77,7 @@ namespace ShomreiTorah.Billing.Export {
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			cancel.Text = "Close";
 		}
+
+		private void cancel_Click(object sender, EventArgs e) { Close(); }
 	}
 }

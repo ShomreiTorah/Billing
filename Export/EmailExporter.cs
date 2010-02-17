@@ -34,7 +34,7 @@ namespace ShomreiTorah.Billing.Export {
 				else
 					XtraMessageBox.Show("None of the people you selected have email addresses.",
 										"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					return;
+				return;
 			}
 			Program.DoReload();
 
@@ -50,10 +50,7 @@ namespace ShomreiTorah.Billing.Export {
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			using (var form = new EmailExporter(people, fileNames)) {
-				if (form.ShowDialog() == DialogResult.Cancel) return;
-				form.SendBills();
-			}
+			new EmailExporter(people, fileNames).Show();
 		}
 
 		const string SettingsPath = @"HKEY_CURRENT_USER\Software\Shomrei Torah\Billing\";
@@ -226,5 +223,8 @@ namespace ShomreiTorah.Billing.Export {
 			e.Cancel = !String.IsNullOrEmpty(previewAddress.Text) && previewMailAddress == null;
 			previewAddress.ErrorText = e.Cancel ? "Invalid email address" : null;
 		}
+
+		private void sendBills_Click(object sender, EventArgs e) { SendBills(); }
+		private void cancel_Click(object sender, EventArgs e) { Close(); }
 	}
 }
