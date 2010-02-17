@@ -24,13 +24,17 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			InitializeComponent();
 			this.year = year;
 
-			addPanel.Hide();
-			gridView.ActiveFilterCriteria = (new OperandProperty("Type") == PledgeType) & (new FunctionOperator(FunctionOperatorType.GetYear, new OperandProperty("Date")) == year);
-
 			Program.Data.Pledges.AddLookupColumns();
 
+			var filterString = "Date > #1/1/" + year + "# AND Date < #12/31/" + year + "# AND Type='" + PledgeType + "'";
+
+			addPanel.Hide();
+			grid.DataMember = null;
+			grid.DataSource = new DataView(Program.Data.Pledges, filterString, "LastName", DataViewRowState.CurrentRows);
+
+
 			searchLookup.SearchTable = Program.Data.Pledges;
-			searchLookup.PresetFilter = "Date > #1/1/" + year + "# AND Date < #12/31/" + year + "# AND Type='" + PledgeType + "'";
+			searchLookup.PresetFilter = filterString;
 		}
 
 		private void personSelector_SelectedPersonChanged(object sender, EventArgs e) {
