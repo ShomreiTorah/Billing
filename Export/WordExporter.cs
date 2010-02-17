@@ -28,7 +28,9 @@ namespace ShomreiTorah.Billing.Export {
 			}
 
 			//Only include people who should receive at least one of the BillKinds.
-			people = Array.FindAll(people, p => kinds.Any(k => new BillInfo(p, startDate, k).ShouldSend));
+			people = people.Where(p => kinds.Any(k => new BillInfo(p, startDate, k).ShouldSend))
+						   .OrderBy(p => p.LastName)
+						   .ToArray();
 
 			if (people.Length == 0) {
 				XtraMessageBox.Show("There are no people to send to.",
