@@ -25,7 +25,7 @@ namespace ShomreiTorah.Billing.Export {
 
 			Accounts = new ReadOnlyCollection<BillAccount>(
 				BillingData.AccountNames.Select(a => new BillAccount(this, a))
-										.Where(ba => (Kind == BillKind.Bill && ba.Pledges.Any()) || ba.Payments.Any())
+										.Where(ba => ba.ShouldInclude)
 										.ToArray()
 			);
 
@@ -58,6 +58,14 @@ namespace ShomreiTorah.Billing.Export {
 
 			TotalPledged = OutstandingBalance + Pledges.Sum(p => p.Amount);
 			TotalPaid = Payments.Sum(p => p.Amount);
+		}
+		internal bool ShouldInclude {
+			get {
+				if (Parent.Kind == BillKind.Bill)
+					return BalanceDue > 0;
+				else
+					return Payments.Any();
+			}
 		}
 
 		public BillInfo Parent { get; private set; }
