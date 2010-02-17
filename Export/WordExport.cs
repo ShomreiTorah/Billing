@@ -241,7 +241,7 @@ namespace ShomreiTorah.Billing.Export {
 				foreach (var payment in account.Payments) {
 					row = table.AddRow().StyleAmount().Stripe();
 					row.Cells[1].Range.Text = payment.Date.ToShortDateString();
-					row.Cells[2].Range.Text = payment.Method + (payment.IsCheckNumberNull() ? "" : " #" + payment.CheckNumber.ToString(Culture));
+					row.Cells[2].Range.Text = payment.Method.Replace("Unknown", "?") + (payment.IsCheckNumberNull() ? "" : " #" + payment.CheckNumber.ToString(Culture));
 					row.Cells[3].Range.Text = payment.Amount.ToString("c", Culture);
 				}
 
