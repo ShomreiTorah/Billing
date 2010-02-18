@@ -61,7 +61,7 @@ namespace ShomreiTorah.Billing.Controls {
 		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error message")]
 		private void commit_Click(object sender, EventArgs e) {
 			if (!commit.Visible) {
-				Debug.Assert(false,"How was commit clicked?");
+				Debug.Assert(false, "How was commit clicked?");
 				return;
 			}
 			var payment = CurrentPayment;
@@ -95,6 +95,11 @@ namespace ShomreiTorah.Billing.Controls {
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
+			string message = CurrentPayment.CheckDuplicateWarning((int)checkNumber.Value, true);
+			if (!string.IsNullOrEmpty(message)
+			 && DialogResult.No == XtraMessageBox.Show(message, "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2))
+				return;
+
 			#endregion
 			if (payment.Amount <= 0) {
 				XtraMessageBox.Show("Amount must be positive",
@@ -176,6 +181,14 @@ Payment:	{4:c} {5} for {6} on {7:d}
 			 && DialogResult.No == XtraMessageBox.Show("Are you sure you want to change this payment to be associated with " + e.Person.VeryFullName + "?",
 													   "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
 				e.Cancel = true;
+		}
+
+		private void checkNumber_Validating(object sender, CancelEventArgs e) {
+			if (!(checkNumber.EditValue is decimal)) return;
+
+			string message = CurrentPayment.CheckDuplicateWarning((int)checkNumber.Value, false);
+			e.Cancel = !string.IsNullOrEmpty(message)
+					&& DialogResult.No == XtraMessageBox.Show(message, "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 		}
 	}
 }

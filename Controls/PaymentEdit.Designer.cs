@@ -182,6 +182,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.checkNumber.Size = new System.Drawing.Size(126, 20);
 			this.checkNumber.TabIndex = 4;
 			this.checkNumber.Visible = false;
+			this.checkNumber.Validating += new System.ComponentModel.CancelEventHandler(this.checkNumber_Validating);
 			this.checkNumber.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
 			// 
 			// labelControl2

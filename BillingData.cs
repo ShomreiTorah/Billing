@@ -9,6 +9,7 @@ using System.Net.Mail;
 using System.Text;
 using ShomreiTorah.Billing.BillingDataTableAdapters;
 using ShomreiTorah.Common;
+using System.Globalization;
 
 namespace ShomreiTorah.Billing {
 	partial class BillingData {
@@ -280,16 +281,29 @@ namespace ShomreiTorah.Billing {
 		public partial class PaymentsRow : ITransaction {
 			public decimal SignedAmount { get { return -Amount; } }
 
-			public string DuplicateWarning() {
-				if (IsCheckNumberNull()) return null;
+			int? lastCheckedCheckNumber;
+			public string CheckDuplicateWarning(int newCheckNumber, bool force) {
+				if (!force) {
+					if (!IsCheckNumberNull() && lastCheckedCheckNumber == CheckNumber)
+						lastCheckedCheckNumber = null;
+					if (!IsCheckNumberNull() && newCheckNumber == CheckNumber)
+						return null;
+					if (newCheckNumber == lastCheckedCheckNumber)
+						return null;
+				}
+
 				//Support detached rows (if the payment is being added)
 				var duplicate = Program.Data.Payments.FirstOrDefault(p => p != this
 																	   && p.PersonId == PersonId
 																	   && !p.IsCheckNumberNull()
-																	   && p.CheckNumber == CheckNumber);
-				if (duplicate == null)
+																	   && p.CheckNumber == newCheckNumber);
+				if (duplicate == null) {
+					lastCheckedCheckNumber = null;
 					return null;
-				return Method + " #" + CheckNumber + " for " + FullName + " has already been entered.";
+				}
+				lastCheckedCheckNumber = force ? new int?() : newCheckNumber;
+				return String.Format(CultureInfo.CurrentUICulture, "{0} #{1} for {2} has already been entered ({3:d}, {4:c}).\r\nAre you sure you aren't making a mistake?",
+																   duplicate.Method, duplicate.CheckNumber, duplicate.FullName, duplicate.Date, duplicate.Amount);
 			}
 		}
 		public partial class DepositsRow : IComparable {

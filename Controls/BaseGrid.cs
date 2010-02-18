@@ -15,6 +15,7 @@ using System.Globalization;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.Data.Filtering;
 using DevExpress.Utils.Menu;
+using DevExpress.XtraEditors.Controls;
 
 namespace ShomreiTorah.Billing.Controls {
 	[ToolboxItem(false)]
@@ -117,8 +118,6 @@ namespace ShomreiTorah.Billing.Controls {
 				}
 			}
 		}
-
-
 		void view_ShowGridMenu(object sender, GridMenuEventArgs e) {
 			if (e.MenuType == GridMenuType.Column) {
 				var grid = (GridView)sender;
@@ -189,10 +188,24 @@ namespace ShomreiTorah.Billing.Controls {
 				fullNameCol.GroupInterval = ColumnGroupInterval.Alphabetical;
 			}
 
-			var depositCol = view.Columns.ColumnByFieldName("Deposit");
-			if (depositCol != null)
+			if (view.Columns.ColumnByFieldName("Deposit") != null)
 				view.CustomUnboundColumnData += view_CustomUnboundColumnData;
+			if (view.Columns.ColumnByFieldName("CheckNumber") != null)
+				view.ValidatingEditor += view_ValidatingEditor;
 		}
 
+		void view_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e) {
+			if (!e.Valid) return;
+			if (!(e.Value is decimal)) return;
+			var view = (ColumnView)sender;
+			if (view.FocusedColumn.FieldName != "CheckNumber") return;
+			var row = (BillingData.PaymentsRow)view.GetFocusedDataRow();
+
+			string message = row.CheckDuplicateWarning((int)(decimal)e.Value, false);
+			e.Valid = string.IsNullOrEmpty(message)
+					|| DialogResult.Yes == XtraMessageBox.Show(message, "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+			if (!e.Valid)
+				e.ErrorText = message;
+		}
 	}
 }
