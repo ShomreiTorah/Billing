@@ -110,12 +110,16 @@ namespace ShomreiTorah.Billing.Export {
 							var info = new BillInfo(person, startDate, kind);
 							if (!info.ShouldSend) continue;
 
-							range.Collapse(WdCollapseDirection.wdCollapseEnd);
 							if (firstPage)
 								firstPage = false;
-							else
-								range.InsertBreak(WdBreakType.wdPageBreak);
-
+							else {
+								range.Start = range.End - 1;
+								while (range.Text.Trim().Length == 0)
+									range.Start--;
+								range.Start++;
+								range.Text = "\f";
+								range.Collapse(WdCollapseDirection.wdCollapseEnd);
+							}
 							sourceRanges[kind].Copy();
 							range.Paste();
 							FillBill(range, info);
