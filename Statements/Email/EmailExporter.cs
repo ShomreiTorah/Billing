@@ -142,7 +142,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 				string html, subject;
 				using (var page = PageBuilder.CreatePage<EmailPage>("/" + emailTemplate.EditValue + ".aspx")) {
 					page.ImagePrefix = PageBuilder.ImagesPath;
-					page.Info = new BillInfo(row, startDate.DateTime, page.Kind);
+					page.Info = new StatementInfo(row, startDate.DateTime, page.Kind);
 					if (!page.Info.ShouldSend) {
 						XtraMessageBox.Show(row.FullName + " do not have any relevant data and will not receive an email.",
 											"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);

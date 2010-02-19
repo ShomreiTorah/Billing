@@ -18,7 +18,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			if (people.Length == 0) return;
 
 			Program.DoReload();
-			BillKind[] kinds;
+			StatementKind[] kinds;
 			DateTime startDate;
 
 			using (var options = new ExportOptions()) {
@@ -28,7 +28,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			}
 
 			//Only include people who should receive at least one of the BillKinds.
-			people = people.Where(p => kinds.Any(k => new BillInfo(p, startDate, k).ShouldSend))
+			people = people.Where(p => kinds.Any(k => new StatementInfo(p, startDate, k).ShouldSend))
 						   .OrderBy(p => p.LastName)
 						   .ToArray();
 
@@ -40,9 +40,9 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			new WordExporter(kinds, startDate, people).Show();
 		}
 		readonly DateTime startDate;
-		readonly BillKind[] kinds;
+		readonly StatementKind[] kinds;
 		readonly BillingData.MasterDirectoryRow[] people;
-		WordExporter(BillKind[] kinds, DateTime startDate, BillingData.MasterDirectoryRow[] people) {
+		WordExporter(StatementKind[] kinds, DateTime startDate, BillingData.MasterDirectoryRow[] people) {
 			InitializeComponent();
 			this.kinds = kinds;
 			this.startDate = startDate;

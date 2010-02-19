@@ -76,7 +76,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			}
 		}
 
-		public static Document CreateBills(ICollection<BillingData.MasterDirectoryRow> people, BillKind[] kinds, DateTime startDate, IProgressReporter progress) {
+		public static Document CreateBills(ICollection<BillingData.MasterDirectoryRow> people, StatementKind[] kinds, DateTime startDate, IProgressReporter progress) {
 			if (people == null) throw new ArgumentNullException("people");
 			if (kinds == null) throw new ArgumentNullException("kinds");
 			if (kinds.Length == 0) return null;
@@ -87,7 +87,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			progress.Caption = "Creating " + kinds.Join(" and ", k => k.ToString() + "s");
 
 			var sourceDocs = new List<Document>(kinds.Length);
-			Dictionary<BillKind, Range> sourceRanges = new Dictionary<BillKind, Range>();
+			Dictionary<StatementKind, Range> sourceRanges = new Dictionary<StatementKind, Range>();
 			try {
 				Word.ScreenUpdating = false;
 				foreach (var kind in kinds) {
@@ -107,7 +107,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 						progress.Progress = i;
 
 						foreach (var kind in kinds) {
-							var info = new BillInfo(person, startDate, kind);
+							var info = new StatementInfo(person, startDate, kind);
 							if (!info.ShouldSend) continue;
 
 							if (firstPage)
@@ -140,7 +140,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			}
 		}
 
-		static readonly Dictionary<string, Action<Range, BillInfo>> CustomFields = new Dictionary<string, Action<Range, BillInfo>>(StringComparer.CurrentCultureIgnoreCase){
+		static readonly Dictionary<string, Action<Range, StatementInfo>> CustomFields = new Dictionary<string, Action<Range, StatementInfo>>(StringComparer.CurrentCultureIgnoreCase){
 			{ "BalanceDue",		(range, info) => range.Text = info.Person.BalanceDue.ToString("c", Culture) },
 			{ "Year",			(range, info) => range.Text = info.StartDate.Year.ToString(CultureInfo.CurrentCulture) },
 			{ "StartDate",		(range, info) => range.Text = info.StartDate.ToShortDateString() },
@@ -150,7 +150,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			{ "Table",			 CreateTable },
 			{ "PayTo",			 InsertPayTo },
 		};
-		static void InsertPayTo(Range range, BillInfo info) {
+		static void InsertPayTo(Range range, StatementInfo info) {
 			if (info.TotalBalance == 0)
 				range.Text = "";
 			else {
@@ -172,14 +172,14 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			return range.Document.Range(range.End - text.Length, range.End);
 		}
 
-		static void FillBill(Range range, BillInfo info) {
+		static void FillBill(Range range, StatementInfo info) {
 			while (range.ContentControls.Count > 0) {
 				var cc = range.ContentControls.Item(1);	//I remove them as we go along
 				var targetRange = cc.Range;
 
 				var fieldName = targetRange.Text;
 
-				Action<Range, BillInfo> customField;
+				Action<Range, StatementInfo> customField;
 
 				if (!CustomFields.TryGetValue(fieldName, out customField)
 				 && !Program.Data.MasterDirectory.Columns.Contains(fieldName))
@@ -195,7 +195,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		static readonly CultureInfo Culture = CultureInfo.CurrentCulture;
 		//Receipts are the same as bills except that they don't have
 		//Balance Due, the Pledges section, and the Payments header.
-		static void CreateTable(Range targetRange, BillInfo info) {
+		static void CreateTable(Range targetRange, StatementInfo info) {
 			var table = targetRange.Tables.Add(targetRange, 2, 3);
 
 			table.Rows.Alignment = WdRowAlignment.wdAlignRowCenter;
@@ -205,7 +205,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			Range range;
 			Row row;
 			foreach (var account in info.Accounts) {
-				if (info.Kind == BillKind.Bill) {
+				if (info.Kind == StatementKind.Bill) {
 					row = table.AddRow().MakeHeader();
 					row.Range.Text = account.AccountName + " Pledges";
 
@@ -255,7 +255,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 					row.Cells[2].Range.Text = account.TotalPaid.ToString("c", Culture);
 				}
 			}
-			if (info.Kind == BillKind.Bill) {
+			if (info.Kind == StatementKind.Bill) {
 				row = table.AddRow().MergeFirstCells().StyleAmount();
 				row.Range.ParagraphFormat.SpaceBefore = 10;
 				row.Cells[1].Range.Text = "Total Pledged:";

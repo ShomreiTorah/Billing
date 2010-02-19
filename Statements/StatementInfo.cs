@@ -5,8 +5,8 @@ using System.Text;
 using System.Collections.ObjectModel;
 
 namespace ShomreiTorah.Billing.Statements {
-	public class BillInfo {
-		public BillInfo(BillingData.MasterDirectoryRow person, DateTime startDate, BillKind kind) {
+	public class StatementInfo {
+		public StatementInfo(BillingData.MasterDirectoryRow person, DateTime startDate, StatementKind kind) {
 			Person = person;
 			StartDate = startDate;
 			Kind = kind;
@@ -16,15 +16,15 @@ namespace ShomreiTorah.Billing.Statements {
 
 		public BillingData.MasterDirectoryRow Person { get; private set; }
 		public DateTime StartDate { get; private set; }
-		public BillKind Kind { get; private set; }
+		public StatementKind Kind { get; private set; }
 
 		public bool ShouldSend { get { return Accounts.Count > 0; } }
 
 		public void Recalculate() {
 			TotalBalance = Math.Max(0, Person.BalanceDue);
 
-			Accounts = new ReadOnlyCollection<BillAccount>(
-				BillingData.AccountNames.Select(a => new BillAccount(this, a))
+			Accounts = new ReadOnlyCollection<StatementAccount>(
+				BillingData.AccountNames.Select(a => new StatementAccount(this, a))
 										.Where(ba => ba.ShouldInclude)
 										.ToArray()
 			);
@@ -37,18 +37,18 @@ namespace ShomreiTorah.Billing.Statements {
 		}
 
 		public decimal TotalBalance { get; private set; }
-		public ReadOnlyCollection<BillAccount> Accounts { get; private set; }
+		public ReadOnlyCollection<StatementAccount> Accounts { get; private set; }
 		public string Deductibility { get; private set; }
 	}
-	public class BillAccount {
-		internal BillAccount(BillInfo parent, string accountName) {
+	public class StatementAccount {
+		internal StatementAccount(StatementInfo parent, string accountName) {
 			Parent = parent;
 			AccountName = accountName;
 			OutstandingBalance = Parent.Person.GetBalance(Parent.StartDate, AccountName);
 			BalanceDue = Math.Max(0, Parent.Person.GetBalance(AccountName));
 
 			Func<ITransaction, bool> filter;
-			if (parent.Kind == BillKind.Receipt)
+			if (parent.Kind == StatementKind.Receipt)
 				filter = t => t.Date.Year == Parent.StartDate.Year && t.Account == AccountName;
 			else
 				filter = t => t.Date >= Parent.StartDate && t.Account == AccountName;
@@ -61,14 +61,14 @@ namespace ShomreiTorah.Billing.Statements {
 		}
 		internal bool ShouldInclude {
 			get {
-				if (Parent.Kind == BillKind.Bill)
+				if (Parent.Kind == StatementKind.Bill)
 					return BalanceDue > 0;
 				else
 					return Payments.Any();
 			}
 		}
 
-		public BillInfo Parent { get; private set; }
+		public StatementInfo Parent { get; private set; }
 		public string AccountName { get; private set; }
 
 		public decimal OutstandingBalance { get; private set; }
@@ -80,7 +80,7 @@ namespace ShomreiTorah.Billing.Statements {
 		public ReadOnlyCollection<BillingData.PledgesRow> Pledges { get; private set; }
 		public ReadOnlyCollection<BillingData.PaymentsRow> Payments { get; private set; }
 	}
-	public enum BillKind {
+	public enum StatementKind {
 		Bill,
 		Receipt
 	}

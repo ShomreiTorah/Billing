@@ -8,7 +8,7 @@
 
 <script runat="server">
 	public override string EmailSubject { get { return "Shomrei Torah Bill"; } }
-	public override BillKind Kind { get { return BillKind.Bill; } }
+	public override StatementKind Kind { get { return StatementKind.Bill; } }
 	public override IEnumerable<string> ImageNames {
 		get {
 			yield return "Logo.gif";

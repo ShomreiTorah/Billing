@@ -16,8 +16,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			startDate.DateTime = new DateTime(DateTime.Today.AddDays(-80).Year, 1, 1);
 			startDate.Properties.MaxValue = DateTime.Today;
 
-			docTypes.Items.Add(BillKind.Bill);
-			docTypes.Items.Add(BillKind.Receipt);
+			docTypes.Items.Add(StatementKind.Bill);
+			docTypes.Items.Add(StatementKind.Receipt);
 		}
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
@@ -29,6 +29,6 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		}
 
 		public DateTime StartDate { get { return startDate.DateTime.Date; } }
-		public IEnumerable<BillKind> Kinds { get { return docTypes.CheckedItems.Cast<CheckedListBoxItem>().Select(i => (BillKind)i.Value); } }
+		public IEnumerable<StatementKind> Kinds { get { return docTypes.CheckedItems.Cast<CheckedListBoxItem>().Select(i => (StatementKind)i.Value); } }
 	}
 }

@@ -10,11 +10,11 @@ using System.Web.Hosting;
 
 namespace ShomreiTorah.Billing.Statements.Email {
 	public abstract class EmailPage : Page {
-		public BillInfo Info { get; internal set; }
+		public StatementInfo Info { get; internal set; }
 		public string ImagePrefix { get; internal set; }
 
 		public abstract string EmailSubject { get; }
-		public abstract BillKind Kind { get; }
+		public abstract StatementKind Kind { get; }
 
 		public virtual IEnumerable<string> ImageNames { get { yield break; } }
 

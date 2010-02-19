@@ -38,7 +38,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 		public static MailMessage CreateMessage(BillingData.MasterDirectoryRow person, string virtualPath, DateTime startDate) {
 			using (var page = PageBuilder.CreatePage<EmailPage>(virtualPath)) {
 				page.ImagePrefix = "cid:";
-				page.Info = new BillInfo(person, startDate, page.Kind);
+				page.Info = new StatementInfo(person, startDate, page.Kind);
 				if (!page.Info.ShouldSend) return null;
 
 				var message = new MailMessage { From = BillingAddress, SubjectEncoding = Email.DefaultEncoding };
