@@ -1,4 +1,4 @@
-namespace ShomreiTorah.Billing.Export {
+namespace ShomreiTorah.Billing.Statements.Email {
 	partial class EmailExporter {
 		/// <summary>
 		/// Required designer variable.

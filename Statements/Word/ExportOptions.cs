@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 
-namespace ShomreiTorah.Billing.Export {
+namespace ShomreiTorah.Billing.Statements.Word {
 	partial class ExportOptions : XtraForm {
 		public ExportOptions() {
 			InitializeComponent();

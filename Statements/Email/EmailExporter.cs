@@ -18,7 +18,9 @@ using Microsoft.Win32;
 using ShomreiTorah.Common;
 using ShomreiTorah.WinForms.Forms;
 
-namespace ShomreiTorah.Billing.Export {
+namespace ShomreiTorah.Billing.Statements.Email {
+	using Email = ShomreiTorah.Common.Email;
+
 	partial class EmailExporter : XtraForm {
 		readonly BillingData.MasterDirectoryRow[] people;
 		readonly EditorButton sendPreviewButton, showPreviewButton;

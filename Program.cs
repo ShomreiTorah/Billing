@@ -116,7 +116,7 @@ namespace ShomreiTorah.Billing {
 
 			Program instance;
 			try {
-				instance = Export.PageBuilder.CreateHost<Program>();
+				instance = Statements.Email.PageBuilder.CreateHost<Program>();
 				instance.InitAspxDomain(AppDirectory);
 			} catch (Exception ex) {
 				MessageBox.Show("An error occurred while initializing ASP.Net.\r\nEmail bills will not work.\r\n\r\n\r\n" + ex, "Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Warning);

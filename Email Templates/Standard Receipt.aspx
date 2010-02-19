@@ -1,10 +1,10 @@
-<%@ Page Language="C#" Inherits="ShomreiTorah.Billing.Export.EmailPage, ShomreiTorah.Billing"
+<%@ Page Language="C#" Inherits="ShomreiTorah.Billing.Statements.Email.EmailPage, ShomreiTorah.Billing"
 	MasterPageFile="EmailPage.Master" Title="Shomrei Torah Receipt" %>
 
 <%@ Assembly Name="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" %>
 <%@ Import Namespace="System.Collections.Generic" %>
 <%@ Import Namespace="System.Linq" %>
-<%@ Import Namespace="ShomreiTorah.Billing.Export" %>
+<%@ Import Namespace="ShomreiTorah.Billing.Statements" %>
 
 <script runat="server">
 	public override string EmailSubject { get { return "Shomrei Torah Receipt"; } }

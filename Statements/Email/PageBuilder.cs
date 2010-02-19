@@ -1,21 +1,22 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Web.Hosting;
-using System.Web;
-using System.Web.Configuration;
-using System.Reflection;
-using System.Globalization;
-using System.Web.UI;
-using System.Web.Compilation;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Net.Mail;
-using ShomreiTorah.Common;
 using System.Net.Mime;
+using System.Reflection;
+using System.Text;
+using System.Web;
+using System.Web.Compilation;
+using System.Web.Configuration;
+using System.Web.Hosting;
+using System.Web.UI;
+using ShomreiTorah.Common;
+namespace ShomreiTorah.Billing.Statements.Email {
+	using Email = ShomreiTorah.Common.Email;
 
-namespace ShomreiTorah.Billing.Export {
 	static class PageBuilder {
 		public static T CreateHost<T>() {
 			return (T)ApplicationHost.CreateApplicationHost(typeof(T), "/", Program.AspxPath);

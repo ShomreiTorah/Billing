@@ -1,4 +1,4 @@
-namespace ShomreiTorah.Billing.Export {
+namespace ShomreiTorah.Billing.Statements.Word {
 	partial class WordExporter {
 		/// <summary>
 		/// Required designer variable.

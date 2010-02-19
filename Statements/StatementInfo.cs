@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
 
-namespace ShomreiTorah.Billing.Export {
+namespace ShomreiTorah.Billing.Statements {
 	public class BillInfo {
 		public BillInfo(BillingData.MasterDirectoryRow person, DateTime startDate, BillKind kind) {
 			Person = person;

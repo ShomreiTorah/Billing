@@ -11,7 +11,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using ShomreiTorah.WinForms.Forms;
 
-namespace ShomreiTorah.Billing.Export {
+namespace ShomreiTorah.Billing.Statements.Word {
 	partial class WordExporter : XtraForm {
 		public static void Execute(params BillingData.MasterDirectoryRow[] people) {
 			if (people == null) throw new ArgumentNullException("people");

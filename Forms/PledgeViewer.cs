@@ -42,11 +42,11 @@ namespace ShomreiTorah.Billing.Forms {
 			if (row != null) new PledgeEditPopup(row).Show(MdiParent);
 		}
 
-		private void emailVisible_ItemClick(object sender, ItemClickEventArgs e) { Export.EmailExporter.Execute(GetVisiblePeople()); }
-		private void exportWordVisible_ItemClick(object sender, ItemClickEventArgs e) { Export.WordExporter.Execute(GetVisiblePeople()); }
+		private void emailVisible_ItemClick(object sender, ItemClickEventArgs e) { Statements.Email.EmailExporter.Execute(GetVisiblePeople()); }
+		private void exportWordVisible_ItemClick(object sender, ItemClickEventArgs e) { Statements.Word.WordExporter.Execute(GetVisiblePeople()); }
 
-		private void emailSelected_ItemClick(object sender, ItemClickEventArgs e) { Export.EmailExporter.Execute(GetSelectedPeople()); }
-		private void exportWordSelected_ItemClick(object sender, ItemClickEventArgs e) { Export.WordExporter.Execute(GetSelectedPeople()); }
+		private void emailSelected_ItemClick(object sender, ItemClickEventArgs e) { Statements.Email.EmailExporter.Execute(GetSelectedPeople()); }
+		private void exportWordSelected_ItemClick(object sender, ItemClickEventArgs e) { Statements.Word.WordExporter.Execute(GetSelectedPeople()); }
 
 		BillingData.MasterDirectoryRow GetPerson(int rowHandle) { return ((BillingData.PledgesRow)gridView.GetDataRow(rowHandle)).MasterDirectoryRow; }
 		BillingData.MasterDirectoryRow[] GetSelectedPeople() { return Array.ConvertAll<int, BillingData.MasterDirectoryRow>(gridView.GetSelectedRows(), GetPerson); }

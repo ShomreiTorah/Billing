@@ -26,16 +26,16 @@ namespace ShomreiTorah.Billing.Forms {
 		}
 
 		private void emailSelected_ItemClick(object sender, ItemClickEventArgs e) {
-			Export.EmailExporter.Execute(Array.ConvertAll(gridView.GetSelectedRows(), h => (BillingData.MasterDirectoryRow)gridView.GetDataRow(h)));
+			Statements.Email.EmailExporter.Execute(Array.ConvertAll(gridView.GetSelectedRows(), h => (BillingData.MasterDirectoryRow)gridView.GetDataRow(h)));
 		}
 		private void emailVisible_ItemClick(object sender, ItemClickEventArgs e) {
-			Export.EmailExporter.Execute(GetVisibleRows());
+			Statements.Email.EmailExporter.Execute(GetVisibleRows());
 		}
 		private void exportWordSelected_ItemClick(object sender, ItemClickEventArgs e) {
-			Export.WordExporter.Execute(Array.ConvertAll(gridView.GetSelectedRows(), h => (BillingData.MasterDirectoryRow)gridView.GetDataRow(h)));
+			Statements.Word.WordExporter.Execute(Array.ConvertAll(gridView.GetSelectedRows(), h => (BillingData.MasterDirectoryRow)gridView.GetDataRow(h)));
 		}
 		private void exportWordVisible_ItemClick(object sender, ItemClickEventArgs e) {
-			Export.WordExporter.Execute(GetVisibleRows());
+			Statements.Word.WordExporter.Execute(GetVisibleRows());
 		}
 
 		BillingData.MasterDirectoryRow[] GetVisibleRows() {

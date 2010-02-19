@@ -12,7 +12,7 @@ using System.Reflection;
 using System.Data;
 using System.Globalization;
 
-namespace ShomreiTorah.Billing.Export {
+namespace ShomreiTorah.Billing.Statements.Word {
 	static class WordExport {
 		static object Missing = Type.Missing;
 		static object dontSave = WdSaveOptions.wdDoNotSaveChanges;

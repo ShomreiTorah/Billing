@@ -40,8 +40,8 @@ namespace ShomreiTorah.Billing.Forms {
 						 + "\r\n\r\nBalance Due: " + person.BalanceDue.ToString("c", CultureInfo.CurrentUICulture);
 		}
 
-		private void exportEmail_ItemClick(object sender, ItemClickEventArgs e) { Export.EmailExporter.Execute(person); }
-		private void exportWord_ItemClick(object sender, ItemClickEventArgs e) { Export.WordExporter.Execute(person); }
+		private void exportEmail_ItemClick(object sender, ItemClickEventArgs e) { Statements.Email.EmailExporter.Execute(person); }
+		private void exportWord_ItemClick(object sender, ItemClickEventArgs e) { Statements.Word.WordExporter.Execute(person); }
 
 		private void pledgeView_DoubleClick(object sender, EventArgs e) {
 			var row = pledgeView.GetFocusedDataRow() as BillingData.PledgesRow;

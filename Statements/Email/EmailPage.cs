@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Web;
 using System.Web.Hosting;
 
-namespace ShomreiTorah.Billing.Export {
+namespace ShomreiTorah.Billing.Statements.Email {
 	public abstract class EmailPage : Page {
 		public BillInfo Info { get; internal set; }
 		public string ImagePrefix { get; internal set; }

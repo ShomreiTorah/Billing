@@ -138,11 +138,11 @@ namespace ShomreiTorah.Billing.Forms {
 				XtraMessageBox.Show("You have not created or modified any payments or pledges yet.\r\nWould you like to?",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
-		private void emailAll_ItemClick(object sender, ItemClickEventArgs e) { Export.EmailExporter.Execute(StatementsAll.ToArray()); }
-		private void emailModified_ItemClick(object sender, ItemClickEventArgs e) { ExportModified(Export.EmailExporter.Execute); }
+		private void emailAll_ItemClick(object sender, ItemClickEventArgs e) { Statements.Email.EmailExporter.Execute(StatementsAll.ToArray()); }
+		private void emailModified_ItemClick(object sender, ItemClickEventArgs e) { ExportModified(Statements.Email.EmailExporter.Execute); }
 
-		private void wordAll_ItemClick(object sender, ItemClickEventArgs e) { Export.WordExporter.Execute(StatementsAll.ToArray()); }
-		private void wordModified_ItemClick(object sender, ItemClickEventArgs e) { ExportModified(Export.WordExporter.Execute); }
+		private void wordAll_ItemClick(object sender, ItemClickEventArgs e) { Statements.Word.WordExporter.Execute(StatementsAll.ToArray()); }
+		private void wordModified_ItemClick(object sender, ItemClickEventArgs e) { ExportModified(Statements.Word.WordExporter.Execute); }
 		#endregion
 	}
 }

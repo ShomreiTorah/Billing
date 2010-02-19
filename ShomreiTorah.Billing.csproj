@@ -143,6 +143,7 @@
       <DependentUpon>PersonDataEntry.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PersonSelector.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\PersonSelector.Designer.cs">
       <DependentUpon>PersonSelector.cs</DependentUpon>
