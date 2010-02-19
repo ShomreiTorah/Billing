@@ -12,38 +12,10 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
 
 namespace ShomreiTorah.Billing.Forms {
-	partial class MasterDirectoryGridForm : XtraForm {
+	partial class MasterDirectoryGridForm : GridFormBase {
 		public MasterDirectoryGridForm() {
 			InitializeComponent();
 			gridView.ActiveFilterString = "TotalPledged <> 0 OR TotalPaid <> 0";
-			SetSelectionButtonsState();
-		}
-
-		private void gridView_SelectionChanged(object sender, SelectionChangedEventArgs e) { SetSelectionButtonsState(); }
-		void SetSelectionButtonsState() {
-			exportWordSelected.Enabled = emailSelected.Enabled = gridView.SelectedRowsCount > 0;
-			exportWordSelected.Caption = emailSelected.Caption = gridView.SelectedRowsCount == 1 ? "Selected person" : "Selected people";
-		}
-
-		private void emailSelected_ItemClick(object sender, ItemClickEventArgs e) {
-			Statements.Email.EmailExporter.Execute(Array.ConvertAll(gridView.GetSelectedRows(), h => (BillingData.MasterDirectoryRow)gridView.GetDataRow(h)));
-		}
-		private void emailVisible_ItemClick(object sender, ItemClickEventArgs e) {
-			Statements.Email.EmailExporter.Execute(GetVisibleRows());
-		}
-		private void exportWordSelected_ItemClick(object sender, ItemClickEventArgs e) {
-			Statements.Word.WordExporter.Execute(Array.ConvertAll(gridView.GetSelectedRows(), h => (BillingData.MasterDirectoryRow)gridView.GetDataRow(h)));
-		}
-		private void exportWordVisible_ItemClick(object sender, ItemClickEventArgs e) {
-			Statements.Word.WordExporter.Execute(GetVisibleRows());
-		}
-
-		BillingData.MasterDirectoryRow[] GetVisibleRows() {
-			if (!gridView.ActiveFilterEnabled || gridView.ActiveFilter.IsEmpty)
-				return (BillingData.MasterDirectoryRow[])Program.Data.MasterDirectory.Select();
-			else
-				return Enumerable.Range(0, gridView.DataRowCount).Select(i => (BillingData.MasterDirectoryRow)gridView.GetDataRow(i)).ToArray();
-			//DevExpress grid filter strings aren't completely compatible with DataTable.Select
 		}
 
 		private void gridView_DoubleClick(object sender, EventArgs e) {

@@ -13,7 +13,7 @@ using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Statements.Word {
 	partial class WordExporter : XtraForm {
-		public static void Execute(params BillingData.MasterDirectoryRow[] people) {
+		public static void Execute(Form parent, params BillingData.MasterDirectoryRow[] people) {
 			if (people == null) throw new ArgumentNullException("people");
 			if (people.Length == 0) return;
 
@@ -37,7 +37,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			new WordExporter(kinds, startDate, people).Show();
+			new WordExporter(kinds, startDate, people).Show(parent);
 		}
 		readonly DateTime startDate;
 		readonly StatementKind[] kinds;

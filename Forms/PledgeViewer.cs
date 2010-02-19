@@ -14,18 +14,8 @@ using DevExpress.XtraGrid.Views.Base;
 using ShomreiTorah.Common;
 
 namespace ShomreiTorah.Billing.Forms {
-	partial class PledgeViewer : XtraForm {
-		public PledgeViewer() {
-			InitializeComponent();
-			SetSelectionButtonsState();
-		}
-
-		private void gridView_SelectionChanged(object sender, SelectionChangedEventArgs e) { SetSelectionButtonsState(); }
-		void SetSelectionButtonsState() {
-			exportWordSelected.Enabled = emailSelected.Enabled = gridView.SelectedRowsCount > 0;
-			exportWordSelected.Caption = emailSelected.Caption = gridView.SelectedRowsCount == 1 ? "Selected person" : "Selected people";
-		}
-
+	partial class PledgeViewer : GridFormBase {
+		public PledgeViewer() { InitializeComponent(); }
 
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
@@ -40,22 +30,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private void gridView_DoubleClick(object sender, EventArgs e) {
 			var row = gridView.GetFocusedDataRow() as BillingData.PledgesRow;
 			if (row != null) new PledgeEditPopup(row).Show(MdiParent);
-		}
-
-		private void emailVisible_ItemClick(object sender, ItemClickEventArgs e) { Statements.Email.EmailExporter.Execute(GetVisiblePeople()); }
-		private void exportWordVisible_ItemClick(object sender, ItemClickEventArgs e) { Statements.Word.WordExporter.Execute(GetVisiblePeople()); }
-
-		private void emailSelected_ItemClick(object sender, ItemClickEventArgs e) { Statements.Email.EmailExporter.Execute(GetSelectedPeople()); }
-		private void exportWordSelected_ItemClick(object sender, ItemClickEventArgs e) { Statements.Word.WordExporter.Execute(GetSelectedPeople()); }
-
-		BillingData.MasterDirectoryRow GetPerson(int rowHandle) { return ((BillingData.PledgesRow)gridView.GetDataRow(rowHandle)).MasterDirectoryRow; }
-		BillingData.MasterDirectoryRow[] GetSelectedPeople() { return Array.ConvertAll<int, BillingData.MasterDirectoryRow>(gridView.GetSelectedRows(), GetPerson); }
-		//DevExpress grid filter strings aren't completely compatible with DataTable.Select
-		BillingData.MasterDirectoryRow[] GetVisiblePeople() {
-			if (!gridView.ActiveFilterEnabled || gridView.ActiveFilter.IsEmpty)
-				return Program.Data.Pledges.CurrentRows().Select(p => p.MasterDirectoryRow).ToArray();
-			else
-				return Enumerable.Range(0, gridView.DataRowCount).Select<int, BillingData.MasterDirectoryRow>(GetPerson).ToArray();
 		}
 	}
 }

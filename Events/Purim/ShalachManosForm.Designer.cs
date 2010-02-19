@@ -25,7 +25,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShalachManosForm));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
 			this.searchLookup = new ShomreiTorah.WinForms.Controls.Lookup();
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -103,10 +103,10 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// 
 			this.grid.DataMember = "Pledges";
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.grid.Location = new System.Drawing.Point(0, 97);
+			this.grid.Location = new System.Drawing.Point(0, 239);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.Size = new System.Drawing.Size(899, 544);
+			this.grid.Size = new System.Drawing.Size(899, 402);
 			this.grid.TabIndex = 2;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -149,7 +149,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// 
 			this.personRefEdit.AutoHeight = false;
 			this.personRefEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Show Person", null, null, true)});
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -262,7 +262,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.personSelector.Caption = "Select a person:";
 			this.personSelector.DefaultText = "Please click here to select a person";
 			this.personSelector.Dock = System.Windows.Forms.DockStyle.Top;
-			this.personSelector.Location = new System.Drawing.Point(0, 0);
+			this.personSelector.Location = new System.Drawing.Point(0, 142);
 			this.personSelector.Name = "personSelector";
 			this.personSelector.PopupOpen = false;
 			this.personSelector.ResultsLocation = ShomreiTorah.WinForms.Controls.ResultsLocation.Bottom;
@@ -307,7 +307,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.addPanel.Controls.Add(this.paymentMethod);
 			this.addPanel.Controls.Add(this.add);
 			this.addPanel.Dock = System.Windows.Forms.DockStyle.Top;
-			this.addPanel.Location = new System.Drawing.Point(0, 20);
+			this.addPanel.Location = new System.Drawing.Point(0, 162);
 			this.addPanel.Name = "addPanel";
 			this.addPanel.Root = this.layoutControlGroup1;
 			this.addPanel.Size = new System.Drawing.Size(899, 77);
@@ -524,8 +524,13 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.Controls.Add(this.addPanel);
 			this.Controls.Add(this.personSelector);
 			this.Controls.Add(this.searchLookup);
+			this.MainView = this.gridView;
 			this.Name = "ShalachManosForm";
 			this.Text = "Shalach Manos";
+			this.Controls.SetChildIndex(this.searchLookup, 0);
+			this.Controls.SetChildIndex(this.personSelector, 0);
+			this.Controls.SetChildIndex(this.addPanel, 0);
+			this.Controls.SetChildIndex(this.grid, 0);
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).EndInit();

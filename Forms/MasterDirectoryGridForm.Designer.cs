@@ -81,14 +81,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colTotalPledged = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colTotalPaid = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colBalanceDue = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-			this.emailSelected = new DevExpress.XtraBars.BarButtonItem();
-			this.emailVisible = new DevExpress.XtraBars.BarButtonItem();
-			this.exportWordSelected = new DevExpress.XtraBars.BarButtonItem();
-			this.exportWordVisible = new DevExpress.XtraBars.BarButtonItem();
-			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethodEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
@@ -101,7 +93,6 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.stateEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personSourceEdit)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// paymentsView
@@ -278,11 +269,11 @@ namespace ShomreiTorah.Billing.Forms {
             gridLevelNode1,
             gridLevelNode2,
             gridLevelNode3});
-			this.grid.Location = new System.Drawing.Point(0, 142);
+			this.grid.Location = new System.Drawing.Point(0, 0);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
 			this.grid.ShowOnlyPredefinedDetails = true;
-			this.grid.Size = new System.Drawing.Size(1067, 399);
+			this.grid.Size = new System.Drawing.Size(1067, 541);
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.pledgesView,
@@ -494,7 +485,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.gridView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colLastName, DevExpress.Data.ColumnSortOrder.Ascending)});
-			this.gridView.SelectionChanged += new DevExpress.Data.SelectionChangedEventHandler(this.gridView_SelectionChanged);
 			this.gridView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
 			// 
 			// colId
@@ -697,86 +687,16 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colBalanceDue.Visible = true;
 			this.colBalanceDue.VisibleIndex = 12;
 			// 
-			// ribbonControl1
-			// 
-			this.ribbonControl1.ApplicationIcon = null;
-			this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.emailSelected,
-            this.emailVisible,
-            this.exportWordSelected,
-            this.exportWordVisible});
-			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl1.MaxItemId = 4;
-			this.ribbonControl1.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
-			this.ribbonControl1.Name = "ribbonControl1";
-			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
-            this.ribbonPage1});
-			this.ribbonControl1.SelectedPage = this.ribbonPage1;
-			this.ribbonControl1.Size = new System.Drawing.Size(1067, 142);
-			// 
-			// emailSelected
-			// 
-			this.emailSelected.Caption = "Selected Person";
-			this.emailSelected.Id = 0;
-			this.emailSelected.Name = "emailSelected";
-			this.emailSelected.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.emailSelected_ItemClick);
-			// 
-			// emailVisible
-			// 
-			this.emailVisible.Caption = "Everyone in this grid";
-			this.emailVisible.Id = 1;
-			this.emailVisible.Name = "emailVisible";
-			this.emailVisible.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.emailVisible_ItemClick);
-			// 
-			// exportWordSelected
-			// 
-			this.exportWordSelected.Appearance.Options.UseTextOptions = true;
-			this.exportWordSelected.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
-			this.exportWordSelected.Caption = "Selected Person";
-			this.exportWordSelected.Id = 2;
-			this.exportWordSelected.Name = "exportWordSelected";
-			this.exportWordSelected.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportWordSelected_ItemClick);
-			// 
-			// exportWordVisible
-			// 
-			this.exportWordVisible.Caption = "Everyone in this grid";
-			this.exportWordVisible.Id = 3;
-			this.exportWordVisible.Name = "exportWordVisible";
-			this.exportWordVisible.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportWordVisible_ItemClick);
-			// 
-			// ribbonPage1
-			// 
-			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1,
-            this.ribbonPageGroup2});
-			this.ribbonPage1.Name = "ribbonPage1";
-			this.ribbonPage1.Text = "Statements";
-			// 
-			// ribbonPageGroup1
-			// 
-			this.ribbonPageGroup1.ItemLinks.Add(this.emailSelected, true);
-			this.ribbonPageGroup1.ItemLinks.Add(this.emailVisible);
-			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-			this.ribbonPageGroup1.ShowCaptionButton = false;
-			this.ribbonPageGroup1.Text = "Send Emails to";
-			// 
-			// ribbonPageGroup2
-			// 
-			this.ribbonPageGroup2.ItemLinks.Add(this.exportWordSelected, true);
-			this.ribbonPageGroup2.ItemLinks.Add(this.exportWordVisible);
-			this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-			this.ribbonPageGroup2.ShowCaptionButton = false;
-			this.ribbonPageGroup2.Text = "Create Word Documents for";
-			// 
 			// MasterDirectoryGridForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1067, 541);
 			this.Controls.Add(this.grid);
-			this.Controls.Add(this.ribbonControl1);
+			this.MainView = this.gridView;
 			this.Name = "MasterDirectoryGridForm";
 			this.Text = "All People";
+			this.Controls.SetChildIndex(this.grid, 0);
 			((System.ComponentModel.ISupportInitialize)(this.paymentsView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethodEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).EndInit();
@@ -789,7 +709,6 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.stateEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personSourceEdit)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -831,11 +750,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit currencyEdit;
 		private DevExpress.XtraGrid.Columns.GridColumn colTotalPledged;
 		private DevExpress.XtraGrid.Columns.GridColumn colTotalPaid;
-		private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
-		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
-		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
-		private DevExpress.XtraBars.BarButtonItem emailSelected;
-		private DevExpress.XtraBars.BarButtonItem emailVisible;
 		private DevExpress.XtraGrid.Views.Grid.GridView emailView;
 		private DevExpress.XtraGrid.Columns.GridColumn colID1;
 		private DevExpress.XtraGrid.Columns.GridColumn colName;
@@ -847,9 +761,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraGrid.Columns.GridColumn colAccount;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox accountEdit;
 		private DevExpress.XtraGrid.Columns.GridColumn colAccount1;
-		private DevExpress.XtraBars.BarButtonItem exportWordSelected;
-		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
-		private DevExpress.XtraBars.BarButtonItem exportWordVisible;
 		private DevExpress.XtraGrid.Columns.GridColumn colSource;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox personSourceEdit;
 		private DevExpress.XtraGrid.Columns.GridColumn colDepositDateSql;

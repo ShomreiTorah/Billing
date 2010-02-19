@@ -24,37 +24,37 @@ namespace ShomreiTorah.Billing.Forms {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmailListForm));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colName = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colEmail = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colJoinDate = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.emptyPersonEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
 			this.personEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+			this.emptyPersonEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
 			this.personSelector = new ShomreiTorah.Billing.Controls.PersonSelector();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptyPersonEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptyPersonEdit)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// grid
 			// 
 			this.grid.DataMember = "EmailList";
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.grid.Location = new System.Drawing.Point(0, 0);
+			this.grid.Location = new System.Drawing.Point(0, 142);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.emptyPersonEdit,
             this.personEdit});
-			this.grid.Size = new System.Drawing.Size(821, 482);
+			this.grid.Size = new System.Drawing.Size(821, 340);
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -111,26 +111,26 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 3;
 			// 
-			// emptyPersonEdit
-			// 
-			this.emptyPersonEdit.AutoHeight = false;
-			this.emptyPersonEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Show Person", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("emptyPersonEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject3, "Show Person", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Clear", -1, false, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject4, "", null, null, true)});
-			this.emptyPersonEdit.Name = "emptyPersonEdit";
-			this.emptyPersonEdit.NullText = "(None)";
-			this.emptyPersonEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-			this.emptyPersonEdit.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.personEdit_ButtonClick);
-			// 
 			// personEdit
 			// 
 			this.personEdit.AutoHeight = false;
 			this.personEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Show Person", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Clear", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Dissociate this person from this email address", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Show Person", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, "Show Person", null, null, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Clear", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject6, "Dissociate this person from this email address", null, null, true)});
 			this.personEdit.Name = "personEdit";
 			this.personEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 			this.personEdit.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.personEdit_ButtonClick);
+			// 
+			// emptyPersonEdit
+			// 
+			this.emptyPersonEdit.AutoHeight = false;
+			this.emptyPersonEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Show Person", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("emptyPersonEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject7, "Show Person", null, null, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Clear", -1, false, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject8, "", null, null, true)});
+			this.emptyPersonEdit.Name = "emptyPersonEdit";
+			this.emptyPersonEdit.NullText = "(None)";
+			this.emptyPersonEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+			this.emptyPersonEdit.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.personEdit_ButtonClick);
 			// 
 			// personSelector
 			// 
@@ -156,12 +156,15 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ClientSize = new System.Drawing.Size(821, 502);
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.personSelector);
+			this.MainView = this.gridView;
 			this.Name = "EmailListForm";
 			this.Text = "Email List";
+			this.Controls.SetChildIndex(this.personSelector, 0);
+			this.Controls.SetChildIndex(this.grid, 0);
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptyPersonEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptyPersonEdit)).EndInit();
 			this.ResumeLayout(false);
 
 		}

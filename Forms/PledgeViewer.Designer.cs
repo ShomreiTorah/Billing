@@ -25,7 +25,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PledgeViewer));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -44,14 +44,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.pledgesBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.billingData = new ShomreiTorah.Billing.BillingData();
-			this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-			this.emailSelected = new DevExpress.XtraBars.BarButtonItem();
-			this.emailVisible = new DevExpress.XtraBars.BarButtonItem();
-			this.exportWordSelected = new DevExpress.XtraBars.BarButtonItem();
-			this.exportWordVisible = new DevExpress.XtraBars.BarButtonItem();
-			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
@@ -60,7 +52,6 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoExEdit1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// grid
@@ -102,7 +93,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.gridView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colModified, DevExpress.Data.ColumnSortOrder.Descending)});
-			this.gridView.SelectionChanged += new DevExpress.Data.SelectionChangedEventHandler(this.gridView_SelectionChanged);
 			this.gridView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
 			// 
 			// colFullName
@@ -124,7 +114,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.personRefEdit.AutoHeight = false;
 			this.personRefEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Show Person", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -258,86 +248,16 @@ namespace ShomreiTorah.Billing.Forms {
 			this.billingData.DataSetName = "BillingData";
 			this.billingData.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
 			// 
-			// ribbonControl1
-			// 
-			this.ribbonControl1.ApplicationIcon = null;
-			this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.emailSelected,
-            this.emailVisible,
-            this.exportWordSelected,
-            this.exportWordVisible});
-			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl1.MaxItemId = 4;
-			this.ribbonControl1.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
-			this.ribbonControl1.Name = "ribbonControl1";
-			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
-            this.ribbonPage1});
-			this.ribbonControl1.SelectedPage = this.ribbonPage1;
-			this.ribbonControl1.Size = new System.Drawing.Size(772, 142);
-			// 
-			// emailSelected
-			// 
-			this.emailSelected.Caption = "Selected Person";
-			this.emailSelected.Id = 0;
-			this.emailSelected.Name = "emailSelected";
-			this.emailSelected.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.emailSelected_ItemClick);
-			// 
-			// emailVisible
-			// 
-			this.emailVisible.Caption = "Everyone in this grid";
-			this.emailVisible.Id = 1;
-			this.emailVisible.Name = "emailVisible";
-			this.emailVisible.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.emailVisible_ItemClick);
-			// 
-			// exportWordSelected
-			// 
-			this.exportWordSelected.Appearance.Options.UseTextOptions = true;
-			this.exportWordSelected.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
-			this.exportWordSelected.Caption = "Selected Person";
-			this.exportWordSelected.Id = 2;
-			this.exportWordSelected.Name = "exportWordSelected";
-			this.exportWordSelected.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportWordSelected_ItemClick);
-			// 
-			// exportWordVisible
-			// 
-			this.exportWordVisible.Caption = "Everyone in this grid";
-			this.exportWordVisible.Id = 3;
-			this.exportWordVisible.Name = "exportWordVisible";
-			this.exportWordVisible.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportWordVisible_ItemClick);
-			// 
-			// ribbonPage1
-			// 
-			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1,
-            this.ribbonPageGroup2});
-			this.ribbonPage1.Name = "ribbonPage1";
-			this.ribbonPage1.Text = "Statements";
-			// 
-			// ribbonPageGroup1
-			// 
-			this.ribbonPageGroup1.ItemLinks.Add(this.emailSelected, true);
-			this.ribbonPageGroup1.ItemLinks.Add(this.emailVisible);
-			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-			this.ribbonPageGroup1.ShowCaptionButton = false;
-			this.ribbonPageGroup1.Text = "Send Emails to";
-			// 
-			// ribbonPageGroup2
-			// 
-			this.ribbonPageGroup2.ItemLinks.Add(this.exportWordSelected, true);
-			this.ribbonPageGroup2.ItemLinks.Add(this.exportWordVisible);
-			this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-			this.ribbonPageGroup2.ShowCaptionButton = false;
-			this.ribbonPageGroup2.Text = "Create Word Documents for";
-			// 
 			// PledgeViewer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(772, 559);
 			this.Controls.Add(this.grid);
-			this.Controls.Add(this.ribbonControl1);
+			this.MainView = this.gridView;
 			this.Name = "PledgeViewer";
 			this.Text = "All Pledges";
+			this.Controls.SetChildIndex(this.grid, 0);
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).EndInit();
@@ -346,7 +266,6 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoExEdit1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -371,13 +290,5 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraGrid.Columns.GridColumn colModifier;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit personRefEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit repositoryItemMemoExEdit1;
-		private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
-		private DevExpress.XtraBars.BarButtonItem emailSelected;
-		private DevExpress.XtraBars.BarButtonItem emailVisible;
-		private DevExpress.XtraBars.BarButtonItem exportWordSelected;
-		private DevExpress.XtraBars.BarButtonItem exportWordVisible;
-		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
-		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
-		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
 	}
 }

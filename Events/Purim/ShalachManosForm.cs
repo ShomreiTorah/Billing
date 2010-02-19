@@ -16,7 +16,7 @@ using ShomreiTorah.Billing.Controls;
 using ShomreiTorah.WinForms.Controls;
 
 namespace ShomreiTorah.Billing.Events.Purim {
-	partial class ShalachManosForm : XtraForm {
+	partial class ShalachManosForm : Forms.GridFormBase {
 		public const string PledgeType = "Shalach Manos";
 		const string Account = "Operating Fund";
 		readonly int year;

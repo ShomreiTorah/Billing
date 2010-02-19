@@ -25,7 +25,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 		readonly BillingData.MasterDirectoryRow[] people;
 		readonly EditorButton sendPreviewButton, showPreviewButton;
 
-		public static void Execute(params BillingData.MasterDirectoryRow[] people) {
+		public static void Execute(Form parent, params BillingData.MasterDirectoryRow[] people) {
 			if (people == null) throw new ArgumentNullException("people");
 			var originalPeople = people;
 			people = Array.FindAll(people, r => r.GetEmailListRows().Length > 0);
@@ -52,7 +52,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			new EmailExporter(people, fileNames).Show();
+			new EmailExporter(people, fileNames).Show(parent);
 		}
 
 		const string SettingsPath = @"HKEY_CURRENT_USER\Software\Shomrei Torah\Billing\";

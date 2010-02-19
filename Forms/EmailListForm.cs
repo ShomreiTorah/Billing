@@ -11,7 +11,7 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 
 namespace ShomreiTorah.Billing.Forms {
-	public partial class EmailListForm : XtraForm {
+	partial class EmailListForm : GridFormBase {
 		public EmailListForm() {
 			InitializeComponent();
 		}
