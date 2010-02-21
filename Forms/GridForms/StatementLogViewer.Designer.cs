@@ -25,7 +25,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatementLogViewer));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -66,7 +66,8 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.gridView.GridControl = this.grid;
 			this.gridView.Name = "gridView";
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
-            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colDateGenerated, DevExpress.Data.ColumnSortOrder.Descending)});
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colDateGenerated, DevExpress.Data.ColumnSortOrder.Descending),
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colFullName, DevExpress.Data.ColumnSortOrder.Ascending)});
 			// 
 			// colFullName
 			// 
@@ -79,12 +80,13 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 0;
+			this.colFullName.Width = 63;
 			// 
 			// personRefEdit
 			// 
 			this.personRefEdit.AutoHeight = false;
 			this.personRefEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Show Person", null, null, true)});
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -92,7 +94,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			// colDateGenerated
 			// 
-			this.colDateGenerated.DisplayFormat.FormatString = "MMMM d, yyyy";
+			this.colDateGenerated.DisplayFormat.FormatString = "MMMM d, yyyy, h:mm:ss tt";
 			this.colDateGenerated.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
 			this.colDateGenerated.FieldName = "DateGenerated";
 			this.colDateGenerated.Name = "colDateGenerated";
@@ -100,6 +102,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colDateGenerated.OptionsColumn.AllowFocus = false;
 			this.colDateGenerated.Visible = true;
 			this.colDateGenerated.VisibleIndex = 1;
+			this.colDateGenerated.Width = 195;
 			// 
 			// colMedia
 			// 
@@ -107,6 +110,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colMedia.Name = "colMedia";
 			this.colMedia.OptionsColumn.AllowEdit = false;
 			this.colMedia.OptionsColumn.AllowFocus = false;
+			this.colMedia.Width = 40;
 			// 
 			// colStatementKind
 			// 
@@ -116,6 +120,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colStatementKind.OptionsColumn.AllowFocus = false;
 			this.colStatementKind.Visible = true;
 			this.colStatementKind.VisibleIndex = 2;
+			this.colStatementKind.Width = 88;
 			// 
 			// colStartDate
 			// 
@@ -125,6 +130,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colStartDate.OptionsColumn.AllowFocus = false;
 			this.colStartDate.Visible = true;
 			this.colStartDate.VisibleIndex = 3;
+			this.colStartDate.Width = 66;
 			// 
 			// colEndDate
 			// 
@@ -134,6 +140,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colEndDate.OptionsColumn.AllowFocus = false;
 			this.colEndDate.Visible = true;
 			this.colEndDate.VisibleIndex = 4;
+			this.colEndDate.Width = 61;
 			// 
 			// colUserName
 			// 
@@ -144,6 +151,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colUserName.OptionsColumn.AllowFocus = false;
 			this.colUserName.Visible = true;
 			this.colUserName.VisibleIndex = 5;
+			this.colUserName.Width = 71;
 			// 
 			// StatementLogViewer
 			// 

@@ -600,10 +600,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.statementsView.GridControl = this.statementsGrid;
 			this.statementsView.Name = "statementsView";
 			this.statementsView.OptionsBehavior.Editable = false;
+			this.statementsView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colDateGenerated, DevExpress.Data.ColumnSortOrder.Descending)});
 			// 
 			// colDateGenerated
 			// 
-			this.colDateGenerated.DisplayFormat.FormatString = "MMMM d, yyyy";
+			this.colDateGenerated.DisplayFormat.FormatString = "MMMM d, yyyy, h:mm:ss tt";
 			this.colDateGenerated.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
 			this.colDateGenerated.FieldName = "DateGenerated";
 			this.colDateGenerated.Name = "colDateGenerated";
