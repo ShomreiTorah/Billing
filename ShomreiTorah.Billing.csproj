@@ -414,6 +414,7 @@
     <Compile Include="Statements\Email\EmailExporter.Designer.cs">
       <DependentUpon>EmailExporter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Statements\Word\ContentPopulator.cs" />
     <Compile Include="Statements\Word\ExportOptions.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -424,6 +425,8 @@
     <Compile Include="Statements\Email\EmailPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Statements\Word\MailingGenerator.cs" />
+    <Compile Include="Statements\Word\StatementGenerator.cs" />
     <Compile Include="Statements\Word\WordExport.cs" />
     <Compile Include="Statements\Word\WordExporter.cs">
       <SubType>Form</SubType>

@@ -66,13 +66,12 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		}
 
 		private void MailingExport_ItemClick(object sender, ItemClickEventArgs e) {
-			var people = statements.Select(s => s.Person).Distinct().OrderBy(p => p.LastName).ToArray();
-			ProgressWorker.Execute(ui => WordExport.CreateMailing(people, e.Item.Caption + ".docx", ui), true);
+			ProgressWorker.Execute(ui => MailingGenerator.CreateMailing(statements, e.Item.Caption + ".docx", ui), true);
 
 			cancel.Text = "Close";
 		}
 		void createDoc_Click(object sender, EventArgs e) {
-			ProgressWorker.Execute(ui => WordExport.CreateBills(statements, ui), true);
+			ProgressWorker.Execute(ui => StatementGenerator.CreateBills(statements, ui), true);
 			if (DialogResult.Yes == XtraMessageBox.Show("Would you like to log these statements?",
 														"Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Question)) {
 				foreach (var statement in statements) {
