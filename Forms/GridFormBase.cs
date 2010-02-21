@@ -64,6 +64,7 @@ namespace ShomreiTorah.Billing.Forms {
 
 		protected BillingData.MasterDirectoryRow GetPerson(int rowHandle) {
 			var row = MainView.GetDataRow(rowHandle);
+			if (row == null) return null;
 			return row as BillingData.MasterDirectoryRow
 				?? row.GetParentRow(row.Table.ParentRelations[0]) as BillingData.MasterDirectoryRow;
 		}
