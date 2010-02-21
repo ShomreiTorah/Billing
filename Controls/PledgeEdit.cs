@@ -103,24 +103,24 @@ namespace ShomreiTorah.Billing.Controls {
 				node = null;
 
 			typeTree.SelectedNode = node;
-			CurrentPledge.Account = typeText.Text == "Building Fund" ? "Building Fund" : "Operating Fund";
 		}
-
+		private void typeText_Leave(object sender, EventArgs e) { BeginInvoke(new Action(SetAccount)); }
+		void SetAccount() {
+			if (BillingData.AccountNames.Contains(account.Text))
+				CurrentPledge.Account = account.Text = (typeText.Text == "Building Fund" ? "Building Fund" : "Operating Fund");
+		}
 		private void typeTree_AfterSelect(object sender, TreeViewEventArgs e) {
-			if (e.Action == TreeViewAction.Unknown && e.Node != null && e.Node.Index == 0 && String.IsNullOrEmpty(typeText.Text)) {
-				typeTree.SelectedNode = null;	//This happens when the control is first shown
-				return;
-			}
 			if (e.Action == TreeViewAction.Collapse || e.Action == TreeViewAction.Expand || e.Action == TreeViewAction.Unknown) return;
 			if (e.Node != null) {
-				
+
 				if (e.Node.Parent == null) {
-					CurrentPledge.Type = e.Node.Text;
-					CurrentPledge.SubType = "";
+					CurrentPledge.Type = typeText.Text = e.Node.Text;
+					CurrentPledge.SubType = subtypeText.Text = "";
 				} else {
-					CurrentPledge.Type = e.Node.Parent.Text;
-					CurrentPledge.SubType = e.Node.Text;
+					CurrentPledge.Type = typeText.Text = e.Node.Parent.Text;
+					CurrentPledge.SubType = subtypeText.Text = e.Node.Text;
 				}
+				SetAccount();
 			}
 		}
 
