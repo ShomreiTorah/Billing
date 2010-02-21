@@ -19,9 +19,18 @@ namespace ShomreiTorah.Billing.Forms {
 
 			exportEmail.Caption = exportWord.Caption = (person.FullName ?? person.VeryFullName).Replace("&", "&&");
 
+			//In the designer, grids are bound to the dataset itself.
+			//I need to rebind them to the person's detail views. The
+			//EmailAddresses and StatementLog tables' relation names 
+			//are not the same as their table names, so I also change
+			//their DataMembers.
 			emailGrid.DataSource = null;
-			emailGrid.DataMember = "EmailAddresses";		//In the designer, grids are bound to the dataset itself.
-			emailGrid.DataSource = paymentsGrid.DataSource = pledgeGrid.DataSource = personBindingSource;
+			emailGrid.DataMember = "EmailAddresses";
+
+			statementsGrid.DataSource = null;
+			statementsGrid.DataMember = "Statements";
+
+			emailGrid.DataSource = statementsGrid.DataSource = paymentsGrid.DataSource = pledgeGrid.DataSource = personBindingSource;
 			SetPerson();
 		}
 

@@ -28,6 +28,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.exportEmail = new DevExpress.XtraBars.BarButtonItem();
 			this.exportWord = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.billingData = new ShomreiTorah.Billing.BillingData();
 			this.personBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
@@ -68,8 +70,15 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colComments1 = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModified1 = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModifier1 = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-			this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.xtraTabPage2 = new DevExpress.XtraTab.XtraTabPage();
+			this.statementsGrid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
+			this.statementsView = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.colDateGenerated = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colMedia = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colStatementKind = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colStartDate = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colEndDate = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colUserName = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personBindingSource)).BeginInit();
@@ -92,6 +101,9 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethodEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).BeginInit();
+			this.xtraTabPage2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.statementsGrid)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.statementsView)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbonControl1
@@ -129,6 +141,20 @@ namespace ShomreiTorah.Billing.Forms {
             this.ribbonPageGroup3});
 			this.ribbonPage1.Name = "ribbonPage1";
 			this.ribbonPage1.Text = "Statements";
+			// 
+			// ribbonPageGroup2
+			// 
+			this.ribbonPageGroup2.ItemLinks.Add(this.exportEmail);
+			this.ribbonPageGroup2.Name = "ribbonPageGroup2";
+			this.ribbonPageGroup2.ShowCaptionButton = false;
+			this.ribbonPageGroup2.Text = "Send Emails to";
+			// 
+			// ribbonPageGroup3
+			// 
+			this.ribbonPageGroup3.ItemLinks.Add(this.exportWord);
+			this.ribbonPageGroup3.Name = "ribbonPageGroup3";
+			this.ribbonPageGroup3.ShowCaptionButton = false;
+			this.ribbonPageGroup3.Text = "Create Word Documents for";
 			// 
 			// billingData
 			// 
@@ -233,7 +259,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.xtraTabControl1.Size = new System.Drawing.Size(661, 505);
 			this.xtraTabControl1.TabIndex = 0;
 			this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
-            this.xtraTabPage1});
+            this.xtraTabPage1,
+            this.xtraTabPage2});
 			// 
 			// xtraTabPage1
 			// 
@@ -541,19 +568,100 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colModifier1.OptionsColumn.AllowFocus = false;
 			this.colModifier1.OptionsColumn.ReadOnly = true;
 			// 
-			// ribbonPageGroup2
+			// xtraTabPage2
 			// 
-			this.ribbonPageGroup2.ItemLinks.Add(this.exportEmail);
-			this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-			this.ribbonPageGroup2.ShowCaptionButton = false;
-			this.ribbonPageGroup2.Text = "Send Emails to";
+			this.xtraTabPage2.Controls.Add(this.statementsGrid);
+			this.xtraTabPage2.Name = "xtraTabPage2";
+			this.xtraTabPage2.Size = new System.Drawing.Size(653, 476);
+			this.xtraTabPage2.Text = "Statements";
 			// 
-			// ribbonPageGroup3
+			// statementsGrid
 			// 
-			this.ribbonPageGroup3.ItemLinks.Add(this.exportWord);
-			this.ribbonPageGroup3.Name = "ribbonPageGroup3";
-			this.ribbonPageGroup3.ShowCaptionButton = false;
-			this.ribbonPageGroup3.Text = "Create Word Documents for";
+			this.statementsGrid.DataMember = "StatementLog";
+			this.statementsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.statementsGrid.Location = new System.Drawing.Point(0, 0);
+			this.statementsGrid.MainView = this.statementsView;
+			this.statementsGrid.MenuManager = this.ribbonControl1;
+			this.statementsGrid.Name = "statementsGrid";
+			this.statementsGrid.Size = new System.Drawing.Size(653, 476);
+			this.statementsGrid.TabIndex = 0;
+			this.statementsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.statementsView});
+			// 
+			// statementsView
+			// 
+			this.statementsView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colDateGenerated,
+            this.colMedia,
+            this.colStatementKind,
+            this.colStartDate,
+            this.colEndDate,
+            this.colUserName});
+			this.statementsView.GridControl = this.statementsGrid;
+			this.statementsView.Name = "statementsView";
+			this.statementsView.OptionsBehavior.Editable = false;
+			// 
+			// colDateGenerated
+			// 
+			this.colDateGenerated.DisplayFormat.FormatString = "MMMM d, yyyy";
+			this.colDateGenerated.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+			this.colDateGenerated.FieldName = "DateGenerated";
+			this.colDateGenerated.Name = "colDateGenerated";
+			this.colDateGenerated.OptionsColumn.AllowEdit = false;
+			this.colDateGenerated.OptionsColumn.AllowFocus = false;
+			this.colDateGenerated.OptionsColumn.ReadOnly = true;
+			this.colDateGenerated.Visible = true;
+			this.colDateGenerated.VisibleIndex = 0;
+			// 
+			// colMedia
+			// 
+			this.colMedia.FieldName = "Media";
+			this.colMedia.Name = "colMedia";
+			this.colMedia.OptionsColumn.AllowEdit = false;
+			this.colMedia.OptionsColumn.AllowFocus = false;
+			this.colMedia.OptionsColumn.ReadOnly = true;
+			this.colMedia.Visible = true;
+			this.colMedia.VisibleIndex = 1;
+			// 
+			// colStatementKind
+			// 
+			this.colStatementKind.FieldName = "StatementKind";
+			this.colStatementKind.Name = "colStatementKind";
+			this.colStatementKind.OptionsColumn.AllowEdit = false;
+			this.colStatementKind.OptionsColumn.AllowFocus = false;
+			this.colStatementKind.OptionsColumn.ReadOnly = true;
+			this.colStatementKind.Visible = true;
+			this.colStatementKind.VisibleIndex = 2;
+			// 
+			// colStartDate
+			// 
+			this.colStartDate.FieldName = "StartDate";
+			this.colStartDate.Name = "colStartDate";
+			this.colStartDate.OptionsColumn.AllowEdit = false;
+			this.colStartDate.OptionsColumn.AllowFocus = false;
+			this.colStartDate.OptionsColumn.ReadOnly = true;
+			this.colStartDate.Visible = true;
+			this.colStartDate.VisibleIndex = 3;
+			// 
+			// colEndDate
+			// 
+			this.colEndDate.FieldName = "EndDate";
+			this.colEndDate.Name = "colEndDate";
+			this.colEndDate.OptionsColumn.AllowEdit = false;
+			this.colEndDate.OptionsColumn.AllowFocus = false;
+			this.colEndDate.OptionsColumn.ReadOnly = true;
+			this.colEndDate.Visible = true;
+			this.colEndDate.VisibleIndex = 4;
+			// 
+			// colUserName
+			// 
+			this.colUserName.FieldName = "UserName";
+			this.colUserName.Name = "colUserName";
+			this.colUserName.OptionsColumn.AllowEdit = false;
+			this.colUserName.OptionsColumn.AllowFocus = false;
+			this.colUserName.OptionsColumn.ReadOnly = true;
+			this.colUserName.Visible = true;
+			this.colUserName.VisibleIndex = 5;
 			// 
 			// PersonDetails
 			// 
@@ -586,6 +694,9 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethodEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).EndInit();
+			this.xtraTabPage2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.statementsGrid)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.statementsView)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -638,5 +749,14 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
+		private DevExpress.XtraTab.XtraTabPage xtraTabPage2;
+		private Controls.BaseGrid statementsGrid;
+		private DevExpress.XtraGrid.Views.Grid.GridView statementsView;
+		private DevExpress.XtraGrid.Columns.GridColumn colDateGenerated;
+		private DevExpress.XtraGrid.Columns.GridColumn colMedia;
+		private DevExpress.XtraGrid.Columns.GridColumn colStatementKind;
+		private DevExpress.XtraGrid.Columns.GridColumn colStartDate;
+		private DevExpress.XtraGrid.Columns.GridColumn colEndDate;
+		private DevExpress.XtraGrid.Columns.GridColumn colUserName;
 	}
 }
