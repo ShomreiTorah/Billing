@@ -51,8 +51,17 @@ namespace ShomreiTorah.Billing.Statements {
 		public ReadOnlyCollection<StatementAccount> Accounts { get; private set; }
 		public string Deductibility { get; private set; }
 
+		//This method is called in a loop.
+		//I want the times to be identical
+		//for all of the calls so that it 
+		//will sort nicely.
+		[ThreadStatic]
+		static DateTime lastGenTime;
 		internal void LogStatement(string media, string kind) {
-			Program.Data.StatementLog.AddStatementLogRow(Guid.NewGuid(), Person, DateTime.Now, media, kind, StartDate, EndDate, Environment.UserName);
+			var now = DateTime.Now;
+			if ((now - lastGenTime) > TimeSpan.FromSeconds(5))
+				lastGenTime = now;
+			Program.Data.StatementLog.AddStatementLogRow(Guid.NewGuid(), Person, lastGenTime, media, kind, StartDate, EndDate, Environment.UserName);
 		}
 	}
 	public class StatementAccount {
