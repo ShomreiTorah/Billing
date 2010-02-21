@@ -167,22 +167,22 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MasterDirectoryGridForm.cs">
+    <Compile Include="Forms\GridForms\MasterDirectoryGridForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MasterDirectoryGridForm.Designer.cs">
+    <Compile Include="Forms\GridForms\MasterDirectoryGridForm.Designer.cs">
       <DependentUpon>MasterDirectoryGridForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PaymentViewer.cs">
+    <Compile Include="Forms\GridForms\PaymentViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\PaymentViewer.Designer.cs">
+    <Compile Include="Forms\GridForms\PaymentViewer.Designer.cs">
       <DependentUpon>PaymentViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PledgeViewer.cs">
+    <Compile Include="Forms\GridForms\PledgeViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\PledgeViewer.Designer.cs">
+    <Compile Include="Forms\GridForms\PledgeViewer.Designer.cs">
       <DependentUpon>PledgeViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Splash.cs">
@@ -243,10 +243,10 @@
     <EmbeddedResource Include="Forms\DepositAdder.resx">
       <DependentUpon>DepositAdder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DepositViewer.resx">
+    <EmbeddedResource Include="Forms\GridForms\DepositViewer.resx">
       <DependentUpon>DepositViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\EmailListForm.resx">
+    <EmbeddedResource Include="Forms\GridForms\EmailListForm.resx">
       <DependentUpon>EmailListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ErrorForm.resx">
@@ -255,13 +255,13 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MasterDirectoryGridForm.resx">
+    <EmbeddedResource Include="Forms\GridForms\MasterDirectoryGridForm.resx">
       <DependentUpon>MasterDirectoryGridForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PaymentEditPopup.resx">
       <DependentUpon>PaymentEditPopup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PaymentViewer.resx">
+    <EmbeddedResource Include="Forms\GridForms\PaymentViewer.resx">
       <DependentUpon>PaymentViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PersonDetails.resx">
@@ -270,7 +270,7 @@
     <EmbeddedResource Include="Forms\PledgeEditPopup.resx">
       <DependentUpon>PledgeEditPopup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PledgeViewer.resx">
+    <EmbeddedResource Include="Forms\GridForms\PledgeViewer.resx">
       <DependentUpon>PledgeViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Splash.resx">
@@ -434,16 +434,16 @@
     <Compile Include="Forms\DepositAdder.Designer.cs">
       <DependentUpon>DepositAdder.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DepositViewer.cs">
+    <Compile Include="Forms\GridForms\DepositViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\DepositViewer.Designer.cs">
+    <Compile Include="Forms\GridForms\DepositViewer.Designer.cs">
       <DependentUpon>DepositViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\EmailListForm.cs">
+    <Compile Include="Forms\GridForms\EmailListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\EmailListForm.Designer.cs">
+    <Compile Include="Forms\GridForms\EmailListForm.Designer.cs">
       <DependentUpon>EmailListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ErrorForm.cs">
