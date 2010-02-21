@@ -170,7 +170,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.createDoc.Name = "createDoc";
 			this.createDoc.Size = new System.Drawing.Size(135, 23);
 			this.createDoc.TabIndex = 17;
-			this.createDoc.Text = "Create Documents";
+			this.createDoc.Text = "Create Document";
 			this.createDoc.Click += new System.EventHandler(this.createDoc_Click);
 			// 
 			// mailingDocuments

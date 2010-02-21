@@ -22,7 +22,8 @@ namespace ShomreiTorah.Billing {
 				PaymentsTableAdapter = new PaymentsTableAdapter { ClearBeforeFill = false },
 				PledgesTableAdapter = new PledgesTableAdapter { ClearBeforeFill = false },
 				EmailListTableAdapter = new EmailListTableAdapter { ClearBeforeFill = false },
-				DepositsTableAdapter = new DepositsTableAdapter { ClearBeforeFill = false }
+				DepositsTableAdapter = new DepositsTableAdapter { ClearBeforeFill = false },
+				StatementLogTableAdapter = new StatementLogTableAdapter { ClearBeforeFill = false }
 			};
 			try {
 				AdapterManager.Connection
@@ -31,6 +32,7 @@ namespace ShomreiTorah.Billing {
 					= AdapterManager.PledgesTableAdapter.Connection
 					= AdapterManager.EmailListTableAdapter.Connection
 					= AdapterManager.DepositsTableAdapter.Connection
+					= AdapterManager.StatementLogTableAdapter.Connection
 					= (SqlConnection)DB.Default.OpenConnection();
 
 				RefreshData(AdapterManager);
@@ -54,6 +56,7 @@ namespace ShomreiTorah.Billing {
 			adapters.PaymentsTableAdapter.Fill(Payments);
 			adapters.EmailListTableAdapter.Fill(EmailList);
 			adapters.DepositsTableAdapter.Fill(Deposits);
+			adapters.StatementLogTableAdapter.Fill(StatementLog);
 		}
 
 		void EmailList_TableNewRow(object sender, DataTableNewRowEventArgs e) {
@@ -327,4 +330,5 @@ namespace ShomreiTorah.Billing {
 		decimal SignedAmount { get; }
 	}
 }
+
 

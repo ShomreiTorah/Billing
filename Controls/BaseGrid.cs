@@ -152,6 +152,11 @@ namespace ShomreiTorah.Billing.Controls {
 						message = "Are you sure you want to delete this email address from the email list?";
 					else
 						message = "Are you sure you want to delete these email addresses from the email list?";
+				} else if (itemName == "statementlog") {
+					if (rows.Length == 1)
+						message = "Are you sure you want to remove the log for this statement?";
+					else
+						message = "Are you sure you want to remove the log for these statemente?";
 				} else {
 					var total = rows.Sum(r => r.Field<decimal>("Amount"));
 

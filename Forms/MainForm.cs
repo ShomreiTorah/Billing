@@ -108,6 +108,9 @@ namespace ShomreiTorah.Billing.Forms {
 		private void showMasterDirectoryGrid_ItemClick(object sender, ItemClickEventArgs e) { new GridForms.MasterDirectoryGridForm { MdiParent = this }.Show(); }
 		private void showEmailList_ItemClick(object sender, ItemClickEventArgs e) { new GridForms.EmailListForm { MdiParent = this }.Show(); }
 
+		private void wordGroup_CaptionButtonClick(object sender, RibbonPageGroupEventArgs e) { new GridForms.StatementLogViewer("Word") { MdiParent = this }.Show(); }
+		private void emailGroup_CaptionButtonClick(object sender, RibbonPageGroupEventArgs e) { new GridForms.StatementLogViewer("Email") { MdiParent = this }.Show(); }
+
 		private void addPayment_ItemClick(object sender, ItemClickEventArgs e) {
 			addPaymentPanel.Show();
 			paymentEdit.Focus();

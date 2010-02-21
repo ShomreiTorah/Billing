@@ -35,10 +35,11 @@ namespace ShomreiTorah.Billing.Statements.Email {
 		};
 		public static readonly string ImagesPath = Path.Combine(Program.AspxPath, @"Images\");
 		static readonly MailAddress BillingAddress = new MailAddress("Billing@ShomreiTorah.us", "Shomrei Torah Billing");
-		public static MailMessage CreateMessage(BillingData.MasterDirectoryRow person, string virtualPath, DateTime startDate) {
+
+		public static MailMessage CreateMessage(BillingData.MasterDirectoryRow person, string virtualPath, DateTime startDate, out StatementInfo info) {
 			using (var page = PageBuilder.CreatePage<EmailPage>(virtualPath)) {
 				page.ImagePrefix = "cid:";
-				page.Info = new StatementInfo(person, startDate, page.Kind);
+				page.Info = info = new StatementInfo(person, startDate, page.Kind);
 				if (!page.Info.ShouldSend) return null;
 
 				var message = new MailMessage { From = BillingAddress, SubjectEncoding = Email.DefaultEncoding };
@@ -57,6 +58,5 @@ namespace ShomreiTorah.Billing.Statements.Email {
 				return message;
 			}
 		}
-
 	}
 }

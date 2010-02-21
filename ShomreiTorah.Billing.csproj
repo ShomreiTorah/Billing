@@ -225,6 +225,9 @@
     <EmbeddedResource Include="Forms\GridFormBase.resx">
       <DependentUpon>GridFormBase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GridForms\StatementLogViewer.resx">
+      <DependentUpon>StatementLogViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Statements\Email\EmailExporter.resx">
       <DependentUpon>EmailExporter.cs</DependentUpon>
     </EmbeddedResource>
@@ -397,6 +400,12 @@
     </Compile>
     <Compile Include="Forms\GridFormBase.Designer.cs">
       <DependentUpon>GridFormBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GridForms\StatementLogViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GridForms\StatementLogViewer.Designer.cs">
+      <DependentUpon>StatementLogViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Statements\StatementInfo.cs" />
     <Compile Include="Statements\Email\EmailExporter.cs">

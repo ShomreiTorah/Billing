@@ -33,6 +33,12 @@ namespace ShomreiTorah.Billing.Forms {
 			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.addPledge = new DevExpress.XtraBars.BarButtonItem();
@@ -55,13 +61,14 @@ namespace ShomreiTorah.Billing.Forms {
 			this.importRaffle = new DevExpress.XtraBars.BarButtonItem();
 			this.showShalachManos = new DevExpress.XtraBars.BarButtonItem();
 			this.shalachManosExport = new DevExpress.XtraBars.BarButtonItem();
+			this.showEmailList = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPage3 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-			this.ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-			this.ribbonPageGroup7 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.emailGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.wordGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPage4 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -79,7 +86,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.modifiedPaymentsGrid = new ShomreiTorah.Billing.Controls.ModifiedPaymentsGrid();
 			this.paymentEdit = new ShomreiTorah.Billing.Controls.PaymentEdit();
 			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
-			this.showEmailList = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
 			this.addPledgePanel.SuspendLayout();
@@ -125,7 +131,7 @@ namespace ShomreiTorah.Billing.Forms {
             this.ribbonPage3,
             this.ribbonPage4,
             this.ribbonPage2});
-			this.ribbon.SelectedPage = this.ribbonPage1;
+			this.ribbon.SelectedPage = this.ribbonPage3;
 			this.ribbon.Size = new System.Drawing.Size(858, 148);
 			this.ribbon.StatusBar = this.ribbonStatusBar;
 			this.ribbon.Toolbar.ItemLinks.Add(this.saveDb);
@@ -303,6 +309,13 @@ namespace ShomreiTorah.Billing.Forms {
 			this.shalachManosExport.Name = "shalachManosExport";
 			this.shalachManosExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.shalachManosExport_ItemClick);
 			// 
+			// showEmailList
+			// 
+			this.showEmailList.Caption = "Show email list";
+			this.showEmailList.Id = 22;
+			this.showEmailList.Name = "showEmailList";
+			this.showEmailList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showEmailList_ItemClick);
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -341,26 +354,40 @@ namespace ShomreiTorah.Billing.Forms {
 			// ribbonPage3
 			// 
 			this.ribbonPage3.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup6,
-            this.ribbonPageGroup7});
+            this.emailGroup,
+            this.wordGroup});
 			this.ribbonPage3.Name = "ribbonPage3";
 			this.ribbonPage3.Text = "Statements";
 			// 
-			// ribbonPageGroup6
+			// emailGroup
 			// 
-			this.ribbonPageGroup6.ItemLinks.Add(this.emailAll);
-			this.ribbonPageGroup6.ItemLinks.Add(this.emailModified);
-			this.ribbonPageGroup6.Name = "ribbonPageGroup6";
-			this.ribbonPageGroup6.ShowCaptionButton = false;
-			this.ribbonPageGroup6.Text = "Send Emails to";
+			this.emailGroup.AllowTextClipping = false;
+			this.emailGroup.ItemLinks.Add(this.emailAll);
+			this.emailGroup.ItemLinks.Add(this.emailModified);
+			this.emailGroup.Name = "emailGroup";
+			toolTipTitleItem4.Text = "Show Email Statement Log";
+			toolTipItem4.LeftIndent = 6;
+			toolTipItem4.Text = "Shows people who have received email statements.";
+			superToolTip4.Items.Add(toolTipTitleItem4);
+			superToolTip4.Items.Add(toolTipItem4);
+			this.emailGroup.SuperTip = superToolTip4;
+			this.emailGroup.Text = "Send Emails to";
+			this.emailGroup.CaptionButtonClick += new DevExpress.XtraBars.Ribbon.RibbonPageGroupEventHandler(this.emailGroup_CaptionButtonClick);
 			// 
-			// ribbonPageGroup7
+			// wordGroup
 			// 
-			this.ribbonPageGroup7.ItemLinks.Add(this.wordAll);
-			this.ribbonPageGroup7.ItemLinks.Add(this.wordModified);
-			this.ribbonPageGroup7.Name = "ribbonPageGroup7";
-			this.ribbonPageGroup7.ShowCaptionButton = false;
-			this.ribbonPageGroup7.Text = "Create Word Documents for";
+			this.wordGroup.AllowTextClipping = false;
+			this.wordGroup.ItemLinks.Add(this.wordAll);
+			this.wordGroup.ItemLinks.Add(this.wordModified);
+			this.wordGroup.Name = "wordGroup";
+			toolTipTitleItem5.Text = "Show Word Statement Log";
+			toolTipItem5.LeftIndent = 6;
+			toolTipItem5.Text = "Shows people who have received Word statements.";
+			superToolTip5.Items.Add(toolTipTitleItem5);
+			superToolTip5.Items.Add(toolTipItem5);
+			this.wordGroup.SuperTip = superToolTip5;
+			this.wordGroup.Text = "Create Word Documents for";
+			this.wordGroup.CaptionButtonClick += new DevExpress.XtraBars.Ribbon.RibbonPageGroupEventHandler(this.wordGroup_CaptionButtonClick);
 			// 
 			// ribbonPage4
 			// 
@@ -525,13 +552,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.mdiManager.MdiParent = this;
 			this.mdiManager.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mdiManager_MouseDown);
 			// 
-			// showEmailList
-			// 
-			this.showEmailList.Caption = "Show email list";
-			this.showEmailList.Id = 22;
-			this.showEmailList.Name = "showEmailList";
-			this.showEmailList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showEmailList_ItemClick);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -592,10 +612,10 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.BarButtonItem importJournal;
 		private DevExpress.XtraBars.BarButtonItem emailAll;
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage3;
-		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup6;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup emailGroup;
 		private DevExpress.XtraBars.BarButtonItem emailModified;
 		private DevExpress.XtraBars.BarButtonItem wordAll;
-		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup7;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup wordGroup;
 		private DevExpress.XtraBars.BarButtonItem wordModified;
 		private DevExpress.XtraBars.BarButtonItem importRaffle;
 		private DevExpress.XtraBars.BarButtonItem showShalachManos;

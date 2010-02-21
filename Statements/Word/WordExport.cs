@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Office.Interop.Word;
 using Microsoft.Office.Interop.Word.Extensions;
 using ShomreiTorah.Common;
-using System.Runtime.InteropServices;
 using ShomreiTorah.WinForms;
-using System.IO;
-using System.Reflection;
-using System.Data;
-using System.Globalization;
 
 namespace ShomreiTorah.Billing.Statements.Word {
 	static class WordExport {
@@ -32,7 +32,6 @@ namespace ShomreiTorah.Billing.Statements.Word {
 
 			Document sourceDoc = null;
 			try {
-				Word.ScreenUpdating = false;
 				sourceDoc = Word.Documents.Open(new DocumentsOpenArgs { FileName = templatePath, ReadOnly = true, Visible = false, AddToRecentFiles = false });
 
 				Document doc;
@@ -43,6 +42,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 					sourceDoc.Range().Copy();
 
 					doc = Word.Documents.Add();
+					doc.ShowGrammaticalErrors = doc.ShowSpellingErrors = false;
 
 					int pageCount = (int)Math.Ceiling(people.Count / (float)pageSize);
 					progress.Maximum = pageCount;
@@ -71,62 +71,55 @@ namespace ShomreiTorah.Billing.Statements.Word {
 				doc.Activate();
 				return doc;
 			} finally {
-				if (sourceDoc != null) ((_Document)sourceDoc).Close(ref dontSave, ref Missing, ref Missing);
 				Word.ScreenUpdating = true;
+				if (sourceDoc != null) ((_Document)sourceDoc).Close(ref dontSave, ref Missing, ref Missing);
 			}
 		}
 
-		public static Document CreateBills(ICollection<BillingData.MasterDirectoryRow> people, StatementKind[] kinds, DateTime startDate, IProgressReporter progress) {
-			if (people == null) throw new ArgumentNullException("people");
-			if (kinds == null) throw new ArgumentNullException("kinds");
-			if (kinds.Length == 0) return null;
-			kinds = kinds.OrderBy(k => (int)k).ToArray();
+		public static Document CreateBills(ICollection<WordStatementInfo> statements, IProgressReporter progress) {
+			if (statements == null) throw new ArgumentNullException("statements");
 
 			progress = progress ?? new EmptyProgressReporter();
 
-			progress.Caption = "Creating " + kinds.Join(" and ", k => k.ToString() + "s");
+			progress.Caption = "Creating document";
 
-			var sourceDocs = new List<Document>(kinds.Length);
 			Dictionary<StatementKind, Range> sourceRanges = new Dictionary<StatementKind, Range>();
 			try {
-				Word.ScreenUpdating = false;
-				foreach (var kind in kinds) {
+				foreach (var kind in statements.Select(s => s.Kind).Distinct()) {
 					var sd = Word.Documents.Open(new DocumentsOpenArgs { FileName = Path.Combine(TemplateFolder, kind.ToString() + ".docx"), ReadOnly = true, Visible = false, AddToRecentFiles = false });
-					sourceDocs.Add(sd);
 					sourceRanges.Add(kind, sd.Range());
 				}
 
 				Document doc = Word.Documents.Add();
+				doc.ShowGrammaticalErrors = doc.ShowSpellingErrors = false;
 				Range range = doc.Range();
 
 				bool firstPage = true;
 				using (new ClipboardScope()) {
-					progress.Maximum = people.Count;
+					progress.Maximum = statements.Count;
 					int i = 0;
-					foreach (var person in people) {
+					foreach (var info in statements) {
+						if (progress.WasCanceled) return null;
 						progress.Progress = i;
 
-						foreach (var kind in kinds) {
-							var info = new StatementInfo(person, startDate, kind);
-							if (!info.ShouldSend) continue;
+						progress.Caption = "Creating " + info.Kind.ToString().ToLower(Culture) + " for " + info.Person.FullName;
 
-							if (firstPage)
-								firstPage = false;
-							else {
-								range.Start = range.End - 1;
-								while (range.Text.Trim().Length == 0)
-									range.Start--;
-								range.Start++;
-								range.Text = "\f";
-								range.Collapse(WdCollapseDirection.wdCollapseEnd);
-							}
-							sourceRanges[kind].Copy();
-							range.Paste();
-							FillBill(range, info);
-							foreach (Shape shape in range.ShapeRange) {
-								FillBill(shape.TextFrame.TextRange, info);
-							}
+						if (firstPage)
+							firstPage = false;
+						else {
+							range.Start = range.End - 1;
+							while (range.Text.Trim().Length == 0)
+								range.Start--;
+							range.Start++;
+							range.Text = "\f";
+							range.Collapse(WdCollapseDirection.wdCollapseEnd);
 						}
+						sourceRanges[info.Kind].Copy();
+						range.Paste();
+
+						FillBill(range, info);
+						foreach (Shape shape in range.ShapeRange)
+							FillBill(shape.TextFrame.TextRange, info);
 
 						i++;
 					}
@@ -135,10 +128,12 @@ namespace ShomreiTorah.Billing.Statements.Word {
 				doc.Activate();
 				return doc;
 			} finally {
-				foreach (_Document sd in sourceDocs) sd.Close(ref dontSave, ref Missing, ref Missing);
 				Word.ScreenUpdating = true;
+				foreach (var sd in sourceRanges.Values) sd.Document.CloseDoc();
 			}
 		}
+
+		static void CloseDoc(this _Document doc) { doc.Close(ref dontSave, ref Missing, ref Missing); }
 
 		static readonly Dictionary<string, Action<Range, StatementInfo>> CustomFields = new Dictionary<string, Action<Range, StatementInfo>>(StringComparer.CurrentCultureIgnoreCase){
 			{ "BalanceDue",		(range, info) => range.Text = info.Person.BalanceDue.ToString("c", Culture) },
@@ -316,7 +311,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			row.Range.Font.Bold = 1;
 			row.Range.Font.Size += 2;
 
-			row.Range.ParagraphFormat.SpaceBefore = 10;
+			if (row.Index > 1)
+				row.Range.ParagraphFormat.SpaceBefore = 7;
 
 			var border = row.Borders[WdBorderType.wdBorderBottom];
 			border.Visible = true;
@@ -342,5 +338,39 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			row.Cells[row.Cells.Count].Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphRight;
 			return row;
 		}
+	}
+
+	//After sending a receipt, we should send the same person
+	//another receipt for that year if he gives us more money
+	//Therefore, we track when each receipt, and only print a
+	//new receipt if a payment was modified after the last 1.
+	//In case we need to regenerate a receipt, we can specify
+	//a receiptLimit,
+	class WordStatementInfo : StatementInfo {
+		readonly DateTime receiptLimit;
+		public WordStatementInfo(BillingData.MasterDirectoryRow person, DateTime startDate, StatementKind kind, DateTime receiptLimit) : base(person, startDate, kind) { this.receiptLimit = receiptLimit; }
+
+		public override bool ShouldSend {
+			get {
+				if (!base.ShouldSend)
+					return false;
+				if (Kind == StatementKind.Receipt) {
+					//Find all Word receipts for the year that we're generating.
+					var statements = Person.GetStatementLogRows().Where(s => s.StatementKind == "Receipt" && s.Media == "Word" && s.StartDate.Year == StartDate.Year);
+
+					if (!statements.Any()) return true;	//If we didn't make any Word receitps, send.
+					var lastStatement = statements.Max(s => s.DateGenerated);
+
+					if (lastStatement >= receiptLimit)
+						return true;		//If the last receipt that we generated was after receiptLimit, (re-)send
+					if (lastStatement <= Accounts.SelectMany(a => a.Payments).Max(p => p.Modified))
+						return true;		//If one of the payments on the receipt was modified after the last receipt, send.
+
+					return false;
+				}
+				return true;
+			}
+		}
+		public void LogStatement() { base.LogStatement("Word", Kind.ToString()); }
 	}
 }

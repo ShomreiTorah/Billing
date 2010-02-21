@@ -18,35 +18,31 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			if (people.Length == 0) return;
 
 			Program.DoReload();
-			StatementKind[] kinds;
-			DateTime startDate;
+			WordStatementInfo[] statements;
 
 			using (var options = new ExportOptions()) {
 				if (options.ShowDialog() == DialogResult.Cancel) return;
-				startDate = options.StartDate;
-				kinds = options.Kinds.ToArray();
+				var kinds = options.Kinds.OrderBy(k => (int)k).ToArray();
+
+				statements = people
+					.Distinct()
+					.OrderBy(p => p.LastName)
+					.SelectMany(p => kinds.Select(kind => new WordStatementInfo(p, options.StartDate, kind, options.ReceiptLimit)))
+					.Where(s => s.ShouldSend)
+					.ToArray();
 			}
 
-			//Only include people who should receive at least one of the BillKinds.
-			people = people.Where(p => kinds.Any(k => new StatementInfo(p, startDate, k).ShouldSend))
-						   .OrderBy(p => p.LastName)
-						   .ToArray();
-
-			if (people.Length == 0) {
+			if (statements.Length == 0) {
 				XtraMessageBox.Show("There are no people to send to.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			new WordExporter(kinds, startDate, people).Show(parent);
+			new WordExporter(statements).Show(parent);
 		}
-		readonly DateTime startDate;
-		readonly StatementKind[] kinds;
-		readonly BillingData.MasterDirectoryRow[] people;
-		WordExporter(StatementKind[] kinds, DateTime startDate, BillingData.MasterDirectoryRow[] people) {
+		readonly WordStatementInfo[] statements;
+		WordExporter(WordStatementInfo[] statements) {
 			InitializeComponent();
-			this.kinds = kinds;
-			this.startDate = startDate;
-			this.people = people;
+			this.statements = statements;
 
 			var barItems = Array.ConvertAll<string, BarItem>(Directory.GetFiles(WordExport.MailingTemplateFolder, "*.docx"),
 				p => {
@@ -58,7 +54,10 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			barManager.Items.AddRange(barItems);
 			mailingDocuments.ItemLinks.AddRange(barItems);
 
-			grid.DataSource = Program.Data.MasterDirectory.Where(people.Contains).AsDataView();
+			grid.DataSource = Program.Data.MasterDirectory
+				.Where(p => statements.Any(s => s.Person == p))
+				.AsDataView();
+
 			gridView.BestFitColumns();
 		}
 		protected override void OnShown(EventArgs e) {
@@ -67,11 +66,20 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		}
 
 		private void MailingExport_ItemClick(object sender, ItemClickEventArgs e) {
+			var people = statements.Select(s => s.Person).Distinct().OrderBy(p => p.LastName).ToArray();
 			ProgressWorker.Execute(ui => WordExport.CreateMailing(people, e.Item.Caption + ".docx", ui), true);
+
 			cancel.Text = "Close";
 		}
 		void createDoc_Click(object sender, EventArgs e) {
-			ProgressWorker.Execute(ui => WordExport.CreateBills(people, kinds, startDate, ui), true);
+			ProgressWorker.Execute(ui => WordExport.CreateBills(statements, ui), true);
+			if (DialogResult.Yes == XtraMessageBox.Show("Would you like to log these statements?",
+														"Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Question)) {
+				foreach (var statement in statements) {
+					statement.LogStatement();
+				}
+			}
+
 			if (cancel.Text != "Close")
 				XtraMessageBox.Show("To create mailing labels or envelopes, click the down arrow next to Create Documents.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);

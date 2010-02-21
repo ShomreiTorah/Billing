@@ -63,7 +63,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			sendPreviewButton = buttonEdit.Buttons[1];
 			showPreviewButton = buttonEdit.Buttons[0];
 
-			startDate.DateTime = new DateTime(DateTime.Today.AddDays(-20).Year, 1, 1);
+			startDate.DateTime = new DateTime(DateTime.Today.AddDays(-80).Year, 1, 1);
 			startDate.Properties.MaxValue = DateTime.Today;
 
 			var recentEmails = (string[])Registry.GetValue(SettingsPath, "RecentPreviewEmails", null);
@@ -95,12 +95,14 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			sendPreviewButton.Enabled = showPreviewButton.Enabled && previewMailAddress != null;
 		}
 
-		MailMessage CreateMessage(BillingData.MasterDirectoryRow person) {
-			return PageBuilder.CreateMessage(person, "/" + emailTemplate.EditValue + ".aspx", startDate.DateTime);
+		MailMessage CreateMessage(BillingData.MasterDirectoryRow person) { StatementInfo info; return CreateMessage(person, out info); }
+		MailMessage CreateMessage(BillingData.MasterDirectoryRow person, out StatementInfo info) {
+			return PageBuilder.CreateMessage(person, "/" + emailTemplate.EditValue + ".aspx", startDate.DateTime, out info);
 		}
 
 		void SendBills() {
 			var exceptions = new List<KeyValuePair<BillingData.MasterDirectoryRow, SmtpException>>();
+			var successes = new List<StatementInfo>(people.Length);
 			ProgressWorker.Execute(ui => {
 				ui.Maximum = people.Length;
 				foreach (var person in people) {
@@ -109,16 +111,22 @@ namespace ShomreiTorah.Billing.Statements.Email {
 
 					if (ui.WasCanceled) return;
 
-					using (var message = CreateMessage(person)) {
+					StatementInfo info;
+					using (var message = CreateMessage(person, out info)) {
 						if (message == null) continue;
 
 						message.To.AddRange(person.GetEmailListRows().Select(e => e.MailAddress));
 						try {
 							Email.Hosted.Send(message);
+							successes.Add(info);
 						} catch (SmtpException ex) { exceptions.Add(new KeyValuePair<BillingData.MasterDirectoryRow, SmtpException>(person, ex)); }
 					}
 				}
 			}, true);
+
+			foreach (var info in successes)	//The dataset can only be modified on the UI thread.
+				info.LogStatement("Email", emailTemplate.Text);
+
 			if (exceptions.Any())
 				XtraMessageBox.Show("The following errors occurred while sending the emails:\r\n\r\n  • "
 					+ exceptions.Join("\r\n\r\n  • ", kvp => kvp.Key.FullName + ": " + kvp.Value.Message),

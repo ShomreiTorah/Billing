@@ -5,9 +5,9 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraLayout.Utils;
 
 namespace ShomreiTorah.Billing.Statements.Word {
 	partial class ExportOptions : XtraForm {
@@ -15,6 +15,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			InitializeComponent();
 			startDate.DateTime = new DateTime(DateTime.Today.AddDays(-80).Year, 1, 1);
 			startDate.Properties.MaxValue = DateTime.Today;
+			receiptLimit.DateTime = DateTime.Today;
 
 			docTypes.Items.Add(StatementKind.Bill);
 			docTypes.Items.Add(StatementKind.Receipt);
@@ -24,10 +25,13 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			MinimumSize = Size;
 		}
 
-		private void docTypes_ItemCheck(object sender, DevExpress.XtraEditors.Controls.ItemCheckEventArgs e) {
+		private void docTypes_ItemCheck(object sender, ItemCheckEventArgs e) {
+			receiptLimitContainer.Visibility = Kinds.Contains(StatementKind.Receipt) ? LayoutVisibility.Always : LayoutVisibility.Never;
 			ok.Enabled = docTypes.CheckedItems.Count > 0;
 		}
 
+		///<summary>Any receipts sent after this date will be sent again.</summary>
+		public DateTime ReceiptLimit { get { return receiptLimit.DateTime; } }
 		public DateTime StartDate { get { return startDate.DateTime.Date; } }
 		public IEnumerable<StatementKind> Kinds { get { return docTypes.CheckedItems.Cast<CheckedListBoxItem>().Select(i => (StatementKind)i.Value); } }
 	}

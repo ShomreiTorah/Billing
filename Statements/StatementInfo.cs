@@ -1,14 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Collections.ObjectModel;
 
 namespace ShomreiTorah.Billing.Statements {
 	public class StatementInfo {
 		public StatementInfo(BillingData.MasterDirectoryRow person, DateTime startDate, StatementKind kind) {
 			Person = person;
-			StartDate = startDate;
+			switch (kind) {
+				case StatementKind.Bill:
+					StartDate = startDate;
+					EndDate = DateTime.Now;
+					break;
+				case StatementKind.Receipt:
+					StartDate = new DateTime(startDate.Year, 1, 1);
+					EndDate = new DateTime(startDate.Year + 1, 1, 1).AddTicks(-1);
+					break;
+			}
+
 			Kind = kind;
 
 			Recalculate();
@@ -16,9 +26,10 @@ namespace ShomreiTorah.Billing.Statements {
 
 		public BillingData.MasterDirectoryRow Person { get; private set; }
 		public DateTime StartDate { get; private set; }
+		public DateTime EndDate { get; private set; }
 		public StatementKind Kind { get; private set; }
 
-		public bool ShouldSend { get { return Accounts.Count > 0; } }
+		public virtual bool ShouldSend { get { return Accounts.Count > 0; } }
 
 		public void Recalculate() {
 			TotalBalance = Math.Max(0, Person.BalanceDue);
@@ -39,6 +50,10 @@ namespace ShomreiTorah.Billing.Statements {
 		public decimal TotalBalance { get; private set; }
 		public ReadOnlyCollection<StatementAccount> Accounts { get; private set; }
 		public string Deductibility { get; private set; }
+
+		internal void LogStatement(string media, string kind) {
+			Program.Data.StatementLog.AddStatementLogRow(Guid.NewGuid(), Person, DateTime.Now, media, kind, StartDate, EndDate, Environment.UserName);
+		}
 	}
 	public class StatementAccount {
 		internal StatementAccount(StatementInfo parent, string accountName) {
@@ -47,11 +62,7 @@ namespace ShomreiTorah.Billing.Statements {
 			OutstandingBalance = Parent.Person.GetBalance(Parent.StartDate, AccountName);
 			BalanceDue = Math.Max(0, Parent.Person.GetBalance(AccountName));
 
-			Func<ITransaction, bool> filter;
-			if (parent.Kind == StatementKind.Receipt)
-				filter = t => t.Date.Year == Parent.StartDate.Year && t.Account == AccountName;
-			else
-				filter = t => t.Date >= Parent.StartDate && t.Account == AccountName;
+			Func<ITransaction, bool> filter = t => t.Date >= Parent.StartDate && t.Date < Parent.EndDate && t.Account == AccountName;
 
 			Pledges = new ReadOnlyCollection<BillingData.PledgesRow>(Parent.Person.GetPledgesRows().Where(p => filter(p)).OrderBy(p => p.Date).ToArray());
 			Payments = new ReadOnlyCollection<BillingData.PaymentsRow>(Parent.Person.GetPaymentsRows().Where(p => filter(p)).OrderBy(p => p.Date).ToArray());
