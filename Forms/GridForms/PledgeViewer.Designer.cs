@@ -1,4 +1,4 @@
-namespace ShomreiTorah.Billing.Forms {
+namespace ShomreiTorah.Billing.Forms.GridForms {
 	partial class PledgeViewer {
 		/// <summary>
 		/// Required designer variable.

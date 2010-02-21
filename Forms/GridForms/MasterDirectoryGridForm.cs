@@ -11,7 +11,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
 
-namespace ShomreiTorah.Billing.Forms {
+namespace ShomreiTorah.Billing.Forms.GridForms {
 	partial class MasterDirectoryGridForm : GridFormBase {
 		public MasterDirectoryGridForm() {
 			InitializeComponent();

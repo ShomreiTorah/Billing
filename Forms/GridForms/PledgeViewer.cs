@@ -13,7 +13,7 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Base;
 using ShomreiTorah.Common;
 
-namespace ShomreiTorah.Billing.Forms {
+namespace ShomreiTorah.Billing.Forms.GridForms {
 	partial class PledgeViewer : GridFormBase {
 		public PledgeViewer() { InitializeComponent(); }
 

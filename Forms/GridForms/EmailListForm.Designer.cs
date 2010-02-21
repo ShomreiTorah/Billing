@@ -1,4 +1,4 @@
-namespace ShomreiTorah.Billing.Forms {
+namespace ShomreiTorah.Billing.Forms.GridForms {
 	partial class EmailListForm {
 		/// <summary>
 		/// Required designer variable.

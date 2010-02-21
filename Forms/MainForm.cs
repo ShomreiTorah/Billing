@@ -102,11 +102,11 @@ namespace ShomreiTorah.Billing.Forms {
 		private void importJournal_ItemClick(object sender, ItemClickEventArgs e) { Import.Journal.JournalImporter.Execute(); }
 		private void importRaffle_ItemClick(object sender, ItemClickEventArgs e) { Import.Raffle.RaffleImporter.Execute(); }
 
-		private void viewPayments_ItemClick(object sender, ItemClickEventArgs e) { new PaymentViewer { MdiParent = this }.Show(); }
-		private void viewPledges_ItemClick(object sender, ItemClickEventArgs e) { new PledgeViewer { MdiParent = this }.Show(); }
-		private void viewDeposits_ItemClick(object sender, ItemClickEventArgs e) { new DepositViewer { MdiParent = this }.Show(); }
-		private void showMasterDirectoryGrid_ItemClick(object sender, ItemClickEventArgs e) { new MasterDirectoryGridForm { MdiParent = this }.Show(); }
-		private void showEmailList_ItemClick(object sender, ItemClickEventArgs e) { new EmailListForm { MdiParent = this }.Show(); }
+		private void viewPayments_ItemClick(object sender, ItemClickEventArgs e) { new GridForms.PaymentViewer { MdiParent = this }.Show(); }
+		private void viewPledges_ItemClick(object sender, ItemClickEventArgs e) { new GridForms.PledgeViewer { MdiParent = this }.Show(); }
+		private void viewDeposits_ItemClick(object sender, ItemClickEventArgs e) { new GridForms.DepositViewer { MdiParent = this }.Show(); }
+		private void showMasterDirectoryGrid_ItemClick(object sender, ItemClickEventArgs e) { new GridForms.MasterDirectoryGridForm { MdiParent = this }.Show(); }
+		private void showEmailList_ItemClick(object sender, ItemClickEventArgs e) { new GridForms.EmailListForm { MdiParent = this }.Show(); }
 
 		private void addPayment_ItemClick(object sender, ItemClickEventArgs e) {
 			addPaymentPanel.Show();

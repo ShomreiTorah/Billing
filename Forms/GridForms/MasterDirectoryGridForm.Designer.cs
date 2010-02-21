@@ -1,4 +1,4 @@
-namespace ShomreiTorah.Billing.Forms {
+namespace ShomreiTorah.Billing.Forms.GridForms {
 	partial class MasterDirectoryGridForm {
 		/// <summary>
 		/// Required designer variable.

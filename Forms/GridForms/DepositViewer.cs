@@ -13,7 +13,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using System.Globalization;
 using ShomreiTorah.Common;
 
-namespace ShomreiTorah.Billing.Forms {
+namespace ShomreiTorah.Billing.Forms.GridForms {
 	partial class DepositViewer : XtraForm {
 		public DepositViewer() {
 			InitializeComponent();
