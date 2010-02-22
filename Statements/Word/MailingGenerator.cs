@@ -123,7 +123,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			delegate void CustomField(Range range, BillingData.MasterDirectoryRow person, IEnumerable<WordStatementInfo> info);
 			static readonly Dictionary<string, CustomField> CustomFields = new Dictionary<string, CustomField>(StringComparer.CurrentCultureIgnoreCase){
 				{ "MailingAddress",	(range, person, infos) => range.Text = person.MailingAddress },
-				{ "Kinds",			(range, person, infos) => range.Text = infos.Select((s, i)=> i == 0 ? s.Kind.ToString() : s.Kind.ToString().ToLower(CultureInfo.CurrentCulture)).Join(" and ") },
+				{ "Kinds",			(range, person, infos) => range.Text = infos.Select((s, i) => i == 0 ? s.Kind.ToString() : s.Kind.ToString().ToLower(CultureInfo.CurrentCulture)).Join(" and ").Replace("Bill", "Invoice") },
 
 				{ "Year",			(range, person, infos) => range.Text = infos.Min(s => s.StartDate).Year.ToString(CultureInfo.CurrentCulture) },
 				{ "StartDate",		(range, person, infos) => range.Text = infos.Min(s => s.StartDate).ToShortDateString() },
