@@ -84,7 +84,7 @@ namespace ShomreiTorah.Billing.Forms {
 			base.Dispose(disposing);
 		}
 		static Point Zero;
-		[SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults")]//, MessageId = "ListMaker.Splash+NativeMethods.ReleaseDC(System.IntPtr,System.IntPtr)")]
+		[SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults")]
 		void UpdateWindow() {
 			IntPtr screenDC = NativeMethods.GetDC(IntPtr.Zero);
 			IntPtr imageDC = NativeMethods.CreateCompatibleDC(screenDC);
@@ -92,23 +92,23 @@ namespace ShomreiTorah.Billing.Forms {
 			IntPtr oldBitmap = IntPtr.Zero;
 
 			try {
-				gdiBitmap = image.GetHbitmap(Color.FromArgb(0));								//Get a GDI handle to the image.
-				oldBitmap = NativeMethods.SelectObject(imageDC, gdiBitmap);						//Select the image into the DC, and cache the old bitmap.
+				gdiBitmap = image.GetHbitmap(Color.FromArgb(0));				//Get a GDI handle to the image.
+				oldBitmap = NativeMethods.SelectObject(imageDC, gdiBitmap);		//Select the image into the DC, and cache the old bitmap.
 
-				Size size = image.Size;															//Get the size and location of the form, as integers.
+				Size size = image.Size;											//Get the size and location of the form, as integers.
 				Point location = this.Location;
 
 				BlendFunction alphaInfo = new BlendFunction { SourceConstantAlpha = 255, AlphaFormat = 1 };	//This struct provides information about the opacity of the form.
 
 				NativeMethods.UpdateLayeredWindow(Handle, screenDC, ref location, ref size, imageDC, ref Zero, 0, ref alphaInfo, UlwType.Alpha);
 			} finally {
-				NativeMethods.ReleaseDC(IntPtr.Zero, screenDC);									//Release the Screen's DC.
+				NativeMethods.ReleaseDC(IntPtr.Zero, screenDC);					//Release the Screen's DC.
 
-				if (gdiBitmap != IntPtr.Zero) {													//If we got a GDI bitmap,
-					NativeMethods.SelectObject(imageDC, oldBitmap);								//Select the old bitmap into the DC
-					NativeMethods.DeleteObject(gdiBitmap);										//Delete the GDI bitmap,
+				if (gdiBitmap != IntPtr.Zero) {									//If we got a GDI bitmap,
+					NativeMethods.SelectObject(imageDC, oldBitmap);				//Select the old bitmap into the DC
+					NativeMethods.DeleteObject(gdiBitmap);						//Delete the GDI bitmap,
 				}
-				NativeMethods.DeleteDC(imageDC);												//And delete the DC.
+				NativeMethods.DeleteDC(imageDC);								//And delete the DC.
 			}
 			Invalidate();
 		}
