@@ -48,7 +48,18 @@ namespace ShomreiTorah.Billing.Forms {
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
 			Size = image.Size;
-			CenterToScreen();
+
+			Screen desktop = Screen.FromPoint(Control.MousePosition);
+
+			var width = desktop.WorkingArea.Width;
+			if (desktop.Bounds.Width > 2 * desktop.Bounds.Height)
+				width /= 2;
+			Rectangle screenRect = desktop.WorkingArea;
+			Location = new Point(
+				Math.Max(screenRect.X, screenRect.X + (width - Width) / 2),
+				Math.Max(screenRect.Y, screenRect.Y + (screenRect.Height - Height) / 2)
+			);
+
 			UpdateWindow();
 			captionForm.Bounds = RectangleToScreen(captionArea);
 			captionForm.Show(this);
