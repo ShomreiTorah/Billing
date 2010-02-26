@@ -131,7 +131,7 @@ namespace ShomreiTorah.Billing.Forms {
             this.ribbonPage3,
             this.ribbonPage4,
             this.ribbonPage2});
-			this.ribbon.SelectedPage = this.ribbonPage3;
+			this.ribbon.SelectedPage = this.ribbonPage2;
 			this.ribbon.Size = new System.Drawing.Size(858, 148);
 			this.ribbon.StatusBar = this.ribbonStatusBar;
 			this.ribbon.Toolbar.ItemLinks.Add(this.saveDb);
@@ -418,14 +418,14 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup4});
 			this.ribbonPage2.Name = "ribbonPage2";
-			this.ribbonPage2.Text = "Import";
+			this.ribbonPage2.Text = "Admin";
 			// 
 			// ribbonPageGroup4
 			// 
 			this.ribbonPageGroup4.ItemLinks.Add(this.importYK);
 			this.ribbonPageGroup4.Name = "ribbonPageGroup4";
 			this.ribbonPageGroup4.ShowCaptionButton = false;
-			this.ribbonPageGroup4.Text = "People";
+			this.ribbonPageGroup4.Text = "Import";
 			// 
 			// ribbonStatusBar
 			// 
