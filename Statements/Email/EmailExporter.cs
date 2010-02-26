@@ -55,7 +55,6 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			new EmailExporter(people, fileNames).Show(parent);
 		}
 
-		const string SettingsPath = @"HKEY_CURRENT_USER\Software\Shomrei Torah\Billing\";
 		EmailExporter(BillingData.MasterDirectoryRow[] people, string[] fileNames) {
 			InitializeComponent();
 			this.people = people;
@@ -66,10 +65,10 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			startDate.DateTime = new DateTime(DateTime.Today.AddDays(-80).Year, 1, 1);
 			startDate.Properties.MaxValue = DateTime.Today;
 
-			var recentEmails = (string[])Registry.GetValue(SettingsPath, "RecentPreviewEmails", null);
+			var recentEmails = (string[])Registry.GetValue(Program.SettingsPath, "RecentPreviewEmails", null);
 			if (recentEmails != null)
 				previewAddress.Properties.Items.AddRange(recentEmails);
-			previewAddress.Text = Registry.GetValue(SettingsPath, "LastPreviewEmail", null) as string;
+			previewAddress.Text = Registry.GetValue(Program.SettingsPath, "LastPreviewEmail", null) as string;
 
 			CheckPreviewAddress();
 
@@ -84,9 +83,9 @@ namespace ShomreiTorah.Billing.Statements.Email {
 		protected override void OnClosed(EventArgs e) {
 			base.OnClosed(e);
 			if (previewAddress.Properties.Items.Count > 0)
-				Registry.SetValue(SettingsPath, "RecentPreviewEmails", previewAddress.Properties.Items.OfType<string>().ToArray(), RegistryValueKind.MultiString);
+				Registry.SetValue(Program.SettingsPath, "RecentPreviewEmails", previewAddress.Properties.Items.OfType<string>().ToArray(), RegistryValueKind.MultiString);
 			if (!String.IsNullOrEmpty(previewAddress.Text))
-				Registry.SetValue(SettingsPath, "LastPreviewEmail", previewAddress.Text, RegistryValueKind.String);
+				Registry.SetValue(Program.SettingsPath, "LastPreviewEmail", previewAddress.Text, RegistryValueKind.String);
 		}
 
 		private void EditValueChanged(object sender, EventArgs e) { SetEnabled(); }

@@ -21,6 +21,7 @@ namespace ShomreiTorah.Billing {
 		static Forms.Splash Splash;
 		public static void CloseSplash() { Splash.CloseSplash(); }
 
+	public	const string SettingsPath = @"HKEY_CURRENT_USER\Software\Shomrei Torah\Billing\";
 		public static DateTime LaunchTime { get; private set; }
 		public static string AppDirectory { get; private set; }
 		public static string AspxPath { get { return Path.Combine(AppDirectory, "Email Templates"); } }

@@ -86,6 +86,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.modifiedPaymentsGrid = new ShomreiTorah.Billing.Controls.ModifiedPaymentsGrid();
 			this.paymentEdit = new ShomreiTorah.Billing.Controls.PaymentEdit();
 			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
+			this.shalachManosColumnsItem = new DevExpress.XtraBars.BarEditItem();
+			this.shalachManosColumnsEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
 			this.addPledgePanel.SuspendLayout();
@@ -93,6 +95,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.addPaymentPanel.SuspendLayout();
 			this.controlContainer1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.mdiManager)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.shalachManosColumnsEdit)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbon
@@ -120,9 +123,10 @@ namespace ShomreiTorah.Billing.Forms {
             this.importRaffle,
             this.showShalachManos,
             this.shalachManosExport,
-            this.showEmailList});
+            this.showEmailList,
+            this.shalachManosColumnsItem});
 			this.ribbon.Location = new System.Drawing.Point(0, 0);
-			this.ribbon.MaxItemId = 23;
+			this.ribbon.MaxItemId = 24;
 			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
 			this.ribbon.Name = "ribbon";
 			this.ribbon.PageHeaderItemLinks.Add(this.checkUpdate);
@@ -131,7 +135,9 @@ namespace ShomreiTorah.Billing.Forms {
             this.ribbonPage3,
             this.ribbonPage4,
             this.ribbonPage2});
-			this.ribbon.SelectedPage = this.ribbonPage2;
+			this.ribbon.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.shalachManosColumnsEdit});
+			this.ribbon.SelectedPage = this.ribbonPage4;
 			this.ribbon.Size = new System.Drawing.Size(858, 148);
 			this.ribbon.StatusBar = this.ribbonStatusBar;
 			this.ribbon.Toolbar.ItemLinks.Add(this.saveDb);
@@ -409,6 +415,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.ribbonPageGroup8.ItemLinks.Add(this.showShalachManos);
 			this.ribbonPageGroup8.ItemLinks.Add(this.shalachManosExport);
+			this.ribbonPageGroup8.ItemLinks.Add(this.shalachManosColumnsItem);
 			this.ribbonPageGroup8.Name = "ribbonPageGroup8";
 			this.ribbonPageGroup8.ShowCaptionButton = false;
 			this.ribbonPageGroup8.Text = "Purim";
@@ -552,6 +559,33 @@ namespace ShomreiTorah.Billing.Forms {
 			this.mdiManager.MdiParent = this;
 			this.mdiManager.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mdiManager_MouseDown);
 			// 
+			// shalachManosColumnsItem
+			// 
+			this.shalachManosColumnsItem.Caption = "Columns:";
+			this.shalachManosColumnsItem.Edit = this.shalachManosColumnsEdit;
+			this.shalachManosColumnsItem.Id = 23;
+			this.shalachManosColumnsItem.Name = "shalachManosColumnsItem";
+			this.shalachManosColumnsItem.EditValueChanged += new System.EventHandler(this.shalachManosColumnsItem_EditValueChanged);
+			// 
+			// shalachManosColumnsEdit
+			// 
+			this.shalachManosColumnsEdit.AutoHeight = false;
+			this.shalachManosColumnsEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.shalachManosColumnsEdit.IsFloatValue = false;
+			this.shalachManosColumnsEdit.Mask.EditMask = "N00";
+			this.shalachManosColumnsEdit.MaxValue = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+			this.shalachManosColumnsEdit.MinValue = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.shalachManosColumnsEdit.Name = "shalachManosColumnsEdit";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -573,6 +607,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.addPaymentPanel.ResumeLayout(false);
 			this.controlContainer1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.mdiManager)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.shalachManosColumnsEdit)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -625,5 +660,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private ShomreiTorah.Billing.Controls.ModifiedPledgesGrid modifiedPledgesGrid;
 		private ShomreiTorah.Billing.Controls.ModifiedPaymentsGrid modifiedPaymentsGrid;
 		private DevExpress.XtraBars.BarButtonItem showEmailList;
+		private DevExpress.XtraBars.BarEditItem shalachManosColumnsItem;
+		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit shalachManosColumnsEdit;
 	}
 }

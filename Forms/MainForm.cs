@@ -16,6 +16,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraTabbedMdi;
 using ShomreiTorah.WinForms.Controls;
 using ShomreiTorah.Billing.Events.Purim;
+using System.Globalization;
 
 namespace ShomreiTorah.Billing.Forms {
 	partial class MainForm : RibbonForm {
@@ -25,6 +26,8 @@ namespace ShomreiTorah.Billing.Forms {
 			lookup.Columns.Add(new ColumnInfo("BalanceDue", lookup.Columns.Last().Right + 10, 200, "Dues: {0:c}"));
 
 			addDeposit.Strings.AddRange(BillingData.AccountNames.ToArray());
+
+			shalachManosColumnsItem.EditValue = ShalachManosExport.ColumnCount;
 
 			pledgeEdit.AddNew();
 			addPledgePanel.Hide();
@@ -147,5 +150,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private void wordAll_ItemClick(object sender, ItemClickEventArgs e) { Statements.Word.WordExporter.Execute(this, StatementsAll.ToArray()); }
 		private void wordModified_ItemClick(object sender, ItemClickEventArgs e) { ExportModified(Statements.Word.WordExporter.Execute); }
 		#endregion
+
+		private void shalachManosColumnsItem_EditValueChanged(object sender, EventArgs e) { ShalachManosExport.ColumnCount = Convert.ToInt32(shalachManosColumnsItem.EditValue, CultureInfo.CurrentUICulture); }
 	}
 }
