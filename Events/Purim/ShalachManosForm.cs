@@ -43,7 +43,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 				amount.Value = 72;
 				amount.Focus();
 				paymentMethod.SelectedIndex = -1;
-				checkDate.EditValue = checkNumber.EditValue = null;
+				comments.EditValue = checkDate.EditValue = checkNumber.EditValue = null;
 			}
 		}
 		private void paymentMethod_SelectedIndexChanged(object sender, EventArgs e) {
