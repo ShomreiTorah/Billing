@@ -12,7 +12,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 	static class ShalachManosExport {
 		static Application Word { get { return Office<ApplicationClass>.App; } }
 
-		static int columnCount = (int)Registry.GetValue(Program.SettingsPath, "ShalachManosColumnCount", 3);
+		static int columnCount = (int)(Registry.GetValue(Program.SettingsPath, "ShalachManosColumnCount", 3) ?? 3);
 		public static int ColumnCount {
 			get { return columnCount; }
 			set {
