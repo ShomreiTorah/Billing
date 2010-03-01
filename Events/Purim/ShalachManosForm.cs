@@ -75,7 +75,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 
 			Program.Data.Pledges.AddPledgesRow(personSelector.SelectedPerson, DateTime.Now, PledgeType, "", null, Account,
 											   amount.Value, String.IsNullOrEmpty(comments.Text) ? null : comments.Text);
-			switch (paymentMethod.Text) {
+			switch ((string)paymentMethod.EditValue) {
 				case "Unpaid": break;
 				case "Cash":
 					Program.Data.Payments.AddPaymentsRow(personSelector.SelectedPerson, DateTime.Now, "Cash", null, Account, amount.Value, comments.Text);
@@ -89,6 +89,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			}
 
 			personSelector.SelectedPerson = null;
+			personSelector.Focus();
 		}
 
 		private void searchLookup_ItemSelected(object sender, ItemSelectionEventArgs e) {

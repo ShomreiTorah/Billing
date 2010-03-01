@@ -25,7 +25,8 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShalachManosForm));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.searchLookup = new ShomreiTorah.WinForms.Controls.Lookup();
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -60,6 +61,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
@@ -83,6 +85,15 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
 			this.SuspendLayout();
+			// 
+			// ribbon
+			// 
+			this.ribbon.ApplicationIcon = null;
+			this.ribbon.Location = new System.Drawing.Point(0, 0);
+			this.ribbon.MaxItemId = 4;
+			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
+			this.ribbon.Name = "ribbon";
+			this.ribbon.Size = new System.Drawing.Size(899, 21);
 			// 
 			// searchLookup
 			// 
@@ -149,7 +160,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// 
 			this.personRefEdit.AutoHeight = false;
 			this.personRefEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Show Person", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -367,9 +378,9 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.paymentMethod.Name = "paymentMethod";
 			this.paymentMethod.Properties.EnableFocusRect = true;
 			this.paymentMethod.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
-            new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "Unpaid"),
-            new DevExpress.XtraEditors.Controls.RadioGroupItem("Cash", "Cash"),
-            new DevExpress.XtraEditors.Controls.RadioGroupItem("Check", "Check")});
+            new DevExpress.XtraEditors.Controls.RadioGroupItem("Unpaid", "&Unpaid"),
+            new DevExpress.XtraEditors.Controls.RadioGroupItem("Cash", "Ca&sh"),
+            new DevExpress.XtraEditors.Controls.RadioGroupItem("Check", "&Check")});
 			this.paymentMethod.Size = new System.Drawing.Size(159, 27);
 			this.paymentMethod.StyleController = this.addPanel;
 			this.paymentMethod.TabIndex = 1;
@@ -531,6 +542,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.Controls.SetChildIndex(this.personSelector, 0);
 			this.Controls.SetChildIndex(this.addPanel, 0);
 			this.Controls.SetChildIndex(this.grid, 0);
+			((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).EndInit();
@@ -593,5 +605,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
 		private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup2;
 		private DevExpress.XtraGrid.Columns.GridColumn colPledgeId;
+		private DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
 	}
 }
