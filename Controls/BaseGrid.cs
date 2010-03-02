@@ -205,10 +205,26 @@ namespace ShomreiTorah.Billing.Controls {
 				fullNameCol.GroupInterval = ColumnGroupInterval.Alphabetical;
 			}
 
-			if (view.Columns.ColumnByFieldName("Deposit") != null)
+			if (view.Columns.ColumnByFieldName("Deposit") != null) {
 				view.CustomUnboundColumnData += view_CustomUnboundColumnData;
+				view.ShowFilterPopupListBox += view_ShowFilterPopupListBox;
+			}
 			if (view.Columns.ColumnByFieldName("CheckNumber") != null)
 				view.ValidatingEditor += view_ValidatingEditor;
+		}
+
+		void view_ShowFilterPopupListBox(object sender, FilterPopupListBoxEventArgs e) {
+			if (e.Column.FieldName == "Deposit") {
+				foreach (var item in e.ComboBox.Items.OfType<FilterItem>()) {
+					var valueItem = item.Value as FilterItem;
+					if (valueItem != null) {
+						if ((int)valueItem.Value == 2)
+							item.Text = "(Undeposited)";
+						else if ((int)valueItem.Value == 3)
+							item.Text = "(All deposited)";
+					}
+				}
+			}
 		}
 
 		void view_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e) {
