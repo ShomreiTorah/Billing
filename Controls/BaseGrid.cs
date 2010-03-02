@@ -171,7 +171,19 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 		void view_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
 			if (e.Column.FieldName == "Deposit") {
-				var row = (BillingData.PaymentsRow)((GridView)sender).GetDataRow(e.RowHandle);
+				var view = (GridView)sender;
+				var dataView = view.DataSource as DataView;
+				if (dataView == null) {
+					var bindingSource = view.DataSource as BindingSource;
+					if (bindingSource != null)
+						dataView = bindingSource.List as DataView;
+				}
+				Debug.Assert(dataView != null);
+
+				var row = (BillingData.PaymentsRow)dataView[e.ListSourceRowIndex].Row;
+
+				Debug.Assert(e.RowHandle == GridControl.InvalidRowHandle || row == view.GetDataRow(e.RowHandle));
+
 				e.Value = row.DepositsRow;
 			}
 		}
