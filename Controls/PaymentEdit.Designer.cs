@@ -219,7 +219,8 @@ namespace ShomreiTorah.Billing.Controls {
 			this.comments.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.paymentsBindingSource, "Comments", true));
 			this.comments.Location = new System.Drawing.Point(228, 25);
 			this.comments.Name = "comments";
-			this.comments.Properties.NullValuePrompt = "Comments (This will not appear on the bill)";
+			this.comments.Properties.NullValuePrompt = "Comments (will not show on invoice)";
+			this.comments.Properties.NullValuePromptShowForEmptyValue = true;
 			this.comments.Size = new System.Drawing.Size(114, 98);
 			this.comments.TabIndex = 5;
 			// 
