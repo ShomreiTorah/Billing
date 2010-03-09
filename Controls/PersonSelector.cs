@@ -15,6 +15,8 @@ namespace ShomreiTorah.Billing.Controls {
 			InitializeComponent();
 			addNew.SendToBack();
 
+			SelectOnTab = true;
+
 			var x = Columns.Last().Left;
 			Columns.RemoveAt(Columns.Count - 1);
 			Columns.Add(new ColumnInfo("BalanceDue", x, 200, "Dues: {0:c}"));
@@ -24,6 +26,12 @@ namespace ShomreiTorah.Billing.Controls {
 			if (Program.Data != null)
 				SearchTable = Program.Data.MasterDirectory;
 		}
+
+		///<summary>Gets or sets whether pressing the Tab key will fire the ItemSelected event.</summary>
+		[Description("Gets or sets whether pressing the Tab key will fire the ItemSelected event.")]
+		[Category("Behavior")]
+		[DefaultValue(true)]
+		public new bool SelectOnTab { get { return base.SelectOnTab; } set { base.SelectOnTab = value; } }
 
 		protected override void OnItemSelected(ItemSelectionEventArgs e) {
 			var person = (BillingData.MasterDirectoryRow)e.SelectedRow;
