@@ -191,11 +191,11 @@ namespace ShomreiTorah.Billing.Statements.Word {
 				row = table.AddRow().MergeFirstCells().StyleAmount();
 				row.Range.ParagraphFormat.SpaceBefore = 10;
 				row.Cells[1].Range.Text = "Total Pledged:";
-				row.Cells[2].Range.Text = info.Person.TotalPledged.ToString("c", Culture);
+				row.Cells[2].Range.Text = info.TotalPledged.ToString("c", Culture);
 
 				row = table.AddRow().MergeFirstCells().StyleAmount();
 				row.Cells[1].Range.Text = "Total Paid:";
-				row.Cells[2].Range.Text = "-" + info.Person.TotalPaid.ToString("c", Culture);
+				row.Cells[2].Range.Text = "-" + info.TotalPaid.ToString("c", Culture);
 
 				row = table.AddRow().MergeFirstCells().StyleAmount().StyleTotal();
 				row.Cells[1].Range.Text = "Balance due:";

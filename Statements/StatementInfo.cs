@@ -40,6 +40,9 @@ namespace ShomreiTorah.Billing.Statements {
 										.ToArray()
 			);
 
+			TotalPledged = Accounts.Sum(a => a.TotalPledged);
+			TotalPaid = Accounts.Sum(a => a.TotalPaid);
+
 			if (Accounts.Any(a => a.Pledges.Any(p => p.Type.StartsWith("Melave Malka", StringComparison.CurrentCultureIgnoreCase)))) {
 				Deductibility = "No goods or services have been provided.  If you attended the Melave Malka, $25 per reservation is not tax deductible.";
 			} else
@@ -47,6 +50,8 @@ namespace ShomreiTorah.Billing.Statements {
 
 		}
 
+		public decimal TotalPledged{ get; private set; }
+		public decimal TotalPaid{ get; private set; }
 		public decimal TotalBalance { get; private set; }
 		public ReadOnlyCollection<StatementAccount> Accounts { get; private set; }
 		public string Deductibility { get; private set; }

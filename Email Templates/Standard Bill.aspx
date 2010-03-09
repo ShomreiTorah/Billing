@@ -125,11 +125,11 @@
 		<tr>
 			<td colspan="2" style="padding-top: 15px">Total Pledged:</td>
 			<td style="padding-top: 15px; text-align: right;">
-				<%=Info.Person.TotalPledged.ToString("c") %></td>
+				<%=Info.TotalPledged.ToString("c") %></td>
 		</tr>
 		<tr>
 			<td colspan="2">Total Paid:</td>
-			<td style="text-align: right;">-<%=Info.Person.TotalPaid.ToString("c") %></td>
+			<td style="text-align: right;">-<%=Info.TotalPaid.ToString("c") %></td>
 		</tr>
 		<tr>
 			<td colspan="2" style="padding-top: 5px; border-top: solid 1px black; border-bottom: solid 2px black;">
