@@ -161,15 +161,13 @@ namespace ShomreiTorah.Billing {
 			}
 		}
 		partial class PaymentsDataTable {
-			public PaymentsRow AddPaymentsRow(MasterDirectoryRow person, DateTime date, string method, int? checkNumber, string account, decimal amount, string comments) {
+			public PaymentsRow AddPaymentsRow(MasterDirectoryRow person, DateTime date, string method, string checkNumber, string account, decimal amount, string comments) {
 				return AddPaymentsRow(person, date, method, checkNumber, account, amount, comments, null, null);
 			}
-			public PaymentsRow AddPaymentsRow(MasterDirectoryRow person, DateTime date, string method, int? checkNumber, string account, decimal amount, string comments, string externalSource, int? externalId) {
-				var row = AddPaymentsRow(Guid.NewGuid(), person, date, method, checkNumber ?? -1, account, amount, comments, DateTime.Now, Environment.UserName, externalSource, externalId ?? -1, null);
+			public PaymentsRow AddPaymentsRow(MasterDirectoryRow person, DateTime date, string method, string checkNumber, string account, decimal amount, string comments, string externalSource, int? externalId) {
+				var row = AddPaymentsRow(Guid.NewGuid(), person, date, method, checkNumber, account, amount, comments, DateTime.Now, Environment.UserName, externalSource, externalId ?? -1, null);
 				if (externalId == null)
 					row.SetExternalIDNull();
-				if (checkNumber == null)
-					row.SetCheckNumberNull();
 				return row;
 			}
 		}
@@ -284,27 +282,30 @@ namespace ShomreiTorah.Billing {
 		public partial class PaymentsRow : ITransaction {
 			public decimal SignedAmount { get { return -Amount; } }
 
-			int? lastCheckedCheckNumber;
-			public string CheckDuplicateWarning(int newCheckNumber, bool force) {
+			string lastCheckedCheckNumber;
+			public string CheckDuplicateWarning(string newCheckNumber, bool force) {
+				if (newCheckNumber == null) {
+					lastCheckedCheckNumber = null;
+					return null;
+				}
+
+				if (IsNull("PersonId")) return null;	//If the row is being added.
 				if (!force) {
-					if (!IsCheckNumberNull() && lastCheckedCheckNumber == CheckNumber)
-						lastCheckedCheckNumber = null;
-					if (!IsCheckNumberNull() && newCheckNumber == CheckNumber)
-						return null;
-					if (newCheckNumber == lastCheckedCheckNumber)
+					if (lastCheckedCheckNumber == CheckNumber)
+						lastCheckedCheckNumber = null;	//If we've commited a previous attempted change, warn again
+					if (newCheckNumber == CheckNumber || newCheckNumber == lastCheckedCheckNumber)
 						return null;
 				}
 
 				//Support detached rows (if the payment is being added)
 				var duplicate = Program.Data.Payments.FirstOrDefault(p => p != this
 																	   && p.PersonId == PersonId
-																	   && !p.IsCheckNumberNull()
-																	   && p.CheckNumber == newCheckNumber);
+																	   && String.Equals(p.CheckNumber, newCheckNumber, StringComparison.CurrentCultureIgnoreCase));
 				if (duplicate == null) {
 					lastCheckedCheckNumber = null;
 					return null;
 				}
-				lastCheckedCheckNumber = force ? new int?() : newCheckNumber;
+				lastCheckedCheckNumber = force ? null : newCheckNumber;
 				return String.Format(CultureInfo.CurrentUICulture, "{0} #{1} for {2} has already been entered ({3:d}, {4:c}).\r\nAre you sure you aren't making a mistake?",
 																   duplicate.Method, duplicate.CheckNumber, duplicate.FullName, duplicate.Date, duplicate.Amount);
 			}

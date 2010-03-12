@@ -34,7 +34,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
 			this.amount = new DevExpress.XtraEditors.SpinEdit();
 			this.checkNumberLabel = new DevExpress.XtraEditors.LabelControl();
-			this.checkNumber = new DevExpress.XtraEditors.SpinEdit();
+			this.checkNumber = new ShomreiTorah.Billing.Controls.Editors.CheckNumberEdit();
 			this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
 			this.method = new DevExpress.XtraEditors.ComboBoxEdit();
 			this.comments = new DevExpress.XtraEditors.MemoEdit();
@@ -162,23 +162,8 @@ namespace ShomreiTorah.Billing.Controls {
 			// checkNumber
 			// 
 			this.checkNumber.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.paymentsBindingSource, "CheckNumber", true));
-			this.checkNumber.EditValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
 			this.checkNumber.Location = new System.Drawing.Point(96, 130);
 			this.checkNumber.Name = "checkNumber";
-			this.checkNumber.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
-			this.checkNumber.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.checkNumber.Properties.DisplayFormat.FormatString = "f0";
-			this.checkNumber.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.checkNumber.Properties.EditFormat.FormatString = "f0";
-			this.checkNumber.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.checkNumber.Properties.IsFloatValue = false;
-			this.checkNumber.Properties.Mask.EditMask = "f0";
-			this.checkNumber.Properties.NullText = "N/A";
 			this.checkNumber.Size = new System.Drawing.Size(126, 20);
 			this.checkNumber.TabIndex = 4;
 			this.checkNumber.Visible = false;
@@ -259,7 +244,6 @@ namespace ShomreiTorah.Billing.Controls {
 			this.person.ResultsLocation = ShomreiTorah.WinForms.Controls.ResultsLocation.Bottom;
 			this.person.ScrollPosition = 0;
 			this.person.SearchTable = null;
-			this.person.SelectedIndex = -1;
 			this.person.Size = new System.Drawing.Size(347, 20);
 			this.person.TabIndex = 0;
 			this.person.TabStop = false;
@@ -306,7 +290,7 @@ namespace ShomreiTorah.Billing.Controls {
 		private DevExpress.XtraEditors.LabelControl labelControl3;
 		private DevExpress.XtraEditors.SpinEdit amount;
 		private DevExpress.XtraEditors.LabelControl checkNumberLabel;
-		private DevExpress.XtraEditors.SpinEdit checkNumber;
+		private Editors.CheckNumberEdit checkNumber;
 		private DevExpress.XtraEditors.LabelControl labelControl2;
 		private DevExpress.XtraEditors.LabelControl labelControl6;
 		private DevExpress.XtraEditors.ComboBoxEdit account;

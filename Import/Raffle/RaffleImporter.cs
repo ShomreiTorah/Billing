@@ -137,7 +137,7 @@ namespace ShomreiTorah.Billing.Import.Raffle {
 
 			decimal amountPaid;
 			string paymentMethod;
-			int? checkNumber;
+			string checkNumber;
 			///<summary>Gets or sets the type of payment.</summary>
 			public string PaymentMethod {
 				get { return paymentMethod; }
@@ -160,7 +160,7 @@ namespace ShomreiTorah.Billing.Import.Raffle {
 				}
 			}
 			///<summary>Gets or sets the check number.</summary>
-			public int? CheckNumber {
+			public string CheckNumber {
 				get { return checkNumber; }
 				set {
 					checkNumber = value;

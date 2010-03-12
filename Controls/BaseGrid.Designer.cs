@@ -28,7 +28,7 @@ namespace ShomreiTorah.Billing.Controls {
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			this.editors = new DevExpress.XtraEditors.Repository.PersistentRepository(this.components);
 			this.currencyEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
-			this.checkNumberEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
+			this.checkNumberEdit = new Editors.RepositoryItemCheckNumberEdit();
 			this.paymentMethodEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.stateEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.accountEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
@@ -78,16 +78,7 @@ namespace ShomreiTorah.Billing.Controls {
 			// 
 			// checkNumberEdit
 			// 
-			this.checkNumberEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.checkNumberEdit.DisplayFormat.FormatString = "f0";
-			this.checkNumberEdit.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.checkNumberEdit.EditFormat.FormatString = "f0";
-			this.checkNumberEdit.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.checkNumberEdit.IsFloatValue = false;
-			this.checkNumberEdit.Mask.EditMask = "f0";
 			this.checkNumberEdit.Name = "checkNumberEdit";
-			this.checkNumberEdit.NullText = "N/A";
 			// 
 			// paymentMethodEdit
 			// 
@@ -229,7 +220,7 @@ namespace ShomreiTorah.Billing.Controls {
 
 		private DevExpress.XtraEditors.Repository.PersistentRepository editors;
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit currencyEdit;
-		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit checkNumberEdit;
+		private Editors.RepositoryItemCheckNumberEdit checkNumberEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox paymentMethodEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox stateEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox accountEdit;

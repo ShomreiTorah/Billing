@@ -33,6 +33,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colMethod = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colCheckNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.checkNumberEdit = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemCheckNumberEdit();
 			this.colAccount = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colDeposit = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -43,6 +44,7 @@ namespace ShomreiTorah.Billing.Controls {
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -129,6 +131,11 @@ namespace ShomreiTorah.Billing.Controls {
 			// 
 			// colCheckNumber
 			// 
+			// 
+			// checkNumberEdit
+			// 
+			this.checkNumberEdit.Name = "checkNumberEdit";
+			this.colCheckNumber.ColumnEdit = this.checkNumberEdit;
 			this.colCheckNumber.FieldName = "CheckNumber";
 			this.colCheckNumber.Name = "colCheckNumber";
 			this.colCheckNumber.OptionsColumn.AllowEdit = false;
@@ -220,6 +227,7 @@ namespace ShomreiTorah.Billing.Controls {
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).EndInit();
 			this.ResumeLayout(false);
 
@@ -241,5 +249,6 @@ namespace ShomreiTorah.Billing.Controls {
 		private DevExpress.XtraGrid.Columns.GridColumn colModifier;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit personRefEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
+		private ShomreiTorah.Billing.Controls.Editors.RepositoryItemCheckNumberEdit checkNumberEdit;
 	}
 }

@@ -95,7 +95,7 @@ namespace ShomreiTorah.Billing.Controls {
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			string message = CurrentPayment.CheckDuplicateWarning((int)checkNumber.Value, true);
+			string message = CurrentPayment.CheckDuplicateWarning(checkNumber.Text, true);
 			if (!string.IsNullOrEmpty(message)
 			 && DialogResult.No == XtraMessageBox.Show(message, "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2))
 				return;
@@ -184,9 +184,7 @@ Payment:	{4:c} {5} for {6} on {7:d}
 		}
 
 		private void checkNumber_Validating(object sender, CancelEventArgs e) {
-			if (!(checkNumber.EditValue is decimal)) return;
-
-			string message = CurrentPayment.CheckDuplicateWarning((int)checkNumber.Value, false);
+			string message = CurrentPayment.CheckDuplicateWarning(checkNumber.Text, false);
 			e.Cancel = !string.IsNullOrEmpty(message)
 					&& DialogResult.No == XtraMessageBox.Show(message, "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 		}

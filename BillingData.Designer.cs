@@ -691,7 +691,7 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public PaymentsRow AddPaymentsRow(System.Guid PaymentId, MasterDirectoryRow parentMasterDirectoryRowByPayments, string FullName, System.DateTime Date, string Method, int CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, string ExternalSource, int ExternalID, DepositsRow parentDepositsRowByDeposit) {
+            public PaymentsRow AddPaymentsRow(System.Guid PaymentId, MasterDirectoryRow parentMasterDirectoryRowByPayments, string FullName, System.DateTime Date, string Method, string CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, string ExternalSource, int ExternalID, DepositsRow parentDepositsRowByDeposit) {
                 PaymentsRow rowPaymentsRow = ((PaymentsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         PaymentId,
@@ -720,7 +720,7 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public PaymentsRow AddPaymentsRow(System.Guid PaymentId, MasterDirectoryRow parentMasterDirectoryRowByPayments, System.DateTime Date, string Method, int CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, string ExternalSource, int ExternalID, DepositsRow parentDepositsRowByDeposit) {
+            public PaymentsRow AddPaymentsRow(System.Guid PaymentId, MasterDirectoryRow parentMasterDirectoryRowByPayments, System.DateTime Date, string Method, string CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, string ExternalSource, int ExternalID, DepositsRow parentDepositsRowByDeposit) {
                 PaymentsRow rowPaymentsRow = ((PaymentsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         PaymentId,
@@ -796,7 +796,7 @@ namespace ShomreiTorah.Billing {
                 base.Columns.Add(this.columnDate);
                 this.columnMethod = new global::System.Data.DataColumn("Method", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMethod);
-                this.columnCheckNumber = new global::System.Data.DataColumn("CheckNumber", typeof(int), null, global::System.Data.MappingType.Element);
+                this.columnCheckNumber = new global::System.Data.DataColumn("CheckNumber", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCheckNumber);
                 this.columnAccount = new global::System.Data.DataColumn("Account", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAccount);
@@ -3054,13 +3054,13 @@ namespace ShomreiTorah.Billing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public int CheckNumber {
+            public string CheckNumber {
                 get {
-                    try {
-                        return ((int)(this[this.tablePayments.CheckNumberColumn]));
+                    if (this.IsCheckNumberNull()) {
+                        return null;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'CheckNumber\' in table \'Payments\' is DBNull.", e);
+                    else {
+                        return ((string)(this[this.tablePayments.CheckNumberColumn]));
                     }
                 }
                 set {

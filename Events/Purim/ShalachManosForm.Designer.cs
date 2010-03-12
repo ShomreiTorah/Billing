@@ -47,7 +47,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.personSelector = new ShomreiTorah.Billing.Controls.PersonSelector();
 			this.amount = new DevExpress.XtraEditors.SpinEdit();
 			this.addPanel = new DevExpress.XtraLayout.LayoutControl();
-			this.checkNumber = new DevExpress.XtraEditors.SpinEdit();
+			this.checkNumber = new Controls.Editors.CheckNumberEdit();
 			this.checkDate = new DevExpress.XtraEditors.DateEdit();
 			this.comments = new DevExpress.XtraEditors.MemoEdit();
 			this.paymentMethod = new DevExpress.XtraEditors.RadioGroup();
@@ -334,15 +334,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
             0});
 			this.checkNumber.Location = new System.Drawing.Point(255, 37);
 			this.checkNumber.Name = "checkNumber";
-			this.checkNumber.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.checkNumber.Properties.DisplayFormat.FormatString = "f0";
-			this.checkNumber.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.checkNumber.Properties.EditFormat.FormatString = "f0";
-			this.checkNumber.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.checkNumber.Properties.IsFloatValue = false;
-			this.checkNumber.Properties.Mask.EditMask = "f0";
-			this.checkNumber.Properties.NullText = "N/A";
 			this.checkNumber.Size = new System.Drawing.Size(80, 20);
 			this.checkNumber.StyleController = this.addPanel;
 			this.checkNumber.TabIndex = 3;
@@ -596,7 +587,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-		private DevExpress.XtraEditors.SpinEdit checkNumber;
+		private Controls.Editors.CheckNumberEdit  checkNumber;
 		private DevExpress.XtraEditors.DateEdit checkDate;
 		private DevExpress.XtraEditors.SimpleButton add;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;

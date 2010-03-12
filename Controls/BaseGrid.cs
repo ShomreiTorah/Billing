@@ -229,12 +229,12 @@ namespace ShomreiTorah.Billing.Controls {
 
 		void view_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e) {
 			if (!e.Valid) return;
-			if (!(e.Value is decimal)) return;
+
 			var view = (ColumnView)sender;
 			if (view.FocusedColumn.FieldName != "CheckNumber") return;
 			var row = (BillingData.PaymentsRow)view.GetFocusedDataRow();
 
-			string message = row.CheckDuplicateWarning((int)(decimal)e.Value, false);
+			string message = row.CheckDuplicateWarning(e.Value as string, false);
 			e.Valid = string.IsNullOrEmpty(message)
 					|| DialogResult.Yes == XtraMessageBox.Show(message, "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 			if (!e.Valid)

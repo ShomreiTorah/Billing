@@ -6,6 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -143,7 +144,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			public void CreatePayment() {
 				Payment = Program.Data.Payments.AddPaymentsRow(
 					Person.ResolvedRow,
-					Ad.DateEntered, Ad.PaymentMethod, Ad.IsCheckNumberNull() ? new int?() : Ad.CheckNumber,
+					Ad.DateEntered, Ad.PaymentMethod, Ad.IsCheckNumberNull() ? null : Ad.CheckNumber.ToString(CultureInfo.InvariantCulture),
 					Account, Ad.AmountToBill, GeneratedComments,
 					source, Ad.InternalID);
 				Payment.Modifier = modifier;

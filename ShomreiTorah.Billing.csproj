@@ -376,6 +376,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BillingData.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Editors\CheckNumberEdit.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\ModifiedPaymentsGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>

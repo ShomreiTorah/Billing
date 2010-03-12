@@ -82,8 +82,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 					break;
 				case "Check":
 					Program.Data.Payments.AddPaymentsRow(personSelector.SelectedPerson, checkDate.DateTime, "Check",
-								checkNumber.EditValue == null ? new int?() : Convert.ToInt32(checkNumber.EditValue, CultureInfo.CurrentUICulture),
-								Account, amount.Value, comments.Text);
+														 checkNumber.Text, Account, amount.Value, comments.Text);
 					break;
 
 			}

@@ -22,7 +22,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colMethod = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colCheckNumber = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.checkNumberEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
+			this.checkNumberEdit = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemCheckNumberEdit();
 			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colComments = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -56,6 +56,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.pledgesTableAdapter = new ShomreiTorah.Billing.BillingDataTableAdapters.PledgesTableAdapter();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.depositsView)).BeginInit();
@@ -126,6 +127,10 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			// colCheckNumber
 			// 
+			// 
+			// checkNumberEdit
+			// 
+			this.checkNumberEdit.Name = "checkNumberEdit";
 			this.colCheckNumber.ColumnEdit = this.checkNumberEdit;
 			this.colCheckNumber.FieldName = "CheckNumber";
 			this.colCheckNumber.Name = "colCheckNumber";
@@ -137,17 +142,8 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			// checkNumberEdit
 			// 
-			this.checkNumberEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.checkNumberEdit.DisplayFormat.FormatString = "f0";
-			this.checkNumberEdit.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.checkNumberEdit.EditFormat.FormatString = "f0";
-			this.checkNumberEdit.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.checkNumberEdit.IsFloatValue = false;
-			this.checkNumberEdit.Mask.EditMask = "f0";
 			this.checkNumberEdit.Name = "checkNumberEdit";
 			this.checkNumberEdit.NullText = "N/A";
-			// 
 			// colAmount
 			// 
 			this.colAmount.DisplayFormat.FormatString = "c";
@@ -439,6 +435,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			((System.ComponentModel.ISupportInitialize)(this.paymentsView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.depositsView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.masterDirectoryBindingSource)).EndInit();
@@ -485,8 +482,8 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		private DevExpress.XtraGrid.Columns.GridColumn colDepositAmount;
 		private DevExpress.XtraGrid.Columns.GridColumn colMethod;
 		private DevExpress.XtraGrid.Columns.GridColumn colCheckNumber;
-		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit checkNumberEdit;
 		private DevExpress.XtraGrid.Columns.GridColumn colPaymentCount;
 		private DevExpress.XtraGrid.Columns.GridColumn colNumber;
+		private Controls.Editors.RepositoryItemCheckNumberEdit checkNumberEdit;
 	}
 }
