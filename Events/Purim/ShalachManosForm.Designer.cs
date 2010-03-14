@@ -327,11 +327,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// 
 			// checkNumber
 			// 
-			this.checkNumber.EditValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
 			this.checkNumber.Location = new System.Drawing.Point(255, 37);
 			this.checkNumber.Name = "checkNumber";
 			this.checkNumber.Size = new System.Drawing.Size(80, 20);

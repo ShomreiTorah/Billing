@@ -32,6 +32,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			grid.DataMember = null;
 			grid.DataSource = new DataView(Program.Data.Pledges, filterString, "LastName", DataViewRowState.CurrentRows);
 
+			ShowHideCheckGroup();
 
 			searchLookup.SearchTable = Program.Data.Pledges;
 			searchLookup.PresetFilter = filterString;
@@ -46,7 +47,8 @@ namespace ShomreiTorah.Billing.Events.Purim {
 				comments.EditValue = checkDate.EditValue = checkNumber.EditValue = null;
 			}
 		}
-		private void paymentMethod_SelectedIndexChanged(object sender, EventArgs e) {
+		private void paymentMethod_SelectedIndexChanged(object sender, EventArgs e) { ShowHideCheckGroup(); }
+		void ShowHideCheckGroup(){
 			checkGroup.Visibility = paymentMethod.Text == "Check" ? LayoutVisibility.Always : LayoutVisibility.Never;
 		}
 
