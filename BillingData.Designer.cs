@@ -4482,7 +4482,7 @@ namespace ShomreiTorah.Billing.BillingDataTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Date", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Method", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Method", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_CheckNumber", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CheckNumber", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CheckNumber", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CheckNumber", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CheckNumber", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CheckNumber", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Account", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Account", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Amount", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Amount", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Comments", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Comments", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -4504,7 +4504,7 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PersonId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Date", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Method", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Method", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CheckNumber", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CheckNumber", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CheckNumber", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CheckNumber", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Account", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Account", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Amount", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Amount", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Comments", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Comments", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -4522,7 +4522,7 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PersonId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Date", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Method", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Method", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CheckNumber", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CheckNumber", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CheckNumber", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CheckNumber", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Account", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Account", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Amount", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Amount", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Comments", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Comments", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -4536,7 +4536,7 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Date", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Date", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Method", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Method", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_CheckNumber", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CheckNumber", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CheckNumber", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CheckNumber", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CheckNumber", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CheckNumber", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Account", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Account", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Amount", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Amount", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Comments", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Comments", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -4618,7 +4618,7 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(System.Guid Original_PaymentId, System.Guid Original_PersonId, System.DateTime Original_Date, string Original_Method, global::System.Nullable<int> Original_CheckNumber, string Original_Account, decimal Original_Amount, string Original_Comments, System.DateTime Original_Modified, string Original_Modifier, global::System.Nullable<int> Original_ExternalID, global::System.Nullable<global::System.Guid> Original_DepositId, string Original_ExternalSource) {
+        public virtual int Delete(System.Guid Original_PaymentId, System.Guid Original_PersonId, System.DateTime Original_Date, string Original_Method, string Original_CheckNumber, string Original_Account, decimal Original_Amount, string Original_Comments, System.DateTime Original_Modified, string Original_Modifier, global::System.Nullable<int> Original_ExternalID, global::System.Nullable<global::System.Guid> Original_DepositId, string Original_ExternalSource) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((System.Guid)(Original_PaymentId));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((System.Guid)(Original_PersonId));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((System.DateTime)(Original_Date));
@@ -4628,13 +4628,13 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             else {
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((string)(Original_Method));
             }
-            if ((Original_CheckNumber.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[5].Value = ((int)(Original_CheckNumber.Value));
-            }
-            else {
+            if ((Original_CheckNumber == null)) {
                 this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((string)(Original_CheckNumber));
             }
             if ((Original_Account == null)) {
                 throw new global::System.ArgumentNullException("Original_Account");
@@ -4701,7 +4701,7 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(System.Guid PaymentId, System.Guid PersonId, System.DateTime Date, string Method, global::System.Nullable<int> CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, global::System.Nullable<int> ExternalID, global::System.Nullable<global::System.Guid> DepositId, string ExternalSource) {
+        public virtual int Insert(System.Guid PaymentId, System.Guid PersonId, System.DateTime Date, string Method, string CheckNumber, string Account, decimal Amount, string Comments, System.DateTime Modified, string Modifier, global::System.Nullable<int> ExternalID, global::System.Nullable<global::System.Guid> DepositId, string ExternalSource) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((System.Guid)(PaymentId));
             this.Adapter.InsertCommand.Parameters[1].Value = ((System.Guid)(PersonId));
             this.Adapter.InsertCommand.Parameters[2].Value = ((System.DateTime)(Date));
@@ -4711,11 +4711,11 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             else {
                 this.Adapter.InsertCommand.Parameters[3].Value = ((string)(Method));
             }
-            if ((CheckNumber.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[4].Value = ((int)(CheckNumber.Value));
+            if ((CheckNumber == null)) {
+                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
+                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(CheckNumber));
             }
             if ((Account == null)) {
                 throw new global::System.ArgumentNullException("Account");
@@ -4779,7 +4779,7 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
                     System.Guid PersonId, 
                     System.DateTime Date, 
                     string Method, 
-                    global::System.Nullable<int> CheckNumber, 
+                    string CheckNumber, 
                     string Account, 
                     decimal Amount, 
                     string Comments, 
@@ -4792,7 +4792,7 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
                     System.Guid Original_PersonId, 
                     System.DateTime Original_Date, 
                     string Original_Method, 
-                    global::System.Nullable<int> Original_CheckNumber, 
+                    string Original_CheckNumber, 
                     string Original_Account, 
                     decimal Original_Amount, 
                     string Original_Comments, 
@@ -4810,11 +4810,11 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             else {
                 this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Method));
             }
-            if ((CheckNumber.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(CheckNumber.Value));
+            if ((CheckNumber == null)) {
+                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(CheckNumber));
             }
             if ((Account == null)) {
                 throw new global::System.ArgumentNullException("Account");
@@ -4863,13 +4863,13 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
             else {
                 this.Adapter.UpdateCommand.Parameters[16].Value = ((string)(Original_Method));
             }
-            if ((Original_CheckNumber.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[17].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((int)(Original_CheckNumber.Value));
-            }
-            else {
+            if ((Original_CheckNumber == null)) {
                 this.Adapter.UpdateCommand.Parameters[17].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[18].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[18].Value = ((string)(Original_CheckNumber));
             }
             if ((Original_Account == null)) {
                 throw new global::System.ArgumentNullException("Original_Account");
@@ -4940,7 +4940,7 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
                     System.Guid PersonId, 
                     System.DateTime Date, 
                     string Method, 
-                    global::System.Nullable<int> CheckNumber, 
+                    string CheckNumber, 
                     string Account, 
                     decimal Amount, 
                     string Comments, 
@@ -4953,7 +4953,7 @@ SELECT PaymentId, PersonId, Date, Method, CheckNumber, Account, Amount, Comments
                     System.Guid Original_PersonId, 
                     System.DateTime Original_Date, 
                     string Original_Method, 
-                    global::System.Nullable<int> Original_CheckNumber, 
+                    string Original_CheckNumber, 
                     string Original_Account, 
                     decimal Original_Amount, 
                     string Original_Comments, 
