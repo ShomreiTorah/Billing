@@ -42,6 +42,22 @@
         </Point>
       </RoutePoints>
     </Connector>
+    <Connector ID="DesignRelation:Statements" ZOrder="2" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>189</X>
+          <Y>343</Y>
+        </Point>
+        <Point>
+          <X>189</X>
+          <Y>427</Y>
+        </Point>
+        <Point>
+          <X>241</X>
+          <Y>427</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
     <Connector ID="DesignRelation:EmailAddresses" ZOrder="9" LineWidth="11">
       <RoutePoints>
         <Point>
@@ -63,22 +79,6 @@
         <Point>
           <X>720</X>
           <Y>264</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
-    <Connector ID="DesignRelation:Statements" ZOrder="2" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>189</X>
-          <Y>343</Y>
-        </Point>
-        <Point>
-          <X>189</X>
-          <Y>427</Y>
-        </Point>
-        <Point>
-          <X>241</X>
-          <Y>427</Y>
         </Point>
       </RoutePoints>
     </Connector>

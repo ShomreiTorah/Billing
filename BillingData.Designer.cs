@@ -474,7 +474,7 @@ namespace ShomreiTorah.Billing {
             this.Pledges.FullNameColumn.Expression = "Parent.FullName";
             this.EmailList.FullNameColumn.Expression = "Parent.FullName";
             this.Deposits.CountColumn.Expression = "COUNT(Child(Deposit).Amount)";
-            this.Deposits.AmountColumn.Expression = "SUM(Child(Deposit).Amount)";
+            this.Deposits.AmountColumn.Expression = "ISNULL(SUM(Child(Deposit).Amount), 0)";
             this.StatementLog.FullNameColumn.Expression = "Parent(Statements).FullName";
         }
         
@@ -2500,7 +2500,7 @@ namespace ShomreiTorah.Billing {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             private void InitExpressions() {
                 this.CountColumn.Expression = "COUNT(Child(Deposit).Amount)";
-                this.AmountColumn.Expression = "SUM(Child(Deposit).Amount)";
+                this.AmountColumn.Expression = "ISNULL(SUM(Child(Deposit).Amount), 0)";
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
