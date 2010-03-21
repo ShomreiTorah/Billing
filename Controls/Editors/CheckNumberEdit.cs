@@ -57,7 +57,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 	class CheckNumberEdit : TextEdit {
 		static CheckNumberEdit() { RepositoryItemCheckNumberEdit.Register(); }
 		protected override void RaiseEditValueChanged() {
-			if (((string)EditValue).Length == 0)
+			if (((EditValue as string) ?? "").Length == 0)
 				EditValue = null;
 			else
 				base.RaiseEditValueChanged();
