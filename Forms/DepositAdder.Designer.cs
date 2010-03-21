@@ -279,6 +279,8 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// depositNumber
 			// 
+			this.depositNumber.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.depositNumber.EditValue = new decimal(new int[] {
             1,
             0,
@@ -318,7 +320,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancel;
-			this.ClientSize = new System.Drawing.Size(806, 575);
+			this.ClientSize = new System.Drawing.Size(816, 585);
 			this.ControlBox = false;
 			this.Controls.Add(this.labelControl2);
 			this.Controls.Add(this.depositNumber);
