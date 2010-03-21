@@ -102,9 +102,12 @@ namespace ShomreiTorah.Billing {
 					"Old version: " + Checker.CurrentVersion + "\r\n"
 				  + "New version: " + update.NewVersion + " (Published on " + update.PublishDate.ToString("F", CultureInfo.CurrentUICulture)
 				  + ")\r\n\r\nPath: " + Program.AppDirectory + "\r\n\r\n"
-				  + update.Description, false
+				  + update.Description
+				  + "\r\n\r\nPre-update files:\r\n • "
+				  + String.Join("\r\n • ", Directory.GetFiles(Program.AppDirectory, "*.*", SearchOption.AllDirectories)), false
 				);
 			} catch (SmtpException) { }
+
 			timer.Stop();	//In case we were called by the Update button in MainForm
 			RestartPending = true;
 
