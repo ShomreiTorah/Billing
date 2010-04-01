@@ -54,6 +54,7 @@ namespace ShomreiTorah.Billing.Controls {
 			commit.Show();
 			commit.CommitType = CommitType.Create;
 			pledgesBindingSource.AddNew();
+			typeTree.CollapseAll();
 			person.Focus();
 		}
 		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error message")]
