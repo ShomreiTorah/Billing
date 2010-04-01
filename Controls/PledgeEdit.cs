@@ -72,8 +72,8 @@ namespace ShomreiTorah.Billing.Controls {
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			if (pledge.IsNull("Amount") || pledge.Amount <= 0) {
-				XtraMessageBox.Show("Amount must be positive",
+			if (pledge.IsNull("Amount") || pledge.Amount < 0) {
+				XtraMessageBox.Show("Amount cannot be negative",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
@@ -136,7 +136,8 @@ namespace ShomreiTorah.Billing.Controls {
 
 		private void person_SelectingPerson(object sender, SelectingPersonEventArgs e) {
 			if (e.Person != person.SelectedPerson
-			 && !commit.Visible
+			 && person.SelectedPerson != null
+				//&& !commit.Visible	//Abba wants to always confirm
 			 && DialogResult.No == XtraMessageBox.Show("Are you sure you want to change this pledge to be associated with " + e.Person.VeryFullName + "?",
 													   "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
 				e.Cancel = true;
