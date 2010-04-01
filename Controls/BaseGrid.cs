@@ -16,6 +16,7 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.Data.Filtering;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraEditors.Controls;
+using ShomreiTorah.Common;
 
 namespace ShomreiTorah.Billing.Controls {
 	[ToolboxItem(false)]
@@ -95,27 +96,37 @@ namespace ShomreiTorah.Billing.Controls {
 			}
 		}
 
+		static readonly string[] SubTypeSorts = new[] { "כהן", "לוי", "שלישי", "רביעי", "חמישי", "שישי", "שביעי", "מפטיר", "פתיחה", "הגבהה" };
 		void view_CustomColumnSort(object sender, CustomColumnSortEventArgs e) {
-			if (e.Column.FieldName == "FullName") {
-				var row1 = e.Column.View.GetDataRow(e.Column.View.GetRowHandle(e.ListSourceRowIndex1));
-				var row2 = e.Column.View.GetDataRow(e.Column.View.GetRowHandle(e.ListSourceRowIndex2));
+			switch (e.Column.FieldName) {
+				case "SubType":
+					var index1 = Array.IndexOf(SubTypeSorts, e.Value1 as string);
+					var index2 = Array.IndexOf(SubTypeSorts, e.Value2 as string);
 
-				if (!row1.Table.Columns.Contains("LastName")) {
-					var relation = row1.Table.ParentRelations[0];
+					e.Result = index1.CompareTo(index2);
+					e.Handled = index1 != index2;
+					break;
+				case "FullName":
+					var row1 = e.Column.View.GetDataRow(e.Column.View.GetRowHandle(e.ListSourceRowIndex1));
+					var row2 = e.Column.View.GetDataRow(e.Column.View.GetRowHandle(e.ListSourceRowIndex2));
 
-					row1 = row1.GetParentRow(relation);
-					row2 = row2.GetParentRow(relation);
-				}
+					if (!row1.Table.Columns.Contains("LastName")) {
+						var relation = row1.Table.ParentRelations[0];
 
-				if (row1 != null && row2 != null) {
-					e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("LastName"), row2.Field<string>("LastName"));
+						row1 = row1.GetParentRow(relation);
+						row2 = row2.GetParentRow(relation);
+					}
 
-					if (e.Result == 0)
-						e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("HisName"), row2.Field<string>("HisName"));
-					if (e.Result == 0)
-						e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("HerName"), row2.Field<string>("HerName"));
-					e.Handled = true;
-				}
+					if (row1 != null && row2 != null) {
+						e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("LastName"), row2.Field<string>("LastName"));
+
+						if (e.Result == 0)
+							e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("HisName"), row2.Field<string>("HisName"));
+						if (e.Result == 0)
+							e.Result = StringComparer.CurrentCultureIgnoreCase.Compare(row1.Field<string>("HerName"), row2.Field<string>("HerName"));
+						e.Handled = true;
+					}
+					break;
 			}
 		}
 		void view_ShowGridMenu(object sender, GridMenuEventArgs e) {
@@ -204,6 +215,9 @@ namespace ShomreiTorah.Billing.Controls {
 				fullNameCol.SortMode = ColumnSortMode.Custom;
 				fullNameCol.GroupInterval = ColumnGroupInterval.Alphabetical;
 			}
+			var subtypeCol = view.Columns.ColumnByFieldName("SubType");
+			if (subtypeCol != null) 
+				subtypeCol.SortMode = ColumnSortMode.Custom;
 
 			if (view.Columns.ColumnByFieldName("Deposit") != null) {
 				view.CustomUnboundColumnData += view_CustomUnboundColumnData;
