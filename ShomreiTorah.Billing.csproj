@@ -198,6 +198,9 @@
     <EmbeddedResource Include="Controls\BaseGrid.resx">
       <DependentUpon>BaseGrid.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Editors\AliyahNoteEdit.resx">
+      <DependentUpon>AliyahNoteEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ModifiedPaymentsGrid.resx">
       <DependentUpon>ModifiedPaymentsGrid.cs</DependentUpon>
     </EmbeddedResource>
@@ -378,6 +381,12 @@
     </Compile>
     <Compile Include="Controls\Editors\CheckNumberEdit.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Editors\AliyahNoteEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Editors\AliyahNoteEdit.Designer.cs">
+      <DependentUpon>AliyahNoteEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ModifiedPaymentsGrid.cs">
       <SubType>UserControl</SubType>
