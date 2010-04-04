@@ -53,6 +53,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.currencyEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.colNote = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.repositoryItemAliyahNoteEdit1 = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemAliyahNoteEdit();
 			this.colComments = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -96,10 +97,10 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.pledgeView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.currencyEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.repositoryItemAliyahNoteEdit1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsGrid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethodEdit)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).BeginInit();
 			this.xtraTabPage2.SuspendLayout();
@@ -294,6 +295,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.pledgeGrid.MainView = this.pledgeView;
 			this.pledgeGrid.MenuManager = this.ribbonControl1;
 			this.pledgeGrid.Name = "pledgeGrid";
+			this.pledgeGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemAliyahNoteEdit1});
 			this.pledgeGrid.Size = new System.Drawing.Size(653, 220);
 			this.pledgeGrid.TabIndex = 0;
 			this.pledgeGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -341,6 +344,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.colSubType.FieldName = "SubType";
 			this.colSubType.Name = "colSubType";
+			this.colSubType.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
 			this.colSubType.Visible = true;
 			this.colSubType.VisibleIndex = 2;
 			// 
@@ -392,10 +396,18 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// colNote
 			// 
+			this.colNote.ColumnEdit = this.repositoryItemAliyahNoteEdit1;
 			this.colNote.FieldName = "Note";
 			this.colNote.Name = "colNote";
 			this.colNote.Visible = true;
 			this.colNote.VisibleIndex = 5;
+			// 
+			// repositoryItemAliyahNoteEdit1
+			// 
+			this.repositoryItemAliyahNoteEdit1.AutoHeight = false;
+			this.repositoryItemAliyahNoteEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.repositoryItemAliyahNoteEdit1.Name = "repositoryItemAliyahNoteEdit1";
 			// 
 			// colComments
 			// 
@@ -493,10 +505,6 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// colCheckNumber
 			// 
-			// 
-			// checkNumberEdit
-			// 
-			this.checkNumberEdit.Name = "checkNumberEdit";
 			this.colCheckNumber.ColumnEdit = this.checkNumberEdit;
 			this.colCheckNumber.FieldName = "CheckNumber";
 			this.colCheckNumber.Name = "colCheckNumber";
@@ -687,10 +695,10 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.pledgeView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.currencyEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.repositoryItemAliyahNoteEdit1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsGrid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethodEdit)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).EndInit();
 			this.xtraTabPage2.ResumeLayout(false);
@@ -757,5 +765,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraGrid.Columns.GridColumn colEndDate;
 		private DevExpress.XtraGrid.Columns.GridColumn colUserName;
 		private Controls.Editors.RepositoryItemCheckNumberEdit checkNumberEdit;
+		private ShomreiTorah.Billing.Controls.Editors.RepositoryItemAliyahNoteEdit repositoryItemAliyahNoteEdit1;
 	}
 }

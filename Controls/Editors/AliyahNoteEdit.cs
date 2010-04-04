@@ -14,6 +14,7 @@ using DevExpress.Accessibility;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraEditors.Controls;
 using System.Text.RegularExpressions;
+using DevExpress.XtraEditors.Popup;
 
 namespace ShomreiTorah.Billing.Controls.Editors {
 	partial class AliyahNotePopup : XtraUserControl {
@@ -81,7 +82,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		}
 	}
 	[UserRepositoryItem("Register")]
-	sealed class RepositoryItemAliyahNoteEdit : RepositoryItemPopupContainerEdit {
+	sealed class RepositoryItemAliyahNoteEdit : RepositoryItemPopupBase {
 		static RepositoryItemAliyahNoteEdit() { Register(); }
 		public static void Register() {
 			EditorRegistrationInfo.Default.Editors.Add(
@@ -89,60 +90,42 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 					"AliyahNoteEdit",
 					typeof(AliyahNoteEdit),
 					typeof(RepositoryItemAliyahNoteEdit),
-					typeof(PopupContainerEditViewInfo),
+					typeof(PopupBaseEditViewInfo),
 					new ButtonEditPainter(),
 					true, EditImageIndexes.TextEdit,
 					typeof(PopupEditAccessible)
 				)
 			);
 		}
+		public override void CreateDefaultButton() {
+			Buttons.Add(new EditorButton(ButtonPredefines.Ellipsis) { IsDefaultButton = true });
+		}
+
+
 		public override string EditorTypeName { get { return "AliyahNoteEdit"; } }
+	}
 
-		public RepositoryItemAliyahNoteEdit() {
-			AliyahNotePopup = new AliyahNotePopup { Dock = DockStyle.Fill };
-			PopupControl = new PopupContainerControl { Width = 200, Height = 325 };//{ Width = 215+3, Height = 158+7 };
-			PopupControl.Controls.Add(AliyahNotePopup);
-
-			ShowPopupCloseButton = false;
-			PopupSizeable = false;
-
-			TextEditStyle = TextEditStyles.Standard;
+	class AliyahNotePopupForm : PopupBaseForm {
+		AliyahNotePopup control;
+		public AliyahNotePopupForm(AliyahNoteEdit edit)
+			: base(edit) {
+			control = new AliyahNotePopup { Dock = DockStyle.Fill };
+			Controls.Add(control);
 		}
 
+		//public new AliyahNoteEdit OwnerEdit { get { return base.OwnerEdit as AliyahNoteEdit; } }
 
-		#region Properties
-		[Browsable(false)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public AliyahNotePopup AliyahNotePopup { get; private set; }
+		protected override Size CalcFormSizeCore() { return new Size(200, 325); }
 
-		[Description("Gets or sets whether the text box is visible and enabled.")]
-		[Category("Behavior")]
-		[DefaultValue(TextEditStyles.Standard)]
-		public new TextEditStyles TextEditStyle {
-			get { return base.TextEditStyle; }
-			set { base.TextEditStyle = value; }
-		}
-		[Description("Gets or sets a value indicating whether the close button is displayed within the popup window.")]
-		[Category("Behavior")]
-		[DefaultValue(false)]
-		public new bool ShowPopupCloseButton {
-			get { return base.ShowPopupCloseButton; }
-			set { base.ShowPopupCloseButton = value; }
-		}
-		[Description("Gets or sets a value indicating whether end-users can resize the popup window.")]
-		[Category("Behavior")]
-		[DefaultValue(false)]
-		public new bool PopupSizeable {
-			get { return base.PopupSizeable; }
-			set { base.PopupSizeable = value; }
-		}
-		#endregion
-		protected override void RaiseQueryResultValue(QueryResultValueEventArgs e) {
-			e.Value = AliyahNotePopup.NoteText;
-			base.RaiseQueryResultValue(e);
+		public override object ResultValue { get { return control.NoteText; } }
+		public override void ShowPopupForm() {
+			control.NoteText = OwnerEdit.Text;
+			base.ShowPopupForm();
 		}
 	}
-	class AliyahNoteEdit : PopupContainerEdit {
+
+
+	class AliyahNoteEdit : PopupBaseEdit {
 		static AliyahNoteEdit() { RepositoryItemAliyahNoteEdit.Register(); }
 
 		[Category("Properties")]
@@ -150,10 +133,8 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public new RepositoryItemAliyahNoteEdit Properties { get { return base.Properties as RepositoryItemAliyahNoteEdit; } }
 
+		protected override PopupBaseForm CreatePopupForm() { return new AliyahNotePopupForm(this); }
+
 		public override string EditorTypeName { get { return "AliyahNoteEdit"; } }
-		protected override void DoShowPopup() {
-			Properties.AliyahNotePopup.NoteText = EditValue as string;
-			base.DoShowPopup();
-		}
 	}
 }

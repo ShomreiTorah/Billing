@@ -38,8 +38,9 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.currencyEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.colNote = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.repositoryItemMemoExEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit();
+			this.repositoryItemAliyahNoteEdit1 = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemAliyahNoteEdit();
 			this.colComments = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.repositoryItemMemoExEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit();
 			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.pledgesBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -49,6 +50,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.currencyEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.repositoryItemAliyahNoteEdit1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoExEdit1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).BeginInit();
@@ -62,7 +64,8 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repositoryItemMemoExEdit1});
+            this.repositoryItemMemoExEdit1,
+            this.repositoryItemAliyahNoteEdit1});
 			this.grid.Size = new System.Drawing.Size(772, 417);
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -141,6 +144,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			this.colSubType.FieldName = "SubType";
 			this.colSubType.Name = "colSubType";
+			this.colSubType.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
 			this.colSubType.Visible = true;
 			this.colSubType.VisibleIndex = 3;
 			this.colSubType.Width = 92;
@@ -195,7 +199,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			// colNote
 			// 
-			this.colNote.ColumnEdit = this.repositoryItemMemoExEdit1;
+			this.colNote.ColumnEdit = this.repositoryItemAliyahNoteEdit1;
 			this.colNote.FieldName = "Note";
 			this.colNote.MaxWidth = 300;
 			this.colNote.Name = "colNote";
@@ -203,13 +207,12 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colNote.VisibleIndex = 6;
 			this.colNote.Width = 174;
 			// 
-			// repositoryItemMemoExEdit1
+			// repositoryItemAliyahNoteEdit1
 			// 
-			this.repositoryItemMemoExEdit1.AutoHeight = false;
-			this.repositoryItemMemoExEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.repositoryItemMemoExEdit1.Name = "repositoryItemMemoExEdit1";
-			this.repositoryItemMemoExEdit1.ShowIcon = false;
+			this.repositoryItemAliyahNoteEdit1.AutoHeight = false;
+			this.repositoryItemAliyahNoteEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.repositoryItemAliyahNoteEdit1.Name = "repositoryItemAliyahNoteEdit1";
 			// 
 			// colComments
 			// 
@@ -219,6 +222,14 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colComments.Visible = true;
 			this.colComments.VisibleIndex = 7;
 			this.colComments.Width = 175;
+			// 
+			// repositoryItemMemoExEdit1
+			// 
+			this.repositoryItemMemoExEdit1.AutoHeight = false;
+			this.repositoryItemMemoExEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.repositoryItemMemoExEdit1.Name = "repositoryItemMemoExEdit1";
+			this.repositoryItemMemoExEdit1.ShowIcon = false;
 			// 
 			// colModified
 			// 
@@ -263,6 +274,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.currencyEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.repositoryItemAliyahNoteEdit1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoExEdit1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).EndInit();
@@ -290,5 +302,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		private DevExpress.XtraGrid.Columns.GridColumn colModifier;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit personRefEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit repositoryItemMemoExEdit1;
+		private ShomreiTorah.Billing.Controls.Editors.RepositoryItemAliyahNoteEdit repositoryItemAliyahNoteEdit1;
 	}
 }
