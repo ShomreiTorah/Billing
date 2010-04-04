@@ -54,7 +54,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 					changingRow = true;
 					personSelector.SelectedPerson = null;
 				} finally { changingRow = false; }
-			} else
+			} else if (SelectedRow.MasterDirectoryRow != null)
 				new PersonDetails(SelectedRow.MasterDirectoryRow) { MdiParent = MdiParent }.Show();
 		}
 
