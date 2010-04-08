@@ -30,7 +30,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			this.emailTemplate = new DevExpress.XtraEditors.ComboBoxEdit();
 			this.startDate = new DevExpress.XtraEditors.DateEdit();
 			this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
-			this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
+			this.gridCaption = new DevExpress.XtraEditors.LabelControl();
 			this.cancel = new DevExpress.XtraEditors.SimpleButton();
 			this.sendBills = new DevExpress.XtraEditors.SimpleButton();
 			this.grid = new DevExpress.XtraGrid.GridControl();
@@ -109,13 +109,13 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			this.labelControl2.TabIndex = 3;
 			this.labelControl2.Text = "Start date:";
 			// 
-			// labelControl3
+			// gridCaption
 			// 
-			this.labelControl3.Location = new System.Drawing.Point(12, 91);
-			this.labelControl3.Name = "labelControl3";
-			this.labelControl3.Size = new System.Drawing.Size(189, 13);
-			this.labelControl3.TabIndex = 5;
-			this.labelControl3.Text = "The following people will receive emails:";
+			this.gridCaption.Location = new System.Drawing.Point(12, 91);
+			this.gridCaption.Name = "gridCaption";
+			this.gridCaption.Size = new System.Drawing.Size(189, 13);
+			this.gridCaption.TabIndex = 5;
+			this.gridCaption.Text = "The following people will receive emails:";
 			// 
 			// cancel
 			// 
@@ -287,7 +287,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.sendBills);
 			this.Controls.Add(this.cancel);
-			this.Controls.Add(this.labelControl3);
+			this.Controls.Add(this.gridCaption);
 			this.Controls.Add(this.labelControl2);
 			this.Controls.Add(this.startDate);
 			this.Controls.Add(this.emailTemplate);
@@ -314,7 +314,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 		private DevExpress.XtraEditors.ComboBoxEdit emailTemplate;
 		private DevExpress.XtraEditors.DateEdit startDate;
 		private DevExpress.XtraEditors.LabelControl labelControl2;
-		private DevExpress.XtraEditors.LabelControl labelControl3;
+		private DevExpress.XtraEditors.LabelControl gridCaption;
 		private DevExpress.XtraEditors.SimpleButton cancel;
 		private DevExpress.XtraEditors.SimpleButton sendBills;
 		private DevExpress.XtraGrid.GridControl grid;

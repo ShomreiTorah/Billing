@@ -17,9 +17,10 @@ using DevExpress.XtraGrid.Views.Grid;
 using Microsoft.Win32;
 using ShomreiTorah.Common;
 using ShomreiTorah.WinForms.Forms;
+using System.Globalization;
 
 namespace ShomreiTorah.Billing.Statements.Email {
-	using Email = ShomreiTorah.Common.Email;
+	using Email = ShomreiTorah.Common.Email;	//Force the name to not refer to this namespace
 
 	partial class EmailExporter : XtraForm {
 		readonly BillingData.MasterDirectoryRow[] people;
@@ -28,7 +29,8 @@ namespace ShomreiTorah.Billing.Statements.Email {
 		public static void Execute(Form parent, params BillingData.MasterDirectoryRow[] people) {
 			if (people == null) throw new ArgumentNullException("people");
 			var originalPeople = people;
-			people = Array.FindAll(people, r => r.GetEmailListRows().Length > 0);
+			people = people.Where(r => r.GetEmailListRows().Length > 0).Distinct().ToArray();
+
 			if (people.Length == 0) {
 				if (originalPeople.Length == 1)
 					XtraMessageBox.Show(originalPeople[0].FullName + " do not have any email addresses.",
@@ -58,6 +60,11 @@ namespace ShomreiTorah.Billing.Statements.Email {
 		EmailExporter(BillingData.MasterDirectoryRow[] people, string[] fileNames) {
 			InitializeComponent();
 			this.people = people;
+
+			if (people.Length == 1)
+				gridCaption.Text = "The following person will receive emails:";
+			else
+				gridCaption.Text = "The following " + people.Length.ToString(CultureInfo.CurrentUICulture) + " people will receive emails:";
 
 			sendPreviewButton = buttonEdit.Buttons[1];
 			showPreviewButton = buttonEdit.Buttons[0];
