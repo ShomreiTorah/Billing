@@ -70,15 +70,17 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			if (isUpdatingUI) return;
 
 			string text = "";
-			if (isMatanah.Checked)
-				text = "מתנה";
 
-			if (relative.SelectedValue != null && relative.SelectedValue.ToString() != EmptyRelative) {
-				if (isMatanah.Checked)
-					text += ", ";
-				text += relative.SelectedValue.ToString();
+			if (relative.SelectedValue != null && relative.SelectedValue.ToString() != EmptyRelative)
+				text = relative.SelectedValue.ToString();
+
+			if (isMatanah.Checked) {
+				if (text.Length > 0)
+					text += ", מתנה";
+				else
+					text = "מתנה";
 			}
-
+			
 			fullText.Text = text;
 		}
 
