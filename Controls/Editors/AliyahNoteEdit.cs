@@ -25,10 +25,11 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			"Son", "Son-in-law",
 			"Guest"
 		};
-
-		public AliyahNotePopup() {
+		readonly AliyahNoteEdit edit;
+		public AliyahNotePopup(AliyahNoteEdit edit) {
 			InitializeComponent();
 			UpdateUI();
+			this.edit = edit;
 		}
 
 		static readonly Regex MatanahMatcher = new Regex(@"(^|\s|[;,|/\+-])+(מתנה|Matanah?)(\s|[;,|/\+-]|$)+", RegexOptions.IgnoreCase);
@@ -80,6 +81,12 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 			fullText.Text = text;
 		}
+
+		private void relative_KeyUp(object sender, KeyEventArgs e) {
+			if (e.KeyCode == Keys.Enter) edit.ClosePopup();
+		}
+
+		private void relative_DoubleClick(object sender, EventArgs e) { edit.ClosePopup(); }
 	}
 	[UserRepositoryItem("Register")]
 	sealed class RepositoryItemAliyahNoteEdit : RepositoryItemPopupBase {
@@ -109,7 +116,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		AliyahNotePopup control;
 		public AliyahNotePopupForm(AliyahNoteEdit edit)
 			: base(edit) {
-			control = new AliyahNotePopup { Dock = DockStyle.Fill };
+			control = new AliyahNotePopup(edit) { Dock = DockStyle.Fill };
 			Controls.Add(control);
 		}
 

@@ -25,13 +25,13 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		private void InitializeComponent() {
 			this.fullText = new DevExpress.XtraEditors.MemoEdit();
 			this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
-			this.isMatanah = new DevExpress.XtraEditors.CheckEdit();
 			this.relative = new DevExpress.XtraEditors.ListBoxControl();
+			this.isMatanah = new DevExpress.XtraEditors.CheckEdit();
 			((System.ComponentModel.ISupportInitialize)(this.fullText.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
 			this.groupControl1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.isMatanah.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.relative)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.isMatanah.Properties)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// fullText
@@ -57,17 +57,6 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			this.groupControl1.TabIndex = 1;
 			this.groupControl1.Text = "עליה";
 			// 
-			// isMatanah
-			// 
-			this.isMatanah.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.isMatanah.Location = new System.Drawing.Point(5, 26);
-			this.isMatanah.Name = "isMatanah";
-			this.isMatanah.Properties.Caption = "מתנה";
-			this.isMatanah.Size = new System.Drawing.Size(213, 18);
-			this.isMatanah.TabIndex = 0;
-			this.isMatanah.CheckedChanged += new System.EventHandler(this.isMatanah_CheckedChanged);
-			// 
 			// relative
 			// 
 			this.relative.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -81,8 +70,22 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			this.relative.Name = "relative";
 			this.relative.Size = new System.Drawing.Size(213, 147);
 			this.relative.TabIndex = 1;
+			this.relative.DoubleClick += new System.EventHandler(this.relative_DoubleClick);
 			this.relative.Click += new System.EventHandler(this.relative_Click);
+			this.relative.KeyUp += new System.Windows.Forms.KeyEventHandler(this.relative_KeyUp);
 			this.relative.SelectedIndexChanged += new System.EventHandler(this.relative_SelectedIndexChanged);
+			// 
+			// isMatanah
+			// 
+			this.isMatanah.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.isMatanah.Location = new System.Drawing.Point(5, 26);
+			this.isMatanah.Name = "isMatanah";
+			this.isMatanah.Properties.Caption = "מתנה";
+			this.isMatanah.Size = new System.Drawing.Size(213, 18);
+			this.isMatanah.TabIndex = 0;
+			this.isMatanah.CheckedChanged += new System.EventHandler(this.isMatanah_CheckedChanged);
+			this.isMatanah.KeyUp += new System.Windows.Forms.KeyEventHandler(this.relative_KeyUp);
 			// 
 			// AliyahNotePopup
 			// 
@@ -95,8 +98,8 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			((System.ComponentModel.ISupportInitialize)(this.fullText.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
 			this.groupControl1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.isMatanah.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.relative)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.isMatanah.Properties)).EndInit();
 			this.ResumeLayout(false);
 
 		}
