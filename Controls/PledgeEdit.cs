@@ -51,11 +51,16 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 
 		public void AddNew() {
+			BillingData.MasterDirectoryRow oldPerson = ModifierKeys == 0 ? null : person.SelectedPerson;
+
 			commit.Show();
 			commit.CommitType = CommitType.Create;
 			pledgesBindingSource.AddNew();
 			typeTree.CollapseAll();
-			person.Focus();
+
+			person.SelectedPerson = oldPerson;
+			if (oldPerson == null)
+				person.Focus();
 		}
 		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error message")]
 		private void commit_Click(object sender, EventArgs e) {
@@ -122,6 +127,8 @@ namespace ShomreiTorah.Billing.Controls {
 					CurrentPledge.SubType = subtypeText.Text = e.Node.Text;
 				}
 				SetAccount();
+
+				e.Node.Expand();
 			}
 		}
 
@@ -130,7 +137,7 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 
 		private void Input_KeyDown(object sender, KeyEventArgs e) {
-			if (e.KeyData == Keys.Enter && commit.Visible)
+			if (e.KeyCode == Keys.Enter && commit.Visible)
 				commit.PerformClick();
 		}
 		#endregion
@@ -142,6 +149,11 @@ namespace ShomreiTorah.Billing.Controls {
 			 && DialogResult.No == XtraMessageBox.Show("Are you sure you want to change this pledge to be associated with " + e.Person.VeryFullName + "?",
 													   "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
 				e.Cancel = true;
+		}
+
+		private void note_EditValueChanged(object sender, EventArgs e) {
+			if (!(amount.EditValue is decimal) && note.Text.Contains("מתנה"))
+				amount.Value = 0;
 		}
 	}
 }
