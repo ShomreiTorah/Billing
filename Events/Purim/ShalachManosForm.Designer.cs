@@ -31,7 +31,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.personRefEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+			this.personRefEdit = new Controls.Editors.RepositoryItemPersonRefEdit();
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colType = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colSubType = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -164,7 +164,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-			this.personRefEdit.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.personRefEdit_ButtonClick);
 			// 
 			// colDate
 			// 
@@ -570,7 +569,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		private DevExpress.XtraGrid.Columns.GridColumn colComments;
 		private DevExpress.XtraGrid.Columns.GridColumn colModified;
 		private DevExpress.XtraGrid.Columns.GridColumn colModifier;
-		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit personRefEdit;
+		private Controls.Editors.RepositoryItemPersonRefEdit personRefEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox accountEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit currencyEdit;
 		private ShomreiTorah.Billing.Controls.PersonSelector personSelector;

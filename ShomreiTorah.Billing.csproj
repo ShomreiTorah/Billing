@@ -388,6 +388,9 @@
     <Compile Include="Controls\Editors\AliyahNoteEdit.Designer.cs">
       <DependentUpon>AliyahNoteEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Editors\PersonRefEdit.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\ModifiedPaymentsGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>

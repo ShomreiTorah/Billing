@@ -32,7 +32,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.paymentMethodEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.stateEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.accountEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
-			this.personRefEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+			this.personRefEdit = new Controls.Editors.RepositoryItemPersonRefEdit();
 			this.personSourceEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.depositEdit = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
@@ -225,7 +225,7 @@ namespace ShomreiTorah.Billing.Controls {
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox stateEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox accountEdit;
 		private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
-		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit personRefEdit;
+		private Controls.Editors.RepositoryItemPersonRefEdit personRefEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox personSourceEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
 	}

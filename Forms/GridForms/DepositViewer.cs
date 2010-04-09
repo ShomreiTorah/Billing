@@ -31,12 +31,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 				e.TotalValue = Program.Data.Payments.CurrentRows().Where(p => p.Account == account && p.IsDepositIdNull()).Sum(p => p.Amount);
 			}
 		}
-		private void personRefEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
-			var view = (GridView)grid.FocusedView;
-			var row = view.GetFocusedDataRow();
-			new PersonDetails((BillingData.MasterDirectoryRow)row.GetParentRow(row.Table.ParentRelations[0])) { MdiParent = MdiParent }.Show();
-		}
-
 		private void depositsView_DoubleClick(object sender, EventArgs e) {
 			var hitInfo = depositsView.CalcHitInfo(grid.PointToClient(MousePosition));
 			if (hitInfo.InRow && hitInfo.RowHandle >= 0)

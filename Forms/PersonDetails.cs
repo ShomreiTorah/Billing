@@ -52,14 +52,5 @@ namespace ShomreiTorah.Billing.Forms {
 
 		private void exportEmail_ItemClick(object sender, ItemClickEventArgs e) { Statements.Email.EmailExporter.Execute(this, person); }
 		private void exportWord_ItemClick(object sender, ItemClickEventArgs e) { Statements.Word.WordExporter.Execute(this, person); }
-
-		private void pledgeView_DoubleClick(object sender, EventArgs e) {
-			var row = pledgeView.GetFocusedDataRow() as BillingData.PledgesRow;
-			if (row != null) new PledgeEditPopup(row).Show(MdiParent);
-		}
-		private void paymentsView_DoubleClick(object sender, EventArgs e) {
-			var row = paymentsView.GetFocusedDataRow() as BillingData.PaymentsRow;
-			if (row != null) new PaymentEditPopup(row).Show(MdiParent);
-		}
 	}
 }

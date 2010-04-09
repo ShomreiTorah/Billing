@@ -29,7 +29,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.personRefEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+			this.personRefEdit = new Controls.Editors.RepositoryItemPersonRefEdit();
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colType = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colSubType = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -96,7 +96,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.gridView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colModified, DevExpress.Data.ColumnSortOrder.Descending)});
-			this.gridView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
 			// 
 			// colFullName
 			// 
@@ -121,8 +120,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-			this.personRefEdit.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
-			this.personRefEdit.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.personRefEdit_ButtonPressed);
 			// 
 			// colDate
 			// 
@@ -300,7 +297,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox accountEdit;
 		private DevExpress.XtraGrid.Columns.GridColumn colModified;
 		private DevExpress.XtraGrid.Columns.GridColumn colModifier;
-		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit personRefEdit;
+		private Controls.Editors.RepositoryItemPersonRefEdit personRefEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit repositoryItemMemoExEdit1;
 		private ShomreiTorah.Billing.Controls.Editors.RepositoryItemAliyahNoteEdit repositoryItemAliyahNoteEdit1;
 	}

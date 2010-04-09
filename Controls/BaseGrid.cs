@@ -68,6 +68,7 @@ namespace ShomreiTorah.Billing.Controls {
 			if (DesignMode) return;
 
 			gv.KeyUp += view_KeyUp;
+			gv.DoubleClick += view_DoubleClick;
 
 			var view = gv as GridView;
 			if (view != null) {
@@ -93,6 +94,27 @@ namespace ShomreiTorah.Billing.Controls {
 					prevColumn = view.FocusedColumn;
 					prevRow = view.FocusedRowHandle;
 				};
+			}
+		}
+
+		void view_DoubleClick(object sender, EventArgs e) {
+			var view = (GridView)sender;
+			var rowHandle = view.CalcHitInfo(PointToClient(MousePosition)).RowHandle;
+
+			if (rowHandle >= 0)
+				ShowDetailsForm(view.GetDataRow(rowHandle));
+		}
+		public static void ShowDetailsForm(DataRow row) {
+			switch (row.Table.TableName) {
+				case "MasterDirectory":
+					new Forms.PersonDetails((BillingData.MasterDirectoryRow)row) { MdiParent = Program.MainForm }.Show();
+					break;
+				case "Pledges":
+					new Forms.PledgeEditPopup((BillingData.PledgesRow)row).Show(Program.MainForm);
+					break;
+				case "Payments":
+					new Forms.PaymentEditPopup((BillingData.PaymentsRow)row).Show(Program.MainForm);
+					break;
 			}
 		}
 
@@ -204,6 +226,8 @@ namespace ShomreiTorah.Billing.Controls {
 			foreach (var view in Views.OfType<ColumnView>())	//MainView will have no columns in RegisterView, so I need to do this here
 				CheckColumns(view);
 		}
+		///<summary>Called for each concrete (non-pattern) view after the view's columns have been populated.</summary>
+		///<remarks>This is called for the grid's primary view(s) in OnLoaded, and for detail clones in RegisterView.</remarks>
 		void CheckColumns(ColumnView view) {
 			if (view.Columns.Count == 0) return;
 			if (!view.IsDetailView && view != MainView)
@@ -216,7 +240,7 @@ namespace ShomreiTorah.Billing.Controls {
 				fullNameCol.GroupInterval = ColumnGroupInterval.Alphabetical;
 			}
 			var subtypeCol = view.Columns.ColumnByFieldName("SubType");
-			if (subtypeCol != null) 
+			if (subtypeCol != null)
 				subtypeCol.SortMode = ColumnSortMode.Custom;
 
 			if (view.Columns.ColumnByFieldName("Deposit") != null) {

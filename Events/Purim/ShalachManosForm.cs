@@ -98,11 +98,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			gridView.Focus();
 		}
 
-		private void personRefEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
-			var row = gridView.GetFocusedDataRow() as BillingData.PledgesRow;
-			new Forms.PersonDetails(row.MasterDirectoryRow) { MdiParent = MdiParent }.Show();
-		}
-
 		private void personSelector_SelectingPerson(object sender, SelectingPersonEventArgs e) {
 			if (Program.Data.Pledges.Any(p => p.PersonId == e.Person.Id && p.Date.Year == year && p.Type == PledgeType)) {
 				XtraMessageBox.Show(e.Person.FullName + " are already on the Shalach Manos list",

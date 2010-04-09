@@ -322,7 +322,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.pledgeView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
 			this.pledgeView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colDate, DevExpress.Data.ColumnSortOrder.Ascending)});
-			this.pledgeView.DoubleClick += new System.EventHandler(this.pledgeView_DoubleClick);
 			// 
 			// colDate
 			// 
@@ -465,7 +464,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.paymentsView.OptionsSelection.MultiSelect = true;
 			this.paymentsView.OptionsView.ShowFooter = true;
 			this.paymentsView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
-			this.paymentsView.DoubleClick += new System.EventHandler(this.paymentsView_DoubleClick);
 			// 
 			// colDate1
 			// 

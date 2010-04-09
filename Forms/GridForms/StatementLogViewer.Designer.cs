@@ -29,7 +29,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.personRefEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+			this.personRefEdit = new Controls.Editors.RepositoryItemPersonRefEdit();
 			this.colDateGenerated = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colMedia = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colStatementKind = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -90,7 +90,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-			this.personRefEdit.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.personRefEdit_ButtonClick);
 			// 
 			// colDateGenerated
 			// 
@@ -175,7 +174,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		private Controls.BaseGrid grid;
 		private DevExpress.XtraGrid.Views.Grid.GridView gridView;
 		private DevExpress.XtraGrid.Columns.GridColumn colFullName;
-		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit personRefEdit;
+		private Controls.Editors.RepositoryItemPersonRefEdit personRefEdit;
 		private DevExpress.XtraGrid.Columns.GridColumn colDateGenerated;
 		private DevExpress.XtraGrid.Columns.GridColumn colMedia;
 		private DevExpress.XtraGrid.Columns.GridColumn colStatementKind;

@@ -21,13 +21,15 @@ namespace ShomreiTorah.Billing {
 		static Forms.Splash Splash;
 		public static void CloseSplash() { Splash.CloseSplash(); }
 
-	public	const string SettingsPath = @"HKEY_CURRENT_USER\Software\Shomrei Torah\Billing\";
+		public const string SettingsPath = @"HKEY_CURRENT_USER\Software\Shomrei Torah\Billing\";
 		public static DateTime LaunchTime { get; private set; }
 		public static string AppDirectory { get; private set; }
 		public static string AspxPath { get { return Path.Combine(AppDirectory, "Email Templates"); } }
 		public static BillingData Data { get; private set; }
 
 		public static ISynchronizeInvoke UIInvoker { get; set; }
+
+		public static Forms.MainForm MainForm { get; private set; }
 
 		public static void DoReload() {
 			Data.Save();
@@ -184,7 +186,7 @@ namespace ShomreiTorah.Billing {
 			Splash.Caption = "Loading UI";
 			SkinManager.EnableFormSkinsIfNotVista();
 			UserLookAndFeel.Default.SkinName = "Lilian";
-			Application.Run(new Forms.MainForm());
+			Application.Run(MainForm = new Forms.MainForm());
 		}
 
 		static void Application_ThreadException(object sender, ThreadExceptionEventArgs e) { new Forms.ErrorForm(e.Exception).Show(); }

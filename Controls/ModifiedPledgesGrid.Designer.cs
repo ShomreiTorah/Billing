@@ -29,7 +29,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.personRefEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+			this.personRefEdit = new Controls.Editors.RepositoryItemPersonRefEdit();
 			this.colDate1 = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colType = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colSubType = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -78,7 +78,6 @@ namespace ShomreiTorah.Billing.Controls {
 			this.gridView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colModified1, DevExpress.Data.ColumnSortOrder.Ascending)});
-			this.gridView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
 			// 
 			// colFullName
 			// 
@@ -102,8 +101,6 @@ namespace ShomreiTorah.Billing.Controls {
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-			this.personRefEdit.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
-			this.personRefEdit.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.personRefEdit_ButtonClick);
 			// 
 			// colDate1
 			// 
@@ -225,6 +222,6 @@ namespace ShomreiTorah.Billing.Controls {
 		private DevExpress.XtraGrid.Columns.GridColumn colComments1;
 		private DevExpress.XtraGrid.Columns.GridColumn colModified1;
 		private DevExpress.XtraGrid.Columns.GridColumn colModifier1;
-		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit personRefEdit;
+		private Controls.Editors.RepositoryItemPersonRefEdit personRefEdit;
 	}
 }

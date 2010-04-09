@@ -18,21 +18,6 @@ namespace ShomreiTorah.Billing.Controls {
 				Program.Data.Payments.RowChanged += Payments_RowChanged;
 		}
 
-		///<summary>Gets or sets the main form, which all MDI child forms will be shown in.</summary>
-		[Description("Gets or sets the main form, which all MDI child forms will be shown in.")]
-		[Category("Behavior")]
-		public Form MainForm { get; set; }
-
-		private void gridView_DoubleClick(object sender, EventArgs e) {
-			var row = (BillingData.PaymentsRow)gridView.GetFocusedDataRow();
-			new Forms.PaymentEditPopup(row).Show(MainForm);
-		}
-
-		private void personRefEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
-			var row = (BillingData.PaymentsRow)gridView.GetFocusedDataRow();
-			new Forms.PersonDetails(row.MasterDirectoryRow) { MdiParent = MainForm }.Show();
-		}
-
 		void Payments_RowChanged(object sender, DataRowChangeEventArgs e) {
 			//if (e.Action != DataRowAction.Add) return;
 
