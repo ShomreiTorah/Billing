@@ -499,7 +499,6 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.modifiedPledgesGrid.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.modifiedPledgesGrid.Location = new System.Drawing.Point(0, 203);
-			this.modifiedPledgesGrid.MainForm = this;
 			this.modifiedPledgesGrid.Name = "modifiedPledgesGrid";
 			this.modifiedPledgesGrid.Size = new System.Drawing.Size(664, 294);
 			this.modifiedPledgesGrid.TabIndex = 1;
@@ -539,7 +538,6 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.modifiedPaymentsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.modifiedPaymentsGrid.Location = new System.Drawing.Point(0, 175);
-			this.modifiedPaymentsGrid.MainForm = this;
 			this.modifiedPaymentsGrid.Name = "modifiedPaymentsGrid";
 			this.modifiedPaymentsGrid.Size = new System.Drawing.Size(669, 322);
 			this.modifiedPaymentsGrid.TabIndex = 1;
