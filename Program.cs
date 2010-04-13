@@ -49,7 +49,9 @@ namespace ShomreiTorah.Billing {
 				Application.SetCompatibleTextRenderingDefault(false);
 
 				Splash = new Forms.Splash();
-				new Thread(delegate() { Splash.ShowDialog(); }) { ApartmentState = ApartmentState.STA, IsBackground = true }.Start();
+				var splashThread = new Thread(delegate() { Splash.ShowDialog(); }) { IsBackground = true };
+				splashThread.SetApartmentState(ApartmentState.STA);
+				splashThread.Start();
 
 				AppDirectory = Path.GetDirectoryName(new Uri(typeof(Program).Assembly.CodeBase).LocalPath);
 				Splash.Caption = "Loading assemblies";
