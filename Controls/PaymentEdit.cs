@@ -123,7 +123,7 @@ Payment:	{4:c} {5} for {6} on {7:d}
 {8}", Environment.MachineName, Environment.UserName,
  new PersonData(person.SelectedPerson).ToFullString(),
  currentBalance,
- payment.Amount, payment.Method.ToLower(CultureInfo.CurrentUICulture), payment.Account.ToLower(CultureInfo.CurrentUICulture), payment.Date, payment.Comments));
+ payment.Amount, payment.Method.ToLower(CultureInfo.CurrentCulture), payment.Account.ToLower(CultureInfo.CurrentCulture), payment.Date, payment.Comments));
 							break;
 						case DialogResult.Yes:				//Add pledge
 							var newRow = Program.Data.Pledges.NewPledgesRow();
@@ -153,9 +153,9 @@ Payment:	{4:c} {5} for {6} on {7:d}
 			}
 			if (commit.CommitType == CommitType.Create) {
 				if (autoPledgeAmount > 0)
-					InfoMessage.Show(String.Format(CultureInfo.CurrentUICulture, "A {0:c} payment and a {1:c} donation pledge have been added for {2}", payment.Amount, autoPledgeAmount, payment.MasterDirectoryRow.FullName));
+					InfoMessage.Show(String.Format(CultureInfo.CurrentCulture, "A {0:c} payment and a {1:c} donation pledge have been added for {2}", payment.Amount, autoPledgeAmount, payment.MasterDirectoryRow.FullName));
 				else
-					InfoMessage.Show(String.Format(CultureInfo.CurrentUICulture, "A {0:c} payment has been added for {1}", payment.Amount, payment.MasterDirectoryRow.FullName));
+					InfoMessage.Show(String.Format(CultureInfo.CurrentCulture, "A {0:c} payment has been added for {1}", payment.Amount, payment.MasterDirectoryRow.FullName));
 				AddNew();
 			}
 		}

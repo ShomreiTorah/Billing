@@ -100,7 +100,7 @@ namespace ShomreiTorah.Billing {
 			try {
 				Email.Default.Send(Email.AlertsAddress, Email.AdminAddress, Environment.UserName + " updated ShomreiTorah.Billing on " + Environment.MachineName,
 					"Old version: " + Checker.CurrentVersion + "\r\n"
-				  + "New version: " + update.NewVersion + " (Published on " + update.PublishDate.ToString("F", CultureInfo.CurrentUICulture)
+				  + "New version: " + update.NewVersion + " (Published on " + update.PublishDate.ToString("F", CultureInfo.InvariantCulture)
 				  + ")\r\n\r\nPath: " + Program.AppDirectory + "\r\n\r\n"
 				  + update.Description
 				  + "\r\n\r\nPre-update files:\r\n • "

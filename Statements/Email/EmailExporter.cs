@@ -64,7 +64,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			if (people.Length == 1)
 				gridCaption.Text = "The following person will receive emails:";
 			else
-				gridCaption.Text = "The following " + people.Length.ToString(CultureInfo.CurrentUICulture) + " people will receive emails:";
+				gridCaption.Text = "The following " + people.Length.ToString(CultureInfo.CurrentCulture) + " people will receive emails:";
 
 			sendPreviewButton = buttonEdit.Buttons[1];
 			showPreviewButton = buttonEdit.Buttons[0];

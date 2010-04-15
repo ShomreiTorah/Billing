@@ -93,7 +93,7 @@ namespace ShomreiTorah.Billing.Controls {
 				return;
 			}
 			if (commit.CommitType == CommitType.Create) {
-				InfoMessage.Show("A " + pledge.Amount.ToString("c", CultureInfo.CurrentUICulture) + " " + pledge.Type + " pledge has been added for " + pledge.MasterDirectoryRow.FullName);
+				InfoMessage.Show("A " + pledge.Amount.ToString("c", CultureInfo.CurrentCulture) + " " + pledge.Type + " pledge has been added for " + pledge.MasterDirectoryRow.FullName);
 				AddNew();
 				date.EditValue = pledge.Date;
 			}

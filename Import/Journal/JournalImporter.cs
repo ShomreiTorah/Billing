@@ -23,7 +23,7 @@ using ShomreiTorah.WinForms.Controls;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Import.Journal {
-	partial class JournalImporter : XtraForm {
+	sealed partial class JournalImporter : XtraForm {
 		const string Account = "Operating Fund";
 
 		public static void Execute() {

@@ -12,8 +12,11 @@ using ShomreiTorah.Common;
 using System.Globalization;
 
 namespace ShomreiTorah.Billing {
+	[SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
 	partial class BillingData {
+		[SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "ReadOnlyCollection is immutable")]
 		public static readonly ReadOnlyCollection<string> AccountNames = new ReadOnlyCollection<string>(new[] { "Operating Fund", "Building Fund" });
+		[SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "ReadOnlyCollection is immutable")]
 		public static readonly ReadOnlyCollection<string> PaymentMethods = new ReadOnlyCollection<string>(new[] { "Cash", "Check" });
 		internal TableAdapterManager AdapterManager { get; private set; }
 		internal void Load() {
@@ -116,7 +119,7 @@ namespace ShomreiTorah.Billing {
 				e.SetError((decimal)e.ProposedValue >= 0 ? null : "Amount cannot be negative");
 			}
 
-			if (!e.Column.ColumnName.StartsWith("Modifie")
+			if (!e.Column.ColumnName.StartsWith("Modifie", StringComparison.Ordinal)
 			 && e.Column.ColumnName != "DepositId"
 			 && !Equals(e.Row[e.Column], e.ProposedValue)) { //Handle nulls and strings
 				e.Row["Modified"] = DateTime.UtcNow;
@@ -306,11 +309,12 @@ namespace ShomreiTorah.Billing {
 					return null;
 				}
 				lastCheckedCheckNumber = force ? null : newCheckNumber;
-				return String.Format(CultureInfo.CurrentUICulture, "{0} #{1} for {2} has already been entered ({3:d}, {4:c}).\r\nAre you sure you aren't making a mistake?",
+				return String.Format(CultureInfo.CurrentCulture, "{0} #{1} for {2} has already been entered ({3:d}, {4:c}).\r\nAre you sure you aren't making a mistake?",
 																   duplicate.Method, duplicate.CheckNumber, duplicate.FullName, duplicate.Date, duplicate.Amount);
 			}
 		}
-		public partial class DepositsRow : IComparable {
+		[SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes", Justification = "This type is only IComparable for grid sorting")]
+		public sealed partial class DepositsRow : IComparable {
 
 			public override string ToString() { return Date.ToShortDateString() + " #" + Number; }
 

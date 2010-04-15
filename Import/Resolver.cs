@@ -249,6 +249,6 @@ namespace ShomreiTorah.Billing.Import {
 		public override int GetHashCode() {
 			return HouseNumber.GetHashCode() ^ StringComparer.OrdinalIgnoreCase.GetHashCode(StreetName);
 		}
-		public override string ToString() { return HouseNumber.ToString(CultureInfo.CurrentUICulture) + " " + StreetName; }
+		public override string ToString() { return HouseNumber.ToString(CultureInfo.CurrentCulture) + " " + StreetName; }
 	}
 }

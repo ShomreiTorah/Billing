@@ -44,9 +44,9 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 
 				string message;
 				if (rows.Length == 1)
-					message = "Are you sure you want to mark this " + rows[0].Amount.ToString("c", CultureInfo.CurrentUICulture) + " payment as undeposited?";
+					message = "Are you sure you want to mark this " + rows[0].Amount.ToString("c", CultureInfo.CurrentCulture) + " payment as undeposited?";
 				else
-					message = "Are you sure you want to mark " + rows.Length + " payments totaling " + rows.Sum(p => p.Amount).ToString("c", CultureInfo.CurrentUICulture) + " as undeposited?";
+					message = "Are you sure you want to mark " + rows.Length + " payments totaling " + rows.Sum(p => p.Amount).ToString("c", CultureInfo.CurrentCulture) + " as undeposited?";
 
 				if (DialogResult.Yes == XtraMessageBox.Show(message, "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)) {
 					foreach (var payment in rows) {

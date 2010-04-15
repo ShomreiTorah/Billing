@@ -151,6 +151,8 @@ namespace ShomreiTorah.Billing.Forms {
 		private void wordModified_ItemClick(object sender, ItemClickEventArgs e) { ExportModified(Statements.Word.WordExporter.Execute); }
 		#endregion
 
-		private void shalachManosColumnsItem_EditValueChanged(object sender, EventArgs e) { ShalachManosExport.ColumnCount = Convert.ToInt32(shalachManosColumnsItem.EditValue, CultureInfo.CurrentUICulture); }
+		private void shalachManosColumnsItem_EditValueChanged(object sender, EventArgs e) {
+			ShalachManosExport.ColumnCount = Convert.ToInt32(shalachManosColumnsItem.EditValue, CultureInfo.CurrentCulture);
+		}
 	}
 }

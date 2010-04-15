@@ -20,7 +20,7 @@ using ShomreiTorah.Common;
 
 namespace ShomreiTorah.Billing.Controls {
 	[ToolboxItem(false)]
-	partial class BaseGrid : GridControl {
+	sealed partial class BaseGrid : GridControl {
 		bool initComponentFinished;
 		public BaseGrid() { Init(); }
 		public BaseGrid(IContainer container) { container.Add(this); Init(); }
@@ -168,7 +168,7 @@ namespace ShomreiTorah.Billing.Controls {
 		void view_KeyUp(object sender, KeyEventArgs e) {
 			if (e.KeyData == Keys.Delete) {
 				var view = sender as GridView;
-				var itemName = ListBindingHelper.GetListName(view.DataSource, null).ToLower(CultureInfo.CurrentUICulture);
+				var itemName = ListBindingHelper.GetListName(view.DataSource, null).ToLower(CultureInfo.CurrentCulture);
 				if (view.OptionsBehavior.AllowDeleteRows == DefaultBoolean.False) {
 					if (itemName == "masterdirectory")
 						XtraMessageBox.Show("You cannot delete rows from the master directory.\r\nIf you really want to delete someone, call Schabse.",
@@ -194,9 +194,9 @@ namespace ShomreiTorah.Billing.Controls {
 					var total = rows.Sum(r => r.Field<decimal>("Amount"));
 
 					if (rows.Length == 1)
-						message = "Are you sure you want to delete this " + total.ToString("c", CultureInfo.CurrentUICulture) + " " + itemName.Remove(itemName.Length - 1) + "?";
+						message = "Are you sure you want to delete this " + total.ToString("c", CultureInfo.CurrentCulture) + " " + itemName.Remove(itemName.Length - 1) + "?";
 					else
-						message = "Are you sure you want to delete " + rows.Length + " " + itemName + " totaling " + total.ToString("c", CultureInfo.CurrentUICulture) + "?";
+						message = "Are you sure you want to delete " + rows.Length + " " + itemName + " totaling " + total.ToString("c", CultureInfo.CurrentCulture) + "?";
 				}
 				if (DialogResult.Yes == XtraMessageBox.Show(message, "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
 					view.DeleteSelectedRows();

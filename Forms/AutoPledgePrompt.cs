@@ -14,9 +14,9 @@ namespace ShomreiTorah.Billing.Forms {
 			InitializeComponent();
 
 			var due = newRow.MasterDirectoryRow.GetBalance(newRow.Account);
-			message.Text = String.Format(CultureInfo.CurrentUICulture, @"{0} has {1:c} due for the {2}, and you are adding a {3:c} payment.
-What would you like to do?", newRow.MasterDirectoryRow.FullName, due, newRow.Account.ToLower(CultureInfo.CurrentUICulture), newRow.Amount);
-			addAutoPledge.Text = String.Format(CultureInfo.CurrentUICulture, @"Add a {0:c} donation pledge", newRow.Amount - due);
+			message.Text = String.Format(CultureInfo.CurrentCulture, @"{0} has {1:c} due for the {2}, and you are adding a {3:c} payment.
+What would you like to do?", newRow.MasterDirectoryRow.FullName, due, newRow.Account.ToLower(CultureInfo.CurrentCulture), newRow.Amount);
+			addAutoPledge.Text = String.Format(CultureInfo.CurrentCulture, @"Add a {0:c} donation pledge", newRow.Amount - due);
 		}
 	}
 }

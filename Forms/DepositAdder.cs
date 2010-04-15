@@ -22,7 +22,7 @@ namespace ShomreiTorah.Billing.Forms {
 				.AsDataView();
 
 			if (payments.Count == 0) {
-				XtraMessageBox.Show("There are no undeposited " + account.ToLower(CultureInfo.CurrentUICulture) + " payments.",
+				XtraMessageBox.Show("There are no undeposited " + account.ToLower(CultureInfo.CurrentCulture) + " payments.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return;
 			}
@@ -51,7 +51,7 @@ namespace ShomreiTorah.Billing.Forms {
 
 			depositNumber.EditValue = null;
 
-			totalSummary = String.Format(CultureInfo.CurrentUICulture, "Total: {0:#,0} undeposited payment{1}, {2:c}\r\n",
+			totalSummary = String.Format(CultureInfo.CurrentCulture, "Total: {0:#,0} undeposited payment{1}, {2:c}\r\n",
 										 payments.Count, payments.Count == 1 ? "" : "s", PaymentRows.Sum(p => p.Amount));
 
 			UpdateSummary();
@@ -78,7 +78,7 @@ namespace ShomreiTorah.Billing.Forms {
 		}
 		void UpdateSummary() {
 			var selPayments = PaymentRows.Where((p, i) => selectedPayments[i]).ToArray();
-			summary.Text = totalSummary + String.Format(CultureInfo.CurrentUICulture, "{0:#,0} payment{1} checked, {2:c}",
+			summary.Text = totalSummary + String.Format(CultureInfo.CurrentCulture, "{0:#,0} payment{1} checked, {2:c}",
 														selPayments.Length, selPayments.Length == 1 ? "" : "s", selPayments.Sum(p => p.Amount));
 		}
 
