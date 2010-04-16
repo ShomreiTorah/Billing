@@ -19,6 +19,7 @@ using DevExpress.XtraLayout.Utils;
 using PowerPointJournal;
 using ShomreiTorah.Billing.Controls;
 using ShomreiTorah.Common;
+using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Controls;
 using ShomreiTorah.WinForms.Forms;
 
@@ -95,9 +96,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 
 					ads.Add(iad);
 				}
-				using (var dialog = new JournalImporter(ads, journal.Ads)) {
-					dialog.ShowDialog();
-				}
+				new JournalImporter(ads, journal.Ads).ShowDisposingDialog();
 			}
 		}
 		static string GetSubType(AdType type) {

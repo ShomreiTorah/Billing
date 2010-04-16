@@ -12,6 +12,7 @@ using DevExpress.XtraEditors.Calendar;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using ShomreiTorah.Common;
+using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Forms {
 	partial class DepositAdder : XtraForm {
@@ -26,7 +27,7 @@ namespace ShomreiTorah.Billing.Forms {
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return;
 			}
-			new DepositAdder(payments).ShowDialog();
+			new DepositAdder(payments).ShowDisposingDialog();
 		}
 
 		IEnumerable<BillingData.PaymentsRow> PaymentRows { get { return payments.Rows<BillingData.PaymentsRow>(); } }

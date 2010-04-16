@@ -2,20 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
+using System.Data.OleDb;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using ShomreiTorah.Common;
-using System.IO;
-using System.Data.OleDb;
-using System.Data.Common;
-using System.Globalization;
-using ShomreiTorah.WinForms.Forms;
-using System.Reflection;
 using DevExpress.XtraGrid.Views.Base;
-using System.Diagnostics.CodeAnalysis;
+using ShomreiTorah.Common;
+using ShomreiTorah.WinForms;
+using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Import {
 	partial class YKImporter : XtraForm {
@@ -173,7 +174,7 @@ namespace ShomreiTorah.Billing.Import {
 				}
 				if (!workerSucceeded)
 					return;
-				new YKImporter(processedRows).ShowDialog();
+				new YKImporter(processedRows).ShowDisposingDialog();
 			}
 		}
 

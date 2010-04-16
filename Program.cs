@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -13,8 +14,8 @@ using DevExpress.LookAndFeel;
 using DevExpress.Skins;
 using ShomreiTorah.Common;
 using ShomreiTorah.Common.Updates;
+using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
-using System.Diagnostics;
 
 namespace ShomreiTorah.Billing {
 	class Program : MarshalByRefObject {
@@ -69,7 +70,7 @@ namespace ShomreiTorah.Billing {
 				if (Debugger.IsAttached)
 					throw;
 				else
-					new Forms.ErrorForm(ex).ShowDialog();
+					new Forms.ErrorForm(ex).ShowDisposingDialog();
 			}
 		}
 		///<summary>Called in both AppDomains to load a specific ShomreiTorahConfig.xml, if one is present.</summary>

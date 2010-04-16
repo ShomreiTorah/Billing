@@ -11,10 +11,11 @@ using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 using Rafflizer;
 using ShomreiTorah.Common;
-using DevExpress.XtraGrid;
+using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Import.Raffle {
 	partial class RaffleImporter : XtraForm {
@@ -38,9 +39,7 @@ namespace ShomreiTorah.Billing.Import.Raffle {
 			using (var database = new RaffleDB()) {
 				database.ReadGzip(dbPath);
 
-				using (var form = new RaffleImporter(database, raffleDate.Value)) {
-					form.ShowDialog();
-				}
+				new RaffleImporter(database, raffleDate.Value).ShowDisposingDialog();
 			}
 		}
 		readonly Resolver resolver = new Resolver("Raffle " + DateTime.Now.Year);
