@@ -83,7 +83,8 @@ namespace ShomreiTorah.Billing {
 				&& String.IsNullOrEmpty(HerName)
 				&& String.IsNullOrEmpty(LastName)
 
-				&& String.IsNullOrEmpty(Address) && !Address.IsInvalidAddress()
+				&& Address.IsInvalidAddress()
+
 				&& String.IsNullOrEmpty(City)
 				&& String.IsNullOrEmpty(State)
 				&& String.IsNullOrEmpty(Zip)
