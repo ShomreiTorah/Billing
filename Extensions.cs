@@ -17,11 +17,11 @@ namespace ShomreiTorah.Billing {
 				return phone;
 			return match.Result("($1) $2 - $3");
 		}
-		public static bool IsInvalidAddress(this string address) { return address.Contains("**"); }
+		public static bool IsInvalidAddress(this string address) { return String.IsNullOrEmpty(address) || address.Contains("**"); }
 		public static int EqualPart(this string str, string substr) {
 			int i;
-			for (i = 0; i < str.Length 
-				&& i < substr.Length && Char.ToUpper(str[i], CultureInfo.InvariantCulture) == Char.ToUpper(substr[i], CultureInfo.InvariantCulture); 
+			for (i = 0; i < str.Length
+				&& i < substr.Length && Char.ToUpper(str[i], CultureInfo.InvariantCulture) == Char.ToUpper(substr[i], CultureInfo.InvariantCulture);
 				i++) {
 			}
 			return i;
