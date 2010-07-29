@@ -36,7 +36,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// ribbon
 			// 
-			this.ribbon.ApplicationIcon = null;
+			this.ribbon.ApplicationButtonText = null;
 			this.ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.emailSelected,
             this.emailVisible,
@@ -49,7 +49,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
 			this.ribbon.SelectedPage = this.ribbonPage1;
-			this.ribbon.Size = new System.Drawing.Size(515, 142);
+			this.ribbon.Size = new System.Drawing.Size(515, 116);
+			this.ribbon.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
 			// 
 			// emailSelected
 			// 
