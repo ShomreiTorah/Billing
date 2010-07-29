@@ -10,6 +10,7 @@ using ShomreiTorah.WinForms.Controls;
 using DevExpress.XtraEditors;
 
 namespace ShomreiTorah.Billing.Controls {
+	[DefaultEvent("SelectedPersonChanged")]
 	partial class PersonSelector : Lookup {
 		public PersonSelector() {
 			InitializeComponent();
