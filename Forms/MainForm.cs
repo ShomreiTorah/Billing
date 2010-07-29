@@ -101,6 +101,8 @@ namespace ShomreiTorah.Billing.Forms {
 		private void showShalachManos_ItemClick(object sender, ItemClickEventArgs e) { new ShalachManosForm(DateTime.Today.Year) { MdiParent = this }.Show(); }
 		private void shalachManosExport_ItemClick(object sender, ItemClickEventArgs e) { ShalachManosExport.CreateDocument(DateTime.Today.Year); }
 
+		private void showSeatingForm_ItemClick(object sender, ItemClickEventArgs e) { new Events.Seating.SeatingForm(DateTime.Now.Year) { MdiParent = this }.Show(); }
+
 		private void importYK_ItemClick(object sender, ItemClickEventArgs e) { Import.YKImporter.Execute(); }
 		private void importJournal_ItemClick(object sender, ItemClickEventArgs e) { Import.Journal.JournalImporter.Execute(); }
 		private void importRaffle_ItemClick(object sender, ItemClickEventArgs e) { Import.Raffle.RaffleImporter.Execute(); }
@@ -154,5 +156,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private void shalachManosColumnsItem_EditValueChanged(object sender, EventArgs e) {
 			ShalachManosExport.ColumnCount = Convert.ToInt32(shalachManosColumnsItem.EditValue, CultureInfo.CurrentCulture);
 		}
+
 	}
 }

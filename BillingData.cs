@@ -26,7 +26,8 @@ namespace ShomreiTorah.Billing {
 				PledgesTableAdapter = new PledgesTableAdapter { ClearBeforeFill = false },
 				EmailListTableAdapter = new EmailListTableAdapter { ClearBeforeFill = false },
 				DepositsTableAdapter = new DepositsTableAdapter { ClearBeforeFill = false },
-				StatementLogTableAdapter = new StatementLogTableAdapter { ClearBeforeFill = false }
+				StatementLogTableAdapter = new StatementLogTableAdapter { ClearBeforeFill = false },
+				SeatingReservationsTableAdapter = new SeatingReservationsTableAdapter { ClearBeforeFill = false },
 			};
 			try {
 				AdapterManager.Connection
@@ -36,6 +37,7 @@ namespace ShomreiTorah.Billing {
 					= AdapterManager.EmailListTableAdapter.Connection
 					= AdapterManager.DepositsTableAdapter.Connection
 					= AdapterManager.StatementLogTableAdapter.Connection
+					= AdapterManager.SeatingReservationsTableAdapter.Connection
 					= (SqlConnection)DB.Default.OpenConnection();
 
 				RefreshData(AdapterManager);
@@ -60,6 +62,7 @@ namespace ShomreiTorah.Billing {
 			adapters.EmailListTableAdapter.Fill(EmailList);
 			adapters.DepositsTableAdapter.Fill(Deposits);
 			adapters.StatementLogTableAdapter.Fill(StatementLog);
+			adapters.SeatingReservationsTableAdapter.Fill(SeatingReservations);
 		}
 
 		void EmailList_TableNewRow(object sender, DataTableNewRowEventArgs e) {

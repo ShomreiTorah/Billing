@@ -36,6 +36,8 @@ namespace ShomreiTorah.Billing {
         
         private StatementLogDataTable tableStatementLog;
         
+        private SeatingReservationsDataTable tableSeatingReservations;
+        
         private global::System.Data.DataRelation relationPayments;
         
         private global::System.Data.DataRelation relationPledges;
@@ -45,6 +47,8 @@ namespace ShomreiTorah.Billing {
         private global::System.Data.DataRelation relationEmailAddresses;
         
         private global::System.Data.DataRelation relationDeposit;
+        
+        private global::System.Data.DataRelation relationSeat;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -95,6 +99,9 @@ namespace ShomreiTorah.Billing {
                 }
                 if ((ds.Tables["StatementLog"] != null)) {
                     base.Tables.Add(new StatementLogDataTable(ds.Tables["StatementLog"]));
+                }
+                if ((ds.Tables["SeatingReservations"] != null)) {
+                    base.Tables.Add(new SeatingReservationsDataTable(ds.Tables["SeatingReservations"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -172,6 +179,16 @@ namespace ShomreiTorah.Billing {
         public StatementLogDataTable StatementLog {
             get {
                 return this.tableStatementLog;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public SeatingReservationsDataTable SeatingReservations {
+            get {
+                return this.tableSeatingReservations;
             }
         }
         
@@ -261,6 +278,9 @@ namespace ShomreiTorah.Billing {
                 if ((ds.Tables["StatementLog"] != null)) {
                     base.Tables.Add(new StatementLogDataTable(ds.Tables["StatementLog"]));
                 }
+                if ((ds.Tables["SeatingReservations"] != null)) {
+                    base.Tables.Add(new SeatingReservationsDataTable(ds.Tables["SeatingReservations"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -330,11 +350,18 @@ namespace ShomreiTorah.Billing {
                     this.tableStatementLog.InitVars();
                 }
             }
+            this.tableSeatingReservations = ((SeatingReservationsDataTable)(base.Tables["SeatingReservations"]));
+            if ((initTable == true)) {
+                if ((this.tableSeatingReservations != null)) {
+                    this.tableSeatingReservations.InitVars();
+                }
+            }
             this.relationPayments = this.Relations["Payments"];
             this.relationPledges = this.Relations["Pledges"];
             this.relationStatements = this.Relations["Statements"];
             this.relationEmailAddresses = this.Relations["EmailAddresses"];
             this.relationDeposit = this.Relations["Deposit"];
+            this.relationSeat = this.Relations["Seat"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -357,6 +384,8 @@ namespace ShomreiTorah.Billing {
             base.Tables.Add(this.tableDeposits);
             this.tableStatementLog = new StatementLogDataTable(false);
             base.Tables.Add(this.tableStatementLog);
+            this.tableSeatingReservations = new SeatingReservationsDataTable(false);
+            base.Tables.Add(this.tableSeatingReservations);
             global::System.Data.ForeignKeyConstraint fkc;
             fkc = new global::System.Data.ForeignKeyConstraint("Payments", new global::System.Data.DataColumn[] {
                         this.tableMasterDirectory.IdColumn}, new global::System.Data.DataColumn[] {
@@ -399,6 +428,10 @@ namespace ShomreiTorah.Billing {
                         this.tableDeposits.DepositIdColumn}, new global::System.Data.DataColumn[] {
                         this.tablePayments.DepositIdColumn}, false);
             this.Relations.Add(this.relationDeposit);
+            this.relationSeat = new global::System.Data.DataRelation("Seat", new global::System.Data.DataColumn[] {
+                        this.tablePledges.PledgeIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSeatingReservations.PledgeIdColumn}, false);
+            this.Relations.Add(this.relationSeat);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -434,6 +467,12 @@ namespace ShomreiTorah.Billing {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private bool ShouldSerializeStatementLog() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializeSeatingReservations() {
             return false;
         }
         
@@ -504,6 +543,7 @@ namespace ShomreiTorah.Billing {
             this.Deposits.CountColumn.Expression = "COUNT(Child(Deposit).Amount)";
             this.Deposits.AmountColumn.Expression = "ISNULL(SUM(Child(Deposit).Amount), 0)";
             this.StatementLog.FullNameColumn.Expression = "Parent(Statements).FullName";
+            this.SeatingReservations.FullNameColumn.Expression = "Parent(Seat).FullName";
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -523,6 +563,9 @@ namespace ShomreiTorah.Billing {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void StatementLogRowChangeEventHandler(object sender, StatementLogRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void SeatingReservationsRowChangeEventHandler(object sender, SeatingReservationsRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -3252,6 +3295,452 @@ namespace ShomreiTorah.Billing {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class SeatingReservationsDataTable : global::System.Data.TypedTableBase<SeatingReservationsRow> {
+            
+            private global::System.Data.DataColumn columnId;
+            
+            private global::System.Data.DataColumn columnPledgeId;
+            
+            private global::System.Data.DataColumn columnFullName;
+            
+            private global::System.Data.DataColumn columnMensSeats;
+            
+            private global::System.Data.DataColumn columnWomensSeats;
+            
+            private global::System.Data.DataColumn columnBoysSeats;
+            
+            private global::System.Data.DataColumn columnGirlsSeats;
+            
+            private global::System.Data.DataColumn columnNotes;
+            
+            private global::System.Data.DataColumn columnStatus;
+            
+            private global::System.Data.DataColumn columnRowVersion;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SeatingReservationsDataTable() : 
+                    this(false) {
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SeatingReservationsDataTable(bool initExpressions) {
+                this.TableName = "SeatingReservations";
+                this.BeginInit();
+                this.InitClass();
+                if ((initExpressions == true)) {
+                    this.InitExpressions();
+                }
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal SeatingReservationsDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected SeatingReservationsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn IdColumn {
+                get {
+                    return this.columnId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PledgeIdColumn {
+                get {
+                    return this.columnPledgeId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FullNameColumn {
+                get {
+                    return this.columnFullName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MensSeatsColumn {
+                get {
+                    return this.columnMensSeats;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn WomensSeatsColumn {
+                get {
+                    return this.columnWomensSeats;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn BoysSeatsColumn {
+                get {
+                    return this.columnBoysSeats;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GirlsSeatsColumn {
+                get {
+                    return this.columnGirlsSeats;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NotesColumn {
+                get {
+                    return this.columnNotes;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn StatusColumn {
+                get {
+                    return this.columnStatus;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RowVersionColumn {
+                get {
+                    return this.columnRowVersion;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SeatingReservationsRow this[int index] {
+                get {
+                    return ((SeatingReservationsRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event SeatingReservationsRowChangeEventHandler SeatingReservationsRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event SeatingReservationsRowChangeEventHandler SeatingReservationsRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event SeatingReservationsRowChangeEventHandler SeatingReservationsRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event SeatingReservationsRowChangeEventHandler SeatingReservationsRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void AddSeatingReservationsRow(SeatingReservationsRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SeatingReservationsRow AddSeatingReservationsRow(System.Guid Id, PledgesRow parentPledgesRowBySeat, string FullName, int MensSeats, int WomensSeats, int BoysSeats, int GirlsSeats, string Notes, string Status, byte[] RowVersion) {
+                SeatingReservationsRow rowSeatingReservationsRow = ((SeatingReservationsRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        Id,
+                        null,
+                        FullName,
+                        MensSeats,
+                        WomensSeats,
+                        BoysSeats,
+                        GirlsSeats,
+                        Notes,
+                        Status,
+                        RowVersion};
+                if ((parentPledgesRowBySeat != null)) {
+                    columnValuesArray[1] = parentPledgesRowBySeat[0];
+                }
+                rowSeatingReservationsRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowSeatingReservationsRow);
+                return rowSeatingReservationsRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SeatingReservationsRow AddSeatingReservationsRow(System.Guid Id, PledgesRow parentPledgesRowBySeat, int MensSeats, int WomensSeats, int BoysSeats, int GirlsSeats, string Notes, string Status, byte[] RowVersion) {
+                SeatingReservationsRow rowSeatingReservationsRow = ((SeatingReservationsRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        Id,
+                        null,
+                        null,
+                        MensSeats,
+                        WomensSeats,
+                        BoysSeats,
+                        GirlsSeats,
+                        Notes,
+                        Status,
+                        RowVersion};
+                if ((parentPledgesRowBySeat != null)) {
+                    columnValuesArray[1] = parentPledgesRowBySeat[0];
+                }
+                rowSeatingReservationsRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowSeatingReservationsRow);
+                return rowSeatingReservationsRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SeatingReservationsRow FindById(System.Guid Id) {
+                return ((SeatingReservationsRow)(this.Rows.Find(new object[] {
+                            Id})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                SeatingReservationsDataTable cln = ((SeatingReservationsDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new SeatingReservationsDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnId = base.Columns["Id"];
+                this.columnPledgeId = base.Columns["PledgeId"];
+                this.columnFullName = base.Columns["FullName"];
+                this.columnMensSeats = base.Columns["MensSeats"];
+                this.columnWomensSeats = base.Columns["WomensSeats"];
+                this.columnBoysSeats = base.Columns["BoysSeats"];
+                this.columnGirlsSeats = base.Columns["GirlsSeats"];
+                this.columnNotes = base.Columns["Notes"];
+                this.columnStatus = base.Columns["Status"];
+                this.columnRowVersion = base.Columns["RowVersion"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnId = new global::System.Data.DataColumn("Id", typeof(global::System.Guid), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnId);
+                this.columnPledgeId = new global::System.Data.DataColumn("PledgeId", typeof(global::System.Guid), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPledgeId);
+                this.columnFullName = new global::System.Data.DataColumn("FullName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFullName);
+                this.columnMensSeats = new global::System.Data.DataColumn("MensSeats", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMensSeats);
+                this.columnWomensSeats = new global::System.Data.DataColumn("WomensSeats", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWomensSeats);
+                this.columnBoysSeats = new global::System.Data.DataColumn("BoysSeats", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBoysSeats);
+                this.columnGirlsSeats = new global::System.Data.DataColumn("GirlsSeats", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGirlsSeats);
+                this.columnNotes = new global::System.Data.DataColumn("Notes", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNotes);
+                this.columnStatus = new global::System.Data.DataColumn("Status", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStatus);
+                this.columnRowVersion = new global::System.Data.DataColumn("RowVersion", typeof(byte[]), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRowVersion);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnId}, true));
+                this.columnId.AllowDBNull = false;
+                this.columnId.Unique = true;
+                this.columnPledgeId.AllowDBNull = false;
+                this.columnFullName.ReadOnly = true;
+                this.columnMensSeats.AllowDBNull = false;
+                this.columnMensSeats.Caption = "Men\'s Seats";
+                this.columnMensSeats.DefaultValue = ((int)(0));
+                this.columnWomensSeats.AllowDBNull = false;
+                this.columnWomensSeats.Caption = "Women\'s Seats";
+                this.columnWomensSeats.DefaultValue = ((int)(0));
+                this.columnBoysSeats.AllowDBNull = false;
+                this.columnBoysSeats.Caption = "Boys\' Seats";
+                this.columnBoysSeats.DefaultValue = ((int)(0));
+                this.columnGirlsSeats.AllowDBNull = false;
+                this.columnGirlsSeats.Caption = "Girls\' Seats";
+                this.columnGirlsSeats.DefaultValue = ((int)(0));
+                this.columnNotes.AllowDBNull = false;
+                this.columnNotes.DefaultValue = ((string)(""));
+                this.columnNotes.MaxLength = 512;
+                this.columnStatus.AllowDBNull = false;
+                this.columnStatus.DefaultValue = ((string)("New"));
+                this.columnStatus.MaxLength = 64;
+                this.columnRowVersion.ReadOnly = true;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SeatingReservationsRow NewSeatingReservationsRow() {
+                return ((SeatingReservationsRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new SeatingReservationsRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(SeatingReservationsRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitExpressions() {
+                this.FullNameColumn.Expression = "Parent(Seat).FullName";
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.SeatingReservationsRowChanged != null)) {
+                    this.SeatingReservationsRowChanged(this, new SeatingReservationsRowChangeEvent(((SeatingReservationsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.SeatingReservationsRowChanging != null)) {
+                    this.SeatingReservationsRowChanging(this, new SeatingReservationsRowChangeEvent(((SeatingReservationsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.SeatingReservationsRowDeleted != null)) {
+                    this.SeatingReservationsRowDeleted(this, new SeatingReservationsRowChangeEvent(((SeatingReservationsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.SeatingReservationsRowDeleting != null)) {
+                    this.SeatingReservationsRowDeleting(this, new SeatingReservationsRowChangeEvent(((SeatingReservationsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void RemoveSeatingReservationsRow(SeatingReservationsRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                BillingData ds = new BillingData();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "SeatingReservationsDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class PaymentsRow : global::System.Data.DataRow {
@@ -4133,6 +4622,17 @@ namespace ShomreiTorah.Billing {
             public void SetExternalIDNull() {
                 this[this.tablePledges.ExternalIDColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SeatingReservationsRow[] GetSeatingReservationsRows() {
+                if ((this.Table.ChildRelations["Seat"] == null)) {
+                    return new SeatingReservationsRow[0];
+                }
+                else {
+                    return ((SeatingReservationsRow[])(base.GetChildRows(this.Table.ChildRelations["Seat"])));
+                }
+            }
         }
         
         /// <summary>
@@ -4535,6 +5035,176 @@ namespace ShomreiTorah.Billing {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class SeatingReservationsRow : global::System.Data.DataRow {
+            
+            private SeatingReservationsDataTable tableSeatingReservations;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal SeatingReservationsRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableSeatingReservations = ((SeatingReservationsDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.Guid Id {
+                get {
+                    return ((global::System.Guid)(this[this.tableSeatingReservations.IdColumn]));
+                }
+                set {
+                    this[this.tableSeatingReservations.IdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.Guid PledgeId {
+                get {
+                    return ((global::System.Guid)(this[this.tableSeatingReservations.PledgeIdColumn]));
+                }
+                set {
+                    this[this.tableSeatingReservations.PledgeIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string FullName {
+                get {
+                    try {
+                        return ((string)(this[this.tableSeatingReservations.FullNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FullName\' in table \'SeatingReservations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSeatingReservations.FullNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int MensSeats {
+                get {
+                    return ((int)(this[this.tableSeatingReservations.MensSeatsColumn]));
+                }
+                set {
+                    this[this.tableSeatingReservations.MensSeatsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int WomensSeats {
+                get {
+                    return ((int)(this[this.tableSeatingReservations.WomensSeatsColumn]));
+                }
+                set {
+                    this[this.tableSeatingReservations.WomensSeatsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int BoysSeats {
+                get {
+                    return ((int)(this[this.tableSeatingReservations.BoysSeatsColumn]));
+                }
+                set {
+                    this[this.tableSeatingReservations.BoysSeatsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int GirlsSeats {
+                get {
+                    return ((int)(this[this.tableSeatingReservations.GirlsSeatsColumn]));
+                }
+                set {
+                    this[this.tableSeatingReservations.GirlsSeatsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Notes {
+                get {
+                    return ((string)(this[this.tableSeatingReservations.NotesColumn]));
+                }
+                set {
+                    this[this.tableSeatingReservations.NotesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Status {
+                get {
+                    return ((string)(this[this.tableSeatingReservations.StatusColumn]));
+                }
+                set {
+                    this[this.tableSeatingReservations.StatusColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public byte[] RowVersion {
+                get {
+                    try {
+                        return ((byte[])(this[this.tableSeatingReservations.RowVersionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'RowVersion\' in table \'SeatingReservations\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSeatingReservations.RowVersionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PledgesRow PledgesRow {
+                get {
+                    return ((PledgesRow)(this.GetParentRow(this.Table.ParentRelations["Seat"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["Seat"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFullNameNull() {
+                return this.IsNull(this.tableSeatingReservations.FullNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFullNameNull() {
+                this[this.tableSeatingReservations.FullNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsRowVersionNull() {
+                return this.IsNull(this.tableSeatingReservations.RowVersionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetRowVersionNull() {
+                this[this.tableSeatingReservations.RowVersionColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -4724,6 +5394,40 @@ namespace ShomreiTorah.Billing {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public StatementLogRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class SeatingReservationsRowChangeEvent : global::System.EventArgs {
+            
+            private SeatingReservationsRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SeatingReservationsRowChangeEvent(SeatingReservationsRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SeatingReservationsRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -7906,6 +8610,367 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
     }
     
     /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class SeatingReservationsTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlTransaction _transaction;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public SeatingReservationsTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.SqlClient.SqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "SeatingReservations";
+            tableMapping.ColumnMappings.Add("Id", "Id");
+            tableMapping.ColumnMappings.Add("PledgeId", "PledgeId");
+            tableMapping.ColumnMappings.Add("MensSeats", "MensSeats");
+            tableMapping.ColumnMappings.Add("WomensSeats", "WomensSeats");
+            tableMapping.ColumnMappings.Add("BoysSeats", "BoysSeats");
+            tableMapping.ColumnMappings.Add("GirlsSeats", "GirlsSeats");
+            tableMapping.ColumnMappings.Add("Notes", "Notes");
+            tableMapping.ColumnMappings.Add("Status", "Status");
+            tableMapping.ColumnMappings.Add("RowVersion", "RowVersion");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [Seating].[SeatingReservations] WHERE (([Id] = @Original_Id) AND ([Ro" +
+                "wVersion] = @Original_RowVersion))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RowVersion", global::System.Data.SqlDbType.Timestamp, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RowVersion", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Seating].[SeatingReservations] ([Id], [PledgeId], [MensSeats], [WomensSeats], [BoysSeats], [GirlsSeats], [Notes], [Status]) VALUES (@Id, @PledgeId, @MensSeats, @WomensSeats, @BoysSeats, @GirlsSeats, @Notes, @Status);
+SELECT Id, PledgeId, MensSeats, WomensSeats, BoysSeats, GirlsSeats, Notes, Status, RowVersion FROM Seating.SeatingReservations WHERE (Id = @Id)";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PledgeId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PledgeId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MensSeats", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MensSeats", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@WomensSeats", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "WomensSeats", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BoysSeats", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BoysSeats", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@GirlsSeats", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "GirlsSeats", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Notes", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Notes", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Status", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Seating].[SeatingReservations] SET [Id] = @Id, [PledgeId] = @PledgeId, [MensSeats] = @MensSeats, [WomensSeats] = @WomensSeats, [BoysSeats] = @BoysSeats, [GirlsSeats] = @GirlsSeats, [Notes] = @Notes, [Status] = @Status WHERE (([Id] = @Original_Id) AND ([RowVersion] = @Original_RowVersion));
+SELECT Id, PledgeId, MensSeats, WomensSeats, BoysSeats, GirlsSeats, Notes, Status, RowVersion FROM Seating.SeatingReservations WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PledgeId", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PledgeId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MensSeats", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MensSeats", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@WomensSeats", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "WomensSeats", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BoysSeats", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BoysSeats", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@GirlsSeats", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "GirlsSeats", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Notes", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Notes", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Status", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RowVersion", global::System.Data.SqlDbType.Timestamp, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RowVersion", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = global::ShomreiTorah.Billing.Properties.Settings.Default.ShomreiTorahConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT Id, PledgeId, MensSeats, WomensSeats, BoysSeats, GirlsSeats, Notes, Status" +
+                ", RowVersion FROM Seating.SeatingReservations";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(BillingData.SeatingReservationsDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual BillingData.SeatingReservationsDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            BillingData.SeatingReservationsDataTable dataTable = new BillingData.SeatingReservationsDataTable(true);
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(BillingData.SeatingReservationsDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(BillingData dataSet) {
+            return this.Adapter.Update(dataSet, "SeatingReservations");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(System.Guid Original_Id, byte[] Original_RowVersion) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((System.Guid)(Original_Id));
+            if ((Original_RowVersion == null)) {
+                throw new global::System.ArgumentNullException("Original_RowVersion");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[1].Value = ((byte[])(Original_RowVersion));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
+        public virtual int Insert(System.Guid Id, System.Guid PledgeId, int MensSeats, int WomensSeats, int BoysSeats, int GirlsSeats, string Notes, string Status) {
+            this.Adapter.InsertCommand.Parameters[0].Value = ((System.Guid)(Id));
+            this.Adapter.InsertCommand.Parameters[1].Value = ((System.Guid)(PledgeId));
+            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(MensSeats));
+            this.Adapter.InsertCommand.Parameters[3].Value = ((int)(WomensSeats));
+            this.Adapter.InsertCommand.Parameters[4].Value = ((int)(BoysSeats));
+            this.Adapter.InsertCommand.Parameters[5].Value = ((int)(GirlsSeats));
+            if ((Notes == null)) {
+                throw new global::System.ArgumentNullException("Notes");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[6].Value = ((string)(Notes));
+            }
+            if ((Status == null)) {
+                throw new global::System.ArgumentNullException("Status");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[7].Value = ((string)(Status));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.InsertCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(System.Guid Id, System.Guid PledgeId, int MensSeats, int WomensSeats, int BoysSeats, int GirlsSeats, string Notes, string Status, System.Guid Original_Id, byte[] Original_RowVersion) {
+            this.Adapter.UpdateCommand.Parameters[0].Value = ((System.Guid)(Id));
+            this.Adapter.UpdateCommand.Parameters[1].Value = ((System.Guid)(PledgeId));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(MensSeats));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(WomensSeats));
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(BoysSeats));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(GirlsSeats));
+            if ((Notes == null)) {
+                throw new global::System.ArgumentNullException("Notes");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Notes));
+            }
+            if ((Status == null)) {
+                throw new global::System.ArgumentNullException("Status");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Status));
+            }
+            this.Adapter.UpdateCommand.Parameters[8].Value = ((System.Guid)(Original_Id));
+            if ((Original_RowVersion == null)) {
+                throw new global::System.ArgumentNullException("Original_RowVersion");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((byte[])(Original_RowVersion));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(System.Guid PledgeId, int MensSeats, int WomensSeats, int BoysSeats, int GirlsSeats, string Notes, string Status, System.Guid Original_Id, byte[] Original_RowVersion) {
+            return this.Update(Original_Id, PledgeId, MensSeats, WomensSeats, BoysSeats, GirlsSeats, Notes, Status, Original_Id, Original_RowVersion);
+        }
+    }
+    
+    /// <summary>
     ///TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
     ///</summary>
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7928,6 +8993,8 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
         private DepositsTableAdapter _depositsTableAdapter;
         
         private StatementLogTableAdapter _statementLogTableAdapter;
+        
+        private SeatingReservationsTableAdapter _seatingReservationsTableAdapter;
         
         private bool _backupDataSetBeforeUpdate;
         
@@ -8030,6 +9097,20 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
+            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
+            "a", "System.Drawing.Design.UITypeEditor")]
+        public SeatingReservationsTableAdapter SeatingReservationsTableAdapter {
+            get {
+                return this._seatingReservationsTableAdapter;
+            }
+            set {
+                this._seatingReservationsTableAdapter = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public bool BackupDataSetBeforeUpdate {
             get {
                 return this._backupDataSetBeforeUpdate;
@@ -8071,6 +9152,10 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
                             && (this._statementLogTableAdapter.Connection != null))) {
                     return this._statementLogTableAdapter.Connection;
                 }
+                if (((this._seatingReservationsTableAdapter != null) 
+                            && (this._seatingReservationsTableAdapter.Connection != null))) {
+                    return this._seatingReservationsTableAdapter.Connection;
+                }
                 return null;
             }
             set {
@@ -8102,6 +9187,9 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
                 if ((this._statementLogTableAdapter != null)) {
                     count = (count + 1);
                 }
+                if ((this._seatingReservationsTableAdapter != null)) {
+                    count = (count + 1);
+                }
                 return count;
             }
         }
@@ -8113,6 +9201,15 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateUpdatedRows(BillingData dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
+            if ((this._masterDirectoryTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.MasterDirectory.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._masterDirectoryTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
             if ((this._depositsTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.Deposits.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -8122,12 +9219,21 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._masterDirectoryTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.MasterDirectory.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._pledgesTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Pledges.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._masterDirectoryTableAdapter.Update(updatedRows));
+                    result = (result + this._pledgesTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._seatingReservationsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.SeatingReservations.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._seatingReservationsTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -8140,15 +9246,6 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._emailListTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.EmailList.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._emailListTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._paymentsTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.Payments.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -8158,12 +9255,12 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._pledgesTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Pledges.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._emailListTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.EmailList.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._pledgesTableAdapter.Update(updatedRows));
+                    result = (result + this._emailListTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -8177,6 +9274,14 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateInsertedRows(BillingData dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
+            if ((this._masterDirectoryTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.MasterDirectory.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._masterDirectoryTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
             if ((this._depositsTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.Deposits.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -8185,11 +9290,19 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._masterDirectoryTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.MasterDirectory.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._pledgesTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Pledges.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._masterDirectoryTableAdapter.Update(addedRows));
+                    result = (result + this._pledgesTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._seatingReservationsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.SeatingReservations.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._seatingReservationsTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -8201,14 +9314,6 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._emailListTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.EmailList.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._emailListTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._paymentsTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.Payments.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -8217,11 +9322,11 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._pledgesTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Pledges.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._emailListTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.EmailList.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._pledgesTableAdapter.Update(addedRows));
+                    result = (result + this._emailListTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -8235,11 +9340,11 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateDeletedRows(BillingData dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._pledgesTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Pledges.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._emailListTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.EmailList.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._pledgesTableAdapter.Update(deletedRows));
+                    result = (result + this._emailListTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -8251,14 +9356,6 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._emailListTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.EmailList.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._emailListTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._statementLogTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.StatementLog.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -8267,11 +9364,19 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._masterDirectoryTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.MasterDirectory.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._seatingReservationsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.SeatingReservations.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._masterDirectoryTableAdapter.Update(deletedRows));
+                    result = (result + this._seatingReservationsTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._pledgesTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Pledges.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._pledgesTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -8280,6 +9385,14 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._depositsTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._masterDirectoryTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.MasterDirectory.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._masterDirectoryTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -8349,6 +9462,11 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
             }
             if (((this._statementLogTableAdapter != null) 
                         && (this.MatchTableAdapterConnection(this._statementLogTableAdapter.Connection) == false))) {
+                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
+                        "tring.");
+            }
+            if (((this._seatingReservationsTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._seatingReservationsTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -8438,6 +9556,15 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
                         adaptersWithAcceptChangesDuringUpdate.Add(this._statementLogTableAdapter.Adapter);
                     }
                 }
+                if ((this._seatingReservationsTableAdapter != null)) {
+                    revertConnections.Add(this._seatingReservationsTableAdapter, this._seatingReservationsTableAdapter.Connection);
+                    this._seatingReservationsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
+                    this._seatingReservationsTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
+                    if (this._seatingReservationsTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._seatingReservationsTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._seatingReservationsTableAdapter.Adapter);
+                    }
+                }
                 // 
                 //---- Perform updates -----------
                 //
@@ -8519,6 +9646,10 @@ SELECT Id, PersonId, DateGenerated, Media, StatementKind, StartDate, EndDate, Us
                 if ((this._statementLogTableAdapter != null)) {
                     this._statementLogTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._statementLogTableAdapter]));
                     this._statementLogTableAdapter.Transaction = null;
+                }
+                if ((this._seatingReservationsTableAdapter != null)) {
+                    this._seatingReservationsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._seatingReservationsTableAdapter]));
+                    this._seatingReservationsTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];

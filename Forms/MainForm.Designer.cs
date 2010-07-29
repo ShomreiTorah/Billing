@@ -24,6 +24,7 @@ namespace ShomreiTorah.Billing.Forms {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
@@ -39,7 +40,6 @@ namespace ShomreiTorah.Billing.Forms {
 			DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.addPledge = new DevExpress.XtraBars.BarButtonItem();
 			this.viewPledges = new DevExpress.XtraBars.BarButtonItem();
@@ -62,6 +62,9 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showShalachManos = new DevExpress.XtraBars.BarButtonItem();
 			this.shalachManosExport = new DevExpress.XtraBars.BarButtonItem();
 			this.showEmailList = new DevExpress.XtraBars.BarButtonItem();
+			this.shalachManosColumnsItem = new DevExpress.XtraBars.BarEditItem();
+			this.shalachManosColumnsEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
+			this.showSeatingForm = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -72,6 +75,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPage4 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
@@ -86,22 +90,21 @@ namespace ShomreiTorah.Billing.Forms {
 			this.modifiedPaymentsGrid = new ShomreiTorah.Billing.Controls.ModifiedPaymentsGrid();
 			this.paymentEdit = new ShomreiTorah.Billing.Controls.PaymentEdit();
 			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
-			this.shalachManosColumnsItem = new DevExpress.XtraBars.BarEditItem();
-			this.shalachManosColumnsEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.shalachManosColumnsEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
 			this.addPledgePanel.SuspendLayout();
 			this.dockPanel1_Container.SuspendLayout();
 			this.addPaymentPanel.SuspendLayout();
 			this.controlContainer1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.mdiManager)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.shalachManosColumnsEdit)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbon
 			// 
+			this.ribbon.ApplicationButtonText = null;
 			this.ribbon.ApplicationCaption = "Shomrei Torah Billing";
-			this.ribbon.ApplicationIcon = global::ShomreiTorah.Billing.Properties.Resources.RibbonIcon;
+			this.ribbon.ApplicationIcon = ((System.Drawing.Bitmap)(resources.GetObject("ribbon.ApplicationIcon")));
 			this.ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.addPledge,
             this.viewPledges,
@@ -124,9 +127,10 @@ namespace ShomreiTorah.Billing.Forms {
             this.showShalachManos,
             this.shalachManosExport,
             this.showEmailList,
-            this.shalachManosColumnsItem});
+            this.shalachManosColumnsItem,
+            this.showSeatingForm});
 			this.ribbon.Location = new System.Drawing.Point(0, 0);
-			this.ribbon.MaxItemId = 24;
+			this.ribbon.MaxItemId = 25;
 			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
 			this.ribbon.Name = "ribbon";
 			this.ribbon.PageHeaderItemLinks.Add(this.checkUpdate);
@@ -161,7 +165,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// saveDb
 			// 
 			this.saveDb.Caption = "Save to database";
-			this.saveDb.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Save16;
+			this.saveDb.Glyph = ((System.Drawing.Image)(resources.GetObject("saveDb.Glyph")));
 			this.saveDb.Id = 2;
 			this.saveDb.Name = "saveDb";
 			toolTipTitleItem1.Text = "Save";
@@ -175,7 +179,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// showCalendar
 			// 
 			this.showCalendar.Caption = "Show Calendar";
-			this.showCalendar.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Calendar16;
+			this.showCalendar.Glyph = ((System.Drawing.Image)(resources.GetObject("showCalendar.Glyph")));
 			this.showCalendar.Id = 3;
 			this.showCalendar.Name = "showCalendar";
 			toolTipTitleItem2.Text = "Show Calendar";
@@ -211,14 +215,14 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.importYK.Caption = "Import YK Directory";
 			this.importYK.Id = 7;
-			this.importYK.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ImportExcel32;
+			this.importYK.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("importYK.LargeGlyph")));
 			this.importYK.Name = "importYK";
 			this.importYK.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.importYK_ItemClick);
 			// 
 			// refreshData
 			// 
 			this.refreshData.Caption = "Reload from database";
-			this.refreshData.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Refresh16;
+			this.refreshData.Glyph = ((System.Drawing.Image)(resources.GetObject("refreshData.Glyph")));
 			this.refreshData.Id = 8;
 			this.refreshData.Name = "refreshData";
 			toolTipTitleItem3.Text = "Reload From Database";
@@ -246,7 +250,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// checkUpdate
 			// 
 			this.checkUpdate.Caption = "Check for updates";
-			this.checkUpdate.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Update16;
+			this.checkUpdate.Glyph = ((System.Drawing.Image)(resources.GetObject("checkUpdate.Glyph")));
 			this.checkUpdate.Id = 12;
 			this.checkUpdate.Name = "checkUpdate";
 			this.checkUpdate.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.checkUpdate_ItemClick);
@@ -255,7 +259,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.importJournal.Caption = "Import Journal";
 			this.importJournal.Id = 14;
-			this.importJournal.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ImportJournal32;
+			this.importJournal.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("importJournal.LargeGlyph")));
 			this.importJournal.Name = "importJournal";
 			this.importJournal.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.importJournal_ItemClick);
 			// 
@@ -295,7 +299,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.importRaffle.Caption = "Import Raffle";
 			this.importRaffle.Id = 19;
-			this.importRaffle.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ImportRaffle32;
+			this.importRaffle.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("importRaffle.LargeGlyph")));
 			this.importRaffle.Name = "importRaffle";
 			this.importRaffle.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.importRaffle_ItemClick);
 			// 
@@ -303,7 +307,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.showShalachManos.Caption = "Shalach Manos";
 			this.showShalachManos.Id = 20;
-			this.showShalachManos.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ShalachManosList32;
+			this.showShalachManos.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("showShalachManos.LargeGlyph")));
 			this.showShalachManos.Name = "showShalachManos";
 			this.showShalachManos.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showShalachManos_ItemClick);
 			// 
@@ -311,7 +315,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.shalachManosExport.Caption = "Create Scroll";
 			this.shalachManosExport.Id = 21;
-			this.shalachManosExport.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ExportScroll32;
+			this.shalachManosExport.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("shalachManosExport.LargeGlyph")));
 			this.shalachManosExport.Name = "shalachManosExport";
 			this.shalachManosExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.shalachManosExport_ItemClick);
 			// 
@@ -321,6 +325,41 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showEmailList.Id = 22;
 			this.showEmailList.Name = "showEmailList";
 			this.showEmailList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showEmailList_ItemClick);
+			// 
+			// shalachManosColumnsItem
+			// 
+			this.shalachManosColumnsItem.Caption = "Columns:";
+			this.shalachManosColumnsItem.Edit = this.shalachManosColumnsEdit;
+			this.shalachManosColumnsItem.Id = 23;
+			this.shalachManosColumnsItem.Name = "shalachManosColumnsItem";
+			this.shalachManosColumnsItem.EditValueChanged += new System.EventHandler(this.shalachManosColumnsItem_EditValueChanged);
+			// 
+			// shalachManosColumnsEdit
+			// 
+			this.shalachManosColumnsEdit.AutoHeight = false;
+			this.shalachManosColumnsEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.shalachManosColumnsEdit.IsFloatValue = false;
+			this.shalachManosColumnsEdit.Mask.EditMask = "N00";
+			this.shalachManosColumnsEdit.MaxValue = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+			this.shalachManosColumnsEdit.MinValue = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.shalachManosColumnsEdit.Name = "shalachManosColumnsEdit";
+			// 
+			// showSeatingForm
+			// 
+			this.showSeatingForm.Caption = "Seating";
+			this.showSeatingForm.Id = 24;
+			this.showSeatingForm.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("showSeatingForm.LargeGlyph")));
+			this.showSeatingForm.Name = "showSeatingForm";
+			this.showSeatingForm.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showSeatingForm_ItemClick);
 			// 
 			// ribbonPage1
 			// 
@@ -399,7 +438,8 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.ribbonPage4.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup5,
-            this.ribbonPageGroup8});
+            this.ribbonPageGroup8,
+            this.ribbonPageGroup6});
 			this.ribbonPage4.Name = "ribbonPage4";
 			this.ribbonPage4.Text = "Events";
 			// 
@@ -419,6 +459,13 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPageGroup8.Name = "ribbonPageGroup8";
 			this.ribbonPageGroup8.ShowCaptionButton = false;
 			this.ribbonPageGroup8.Text = "Purim";
+			// 
+			// ribbonPageGroup6
+			// 
+			this.ribbonPageGroup6.ItemLinks.Add(this.showSeatingForm);
+			this.ribbonPageGroup6.Name = "ribbonPageGroup6";
+			this.ribbonPageGroup6.ShowCaptionButton = false;
+			this.ribbonPageGroup6.Text = "ימים נוראים";
 			// 
 			// ribbonPage2
 			// 
@@ -453,7 +500,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.lookup.ResultsLocation = ShomreiTorah.WinForms.Controls.ResultsLocation.Bottom;
 			this.lookup.ScrollPosition = 0;
 			this.lookup.SearchTable = null;
-			this.lookup.SelectedIndex = -1;
 			this.lookup.Size = new System.Drawing.Size(858, 20);
 			this.lookup.TabIndex = 5;
 			this.lookup.TabStop = false;
@@ -557,33 +603,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.mdiManager.MdiParent = this;
 			this.mdiManager.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mdiManager_MouseDown);
 			// 
-			// shalachManosColumnsItem
-			// 
-			this.shalachManosColumnsItem.Caption = "Columns:";
-			this.shalachManosColumnsItem.Edit = this.shalachManosColumnsEdit;
-			this.shalachManosColumnsItem.Id = 23;
-			this.shalachManosColumnsItem.Name = "shalachManosColumnsItem";
-			this.shalachManosColumnsItem.EditValueChanged += new System.EventHandler(this.shalachManosColumnsItem_EditValueChanged);
-			// 
-			// shalachManosColumnsEdit
-			// 
-			this.shalachManosColumnsEdit.AutoHeight = false;
-			this.shalachManosColumnsEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.shalachManosColumnsEdit.IsFloatValue = false;
-			this.shalachManosColumnsEdit.Mask.EditMask = "N00";
-			this.shalachManosColumnsEdit.MaxValue = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
-			this.shalachManosColumnsEdit.MinValue = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.shalachManosColumnsEdit.Name = "shalachManosColumnsEdit";
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -599,13 +618,13 @@ namespace ShomreiTorah.Billing.Forms {
 			this.StatusBar = this.ribbonStatusBar;
 			this.Text = "Shomrei Torah Billing";
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.shalachManosColumnsEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).EndInit();
 			this.addPledgePanel.ResumeLayout(false);
 			this.dockPanel1_Container.ResumeLayout(false);
 			this.addPaymentPanel.ResumeLayout(false);
 			this.controlContainer1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.mdiManager)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.shalachManosColumnsEdit)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -660,5 +679,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.BarButtonItem showEmailList;
 		private DevExpress.XtraBars.BarEditItem shalachManosColumnsItem;
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit shalachManosColumnsEdit;
+		private DevExpress.XtraBars.BarButtonItem showSeatingForm;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup6;
 	}
 }

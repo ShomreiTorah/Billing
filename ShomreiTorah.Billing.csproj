@@ -160,6 +160,18 @@
     <Compile Include="Controls\PledgeEdit.Designer.cs">
       <DependentUpon>PledgeEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\Seating\SeatingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Events\Seating\SeatingForm.Designer.cs">
+      <DependentUpon>SeatingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\Seating\SeatingReservationEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Events\Seating\SeatingReservationEdit.Designer.cs">
+      <DependentUpon>SeatingReservationEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions.cs" />
     <Compile Include="Forms\CalendarForm.cs">
       <SubType>Form</SubType>
@@ -231,6 +243,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Events\Purim\ShalachManosForm.resx">
       <DependentUpon>ShalachManosForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Events\Seating\SeatingForm.resx">
+      <DependentUpon>SeatingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Events\Seating\SeatingReservationEdit.resx">
+      <DependentUpon>SeatingReservationEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GridFormBase.resx">
       <DependentUpon>GridFormBase.cs</DependentUpon>
@@ -373,6 +391,8 @@
     <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <None Include="Resources\Add32.png" />
+    <None Include="Resources\Seating32.png" />
     <None Include="Email Templates\EmailPage.master">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>ASPXCodeBehind</SubType>
@@ -587,9 +607,7 @@
       <Name>ShomreiTorah.WinForms</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Events\Seating\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
