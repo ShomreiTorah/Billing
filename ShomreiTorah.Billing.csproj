@@ -173,6 +173,12 @@
     <Compile Include="Events\Seating\SeatingReservationEdit.Designer.cs">
       <DependentUpon>SeatingReservationEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\Seating\SeatingReservationPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Events\Seating\SeatingReservationPopup.Designer.cs">
+      <DependentUpon>SeatingReservationPopup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions.cs" />
     <Compile Include="Forms\CalendarForm.cs">
       <SubType>Form</SubType>
@@ -250,6 +256,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Events\Seating\SeatingReservationEdit.resx">
       <DependentUpon>SeatingReservationEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Events\Seating\SeatingReservationPopup.resx">
+      <DependentUpon>SeatingReservationPopup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GridFormBase.resx">
       <DependentUpon>GridFormBase.cs</DependentUpon>

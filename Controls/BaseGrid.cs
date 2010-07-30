@@ -115,6 +115,9 @@ namespace ShomreiTorah.Billing.Controls {
 				case "Payments":
 					new Forms.PaymentEditPopup((BillingData.PaymentsRow)row).Show(Program.MainForm);
 					break;
+				case "SeatingReservations":
+					new Events.Seating.SeatingReservationPopup((BillingData.SeatingReservationsRow)row).Show(Program.MainForm);
+					break;
 			}
 		}
 
@@ -133,10 +136,8 @@ namespace ShomreiTorah.Billing.Controls {
 					var row2 = e.Column.View.GetDataRow(e.Column.View.GetRowHandle(e.ListSourceRowIndex2));
 
 					if (!row1.Table.Columns.Contains("LastName")) {
-						var relation = row1.Table.ParentRelations[0];
-
-						row1 = row1.GetParentRow(relation);
-						row2 = row2.GetParentRow(relation);
+						row1 = ((IPersonAccessor)row1).Person;
+						row2 = ((IPersonAccessor)row2).Person;
 					}
 
 					if (row1 != null && row2 != null) {

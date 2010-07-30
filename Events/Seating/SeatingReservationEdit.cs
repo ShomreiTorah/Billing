@@ -35,6 +35,11 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			pledgeTypeEdit.Focus();
 		}
 
+		public void EditRow(BillingData.SeatingReservationsRow row) {
+			pledgesBindingSource.Position = pledgesBindingSource.Find("PledgeId", row.PledgeId);
+			seatingReservationsBindingSource.Position = seatingReservationsBindingSource.Find("Id", row.Id);
+		}
+
 		public bool CommitNew() {
 			try {
 				pledgesBindingSource.EndEdit();
