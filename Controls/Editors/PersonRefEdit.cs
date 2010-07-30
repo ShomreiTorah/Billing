@@ -1,19 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
-using DevExpress.XtraEditors.ViewInfo;
+using DevExpress.Accessibility;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Drawing;
 using DevExpress.XtraEditors.Registrator;
-using DevExpress.Accessibility;
 using DevExpress.XtraEditors.Repository;
-using System.ComponentModel;
-using DevExpress.XtraEditors;
-using DevExpress.XtraGrid.Views.Grid;
-using System.Data;
-using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraEditors.ViewInfo;
 using DevExpress.XtraGrid;
-using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
 using ShomreiTorah.Billing.Properties;
 
 namespace ShomreiTorah.Billing.Controls.Editors {
@@ -47,8 +47,8 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			base.RaiseButtonClick(e);
 
 			var row = OwnerEdit.SelectedRow;
-			var relation = row.Table.ParentRelations.Cast<DataRelation>().First(r => r.ParentTable.TableName == "MasterDirectory");
-			BaseGrid.ShowDetailsForm(row.GetParentRow(relation));
+			var personAccessor = (IPersonAccesor)row;
+			BaseGrid.ShowDetailsForm(personAccessor.Person);
 		}
 		public new PersonRefEdit OwnerEdit { get { return (PersonRefEdit)base.OwnerEdit; } }
 	}

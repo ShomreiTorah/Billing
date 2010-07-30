@@ -19,7 +19,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			var filterString = "Parent(Seat).Date > #1/1/" + year + "# AND Parent(Seat).Date < #12/31/" + year + "#";
 
 			grid.DataMember = null;
-			grid.DataSource = new DataView(Program.Data.SeatingReservations, filterString, "LastName", DataViewRowState.CurrentRows);
+			grid.DataSource = new DataView(Program.Data.SeatingReservations, filterString, null, DataViewRowState.CurrentRows);
 
 			Text = year.ToString(CultureInfo.CurrentCulture) + " Seating Reservations";
 		}

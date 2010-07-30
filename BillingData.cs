@@ -278,14 +278,22 @@ namespace ShomreiTorah.Billing {
 				}
 			}
 		}
-		public partial class EmailListRow {
+		public partial class EmailListRow : IPersonAccesor {
+			public MasterDirectoryRow Person { get { return MasterDirectoryRow; } }
 			public MailAddress MailAddress { get { return new MailAddress(Email, Name); } }
 		}
-		public partial class PledgesRow : ITransaction {
+		public partial class SeatingReservationsRow : IPersonAccesor {
+			public MasterDirectoryRow Person { get { return PledgesRow.MasterDirectoryRow; } }
+		}
+		public partial class StatementLogRow : IPersonAccesor {
+			public MasterDirectoryRow Person { get { return MasterDirectoryRow; } }
+		}
+		public partial class PledgesRow : IPersonAccesor, ITransaction {
+			public MasterDirectoryRow Person { get { return MasterDirectoryRow; } }
 			public decimal SignedAmount { get { return Amount; } }
 		}
 
-		public partial class PaymentsRow : ITransaction {
+		public partial class PaymentsRow : IPersonAccesor, ITransaction {
 			public decimal SignedAmount { get { return -Amount; } }
 
 			string lastCheckedCheckNumber;
@@ -315,6 +323,8 @@ namespace ShomreiTorah.Billing {
 				return String.Format(CultureInfo.CurrentCulture, "{0} #{1} for {2} has already been entered ({3:d}, {4:c}).\r\nAre you sure you aren't making a mistake?",
 																   duplicate.Method, duplicate.CheckNumber, duplicate.FullName, duplicate.Date, duplicate.Amount);
 			}
+
+			public MasterDirectoryRow Person { get { return MasterDirectoryRow; } }
 		}
 		[SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes", Justification = "This type is only IComparable for grid sorting")]
 		public sealed partial class DepositsRow : IComparable {
@@ -336,6 +346,9 @@ namespace ShomreiTorah.Billing {
 		string Account { get; }
 		///<summary>Gets the amount with the sign as reflected in the balance due.</summary>
 		decimal SignedAmount { get; }
+	}
+	public interface IPersonAccesor {
+		BillingData.MasterDirectoryRow Person { get; }
 	}
 }
 

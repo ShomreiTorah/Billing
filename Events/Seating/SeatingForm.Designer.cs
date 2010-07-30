@@ -26,24 +26,29 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SeatingForm));
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
 			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.personRefEdit = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemPersonRefEdit();
-			this.personSelector = new ShomreiTorah.Billing.Controls.PersonSelector();
-			this.addNewPanel = new DevExpress.XtraEditors.PanelControl();
-			this.addNewEdit = new ShomreiTorah.Billing.Events.Seating.SeatingReservationEdit();
-			this.addEntry = new DevExpress.XtraEditors.SimpleButton();
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.personEdit = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemPersonRefEdit();
 			this.colMensSeats = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.seatCountEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.colWomensSeats = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colBoysSeats = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colGirlsSeats = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colNotes = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colStatus = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.personRefEdit = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemPersonRefEdit();
+			this.personSelector = new ShomreiTorah.Billing.Controls.PersonSelector();
+			this.addNewPanel = new DevExpress.XtraEditors.PanelControl();
+			this.addNewEdit = new ShomreiTorah.Billing.Events.Seating.SeatingReservationEdit();
+			this.addEntry = new DevExpress.XtraEditors.SimpleButton();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.personEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.seatCountEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.addNewPanel)).BeginInit();
 			this.addNewPanel.SuspendLayout();
@@ -67,6 +72,9 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.grid.MainView = this.gridView;
 			this.grid.MenuManager = this.ribbon;
 			this.grid.Name = "grid";
+			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.personEdit,
+            this.seatCountEdit});
 			this.grid.Size = new System.Drawing.Size(1011, 493);
 			this.grid.TabIndex = 1;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -85,11 +93,92 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.gridView.GridControl = this.grid;
 			this.gridView.Name = "gridView";
 			// 
+			// colFullName
+			// 
+			this.colFullName.ColumnEdit = this.personEdit;
+			this.colFullName.FieldName = "FullName";
+			this.colFullName.GroupInterval = DevExpress.XtraGrid.ColumnGroupInterval.Alphabetical;
+			this.colFullName.Name = "colFullName";
+			this.colFullName.OptionsColumn.ReadOnly = true;
+			this.colFullName.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
+			this.colFullName.Visible = true;
+			this.colFullName.VisibleIndex = 0;
+			// 
+			// personEdit
+			// 
+			this.personEdit.AutoHeight = false;
+			this.personEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
+			this.personEdit.Name = "personEdit";
+			this.personEdit.ReadOnly = true;
+			this.personEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+			// 
+			// colMensSeats
+			// 
+			this.colMensSeats.ColumnEdit = this.seatCountEdit;
+			this.colMensSeats.FieldName = "MensSeats";
+			this.colMensSeats.Name = "colMensSeats";
+			this.colMensSeats.Visible = true;
+			this.colMensSeats.VisibleIndex = 1;
+			// 
+			// seatCountEdit
+			// 
+			this.seatCountEdit.AutoHeight = false;
+			this.seatCountEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.seatCountEdit.IsFloatValue = false;
+			this.seatCountEdit.Mask.EditMask = "N00";
+			this.seatCountEdit.MaxValue = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.seatCountEdit.Name = "seatCountEdit";
+			// 
+			// colWomensSeats
+			// 
+			this.colWomensSeats.ColumnEdit = this.seatCountEdit;
+			this.colWomensSeats.FieldName = "WomensSeats";
+			this.colWomensSeats.Name = "colWomensSeats";
+			this.colWomensSeats.Visible = true;
+			this.colWomensSeats.VisibleIndex = 2;
+			// 
+			// colBoysSeats
+			// 
+			this.colBoysSeats.ColumnEdit = this.seatCountEdit;
+			this.colBoysSeats.FieldName = "BoysSeats";
+			this.colBoysSeats.Name = "colBoysSeats";
+			this.colBoysSeats.Visible = true;
+			this.colBoysSeats.VisibleIndex = 3;
+			// 
+			// colGirlsSeats
+			// 
+			this.colGirlsSeats.ColumnEdit = this.seatCountEdit;
+			this.colGirlsSeats.FieldName = "GirlsSeats";
+			this.colGirlsSeats.Name = "colGirlsSeats";
+			this.colGirlsSeats.Visible = true;
+			this.colGirlsSeats.VisibleIndex = 4;
+			// 
+			// colNotes
+			// 
+			this.colNotes.FieldName = "Notes";
+			this.colNotes.Name = "colNotes";
+			this.colNotes.Visible = true;
+			this.colNotes.VisibleIndex = 5;
+			// 
+			// colStatus
+			// 
+			this.colStatus.FieldName = "Status";
+			this.colStatus.Name = "colStatus";
+			this.colStatus.Visible = true;
+			this.colStatus.VisibleIndex = 6;
+			// 
 			// personRefEdit
 			// 
 			this.personRefEdit.AutoHeight = false;
 			this.personRefEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Show Person", null, null, true)});
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -145,56 +234,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.addEntry.Text = "Add Reservation";
 			this.addEntry.Click += new System.EventHandler(this.addEntry_Click);
 			// 
-			// colFullName
-			// 
-			this.colFullName.FieldName = "FullName";
-			this.colFullName.Name = "colFullName";
-			this.colFullName.OptionsColumn.ReadOnly = true;
-			this.colFullName.Visible = true;
-			this.colFullName.VisibleIndex = 0;
-			// 
-			// colMensSeats
-			// 
-			this.colMensSeats.FieldName = "MensSeats";
-			this.colMensSeats.Name = "colMensSeats";
-			this.colMensSeats.Visible = true;
-			this.colMensSeats.VisibleIndex = 1;
-			// 
-			// colWomensSeats
-			// 
-			this.colWomensSeats.FieldName = "WomensSeats";
-			this.colWomensSeats.Name = "colWomensSeats";
-			this.colWomensSeats.Visible = true;
-			this.colWomensSeats.VisibleIndex = 2;
-			// 
-			// colBoysSeats
-			// 
-			this.colBoysSeats.FieldName = "BoysSeats";
-			this.colBoysSeats.Name = "colBoysSeats";
-			this.colBoysSeats.Visible = true;
-			this.colBoysSeats.VisibleIndex = 3;
-			// 
-			// colGirlsSeats
-			// 
-			this.colGirlsSeats.FieldName = "GirlsSeats";
-			this.colGirlsSeats.Name = "colGirlsSeats";
-			this.colGirlsSeats.Visible = true;
-			this.colGirlsSeats.VisibleIndex = 4;
-			// 
-			// colNotes
-			// 
-			this.colNotes.FieldName = "Notes";
-			this.colNotes.Name = "colNotes";
-			this.colNotes.Visible = true;
-			this.colNotes.VisibleIndex = 5;
-			// 
-			// colStatus
-			// 
-			this.colStatus.FieldName = "Status";
-			this.colStatus.Name = "colStatus";
-			this.colStatus.Visible = true;
-			this.colStatus.VisibleIndex = 6;
-			// 
 			// SeatingForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -212,6 +251,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.personEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.seatCountEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.addNewPanel)).EndInit();
 			this.addNewPanel.ResumeLayout(false);
@@ -235,5 +276,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private DevExpress.XtraGrid.Columns.GridColumn colGirlsSeats;
 		private DevExpress.XtraGrid.Columns.GridColumn colNotes;
 		private DevExpress.XtraGrid.Columns.GridColumn colStatus;
+		private Controls.Editors.RepositoryItemPersonRefEdit personEdit;
+		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit seatCountEdit;
 	}
 }
