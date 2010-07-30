@@ -278,22 +278,22 @@ namespace ShomreiTorah.Billing {
 				}
 			}
 		}
-		public partial class EmailListRow : IPersonAccesor {
+		public partial class EmailListRow : IPersonAccessor {
 			public MasterDirectoryRow Person { get { return MasterDirectoryRow; } }
 			public MailAddress MailAddress { get { return new MailAddress(Email, Name); } }
 		}
-		public partial class SeatingReservationsRow : IPersonAccesor {
+		public partial class SeatingReservationsRow : IPersonAccessor {
 			public MasterDirectoryRow Person { get { return PledgesRow.MasterDirectoryRow; } }
 		}
-		public partial class StatementLogRow : IPersonAccesor {
+		public partial class StatementLogRow : IPersonAccessor {
 			public MasterDirectoryRow Person { get { return MasterDirectoryRow; } }
 		}
-		public partial class PledgesRow : IPersonAccesor, ITransaction {
+		public partial class PledgesRow : IPersonAccessor, ITransaction {
 			public MasterDirectoryRow Person { get { return MasterDirectoryRow; } }
 			public decimal SignedAmount { get { return Amount; } }
 		}
 
-		public partial class PaymentsRow : IPersonAccesor, ITransaction {
+		public partial class PaymentsRow : IPersonAccessor, ITransaction {
 			public decimal SignedAmount { get { return -Amount; } }
 
 			string lastCheckedCheckNumber;
@@ -347,7 +347,7 @@ namespace ShomreiTorah.Billing {
 		///<summary>Gets the amount with the sign as reflected in the balance due.</summary>
 		decimal SignedAmount { get; }
 	}
-	public interface IPersonAccesor {
+	public interface IPersonAccessor {
 		BillingData.MasterDirectoryRow Person { get; }
 	}
 }

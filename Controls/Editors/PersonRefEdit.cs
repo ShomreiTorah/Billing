@@ -47,7 +47,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			base.RaiseButtonClick(e);
 
 			var row = OwnerEdit.SelectedRow;
-			var personAccessor = (IPersonAccesor)row;
+			var personAccessor = (IPersonAccessor)row;
 			BaseGrid.ShowDetailsForm(personAccessor.Person);
 		}
 		public new PersonRefEdit OwnerEdit { get { return (PersonRefEdit)base.OwnerEdit; } }
