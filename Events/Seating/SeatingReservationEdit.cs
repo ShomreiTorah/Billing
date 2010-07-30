@@ -30,6 +30,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			pledge.MasterDirectoryRow = person;
 			seatRes.Id = Guid.NewGuid();
 			seatRes.PledgesRow = pledge;
+			pledgeTypeEdit.Focus();
 		}
 
 		public bool CommitNew() {

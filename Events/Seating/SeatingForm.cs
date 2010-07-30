@@ -23,11 +23,12 @@ namespace ShomreiTorah.Billing.Events.Seating {
 
 			Text = year.ToString(CultureInfo.CurrentCulture) + " Seating Reservations";
 		}
+		#region AddEntry Panel
 
 		private void personSelector_SelectedPersonChanged(object sender, EventArgs e) {
 			if (personSelector.SelectedPerson == null) return;
-			addNewEdit.BeginAddNew(personSelector.SelectedPerson);
 			addNewPanel.Show();
+			addNewEdit.BeginAddNew(personSelector.SelectedPerson);
 		}
 
 		private void personSelector_SelectingPerson(object sender, SelectingPersonEventArgs e) {
@@ -41,9 +42,17 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private void addEntry_Click(object sender, EventArgs e) {
 			if (!addNewEdit.CommitNew())
 				return;
-
+			CloseAddEndtryPanel();
+		}
+		void CloseAddEndtryPanel(bool confirm = false) {
+			if (!addNewPanel.Visible) return;
+			if (confirm && DialogResult.No == XtraMessageBox.Show("Are you sure you wish to cancel adding this seating reservation?",
+																  "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+				return;
 			addNewPanel.Hide();
 			personSelector.SelectedPerson = null;
 		}
+		private void cancelAddEntry_Click(object sender, EventArgs e) { CloseAddEndtryPanel(confirm:true); }
+		#endregion
 	}
 }

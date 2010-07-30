@@ -391,6 +391,7 @@
     <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <None Include="Resources\Close.png" />
     <None Include="Resources\Add32.png" />
     <None Include="Resources\Seating32.png" />
     <None Include="Email Templates\EmailPage.master">

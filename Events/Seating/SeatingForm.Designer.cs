@@ -42,6 +42,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.personRefEdit = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemPersonRefEdit();
 			this.personSelector = new ShomreiTorah.Billing.Controls.PersonSelector();
 			this.addNewPanel = new DevExpress.XtraEditors.PanelControl();
+			this.cancelAddEntry = new DevExpress.XtraEditors.SimpleButton();
 			this.addNewEdit = new ShomreiTorah.Billing.Events.Seating.SeatingReservationEdit();
 			this.addEntry = new DevExpress.XtraEditors.SimpleButton();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
@@ -76,7 +77,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
             this.personEdit,
             this.seatCountEdit});
 			this.grid.Size = new System.Drawing.Size(1011, 493);
-			this.grid.TabIndex = 1;
+			this.grid.TabIndex = 2;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
 			// 
@@ -195,7 +196,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.personSelector.ScrollPosition = 0;
 			this.personSelector.SearchTable = null;
 			this.personSelector.Size = new System.Drawing.Size(1011, 20);
-			this.personSelector.TabIndex = 2;
+			this.personSelector.TabIndex = 0;
 			this.personSelector.TabStop = false;
 			this.personSelector.Value = ((object)(resources.GetObject("personSelector.Value")));
 			this.personSelector.SelectedPersonChanged += new System.EventHandler(this.personSelector_SelectedPersonChanged);
@@ -203,14 +204,32 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// 
 			// addNewPanel
 			// 
+			this.addNewPanel.Controls.Add(this.cancelAddEntry);
 			this.addNewPanel.Controls.Add(this.addNewEdit);
 			this.addNewPanel.Controls.Add(this.addEntry);
 			this.addNewPanel.Dock = System.Windows.Forms.DockStyle.Top;
 			this.addNewPanel.Location = new System.Drawing.Point(0, 136);
 			this.addNewPanel.Name = "addNewPanel";
 			this.addNewPanel.Size = new System.Drawing.Size(1011, 97);
-			this.addNewPanel.TabIndex = 3;
+			this.addNewPanel.TabIndex = 1;
 			this.addNewPanel.Visible = false;
+			// 
+			// cancelAddEntry
+			// 
+			this.cancelAddEntry.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cancelAddEntry.Appearance.BackColor = System.Drawing.Color.Transparent;
+			this.cancelAddEntry.Appearance.Options.UseBackColor = true;
+			this.cancelAddEntry.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat;
+			this.cancelAddEntry.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.cancelAddEntry.Image = global::ShomreiTorah.Billing.Properties.Resources.Close;
+			this.cancelAddEntry.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.cancelAddEntry.Location = new System.Drawing.Point(913, 0);
+			this.cancelAddEntry.Name = "cancelAddEntry";
+			this.cancelAddEntry.Size = new System.Drawing.Size(13, 13);
+			this.cancelAddEntry.TabIndex = 2;
+			this.cancelAddEntry.Text = "Close";
+			this.cancelAddEntry.ToolTip = "Close";
+			this.cancelAddEntry.Click += new System.EventHandler(this.cancelAddEntry_Click);
 			// 
 			// addNewEdit
 			// 
@@ -218,7 +237,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.addNewEdit.Location = new System.Drawing.Point(2, 2);
 			this.addNewEdit.Name = "addNewEdit";
 			this.addNewEdit.Size = new System.Drawing.Size(924, 93);
-			this.addNewEdit.TabIndex = 1;
+			this.addNewEdit.TabIndex = 0;
 			// 
 			// addEntry
 			// 
@@ -230,7 +249,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.addEntry.Location = new System.Drawing.Point(926, 2);
 			this.addEntry.Name = "addEntry";
 			this.addEntry.Size = new System.Drawing.Size(83, 93);
-			this.addEntry.TabIndex = 0;
+			this.addEntry.TabIndex = 1;
 			this.addEntry.Text = "Add Reservation";
 			this.addEntry.Click += new System.EventHandler(this.addEntry_Click);
 			// 
@@ -278,5 +297,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private DevExpress.XtraGrid.Columns.GridColumn colStatus;
 		private Controls.Editors.RepositoryItemPersonRefEdit personEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit seatCountEdit;
+		private DevExpress.XtraEditors.SimpleButton cancelAddEntry;
 	}
 }

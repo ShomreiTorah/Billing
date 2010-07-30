@@ -30,7 +30,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
 			this.spinEdit1 = new DevExpress.XtraEditors.SpinEdit();
 			this.pledgesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.comboBoxEdit1 = new DevExpress.XtraEditors.ComboBoxEdit();
+			this.pledgeTypeEdit = new DevExpress.XtraEditors.ComboBoxEdit();
 			this.IdTextEdit = new DevExpress.XtraEditors.TextEdit();
 			this.PledgeIdTextEdit = new DevExpress.XtraEditors.TextEdit();
 			this.MensSeatsSpinEdit = new DevExpress.XtraEditors.SpinEdit();
@@ -59,7 +59,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.dataLayoutControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spinEdit1.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesBindingSource)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit1.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pledgeTypeEdit.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.IdTextEdit.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.PledgeIdTextEdit.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.MensSeatsSpinEdit.Properties)).BeginInit();
@@ -107,7 +107,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// dataLayoutControl1
 			// 
 			this.dataLayoutControl1.Controls.Add(this.spinEdit1);
-			this.dataLayoutControl1.Controls.Add(this.comboBoxEdit1);
+			this.dataLayoutControl1.Controls.Add(this.pledgeTypeEdit);
 			this.dataLayoutControl1.Controls.Add(this.IdTextEdit);
 			this.dataLayoutControl1.Controls.Add(this.PledgeIdTextEdit);
 			this.dataLayoutControl1.Controls.Add(this.MensSeatsSpinEdit);
@@ -125,6 +125,9 @@ namespace ShomreiTorah.Billing.Events.Seating {
             this.ItemForRowVersion});
 			this.dataLayoutControl1.Location = new System.Drawing.Point(0, 0);
 			this.dataLayoutControl1.Name = "dataLayoutControl1";
+			this.dataLayoutControl1.OptionsFocus.AllowFocusControlOnLabelClick = true;
+			this.dataLayoutControl1.OptionsFocus.EnableAutoTabOrder = false;
+			this.dataLayoutControl1.OptionsItemText.TextAlignMode = DevExpress.XtraLayout.TextAlignMode.AlignInGroups;
 			this.dataLayoutControl1.Root = this.layoutControlGroup1;
 			this.dataLayoutControl1.Size = new System.Drawing.Size(647, 92);
 			this.dataLayoutControl1.TabIndex = 0;
@@ -156,20 +159,20 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.pledgesBindingSource.DataMember = "Pledges";
 			this.pledgesBindingSource.DataSource = this.billingData;
 			// 
-			// comboBoxEdit1
+			// pledgeTypeEdit
 			// 
-			this.comboBoxEdit1.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.pledgesBindingSource, "Type", true));
-			this.comboBoxEdit1.Location = new System.Drawing.Point(89, 12);
-			this.comboBoxEdit1.Name = "comboBoxEdit1";
-			this.comboBoxEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+			this.pledgeTypeEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.pledgesBindingSource, "Type", true));
+			this.pledgeTypeEdit.Location = new System.Drawing.Point(89, 12);
+			this.pledgeTypeEdit.Name = "pledgeTypeEdit";
+			this.pledgeTypeEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.comboBoxEdit1.Properties.Items.AddRange(new object[] {
+			this.pledgeTypeEdit.Properties.Items.AddRange(new object[] {
             "ימים נוראים Seating",
             "Membership",
             "Associate Membership"});
-			this.comboBoxEdit1.Size = new System.Drawing.Size(96, 20);
-			this.comboBoxEdit1.StyleController = this.dataLayoutControl1;
-			this.comboBoxEdit1.TabIndex = 0;
+			this.pledgeTypeEdit.Size = new System.Drawing.Size(96, 20);
+			this.pledgeTypeEdit.StyleController = this.dataLayoutControl1;
+			this.pledgeTypeEdit.TabIndex = 0;
 			// 
 			// IdTextEdit
 			// 
@@ -201,6 +204,13 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.MensSeatsSpinEdit.Name = "MensSeatsSpinEdit";
 			this.MensSeatsSpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.MensSeatsSpinEdit.Properties.IsFloatValue = false;
+			this.MensSeatsSpinEdit.Properties.Mask.EditMask = "N00";
+			this.MensSeatsSpinEdit.Properties.MaxValue = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
 			this.MensSeatsSpinEdit.Size = new System.Drawing.Size(64, 20);
 			this.MensSeatsSpinEdit.StyleController = this.dataLayoutControl1;
 			this.MensSeatsSpinEdit.TabIndex = 2;
@@ -217,6 +227,13 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.WomensSeatsSpinEdit.Name = "WomensSeatsSpinEdit";
 			this.WomensSeatsSpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.WomensSeatsSpinEdit.Properties.IsFloatValue = false;
+			this.WomensSeatsSpinEdit.Properties.Mask.EditMask = "N00";
+			this.WomensSeatsSpinEdit.Properties.MaxValue = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
 			this.WomensSeatsSpinEdit.Size = new System.Drawing.Size(64, 20);
 			this.WomensSeatsSpinEdit.StyleController = this.dataLayoutControl1;
 			this.WomensSeatsSpinEdit.TabIndex = 3;
@@ -233,6 +250,13 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.BoysSeatsSpinEdit.Name = "BoysSeatsSpinEdit";
 			this.BoysSeatsSpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.BoysSeatsSpinEdit.Properties.IsFloatValue = false;
+			this.BoysSeatsSpinEdit.Properties.Mask.EditMask = "N00";
+			this.BoysSeatsSpinEdit.Properties.MaxValue = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
 			this.BoysSeatsSpinEdit.Size = new System.Drawing.Size(50, 20);
 			this.BoysSeatsSpinEdit.StyleController = this.dataLayoutControl1;
 			this.BoysSeatsSpinEdit.TabIndex = 4;
@@ -249,6 +273,13 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.GirlsSeatsSpinEdit.Name = "GirlsSeatsSpinEdit";
 			this.GirlsSeatsSpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.GirlsSeatsSpinEdit.Properties.IsFloatValue = false;
+			this.GirlsSeatsSpinEdit.Properties.Mask.EditMask = "N00";
+			this.GirlsSeatsSpinEdit.Properties.MaxValue = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
 			this.GirlsSeatsSpinEdit.Size = new System.Drawing.Size(48, 20);
 			this.GirlsSeatsSpinEdit.StyleController = this.dataLayoutControl1;
 			this.GirlsSeatsSpinEdit.TabIndex = 5;
@@ -397,7 +428,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// 
 			// layoutControlItem1
 			// 
-			this.layoutControlItem1.Control = this.comboBoxEdit1;
+			this.layoutControlItem1.Control = this.pledgeTypeEdit;
 			this.layoutControlItem1.CustomizationFormText = "Pledge Type";
 			this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlItem1.Name = "layoutControlItem1";
@@ -439,7 +470,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.dataLayoutControl1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.spinEdit1.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesBindingSource)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit1.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pledgeTypeEdit.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.IdTextEdit.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.PledgeIdTextEdit.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.MensSeatsSpinEdit.Properties)).EndInit();
@@ -492,7 +523,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private DevExpress.XtraLayout.LayoutControlItem ItemForGirlsSeats;
 		private DevExpress.XtraEditors.SpinEdit spinEdit1;
 		private System.Windows.Forms.BindingSource pledgesBindingSource;
-		private DevExpress.XtraEditors.ComboBoxEdit comboBoxEdit1;
+		private DevExpress.XtraEditors.ComboBoxEdit pledgeTypeEdit;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
 	}
