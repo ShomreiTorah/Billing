@@ -25,8 +25,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SeatingForm));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
 			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -35,7 +35,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.personEdit = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemPersonRefEdit();
 			this.colPledgeType = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.currencyEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
+			this.currencyEditor = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.colMensSeats = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.seatCountEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.colWomensSeats = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -49,16 +49,15 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.cancelAddEntry = new DevExpress.XtraEditors.SimpleButton();
 			this.addNewEdit = new ShomreiTorah.Billing.Events.Seating.SeatingReservationEdit();
 			this.addEntry = new DevExpress.XtraEditors.SimpleButton();
-			this.currencyEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.currencyEditor)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.seatCountEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.addNewPanel)).BeginInit();
 			this.addNewPanel.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.currencyEdit)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbon
@@ -82,7 +81,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.personEdit,
             this.seatCountEdit,
-            this.currencyEdit});
+            this.currencyEditor});
 			this.grid.Size = new System.Drawing.Size(1011, 493);
 			this.grid.TabIndex = 2;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -132,7 +131,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// 
 			this.personEdit.AutoHeight = false;
 			this.personEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject3, "Show Person", null, null, true)});
 			this.personEdit.Name = "personEdit";
 			this.personEdit.ReadOnly = true;
 			this.personEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -149,28 +148,29 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// colAmount
 			// 
 			this.colAmount.Caption = "Amount";
-			// 
-			// currencyEdit
-			// 
-			this.currencyEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.currencyEdit.DisplayFormat.FormatString = "c";
-			this.currencyEdit.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.currencyEdit.EditFormat.FormatString = "c";
-			this.currencyEdit.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.currencyEdit.Increment = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-			this.currencyEdit.Mask.EditMask = "c";
-			this.currencyEdit.Name = "currencyEdit";
-			this.colAmount.ColumnEdit = this.currencyEdit;
+			this.colAmount.ColumnEdit = this.currencyEditor;
 			this.colAmount.FieldName = "Pledge/Amount";
 			this.colAmount.Name = "colAmount";
 			this.colAmount.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
 			this.colAmount.Visible = true;
 			this.colAmount.VisibleIndex = 3;
+			// 
+			// currencyEditor
+			// 
+			this.currencyEditor.AutoHeight = false;
+			this.currencyEditor.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.currencyEditor.DisplayFormat.FormatString = "c";
+			this.currencyEditor.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.currencyEditor.EditFormat.FormatString = "c";
+			this.currencyEditor.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.currencyEditor.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.currencyEditor.Mask.EditMask = "c";
+			this.currencyEditor.Name = "currencyEditor";
 			// 
 			// colMensSeats
 			// 
@@ -236,7 +236,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// 
 			this.personRefEdit.AutoHeight = false;
 			this.personRefEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Show Person", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject4, "Show Person", null, null, true)});
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -310,18 +310,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.addEntry.Text = "Add Reservation";
 			this.addEntry.Click += new System.EventHandler(this.addEntry_Click);
 			// 
-			// currencyEdit
-			// 
-			this.currencyEdit.AutoHeight = false;
-			this.currencyEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.currencyEdit.DisplayFormat.FormatString = "c";
-			this.currencyEdit.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.currencyEdit.EditFormat.FormatString = "c";
-			this.currencyEdit.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.currencyEdit.Mask.EditMask = "c";
-			this.currencyEdit.Name = "currencyEdit";
-			// 
 			// SeatingForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -340,11 +328,11 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.currencyEditor)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.seatCountEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.addNewPanel)).EndInit();
 			this.addNewPanel.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.currencyEdit)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -371,6 +359,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private DevExpress.XtraGrid.Columns.GridColumn colDate;
 		private DevExpress.XtraGrid.Columns.GridColumn colPledgeType;
 		private DevExpress.XtraGrid.Columns.GridColumn colAmount;
-		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit currencyEdit;
+		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit currencyEditor;
 	}
 }
