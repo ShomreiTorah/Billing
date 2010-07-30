@@ -12,6 +12,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 	public partial class SeatingReservationEdit : XtraUserControl {
 		public SeatingReservationEdit() {
 			InitializeComponent();
+			pledgeTypeEdit.Properties.Assign(SeatingInfo.PledgeTypeEdit);
+
 			if (Program.Data != null) {//Bugfix for nested designer
 				pledgesBindingSource.DataSource = Program.Data;
 				seatingReservationsBindingSource.DataSource = Program.Data;

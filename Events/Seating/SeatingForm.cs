@@ -18,6 +18,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		public SeatingForm(int year) {
 			InitializeComponent();
 
+			colPledgeType.ColumnEdit = SeatingInfo.PledgeTypeEdit;
 			this.year = year;
 			var filterString = "Parent(Seat).Date > #1/1/" + year + "# AND Parent(Seat).Date < #12/31/" + year + "#";
 

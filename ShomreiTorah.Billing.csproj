@@ -166,6 +166,7 @@
     <Compile Include="Events\Seating\SeatingForm.Designer.cs">
       <DependentUpon>SeatingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\Seating\SeatingInfo.cs" />
     <Compile Include="Events\Seating\SeatingReservationEdit.cs">
       <SubType>UserControl</SubType>
     </Compile>

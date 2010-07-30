@@ -35,6 +35,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.personEdit = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemPersonRefEdit();
 			this.colPledgeType = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.currencyEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.colMensSeats = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.seatCountEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.colWomensSeats = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -48,6 +49,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.cancelAddEntry = new DevExpress.XtraEditors.SimpleButton();
 			this.addNewEdit = new ShomreiTorah.Billing.Events.Seating.SeatingReservationEdit();
 			this.addEntry = new DevExpress.XtraEditors.SimpleButton();
+			this.currencyEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
@@ -56,6 +58,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.addNewPanel)).BeginInit();
 			this.addNewPanel.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.currencyEdit)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbon
@@ -78,7 +81,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.grid.Name = "grid";
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.personEdit,
-            this.seatCountEdit});
+            this.seatCountEdit,
+            this.currencyEdit});
 			this.grid.Size = new System.Drawing.Size(1011, 493);
 			this.grid.TabIndex = 2;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -145,6 +149,23 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// colAmount
 			// 
 			this.colAmount.Caption = "Amount";
+			// 
+			// currencyEdit
+			// 
+			this.currencyEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.currencyEdit.DisplayFormat.FormatString = "c";
+			this.currencyEdit.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.currencyEdit.EditFormat.FormatString = "c";
+			this.currencyEdit.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.currencyEdit.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.currencyEdit.Mask.EditMask = "c";
+			this.currencyEdit.Name = "currencyEdit";
+			this.colAmount.ColumnEdit = this.currencyEdit;
 			this.colAmount.FieldName = "Pledge/Amount";
 			this.colAmount.Name = "colAmount";
 			this.colAmount.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
@@ -289,6 +310,18 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.addEntry.Text = "Add Reservation";
 			this.addEntry.Click += new System.EventHandler(this.addEntry_Click);
 			// 
+			// currencyEdit
+			// 
+			this.currencyEdit.AutoHeight = false;
+			this.currencyEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.currencyEdit.DisplayFormat.FormatString = "c";
+			this.currencyEdit.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.currencyEdit.EditFormat.FormatString = "c";
+			this.currencyEdit.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.currencyEdit.Mask.EditMask = "c";
+			this.currencyEdit.Name = "currencyEdit";
+			// 
 			// SeatingForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -311,6 +344,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.addNewPanel)).EndInit();
 			this.addNewPanel.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.currencyEdit)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -337,5 +371,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private DevExpress.XtraGrid.Columns.GridColumn colDate;
 		private DevExpress.XtraGrid.Columns.GridColumn colPledgeType;
 		private DevExpress.XtraGrid.Columns.GridColumn colAmount;
+		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit currencyEdit;
 	}
 }
