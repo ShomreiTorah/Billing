@@ -30,8 +30,11 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.personEdit = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemPersonRefEdit();
+			this.colPledgeType = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colMensSeats = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.seatCountEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.colWomensSeats = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -84,7 +87,10 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// gridView
 			// 
 			this.gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colDate,
             this.colFullName,
+            this.colPledgeType,
+            this.colAmount,
             this.colMensSeats,
             this.colWomensSeats,
             this.colBoysSeats,
@@ -93,6 +99,18 @@ namespace ShomreiTorah.Billing.Events.Seating {
             this.colStatus});
 			this.gridView.GridControl = this.grid;
 			this.gridView.Name = "gridView";
+			this.gridView.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gridView_CustomUnboundColumnData);
+			// 
+			// colDate
+			// 
+			this.colDate.Caption = "Date";
+			this.colDate.FieldName = "Pledge/Date";
+			this.colDate.Name = "colDate";
+			this.colDate.OptionsColumn.AllowEdit = false;
+			this.colDate.OptionsColumn.ReadOnly = true;
+			this.colDate.UnboundType = DevExpress.Data.UnboundColumnType.DateTime;
+			this.colDate.Visible = true;
+			this.colDate.VisibleIndex = 1;
 			// 
 			// colFullName
 			// 
@@ -115,13 +133,31 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.personEdit.ReadOnly = true;
 			this.personEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 			// 
+			// colPledgeType
+			// 
+			this.colPledgeType.Caption = "Pledge Type";
+			this.colPledgeType.FieldName = "Pledge/Type";
+			this.colPledgeType.Name = "colPledgeType";
+			this.colPledgeType.UnboundType = DevExpress.Data.UnboundColumnType.String;
+			this.colPledgeType.Visible = true;
+			this.colPledgeType.VisibleIndex = 2;
+			// 
+			// colAmount
+			// 
+			this.colAmount.Caption = "Amount";
+			this.colAmount.FieldName = "Pledge/Amount";
+			this.colAmount.Name = "colAmount";
+			this.colAmount.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+			this.colAmount.Visible = true;
+			this.colAmount.VisibleIndex = 3;
+			// 
 			// colMensSeats
 			// 
 			this.colMensSeats.ColumnEdit = this.seatCountEdit;
 			this.colMensSeats.FieldName = "MensSeats";
 			this.colMensSeats.Name = "colMensSeats";
 			this.colMensSeats.Visible = true;
-			this.colMensSeats.VisibleIndex = 1;
+			this.colMensSeats.VisibleIndex = 4;
 			// 
 			// seatCountEdit
 			// 
@@ -143,7 +179,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colWomensSeats.FieldName = "WomensSeats";
 			this.colWomensSeats.Name = "colWomensSeats";
 			this.colWomensSeats.Visible = true;
-			this.colWomensSeats.VisibleIndex = 2;
+			this.colWomensSeats.VisibleIndex = 5;
 			// 
 			// colBoysSeats
 			// 
@@ -151,7 +187,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colBoysSeats.FieldName = "BoysSeats";
 			this.colBoysSeats.Name = "colBoysSeats";
 			this.colBoysSeats.Visible = true;
-			this.colBoysSeats.VisibleIndex = 3;
+			this.colBoysSeats.VisibleIndex = 6;
 			// 
 			// colGirlsSeats
 			// 
@@ -159,21 +195,21 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colGirlsSeats.FieldName = "GirlsSeats";
 			this.colGirlsSeats.Name = "colGirlsSeats";
 			this.colGirlsSeats.Visible = true;
-			this.colGirlsSeats.VisibleIndex = 4;
+			this.colGirlsSeats.VisibleIndex = 7;
 			// 
 			// colNotes
 			// 
 			this.colNotes.FieldName = "Notes";
 			this.colNotes.Name = "colNotes";
 			this.colNotes.Visible = true;
-			this.colNotes.VisibleIndex = 5;
+			this.colNotes.VisibleIndex = 8;
 			// 
 			// colStatus
 			// 
 			this.colStatus.FieldName = "Status";
 			this.colStatus.Name = "colStatus";
 			this.colStatus.Visible = true;
-			this.colStatus.VisibleIndex = 6;
+			this.colStatus.VisibleIndex = 9;
 			// 
 			// personRefEdit
 			// 
@@ -298,5 +334,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private Controls.Editors.RepositoryItemPersonRefEdit personEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit seatCountEdit;
 		private DevExpress.XtraEditors.SimpleButton cancelAddEntry;
+		private DevExpress.XtraGrid.Columns.GridColumn colDate;
+		private DevExpress.XtraGrid.Columns.GridColumn colPledgeType;
+		private DevExpress.XtraGrid.Columns.GridColumn colAmount;
 	}
 }

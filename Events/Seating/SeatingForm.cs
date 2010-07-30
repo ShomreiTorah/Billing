@@ -8,10 +8,13 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using System.Globalization;
 using ShomreiTorah.Billing.Controls;
+using DevExpress.XtraGrid.Views.Base;
+using System.IO;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	partial class SeatingForm : Forms.GridFormBase {
 		readonly int year;
+		readonly DataView dataSource;
 		public SeatingForm(int year) {
 			InitializeComponent();
 
@@ -19,12 +22,12 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			var filterString = "Parent(Seat).Date > #1/1/" + year + "# AND Parent(Seat).Date < #12/31/" + year + "#";
 
 			grid.DataMember = null;
-			grid.DataSource = new DataView(Program.Data.SeatingReservations, filterString, null, DataViewRowState.CurrentRows);
+			grid.DataSource = dataSource = new DataView(Program.Data.SeatingReservations, filterString, null, DataViewRowState.CurrentRows);
 
 			Text = year.ToString(CultureInfo.CurrentCulture) + " Seating Reservations";
 		}
-		#region AddEntry Panel
 
+		#region AddEntry Panel
 		private void personSelector_SelectedPersonChanged(object sender, EventArgs e) {
 			if (personSelector.SelectedPerson == null) return;
 			addNewPanel.Show();
@@ -52,7 +55,19 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			addNewPanel.Hide();
 			personSelector.SelectedPerson = null;
 		}
-		private void cancelAddEntry_Click(object sender, EventArgs e) { CloseAddEndtryPanel(confirm:true); }
+		private void cancelAddEntry_Click(object sender, EventArgs e) { CloseAddEndtryPanel(confirm: true); }
 		#endregion
+
+		private void gridView_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
+			if (e.Column.FieldName.StartsWith("Pledge/")) {
+				var columnName = Path.GetFileName(e.Column.FieldName);
+				var row = (BillingData.SeatingReservationsRow)dataSource[e.ListSourceRowIndex].Row;
+
+				if (e.IsGetData)
+					e.Value = row.PledgesRow[columnName];
+				else
+					row.PledgesRow[columnName] = e.Value;
+			}
+		}
 	}
 }
