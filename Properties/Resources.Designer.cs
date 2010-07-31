@@ -81,6 +81,13 @@ namespace ShomreiTorah.Billing.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap CalculatorButton {
+            get {
+                object obj = ResourceManager.GetObject("CalculatorButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Calendar16 {
             get {
                 object obj = ResourceManager.GetObject("Calendar16", resourceCulture);

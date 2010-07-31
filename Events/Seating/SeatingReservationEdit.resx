@@ -126,4 +126,16 @@
   <metadata name="pledgesBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>366, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="amountEditor.Properties.Buttons" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAAgAAAAKCAYAAACJxx+AAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEwSURBVChTHctdL0JxAMfx/zvyGswL6MqNK7PmwgxbO5uh
+        JQwrNunUCpMeJDKlE9VprcmpoRSbx/SEjdGFzZW7L/rdfG5+X1FrvhKMFpADBWadGaSlJMOzCtKiwlPj
+        GRGKJInm3pgOfWNXvhhb+6RnvI7elMBgtiN2DpI033/YK4HrBGzH30x46/hjlb+DA+HbVWjXX/B1ddPK
+        lzpW42nOg3GGpmyIjUCUVquNpha5LtdQ4wXyuRv83hR6yYpwevYp3X2gG1WI5+odtxMPLHsL9I/NI1bc
+        O1w9tgmr92TOGvgOy8SyVVwhjb6hGYRF9qNV3jtlOHXbUQ4WWXBn6B00IczWdQ7Tl0RSFwQip2yFs7gC
+        KqueI3QDk4j/WRxBjNZNpDkXhmmZEaOdUZNMTNX4BZlH6WRKmq0aAAAAAElFTkSuQmCC
+</value>
+  </data>
 </root>
