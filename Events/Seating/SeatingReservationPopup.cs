@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using System.Security.Permissions;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	public partial class SeatingReservationPopup : XtraForm {
@@ -26,6 +27,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				Close();
 		}
 
+		[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
 			if (keyData == Keys.Escape) {
 				Close();

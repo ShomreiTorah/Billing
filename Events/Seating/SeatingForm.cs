@@ -60,7 +60,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		#endregion
 
 		private void gridView_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
-			if (e.Column.FieldName.StartsWith("Pledge/")) {
+			if (e.Column.FieldName.StartsWith("Pledge/", StringComparison.OrdinalIgnoreCase)) {
 				var columnName = Path.GetFileName(e.Column.FieldName);
 				var row = (BillingData.SeatingReservationsRow)dataSource[e.ListSourceRowIndex].Row;
 
