@@ -284,6 +284,7 @@ namespace ShomreiTorah.Billing {
 		}
 		public partial class SeatingReservationsRow : IPersonAccessor {
 			public MasterDirectoryRow Person { get { return PledgesRow.MasterDirectoryRow; } }
+			public int TotalSeats { get { return MensSeats + WomensSeats + BoysSeats + GirlsSeats; } }
 		}
 		public partial class StatementLogRow : IPersonAccessor {
 			public MasterDirectoryRow Person { get { return MasterDirectoryRow; } }

@@ -760,21 +760,21 @@ SELECT Id, PledgeId, MensSeats, WomensSeats, BoysSeats, GirlsSeats, Notes, Statu
               <xs:element name="PersonId" msdata:DataType="System.Guid, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnPersonId" msprop:Generator_ColumnPropNameInRow="PersonId" msprop:Generator_ColumnPropNameInTable="PersonIdColumn" msprop:Generator_UserColumnName="PersonId" type="xs:string" />
               <xs:element name="FullName" msdata:ReadOnly="true" msdata:Expression="Parent.FullName" msprop:Generator_ColumnVarNameInTable="columnFullName" msprop:Generator_ColumnPropNameInRow="FullName" msprop:Generator_ColumnPropNameInTable="FullNameColumn" msprop:Generator_UserColumnName="FullName" type="xs:string" />
               <xs:element name="Date" msprop:Generator_ColumnVarNameInTable="columnDate" msprop:Generator_ColumnPropNameInRow="Date" msprop:Generator_ColumnPropNameInTable="DateColumn" msprop:Generator_UserColumnName="Date" type="xs:dateTime" />
-              <xs:element name="Type" msprop:Generator_ColumnVarNameInTable="columnType" msprop:Generator_ColumnPropNameInRow="Type" msprop:Generator_ColumnPropNameInTable="TypeColumn" msprop:Generator_UserColumnName="Type">
+              <xs:element name="Type" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="Type" msprop:Generator_ColumnVarNameInTable="columnType" msprop:Generator_ColumnPropNameInTable="TypeColumn" msprop:Generator_UserColumnName="Type">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="64" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="SubType" msprop:Generator_ColumnVarNameInTable="columnSubType" msprop:Generator_ColumnPropNameInRow="SubType" msprop:Generator_ColumnPropNameInTable="SubTypeColumn" msprop:Generator_UserColumnName="SubType" default="">
+              <xs:element name="SubType" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="SubType" msprop:Generator_ColumnVarNameInTable="columnSubType" msprop:Generator_ColumnPropNameInTable="SubTypeColumn" msprop:Generator_UserColumnName="SubType" default="">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="64" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Account" msprop:Generator_ColumnVarNameInTable="columnAccount" msprop:Generator_ColumnPropNameInRow="Account" msprop:Generator_ColumnPropNameInTable="AccountColumn" msprop:Generator_UserColumnName="Account" type="xs:string" default="Operating Fund" />
+              <xs:element name="Account" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="Account" msprop:Generator_ColumnVarNameInTable="columnAccount" msprop:Generator_ColumnPropNameInTable="AccountColumn" msprop:Generator_UserColumnName="Account" type="xs:string" default="Operating Fund" />
               <xs:element name="Amount" msprop:Generator_ColumnVarNameInTable="columnAmount" msprop:Generator_ColumnPropNameInRow="Amount" msprop:Generator_ColumnPropNameInTable="AmountColumn" msprop:Generator_UserColumnName="Amount" type="xs:decimal" />
               <xs:element name="Note" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="Note" msprop:Generator_ColumnVarNameInTable="columnNote" msprop:Generator_ColumnPropNameInTable="NoteColumn" msprop:Generator_UserColumnName="Note" default="" minOccurs="0">
                 <xs:simpleType>
@@ -950,6 +950,10 @@ SELECT Id, PledgeId, MensSeats, WomensSeats, BoysSeats, GirlsSeats, Notes, Statu
       <xs:selector xpath=".//mstns:SeatingReservations" />
       <xs:field xpath="mstns:Id" />
     </xs:unique>
+    <xs:keyref name="Seat" refer="Pledges_Constraint1" msprop:rel_Generator_UserChildTable="SeatingReservations" msprop:rel_Generator_ChildPropName="GetSeatingReservationsRows" msprop:rel_Generator_ParentPropName="PledgesRow" msprop:rel_Generator_UserRelationName="Seat" msprop:rel_Generator_RelationVarName="relationSeat" msprop:rel_Generator_UserParentTable="Pledges" msdata:UpdateRule="None">
+      <xs:selector xpath=".//mstns:SeatingReservations" />
+      <xs:field xpath="mstns:PledgeId" />
+    </xs:keyref>
     <xs:keyref name="Statements" refer="MasterDirectory_Constraint1" msprop:rel_Generator_UserChildTable="StatementLog" msprop:rel_Generator_ChildPropName="GetStatementLogRows" msprop:rel_Generator_ParentPropName="MasterDirectoryRow" msprop:rel_Generator_UserRelationName="Statements" msprop:rel_Generator_RelationVarName="relationStatements" msprop:rel_Generator_UserParentTable="MasterDirectory" msdata:UpdateRule="None" msdata:DeleteRule="None">
       <xs:selector xpath=".//mstns:StatementLog" />
       <xs:field xpath="mstns:PersonId" />
@@ -967,7 +971,6 @@ SELECT Id, PledgeId, MensSeats, WomensSeats, BoysSeats, GirlsSeats, Notes, Statu
     <xs:appinfo>
       <msdata:Relationship name="EmailAddresses" msdata:parent="MasterDirectory" msdata:child="EmailList" msdata:parentkey="Id" msdata:childkey="PersonId" msprop:Generator_UserChildTable="EmailList" msprop:Generator_ChildPropName="GetEmailListRows" msprop:Generator_ParentPropName="MasterDirectoryRow" msprop:Generator_UserRelationName="EmailAddresses" msprop:Generator_RelationVarName="relationEmailAddresses" msprop:Generator_UserParentTable="MasterDirectory" />
       <msdata:Relationship name="Deposit" msdata:parent="Deposits" msdata:child="Payments" msdata:parentkey="DepositId" msdata:childkey="DepositId" msprop:Generator_UserChildTable="Payments" msprop:Generator_ChildPropName="GetPaymentsRows" msprop:Generator_ParentPropName="DepositsRow" msprop:Generator_UserRelationName="Deposit" msprop:Generator_RelationVarName="relationDeposit" msprop:Generator_UserParentTable="Deposits" />
-      <msdata:Relationship name="Seat" msdata:parent="Pledges" msdata:child="SeatingReservations" msdata:parentkey="PledgeId" msdata:childkey="PledgeId" msprop:Generator_UserChildTable="SeatingReservations" msprop:Generator_ChildPropName="GetSeatingReservationsRows" msprop:Generator_UserParentTable="Pledges" msprop:Generator_UserRelationName="Seat" msprop:Generator_RelationVarName="relationSeat" msprop:Generator_ParentPropName="PledgesRow" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>

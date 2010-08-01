@@ -70,5 +70,14 @@ namespace ShomreiTorah.Billing.Events.Seating {
 					row.PledgesRow[columnName] = e.Value;
 			}
 		}
+
+		private void gridView_KeyUp(object sender, KeyEventArgs e) {
+			if (e.KeyData == Keys.Delete) {
+				var row = (BillingData.SeatingReservationsRow)gridView.GetFocusedDataRow();
+				if (row == null) return;
+
+				new SeatingReservationDeleter(row).ShowDialog(this);
+			}
+		}
 	}
 }

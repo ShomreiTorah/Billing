@@ -167,6 +167,12 @@
       <DependentUpon>SeatingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\Seating\SeatingInfo.cs" />
+    <Compile Include="Events\Seating\SeatingReservationDeleter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Events\Seating\SeatingReservationDeleter.Designer.cs">
+      <DependentUpon>SeatingReservationDeleter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\Seating\SeatingReservationEdit.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -253,6 +259,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Events\Seating\SeatingForm.resx">
       <DependentUpon>SeatingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Events\Seating\SeatingReservationDeleter.resx">
+      <DependentUpon>SeatingReservationDeleter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Events\Seating\SeatingReservationEdit.resx">
       <DependentUpon>SeatingReservationEdit.cs</DependentUpon>

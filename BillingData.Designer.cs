@@ -44,11 +44,11 @@ namespace ShomreiTorah.Billing {
         
         private global::System.Data.DataRelation relationStatements;
         
+        private global::System.Data.DataRelation relationSeat;
+        
         private global::System.Data.DataRelation relationEmailAddresses;
         
         private global::System.Data.DataRelation relationDeposit;
-        
-        private global::System.Data.DataRelation relationSeat;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -359,9 +359,9 @@ namespace ShomreiTorah.Billing {
             this.relationPayments = this.Relations["Payments"];
             this.relationPledges = this.Relations["Pledges"];
             this.relationStatements = this.Relations["Statements"];
+            this.relationSeat = this.Relations["Seat"];
             this.relationEmailAddresses = this.Relations["EmailAddresses"];
             this.relationDeposit = this.Relations["Deposit"];
-            this.relationSeat = this.Relations["Seat"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -408,6 +408,13 @@ namespace ShomreiTorah.Billing {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.None;
+            fkc = new global::System.Data.ForeignKeyConstraint("Seat", new global::System.Data.DataColumn[] {
+                        this.tablePledges.PledgeIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSeatingReservations.PledgeIdColumn});
+            this.tableSeatingReservations.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.None;
             this.relationPayments = new global::System.Data.DataRelation("Payments", new global::System.Data.DataColumn[] {
                         this.tableMasterDirectory.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tablePayments.PersonIdColumn}, false);
@@ -420,6 +427,10 @@ namespace ShomreiTorah.Billing {
                         this.tableMasterDirectory.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableStatementLog.PersonIdColumn}, false);
             this.Relations.Add(this.relationStatements);
+            this.relationSeat = new global::System.Data.DataRelation("Seat", new global::System.Data.DataColumn[] {
+                        this.tablePledges.PledgeIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSeatingReservations.PledgeIdColumn}, false);
+            this.Relations.Add(this.relationSeat);
             this.relationEmailAddresses = new global::System.Data.DataRelation("EmailAddresses", new global::System.Data.DataColumn[] {
                         this.tableMasterDirectory.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableEmailList.PersonIdColumn}, false);
@@ -428,10 +439,6 @@ namespace ShomreiTorah.Billing {
                         this.tableDeposits.DepositIdColumn}, new global::System.Data.DataColumn[] {
                         this.tablePayments.DepositIdColumn}, false);
             this.Relations.Add(this.relationDeposit);
-            this.relationSeat = new global::System.Data.DataRelation("Seat", new global::System.Data.DataColumn[] {
-                        this.tablePledges.PledgeIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSeatingReservations.PledgeIdColumn}, false);
-            this.Relations.Add(this.relationSeat);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
