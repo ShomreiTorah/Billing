@@ -10,7 +10,7 @@ using System.Diagnostics;
 using System.Globalization;
 
 namespace ShomreiTorah.Billing.Events.Seating {
-	public partial class SeatingReservationDeleter : DevExpress.XtraEditors.XtraForm {
+	partial class SeatingReservationDeleter : DevExpress.XtraEditors.XtraForm {
 		readonly BillingData.SeatingReservationsRow seat;
 		public SeatingReservationDeleter(BillingData.SeatingReservationsRow row) {
 			InitializeComponent();
