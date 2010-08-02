@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
-using System.Globalization;
-using ShomreiTorah.Billing.Controls;
 using DevExpress.XtraGrid.Views.Base;
-using System.IO;
+using Microsoft.Office.Interop.Word.Extensions;
+using ShomreiTorah.Billing.Controls;
+using ShomreiTorah.Common;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	partial class SeatingForm : Forms.GridFormBase {
@@ -79,5 +84,39 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				new SeatingReservationDeleter(row).ShowDialog(this);
 			}
 		}
+
+		#region Word
+		static Word.Application Word { get { return Office<Word.ApplicationClass>.App; } }
+		private void openWordDoc_ItemClick(object sender, ItemClickEventArgs e) {
+			string fileName;
+			using (var openDialog = new OpenFileDialog {
+				Filter = "Word Documents|*.docx;*.doc|All Files|*.*",
+				Title = "Open Schedule"
+			}) {
+				if (openDialog.ShowDialog() == DialogResult.Cancel) return;
+				fileName = openDialog.FileName;
+			}
+			OpenChart(Word.Documents.Open(fileName));
+		}
+
+		private void wordDocsMenu_BeforePopup(object sender, CancelEventArgs e) {
+			wordDocList.Strings.Clear();
+			if (!Office<Word.ApplicationClass>.IsRunning) return;
+
+			foreach (Word.Document document in Word.Documents) {
+				wordDocList.Strings.Add(document.Name);
+			}
+		}
+
+		private void wordDocList_ListItemClick(object sender, ListItemClickEventArgs e) {
+			var name = wordDocList.Strings[e.Index];
+			OpenChart(Word.Documents.Items().Single(d => d.Name == name));
+		}
+		void OpenChart(Word.Document document) {
+			chart = WordParser.ParseChart(document);
+		}
+
+		ParsedSeatingChart chart;
+		#endregion
 	}
 }

@@ -87,6 +87,9 @@
     <Reference Include="Microsoft.Office.Interop.Word.Extensions, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
+    <Reference Include="Office, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="PowerPointJournal, Version=1.4.2.0, Culture=neutral, PublicKeyToken=a618b678561bfa4a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Journal\PowerPointJournal\bin\Debug\PowerPointJournal.dll</HintPath>
@@ -160,6 +163,7 @@
     <Compile Include="Controls\PledgeEdit.Designer.cs">
       <DependentUpon>PledgeEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\Seating\ParsedSeatingChart.cs" />
     <Compile Include="Events\Seating\SeatingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,6 +189,7 @@
     <Compile Include="Events\Seating\SeatingReservationPopup.Designer.cs">
       <DependentUpon>SeatingReservationPopup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\Seating\WordParser.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Forms\CalendarForm.cs">
       <SubType>Form</SubType>
@@ -410,6 +415,8 @@
     <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <None Include="Resources\Open16.png" />
+    <None Include="Resources\WordDocuments32.png" />
     <None Include="Resources\CalculatorButton.png" />
     <None Include="Resources\Close.png" />
     <None Include="Resources\Add32.png" />

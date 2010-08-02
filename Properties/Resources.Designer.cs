@@ -137,6 +137,13 @@ namespace ShomreiTorah.Billing.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Open16 {
+            get {
+                object obj = ResourceManager.GetObject("Open16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Refresh16 {
             get {
                 object obj = ResourceManager.GetObject("Refresh16", resourceCulture);
@@ -210,6 +217,13 @@ namespace ShomreiTorah.Billing.Properties {
         internal static System.Drawing.Bitmap WebPreview {
             get {
                 object obj = ResourceManager.GetObject("WebPreview", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap WordDocuments32 {
+            get {
+                object obj = ResourceManager.GetObject("WordDocuments32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

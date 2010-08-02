@@ -25,9 +25,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SeatingForm));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -49,6 +46,12 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.cancelAddEntry = new DevExpress.XtraEditors.SimpleButton();
 			this.addNewEdit = new ShomreiTorah.Billing.Events.Seating.SeatingReservationEdit();
 			this.addEntry = new DevExpress.XtraEditors.SimpleButton();
+			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.wordButton = new DevExpress.XtraBars.BarButtonItem();
+			this.wordDocsMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+			this.wordDocList = new DevExpress.XtraBars.BarListItem();
+			this.openWordDoc = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
@@ -58,17 +61,20 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.addNewPanel)).BeginInit();
 			this.addNewPanel.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.wordDocsMenu)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbon
 			// 
-			this.ribbon.ApplicationButtonText = null;
-			this.ribbon.Location = new System.Drawing.Point(0, 0);
-			this.ribbon.MaxItemId = 4;
-			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
-			this.ribbon.Name = "ribbon";
-			this.ribbon.Size = new System.Drawing.Size(753, 21);
-			this.ribbon.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
+			this.ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.wordButton,
+            this.openWordDoc,
+            this.wordDocList});
+			this.ribbon.MaxItemId = 8;
+			this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.ribbonPage1});
+			this.ribbon.SelectedPage = this.ribbonPage1;
+			this.ribbon.Size = new System.Drawing.Size(1011, 116);
 			// 
 			// grid
 			// 
@@ -132,8 +138,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// personEdit
 			// 
 			this.personEdit.AutoHeight = false;
-			this.personEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
 			this.personEdit.Name = "personEdit";
 			this.personEdit.ReadOnly = true;
 			this.personEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -238,8 +242,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// personRefEdit
 			// 
 			this.personRefEdit.AutoHeight = false;
-			this.personRefEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Show Person", null, null, true)});
 			this.personRefEdit.Name = "personRefEdit";
 			this.personRefEdit.ReadOnly = true;
 			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -313,6 +315,55 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.addEntry.Text = "Add Reservation";
 			this.addEntry.Click += new System.EventHandler(this.addEntry_Click);
 			// 
+			// ribbonPage1
+			// 
+			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup1});
+			this.ribbonPage1.Name = "ribbonPage1";
+			this.ribbonPage1.Text = "Events";
+			// 
+			// ribbonPageGroup1
+			// 
+			this.ribbonPageGroup1.ItemLinks.Add(this.wordButton);
+			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+			this.ribbonPageGroup1.ShowCaptionButton = false;
+			this.ribbonPageGroup1.Text = "ימים נוראים";
+			// 
+			// wordButton
+			// 
+			this.wordButton.ActAsDropDown = true;
+			this.wordButton.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
+			this.wordButton.Caption = "Seating Chart";
+			this.wordButton.DropDownControl = this.wordDocsMenu;
+			this.wordButton.Id = 4;
+			this.wordButton.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.WordDocuments32;
+			this.wordButton.Name = "wordButton";
+			// 
+			// wordDocsMenu
+			// 
+			this.wordDocsMenu.ItemLinks.Add(this.wordDocList, true);
+			this.wordDocsMenu.ItemLinks.Add(this.openWordDoc, true);
+			this.wordDocsMenu.MenuCaption = "Open Documents";
+			this.wordDocsMenu.Name = "wordDocsMenu";
+			this.wordDocsMenu.Ribbon = this.ribbon;
+			this.wordDocsMenu.ShowCaption = true;
+			this.wordDocsMenu.BeforePopup += new System.ComponentModel.CancelEventHandler(this.wordDocsMenu_BeforePopup);
+			// 
+			// wordDocList
+			// 
+			this.wordDocList.Caption = "Documents";
+			this.wordDocList.Id = 7;
+			this.wordDocList.Name = "wordDocList";
+			this.wordDocList.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.wordDocList_ListItemClick);
+			// 
+			// openWordDoc
+			// 
+			this.openWordDoc.Caption = "&Open...";
+			this.openWordDoc.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Open16;
+			this.openWordDoc.Id = 6;
+			this.openWordDoc.Name = "openWordDoc";
+			this.openWordDoc.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.openWordDoc_ItemClick);
+			// 
 			// SeatingForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -324,6 +375,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.MainView = this.gridView;
 			this.Name = "SeatingForm";
 			this.Text = "Seating Reservations";
+			this.Controls.SetChildIndex(this.ribbon, 0);
 			this.Controls.SetChildIndex(this.personSelector, 0);
 			this.Controls.SetChildIndex(this.addNewPanel, 0);
 			this.Controls.SetChildIndex(this.grid, 0);
@@ -336,12 +388,12 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.addNewPanel)).EndInit();
 			this.addNewPanel.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.wordDocsMenu)).EndInit();
 			this.ResumeLayout(false);
 
 		}
 		#endregion
 
-		private DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
 		private Controls.BaseGrid grid;
 		private DevExpress.XtraGrid.Views.Grid.GridView gridView;
 		private Controls.PersonSelector personSelector;
@@ -363,5 +415,11 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private DevExpress.XtraGrid.Columns.GridColumn colPledgeType;
 		private DevExpress.XtraGrid.Columns.GridColumn colAmount;
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit currencyEditor;
+		private DevExpress.XtraBars.BarButtonItem wordButton;
+		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
+		private DevExpress.XtraBars.BarButtonItem openWordDoc;
+		private DevExpress.XtraBars.BarListItem wordDocList;
+		private DevExpress.XtraBars.PopupMenu wordDocsMenu;
 	}
 }

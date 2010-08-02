@@ -121,7 +121,6 @@ namespace ShomreiTorah.Billing.Forms {
 
 		#endregion
 
-		private DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
 		private DevExpress.XtraBars.BarButtonItem emailSelected;
 		private DevExpress.XtraBars.BarButtonItem emailVisible;
 		private DevExpress.XtraBars.BarButtonItem exportWordSelected;
@@ -129,5 +128,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
+		protected DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
 	}
 }
