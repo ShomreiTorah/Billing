@@ -69,7 +69,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			var newPrice = CalculatePrice();
 
 			if (newPrice != null
-			&& (oldCalculatedPrice == amountEditor.Value || oldCalculatedPrice == null && amountEditor.Value == 0))
+			&& (oldCalculatedPrice == amountEditor.Value || amountEditor.EditValue == null || amountEditor.Value == 0))
 				amountEditor.EditValue = newPrice;
 			oldCalculatedPrice = newPrice ?? oldCalculatedPrice;
 		}
@@ -98,8 +98,10 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		#endregion
 
 		private void amountEditor_ButtonClick(object sender, ButtonPressedEventArgs e) {
-			if (e.Button.Index == 1)
-				amountEditor.EditValue = CalculatePrice() ?? amountEditor.Value;
+			if (e.Button.Index == 1) {
+				pledgeTypeEditor.Focus();
+				amountEditor.EditValue = CalculatePrice();
+			}
 		}
 	}
 }

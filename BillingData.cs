@@ -118,7 +118,7 @@ namespace ShomreiTorah.Billing {
 				}
 			}
 
-			if (e.Column.ColumnName == "Amount") {
+			if (e.Column.ColumnName == "Amount" && e.ProposedValue != DBNull.Value) {
 				e.SetError((decimal)e.ProposedValue >= 0 ? null : "Amount cannot be negative");
 			}
 
