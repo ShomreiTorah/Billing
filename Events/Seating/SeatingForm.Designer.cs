@@ -5,17 +5,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing) {
-			if (disposing && (components != null)) {
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		#region Windows Form Designer generated code
 
 		/// <summary>
@@ -30,6 +19,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.repositoryItemPersonRefEdit1 = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemPersonRefEdit();
 			this.colPledgeType = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.currencyEditor = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
@@ -39,7 +29,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colBoysSeats = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colGirlsSeats = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colNotes = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colStatus = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colChartStatus = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.personSelector = new ShomreiTorah.Billing.Controls.PersonSelector();
 			this.addNewPanel = new DevExpress.XtraEditors.PanelControl();
 			this.cancelAddEntry = new DevExpress.XtraEditors.SimpleButton();
@@ -51,16 +41,15 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.wordDocsMenu = new DevExpress.XtraBars.PopupMenu(this.components);
 			this.wordDocList = new DevExpress.XtraBars.BarListItem();
 			this.openWordDoc = new DevExpress.XtraBars.BarButtonItem();
-			this.repositoryItemPersonRefEdit1 = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemPersonRefEdit();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.repositoryItemPersonRefEdit1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.currencyEditor)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.seatCountEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.addNewPanel)).BeginInit();
 			this.addNewPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.wordDocsMenu)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.repositoryItemPersonRefEdit1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbon
@@ -104,11 +93,12 @@ namespace ShomreiTorah.Billing.Events.Seating {
             this.colBoysSeats,
             this.colGirlsSeats,
             this.colNotes,
-            this.colStatus});
+            this.colChartStatus});
 			this.gridView.GridControl = this.grid;
 			this.gridView.Name = "gridView";
 			this.gridView.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
 			this.gridView.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gridView_CustomUnboundColumnData);
+			this.gridView.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gridView_CustomColumnDisplayText);
 			this.gridView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.gridView_KeyUp);
 			// 
 			// colDate
@@ -133,6 +123,15 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 0;
+			// 
+			// repositoryItemPersonRefEdit1
+			// 
+			this.repositoryItemPersonRefEdit1.AutoHeight = false;
+			this.repositoryItemPersonRefEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("repositoryItemPersonRefEdit1.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
+			this.repositoryItemPersonRefEdit1.Name = "repositoryItemPersonRefEdit1";
+			this.repositoryItemPersonRefEdit1.ReadOnly = true;
+			this.repositoryItemPersonRefEdit1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 			// 
 			// colPledgeType
 			// 
@@ -223,12 +222,16 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colNotes.Visible = true;
 			this.colNotes.VisibleIndex = 8;
 			// 
-			// colStatus
+			// colChartStatus
 			// 
-			this.colStatus.FieldName = "Status";
-			this.colStatus.Name = "colStatus";
-			this.colStatus.Visible = true;
-			this.colStatus.VisibleIndex = 9;
+			this.colChartStatus.Caption = "Chart Status";
+			this.colChartStatus.FieldName = "ChartStatus";
+			this.colChartStatus.Name = "colChartStatus";
+			this.colChartStatus.OptionsColumn.AllowEdit = false;
+			this.colChartStatus.OptionsColumn.AllowFocus = false;
+			this.colChartStatus.UnboundType = DevExpress.Data.UnboundColumnType.Integer;
+			this.colChartStatus.Visible = true;
+			this.colChartStatus.VisibleIndex = 9;
 			// 
 			// personSelector
 			// 
@@ -348,15 +351,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.openWordDoc.Name = "openWordDoc";
 			this.openWordDoc.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.openWordDoc_ItemClick);
 			// 
-			// repositoryItemPersonRefEdit1
-			// 
-			this.repositoryItemPersonRefEdit1.AutoHeight = false;
-			this.repositoryItemPersonRefEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("repositoryItemPersonRefEdit1.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
-			this.repositoryItemPersonRefEdit1.Name = "repositoryItemPersonRefEdit1";
-			this.repositoryItemPersonRefEdit1.ReadOnly = true;
-			this.repositoryItemPersonRefEdit1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-			// 
 			// SeatingForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -375,12 +369,12 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.repositoryItemPersonRefEdit1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.currencyEditor)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.seatCountEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.addNewPanel)).EndInit();
 			this.addNewPanel.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.wordDocsMenu)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.repositoryItemPersonRefEdit1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -398,7 +392,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private DevExpress.XtraGrid.Columns.GridColumn colBoysSeats;
 		private DevExpress.XtraGrid.Columns.GridColumn colGirlsSeats;
 		private DevExpress.XtraGrid.Columns.GridColumn colNotes;
-		private DevExpress.XtraGrid.Columns.GridColumn colStatus;
+		private DevExpress.XtraGrid.Columns.GridColumn colChartStatus;
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit seatCountEdit;
 		private DevExpress.XtraEditors.SimpleButton cancelAddEntry;
 		private DevExpress.XtraGrid.Columns.GridColumn colDate;
