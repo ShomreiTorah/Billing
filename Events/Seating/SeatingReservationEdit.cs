@@ -64,6 +64,14 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		}
 
 		#region Amount calculations
+		private void amountEditor_ButtonClick(object sender, ButtonPressedEventArgs e) {
+			if (e.Button.Index == 1) {
+				layoutControl.SelectNextControl(amountEditor, true, true, false, true);
+				amountEditor.EditValue = CalculatePrice();
+			}
+		}
+
+		private void Edit_EditValueChanged(object sender, EventArgs e) { UpdatePrice(); }
 		void UpdatePrice() {
 			if (Seat == null) return;
 			var newPrice = CalculatePrice();
@@ -74,10 +82,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			oldCalculatedPrice = newPrice ?? oldCalculatedPrice;
 		}
 
-		private void Edit_EditValueChanged(object sender, EventArgs e) { UpdatePrice(); }
 
 		const int MembershipFee = 500;
-
 		///<summary>Calculates the default price of the current seating reservation.</summary>
 		decimal? CalculatePrice() {
 			switch (pledgeTypeEditor.Text) {
@@ -97,11 +103,28 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		}
 		#endregion
 
-		private void amountEditor_ButtonClick(object sender, ButtonPressedEventArgs e) {
-			if (e.Button.Index == 1) {
-				pledgeTypeEditor.Focus();
-				amountEditor.EditValue = CalculatePrice();
+
+		private void Input_KeyDown(object sender, KeyEventArgs e) {
+			if (e.KeyCode == Keys.Enter) {
+				if (Seat.RowState != DataRowState.Detached) {
+					var edit = (BaseEdit)sender;
+					layoutControl.SelectNextControl(edit, true, true, false, true);
+
+					pledgesBindingSource.EndEdit();
+					seatingReservationsBindingSource.EndEdit();
+				}
+				OnEnterPressed();
 			}
+		}
+		///<summary>Occurs when the enter key is pressed.</summary>
+		public event EventHandler EnterPressed;
+		///<summary>Raises the EnterPressed event.</summary>
+		internal protected virtual void OnEnterPressed() { OnEnterPressed(EventArgs.Empty); }
+		///<summary>Raises the EnterPressed event.</summary>
+		///<param name="e">An EventArgs object that provides the event data.</param>
+		internal protected virtual void OnEnterPressed(EventArgs e) {
+			if (EnterPressed != null)
+				EnterPressed(this, e);
 		}
 	}
 }

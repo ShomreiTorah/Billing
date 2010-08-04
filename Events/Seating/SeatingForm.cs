@@ -62,11 +62,16 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			}
 		}
 
+		private void addNewEdit_EnterPressed(object sender, EventArgs e) {
+			addEntry.PerformClick();
+		}
+
 		private void addEntry_Click(object sender, EventArgs e) {
 			if (!addNewEdit.CommitNew())
 				return;
 			CloseAddEndtryPanel();
 		}
+		private void cancelAddEntry_Click(object sender, EventArgs e) { CloseAddEndtryPanel(confirm: true); }
 		void CloseAddEndtryPanel(bool confirm = false) {
 			if (!addNewPanel.Visible) return;
 			if (confirm && DialogResult.No == XtraMessageBox.Show("Are you sure you wish to cancel adding this seating reservation?",
@@ -75,7 +80,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			addNewPanel.Hide();
 			personSelector.SelectedPerson = null;
 		}
-		private void cancelAddEntry_Click(object sender, EventArgs e) { CloseAddEndtryPanel(confirm: true); }
 		#endregion
 
 		void Pledges_PledgesRowChanged(object sender, BillingData.PledgesRowChangeEvent e) {
@@ -187,8 +191,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 					e.DisplayText = "Not in chart";
 				else {
 					var value = (int)e.Value;
-					if (value <= -1)
-						e.DisplayText = value + " extra seats";
+					if (value < -1)
+						e.DisplayText = -value + " extra seats";
 					else if (value == -1)
 						e.DisplayText = "1 extra seat";
 					else if (value == 0)

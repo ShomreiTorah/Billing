@@ -68,7 +68,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// 
 			this.grid.DataMember = "SeatingReservations";
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.grid.Location = new System.Drawing.Point(0, 233);
+			this.grid.Location = new System.Drawing.Point(0, 208);
 			this.grid.MainView = this.gridView;
 			this.grid.MenuManager = this.ribbon;
 			this.grid.Name = "grid";
@@ -76,7 +76,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
             this.seatCountEdit,
             this.currencyEditor,
             this.repositoryItemPersonRefEdit1});
-			this.grid.Size = new System.Drawing.Size(1011, 493);
+			this.grid.Size = new System.Drawing.Size(1011, 518);
 			this.grid.TabIndex = 2;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -97,6 +97,9 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.gridView.GridControl = this.grid;
 			this.gridView.Name = "gridView";
 			this.gridView.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+			this.gridView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
+			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colFullName, DevExpress.Data.ColumnSortOrder.Ascending)});
 			this.gridView.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gridView_CustomUnboundColumnData);
 			this.gridView.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gridView_CustomColumnDisplayText);
 			this.gridView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.gridView_KeyUp);
@@ -132,6 +135,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.repositoryItemPersonRefEdit1.Name = "repositoryItemPersonRefEdit1";
 			this.repositoryItemPersonRefEdit1.ReadOnly = true;
 			this.repositoryItemPersonRefEdit1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+			this.repositoryItemPersonRefEdit1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.gridView_KeyUp);
 			// 
 			// colPledgeType
 			// 
@@ -259,7 +263,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.addNewPanel.Dock = System.Windows.Forms.DockStyle.Top;
 			this.addNewPanel.Location = new System.Drawing.Point(0, 136);
 			this.addNewPanel.Name = "addNewPanel";
-			this.addNewPanel.Size = new System.Drawing.Size(1011, 97);
+			this.addNewPanel.Size = new System.Drawing.Size(1011, 72);
 			this.addNewPanel.TabIndex = 1;
 			this.addNewPanel.Visible = false;
 			// 
@@ -285,8 +289,9 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.addNewEdit.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.addNewEdit.Location = new System.Drawing.Point(2, 2);
 			this.addNewEdit.Name = "addNewEdit";
-			this.addNewEdit.Size = new System.Drawing.Size(924, 93);
+			this.addNewEdit.Size = new System.Drawing.Size(924, 68);
 			this.addNewEdit.TabIndex = 0;
+			this.addNewEdit.EnterPressed += new System.EventHandler(this.addNewEdit_EnterPressed);
 			// 
 			// addEntry
 			// 
@@ -297,7 +302,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.addEntry.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
 			this.addEntry.Location = new System.Drawing.Point(926, 2);
 			this.addEntry.Name = "addEntry";
-			this.addEntry.Size = new System.Drawing.Size(83, 93);
+			this.addEntry.Size = new System.Drawing.Size(83, 68);
 			this.addEntry.TabIndex = 1;
 			this.addEntry.Text = "Add Reservation";
 			this.addEntry.Click += new System.EventHandler(this.addEntry_Click);
