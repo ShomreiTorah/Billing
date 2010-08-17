@@ -55,9 +55,18 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		}
 
 		private void personSelector_SelectingPerson(object sender, SelectingPersonEventArgs e) {
-			if (e.Person != null && addNewPanel.Visible) {
-				if (DialogResult.Yes == XtraMessageBox.Show("Are you sure you want to start adding a new reservation?\r\nYou haven't added the reservation you're currently editing yet!",
+			if (e.Person == null) return;
+			if (addNewPanel.Visible) {
+				if (DialogResult.Yes != XtraMessageBox.Show("Are you sure you want to start adding a new reservation?\r\nYou haven't added the reservation you're currently editing yet!",
 															"Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+					e.Cancel = true;
+			}
+			var existingReservation = Program.Data.SeatingReservations.CurrentRows()
+					.FirstOrDefault(sr => sr.PledgesRow.Date.Year == year && sr.PledgesRow.PersonId == e.Person.Id);
+			if (existingReservation != null) {
+				if (DialogResult.Yes != XtraMessageBox.Show(e.Person.VeryFullName + " already have a reservation for " + existingReservation.TotalSeats + " seats."
+														  + "\r\nAre you sure you want to add a second reservation?",
+															"Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2))
 					e.Cancel = true;
 			}
 		}
