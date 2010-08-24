@@ -103,7 +103,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.NotesTextEdit.Properties.NullValuePromptShowForEmptyValue = true;
 			this.NotesTextEdit.Size = new System.Drawing.Size(147, 44);
 			this.NotesTextEdit.StyleController = this.layoutControl;
-			this.NotesTextEdit.TabIndex = 7;
+			this.NotesTextEdit.TabIndex = 6;
 			// 
 			// layoutControl
 			// 
@@ -159,7 +159,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.amountEditor.Properties.Mask.EditMask = "c";
 			this.amountEditor.Size = new System.Drawing.Size(119, 20);
 			this.amountEditor.StyleController = this.layoutControl;
-			this.amountEditor.TabIndex = 1;
+			this.amountEditor.TabIndex = 5;
 			this.amountEditor.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.amountEditor_ButtonClick);
 			this.amountEditor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
 			// 
@@ -225,7 +225,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
             0});
 			this.MensSeatsSpinEdit.Size = new System.Drawing.Size(64, 20);
 			this.MensSeatsSpinEdit.StyleController = this.layoutControl;
-			this.MensSeatsSpinEdit.TabIndex = 2;
+			this.MensSeatsSpinEdit.TabIndex = 1;
 			this.MensSeatsSpinEdit.EditValueChanged += new System.EventHandler(this.Edit_EditValueChanged);
 			this.MensSeatsSpinEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
 			// 
@@ -277,7 +277,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
             0});
 			this.BoysSeatsSpinEdit.Size = new System.Drawing.Size(50, 20);
 			this.BoysSeatsSpinEdit.StyleController = this.layoutControl;
-			this.BoysSeatsSpinEdit.TabIndex = 4;
+			this.BoysSeatsSpinEdit.TabIndex = 2;
 			this.BoysSeatsSpinEdit.EditValueChanged += new System.EventHandler(this.Edit_EditValueChanged);
 			this.BoysSeatsSpinEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
 			// 
@@ -303,7 +303,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
             0});
 			this.GirlsSeatsSpinEdit.Size = new System.Drawing.Size(48, 20);
 			this.GirlsSeatsSpinEdit.StyleController = this.layoutControl;
-			this.GirlsSeatsSpinEdit.TabIndex = 5;
+			this.GirlsSeatsSpinEdit.TabIndex = 4;
 			this.GirlsSeatsSpinEdit.EditValueChanged += new System.EventHandler(this.Edit_EditValueChanged);
 			this.GirlsSeatsSpinEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
 			// 
