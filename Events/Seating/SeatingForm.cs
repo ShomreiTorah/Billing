@@ -15,6 +15,8 @@ using Microsoft.Office.Interop.Word.Extensions;
 using ShomreiTorah.Billing.Controls;
 using ShomreiTorah.Common;
 using Word = Microsoft.Office.Interop.Word;
+using System.Threading;
+using System.Diagnostics;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	partial class SeatingForm : Forms.GridFormBase {
@@ -23,6 +25,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		public SeatingForm(int year) {
 			InitializeComponent();
 
+			loadingIconItem.EditValue = Properties.Resources.Loading16;
 			colPledgeType.ColumnEdit = SeatingInfo.PledgeTypeEdit;
 			this.year = year;
 			var filterString = "Parent(Seat).Date > #1/1/" + year + "# AND Parent(Seat).Date < #12/31/" + year + "#";
@@ -36,7 +39,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			Program.Data.Pledges.PledgesRowChanged += Pledges_PledgesRowChanged;
 			Program.Data.SeatingReservations.SeatingReservationsRowChanged += SeatingReservations_SeatingReservationsRowChanged;
 		}
-
 
 		protected override void Dispose(bool disposing) {
 			if (disposing) {
@@ -145,33 +147,72 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				if (openDialog.ShowDialog() == DialogResult.Cancel) return;
 				fileName = openDialog.FileName;
 			}
-			OpenChart(Word.Documents.Open(fileName));
+			BeginOpenChart(Word.Documents.Open(fileName));
 		}
 
 		private void wordDocsMenu_BeforePopup(object sender, CancelEventArgs e) {
 			wordDocList.Strings.Clear();
-			if (!Office<Word.ApplicationClass>.IsRunning) return;
 
-			foreach (Word.Document document in Word.Documents) {
-				wordDocList.Strings.Add(document.Name);
-			}
+			try {
+				if (!Office<Word.ApplicationClass>.IsRunning) return;
+
+				LoadingCaption = "Connecting to Word...";
+				foreach (Word.Document document in Word.Documents) {
+					wordDocList.Strings.Add(document.Name);
+				}
+			} finally { LoadingCaption = null; }
 		}
 
 		private void wordDocList_ListItemClick(object sender, ListItemClickEventArgs e) {
 			var name = wordDocList.Strings[e.Index];
-			OpenChart(Word.Documents.Items().Single(d => d.Name == name));
+			BeginOpenChart(Word.Documents.Items().Single(d => d.Name == name));
 		}
 		#endregion
 		#region SeatingChart
-		void OpenChart(Word.Document document) {
-			chart = WordParser.ParseChart(document);
-			if (seatGroups == null)
-				seatGroups = new Dictionary<BillingData.MasterDirectoryRow, SeatGroup>();
-			else
-				seatGroups.Clear();
+		string LoadingCaption {
+			get { return loadingIconItem.Caption; }
+			set {
+				if (InvokeRequired) {
+					BeginInvoke(new Action(delegate { LoadingCaption = value; }));
+					return;
+				}
+				if (LoadingCaption == value) return;
+				loadingIconItem.Visibility = String.IsNullOrEmpty(value) ? BarItemVisibility.OnlyInCustomizing: BarItemVisibility.OnlyInRuntime;
+				loadingIconItem.Caption = value;
+				loadingIconItem.Refresh();	//Necessary to refresh merged parent
+			}
+		}
 
-			colChartStatus.Visible = colChartStatus.OptionsColumn.ShowInCustomizationForm = true;
-			gridView.RefreshData();
+		void BeginOpenChart(Word.Document document) {
+			LoadingCaption = "Loading " + document.Name + "...";
+			ThreadPool.QueueUserWorkItem(delegate {
+				try {
+					chart = WordParser.ParseChart(document);
+				} catch (Exception ex) {
+					if (Debugger.IsAttached) {
+						LoadingCaption = null;
+						Debugger.Break();
+						return;
+					}
+					BeginInvoke(new Action(delegate {
+						LoadingCaption = null;
+						new Forms.ErrorForm(ex).Show();
+					}));
+				}
+
+				BeginInvoke(new Action(delegate {
+					try {
+						if (seatGroups == null)
+							seatGroups = new Dictionary<BillingData.MasterDirectoryRow, SeatGroup>();
+						else
+							seatGroups.Clear();
+
+						colChartStatus.Visible = colChartStatus.OptionsColumn.ShowInCustomizationForm = true;
+						gridView.RefreshData();
+
+					} finally { LoadingCaption = null; }
+				}));
+			});
 		}
 
 		void SeatingReservations_SeatingReservationsRowChanged(object sender, BillingData.SeatingReservationsRowChangeEvent e) {
