@@ -23,10 +23,15 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		}
 		static IEnumerable<Word.Shape> AllShapes(this Word.Shape shape) {
 			if (shape.Type == MsoShapeType.msoGroup) {
-				foreach (var child in shape.GroupItems.Cast<Word.Shape>().SelectMany(AllShapes))
+				foreach (var child in shape.GroupItems.Items().SelectMany(AllShapes))
 					yield return child;
 			} else
 				yield return shape;
+		}
+
+		static IEnumerable<Word.Shape> Items(this Word.GroupShapes g) {
+			for (int i = 1, c = g.Count; i <= c; i++) 		//foreach won't work due to a bug in Word
+				yield return g[i];
 		}
 
 		static SeatRow ParseTable(this Table table) {
