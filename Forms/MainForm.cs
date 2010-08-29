@@ -157,5 +157,15 @@ namespace ShomreiTorah.Billing.Forms {
 			ShalachManosExport.ColumnCount = Convert.ToInt32(shalachManosColumnsItem.EditValue, CultureInfo.CurrentCulture);
 		}
 
+		private void ribbon_Merge(object sender, RibbonMergeEventArgs e) {
+			var childBar = e.MergedChild.StatusBar;
+			if (childBar != null)
+				ribbonStatusBar.MergeStatusBar(childBar);
+		}
+		private void ribbon_UnMerge(object sender, RibbonMergeEventArgs e) {
+			var childBar = e.MergedChild.StatusBar;
+			if (childBar != null)
+				ribbonStatusBar.UnMergeStatusBar();
+		}
 	}
 }

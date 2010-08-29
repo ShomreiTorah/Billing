@@ -105,7 +105,14 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbon.ApplicationButtonText = null;
 			this.ribbon.ApplicationCaption = "Shomrei Torah Billing";
 			this.ribbon.ApplicationIcon = ((System.Drawing.Bitmap)(resources.GetObject("ribbon.ApplicationIcon")));
+			// 
+			// 
+			// 
+			this.ribbon.ExpandCollapseItem.Id = 0;
+			this.ribbon.ExpandCollapseItem.Name = "";
+			this.ribbon.ExpandCollapseItem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
 			this.ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.ribbon.ExpandCollapseItem,
             this.addPledge,
             this.viewPledges,
             this.saveDb,
@@ -147,6 +154,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbon.Toolbar.ItemLinks.Add(this.saveDb);
 			this.ribbon.Toolbar.ItemLinks.Add(this.refreshData);
 			this.ribbon.Toolbar.ItemLinks.Add(this.showCalendar, true);
+			this.ribbon.Merge += new DevExpress.XtraBars.Ribbon.RibbonMergeEventHandler(this.ribbon_Merge);
+			this.ribbon.UnMerge += new DevExpress.XtraBars.Ribbon.RibbonMergeEventHandler(this.ribbon_UnMerge);
 			// 
 			// addPledge
 			// 
