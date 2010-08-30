@@ -269,7 +269,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		Dictionary<BillingData.MasterDirectoryRow, SeatGroup> seatGroups;
 		#endregion
 
-		private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e) {
+		private void exportLadiesInfo_ItemClick(object sender, ItemClickEventArgs e) {
 			string path;
 			using (var dialog = new SaveFileDialog {
 				Filter = "Excel 2003 Spreadsheet|*.xls|Excel 2007 Spreadsheet (*.xlsx)|*.xlsx",
