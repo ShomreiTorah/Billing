@@ -163,6 +163,7 @@
     <Compile Include="Controls\PledgeEdit.Designer.cs">
       <DependentUpon>PledgeEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\Seating\ExcelExporter.cs" />
     <Compile Include="Events\Seating\ParsedSeatingChart.cs" />
     <Compile Include="Events\Seating\SeatingForm.cs">
       <SubType>Form</SubType>
@@ -415,6 +416,7 @@
     <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <None Include="Resources\ExportExcel32.png" />
     <None Include="Resources\Loading16.gif" />
     <None Include="Resources\Open16.png" />
     <None Include="Resources\WordDocuments32.png" />

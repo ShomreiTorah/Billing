@@ -268,5 +268,19 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		///<summary>Contains the SeatGroups corresponding to people in the master directory.</summary>
 		Dictionary<BillingData.MasterDirectoryRow, SeatGroup> seatGroups;
 		#endregion
+
+		private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e) {
+			string path;
+			using (var dialog = new SaveFileDialog {
+				Filter = "Excel 2003 Spreadsheet|*.xls|Excel 2007 Spreadsheet (*.xlsx)|*.xlsx",
+				FileName = "Ladies' Seats " + year,
+				Title = "Save Ladies' Seating Info"
+			}) {
+				if (dialog.ShowDialog(MdiParent) != DialogResult.OK) return;
+				path = dialog.FileName;
+			}
+			dataSource.Rows<BillingData.SeatingReservationsRow>().ExportWomensSeats(path);
+			Process.Start(path);
+		}
 	}
 }
