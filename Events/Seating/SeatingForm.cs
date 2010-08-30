@@ -20,12 +20,14 @@ using System.Diagnostics;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	partial class SeatingForm : Forms.GridFormBase {
+		static readonly Bitmap LoadingImage = Properties.Resources.Loading16;
+
 		readonly int year;
 		readonly DataView dataSource;
 		public SeatingForm(int year) {
 			InitializeComponent();
 
-			loadingIconItem.EditValue = Properties.Resources.Loading16;
+			loadingIconItem.EditValue = LoadingImage;
 			colPledgeType.ColumnEdit = SeatingInfo.PledgeTypeEdit;
 			this.year = year;
 			var filterString = "Parent(Seat).Date > #1/1/" + year + "# AND Parent(Seat).Date < #12/31/" + year + "#";
@@ -111,7 +113,9 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				else
 					row.PledgesRow[columnName] = e.Value;
 			} else if (e.Column == colChartStatus) {
-				if (seatGroups == null)
+				if (colChartStatus.ColumnEdit == gridLoadingEdit)
+					e.Value = LoadingImage;
+				else if (seatGroups == null)
 					e.Value = null;
 				else {
 					var row = (BillingData.SeatingReservationsRow)dataSource[e.ListSourceRowIndex].Row;
@@ -177,25 +181,29 @@ namespace ShomreiTorah.Billing.Events.Seating {
 					return;
 				}
 				if (LoadingCaption == value) return;
-				loadingIconItem.Visibility = String.IsNullOrEmpty(value) ? BarItemVisibility.OnlyInCustomizing: BarItemVisibility.OnlyInRuntime;
+				loadingIconItem.Visibility = String.IsNullOrEmpty(value) ? BarItemVisibility.OnlyInCustomizing : BarItemVisibility.OnlyInRuntime;
 				loadingIconItem.Caption = value;
-				loadingIconItem.Refresh();	//Necessary to refresh merged parent
 			}
 		}
 
 		void BeginOpenChart(Word.Document document) {
-			LoadingCaption = "Loading " + document.Name + "...";
+			colChartStatus.Visible = colChartStatus.OptionsColumn.ShowInCustomizationForm = true;
+
+			LoadingCaption = "Reading " + document.Name + "...";
+			colChartStatus.ColumnEdit = gridLoadingEdit;
 			ThreadPool.QueueUserWorkItem(delegate {
 				try {
 					chart = WordParser.ParseChart(document);
 				} catch (Exception ex) {
 					if (Debugger.IsAttached) {
 						LoadingCaption = null;
+						colChartStatus.ColumnEdit = null;
 						Debugger.Break();
 						return;
 					}
 					BeginInvoke(new Action(delegate {
 						LoadingCaption = null;
+						colChartStatus.ColumnEdit = null;
 						new Forms.ErrorForm(ex).Show();
 					}));
 				}
@@ -207,10 +215,9 @@ namespace ShomreiTorah.Billing.Events.Seating {
 						else
 							seatGroups.Clear();
 
-						colChartStatus.Visible = colChartStatus.OptionsColumn.ShowInCustomizationForm = true;
 						gridView.RefreshData();
 
-					} finally { LoadingCaption = null; }
+					} finally { LoadingCaption = null; colChartStatus.ColumnEdit = null; }
 				}));
 			});
 		}
@@ -237,6 +244,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 
 		private void gridView_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e) {
 			if (e.Column == colChartStatus) {
+				if (e.Column.ColumnEdit != null) return;
 				if (e.Value == null)
 					e.DisplayText = "Not in chart";
 				else {

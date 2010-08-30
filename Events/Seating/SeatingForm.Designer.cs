@@ -12,10 +12,9 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SeatingForm));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid();
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -38,12 +37,13 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.wordButton = new DevExpress.XtraBars.BarButtonItem();
-			this.wordDocsMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+			this.wordDocsMenu = new DevExpress.XtraBars.PopupMenu();
 			this.wordDocList = new DevExpress.XtraBars.BarListItem();
 			this.openWordDoc = new DevExpress.XtraBars.BarButtonItem();
 			this.statusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
 			this.loadingIconItem = new DevExpress.XtraBars.BarEditItem();
 			this.loadingIconEdit = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
+			this.gridLoadingEdit = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
@@ -54,6 +54,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.addNewPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.wordDocsMenu)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.loadingIconEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridLoadingEdit)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbon
@@ -89,7 +90,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.seatCountEdit,
             this.currencyEditor,
-            this.repositoryItemPersonRefEdit1});
+            this.repositoryItemPersonRefEdit1,
+            this.gridLoadingEdit});
 			this.grid.Size = new System.Drawing.Size(1011, 518);
 			this.grid.TabIndex = 2;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -111,6 +113,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.gridView.GridControl = this.grid;
 			this.gridView.Name = "gridView";
 			this.gridView.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+			this.gridView.OptionsView.AnimationType = DevExpress.XtraGrid.Views.Base.GridAnimationType.AnimateAllContent;
 			this.gridView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colFullName, DevExpress.Data.ColumnSortOrder.Ascending)});
@@ -145,7 +148,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// 
 			this.repositoryItemPersonRefEdit1.AutoHeight = false;
 			this.repositoryItemPersonRefEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("repositoryItemPersonRefEdit1.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Show Person", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("repositoryItemPersonRefEdit1.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
 			this.repositoryItemPersonRefEdit1.Name = "repositoryItemPersonRefEdit1";
 			this.repositoryItemPersonRefEdit1.ReadOnly = true;
 			this.repositoryItemPersonRefEdit1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -244,6 +247,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// colChartStatus
 			// 
 			this.colChartStatus.Caption = "Chart Status";
+			this.colChartStatus.ColumnEdit = this.gridLoadingEdit;
 			this.colChartStatus.FieldName = "ChartStatus";
 			this.colChartStatus.Name = "colChartStatus";
 			this.colChartStatus.OptionsColumn.AllowEdit = false;
@@ -401,6 +405,13 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.loadingIconEdit.ReadOnly = true;
 			this.loadingIconEdit.ShowMenu = false;
 			// 
+			// gridLoadingEdit
+			// 
+			this.gridLoadingEdit.Name = "gridLoadingEdit";
+			this.gridLoadingEdit.ReadOnly = true;
+			this.gridLoadingEdit.ShowMenu = false;
+			this.gridLoadingEdit.UseParentBackground = true;
+			// 
 			// SeatingForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -428,6 +439,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.addNewPanel.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.wordDocsMenu)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.loadingIconEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridLoadingEdit)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -462,5 +474,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private DevExpress.XtraBars.BarEditItem loadingIconItem;
 		private DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit loadingIconEdit;
 		private DevExpress.XtraBars.Ribbon.RibbonStatusBar statusBar;
+		private DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit gridLoadingEdit;
 	}
 }
