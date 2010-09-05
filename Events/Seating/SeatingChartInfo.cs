@@ -21,7 +21,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 								  .Select(cs => new { cs.Name, cs.SeatCount, Message = "No matching reservation"}),
 
 					//Seats with wrong widths
-					chart.AllSeats.Where(cs => cs.SeatCount != cs.SeatWidth)
+					chart.AllSeats.Where(cs => !cs.CheckWidth())
 								  .Select(cs => new { cs.Name, cs.SeatCount, Message = "Width is wrong"}),
 
 				}.SelectMany(s => s).ToArray();

@@ -39,7 +39,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.grid.Location = new System.Drawing.Point(0, 0);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.Size = new System.Drawing.Size(690, 401);
+			this.grid.Size = new System.Drawing.Size(348, 745);
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -71,7 +71,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
 			this.colName.Visible = true;
 			this.colName.VisibleIndex = 0;
-			this.colName.Width = 73;
+			this.colName.Width = 103;
 			// 
 			// colSeatCount
 			// 
@@ -96,13 +96,13 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colMessage.OptionsColumn.ReadOnly = true;
 			this.colMessage.Visible = true;
 			this.colMessage.VisibleIndex = 2;
-			this.colMessage.Width = 543;
+			this.colMessage.Width = 145;
 			// 
 			// SeatingChartInfo
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(690, 401);
+			this.ClientSize = new System.Drawing.Size(348, 745);
 			this.Controls.Add(this.grid);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "SeatingChartInfo";

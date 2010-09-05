@@ -54,7 +54,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			return new SeatGroup(
 				name: lines[0].Trim(),
 				seatCount: int.Parse(seatCount.Remove(seatCount.IndexOf(' ')), CultureInfo.CurrentCulture),
-				seatWidth: (int)(cell.Width / cell.Height)
+				seatWidth: cell.Width / cell.Height
 			);
 		}
 	}

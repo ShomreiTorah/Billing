@@ -24,15 +24,19 @@ namespace ShomreiTorah.Billing.Events.Seating {
 	}
 	class SeatGroup {
 		static readonly Regex SpaceTrimmer = new Regex(@"\s+");
-		public SeatGroup(string name, int seatCount, int seatWidth) {
+		public SeatGroup(string name, int seatCount, float seatWidth) {
 			Name = SpaceTrimmer.Replace(name, " ");
 			SeatCount = seatCount;
 			SeatWidth = seatWidth;
 		}
 
-		public string Name	{ get; private set; }
+		public string Name { get; private set; }
 		public int SeatCount { get; private set; }
-		public int SeatWidth { get; private set; }
+		public float SeatWidth { get; private set; }
+
+		public bool CheckWidth() {
+			return Math.Abs((SeatWidth - SeatCount)) < .5;
+		}
 
 		public override string ToString() { return Name + " - " + SeatCount; }
 
