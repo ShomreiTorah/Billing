@@ -51,11 +51,26 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			//D Laks
 			//4 Seats
 			var seatCount = lines[1].Trim();
-			return new SeatGroup(
+			return new WordSeatGroup(
 				name: lines[0].Trim(),
 				seatCount: int.Parse(seatCount.Remove(seatCount.IndexOf(' ')), CultureInfo.CurrentCulture),
-				seatWidth: cell.Width / cell.Height
+				cell: cell
 			);
+		}
+
+		class WordSeatGroup : SeatGroup {
+			readonly Cell cell;
+			public WordSeatGroup(string name, int seatCount, Cell cell) : base(name, seatCount, cell.Width / (1.1f * cell.Height)) { this.cell = cell; }
+
+			public override void Select() {
+				try {
+					cell.Application.Activate();
+					cell.Range.Document.Activate();
+					cell.Range.Document.Range(1, 1).Select();		//Fix bug with table borders
+					cell.Select();
+					cell.Application.ScreenRefresh();	
+				} catch (COMException) { }
+			}
 		}
 	}
 }

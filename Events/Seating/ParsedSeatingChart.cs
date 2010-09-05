@@ -22,9 +22,9 @@ namespace ShomreiTorah.Billing.Events.Seating {
 
 		public override string ToString() { return "Row - " + Seats.Count + " people; " + Seats.Sum(s => s.SeatCount) + " seats"; }
 	}
-	class SeatGroup {
+	abstract class SeatGroup {
 		static readonly Regex SpaceTrimmer = new Regex(@"\s+");
-		public SeatGroup(string name, int seatCount, float seatWidth) {
+		protected SeatGroup(string name, int seatCount, float seatWidth) {
 			Name = SpaceTrimmer.Replace(name, " ");
 			SeatCount = seatCount;
 			SeatWidth = seatWidth;
@@ -37,6 +37,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		public bool CheckWidth() {
 			return Math.Abs((SeatWidth - SeatCount)) < .5;
 		}
+
+		public abstract void Select();
 
 		public override string ToString() { return Name + " - " + SeatCount; }
 

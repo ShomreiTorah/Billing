@@ -43,6 +43,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
+			this.grid.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.grid_MouseDoubleClick);
 			// 
 			// gridView
 			// 

@@ -18,11 +18,11 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				new[]{
 					//Extra seats
 					chart.AllSeats.Where(cs => seats.All( rs => !cs.Matches(rs.Person)))
-								  .Select(cs => new { cs.Name, cs.SeatCount, Message = "No matching reservation"}),
+								  .Select(cs => new SeatInfo(cs, message: "No matching reservation")),
 
 					//Seats with wrong widths
 					chart.AllSeats.Where(cs => !cs.CheckWidth())
-								  .Select(cs => new { cs.Name, cs.SeatCount, Message = "Width is wrong"}),
+								  .Select(cs => new SeatInfo(cs, message: "Width is wrong")),
 
 				}.SelectMany(s => s).ToArray();
 
@@ -33,6 +33,17 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			} else
 				new SeatingChartInfo(data).Show(parent);
 		}
+		class SeatInfo {
+			readonly SeatGroup seat;
+
+			public SeatInfo(SeatGroup seat, string message) { this.seat = seat; Message = message; }
+
+			public string Name { get { return seat.Name; } }
+			public int SeatCount { get { return seat.SeatCount; } }
+			public string Message { get; private set; }
+
+			public void Select() { seat.Select(); }
+		}
 
 		private SeatingChartInfo(object dataSource) {
 			InitializeComponent();
@@ -40,6 +51,14 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			grid.DataSource = dataSource;
 		}
 
+		private void grid_MouseDoubleClick(object sender, MouseEventArgs e) {
+			var rowHandle = gridView.CalcHitInfo(e.Location).RowHandle;
+
+			if (rowHandle >= 0) {
+				var info = (SeatInfo)gridView.GetRow(rowHandle);
+				info.Select();
+			}
+		}
 		private void gridView_CustomColumnSort(object sender, CustomColumnSortEventArgs e) {
 			if (e.Column == colName) {
 				var name1 = (e.Value1 ?? "").ToString();
