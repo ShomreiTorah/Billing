@@ -241,5 +241,12 @@ namespace ShomreiTorah.Billing.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap WordWarning32 {
+            get {
+                object obj = ResourceManager.GetObject("WordWarning32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

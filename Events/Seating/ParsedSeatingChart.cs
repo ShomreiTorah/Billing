@@ -24,17 +24,21 @@ namespace ShomreiTorah.Billing.Events.Seating {
 	}
 	class SeatGroup {
 		static readonly Regex SpaceTrimmer = new Regex(@"\s+");
-		public SeatGroup(string name, int seatCount) {
+		public SeatGroup(string name, int seatCount, int seatWidth) {
 			Name = SpaceTrimmer.Replace(name, " ");
 			SeatCount = seatCount;
+			SeatWidth = seatWidth;
 		}
 
-		public string Name { get; private set; }
+		public string Name	{ get; private set; }
 		public int SeatCount { get; private set; }
+		public int SeatWidth { get; private set; }
 
 		public override string ToString() { return Name + " - " + SeatCount; }
 
 		public bool Matches(BillingData.MasterDirectoryRow person) {
+			if (String.IsNullOrEmpty(person.HisName) || String.IsNullOrEmpty(person.LastName))
+				return false;
 			return person.HisName[0] == Name[0] && person.LastName == Name.Substring(2);
 		}
 	}

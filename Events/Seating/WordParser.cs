@@ -51,7 +51,11 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			//D Laks
 			//4 Seats
 			var seatCount = lines[1].Trim();
-			return new SeatGroup(lines[0].Trim(), int.Parse(seatCount.Remove(seatCount.IndexOf(' ')), CultureInfo.CurrentCulture));
+			return new SeatGroup(
+				name: lines[0].Trim(),
+				seatCount: int.Parse(seatCount.Remove(seatCount.IndexOf(' ')), CultureInfo.CurrentCulture),
+				seatWidth: (int)(cell.Width / cell.Height)
+			);
 		}
 	}
 }

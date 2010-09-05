@@ -13,7 +13,10 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		/// </summary>
 		private void InitializeComponent() {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SeatingForm));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid();
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -41,6 +44,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.wordDocsMenu = new DevExpress.XtraBars.PopupMenu();
 			this.wordDocList = new DevExpress.XtraBars.BarListItem();
 			this.openWordDoc = new DevExpress.XtraBars.BarButtonItem();
+			this.showChartInfo = new DevExpress.XtraBars.BarButtonItem();
 			this.exportLadiesInfo = new DevExpress.XtraBars.BarButtonItem();
 			this.statusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
 			this.loadingIconItem = new DevExpress.XtraBars.BarEditItem();
@@ -71,8 +75,9 @@ namespace ShomreiTorah.Billing.Events.Seating {
             this.openWordDoc,
             this.wordDocList,
             this.loadingIconItem,
-            this.exportLadiesInfo});
-			this.ribbon.MaxItemId = 14;
+            this.exportLadiesInfo,
+            this.showChartInfo});
+			this.ribbon.MaxItemId = 15;
 			this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
 			this.ribbon.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -150,7 +155,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// 
 			this.repositoryItemPersonRefEdit1.AutoHeight = false;
 			this.repositoryItemPersonRefEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("repositoryItemPersonRefEdit1.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Show Person", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("repositoryItemPersonRefEdit1.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
 			this.repositoryItemPersonRefEdit1.Name = "repositoryItemPersonRefEdit1";
 			this.repositoryItemPersonRefEdit1.ReadOnly = true;
 			this.repositoryItemPersonRefEdit1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -345,7 +350,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// ribbonPageGroup1
 			// 
 			this.ribbonPageGroup1.ItemLinks.Add(this.wordButton);
-			this.ribbonPageGroup1.ItemLinks.Add(this.exportLadiesInfo);
+			this.ribbonPageGroup1.ItemLinks.Add(this.showChartInfo);
+			this.ribbonPageGroup1.ItemLinks.Add(this.exportLadiesInfo, true);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			this.ribbonPageGroup1.ShowCaptionButton = false;
 			this.ribbonPageGroup1.Text = "ימים נוראים";
@@ -384,6 +390,21 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.openWordDoc.Id = 6;
 			this.openWordDoc.Name = "openWordDoc";
 			this.openWordDoc.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.openWordDoc_ItemClick);
+			// 
+			// showChartInfo
+			// 
+			this.showChartInfo.Caption = "Analyze Chart";
+			this.showChartInfo.Enabled = false;
+			this.showChartInfo.Id = 14;
+			this.showChartInfo.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.WordWarning32;
+			this.showChartInfo.Name = "showChartInfo";
+			toolTipTitleItem1.Text = "Analyze Seating Chart";
+			toolTipItem1.LeftIndent = 6;
+			toolTipItem1.Text = "Analyzes the selected seating chart and displays any problems found.";
+			superToolTip1.Items.Add(toolTipTitleItem1);
+			superToolTip1.Items.Add(toolTipItem1);
+			this.showChartInfo.SuperTip = superToolTip1;
+			this.showChartInfo.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showChartInfo_ItemClick);
 			// 
 			// exportLadiesInfo
 			// 
@@ -487,5 +508,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private DevExpress.XtraBars.Ribbon.RibbonStatusBar statusBar;
 		private DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit gridLoadingEdit;
 		private DevExpress.XtraBars.BarButtonItem exportLadiesInfo;
+		private DevExpress.XtraBars.BarButtonItem showChartInfo;
 	}
 }

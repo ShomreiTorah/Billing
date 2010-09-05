@@ -165,6 +165,12 @@
     </Compile>
     <Compile Include="Events\Seating\ExcelExporter.cs" />
     <Compile Include="Events\Seating\ParsedSeatingChart.cs" />
+    <Compile Include="Events\Seating\SeatingChartInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Events\Seating\SeatingChartInfo.Designer.cs">
+      <DependentUpon>SeatingChartInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\Seating\SeatingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -262,6 +268,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Events\Purim\ShalachManosForm.resx">
       <DependentUpon>ShalachManosForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Events\Seating\SeatingChartInfo.resx">
+      <DependentUpon>SeatingChartInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Events\Seating\SeatingForm.resx">
       <DependentUpon>SeatingForm.cs</DependentUpon>
@@ -416,6 +425,7 @@
     <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <None Include="Resources\WordWarning32.png" />
     <None Include="Resources\ExportExcel32.png" />
     <None Include="Resources\Loading16.gif" />
     <None Include="Resources\Open16.png" />
