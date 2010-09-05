@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using DevExpress.XtraGrid.Views.Base;
 using DevExpress.Data;
 using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Views.Base;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	partial class SeatingChartInfo : XtraForm {
@@ -38,8 +39,11 @@ namespace ShomreiTorah.Billing.Events.Seating {
 
 			public SeatInfo(SeatGroup seat, string message) { this.seat = seat; Message = message; }
 
+			[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",Justification= "Used with data-binding")]
 			public string Name { get { return seat.Name; } }
+			[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Used with data-binding")]
 			public int SeatCount { get { return seat.SeatCount; } }
+			[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Used with data-binding")]
 			public string Message { get; private set; }
 
 			public void Select() { seat.Select(); }
