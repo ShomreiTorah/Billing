@@ -39,16 +39,37 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			colChartStatus.Visible = colChartStatus.OptionsColumn.ShowInCustomizationForm = false;
 
 			Program.Data.Pledges.PledgesRowChanged += Pledges_PledgesRowChanged;
+			Program.Data.SeatingReservations.SeatingReservationsRowDeleted += SeatingReservations_SeatingReservationsRowDeleted;
 			Program.Data.SeatingReservations.SeatingReservationsRowChanged += SeatingReservations_SeatingReservationsRowChanged;
+
+			UpdateTotals();
+		}
+
+		void SeatingReservations_SeatingReservationsRowDeleted(object sender, BillingData.SeatingReservationsRowChangeEvent e) {
+			if (e.Row.PledgesRow.Date.Year != year)
+				return;
+			UpdateTotals();
 		}
 
 		protected override void Dispose(bool disposing) {
 			if (disposing) {
+				Program.Data.SeatingReservations.SeatingReservationsRowDeleted -= SeatingReservations_SeatingReservationsRowDeleted;
 				Program.Data.SeatingReservations.SeatingReservationsRowChanged -= SeatingReservations_SeatingReservationsRowChanged;
 				Program.Data.Pledges.PledgesRowChanged -= Pledges_PledgesRowChanged;
 				if (components != null) components.Dispose();
 			}
 			base.Dispose(disposing);
+		}
+
+		void UpdateTotals() {
+			int men = 0, women = 0;
+			foreach (var seat in dataSource.Rows<BillingData.SeatingReservationsRow>()) {
+				men += seat.MensSeats + seat.BoysSeats;
+				women += seat.WomensSeats + seat.GirlsSeats;
+			}
+
+			mensTotal.Caption = "Men's Section: " + men + " Seats";
+			womensTotal.Caption = "Women's Section: " + women + " Seats";
 		}
 
 		#region AddEntry Panel
@@ -146,7 +167,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			string fileName;
 			using (var openDialog = new OpenFileDialog {
 				Filter = "Word Documents|*.docx;*.doc|All Files|*.*",
-				Title = "Open Schedule"
+				Title = "Open Seating Chart"
 			}) {
 				if (openDialog.ShowDialog() == DialogResult.Cancel) return;
 				fileName = openDialog.FileName;
@@ -193,20 +214,19 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			colChartStatus.ColumnEdit = gridLoadingEdit;
 			ThreadPool.QueueUserWorkItem(delegate {
 				try {
+					Word.ScreenUpdating = false;
 					chart = WordParser.ParseChart(document);
 				} catch (Exception ex) {
-					if (Debugger.IsAttached) {
-						LoadingCaption = null;
-						colChartStatus.ColumnEdit = null;
-						Debugger.Break();
-						return;
-					}
 					BeginInvoke(new Action(delegate {
 						LoadingCaption = null;
 						colChartStatus.ColumnEdit = null;
-						new Forms.ErrorForm(ex).Show();
+						if (!Debugger.IsAttached)
+							new Forms.ErrorForm(ex).Show();
 					}));
-				}
+
+					if (Debugger.IsAttached)
+						Debugger.Break();
+				} finally { Word.ScreenUpdating = true; }
 
 				BeginInvoke(new Action(delegate {
 					try {
@@ -216,7 +236,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 							seatGroups.Clear();
 
 						gridView.RefreshData();
-
+						showChartInfo.Enabled = true;
 					} finally { LoadingCaption = null; colChartStatus.ColumnEdit = null; }
 				}));
 			});
@@ -225,6 +245,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		void SeatingReservations_SeatingReservationsRowChanged(object sender, BillingData.SeatingReservationsRowChangeEvent e) {
 			if (e.Row.PledgesRow.Date.Year != year)
 				return;
+			UpdateTotals();
 			gridView.RefreshRowCell(
 				gridView.GetRowHandle(dataSource.Rows<BillingData.SeatingReservationsRow>().IndexOf(e.Row)),
 				colChartStatus
@@ -261,6 +282,10 @@ namespace ShomreiTorah.Billing.Events.Seating {
 						e.DisplayText = "Missing " + value + " seats";
 				}
 			}
+		}
+
+		private void showChartInfo_ItemClick(object sender, ItemClickEventArgs e) {
+			SeatingChartInfo.Show(MdiParent, chart, dataSource.Rows<BillingData.SeatingReservationsRow>());
 		}
 
 		ParsedSeatingChart chart;

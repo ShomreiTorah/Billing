@@ -49,6 +49,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.statusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
 			this.loadingIconItem = new DevExpress.XtraBars.BarEditItem();
 			this.loadingIconEdit = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
+			this.mensTotal = new DevExpress.XtraBars.BarStaticItem();
+			this.womensTotal = new DevExpress.XtraBars.BarStaticItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
@@ -76,8 +78,10 @@ namespace ShomreiTorah.Billing.Events.Seating {
             this.wordDocList,
             this.loadingIconItem,
             this.exportLadiesInfo,
-            this.showChartInfo});
-			this.ribbon.MaxItemId = 15;
+            this.showChartInfo,
+            this.mensTotal,
+            this.womensTotal});
+			this.ribbon.MaxItemId = 17;
 			this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
 			this.ribbon.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -99,7 +103,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
             this.currencyEditor,
             this.repositoryItemPersonRefEdit1,
             this.gridLoadingEdit});
-			this.grid.Size = new System.Drawing.Size(1011, 518);
+			this.grid.Size = new System.Drawing.Size(1011, 495);
 			this.grid.TabIndex = 2;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -121,6 +125,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.gridView.Name = "gridView";
 			this.gridView.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
 			this.gridView.OptionsView.AnimationType = DevExpress.XtraGrid.Views.Base.GridAnimationType.AnimateAllContent;
+			this.gridView.OptionsView.ShowFooter = true;
 			this.gridView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colFullName, DevExpress.Data.ColumnSortOrder.Ascending)});
@@ -202,6 +207,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colMensSeats.ColumnEdit = this.seatCountEdit;
 			this.colMensSeats.FieldName = "MensSeats";
 			this.colMensSeats.Name = "colMensSeats";
+			this.colMensSeats.SummaryItem.DisplayFormat = "{0} Men";
+			this.colMensSeats.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
 			this.colMensSeats.Visible = true;
 			this.colMensSeats.VisibleIndex = 5;
 			// 
@@ -224,6 +231,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colWomensSeats.ColumnEdit = this.seatCountEdit;
 			this.colWomensSeats.FieldName = "WomensSeats";
 			this.colWomensSeats.Name = "colWomensSeats";
+			this.colWomensSeats.SummaryItem.DisplayFormat = "{0} Women";
+			this.colWomensSeats.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
 			this.colWomensSeats.Visible = true;
 			this.colWomensSeats.VisibleIndex = 6;
 			// 
@@ -232,6 +241,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colBoysSeats.ColumnEdit = this.seatCountEdit;
 			this.colBoysSeats.FieldName = "BoysSeats";
 			this.colBoysSeats.Name = "colBoysSeats";
+			this.colBoysSeats.SummaryItem.DisplayFormat = "{0} Boys";
+			this.colBoysSeats.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
 			this.colBoysSeats.Visible = true;
 			this.colBoysSeats.VisibleIndex = 7;
 			// 
@@ -240,6 +251,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colGirlsSeats.ColumnEdit = this.seatCountEdit;
 			this.colGirlsSeats.FieldName = "GirlsSeats";
 			this.colGirlsSeats.Name = "colGirlsSeats";
+			this.colGirlsSeats.SummaryItem.DisplayFormat = "{0} Girls";
+			this.colGirlsSeats.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
 			this.colGirlsSeats.Visible = true;
 			this.colGirlsSeats.VisibleIndex = 8;
 			// 
@@ -417,6 +430,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// statusBar
 			// 
 			this.statusBar.ItemLinks.Add(this.loadingIconItem);
+			this.statusBar.ItemLinks.Add(this.mensTotal);
+			this.statusBar.ItemLinks.Add(this.womensTotal, true);
 			this.statusBar.Location = new System.Drawing.Point(0, 703);
 			this.statusBar.Name = "statusBar";
 			this.statusBar.Ribbon = this.ribbon;
@@ -444,13 +459,29 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.loadingIconEdit.ReadOnly = true;
 			this.loadingIconEdit.ShowMenu = false;
 			// 
+			// mensTotal
+			// 
+			this.mensTotal.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+			this.mensTotal.Caption = "Men\'s Section: 90 Seats";
+			this.mensTotal.Id = 15;
+			this.mensTotal.Name = "mensTotal";
+			this.mensTotal.TextAlignment = System.Drawing.StringAlignment.Near;
+			// 
+			// womensTotal
+			// 
+			this.womensTotal.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+			this.womensTotal.Caption = "Women\'s Section: 60 Seats";
+			this.womensTotal.Id = 16;
+			this.womensTotal.Name = "womensTotal";
+			this.womensTotal.TextAlignment = System.Drawing.StringAlignment.Near;
+			// 
 			// SeatingForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1011, 726);
-			this.Controls.Add(this.statusBar);
 			this.Controls.Add(this.grid);
+			this.Controls.Add(this.statusBar);
 			this.Controls.Add(this.addNewPanel);
 			this.Controls.Add(this.personSelector);
 			this.MainView = this.gridView;
@@ -459,8 +490,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.Controls.SetChildIndex(this.ribbon, 0);
 			this.Controls.SetChildIndex(this.personSelector, 0);
 			this.Controls.SetChildIndex(this.addNewPanel, 0);
-			this.Controls.SetChildIndex(this.grid, 0);
 			this.Controls.SetChildIndex(this.statusBar, 0);
+			this.Controls.SetChildIndex(this.grid, 0);
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
@@ -509,5 +540,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit gridLoadingEdit;
 		private DevExpress.XtraBars.BarButtonItem exportLadiesInfo;
 		private DevExpress.XtraBars.BarButtonItem showChartInfo;
+		private DevExpress.XtraBars.BarStaticItem mensTotal;
+		private DevExpress.XtraBars.BarStaticItem womensTotal;
 	}
 }
