@@ -22,7 +22,7 @@ CREATE TABLE [WomensSeating] (
 	[Notes]			LONGTEXT
 );");
 
-				foreach (var seat in seats.Where(s => s.WomensSeats + s.GirlsSeats > 0)) {
+				foreach (var seat in seats.Where(s => s.WomensSeats + s.GirlsSeats > 0).OrderBy(s => s.Person.LastName)) {
 					var person = seat.Person;
 					connection.ExecuteNonQuery(
 						@"INSERT INTO [WomensSeating]
