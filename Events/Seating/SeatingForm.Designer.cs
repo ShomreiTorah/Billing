@@ -18,7 +18,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
-			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -68,7 +67,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// 
 			// ribbon
 			// 
-			this.ribbon.ApplicationButtonText = null;
 			// 
 			// 
 			// 
@@ -76,7 +74,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.ribbon.ExpandCollapseItem.Name = "";
 			this.ribbon.ExpandCollapseItem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
 			this.ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.ribbon.ExpandCollapseItem,
             this.wordButton,
             this.openWordDoc,
             this.wordDocList,
@@ -85,10 +82,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
             this.showChartInfo,
             this.mensTotal,
             this.womensTotal});
-			this.ribbon.Location = new System.Drawing.Point(0, 0);
 			this.ribbon.MaxItemId = 17;
-			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
-			this.ribbon.Name = "ribbon";
 			this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
 			this.ribbon.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -96,7 +90,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.ribbon.SelectedPage = this.ribbonPage1;
 			this.ribbon.Size = new System.Drawing.Size(1011, 116);
 			this.ribbon.StatusBar = this.statusBar;
-			this.ribbon.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
 			// 
 			// grid
 			// 
@@ -501,6 +494,11 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.MainView = this.gridView;
 			this.Name = "SeatingForm";
 			this.Text = "Seating Reservations";
+			this.Controls.SetChildIndex(this.ribbon, 0);
+			this.Controls.SetChildIndex(this.personSelector, 0);
+			this.Controls.SetChildIndex(this.addNewPanel, 0);
+			this.Controls.SetChildIndex(this.statusBar, 0);
+			this.Controls.SetChildIndex(this.grid, 0);
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
@@ -551,6 +549,5 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private DevExpress.XtraBars.BarButtonItem showChartInfo;
 		private DevExpress.XtraBars.BarStaticItem mensTotal;
 		private DevExpress.XtraBars.BarStaticItem womensTotal;
-		private DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
 	}
 }
