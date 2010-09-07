@@ -11,7 +11,7 @@ using DevExpress.XtraEditors;
 
 namespace ShomreiTorah.Billing.Controls {
 	[DefaultEvent("SelectedPersonChanged")]
-	partial class PersonSelector : Lookup {
+	partial class PersonSelector : LookupControl {
 		public PersonSelector() {
 			InitializeComponent();
 			addNew.SendToBack();

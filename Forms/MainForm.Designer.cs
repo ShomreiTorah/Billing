@@ -79,7 +79,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-			this.lookup = new ShomreiTorah.WinForms.Controls.Lookup();
+			this.lookup = new ShomreiTorah.WinForms.Controls.LookupControl();
 			this.dockManager = new DevExpress.XtraBars.Docking.DockManager(this.components);
 			this.addPledgePanel = new DevExpress.XtraBars.Docking.DockPanel();
 			this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
@@ -644,7 +644,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
 		private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
-		private ShomreiTorah.WinForms.Controls.Lookup lookup;
+		private ShomreiTorah.WinForms.Controls.LookupControl lookup;
 		private DevExpress.XtraBars.Docking.DockManager dockManager;
 		private DevExpress.XtraBars.Docking.DockPanel addPledgePanel;
 		private DevExpress.XtraBars.Docking.ControlContainer dockPanel1_Container;

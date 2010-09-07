@@ -26,7 +26,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShalachManosForm));
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-			this.searchLookup = new ShomreiTorah.WinForms.Controls.Lookup();
+			this.searchLookup = new ShomreiTorah.WinForms.Controls.LookupControl();
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -551,7 +551,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 
 		#endregion
 
-		private ShomreiTorah.WinForms.Controls.Lookup searchLookup;
+		private ShomreiTorah.WinForms.Controls.LookupControl searchLookup;
 		private Controls.BaseGrid grid;
 		private DevExpress.XtraGrid.Views.Grid.GridView gridView;
 		private DevExpress.XtraGrid.Columns.GridColumn colFullName;
