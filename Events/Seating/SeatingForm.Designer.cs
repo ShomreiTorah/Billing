@@ -12,13 +12,12 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SeatingForm));
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
-			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
+			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid();
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -42,11 +41,13 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.wordButton = new DevExpress.XtraBars.BarButtonItem();
-			this.wordDocsMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+			this.wordDocsMenu = new DevExpress.XtraBars.PopupMenu();
 			this.wordDocList = new DevExpress.XtraBars.BarListItem();
 			this.openWordDoc = new DevExpress.XtraBars.BarButtonItem();
 			this.showChartInfo = new DevExpress.XtraBars.BarButtonItem();
+			this.excelMenu = new DevExpress.XtraBars.BarSubItem();
 			this.exportLadiesInfo = new DevExpress.XtraBars.BarButtonItem();
+			this.exportAllInfo = new DevExpress.XtraBars.BarButtonItem();
 			this.statusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
 			this.loadingIconItem = new DevExpress.XtraBars.BarEditItem();
 			this.loadingIconEdit = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
@@ -81,8 +82,10 @@ namespace ShomreiTorah.Billing.Events.Seating {
             this.exportLadiesInfo,
             this.showChartInfo,
             this.mensTotal,
-            this.womensTotal});
-			this.ribbon.MaxItemId = 17;
+            this.womensTotal,
+            this.excelMenu,
+            this.exportAllInfo});
+			this.ribbon.MaxItemId = 20;
 			this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
 			this.ribbon.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -371,7 +374,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// 
 			this.ribbonPageGroup1.ItemLinks.Add(this.wordButton);
 			this.ribbonPageGroup1.ItemLinks.Add(this.showChartInfo);
-			this.ribbonPageGroup1.ItemLinks.Add(this.exportLadiesInfo, true);
+			this.ribbonPageGroup1.ItemLinks.Add(this.excelMenu, true);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			this.ribbonPageGroup1.ShowCaptionButton = false;
 			this.ribbonPageGroup1.Text = "ימים נוראים";
@@ -426,13 +429,29 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.showChartInfo.SuperTip = superToolTip1;
 			this.showChartInfo.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showChartInfo_ItemClick);
 			// 
+			// excelMenu
+			// 
+			this.excelMenu.Caption = "Export";
+			this.excelMenu.Id = 18;
+			this.excelMenu.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ExportExcel32;
+			this.excelMenu.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.exportLadiesInfo),
+            new DevExpress.XtraBars.LinkPersistInfo(this.exportAllInfo)});
+			this.excelMenu.Name = "excelMenu";
+			// 
 			// exportLadiesInfo
 			// 
-			this.exportLadiesInfo.Caption = "Export Ladies\' Chart";
+			this.exportLadiesInfo.Caption = "Ladies\' Info";
 			this.exportLadiesInfo.Id = 13;
-			this.exportLadiesInfo.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ExportExcel32;
 			this.exportLadiesInfo.Name = "exportLadiesInfo";
 			this.exportLadiesInfo.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportLadiesInfo_ItemClick);
+			// 
+			// exportAllInfo
+			// 
+			this.exportAllInfo.Caption = "Seating Info";
+			this.exportAllInfo.Id = 19;
+			this.exportAllInfo.Name = "exportAllInfo";
+			this.exportAllInfo.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportAllInfo_ItemClick);
 			// 
 			// statusBar
 			// 
@@ -549,5 +568,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private DevExpress.XtraBars.BarButtonItem showChartInfo;
 		private DevExpress.XtraBars.BarStaticItem mensTotal;
 		private DevExpress.XtraBars.BarStaticItem womensTotal;
+		private DevExpress.XtraBars.BarSubItem excelMenu;
+		private DevExpress.XtraBars.BarButtonItem exportAllInfo;
 	}
 }

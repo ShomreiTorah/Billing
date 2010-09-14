@@ -309,5 +309,19 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			dataSource.Rows<BillingData.SeatingReservationsRow>().ExportWomensSeats(path);
 			Process.Start(path);
 		}
+
+		private void exportAllInfo_ItemClick(object sender, ItemClickEventArgs e) {
+			string path;
+			using (var dialog = new SaveFileDialog {
+				Filter = "Excel 2003 Spreadsheet|*.xls|Excel 2007 Spreadsheet (*.xlsx)|*.xlsx",
+				FileName = "Seats " + year,
+				Title = "Save Seating Info"
+			}) {
+				if (dialog.ShowDialog(MdiParent) != DialogResult.OK) return;
+				path = dialog.FileName;
+			}
+			dataSource.Rows<BillingData.SeatingReservationsRow>().ExportSeatingInfo(path);
+			Process.Start(path);
+		}
 	}
 }
