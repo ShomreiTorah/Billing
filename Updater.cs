@@ -102,11 +102,13 @@ namespace ShomreiTorah.Billing {
 				Email.Default.Send(Email.AlertsAddress, Email.AdminAddress, Environment.UserName + " updated ShomreiTorah.Billing on " + Environment.MachineName,
 					"Old version: " + Checker.CurrentVersion + "\r\n"
 				  + "New version: " + update.NewVersion + " (Published on " + update.PublishDate.ToString("F", CultureInfo.InvariantCulture)
-				  + ")\r\n\r\nPath: " + Program.AppDirectory + "\r\n\r\n"
+				  + ")\r\n\r\nPath: " + Program.AppDirectory + "\r\n\r\nChanges:\r\n"
 				  + description
+				  + "\r\n\r\nUpdated files:\r\n • "
+				  + update.Files.Where(f => !f.Matches(Program.AppDirectory)).Join("\r\n • ", f => f.RelativePath)
 				  + "\r\n\r\nPre-update files:\r\n • "
-				  + String.Join("\r\n • ", Directory.GetFiles(Program.AppDirectory, "*.*", SearchOption.AllDirectories)), false
-				);
+				  + String.Join("\r\n • ", Directory.GetFiles(Program.AppDirectory, "*.*", SearchOption.AllDirectories))
+				, false);
 			} catch (SmtpException) { }
 
 			timer.Stop();	//In case we were called by the Update button in MainForm
