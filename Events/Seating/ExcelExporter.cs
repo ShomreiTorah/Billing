@@ -10,10 +10,11 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			var file = DB.CreateFile(path);
 			using (var connection = file.OpenConnection()) {
 				connection.ExecuteNonQuery(@"
-CREATE TABLE [WomensSeating] (
+CREATE TABLE [SeatingReservations] (
 	[Last Name]		NVARCHAR(128),
 	[His Name]		NVARCHAR(128),
 	[Her Name]		NVARCHAR(128),
+	[Full Name]		NVARCHAR(128),
 	[Address]		NVARCHAR(128),
 	[Phone]			NVARCHAR(128),
 
@@ -27,10 +28,10 @@ CREATE TABLE [WomensSeating] (
 				foreach (var seat in seats.OrderBy(s => s.Person.LastName)) {
 					var person = seat.Person;
 					connection.ExecuteNonQuery(
-						@"INSERT INTO [WomensSeating]
-		([Last Name],	[His Name],	[Her Name],	[Address],	[Phone],	[Men's Seats],	[Boys' Seats], 	[Women's Seats],	[Girls' Seats], [Notes])
-VALUES	(@LastName,		@HisName,	@HerName,	@Address,	@Phone,		@MensSeats,		@BoysSeats,		@WomensSeats,		@GirlsSeats,	@Notes);",
-		new { person.LastName, person.HisName, person.HerName, person.Address, person.Phone, seat.MensSeats, seat.BoysSeats, seat.WomensSeats, seat.GirlsSeats, seat.Notes }
+						@"INSERT INTO [SeatingReservations]
+		([Last Name],	[His Name],	[Her Name],	[Full Name],	[Address],	[Phone],	[Men's Seats],	[Boys' Seats], 	[Women's Seats],	[Girls' Seats], [Notes])
+VALUES	(@LastName,		@HisName,	@HerName,	@FullName,		@Address,	@Phone,		@MensSeats,		@BoysSeats,		@WomensSeats,		@GirlsSeats,	@Notes);",
+		new { person.LastName, person.HisName, person.HerName, person.FullName, person.Address, person.Phone, seat.MensSeats, seat.BoysSeats, seat.WomensSeats, seat.GirlsSeats, seat.Notes }
 	);
 				}
 			}
