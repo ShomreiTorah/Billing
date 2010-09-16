@@ -61,8 +61,9 @@ namespace ShomreiTorah.Billing {
 			UserLookAndFeel.Default.SkinName = "Lilian";	//This must be set here in case we're on the splash thread at launch time.
 			SkinManager.EnableFormSkins();
 			var parent = (IWin32Window)Program.UIInvoker;	//For some reason, I must set the parent to MainForm or it won't be properly modal.
+			var description = update.GetChanges(Checker.CurrentVersion);
 
-			if (DialogResult.No == XtraMessageBox.Show(parent, "An update is available.  Do you want to install it?\r\n\r\n" + update.Description,
+			if (DialogResult.No == XtraMessageBox.Show(parent, "An update is available.  Do you want to install it?\r\n\r\nThis update provides the following features:\r\n" + description,
 													   "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
 				return false;
 
@@ -70,16 +71,16 @@ namespace ShomreiTorah.Billing {
 			try {
 				if (!ProgressWorker.Execute(parent, ui => {
 					ui.Caption = "Downloading update...";
-					updatePath = update.ExtractFiles(ui);
+					updatePath = update.DownloadFiles(existingFiles: Program.AppDirectory, ui: ui);
 					if (!ui.WasCanceled)
 						ui.Caption = "Applying update";
 				}, true))
 					return false;
 			} catch (TargetInvocationException tex) {
-				Exception ex = tex;
-				while (ex.InnerException != null) ex = ex.InnerException;
+				Exception ex = tex.GetBaseException();
+
 				if (!Debugger.IsAttached)
-					Email.Warn("Billing Update Error", "New Version: " + update.NewVersion + "\r\nDescription: \r\n" + update.Description + "\r\n\r\n" + ex);
+					Email.Warn("Billing Update Error", "New Version: " + update.NewVersion + "\r\nDescription: \r\n" + description + "\r\n\r\n" + ex);
 
 				XtraMessageBox.Show(parent, "An error occurred while downloading the update.\r\n" + ex,
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -102,7 +103,7 @@ namespace ShomreiTorah.Billing {
 					"Old version: " + Checker.CurrentVersion + "\r\n"
 				  + "New version: " + update.NewVersion + " (Published on " + update.PublishDate.ToString("F", CultureInfo.InvariantCulture)
 				  + ")\r\n\r\nPath: " + Program.AppDirectory + "\r\n\r\n"
-				  + update.Description
+				  + description
 				  + "\r\n\r\nPre-update files:\r\n • "
 				  + String.Join("\r\n • ", Directory.GetFiles(Program.AppDirectory, "*.*", SearchOption.AllDirectories)), false
 				);
