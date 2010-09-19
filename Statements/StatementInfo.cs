@@ -50,10 +50,15 @@ namespace ShomreiTorah.Billing.Statements {
 
 		}
 
-		public decimal TotalPledged{ get; private set; }
-		public decimal TotalPaid{ get; private set; }
+		///<summary>Gets the total value of the pledges in the statement.</summary>
+		public decimal TotalPledged { get; private set; }
+		///<summary>Gets the total value of the payments in the statement.</summary>
+		public decimal TotalPaid { get; private set; }
+		///<summary>Gets the person's balance due.</summary>
 		public decimal TotalBalance { get; private set; }
+		///<summary>Gets the accounts in the statement.</summary>
 		public ReadOnlyCollection<StatementAccount> Accounts { get; private set; }
+		///<summary>Gets a disclaimer describing how much of the contributions are tax-deductible.</summary>
 		public string Deductibility { get; private set; }
 
 		//This method is called in a loop.
@@ -69,6 +74,7 @@ namespace ShomreiTorah.Billing.Statements {
 			Program.Data.StatementLog.AddStatementLogRow(Guid.NewGuid(), Person, lastGenTime, media, kind, StartDate, EndDate, Environment.UserName);
 		}
 	}
+	///<summary>Contains data about a specific account in a statement.</summary>
 	public class StatementAccount {
 		internal StatementAccount(StatementInfo parent, string accountName) {
 			Parent = parent;
@@ -93,16 +99,23 @@ namespace ShomreiTorah.Billing.Statements {
 			}
 		}
 
+		///<summary>Gets the statement containing the account.</summary>
 		public StatementInfo Parent { get; private set; }
+		///<summary>Gets the name of the account.</summary>
 		public string AccountName { get; private set; }
 
+		///<summary>Gets the outstanding balance in the account.</summary>
 		public decimal OutstandingBalance { get; private set; }
 		public decimal BalanceDue { get; private set; }
 
+		///<summary>Gets the total value of the pledges in the account.</summary>
 		public decimal TotalPledged { get; private set; }
+		///<summary>Gets the total value of the payments in the account.</summary>
 		public decimal TotalPaid { get; private set; }
 
+		///<summary>Gets the pledges that belong to the account.</summary>
 		public ReadOnlyCollection<BillingData.PledgesRow> Pledges { get; private set; }
+		///<summary>Gets the payments that belong to the account.</summary>
 		public ReadOnlyCollection<BillingData.PaymentsRow> Payments { get; private set; }
 	}
 	public enum StatementKind {
