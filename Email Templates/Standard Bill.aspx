@@ -1,5 +1,4 @@
-<%@ Page Language="C#" Inherits="ShomreiTorah.Billing.Statements.Email.EmailPage, ShomreiTorah.Billing"
-	MasterPageFile="EmailPage.master" %>
+<%@ Page Language="C#" Inherits="ShomreiTorah.Billing.Statements.Email.EmailPage, ShomreiTorah.Billing" MasterPageFile="EmailPage.master" %>
 
 <%@ Assembly Name="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" %>
 <%@ Import Namespace="System.Collections.Generic" %>
@@ -37,15 +36,13 @@
 		Dear
 		<%=Server.HtmlEncode(Info.Person.FullName)%>,</p>
 	<p>
-		On behalf of Rabbi Weinberger and Congregation Shomrei Torah, I would like to express
-		my sincere gratitude and appreciation for your financial support and valued participation
-		in our davening and learning. Through your generosity, support, and participation
-		our Shul will continue to grow and thrive as a special place of Torah and Avodah.</p>
+		On behalf of Rabbi Weinberger and Congregation Shomrei Torah, I would like to express my sincere gratitude and appreciation
+		for your financial support and valued participation in our davening and learning. Through your generosity, support, and
+		participation our Shul will continue to grow and thrive as a special place of Torah and Avodah.</p>
 	<p>
 		Your total balance due is <b>
-			<%=Info.TotalBalance.ToString("c") %></b>. Please review the summary below.
-		If you have any questions regarding the pledges or payments contained herein, please
-		reply to this email or contact Yaacov Gitstein at (732) 516 - 5583.
+			<%=Info.TotalBalance.ToString("c") %></b>. Please review the summary below. If you have any questions regarding the
+		pledges or payments contained herein, please reply to this email or contact Yaacov Gitstein at (732) 516 - 5583.
 	</p>
 	<p>
 		Thank you.</p>
@@ -82,10 +79,8 @@
 		</tr>
 		<%} %>
 		<tr>
-			<td colspan="2" style="border-top: solid 1px black; border-bottom: solid 2px black;
-				padding-top: 10px;">Total: </td>
-			<td style="text-align: right; font-weight: bold; border-top: solid 1px black; border-bottom: solid 2px black;
-				padding-top: 10px;">
+			<td colspan="2" style="border-top: solid 1px black; border-bottom: solid 2px black; padding-top: 10px;">Total: </td>
+			<td style="text-align: right; font-weight: bold; border-top: solid 1px black; border-bottom: solid 2px black; padding-top: 10px;">
 				<%=account.TotalPledged.ToString("c")%>
 			</td>
 		</tr>
@@ -114,10 +109,8 @@
 		</tr>
 		<%} else { %>
 		<tr>
-			<td colspan="2" style="border-top: solid 1px black; border-bottom: solid 2px black;
-				padding-top: 10px;">Total: </td>
-			<td style="text-align: right; font-weight: bold; border-top: solid 1px black; border-bottom: solid 2px black;
-				padding-top: 10px;">
+			<td colspan="2" style="border-top: solid 1px black; border-bottom: solid 2px black; padding-top: 10px;">Total: </td>
+			<td style="text-align: right; font-weight: bold; border-top: solid 1px black; border-bottom: solid 2px black; padding-top: 10px;">
 				<%=account.TotalPaid.ToString("c")%></td>
 		</tr>
 		<%}
@@ -132,15 +125,13 @@
 			<td style="text-align: right;">-<%=Info.TotalPaid.ToString("c") %></td>
 		</tr>
 		<tr>
-			<td colspan="2" style="padding-top: 5px; border-top: solid 1px black; border-bottom: solid 2px black;">
-				Balance due: </td>
+			<td colspan="2" style="padding-top: 5px; border-top: solid 1px black; border-bottom: solid 2px black;">Balance due: </td>
 			<td style="padding-top: 5px; text-align: right; border-top: solid 1px black; border-bottom: solid 2px black;"><b>
 				<%=Info.TotalBalance.ToString("c") %></b></td>
 		</tr>
 	</table>
 	<%if (Info.TotalBalance > 0) { %><p>
-		Please make your checks payable to <b>Congregation Shomrei Torah of Passaic-Clifton</b>,
-		and mail your remittance to:</p>
+		Please make your checks payable to <b>Congregation Shomrei Torah of Passaic-Clifton</b>, and mail your remittance to:</p>
 	<blockquote>
 		<p>
 			Congregation Shomrei Torah of Passaic-Clifton<br />
