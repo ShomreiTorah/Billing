@@ -42,7 +42,7 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 
 		protected override void DoShowPopup() {
-			FlushPendingEditActions();	
+			FlushPendingEditActions();
 			if (EditValue == null || EditValue == DBNull.Value)
 				Properties.Calendar.SelectedDate = null;
 			else
@@ -56,7 +56,7 @@ namespace ShomreiTorah.Billing.Controls {
 			Calendar.KeyUp += Calendar_KeyUp;
 			Calendar.DateClicked += Calendar_DateClicked;
 
-			PopupControl = new PopupContainerControl { Width = 750, Height = 475 };//{ Width = 215+3, Height = 158+7 };
+			PopupControl = new PopupContainerControl { Width = 744, Height = 533 };
 			PopupControl.Controls.Add(Calendar);
 
 			ShowPopupCloseButton = false;
