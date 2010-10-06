@@ -88,6 +88,8 @@
 			<th colspan="3" style="padding-top: 25px; border-bottom: solid 2px black;">
 				<%=Server.HtmlEncode(account.AccountName) %>
 				Payments </th>
+			As of
+			<%=Info.LastEnteredPayment.ToLongDateString() %>
 		</tr>
 		<%curStyle = ""; foreach (var payment in account.Payments) {
 		curStyle = curStyle == "" ? StripeStyle : "";%>
