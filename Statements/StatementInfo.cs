@@ -48,7 +48,11 @@ namespace ShomreiTorah.Billing.Statements {
 			} else
 				Deductibility = "No goods or services have been provided.";
 
+			LastEnteredPayment = Program.Data.Payments.Max(p => p.Modified);
 		}
+
+		///<summary>Gets the date of the most recently entered payment in the system.</summary>
+		public DateTime LastEnteredPayment { get; private set; }
 
 		///<summary>Gets the total value of the pledges in the statement.</summary>
 		public decimal TotalPledged { get; private set; }
