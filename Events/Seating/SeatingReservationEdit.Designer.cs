@@ -176,7 +176,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.pledgeTypeEditor.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.pledgeTypeEditor.Properties.Items.AddRange(new object[] {
-            "ימים נוראים Seating",
+            "ימים נוראים Seats",
             "Membership",
             "Associate Membership"});
 			this.pledgeTypeEditor.Size = new System.Drawing.Size(119, 20);
