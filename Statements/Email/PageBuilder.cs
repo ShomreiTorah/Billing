@@ -1,21 +1,18 @@
 using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
-using System.Reflection;
-using System.Text;
 using System.Web;
 using System.Web.Compilation;
-using System.Web.Configuration;
 using System.Web.Hosting;
 using System.Web.UI;
 using ShomreiTorah.Common;
+using ShomreiTorah.Data;
+
 namespace ShomreiTorah.Billing.Statements.Email {
-	using Email = ShomreiTorah.Common.Email;
+	using Email = Common.Email;
 
 	static class PageBuilder {
 		public static T CreateHost<T>() {
@@ -36,7 +33,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 		public static readonly string ImagesPath = Path.Combine(Program.AspxPath, @"Images\");
 		static readonly MailAddress BillingAddress = new MailAddress("Billing@ShomreiTorah.us", "Shomrei Torah Billing");
 
-		public static MailMessage CreateMessage(BillingData.MasterDirectoryRow person, string virtualPath, DateTime startDate, out StatementInfo info) {
+		public static MailMessage CreateMessage(Person person, string virtualPath, DateTime startDate, out StatementInfo info) {
 			using (var page = PageBuilder.CreatePage<EmailPage>(virtualPath)) {
 				page.ImagePrefix = "cid:";
 				page.Info = info = new StatementInfo(person, startDate, page.Kind);

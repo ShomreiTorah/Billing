@@ -7,6 +7,7 @@ using Microsoft.Office.Interop.Word.Extensions;
 using ShomreiTorah.Common;
 using ShomreiTorah.WinForms.Forms;
 using Microsoft.Win32;
+using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Events.Purim {
 	static class ShalachManosExport {
@@ -23,14 +24,13 @@ namespace ShomreiTorah.Billing.Events.Purim {
 
 		public static Document CreateDocument(int year) {
 			return ShalachManosExport.CreateDocument((
-						from person in Program.Data.Pledges
-						where person.Date.Year == year && person.Type == ShalachManosForm.PledgeType
-						select person.MasterDirectoryRow into person
-						orderby person.LastName
-						select person
+						from pledge in Program.Table<Pledge>().Rows
+						where pledge.Date.Year == year && pledge.Type == ShalachManosForm.PledgeType
+						orderby pledge.Person.LastName
+						select pledge.Person
 					).ToArray());
 		}
-		public static Document CreateDocument(IList<BillingData.MasterDirectoryRow> people) {
+		public static Document CreateDocument(IList<Person> people) {
 			var document = Word.Documents.Add();
 
 			document.EmbedTrueTypeFonts = true;

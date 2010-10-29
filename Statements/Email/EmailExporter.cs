@@ -20,16 +20,19 @@ using ShomreiTorah.WinForms.Forms;
 using System.Globalization;
 
 namespace ShomreiTorah.Billing.Statements.Email {
-	using Email = ShomreiTorah.Common.Email;	//Force the name to not refer to this namespace
+	using Email = ShomreiTorah.Common.Email;
+	using ShomreiTorah.Data;
+	using ShomreiTorah.Singularity.DataBinding;
+	using ShomreiTorah.Singularity;	//Force the name to not refer to this namespace
 
 	partial class EmailExporter : XtraForm {
-		readonly BillingData.MasterDirectoryRow[] people;
+		readonly Person[] people;
 		readonly EditorButton sendPreviewButton, showPreviewButton;
 
-		public static void Execute(Form parent, params BillingData.MasterDirectoryRow[] people) {
+		public static void Execute(Form parent, params Person[] people) {
 			if (people == null) throw new ArgumentNullException("people");
 			var originalPeople = people;
-			people = people.Where(r => r.GetEmailListRows().Length > 0).Distinct().ToArray();
+			people = people.Where(r => r.EmailAddresses.Count > 0).Distinct().ToArray();
 
 			if (people.Length == 0) {
 				if (originalPeople.Length == 1)
@@ -40,7 +43,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 										"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			Program.DoReload();
+			Program.Current.RefreshDatabase();
 
 			if (HttpRuntime.AppDomainAppVirtualPath == null) {
 				XtraMessageBox.Show("ASP.Net is not initialized.\r\nPlese restart the program and try again.",
@@ -57,7 +60,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			new EmailExporter(people, fileNames).Show(parent);
 		}
 
-		EmailExporter(BillingData.MasterDirectoryRow[] people, string[] fileNames) {
+		EmailExporter(Person[] people, string[] fileNames) {
 			InitializeComponent();
 			this.people = people;
 
@@ -79,7 +82,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 
 			CheckPreviewAddress();
 
-			grid.DataSource = Program.Data.MasterDirectory.Where(people.Contains).AsDataView();
+			grid.DataSource = new RowListBinder(Program.Table<Person>(), (Row[])people);
 			gridView.BestFitColumns();
 
 			emailTemplate.Properties.Items.AddRange(fileNames);
@@ -101,13 +104,13 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			sendPreviewButton.Enabled = showPreviewButton.Enabled && previewMailAddress != null;
 		}
 
-		MailMessage CreateMessage(BillingData.MasterDirectoryRow person) { StatementInfo info; return CreateMessage(person, out info); }
-		MailMessage CreateMessage(BillingData.MasterDirectoryRow person, out StatementInfo info) {
+		MailMessage CreateMessage(Person person) { StatementInfo info; return CreateMessage(person, out info); }
+		MailMessage CreateMessage(Person person, out StatementInfo info) {
 			return PageBuilder.CreateMessage(person, "/" + emailTemplate.EditValue + ".aspx", startDate.DateTime, out info);
 		}
 
 		void SendBills() {
-			var exceptions = new List<KeyValuePair<BillingData.MasterDirectoryRow, SmtpException>>();
+			var exceptions = new List<KeyValuePair<Person, SmtpException>>();
 			var successes = new List<StatementInfo>(people.Length);
 			ProgressWorker.Execute(ui => {
 				ui.Maximum = people.Length;
@@ -121,11 +124,11 @@ namespace ShomreiTorah.Billing.Statements.Email {
 					using (var message = CreateMessage(person, out info)) {
 						if (message == null) continue;
 
-						message.To.AddRange(person.GetEmailListRows().Select(e => e.MailAddress));
+						message.To.AddRange(person.EmailAddresses.Select(e => e.MailAddress));
 						try {
 							Email.Hosted.Send(message);
 							successes.Add(info);
-						} catch (SmtpException ex) { exceptions.Add(new KeyValuePair<BillingData.MasterDirectoryRow, SmtpException>(person, ex)); }
+						} catch (SmtpException ex) { exceptions.Add(new KeyValuePair<Person, SmtpException>(person, ex)); }
 					}
 				}
 			}, true);
@@ -139,7 +142,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 		private void buttonEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
-			var row = (BillingData.MasterDirectoryRow)gridView.GetFocusedDataRow();
+			var row = (Person)gridView.GetFocusedRow();
 			if (row == null) return;
 
 			if (e.Button.Caption == sendPreviewButton.Caption) {
@@ -208,9 +211,9 @@ namespace ShomreiTorah.Billing.Statements.Email {
 
 		private void gridView_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
 			if (e.Column == colEmails) {
-				var row = (BillingData.MasterDirectoryRow)gridView.GetDataRow(e.RowHandle);
+				var row = (Person)gridView.GetRow(e.RowHandle);
 				if (row != null)
-					e.Value = String.Join(", ", Array.ConvertAll(row.GetEmailListRows(), m => m.Email));
+					e.Value = row.EmailAddresses.Select(m => m.Email).Join(", ");
 			}
 		}
 

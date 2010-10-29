@@ -1,31 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using DevExpress.Data.Filtering;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
-using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraTabbedMdi;
-using ShomreiTorah.WinForms.Controls;
 using ShomreiTorah.Billing.Events.Purim;
-using System.Globalization;
+using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI.DisplaySettings;
+using ShomreiTorah.Singularity;
+using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Forms {
 	partial class MainForm : RibbonForm {
 		public MainForm() {
 			InitializeComponent();
-			lookup.SearchTable = Program.Data.MasterDirectory;
-			lookup.Columns.Add(new ColumnInfo("BalanceDue", lookup.Columns.Last().Right + 10, 200, "Dues: {0:c}"));
 
-			addDeposit.Strings.AddRange(BillingData.AccountNames.ToArray());
+			EditorRepository.PersonLookup.Apply(lookup.Properties);
+			addDeposit.Strings.AddRange(Names.AccountNames.ToArray());
 
 			shalachManosColumnsItem.EditValue = ShalachManosExport.ColumnCount;
 
@@ -44,19 +40,18 @@ namespace ShomreiTorah.Billing.Forms {
 			Program.UIInvoker = this;
 			Updater.RunBackground();
 			if (Environment.GetCommandLineArgs().Contains("Updated"))
-				XtraMessageBox.Show("Congratulations!\r\nYou have successfully updated to version " + Updater.Checker.CurrentVersion,
-									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				Dialog.Inform("Congratulations!\r\nYou have successfully updated to version " + Updater.Checker.CurrentVersion);
 		}
 
-		private void refreshData_ItemClick(object sender, ItemClickEventArgs e) { Program.DoReload(); }
-		private void saveDb_ItemClick(object sender, ItemClickEventArgs e) { Program.Data.Save(); }
+		private void refreshData_ItemClick(object sender, ItemClickEventArgs e) { Program.Current.RefreshDatabase(); }
+		private void saveDb_ItemClick(object sender, ItemClickEventArgs e) { Program.Current.SaveDatabase(); }
 
 		protected override void OnClosing(CancelEventArgs e) {
-			if (Program.Data.HasChanges()) {
+			if (Program.Current.HasDataChanged) {
 				switch (XtraMessageBox.Show("You have not saved your changes to the database.\r\nWould you like to save before exiting?",
 											"Shomrei Torah Billing", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning)) {
 					case DialogResult.Yes:
-						Program.Data.Save();
+						Program.Current.SaveDatabase();
 						break;
 					case DialogResult.No:
 						break;
@@ -68,9 +63,11 @@ namespace ShomreiTorah.Billing.Forms {
 			base.OnClosing(e);
 		}
 
-		private void lookup_ItemSelected(object sender, ItemSelectionEventArgs e) {
-			lookup.PopupOpen = false;
-			new PersonDetails((BillingData.MasterDirectoryRow)e.SelectedRow) { MdiParent = this }.Show();
+		private void lookup_EditValueChanged(object sender, EventArgs e) {
+			var row = lookup.EditValue as Row;
+			if (row == null) return;	//eg, DBNull
+			lookup.EditValue = null;
+			Program.Current.ShowDetails(row);
 		}
 
 		private void mdiManager_MouseDown(object sender, MouseEventArgs e) {
@@ -128,23 +125,22 @@ namespace ShomreiTorah.Billing.Forms {
 		#endregion
 
 		#region Statements
-		static IEnumerable<BillingData.MasterDirectoryRow> StatementsAll {
-			get { return Program.Data.MasterDirectory.Where(p => p.TotalPledged != 0 || p.TotalPaid != 0); }
+		static IEnumerable<Person> StatementsAll {
+			get { return Program.Table<Person>().Rows.Where(p => p.Pledges.Any() || p.Payments.Any()); }
 		}
-		static IEnumerable<BillingData.MasterDirectoryRow> StatementsModified {
+		static IEnumerable<Person> StatementsModified {
 			get {
-				return Program.Data.MasterDirectory.Where(p => p.GetPaymentsRows().Any(t => t.Modified >= Program.LaunchTime.ToUniversalTime())
-															|| p.GetPledgesRows().Any(t => t.Modified >= Program.LaunchTime.ToUniversalTime())
+				return Program.Table<Person>().Rows.Where(p => p.Pledges.Any(t => t.Modified >= Program.LaunchTime.ToUniversalTime())
+															|| p.Payments.Any(t => t.Modified >= Program.LaunchTime.ToUniversalTime())
 														  );
 			}
 		}
-		void ExportModified(Action<Form, BillingData.MasterDirectoryRow[]> exporter) {
+		void ExportModified(Action<Form, Person[]> exporter) {
 			var people = StatementsModified.ToArray();
 			if (people.Any())
 				exporter(this, people);
 			else
-				XtraMessageBox.Show("You have not created or modified any payments or pledges yet.\r\nWould you like to?",
-									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				Dialog.Inform("You have not created or modified any payments or pledges yet.\r\nWould you like to?");
 		}
 		private void emailAll_ItemClick(object sender, ItemClickEventArgs e) { Statements.Email.EmailExporter.Execute(this, StatementsAll.ToArray()); }
 		private void emailModified_ItemClick(object sender, ItemClickEventArgs e) { ExportModified(Statements.Email.EmailExporter.Execute); }

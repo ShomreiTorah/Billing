@@ -29,7 +29,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
-			this.billingData = new ShomreiTorah.Billing.BillingData();
+			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource();
 			this.seatingReservationsBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.NotesTextEdit = new DevExpress.XtraEditors.MemoEdit();
 			this.layoutControl = new DevExpress.XtraDataLayout.DataLayoutControl();
@@ -83,11 +83,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// billingData
-			// 
-			this.billingData.DataSetName = "BillingData";
-			this.billingData.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
 			// 
 			// seatingReservationsBindingSource
 			// 
@@ -503,7 +498,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		#endregion
 
 		private System.Windows.Forms.BindingSource seatingReservationsBindingSource;
-		private BillingData billingData;
+		private ShomreiTorah.Data.UI.FrameworkBindingSource billingData;
 		private DevExpress.XtraEditors.MemoEdit NotesTextEdit;
 		private DevExpress.XtraDataLayout.DataLayoutControl layoutControl;
 		private DevExpress.XtraEditors.TextEdit IdTextEdit;

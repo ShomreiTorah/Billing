@@ -1,28 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using DevExpress.Data.Filtering;
 using DevExpress.XtraEditors;
-using DevExpress.XtraEditors.Controls;
+using ShomreiTorah.Data;
+using ShomreiTorah.Singularity;
 
 namespace ShomreiTorah.Billing.Controls {
 	partial class ModifiedPaymentsGrid : XtraUserControl {
 		public ModifiedPaymentsGrid() {
 			InitializeComponent();
 			gridView.ActiveFilterCriteria = new OperandProperty("Modified") > Program.LaunchTime.ToUniversalTime();
-			if (Program.Data != null)
-				Program.Data.Payments.RowChanged += Payments_RowChanged;
+			if (!Program.Current.IsDesignTime)
+				Program.Table<Payment>().ValueChanged += Payments_ValueChanged;
 		}
 
-		void Payments_RowChanged(object sender, DataRowChangeEventArgs e) {
-			//if (e.Action != DataRowAction.Add) return;
-
+		void Payments_ValueChanged(object sender, ValueChangedEventArgs<Payment> e) {
 			gridView.BestFitColumns();
-			Program.Data.Payments.RowChanged -= Payments_RowChanged;
+			Program.Table<Payment>().ValueChanged -= Payments_ValueChanged;
 		}
 	}
 }

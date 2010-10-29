@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Linq;
-using System.Text;
 using DevExpress.Accessibility;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -13,8 +9,10 @@ using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraEditors.ViewInfo;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
-using DevExpress.XtraGrid.Views.Grid;
 using ShomreiTorah.Billing.Properties;
+using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI;
+using ShomreiTorah.Singularity;
 
 namespace ShomreiTorah.Billing.Controls.Editors {
 	[UserRepositoryItem("Register")]
@@ -47,25 +45,27 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			base.RaiseButtonClick(e);
 
 			var row = OwnerEdit.SelectedRow;
-			var personAccessor = (IPersonAccessor)row;
-			BaseGrid.ShowDetailsForm(personAccessor.Person);
+			var personAccessor = (IOwnedObject)row;
+			AppFramework.Current.ShowDetails(personAccessor.Person);
 		}
 		public new PersonRefEdit OwnerEdit { get { return (PersonRefEdit)base.OwnerEdit; } }
 	}
 	class PersonRefEdit : ButtonEdit {
 		static PersonRefEdit() { RepositoryItemPersonRefEdit.Register(); }
 
-		internal DataRow SelectedRow {
+		internal Row SelectedRow {
 			get {
 				var grid = (GridControl)Parent;
 				var view = (ColumnView)grid.FocusedView;
-				return view.GetFocusedDataRow();
+				return (Row)view.GetFocusedRow();
 			}
 		}
 
 		protected override void OnDoubleClick(EventArgs e) {
 			base.OnDoubleClick(e);
-			BaseGrid.ShowDetailsForm(SelectedRow);
+			var row = SelectedRow;
+			if (Program.Current.CanShowDetails(row.Schema))
+				Program.Current.ShowDetails(row);
 		}
 
 		[Category("Properties")]

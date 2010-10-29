@@ -1,33 +1,27 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using System.Security.Permissions;
+using ShomreiTorah.Data;
+using ShomreiTorah.Singularity;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	public partial class SeatingReservationPopup : XtraForm {
-		readonly BillingData.SeatingReservationsRow row;
-		public SeatingReservationPopup(BillingData.SeatingReservationsRow row) {
+		readonly SeatingReservation row;
+		public SeatingReservationPopup(SeatingReservation row) {
 			InitializeComponent();
 
-			Text = "Seating Reservation Editor - " + row.FullName;
+			Text = "Seating Reservation Editor - " + row.Person.FullName;
 			this.row = row;
 			editor.EditRow(row);
 			ClientSize = editor.Size;
 
-			Program.Data.SeatingReservations.SeatingReservationsRowDeleted += SeatingReservations_SeatingReservationsRowDeleted;
+			Program.Table<SeatingReservation>().RowRemoved += SeatingReservations_RowRemoved;
 		}
 
-		void SeatingReservations_SeatingReservationsRowDeleted(object sender, BillingData.SeatingReservationsRowChangeEvent e) {
+		void SeatingReservations_RowRemoved(object sender, RowListEventArgs<SeatingReservation> e) {
 			if (e.Row == row)
 				Close();
 		}
 
-		[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
 			if (keyData == Keys.Escape) {
 				Close();
@@ -37,7 +31,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		}
 		protected override void Dispose(bool disposing) {
 			if (disposing) {
-				Program.Data.SeatingReservations.SeatingReservationsRowDeleted -= SeatingReservations_SeatingReservationsRowDeleted;
+				Program.Table<SeatingReservation>().RowRemoved -= SeatingReservations_RowRemoved;
 				if (components != null) components.Dispose();
 			}
 			base.Dispose(disposing);

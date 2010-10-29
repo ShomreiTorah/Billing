@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using Microsoft.Office.Interop.Word;
 using Microsoft.Office.Interop.Word.Extensions;
-using System.IO;
+using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Statements.Word {
 	abstract class ContentPopulator {
@@ -23,15 +20,15 @@ namespace ShomreiTorah.Billing.Statements.Word {
 	}
 
 	abstract class DataContentPopulator : ContentPopulator {
-		public BillingData.MasterDirectoryRow Person { get; private set; }
+		public Person Person { get; private set; }
 
 		protected abstract bool PopulateCustomField(Range range, string name);
 
-		public void Populate(Range range, BillingData.MasterDirectoryRow person) { Person = person; base.Populate(range); }
+		public void Populate(Range range, Person person) { Person = person; base.Populate(range); }
 		protected override void Fill(Range range, string name) {
 			if (PopulateCustomField(range, name)) return;
 
-			if (!Program.Data.MasterDirectory.Columns.Contains(name))
+			if (!Person.Schema.Columns.Contains(name))
 				throw new InvalidDataException("Unknown ContentControl: " + name);
 
 			range.Text = Person[name].ToString();

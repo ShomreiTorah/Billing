@@ -1,3 +1,4 @@
+using ShomreiTorah.Data.UI.Controls;
 namespace ShomreiTorah.Billing.Events.Seating {
 	partial class SeatingForm {
 		/// <summary>
@@ -33,7 +34,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colNotes = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colChartStatus = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.gridLoadingEdit = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
-			this.personSelector = new ShomreiTorah.Billing.Controls.PersonSelector();
+			this.personSelector = new ShomreiTorah.Data.UI.Controls.PersonSelector();
 			this.addNewPanel = new DevExpress.XtraEditors.PanelControl();
 			this.cancelAddEntry = new DevExpress.XtraEditors.SimpleButton();
 			this.addNewEdit = new ShomreiTorah.Billing.Events.Seating.SeatingReservationEdit();
@@ -54,6 +55,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.mensTotal = new DevExpress.XtraBars.BarStaticItem();
 			this.womensTotal = new DevExpress.XtraBars.BarStaticItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.personSelector.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemPersonRefEdit1)).BeginInit();
@@ -153,7 +155,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// colFullName
 			// 
 			this.colFullName.ColumnEdit = this.repositoryItemPersonRefEdit1;
-			this.colFullName.FieldName = "FullName";
+			this.colFullName.FieldName = "Person";
 			this.colFullName.GroupInterval = DevExpress.XtraGrid.ColumnGroupInterval.Alphabetical;
 			this.colFullName.Name = "colFullName";
 			this.colFullName.OptionsColumn.ReadOnly = true;
@@ -295,21 +297,14 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// 
 			// personSelector
 			// 
-			this.personSelector.Caption = "Select a person:";
-			this.personSelector.DefaultText = "Please click here to select a person";
 			this.personSelector.Dock = System.Windows.Forms.DockStyle.Top;
 			this.personSelector.Location = new System.Drawing.Point(0, 116);
 			this.personSelector.Name = "personSelector";
-			this.personSelector.PopupOpen = false;
-			this.personSelector.ResultsLocation = ShomreiTorah.WinForms.Controls.ResultsLocation.Bottom;
-			this.personSelector.ScrollPosition = 0;
-			this.personSelector.SearchTable = null;
 			this.personSelector.Size = new System.Drawing.Size(1011, 20);
 			this.personSelector.TabIndex = 0;
 			this.personSelector.TabStop = false;
-			this.personSelector.Value = ((object)(resources.GetObject("personSelector.Value")));
-			this.personSelector.SelectedPersonChanged += new System.EventHandler(this.personSelector_SelectedPersonChanged);
-			this.personSelector.SelectingPerson += new System.EventHandler<ShomreiTorah.Billing.Controls.SelectingPersonEventArgs>(this.personSelector_SelectingPerson);
+			this.personSelector.EditValueChanged += new System.EventHandler(this.personSelector_EditValueChanged);
+			this.personSelector.PersonSelecting += new System.EventHandler<ShomreiTorah.Data.UI.Controls.PersonSelectingEventArgs>(this.personSelector_PersonSelecting);
 			// 
 			// addNewPanel
 			// 
@@ -526,6 +521,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			((System.ComponentModel.ISupportInitialize)(this.seatCountEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridLoadingEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.addNewPanel)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.personSelector.Properties)).EndInit();
 			this.addNewPanel.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.wordDocsMenu)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.loadingIconEdit)).EndInit();
@@ -536,7 +532,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 
 		private Controls.BaseGrid grid;
 		private DevExpress.XtraGrid.Views.Grid.GridView gridView;
-		private Controls.PersonSelector personSelector;
+		private PersonSelector personSelector;
 		private DevExpress.XtraEditors.PanelControl addNewPanel;
 		private DevExpress.XtraEditors.SimpleButton addEntry;
 		private SeatingReservationEdit addNewEdit;

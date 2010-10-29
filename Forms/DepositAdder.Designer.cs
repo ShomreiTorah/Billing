@@ -144,7 +144,6 @@ namespace ShomreiTorah.Billing.Forms {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colFullName, DevExpress.Data.ColumnSortOrder.Ascending)});
 			this.gridView.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gridView_CustomUnboundColumnData);
 			this.gridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridView_KeyDown);
-			this.gridView.CustomColumnSort += new DevExpress.XtraGrid.Views.Base.CustomColumnSortEventHandler(this.gridView_CustomColumnSort);
 			this.gridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridView_MouseUp);
 			this.gridView.BeforeLeaveRow += new DevExpress.XtraGrid.Views.Base.RowAllowEventHandler(this.gridView_BeforeLeaveRow);
 			// 
@@ -170,12 +169,13 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// colFullName
 			// 
-			this.colFullName.FieldName = "FullName";
+			this.colFullName.FieldName = "Person";
 			this.colFullName.Name = "colFullName";
 			this.colFullName.OptionsColumn.AllowEdit = false;
 			this.colFullName.OptionsColumn.AllowFocus = false;
 			this.colFullName.OptionsColumn.ReadOnly = true;
-			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
+			this.colFullName.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
+			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Default;
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 1;
 			this.colFullName.Width = 49;

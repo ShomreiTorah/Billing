@@ -1,19 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using DevExpress.Data;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
+using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	partial class SeatingChartInfo : XtraForm {
-		public static void Show(IWin32Window parent, ParsedSeatingChart chart, IEnumerable<BillingData.SeatingReservationsRow> seats) {
+		public static void Show(IWin32Window parent, ParsedSeatingChart chart, IEnumerable<SeatingReservation> seats) {
 			var data =
 				//CS means Chart Seat; RS means Reserved Seat.
 				new[]{

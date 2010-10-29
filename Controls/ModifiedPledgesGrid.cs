@@ -1,28 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using DevExpress.Data.Filtering;
 using DevExpress.XtraEditors;
-using DevExpress.XtraEditors.Controls;
+using ShomreiTorah.Data;
+using ShomreiTorah.Singularity;
 
 namespace ShomreiTorah.Billing.Controls {
 	partial class ModifiedPledgesGrid : XtraUserControl {
 		public ModifiedPledgesGrid() {
 			InitializeComponent();
 			gridView.ActiveFilterCriteria = new OperandProperty("Modified") > Program.LaunchTime.ToUniversalTime();
-			if (Program.Data != null)
-				Program.Data.Pledges.RowChanged += Pledges_RowChanged;
+			if (!Program.Current.IsDesignTime)
+				Program.Table<Pledge>().ValueChanged += Pledges_ValueChanged;
 		}
 
-		void Pledges_RowChanged(object sender, DataRowChangeEventArgs e) {
-			//if (e.Action != DataRowAction.Add) return;
-
+		void Pledges_ValueChanged(object sender, ValueChangedEventArgs<Pledge> e) {
 			gridView.BestFitColumns();
-			Program.Data.Pledges.RowChanged -= Pledges_RowChanged;
+			Program.Table<Pledge>().ValueChanged -= Pledges_ValueChanged;
 		}
 	}
 }

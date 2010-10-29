@@ -1,61 +1,75 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using Microsoft.Office.Interop.Word.Extensions;
-using ShomreiTorah.Billing.Controls;
 using ShomreiTorah.Common;
+using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI.Controls;
+using ShomreiTorah.Singularity;
 using Word = Microsoft.Office.Interop.Word;
-using System.Threading;
-using System.Diagnostics;
+using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	partial class SeatingForm : Forms.GridFormBase {
 		static readonly Bitmap LoadingImage = Properties.Resources.Loading16;
 
 		readonly int year;
-		readonly DataView dataSource;
+		readonly FilteredTable<SeatingReservation> seats;
 		public SeatingForm(int year) {
 			InitializeComponent();
 
 			loadingIconItem.EditValue = LoadingImage;
-			colPledgeType.ColumnEdit = SeatingInfo.PledgeTypeEdit;
+			colPledgeType.ColumnEdit = SeatingInfo.PledgeTypeEdit;	//TODO: IEditorSettings?
 			this.year = year;
-			var filterString = "Parent(Seat).Date > #1/1/" + year + "# AND Parent(Seat).Date < #12/31/" + year + "#";
 
 			grid.DataMember = null;
-			grid.DataSource = dataSource = new DataView(Program.Data.SeatingReservations, filterString, null, DataViewRowState.CurrentRows);
+			grid.DataSource = seats = new FilteredTable<SeatingReservation>(
+				Program.Table<SeatingReservation>(),
+				sr => sr.Pledge.Date.Year == year
+			);
 
 			Text = year.ToString(CultureInfo.CurrentCulture) + " Seating Reservations";
 			colChartStatus.Visible = colChartStatus.OptionsColumn.ShowInCustomizationForm = false;
 
-			Program.Data.Pledges.PledgesRowChanged += Pledges_PledgesRowChanged;
-			Program.Data.SeatingReservations.SeatingReservationsRowDeleted += SeatingReservations_SeatingReservationsRowDeleted;
-			Program.Data.SeatingReservations.SeatingReservationsRowChanged += SeatingReservations_SeatingReservationsRowChanged;
+			Program.Table<Pledge>().ValueChanged += Pledge_ValueChanged;
+			Program.Table<SeatingReservation>().RowRemoved += SeatingReservation_RowRemoved;
+			Program.Table<SeatingReservation>().ValueChanged += SeatingReservation_ValueChanged;
 
 			UpdateTotals();
 		}
 
-		void SeatingReservations_SeatingReservationsRowDeleted(object sender, BillingData.SeatingReservationsRowChangeEvent e) {
-			if (e.Row.PledgesRow.Date.Year != year)
+
+		void SeatingReservation_RowRemoved(object sender, RowListEventArgs<SeatingReservation> e) {
+			if (e.Row.Pledge.Date.Year != year)
 				return;
 			UpdateTotals();
 		}
 
+		void Pledge_ValueChanged(object sender, ValueChangedEventArgs<Pledge> e) {
+			if (e.Row.Date.Year != year) return;
+			var seatRow = e.Row.SeatingReservations.FirstOrDefault();
+			if (seatRow == null) return;
+
+			gridView.RefreshRow(gridView.GetRowHandle(seats.Rows.IndexOf(seatRow)));
+		}
+
 		protected override void Dispose(bool disposing) {
 			if (disposing) {
-				Program.Data.SeatingReservations.SeatingReservationsRowDeleted -= SeatingReservations_SeatingReservationsRowDeleted;
-				Program.Data.SeatingReservations.SeatingReservationsRowChanged -= SeatingReservations_SeatingReservationsRowChanged;
-				Program.Data.Pledges.PledgesRowChanged -= Pledges_PledgesRowChanged;
+				seats.Dispose();
+				Program.Table<Pledge>().ValueChanged -= Pledge_ValueChanged;
+				Program.Table<SeatingReservation>().RowRemoved -= SeatingReservation_RowRemoved;
+				Program.Table<SeatingReservation>().ValueChanged -= SeatingReservation_ValueChanged;
+
 				if (components != null) components.Dispose();
 			}
 			base.Dispose(disposing);
@@ -63,7 +77,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 
 		void UpdateTotals() {
 			int men = 0, women = 0;
-			foreach (var seat in dataSource.Rows<BillingData.SeatingReservationsRow>()) {
+			foreach (var seat in seats.Rows) {
 				men += seat.MensSeats + seat.BoysSeats;
 				women += seat.WomensSeats + seat.GirlsSeats;
 			}
@@ -73,21 +87,21 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		}
 
 		#region AddEntry Panel
-		private void personSelector_SelectedPersonChanged(object sender, EventArgs e) {
+		private void personSelector_EditValueChanged(object sender, EventArgs e) {
 			if (personSelector.SelectedPerson == null) return;
 			addNewPanel.Show();
 			addNewEdit.BeginAddNew(personSelector.SelectedPerson);
 		}
 
-		private void personSelector_SelectingPerson(object sender, SelectingPersonEventArgs e) {
+		private void personSelector_PersonSelecting(object sender, PersonSelectingEventArgs e) {
 			if (e.Person == null) return;
 			if (addNewPanel.Visible) {
-				if (DialogResult.Yes != XtraMessageBox.Show("Are you sure you want to start adding a new reservation?\r\nYou haven't added the reservation you're currently editing yet!",
-															"Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+				if (!Dialog.Warn("Are you sure you want to start adding a new reservation?\r\nYou haven't added the reservation you're currently editing yet!")) {
 					e.Cancel = true;
+					return;
+				}
 			}
-			var existingReservation = Program.Data.SeatingReservations.CurrentRows()
-					.FirstOrDefault(sr => sr.PledgesRow.Date.Year == year && sr.PledgesRow.PersonId == e.Person.Id);
+			var existingReservation = Program.Table<SeatingReservation>().Rows.FirstOrDefault(sr => sr.Pledge.Date.Year == year && sr.Person == e.Person);
 			if (existingReservation != null) {
 				if (DialogResult.Yes != XtraMessageBox.Show(e.Person.VeryFullName + " already have a reservation for " + existingReservation.TotalSeats + " seats."
 														  + "\r\nAre you sure you want to add a second reservation?",
@@ -116,32 +130,24 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		}
 		#endregion
 
-		void Pledges_PledgesRowChanged(object sender, BillingData.PledgesRowChangeEvent e) {
-			if (e.Row.Date.Year != year) return;
-			var seatRow = e.Row.GetSeatingReservationsRows().FirstOrDefault();
-			if (seatRow == null) return;
-
-			gridView.RefreshRow(gridView.GetRowHandle(dataSource.Rows<BillingData.SeatingReservationsRow>().IndexOf(seatRow)));
-		}
-
 		private void gridView_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
-			if (dataSource == null) return;	//Still initializing
+			if (seats == null) return;	//Still initializing
 
 			if (e.Column.FieldName.StartsWith("Pledge/", StringComparison.OrdinalIgnoreCase)) {
 				var columnName = Path.GetFileName(e.Column.FieldName);
-				var row = (BillingData.SeatingReservationsRow)dataSource[e.ListSourceRowIndex].Row;
+				var row = seats.Rows[e.ListSourceRowIndex];
 
 				if (e.IsGetData)
-					e.Value = row.PledgesRow[columnName];
+					e.Value = row.Pledge[columnName];
 				else
-					row.PledgesRow[columnName] = e.Value;
+					row.Pledge[columnName] = e.Value;
 			} else if (e.Column == colChartStatus) {
 				if (colChartStatus.ColumnEdit == gridLoadingEdit)
 					e.Value = LoadingImage;
 				else if (seatGroups == null)
 					e.Value = null;
 				else {
-					var row = (BillingData.SeatingReservationsRow)dataSource[e.ListSourceRowIndex].Row;
+					var row = seats.Rows[e.ListSourceRowIndex];
 
 					var seat = FindSeatGroup(row.Person);
 					if (seat == null)
@@ -156,7 +162,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 
 		private void gridView_KeyUp(object sender, KeyEventArgs e) {
 			if (e.KeyData == Keys.Delete) {
-				var row = (BillingData.SeatingReservationsRow)gridView.GetFocusedDataRow();
+				var row = (SeatingReservation)gridView.GetFocusedRow();
 				if (row == null) return;
 
 				new SeatingReservationDeleter(row).ShowDialog(this);
@@ -223,7 +229,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 						LoadingCaption = null;
 						colChartStatus.ColumnEdit = null;
 						if (!Debugger.IsAttached)
-							new Forms.ErrorForm(ex).Show();
+							Program.Current.HandleException(ex);
 					}));
 
 					if (Debugger.IsAttached)
@@ -233,7 +239,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				BeginInvoke(new Action(delegate {
 					try {
 						if (seatGroups == null)
-							seatGroups = new Dictionary<BillingData.MasterDirectoryRow, SeatGroup>();
+							seatGroups = new Dictionary<Person, SeatGroup>();
 						else
 							seatGroups.Clear();
 
@@ -244,17 +250,17 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			});
 		}
 
-		void SeatingReservations_SeatingReservationsRowChanged(object sender, BillingData.SeatingReservationsRowChangeEvent e) {
-			if (e.Row.PledgesRow.Date.Year != year)
+		void SeatingReservation_ValueChanged(object sender, ValueChangedEventArgs<SeatingReservation> e) {
+			if (e.Row.Pledge.Date.Year != year)
 				return;
 			UpdateTotals();
 			gridView.RefreshRowCell(
-				gridView.GetRowHandle(dataSource.Rows<BillingData.SeatingReservationsRow>().IndexOf(e.Row)),
+				gridView.GetRowHandle(seats.Rows.IndexOf(e.Row)),
 				colChartStatus
 			);
 		}
 
-		SeatGroup FindSeatGroup(BillingData.MasterDirectoryRow person) {
+		SeatGroup FindSeatGroup(Person person) {
 			SeatGroup retVal;
 			if (seatGroups.TryGetValue(person, out retVal))
 				return retVal;
@@ -287,13 +293,13 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		}
 
 		private void showChartInfo_ItemClick(object sender, ItemClickEventArgs e) {
-			SeatingChartInfo.Show(MdiParent, chart, dataSource.Rows<BillingData.SeatingReservationsRow>());
+			SeatingChartInfo.Show(MdiParent, chart, seats.Rows);
 		}
 
 		ParsedSeatingChart chart;
 
 		///<summary>Contains the SeatGroups corresponding to people in the master directory.</summary>
-		Dictionary<BillingData.MasterDirectoryRow, SeatGroup> seatGroups;
+		Dictionary<Person, SeatGroup> seatGroups;
 		#endregion
 
 		private void exportLadiesInfo_ItemClick(object sender, ItemClickEventArgs e) {
@@ -306,7 +312,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				if (dialog.ShowDialog(MdiParent) != DialogResult.OK) return;
 				path = dialog.FileName;
 			}
-			dataSource.Rows<BillingData.SeatingReservationsRow>().ExportWomensSeats(path);
+			seats.Rows.ExportWomensSeats(path);
 			Process.Start(path);
 		}
 
@@ -320,7 +326,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				if (dialog.ShowDialog(MdiParent) != DialogResult.OK) return;
 				path = dialog.FileName;
 			}
-			dataSource.Rows<BillingData.SeatingReservationsRow>().ExportSeatingInfo(path);
+			seats.Rows.ExportSeatingInfo(path);
 			Process.Start(path);
 		}
 	}

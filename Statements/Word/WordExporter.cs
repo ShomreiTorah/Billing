@@ -1,23 +1,20 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
+using ShomreiTorah.Data;
+using ShomreiTorah.Singularity.DataBinding;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Statements.Word {
 	partial class WordExporter : XtraForm {
-		public static void Execute(Form parent, params BillingData.MasterDirectoryRow[] people) {
+		public static void Execute(Form parent, params Person[] people) {
 			if (people == null) throw new ArgumentNullException("people");
 			if (people.Length == 0) return;
 
-			Program.DoReload();
+			Program.Current.RefreshDatabase();
 			WordStatementInfo[] statements;
 
 			using (var options = new ExportOptions()) {
@@ -54,9 +51,10 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			barManager.Items.AddRange(barItems);
 			mailingDocuments.ItemLinks.AddRange(barItems);
 
-			grid.DataSource = Program.Data.MasterDirectory
-				.Where(p => statements.Any(s => s.Person == p))
-				.AsDataView();
+			grid.DataSource = new RowListBinder(
+				Program.Table<Person>(),
+				statements.Select(p => p.Person).Distinct().ToArray()
+			);
 
 			gridView.BestFitColumns();
 		}

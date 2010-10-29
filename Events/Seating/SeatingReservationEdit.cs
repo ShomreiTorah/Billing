@@ -1,13 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	public partial class SeatingReservationEdit : XtraUserControl {
@@ -15,40 +10,34 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			InitializeComponent();
 			pledgeTypeEditor.Properties.Assign(SeatingInfo.PledgeTypeEdit);
 
-			if (Program.Data != null) {//Bugfix for nested designer
-				pledgesBindingSource.DataSource = Program.Data;
-				seatingReservationsBindingSource.DataSource = Program.Data;
+			if (Program.Current.DataContext != null) {//Bugfix for nested designer
+				pledgesBindingSource.DataSource = Program.Table<Pledge>();
+				seatingReservationsBindingSource.DataSource = Program.Table<SeatingReservation>();
 			}
 		}
 
 		decimal? oldCalculatedPrice;
-		public void BeginAddNew(BillingData.MasterDirectoryRow person) {
+		public void BeginAddNew(Person person) {
 			pledgesBindingSource.CancelEdit();
 			seatingReservationsBindingSource.CancelEdit();
-			var pledge = (BillingData.PledgesRow)((DataRowView)pledgesBindingSource.AddNew()).Row;
-			var seatRes = (BillingData.SeatingReservationsRow)((DataRowView)seatingReservationsBindingSource.AddNew()).Row;
+			var pledge = (Pledge)pledgesBindingSource.AddNew();
+			var seatRes = (SeatingReservation)seatingReservationsBindingSource.AddNew();
 
-			pledge.PledgeId = Guid.NewGuid();
 			pledge.Account = "Operating Fund";
 			pledge.Date = DateTime.Now;
-			pledge.MasterDirectoryRow = person;
-			seatRes.Id = Guid.NewGuid();
-			seatRes.PledgesRow = pledge;
+			pledge.Person = person;
+			seatRes.Pledge = pledge;
 			pledgeTypeEditor.Focus();
 
 			oldCalculatedPrice = CalculatePrice();
 		}
 
-		BillingData.SeatingReservationsRow Seat {
-			get { return seatingReservationsBindingSource.Current == null ? null : (BillingData.SeatingReservationsRow)((DataRowView)seatingReservationsBindingSource.Current).Row; }
-		}
-		BillingData.PledgesRow Pledge {
-			get { return pledgesBindingSource.Current == null ? null : (BillingData.PledgesRow)((DataRowView)pledgesBindingSource.Current).Row; }
-		}
+		SeatingReservation Seat { get { return (SeatingReservation)seatingReservationsBindingSource.Current; } }
+		Pledge Pledge { get { return (Pledge)pledgesBindingSource.Current; } }
 
-		public void EditRow(BillingData.SeatingReservationsRow row) {
-			pledgesBindingSource.Position = pledgesBindingSource.Find("PledgeId", row.PledgeId);
-			seatingReservationsBindingSource.Position = seatingReservationsBindingSource.Find("Id", row.Id);
+		public void EditRow(SeatingReservation row) {
+			pledgesBindingSource.Position = pledgesBindingSource.IndexOf(row.Pledge);
+			seatingReservationsBindingSource.Position = seatingReservationsBindingSource.IndexOf(row);
 			oldCalculatedPrice = CalculatePrice();
 		}
 
@@ -106,7 +95,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 
 		private void Input_KeyDown(object sender, KeyEventArgs e) {
 			if (e.KeyCode == Keys.Enter) {
-				if (Seat.RowState != DataRowState.Detached) {
+				if (Seat.Table != null) {
 					var edit = (BaseEdit)sender;
 					layoutControl.SelectNextControl(edit, true, true, false, true);
 

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Statements {
 	public class StatementInfo {
-		public StatementInfo(BillingData.MasterDirectoryRow person, DateTime startDate, StatementKind kind) {
+		public StatementInfo(Person person, DateTime startDate, StatementKind kind) {
 			Person = person;
 			switch (kind) {
 				case StatementKind.Bill:
@@ -24,7 +25,7 @@ namespace ShomreiTorah.Billing.Statements {
 			Recalculate();
 		}
 
-		public BillingData.MasterDirectoryRow Person { get; private set; }
+		public Person Person { get; private set; }
 		public DateTime StartDate { get; private set; }
 		public DateTime EndDate { get; private set; }
 		public StatementKind Kind { get; private set; }
@@ -32,12 +33,12 @@ namespace ShomreiTorah.Billing.Statements {
 		public virtual bool ShouldSend { get { return Accounts.Count > 0; } }
 
 		public void Recalculate() {
-			TotalBalance = Math.Max(0, Person.BalanceDue);
+			TotalBalance = Math.Max(0, Person.Field<decimal>(" BalanceDue"));
 
 			Accounts = new ReadOnlyCollection<StatementAccount>(
-				BillingData.AccountNames.Select(a => new StatementAccount(this, a))
-										.Where(ba => ba.ShouldInclude)
-										.ToArray()
+				Names.AccountNames.Select(a => new StatementAccount(this, a))
+								  .Where(ba => ba.ShouldInclude)
+								  .ToArray()
 			);
 
 			TotalPledged = Accounts.Sum(a => a.TotalPledged);
@@ -48,7 +49,7 @@ namespace ShomreiTorah.Billing.Statements {
 			} else
 				Deductibility = "No goods or services have been provided.";
 
-			LastEnteredPayment = Program.Data.Payments.Max(p => p.Modified);
+			LastEnteredPayment = Program.Table<Payment>().Rows.Max(p => p.Modified);
 		}
 
 		///<summary>Gets the date of the most recently entered payment in the system.</summary>
@@ -75,7 +76,15 @@ namespace ShomreiTorah.Billing.Statements {
 			var now = DateTime.Now;
 			if ((now - lastGenTime) > TimeSpan.FromSeconds(5))
 				lastGenTime = now;
-			Program.Data.StatementLog.AddStatementLogRow(Guid.NewGuid(), Person, lastGenTime, media, kind, StartDate, EndDate, Environment.UserName);
+			Program.Table<LoggedStatement>().Rows.Add(new LoggedStatement {
+				Person = Person,
+				DateGenerated = lastGenTime,
+				Media = media,
+				StatementKind = kind,
+				StartDate = StartDate,
+				EndDate = EndDate,
+				UserName = Environment.UserName
+			});
 		}
 	}
 	///<summary>Contains data about a specific account in a statement.</summary>
@@ -88,8 +97,8 @@ namespace ShomreiTorah.Billing.Statements {
 
 			Func<ITransaction, bool> filter = t => t.Date >= Parent.StartDate && t.Date < Parent.EndDate && t.Account == AccountName;
 
-			Pledges = new ReadOnlyCollection<BillingData.PledgesRow>(Parent.Person.GetPledgesRows().Where(p => filter(p)).OrderBy(p => p.Date).ToArray());
-			Payments = new ReadOnlyCollection<BillingData.PaymentsRow>(Parent.Person.GetPaymentsRows().Where(p => filter(p)).OrderBy(p => p.Date).ToArray());
+			Pledges = new ReadOnlyCollection<Pledge>(Parent.Person.Pledges.Where(p => filter(p)).OrderBy(p => p.Date).ToArray());
+			Payments = new ReadOnlyCollection<Payment>(Parent.Person.Payments.Where(p => filter(p)).OrderBy(p => p.Date).ToArray());
 
 			TotalPledged = OutstandingBalance + Pledges.Sum(p => p.Amount);
 			TotalPaid = Payments.Sum(p => p.Amount);
@@ -118,9 +127,9 @@ namespace ShomreiTorah.Billing.Statements {
 		public decimal TotalPaid { get; private set; }
 
 		///<summary>Gets the pledges that belong to the account.</summary>
-		public ReadOnlyCollection<BillingData.PledgesRow> Pledges { get; private set; }
+		public ReadOnlyCollection<Pledge> Pledges { get; private set; }
 		///<summary>Gets the payments that belong to the account.</summary>
-		public ReadOnlyCollection<BillingData.PaymentsRow> Payments { get; private set; }
+		public ReadOnlyCollection<Payment> Payments { get; private set; }
 	}
 	public enum StatementKind {
 		Bill,

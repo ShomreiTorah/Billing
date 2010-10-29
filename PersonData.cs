@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
+using ShomreiTorah.Singularity;
 
 namespace ShomreiTorah.Billing {
 	struct PersonData {
@@ -57,6 +57,25 @@ namespace ShomreiTorah.Billing {
 		///<summary>Constructs a new PersonData from a DataRow.</summary>
 		///<param name="ykRow">Any ykRow with the standard set of fields.</param>
 		public PersonData(DataRow row)
+			: this() {
+			if (row == null)
+				throw new ArgumentNullException("row");
+			FullName = row["FullName"].ToString();
+
+			HisName = row["HisName"].ToString();
+			HerName = row["HerName"].ToString();
+			LastName = row["LastName"].ToString();
+
+			Address = row["Address"].ToString();
+			City = row["City"].ToString();
+			State = row["State"].ToString();
+			Zip = row["Zip"].ToString();
+
+			pPhone = row["Phone"].ToString();
+		}
+		///<summary>Constructs a new PersonData from a Singularity Row.</summary>
+		///<param name="ykRow">Any ykRow with the standard set of fields.</param>
+		public PersonData(Row row)
 			: this() {
 			if (row == null)
 				throw new ArgumentNullException("row");
@@ -148,7 +167,7 @@ namespace ShomreiTorah.Billing {
 		///<summary>Checks whether the given ykRow contradicts this value.</summary>
 		///<param name="ykRow">The ykRow to check.</param>
 		///<returns>true if any property is not null or empty and has a different value than the ykRow's corresponding property.</returns>
-		public bool IsUnequal(DataRow row) {
+		public bool IsUnequal(Row row) {
 			if (row == null)
 				throw new ArgumentNullException("row", "row is null.");
 

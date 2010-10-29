@@ -1,21 +1,20 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Reflection;
-using System.Text;
 using System.Timers;
 using System.Windows.Forms;
 using DevExpress.LookAndFeel;
+using DevExpress.Skins;
+using DevExpress.UserSkins;
 using DevExpress.XtraEditors;
 using ShomreiTorah.Common;
 using ShomreiTorah.Common.Updates;
 using ShomreiTorah.WinForms.Forms;
-using DevExpress.Skins;
-using System.Globalization;
-using System.Net.Mail;
 
 namespace ShomreiTorah.Billing {
 	static class Updater {
@@ -58,7 +57,8 @@ namespace ShomreiTorah.Billing {
 					Application.Exit();
 				return true;
 			}
-			UserLookAndFeel.Default.SkinName = "Lilian";	//This must be set here in case we're on the splash thread at launch time.
+			OfficeSkins.Register();
+			UserLookAndFeel.Default.SkinName = "Office 2010 Blue";		//This must be set here in case we're on the splash thread at launch time.
 			SkinManager.EnableFormSkins();
 			var parent = (IWin32Window)Program.UIInvoker;	//For some reason, I must set the parent to MainForm or it won't be properly modal.
 			var description = update.GetChanges(Checker.CurrentVersion);
@@ -94,8 +94,8 @@ namespace ShomreiTorah.Billing {
 			if (!File.Exists(Path.Combine(Program.AppDirectory, "ShomreiTorah.Billing.Config.xml")))
 				File.Delete(Path.Combine(updatePath, "ShomreiTorah.Billing.Config.xml"));	//File.Delete doesn't throw FileNotFound
 
-			if (Program.Data != null)	//If an update was applied at launch, the DB will not have been loaded yet.
-				Program.Data.Save();
+			if (Program.Current != null)	//If an update was applied at launch, the AppFramework will not have been registered yet.
+				Program.Current.SaveDatabase();
 			UpdateChecker.ApplyUpdate(updatePath, Program.AppDirectory);
 
 			try {

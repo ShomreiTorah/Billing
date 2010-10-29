@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Diagnostics.CodeAnalysis;
+using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Import {
 	class Resolver {
@@ -58,9 +59,9 @@ namespace ShomreiTorah.Billing.Import {
 			return retVal;
 		}
 
-		public static ReadOnlyCollection<BillingData.MasterDirectoryRow> GetMatches(PersonData data) {
+		public static ReadOnlyCollection<Person> GetMatches(PersonData data) {
 			if (data.IsEmpty())
-				return EmptyCollection<BillingData.MasterDirectoryRow>.Instance;
+				return EmptyCollection<Person>.Instance;
 
 			if (!String.IsNullOrEmpty(data.FullName)) {
 				if (String.IsNullOrEmpty(data.LastName)) {
@@ -72,15 +73,15 @@ namespace ShomreiTorah.Billing.Import {
 
 			var initialMatches = GetInitialMatches(data).ToArray();
 			if (!initialMatches.Any())
-				return EmptyCollection<BillingData.MasterDirectoryRow>.Instance;
+				return EmptyCollection<Person>.Instance;
 
 			var retVal = FilterName(initialMatches, data).ToArray();
 			if (retVal.Length == 0)
-				return new ReadOnlyCollection<BillingData.MasterDirectoryRow>(initialMatches);
-			return new ReadOnlyCollection<BillingData.MasterDirectoryRow>(retVal);
+				return new ReadOnlyCollection<Person>(initialMatches);
+			return new ReadOnlyCollection<Person>(retVal);
 		}
-		static IEnumerable<BillingData.MasterDirectoryRow> FilterName(IEnumerable<BillingData.MasterDirectoryRow> initialMatches, PersonData data) {
-			if (!initialMatches.Any()) return EmptyCollection<BillingData.MasterDirectoryRow>.Instance;
+		static IEnumerable<Person> FilterName(IEnumerable<Person> initialMatches, PersonData data) {
+			if (!initialMatches.Any()) return EmptyCollection<Person>.Instance;
 			var fullNameMatches = initialMatches.Where(p =>
 				(!String.IsNullOrEmpty(p.HisName) && -1 != data.FullName.IndexOf(p.HisName, StringComparison.OrdinalIgnoreCase))
 			 || (!String.IsNullOrEmpty(p.HerName) && -1 != data.FullName.IndexOf(p.HerName, StringComparison.OrdinalIgnoreCase))
@@ -100,11 +101,11 @@ namespace ShomreiTorah.Billing.Import {
 					   && (bestHerMatch == 0 || p.HerName.EqualPart(data.HerName) >= bestHerMatch)
 				   );
 		}
-		static IEnumerable<BillingData.MasterDirectoryRow> GetInitialMatches(PersonData data) {
+		static IEnumerable<Person> GetInitialMatches(PersonData data) {
 			if (!String.IsNullOrEmpty(data.Phone)) {
-				var phoneMatches = (BillingData.MasterDirectoryRow[])Program.Data.MasterDirectory.Select("Phone='" + data.Phone + "'", "LastName");
+				var phoneMatches = Program.Table<Person>().Rows.Where(p => p.Phone == data.Phone).ToArray();
 				if (phoneMatches.Length == 1)
-					return new ReadOnlyCollection<BillingData.MasterDirectoryRow>(phoneMatches);
+					return new ReadOnlyCollection<Person>(phoneMatches);
 
 				if (phoneMatches.Length > 1) {
 					var phoneLast = phoneMatches.Where(p => data.LastName.Equals(p.LastName, StringComparison.OrdinalIgnoreCase));
@@ -113,54 +114,54 @@ namespace ShomreiTorah.Billing.Import {
 				}
 			}
 
-			IEnumerable<BillingData.MasterDirectoryRow> addressMatches = null;
+			IEnumerable<Person> addressMatches = null;
 			var address = AddressInfo.Parse(data.Address);
 			if (address != AddressInfo.Invalid) {
-				addressMatches = Program.Data.MasterDirectory.Where(p => address != AddressInfo.Invalid && !p.IsAddressNull() && p.Address.Length > 0 && AddressInfo.Parse(p.Address) == address);
+				addressMatches = Program.Table<Person>().Rows.Where(p => !String.IsNullOrEmpty(p.Address) && AddressInfo.Parse(p.Address) == address);
 				if (addressMatches.Any()) {
 					var addrLastMatches = addressMatches.Where(p => data.LastName.Equals(p.LastName, StringComparison.OrdinalIgnoreCase));
 					if (addrLastMatches.Any())
-						return new ReadOnlyCollection<BillingData.MasterDirectoryRow>(addrLastMatches.ToArray());
-					return new ReadOnlyCollection<BillingData.MasterDirectoryRow>(addressMatches.ToArray());
+						return new ReadOnlyCollection<Person>(addrLastMatches.ToArray());
+					return new ReadOnlyCollection<Person>(addressMatches.ToArray());
 				}
 			}
 			//If we've gotten here, both phone and address are either missing or not in AllPeople.
-			var retVal = Program.Data.MasterDirectory.Where(p => data.LastName.Equals(p.LastName, StringComparison.OrdinalIgnoreCase));
+			var retVal = Program.Table<Person>().Rows.Where(p => data.LastName.Equals(p.LastName, StringComparison.OrdinalIgnoreCase));
 			if (!FilterName(retVal, data).Any())
-				return Enumerable.Empty<BillingData.MasterDirectoryRow>();
+				return Enumerable.Empty<Person>();
 			return retVal;
 		}
 	}
 	class ResolvedPerson {
 		///<summary>Gets the people that match the original data.</summary>
-		public ReadOnlyCollection<BillingData.MasterDirectoryRow> Matches { get; private set; }
+		public ReadOnlyCollection<Person> Matches { get; private set; }
 		///<summary>Gets the data to resolve.</summary>
 		public PersonData Data { get; set; }
 		///<summary>Gets the action to take.</summary>
 		public ResolveAction Action { get; protected set; }
 		///<summary>Gets the final resolved row</summary>
-		public BillingData.MasterDirectoryRow ResolvedRow { get; protected set; }
+		public Person ResolvedRow { get; protected set; }
 
 		public Resolver Resolver { get; private set; }
 
-		//public ResolvedPerson(Resolver resolver, PersonData data) : this(resolver, data, new BillingData.MasterDirectoryRow[0]) { }
-		public ResolvedPerson(Resolver resolver, PersonData data, IList<BillingData.MasterDirectoryRow> matches) { Resolver = resolver; Data = data; Matches = new ReadOnlyCollection<BillingData.MasterDirectoryRow>(matches); }
+		//public ResolvedPerson(Resolver resolver, PersonData data) : this(resolver, data, new Person[0]) { }
+		public ResolvedPerson(Resolver resolver, PersonData data, IList<Person> matches) { Resolver = resolver; Data = data; Matches = new ReadOnlyCollection<Person>(matches); }
 
 		//public void AskUser() { Resolver.Disambiguate(this); }
 
 		//public void SetSkip() { UndoAction(); }
 		public void SetAddNew(PersonData newData) {
 			UndoAction();
-			ResolvedRow = Program.Data.MasterDirectory.AddMasterDirectoryRow(newData, "Imported from " + Resolver.Source);
+			ResolvedRow = Program.Table<Person>().AddPerson(newData, "Imported from " + Resolver.Source);
 			Action = ResolveAction.AddNew;
 		}
-		public void SetUseExisting(BillingData.MasterDirectoryRow row) {
+		public void SetUseExisting(Person row) {
 			UndoAction();
 			ResolvedRow = row;
 			Action = ResolveAction.UseExisting;
 		}
 		PersonData originalData;
-		public void SetUpdateExisting(BillingData.MasterDirectoryRow row) {
+		public void SetUpdateExisting(Person row) {
 			if (!Data.IsUnequal(row)) {
 				SetUseExisting(row);
 				return;
@@ -175,7 +176,7 @@ namespace ShomreiTorah.Billing.Import {
 		public void UndoAction() {
 			switch (Action) {
 				case ResolveAction.AddNew:
-					ResolvedRow.Delete();
+					ResolvedRow.RemoveRow();
 					break;
 				case ResolveAction.UpdateExisting:
 					ResolvedRow.Set(originalData);

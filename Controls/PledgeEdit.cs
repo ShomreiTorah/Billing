@@ -1,17 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using ShomreiTorah.WinForms.Controls;
-using System.Diagnostics.CodeAnalysis;
+using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI.Controls;
 using ShomreiTorah.WinForms.Forms;
-using System.Globalization;
-using System.Diagnostics;
 
 namespace ShomreiTorah.Billing.Controls {
 	partial class PledgeEdit : XtraUserControl {
@@ -19,15 +16,11 @@ namespace ShomreiTorah.Billing.Controls {
 			InitializeComponent();
 
 			account.Properties.Items.Clear();
-			account.Properties.Items.AddRange(BillingData.AccountNames);
-			account.Properties.DropDownRows = BillingData.AccountNames.Count;
+			account.Properties.Items.AddRange(Names.AccountNames);
+			account.Properties.DropDownRows = Names.AccountNames.Count;
 
-			if (Program.Data != null)	//Bugfix for nested designer
-				pledgesBindingSource.DataSource = Program.Data;
-		}
-		protected override void OnLayout(LayoutEventArgs e) {
-			base.OnLayout(e);
-			person.MaxPopupHeight = Height - person.Bottom;
+			if (Program.Current != null)	//Bugfix for nested designer
+				pledgesBindingSource.DataSource = Program.Current.DataContext;
 		}
 		void SetCommentsHeight() {
 			if (commit.Visible)
@@ -40,18 +33,18 @@ namespace ShomreiTorah.Billing.Controls {
 
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public BillingData.PledgesRow CurrentPledge {
-			get { return pledgesBindingSource.Current == null ? null : (BillingData.PledgesRow)((DataRowView)pledgesBindingSource.Current).Row; }
+		public Pledge CurrentPledge {
+			get { return (Pledge)pledgesBindingSource.Current; }
 			set {
 				if (value == null) return;
-				pledgesBindingSource.Position = pledgesBindingSource.Find("PledgeId", value.PledgeId);
+				pledgesBindingSource.Position = pledgesBindingSource.IndexOf(value);
 				commit.Hide();
 				SetCommentsHeight();	//For some reason, VisibleChanged doesn't fire.
 			}
 		}
 
 		public void AddNew() {
-			BillingData.MasterDirectoryRow oldPerson = ModifierKeys == 0 ? null : person.SelectedPerson;
+			Person oldPerson = ModifierKeys == 0 ? null : person.SelectedPerson;
 
 			commit.Show();
 			commit.CommitType = CommitType.Create;
@@ -83,8 +76,6 @@ namespace ShomreiTorah.Billing.Controls {
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			if (pledge.IsNull("PledgeId"))
-				pledge.PledgeId = Guid.NewGuid();
 
 			try {
 				pledgesBindingSource.EndEdit();
@@ -93,7 +84,7 @@ namespace ShomreiTorah.Billing.Controls {
 				return;
 			}
 			if (commit.CommitType == CommitType.Create) {
-				InfoMessage.Show("A " + pledge.Amount.ToString("c", CultureInfo.CurrentCulture) + " " + pledge.Type + " pledge has been added for " + pledge.MasterDirectoryRow.FullName);
+				InfoMessage.Show("A " + pledge.Amount.ToString("c", CultureInfo.CurrentCulture) + " " + pledge.Type + " pledge has been added for " + pledge.Person.FullName);
 				AddNew();
 				date.EditValue = pledge.Date;
 			}
@@ -112,7 +103,7 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 		private void typeText_Leave(object sender, EventArgs e) { BeginInvoke(new Action(SetAccount)); }
 		void SetAccount() {
-			if (BillingData.AccountNames.Contains(account.Text))
+			if (Names.AccountNames.Contains(account.Text))
 				CurrentPledge.Account = account.Text = (typeText.Text == "Building Fund" ? "Building Fund" : "Operating Fund");
 		}
 		private void typeTree_AfterSelect(object sender, TreeViewEventArgs e) {
@@ -132,7 +123,7 @@ namespace ShomreiTorah.Billing.Controls {
 			}
 		}
 
-		private void person_ItemSelected(object sender, ItemSelectionEventArgs e) {
+		private void person_EditValueChanged(object sender, EventArgs e) {
 			typeTree.Focus();
 		}
 
@@ -142,7 +133,8 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 		#endregion
 
-		private void person_SelectingPerson(object sender, SelectingPersonEventArgs e) {
+		//TODO: Remove
+		private void person_PersonSelecting(object sender, PersonSelectingEventArgs e) {
 			if (e.Person != person.SelectedPerson
 			 && person.SelectedPerson != null
 				//&& !commit.Visible	//Abba wants to always confirm

@@ -1,17 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using DevExpress.Data;
 using DevExpress.XtraEditors;
-using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Grid;
-using System.Globalization;
-using ShomreiTorah.Common;
+using ShomreiTorah.Data;
+using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Forms.GridForms {
 	partial class DepositViewer : XtraForm {
@@ -28,7 +23,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		private void depositsView_CustomSummaryCalculate(object sender, CustomSummaryEventArgs e) {
 			if (e.SummaryProcess == CustomSummaryProcess.Finalize) {
 				var account = (string)depositsView.GetGroupRowValue(e.GroupRowHandle);
-				e.TotalValue = Program.Data.Payments.CurrentRows().Where(p => p.Account == account && p.IsDepositIdNull()).Sum(p => p.Amount);
+				e.TotalValue = Program.Table<Payment>().Rows.Where(p => p.Account == account && p.Deposit == null).Sum(p => p.Amount);
 			}
 		}
 		private void depositsView_DoubleClick(object sender, EventArgs e) {
@@ -40,7 +35,10 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		private void paymentsView_KeyUp(object sender, KeyEventArgs e) {
 			if (e.KeyData == Keys.Delete) {
 				var view = (sender as GridView) ?? (GridView)((Controls.BaseGrid)((BaseEdit)sender).Parent).FocusedView;
-				var rows = view.GetSelectedRows().Select<int, DataRow>(view.GetDataRow).Cast<BillingData.PaymentsRow>().ToArray();
+				var rows = view.GetSelectedRows().Select<int, object>(view.GetRow)
+							   .DefaultIfEmpty(view.GetFocusedRow())
+							   .Cast<Payment>()
+							   .ToArray();
 
 				string message;
 				if (rows.Length == 1)
@@ -48,12 +46,16 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 				else
 					message = "Are you sure you want to mark " + rows.Length + " payments totaling " + rows.Sum(p => p.Amount).ToString("c", CultureInfo.CurrentCulture) + " as undeposited?";
 
-				if (DialogResult.Yes == XtraMessageBox.Show(message, "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)) {
-					foreach (var payment in rows) {
-						payment.SetDepositIdNull();
-					}
-
-					depositsView.RefreshData();
+				if (Dialog.Warn(message)) {
+					//This code can end up deleting the child 
+					//view (if the last payment in the deposit
+					//is deleted), which will break the grid's
+					//keyboard code.
+					BeginInvoke(new Action(delegate {
+						foreach (var payment in rows)
+							payment.Deposit = null;
+						depositsView.RefreshData();
+					}));
 				}
 			}
 		}

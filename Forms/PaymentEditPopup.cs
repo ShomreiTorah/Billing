@@ -1,23 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using ShomreiTorah.Data;
+using ShomreiTorah.Singularity;
 
 namespace ShomreiTorah.Billing.Forms {
-	partial class PaymentEditPopup : DevExpress.XtraEditors.XtraForm {
-		readonly BillingData.PaymentsRow payment;
-		public PaymentEditPopup(BillingData.PaymentsRow payment) {
+	partial class PaymentEditPopup : XtraForm {
+		readonly Payment payment;
+		public PaymentEditPopup(Payment payment) {
 			InitializeComponent();
 			paymentEdit.CurrentPayment = this.payment = payment;
-			Program.Data.Payments.PaymentsRowDeleted += Payments_PaymentsRowDeleted;
+			Program.Table<Payment>().RowRemoved += Paymens_RowRemoved;
 			ClientSize = paymentEdit.Size;
 		}
 
-		void Payments_PaymentsRowDeleted(object sender, BillingData.PaymentsRowChangeEvent e) {
+		void Paymens_RowRemoved(object sender, RowListEventArgs<Payment> e) {
 			if (e.Row == payment)
 				Close();
 		}
@@ -31,7 +27,7 @@ namespace ShomreiTorah.Billing.Forms {
 		}
 		protected override void Dispose(bool disposing) {
 			if (disposing) {
-				Program.Data.Payments.PaymentsRowDeleted -= Payments_PaymentsRowDeleted;
+				Program.Table<Payment>().RowRemoved -= Paymens_RowRemoved;
 				if (components != null) components.Dispose();
 			}
 			base.Dispose(disposing);

@@ -1,22 +1,21 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
-using System.Text;
-using DevExpress.XtraGrid;
-using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraGrid.Views.Base;
 using System.Windows.Forms;
 using DevExpress.Utils;
-using DevExpress.XtraEditors;
-using System.Data;
-using System.Globalization;
-using DevExpress.XtraGrid.Columns;
-using DevExpress.Data.Filtering;
 using DevExpress.Utils.Menu;
+using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
-using ShomreiTorah.Common;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
+using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI;
+using ShomreiTorah.Singularity;
+using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Controls {
 	[ToolboxItem(false)]
@@ -31,10 +30,11 @@ namespace ShomreiTorah.Billing.Controls {
 			MainView = null;
 			ViewCollection.Clear();
 
+			Program.AutoRegisterDesigner();
 			initComponentFinished = true;
-			DataSource = Program.Data ?? new BillingData();
+			DataSource = Program.Current.DataContext;
 			accountEdit.Items.Clear();
-			accountEdit.Items.AddRange(BillingData.AccountNames);
+			accountEdit.Items.AddRange(Names.AccountNames);
 		}
 		protected override void CreateMainView() { }//Do nothing
 
@@ -101,23 +101,10 @@ namespace ShomreiTorah.Billing.Controls {
 			var view = (GridView)sender;
 			var rowHandle = view.CalcHitInfo(PointToClient(MousePosition)).RowHandle;
 
-			if (rowHandle >= 0)
-				ShowDetailsForm(view.GetDataRow(rowHandle));
-		}
-		public static void ShowDetailsForm(DataRow row) {
-			switch (row.Table.TableName) {
-				case "MasterDirectory":
-					new Forms.PersonDetails((BillingData.MasterDirectoryRow)row) { MdiParent = Program.MainForm }.Show();
-					break;
-				case "Pledges":
-					new Forms.PledgeEditPopup((BillingData.PledgesRow)row).Show(Program.MainForm);
-					break;
-				case "Payments":
-					new Forms.PaymentEditPopup((BillingData.PaymentsRow)row).Show(Program.MainForm);
-					break;
-				case "SeatingReservations":
-					new Events.Seating.SeatingReservationPopup((BillingData.SeatingReservationsRow)row).Show(Program.MainForm);
-					break;
+			if (rowHandle >= 0) {
+				var row = (Row)view.GetRow(rowHandle);
+				if (Program.Current.CanShowDetails(row.Schema))
+					Program.Current.ShowDetails(row);
 			}
 		}
 
@@ -132,12 +119,12 @@ namespace ShomreiTorah.Billing.Controls {
 					e.Handled = index1 != index2;
 					break;
 				case "FullName":
-					var row1 = e.Column.View.GetDataRow(e.Column.View.GetRowHandle(e.ListSourceRowIndex1));
-					var row2 = e.Column.View.GetDataRow(e.Column.View.GetRowHandle(e.ListSourceRowIndex2));
+					var row1 = (Row)e.Column.View.GetRow(e.Column.View.GetRowHandle(e.ListSourceRowIndex1));
+					var row2 = (Row)e.Column.View.GetRow(e.Column.View.GetRowHandle(e.ListSourceRowIndex2));
 
-					if (!row1.Table.Columns.Contains("LastName")) {
-						row1 = ((IPersonAccessor)row1).Person;
-						row2 = ((IPersonAccessor)row2).Person;
+					if (!row1.Schema.Columns.Contains("LastName")) {
+						row1 = ((IOwnedObject)row1).Person;
+						row2 = ((IOwnedObject)row2).Person;
 					}
 
 					if (row1 != null && row2 != null) {
@@ -177,7 +164,7 @@ namespace ShomreiTorah.Billing.Controls {
 					return;
 				}
 
-				var rows = view.GetSelectedRows().Select<int, DataRow>(view.GetDataRow).ToArray();
+				var rows = view.GetSelectedRows().Select<int, object>(view.GetRow).Cast<Row>().ToArray();
 
 				string message;
 
@@ -206,19 +193,12 @@ namespace ShomreiTorah.Billing.Controls {
 		void view_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
 			if (e.Column.FieldName == "Deposit") {
 				var view = (GridView)sender;
-				var dataView = view.DataSource as DataView;
-				if (dataView == null) {
-					var bindingSource = view.DataSource as BindingSource;
-					if (bindingSource != null)
-						dataView = bindingSource.List as DataView;
-				}
-				Debug.Assert(dataView != null);
 
-				var row = (BillingData.PaymentsRow)dataView[e.ListSourceRowIndex].Row;
+				var row = (Payment)view.DataController.GetListSourceRow(view.DataController.GetControllerRow(e.ListSourceRowIndex));
 
-				Debug.Assert(e.RowHandle == GridControl.InvalidRowHandle || row == view.GetDataRow(e.RowHandle));
+				Debug.Assert(e.RowHandle == GridControl.InvalidRowHandle || row == view.GetRow(e.RowHandle));
 
-				e.Value = row.DepositsRow;
+				e.Value = row.Deposit;
 			}
 		}
 
@@ -271,11 +251,13 @@ namespace ShomreiTorah.Billing.Controls {
 
 			var view = (ColumnView)sender;
 			if (view.FocusedColumn.FieldName != "CheckNumber") return;
-			var row = (BillingData.PaymentsRow)view.GetFocusedDataRow();
+			var row = (Payment)view.GetFocusedRow();
 
-			string message = row.CheckDuplicateWarning(e.Value as string, false);
-			e.Valid = string.IsNullOrEmpty(message)
-					|| DialogResult.Yes == XtraMessageBox.Show(message, "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+			Payment duplicate = row.FindDuplicate(e.Value as string);
+			string message = String.Format(CultureInfo.CurrentCulture, "{0} #{1} for {2} has already been entered ({3:d}, {4:c}).\r\nIs that correct?",
+																		  duplicate.Method, duplicate.CheckNumber, duplicate.Person.FullName, duplicate.Date, duplicate.Amount);
+			e.Valid = duplicate != null && !Dialog.Warn(message);
+
 			if (!e.Valid)
 				e.ErrorText = message;
 		}

@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Microsoft.Office.Interop.Word;
 using Microsoft.Office.Interop.Word.Extensions;
 using ShomreiTorah.Common;
+using ShomreiTorah.Data;
 using ShomreiTorah.WinForms;
-using System.Globalization;
 
 namespace ShomreiTorah.Billing.Statements.Word {
 	static partial class MailingGenerator {
@@ -84,8 +84,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			}
 		}
 		class MassMailingGenerator : ContentPopulator {
-			public MassMailingGenerator(IList<BillingData.MasterDirectoryRow> people) { this.people = people; }
-			readonly IList<BillingData.MasterDirectoryRow> people;
+			public MassMailingGenerator(IList<Person> people) { this.people = people; }
+			readonly IList<Person> people;
 			int index;
 
 			protected override void Fill(Range range, string name) {
@@ -120,7 +120,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			}
 		}
 		class MailingPopulator : DataContentPopulator {
-			delegate void CustomField(Range range, BillingData.MasterDirectoryRow person, IEnumerable<WordStatementInfo> info);
+			delegate void CustomField(Range range, Person person, IEnumerable<WordStatementInfo> info);
 			static readonly Dictionary<string, CustomField> CustomFields = new Dictionary<string, CustomField>(StringComparer.CurrentCultureIgnoreCase){
 				{ "MailingAddress",	(range, person, infos) => range.Text = person.MailingAddress },
 				{ "Kinds",			(range, person, infos) => range.Text = infos.Select((s, i) => i == 0 ? s.Kind.ToString() : s.Kind.ToString().ToLower(CultureInfo.CurrentCulture)).Join(" and ").Replace("Bill", "Invoice") },

@@ -1,15 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
@@ -17,19 +14,17 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraLayout.Utils;
 using PowerPointJournal;
-using ShomreiTorah.Billing.Controls;
 using ShomreiTorah.Common;
+using ShomreiTorah.Data;
 using ShomreiTorah.WinForms;
-using ShomreiTorah.WinForms.Controls;
-using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Import.Journal {
 	sealed partial class JournalImporter : XtraForm {
-		const string Account = "Operating Fund";
+		static readonly string Account = Names.DefaultAccount;
 
+		//TODO: RejectChanges?
 		public static void Execute() {
-			Program.DoReload();
-			Program.Data.AcceptChanges();
+			Program.Current.RefreshDatabase();
 
 			string dbPath;
 			using (var dialog = new OpenFileDialog {
@@ -61,25 +56,31 @@ namespace ShomreiTorah.Billing.Import.Journal {
 					iad.Person = resolver.Resolve(new PersonData(iad.Ad));
 
 					#region Pledge
-					iad.Pledge = Program.Data.Pledges.CurrentRows().FirstOrDefault(p => p.ExternalSource == source
-																					 && !p.IsExternalIDNull()
-																					 && p.ExternalID == iad.Ad.InternalID);
+					iad.Pledge = Program.Table<Pledge>().Rows.FirstOrDefault(p => p.ExternalSource == source
+																			  && p.ExternalId == iad.Ad.InternalID);
 					if (iad.Pledge == null) {
-						iad.Pledge = Program.Data.Pledges.AddPledgesRow(
-							iad.Person.ResolvedRow,
-							iad.Ad.DateEntered, "Melave Malka Journal", GetSubType(iad.Ad.Type),
-							null, Account, iad.Ad.AmountToBill, iad.GeneratedComments,
-							source, iad.Ad.InternalID);
+						iad.Pledge = new Pledge {
+							Person = iad.Person.ResolvedRow,
+							Date = iad.Ad.DateEntered,
+							Type = "Melave Malka Journal",
+							SubType = GetSubType(iad.Ad.Type),
+							Account = Account,
+							Amount = iad.Ad.AmountToBill,
+							Comments = iad.GeneratedComments,
+							ExternalSource = source,
+							ExternalId = iad.Ad.InternalID,
+						};
+						Program.Table<Pledge>().Rows.Add(iad.Pledge);
 						iad.Pledge.Modifier = modifier;
+
 						iad.State = ImportState.Added;
 					} else
 						iad.State = ImportState.ExistingIdentical;
 					#endregion
 
 					#region Payment
-					iad.Payment = Program.Data.Payments.CurrentRows().FirstOrDefault(p => p.ExternalSource == source
-																					   && !p.IsExternalIDNull()
-																					   && p.ExternalID == iad.Ad.InternalID);
+					iad.Payment = Program.Table<Payment>().Rows.FirstOrDefault(p => p.ExternalSource == source
+																				 && p.ExternalId == iad.Ad.InternalID);
 					if (iad.Ad.PaymentMethod == "Unpaid") {
 						if (iad.Payment != null)
 							iad.State = ImportState.ExistingChanged;	//We have a payment, but we shouldn't
@@ -135,17 +136,24 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			public JournalDB.AdsRow Ad { get; private set; }
 			public ResolvedPerson Person { get; set; }
 			public string GeneratedComments { get; private set; }
-			public BillingData.PledgesRow Pledge { get; set; }
-			public BillingData.PaymentsRow Payment { get; set; }
+			public Pledge Pledge { get; set; }
+			public Payment Payment { get; set; }
 
 			public ImportState State { get; set; }
 
 			public void CreatePayment() {
-				Payment = Program.Data.Payments.AddPaymentsRow(
-					Person.ResolvedRow,
-					Ad.DateEntered, Ad.PaymentMethod, Ad.IsCheckNumberNull() ? null : Ad.CheckNumber.ToString(CultureInfo.InvariantCulture),
-					Account, Ad.AmountToBill, GeneratedComments,
-					source, Ad.InternalID);
+				Payment = new Payment {
+					Person = Person.ResolvedRow,
+					Date = Ad.DateEntered,
+					Method = Ad.PaymentMethod,
+					CheckNumber = Ad.IsCheckNumberNull() ? null : Ad.CheckNumber.ToString(CultureInfo.InvariantCulture),
+					Account = Account,
+					Amount = Ad.AmountToBill,
+					Comments = GeneratedComments,
+					ExternalSource = source,
+					ExternalId = Ad.InternalID
+				};
+				Program.Table<Payment>().Rows.Add(Payment);
 				Payment.Modifier = modifier;
 			}
 
@@ -157,7 +165,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 					 || Pledge.Type != "Melave Malka Journal"
 					 || Pledge.SubType != GetSubType(Ad.Type)
 					 || Pledge.Account != Account
-					 || Pledge.MasterDirectoryRow != Person.ResolvedRow
+					 || Pledge.Person != Person.ResolvedRow
 					 )
 						State = ImportState.ExistingChanged;
 					else if (Payment != null && (
@@ -166,7 +174,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 						 || Payment.Field<int?>("CheckNumber") != Ad.Field<int?>("CheckNumber")
 						 || Payment.Comments != GeneratedComments
 						 || Payment.Method != Ad.PaymentMethod
-						 || Payment.MasterDirectoryRow != Person.ResolvedRow
+						 || Payment.Person != Person.ResolvedRow
 					 ))
 						State = ImportState.ExistingChanged;
 				}
@@ -193,7 +201,6 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			public override string ToString() { return Name; }
 
 			public int CompareTo(object obj) { return String.Compare(Name, (obj ?? "").ToString(), StringComparison.CurrentCultureIgnoreCase); }
-
 		}
 
 		readonly AdCollection ads;
@@ -205,16 +212,16 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.ads = ads;
 			adsGrid.DataSource = table;
 
-			accountEdit1.Properties.Items.AddRange(BillingData.AccountNames);
-			accountEdit2.Properties.Items.AddRange(BillingData.AccountNames);
+			accountEdit1.Properties.Items.AddRange(Names.AccountNames);
+			accountEdit2.Properties.Items.AddRange(Names.AccountNames);
 
-			accountEdit1.Properties.DropDownRows = accountEdit2.Properties.DropDownRows = BillingData.AccountNames.Count;
+			accountEdit1.Properties.DropDownRows = accountEdit2.Properties.DropDownRows = Names.AccountNames.Count;
 
-			methodEdit.Properties.Items.AddRange(BillingData.PaymentMethods);
-			methodEdit.Properties.DropDownRows = BillingData.PaymentMethods.Count;
+			methodEdit.Properties.Items.AddRange(Names.PaymentMethods);
+			methodEdit.Properties.DropDownRows = Names.PaymentMethods.Count;
 
-			pledgesBindingSource.DataSource = Program.Data.Pledges;
-			paymentsBindingSource.DataSource = Program.Data.Payments;
+			pledgesBindingSource.DataSource = Program.Table<Pledge>().Rows;
+			paymentsBindingSource.DataSource = Program.Table<Payment>().Rows;
 
 			adsView.BestFitColumns();
 			CheckSelection();
@@ -275,15 +282,17 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			personSelector.ResolvedPerson = iad.Person;
 			personDetails.Text = "Action: " + iad.Person.Action + "\r\n" + new PersonData(iad.Person.ResolvedRow).ToFullString();
 
-			pledgesBindingSource.Position = pledgesBindingSource.Find("PledgeId", iad.Pledge.PledgeId);
+			pledgesBindingSource.Position = pledgesBindingSource.IndexOf(iad.Pledge);
 			importPayment.Checked = iad.Payment != null;
 			if (iad.Payment != null)
-				paymentsBindingSource.Position = paymentsBindingSource.Find("PaymentId", iad.Payment.PaymentId);
+				paymentsBindingSource.Position = paymentsBindingSource.IndexOf(iad.Payment);
 
 			splitContainerControl1.PanelVisibility = SplitPanelVisibility.Both;
 		}
 
-		class ResolvingPersonSelector : PersonSelector {
+		//TODO: RepositoryItem?
+		//TODO: Remove class; handle Selecting event
+		class ResolvingPersonSelector : Data.UI.Controls.PersonSelector {
 			ResolvedPerson resolvedPerson;
 			[Browsable(false)]
 			[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -294,14 +303,16 @@ namespace ShomreiTorah.Billing.Import.Journal {
 					SelectedPerson = value.ResolvedRow;
 				}
 			}
-
-			protected override void OnItemSelected(ItemSelectionEventArgs e) {
-				ResolvedPerson.SetUseExisting((BillingData.MasterDirectoryRow)e.SelectedRow);
+			protected override void OnEditValueChanged() {
+				base.OnEditValueChanged();
+				if (SelectedPerson != null)
+					ResolvedPerson.SetUseExisting(SelectedPerson);
 			}
-			protected override void OnAddNew() {
-				using (var dialog = new NewPerson(p => { ResolvedPerson.SetAddNew(p); return ResolvedPerson.ResolvedRow; })) {
-					dialog.ShowDialog(FindForm());
-				}
+			protected override Person PromptNew() {
+				//using (var dialog = new NewPerson(p => { ResolvedPerson.SetAddNew(p); return ResolvedPerson.ResolvedRow; })) {
+				//    dialog.ShowDialog(FindForm());
+				//}
+				return ResolvedPerson.ResolvedRow;
 			}
 		}
 
@@ -313,9 +324,9 @@ namespace ShomreiTorah.Billing.Import.Journal {
 
 			if (importPayment.Checked) {
 				iad.CreatePayment();
-				paymentsBindingSource.Position = paymentsBindingSource.Find("PaymentId", iad.Payment.PaymentId);
+				paymentsBindingSource.Position = paymentsBindingSource.IndexOf(iad.Payment);
 			} else {
-				iad.Payment.Delete();
+				iad.Payment.RemoveRow();
 				iad.Payment = null;
 			}
 		}

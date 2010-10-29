@@ -5,17 +5,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing) {
-			if (disposing && (components != null)) {
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		#region Windows Form Designer generated code
 
 		/// <summary>
@@ -26,7 +15,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShalachManosForm));
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-			this.searchLookup = new ShomreiTorah.WinForms.Controls.LookupControl();
+			this.searchLookup = new ShomreiTorah.WinForms.Controls.Lookup.ItemSelector();
 			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -42,7 +31,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colPledgeId = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.personSelector = new ShomreiTorah.Billing.Controls.PersonSelector();
+			this.personSelector = new ShomreiTorah.Data.UI.Controls.PersonSelector();
 			this.amount = new DevExpress.XtraEditors.SpinEdit();
 			this.addPanel = new DevExpress.XtraLayout.LayoutControl();
 			this.checkNumber = new ShomreiTorah.Billing.Controls.Editors.CheckNumberEdit();
@@ -61,6 +50,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.repositoryItemPersonRefEdit1 = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemPersonRefEdit();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.personSelector.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).BeginInit();
@@ -91,17 +81,14 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// 
 			// searchLookup
 			// 
-			this.searchLookup.DefaultText = "Click to search the list";
+			this.searchLookup.Properties.NullValuePrompt = "Click to search the list";
 			this.searchLookup.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.searchLookup.Location = new System.Drawing.Point(0, 641);
 			this.searchLookup.Name = "searchLookup";
-			this.searchLookup.PopupOpen = false;
-			this.searchLookup.ScrollPosition = 0;
-			this.searchLookup.SearchTable = null;
 			this.searchLookup.Size = new System.Drawing.Size(899, 20);
 			this.searchLookup.TabIndex = 3;
 			this.searchLookup.TabStop = false;
-			this.searchLookup.ItemSelected += new System.EventHandler<ShomreiTorah.WinForms.Controls.ItemSelectionEventArgs>(this.searchLookup_ItemSelected);
+			this.searchLookup.EditValueChanged += new System.EventHandler(this.searchLookup_EditValueChanged);
 			// 
 			// grid
 			// 
@@ -140,7 +127,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// colFullName
 			// 
 			this.colFullName.ColumnEdit = this.repositoryItemPersonRefEdit1;
-			this.colFullName.FieldName = "FullName";
+			this.colFullName.FieldName = "Person";
 			this.colFullName.GroupInterval = DevExpress.XtraGrid.ColumnGroupInterval.Alphabetical;
 			this.colFullName.Name = "colFullName";
 			this.colFullName.OptionsColumn.ReadOnly = true;
@@ -256,21 +243,14 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// 
 			// personSelector
 			// 
-			this.personSelector.Caption = "Select a person:";
-			this.personSelector.DefaultText = "Please click here to select a person";
 			this.personSelector.Dock = System.Windows.Forms.DockStyle.Top;
 			this.personSelector.Location = new System.Drawing.Point(0, 116);
 			this.personSelector.Name = "personSelector";
-			this.personSelector.PopupOpen = false;
-			this.personSelector.ResultsLocation = ShomreiTorah.WinForms.Controls.ResultsLocation.Bottom;
-			this.personSelector.ScrollPosition = 0;
-			this.personSelector.SearchTable = null;
 			this.personSelector.Size = new System.Drawing.Size(899, 20);
 			this.personSelector.TabIndex = 0;
 			this.personSelector.TabStop = false;
-			this.personSelector.Value = ((object)(resources.GetObject("personSelector.Value")));
-			this.personSelector.SelectedPersonChanged += new System.EventHandler(this.personSelector_SelectedPersonChanged);
-			this.personSelector.SelectingPerson += new System.EventHandler<ShomreiTorah.Billing.Controls.SelectingPersonEventArgs>(this.personSelector_SelectingPerson);
+			this.personSelector.EditValueChanged += new System.EventHandler(this.personSelector_EditValueChanged);
+			this.personSelector.PersonSelecting += new System.EventHandler<ShomreiTorah.Data.UI.Controls.PersonSelectingEventArgs>(this.personSelector_PersonSelecting);
 			// 
 			// amount
 			// 
@@ -535,6 +515,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			((System.ComponentModel.ISupportInitialize)(this.checkDate.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.comments.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethod.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.personSelector.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkGroup)).EndInit();
@@ -551,7 +532,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 
 		#endregion
 
-		private ShomreiTorah.WinForms.Controls.LookupControl searchLookup;
+		private ShomreiTorah.WinForms.Controls.Lookup.ItemSelector searchLookup;
 		private Controls.BaseGrid grid;
 		private DevExpress.XtraGrid.Views.Grid.GridView gridView;
 		private DevExpress.XtraGrid.Columns.GridColumn colFullName;
@@ -566,7 +547,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		private DevExpress.XtraGrid.Columns.GridColumn colModifier;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox accountEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit currencyEdit;
-		private ShomreiTorah.Billing.Controls.PersonSelector personSelector;
+		private ShomreiTorah.Data.UI.Controls.PersonSelector personSelector;
 		private DevExpress.XtraEditors.SpinEdit amount;
 		private DevExpress.XtraEditors.RadioGroup paymentMethod;
 		private DevExpress.XtraLayout.LayoutControl addPanel;

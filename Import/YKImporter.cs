@@ -1,20 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.Data.OleDb;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using ShomreiTorah.Common;
+using ShomreiTorah.Data;
 using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
 
@@ -51,7 +49,7 @@ namespace ShomreiTorah.Billing.Import {
 		};
 
 		public static void Execute() {
-			Program.DoReload();
+			Program.Current.RefreshDatabase();
 			using (var fileDialog = new OpenFileDialog {
 				Filter = "Excel Files (*.xls, *.xlsx)|*.xls;*.xlsx|All Files|*.*",
 				Title = "Open YK Directory"
@@ -83,6 +81,8 @@ namespace ShomreiTorah.Billing.Import {
 
 						ui.Caption = "Processing " + ykData.TableName;
 
+						var masterDirectory = Program.Current.DataContext.Table<Person>();
+
 						ui.Maximum = ykData.Rows.Count;
 						for (int i = 0; i < ykData.Rows.Count; i++) {
 							if (ui.WasCanceled) return;
@@ -106,12 +106,12 @@ namespace ShomreiTorah.Billing.Import {
 							if (ykPerson.Address == null)
 								ykPerson.City = ykPerson.State = ykPerson.Zip = null;
 
-							var mdRow = (BillingData.MasterDirectoryRow)Program.Data.MasterDirectory.Select("YKID=" + ykid).FirstOrDefault();
+							var mdRow = masterDirectory.Rows.FirstOrDefault(p => p.YKID == ykid);
 
 							if (mdRow != null && mdRow.LastName != ykPerson.LastName) {
-								var candidates = Program.Data.MasterDirectory
+								var candidates = masterDirectory.Rows
 									.Where(md => md.LastName == ykPerson.LastName
-											  && !md.IsYKIDNull()
+											  && md.YKID != null
 											  && ykData.Select("YKID=" + md.YKID).Length == 0
 									).ToArray();
 								if (candidates.Length == 1)
@@ -146,16 +146,16 @@ namespace ShomreiTorah.Billing.Import {
 						}
 
 						ui.Caption = "Scanning for deleted people";
-						ui.Maximum = Program.Data.MasterDirectory.Count;
-						for (int i = 0; i < Program.Data.MasterDirectory.Count; i++) {
+						ui.Maximum = masterDirectory.Rows.Count;
+						for (int i = 0; i < masterDirectory.Rows.Count; i++) {
 							if (ui.WasCanceled) return;
 							ui.Progress = i;
-							var mdRow = Program.Data.MasterDirectory[i];
+							var mdRow = masterDirectory.Rows[i];
 
 							if (processedRows.Select("PersonId = '" + mdRow.Id + "'").Length > 0)
 								continue;		//Skip people we've already added.
 
-							var state = mdRow.IsYKIDNull() ? MatchState.NonYK : MatchState.Deleted;
+							var state = mdRow.YKID.HasValue ? MatchState.NonYK : MatchState.Deleted;
 							//TODO: Try to match custom people
 							processedRows.Rows.Add(
 								mdRow.Id, null,	//YKID here is new YKID; thereisn't any
@@ -221,7 +221,7 @@ namespace ShomreiTorah.Billing.Import {
 						break;
 					case ImportAction.Update:
 						var ykPerson = new PersonData(ykRow);
-						var mdRow = Program.Data.MasterDirectory.FindById(ykRow.Field<Guid>("PersonId"));
+						var mdRow = Program.Table<Person>().Rows.First(p => p.Id == ykRow.Field<Guid>("PersonId"));
 
 						if (!ykRow.IsNull("YKID"))
 							mdRow.YKID = ykRow.Field<int>("YKID");
@@ -238,11 +238,11 @@ namespace ShomreiTorah.Billing.Import {
 						mdRow.Source = "YK Directory";
 						break;
 					case ImportAction.Add:
-						var row = Program.Data.MasterDirectory.AddMasterDirectoryRow(new PersonData(ykRow), "YK Directory");
+						var row = Program.Table<Person>().AddPerson(new PersonData(ykRow), "YK Directory");
 						row.YKID = ykRow.Field<int>("YKID");
 						break;
 					case ImportAction.Delete:
-						Program.Data.MasterDirectory.FindById(ykRow.Field<Guid>("PersonId")).Delete();
+						Program.Table<Person>().Rows.First(p => p.Id == ykRow.Field<Guid>("PersonId")).RemoveRow();
 						break;
 				}
 			}
@@ -284,7 +284,7 @@ namespace ShomreiTorah.Billing.Import {
 			if (ykRow == null) {
 				mdDetails.Text = ykDetails.Text = "Please select a person in the grid.";
 			} else {
-				var mdRow = ykRow.IsNull("PersonId") ? null : Program.Data.MasterDirectory.FindById(ykRow.Field<Guid>("PersonId"));
+				var mdRow = ykRow.IsNull("PersonId") ? null : Program.Table<Person>().Rows.FirstOrDefault(p => p.Id == ykRow.Field<Guid>("PersonId"));
 
 				switch (ykRow.Field<MatchState>("MatchState")) {
 					case MatchState.Identical:

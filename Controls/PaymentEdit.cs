@@ -1,16 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Globalization;
-using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using ShomreiTorah.Common;
-using ShomreiTorah.WinForms.Controls;
+using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI;
+using ShomreiTorah.Data.UI.Controls;
+using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Controls {
@@ -18,19 +17,15 @@ namespace ShomreiTorah.Billing.Controls {
 		public PaymentEdit() {
 			InitializeComponent();
 
+			//TODO: Replace with ESA
 			account.Properties.Items.Clear();
-			account.Properties.Items.AddRange(BillingData.AccountNames);
+			account.Properties.Items.AddRange(Names.AccountNames);
 			method.Properties.Items.Clear();
-			method.Properties.Items.AddRange(BillingData.PaymentMethods);
+			method.Properties.Items.AddRange(Names.PaymentMethods);
 
-			if (Program.Data != null)	//Bugfix for nested designer
-				paymentsBindingSource.DataSource = Program.Data;
+			paymentsBindingSource.DataSource = Program.Current.DataContext;
 		}
 
-		protected override void OnLayout(LayoutEventArgs e) {
-			base.OnLayout(e);
-			person.MaxPopupHeight = Height - person.Bottom;
-		}
 		void SetCommentsHeight() {
 			if (commit.Visible)
 				comments.Height = method.Bottom - comments.Top;
@@ -41,11 +36,11 @@ namespace ShomreiTorah.Billing.Controls {
 
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public BillingData.PaymentsRow CurrentPayment {
-			get { return paymentsBindingSource.Current == null ? null : (BillingData.PaymentsRow)((DataRowView)paymentsBindingSource.Current).Row; }
+		public Payment CurrentPayment {
+			get { return (Payment)paymentsBindingSource.Current; ; }
 			set {
 				if (value == null) return;
-				paymentsBindingSource.Position = paymentsBindingSource.Find("PaymentId", value.PaymentId);
+				paymentsBindingSource.Position = paymentsBindingSource.IndexOf(value);
 				commit.Hide();
 				SetCommentsHeight();	//For some reason, VisibleChanged doesn't fire.
 			}
@@ -75,29 +70,30 @@ namespace ShomreiTorah.Billing.Controls {
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			if (payment.IsNull("Date")) {
+			if (payment["Date"] == null) {
 				XtraMessageBox.Show("Please enter a date.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			if (payment.IsNull("Amount")) {
+			if (payment["Amount"] == null) {
 				XtraMessageBox.Show("Please enter the amount paid.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			if (payment.IsNull("Account")) {
+			if (payment["Account"] == null) {
 				XtraMessageBox.Show("Please select the account.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			if (payment.IsNull("Method")) {
+			if (payment["Method"] == null) {
 				XtraMessageBox.Show("Please enter select the payment method.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			string message = CurrentPayment.CheckDuplicateWarning(checkNumber.Text, true);
-			if (!string.IsNullOrEmpty(message)
-			 && DialogResult.No == XtraMessageBox.Show(message, "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2))
+			Payment duplicate = CurrentPayment.FindDuplicate(checkNumber.Text);
+			if (duplicate != null
+			 && !Dialog.Warn(String.Format(CultureInfo.CurrentCulture, "{0} #{1} for {2} has already been entered ({3:d}, {4:c}).\r\nIs that correct?",
+																	  duplicate.Method, duplicate.CheckNumber, duplicate.Person.FullName, duplicate.Date, duplicate.Amount)))
 				return;
 
 			#endregion
@@ -126,24 +122,18 @@ Payment:	{4:c} {5} for {6} on {7:d}
  payment.Amount, payment.Method.ToLower(CultureInfo.CurrentCulture), payment.Account.ToLower(CultureInfo.CurrentCulture), payment.Date, payment.Comments));
 							break;
 						case DialogResult.Yes:				//Add pledge
-							var newRow = Program.Data.Pledges.NewPledgesRow();
-
-							newRow.PledgeId = Guid.NewGuid();
-							newRow.PersonId = person.SelectedPerson.Id;
-							newRow.Date = date.DateTime;
-							newRow.Type = "Donation";
-							newRow.Account = account.Text;
-							autoPledgeAmount = newRow.Amount = payment.Amount - currentBalance;
-							newRow.Comments = ("Automatically added donation pledge\r\n\r\n" + comments.Text).Trim();
-
-							Program.Data.Pledges.AddPledgesRow(newRow);
+							Program.Table<Pledge>().Rows.Add(new Pledge {
+								Person = person.SelectedPerson,
+								Date = date.DateTime,
+								Type = "Donation",
+								Account = account.Text,
+								Amount = autoPledgeAmount = payment.Amount - currentBalance,
+								Comments = ("Automatically added donation pledge\r\n\r\n" + comments.Text).Trim()
+							});
 							break;
 					}
 				}
 			}
-
-			if (payment.IsNull("PaymentId"))
-				payment.PaymentId = Guid.NewGuid();
 
 			try {
 				paymentsBindingSource.EndEdit();
@@ -153,20 +143,20 @@ Payment:	{4:c} {5} for {6} on {7:d}
 			}
 			if (commit.CommitType == CommitType.Create) {
 				if (autoPledgeAmount > 0)
-					InfoMessage.Show(String.Format(CultureInfo.CurrentCulture, "A {0:c} payment and a {1:c} donation pledge have been added for {2}", payment.Amount, autoPledgeAmount, payment.MasterDirectoryRow.FullName));
+					InfoMessage.Show(String.Format(CultureInfo.CurrentCulture, "A {0:c} payment and a {1:c} donation pledge have been added for {2}", payment.Amount, autoPledgeAmount, payment.Person.FullName));
 				else
-					InfoMessage.Show(String.Format(CultureInfo.CurrentCulture, "A {0:c} payment has been added for {1}", payment.Amount, payment.MasterDirectoryRow.FullName));
+					InfoMessage.Show(String.Format(CultureInfo.CurrentCulture, "A {0:c} payment has been added for {1}", payment.Amount, payment.Person.FullName));
 				AddNew();
 			}
 		}
 
 		private void method_EditValueChanged(object sender, EventArgs e) {
-			//It can be DBNull
+			//EditValue can be DBNull
 			checkNumber.Visible = checkNumberLabel.Visible = method.EditValue as string == "Check";
 			checkNumber.EditValue = null;
 		}
 
-		private void person_ItemSelected(object sender, ItemSelectionEventArgs e) {
+		private void person_EditValueChanged(object sender, EventArgs e) {
 			date.Focus();
 		}
 
@@ -175,18 +165,13 @@ Payment:	{4:c} {5} for {6} on {7:d}
 				commit.PerformClick();
 		}
 
-		private void person_SelectingPerson(object sender, SelectingPersonEventArgs e) {
+		//TODO: Remove
+		private void person_PersonSelecting(object sender, PersonSelectingEventArgs e) {
 			if (e.Person != person.SelectedPerson
 			 && !commit.Visible
 			 && DialogResult.No == XtraMessageBox.Show("Are you sure you want to change this payment to be associated with " + e.Person.VeryFullName + "?",
 													   "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
 				e.Cancel = true;
-		}
-
-		private void checkNumber_Validating(object sender, CancelEventArgs e) {
-			string message = CurrentPayment.CheckDuplicateWarning(checkNumber.Text, false);
-			e.Cancel = !string.IsNullOrEmpty(message)
-					&& DialogResult.No == XtraMessageBox.Show(message, "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 		}
 	}
 }

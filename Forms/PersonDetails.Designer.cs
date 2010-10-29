@@ -30,7 +30,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-			this.billingData = new ShomreiTorah.Billing.BillingData();
+			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource();
 			this.personBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
 			this.emailGrid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
@@ -158,11 +158,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPageGroup3.ShowCaptionButton = false;
 			this.ribbonPageGroup3.Text = "Create Word Documents for";
 			// 
-			// billingData
-			// 
-			this.billingData.DataSetName = "BillingData";
-			this.billingData.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-			// 
 			// personBindingSource
 			// 
 			this.personBindingSource.DataMember = "MasterDirectory";
@@ -188,7 +183,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// emailGrid
 			// 
-			this.emailGrid.DataMember = "EmailList";
+			this.emailGrid.DataMember = "EmailAddresses";
 			this.emailGrid.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.emailGrid.Location = new System.Drawing.Point(0, 315);
 			this.emailGrid.MainView = this.emailView;
@@ -579,7 +574,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// statementsGrid
 			// 
-			this.statementsGrid.DataMember = "StatementLog";
+			this.statementsGrid.DataMember = "LoggedStatements";
 			this.statementsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.statementsGrid.Location = new System.Drawing.Point(0, 0);
 			this.statementsGrid.MainView = this.statementsView;
@@ -712,7 +707,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
 		private DevExpress.XtraBars.BarButtonItem exportEmail;
 		private DevExpress.XtraBars.BarButtonItem exportWord;
-		private BillingData billingData;
+		private ShomreiTorah.Data.UI.FrameworkBindingSource billingData;
 		private System.Windows.Forms.BindingSource personBindingSource;
 		private DevExpress.XtraEditors.SplitContainerControl splitContainerControl1;
 		private Controls.BaseGrid emailGrid;

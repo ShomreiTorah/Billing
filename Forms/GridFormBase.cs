@@ -1,17 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
-using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.Data;
 using System.Linq;
-using ShomreiTorah.Common;
+using DevExpress.Data;
 using DevExpress.XtraBars;
+using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
+using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Forms {
 	//This needs to handle the Email list form,
@@ -52,6 +48,7 @@ namespace ShomreiTorah.Billing.Forms {
 		void MainView_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e) { SetSelectionButtonsState(); }
 		private void MainView_SelectionChanged(object sender, SelectionChangedEventArgs e) { SetSelectionButtonsState(); }
 		void SetSelectionButtonsState() {
+			if (!Visible) return;
 			exportWordSelected.Enabled = emailSelected.Enabled = MainView.SelectedRowsCount > 0 && GetSelectedPeople().Any();
 			exportWordSelected.Caption = emailSelected.Caption = MainView.SelectedRowsCount == 1 ? "Selected person" : "Selected people";
 		}
@@ -62,18 +59,18 @@ namespace ShomreiTorah.Billing.Forms {
 		private void emailSelected_ItemClick(object sender, ItemClickEventArgs e) { Statements.Email.EmailExporter.Execute(MdiParent ?? this, GetSelectedPeople().ToArray()); }
 		private void exportWordSelected_ItemClick(object sender, ItemClickEventArgs e) { Statements.Word.WordExporter.Execute(MdiParent ?? this, GetSelectedPeople().ToArray()); }
 
-		protected BillingData.MasterDirectoryRow GetPerson(int rowHandle) {
-			var row = MainView.GetDataRow(rowHandle);
+		protected Person GetPerson(int rowHandle) {
+			var row = MainView.GetRow(rowHandle);
 			if (row == null) return null;
-			return row as BillingData.MasterDirectoryRow
-				?? ((IPersonAccessor)row).Person;
+			return row as Person
+				?? ((IOwnedObject)row).Person;
 		}
 
-		protected IEnumerable<BillingData.MasterDirectoryRow> GetSelectedPeople() {
-			return MainView.GetSelectedRows().Select<int, BillingData.MasterDirectoryRow>(GetPerson).Where(p => p != null);
+		protected IEnumerable<Person> GetSelectedPeople() {
+			return MainView.GetSelectedRows().Select<int, Person>(GetPerson).Where(p => p != null);
 		}
-		protected IEnumerable<BillingData.MasterDirectoryRow> GetVisiblePeople() {
-			return Enumerable.Range(0, MainView.DataRowCount).Select<int, BillingData.MasterDirectoryRow>(GetPerson).Where(p => p != null);
+		protected IEnumerable<Person> GetVisiblePeople() {
+			return Enumerable.Range(0, MainView.DataRowCount).Select<int, Person>(GetPerson).Where(p => p != null);
 		}
 	}
 }

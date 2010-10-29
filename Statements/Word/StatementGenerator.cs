@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Microsoft.Office.Interop.Word;
 using Microsoft.Office.Interop.Word.Extensions;
 using ShomreiTorah.Common;
@@ -83,7 +82,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		class StatementPopulator : DataContentPopulator {
 			delegate void CustomField(Range range, StatementInfo info);
 			static readonly Dictionary<string, CustomField> CustomFields = new Dictionary<string, CustomField>(StringComparer.CurrentCultureIgnoreCase){
-				{ "BalanceDue",		(range, info) => range.Text = info.Person.BalanceDue.ToString("c", Culture) },
+				{ "BalanceDue",		(range, info) => range.Text = info.Person.Field<decimal>("BalanceDue").ToString("c", Culture) },
 				{ "Year",			(range, info) => range.Text = info.StartDate.Year.ToString(CultureInfo.CurrentCulture) },
 				{ "StartDate",		(range, info) => range.Text = info.StartDate.ToShortDateString() },
 				{ "MailingAddress",	(range, info) => range.Text = info.Person.MailingAddress },
@@ -177,7 +176,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 				foreach (var payment in account.Payments) {
 					row = table.AddRow().StyleAmount().Stripe();
 					row.Cells[1].Range.Text = payment.Date.ToShortDateString();
-					row.Cells[2].Range.Text = payment.Method.Replace("Unknown", "?") + (payment.IsCheckNumberNull() ? "" : " #" + payment.CheckNumber.ToString(Culture));
+					row.Cells[2].Range.Text = payment.Method.Replace("Unknown", "?") 
+											+ (payment.CheckNumber == null ? "" : " #" + payment.CheckNumber.ToString(Culture));
 					row.Cells[3].Range.Text = payment.Amount.ToString("c", Culture);
 				}
 
@@ -199,7 +199,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 
 				row = table.AddRow().MergeFirstCells().StyleAmount().StyleTotal();
 				row.Cells[1].Range.Text = "Balance due:";
-				row.Cells[2].Range.Text = info.Person.BalanceDue.ToString("c", Culture);
+				row.Cells[2].Range.Text = info.Person.Field<decimal>("BalanceDue").ToString("c", Culture);
 				row.Cells[2].Range.Font.Bold = 1;
 			}
 			table.Rows[table.Rows.Count].Delete();

@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ShomreiTorah.Billing</RootNamespace>
     <AssemblyName>ShomreiTorah.Billing</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Perforce Project</SccProjectName>
     <SccLocalPath>..\..</SccLocalPath>
@@ -39,6 +39,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -66,6 +67,7 @@
     <Reference Include="DevExpress.Data.v10.1, Version=10.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
+    <Reference Include="DevExpress.OfficeSkins.v10.1, Version=10.1.6.0, Culture=neutral, PublicKeyToken=95fc6c5621878f0a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v10.1, Version=10.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -88,7 +90,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Office, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="PowerPointJournal, Version=1.4.2.0, Culture=neutral, PublicKeyToken=a618b678561bfa4a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -117,10 +119,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BillingData.cs">
-      <DependentUpon>BillingData.xsd</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\BaseGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -133,29 +131,11 @@
     <Compile Include="Controls\HebrewCalendarEdit.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\NewPerson.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\NewPerson.Designer.cs">
-      <DependentUpon>NewPerson.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\PaymentEdit.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\PaymentEdit.Designer.cs">
       <DependentUpon>PaymentEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\PersonDataEntry.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\PersonDataEntry.designer.cs">
-      <DependentUpon>PersonDataEntry.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\PersonSelector.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\PersonSelector.Designer.cs">
-      <DependentUpon>PersonSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PledgeEdit.cs">
       <SubType>UserControl</SubType>
@@ -234,7 +214,6 @@
     <Compile Include="Forms\Splash.Designer.cs">
       <DependentUpon>Splash.cs</DependentUpon>
     </Compile>
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="PersonData.cs" />
     <Compile Include="Program.cs" />
@@ -251,17 +230,8 @@
     <EmbeddedResource Include="Controls\ModifiedPledgesGrid.resx">
       <DependentUpon>ModifiedPledgesGrid.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\NewPerson.resx">
-      <DependentUpon>NewPerson.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\PaymentEdit.resx">
       <DependentUpon>PaymentEdit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PersonDataEntry.resx">
-      <DependentUpon>PersonDataEntry.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PersonSelector.resx">
-      <DependentUpon>PersonSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PledgeEdit.resx">
       <DependentUpon>PledgeEdit.cs</DependentUpon>
@@ -314,9 +284,6 @@
     <EmbeddedResource Include="Forms\GridForms\EmailListForm.resx">
       <DependentUpon>EmailListForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ErrorForm.resx">
-      <DependentUpon>ErrorForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -367,17 +334,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="BillingData.xsc">
-      <DependentUpon>BillingData.xsd</DependentUpon>
-    </None>
-    <None Include="BillingData.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>BillingData.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="BillingData.xss">
-      <DependentUpon>BillingData.xsd</DependentUpon>
-    </None>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -442,11 +399,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>ASPXCodeBehind</SubType>
     </None>
-    <Compile Include="BillingData.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BillingData.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Editors\CheckNumberEdit.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -540,12 +492,6 @@
     </Compile>
     <Compile Include="Forms\GridForms\EmailListForm.Designer.cs">
       <DependentUpon>EmailListForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\ErrorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ErrorForm.Designer.cs">
-      <DependentUpon>ErrorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PaymentEditPopup.cs">
       <SubType>Form</SubType>
@@ -642,6 +588,18 @@
     <ProjectReference Include="..\..\Libraries\ShomreiTorah.Common\ShomreiTorah.Common.csproj">
       <Project>{1308A6E1-7787-49F6-A19C-8AF327DAF9B5}</Project>
       <Name>ShomreiTorah.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\ShomreiTorah.Data.UI\ShomreiTorah.Data.UI.csproj">
+      <Project>{43AD72A0-F262-4561-B5C4-2686AE0B5E03}</Project>
+      <Name>ShomreiTorah.Data.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\ShomreiTorah.Data\ShomreiTorah.Data.csproj">
+      <Project>{88D62EF0-7A6C-403E-80EF-6CEFE734DD53}</Project>
+      <Name>ShomreiTorah.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\ShomreiTorah.Singularity\ShomreiTorah.Singularity.csproj">
+      <Project>{53C1A3A0-B443-4C28-895B-5E4DFE803A1C}</Project>
+      <Name>ShomreiTorah.Singularity</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\ShomreiTorah.WinForms\ShomreiTorah.WinForms.csproj">
       <Project>{0B927F97-8CDD-47CB-B775-CA1E0AB2409C}</Project>

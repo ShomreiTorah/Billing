@@ -72,7 +72,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// colFullName
 			// 
 			this.colFullName.ColumnEdit = this.personRefEdit;
-			this.colFullName.FieldName = "FullName";
+			this.colFullName.FieldName = "Person";
 			this.colFullName.GroupInterval = DevExpress.XtraGrid.ColumnGroupInterval.Alphabetical;
 			this.colFullName.Name = "colFullName";
 			this.colFullName.OptionsColumn.ReadOnly = true;

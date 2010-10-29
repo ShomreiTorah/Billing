@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Repository;
@@ -15,6 +13,7 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 using Rafflizer;
 using ShomreiTorah.Common;
+using ShomreiTorah.Data;
 using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Import.Raffle {
@@ -48,8 +47,8 @@ namespace ShomreiTorah.Billing.Import.Raffle {
 		RaffleImporter(RaffleDB database, DateTime raffleDate) {
 			InitializeComponent();
 
-			accountEdit.Items.AddRange(BillingData.AccountNames);
-			accountEdit.DropDownRows = BillingData.AccountNames.Count;
+			accountEdit.Items.AddRange(Names.AccountNames);
+			accountEdit.DropDownRows = Names.AccountNames.Count;
 
 			this.raffleDate = raffleDate;
 			tickets = (
@@ -170,19 +169,33 @@ namespace ShomreiTorah.Billing.Import.Raffle {
 
 			const string Modifier = "Raffle Import";
 			public void DoImport(DateTime raffleDate) {
-				var pledge = Program.Data.Pledges.AddPledgesRow(
-						Person.ResolvedRow, raffleDate, Type,
-						SubType, Note, Account, Amount, Comments);
+				var pledge = new Pledge {
+					Person = Person.ResolvedRow,
+					Date = raffleDate,
+					Type = Type,
+					SubType = SubType,
+					Note = Note,
+					Account = Account,
+					Amount = Amount,
+					Comments = Comments
+				};
+				Program.Table<Pledge>().Rows.Add(pledge);
 				pledge.Modifier = Modifier;
 
-				if (AmountPaid == 0)
-					return;
-				var payment = Program.Data.Payments.AddPaymentsRow(
-						Person.ResolvedRow, raffleDate, PaymentMethod,
-						CheckNumber, Account, AmountPaid, Comments);
-				payment.Modifier = Modifier;
+				if (AmountPaid != 0) {
+					var payment = new Payment {
+						Person = Person.ResolvedRow,
+						Date = raffleDate,
+						Method = PaymentMethod,
+						CheckNumber = CheckNumber,
+						Account = Account,
+						Amount = AmountPaid,
+						Comments = Comments
+					};
+					Program.Table<Payment>().Rows.Add(payment);
+					payment.Modifier = Modifier;
+				}
 			}
-
 			///<summary>Occurs when a property value is changed.</summary>
 			public event PropertyChangedEventHandler PropertyChanged;
 			///<summary>Raises the PropertyChanged event.</summary>

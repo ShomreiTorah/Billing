@@ -1,3 +1,4 @@
+using ShomreiTorah.Data.UI.Controls;
 namespace ShomreiTorah.Billing.Controls {
 	partial class PaymentEdit {
 		/// <summary> 
@@ -24,23 +25,22 @@ namespace ShomreiTorah.Billing.Controls {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaymentEdit));
 			this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
 			this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
 			this.commit = new ShomreiTorah.Billing.Controls.CommitButton();
 			this.account = new DevExpress.XtraEditors.ComboBoxEdit();
 			this.paymentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.billingData = new ShomreiTorah.Billing.BillingData();
+			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource();
 			this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
 			this.amount = new DevExpress.XtraEditors.SpinEdit();
 			this.checkNumberLabel = new DevExpress.XtraEditors.LabelControl();
-			this.checkNumber = new ShomreiTorah.Billing.Controls.Editors.CheckNumberEdit();
+			this.checkNumber = new CheckNumberEdit();
 			this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
 			this.method = new DevExpress.XtraEditors.ComboBoxEdit();
 			this.comments = new DevExpress.XtraEditors.MemoEdit();
 			this.date = new DevExpress.XtraEditors.DateEdit();
 			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
-			this.person = new ShomreiTorah.Billing.Controls.PersonSelector();
+			this.person = new ShomreiTorah.Data.UI.Controls.PersonSelector();
 			((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
 			this.groupControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.account.Properties)).BeginInit();
@@ -52,6 +52,7 @@ namespace ShomreiTorah.Billing.Controls {
 			((System.ComponentModel.ISupportInitialize)(this.comments.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.date.Properties.VistaTimeProperties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.date.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.person.Properties)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupControl1
@@ -116,11 +117,6 @@ namespace ShomreiTorah.Billing.Controls {
 			this.paymentsBindingSource.DataMember = "Payments";
 			this.paymentsBindingSource.DataSource = this.billingData;
 			// 
-			// billingData
-			// 
-			this.billingData.DataSetName = "BillingData";
-			this.billingData.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-			// 
 			// labelControl3
 			// 
 			this.labelControl3.Location = new System.Drawing.Point(5, 54);
@@ -167,7 +163,6 @@ namespace ShomreiTorah.Billing.Controls {
 			this.checkNumber.Size = new System.Drawing.Size(126, 20);
 			this.checkNumber.TabIndex = 4;
 			this.checkNumber.Visible = false;
-			this.checkNumber.Validating += new System.ComponentModel.CancelEventHandler(this.checkNumber_Validating);
 			this.checkNumber.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
 			// 
 			// labelControl2
@@ -234,22 +229,15 @@ namespace ShomreiTorah.Billing.Controls {
 			// 
 			// person
 			// 
-			this.person.Caption = "Select a person:";
-			this.person.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.paymentsBindingSource, "PersonId", true));
-			this.person.DefaultText = "Please click here to select a person";
+			this.person.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.paymentsBindingSource, "Person", true));
 			this.person.Dock = System.Windows.Forms.DockStyle.Top;
 			this.person.Location = new System.Drawing.Point(0, 0);
 			this.person.Name = "person";
-			this.person.PopupOpen = false;
-			this.person.ResultsLocation = ShomreiTorah.WinForms.Controls.ResultsLocation.Bottom;
-			this.person.ScrollPosition = 0;
-			this.person.SearchTable = null;
 			this.person.Size = new System.Drawing.Size(347, 20);
 			this.person.TabIndex = 0;
 			this.person.TabStop = false;
-			this.person.Value = ((object)(resources.GetObject("person.Value")));
-			this.person.SelectingPerson += new System.EventHandler<ShomreiTorah.Billing.Controls.SelectingPersonEventArgs>(this.person_SelectingPerson);
-			this.person.ItemSelected += new System.EventHandler<ShomreiTorah.WinForms.Controls.ItemSelectionEventArgs>(this.person_ItemSelected);
+			this.person.PersonSelecting += new System.EventHandler<ShomreiTorah.Data.UI.Controls.PersonSelectingEventArgs>(this.person_PersonSelecting);
+			this.person.EditValueChanged += new System.EventHandler(this.person_EditValueChanged);
 			// 
 			// PaymentEdit
 			// 
@@ -272,6 +260,7 @@ namespace ShomreiTorah.Billing.Controls {
 			((System.ComponentModel.ISupportInitialize)(this.comments.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.date.Properties.VistaTimeProperties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.date.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.person.Properties)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -284,13 +273,13 @@ namespace ShomreiTorah.Billing.Controls {
 		private DevExpress.XtraEditors.MemoEdit comments;
 		private PersonSelector person;
 		private System.Windows.Forms.BindingSource paymentsBindingSource;
-		private BillingData billingData;
+		private ShomreiTorah.Data.UI.FrameworkBindingSource billingData;
 		private DevExpress.XtraEditors.ComboBoxEdit method;
 		private CommitButton commit;
 		private DevExpress.XtraEditors.LabelControl labelControl3;
 		private DevExpress.XtraEditors.SpinEdit amount;
 		private DevExpress.XtraEditors.LabelControl checkNumberLabel;
-		private Editors.CheckNumberEdit checkNumber;
+		private ShomreiTorah.Data.UI.Controls.CheckNumberEdit checkNumber;
 		private DevExpress.XtraEditors.LabelControl labelControl2;
 		private DevExpress.XtraEditors.LabelControl labelControl6;
 		private DevExpress.XtraEditors.ComboBoxEdit account;

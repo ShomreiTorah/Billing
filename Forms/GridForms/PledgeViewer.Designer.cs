@@ -44,7 +44,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.pledgesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.billingData = new ShomreiTorah.Billing.BillingData();
+			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
@@ -100,7 +100,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// colFullName
 			// 
 			this.colFullName.ColumnEdit = this.personRefEdit;
-			this.colFullName.FieldName = "FullName";
+			this.colFullName.FieldName = "Person";
 			this.colFullName.GroupInterval = DevExpress.XtraGrid.ColumnGroupInterval.Alphabetical;
 			this.colFullName.Name = "colFullName";
 			this.colFullName.OptionsColumn.ReadOnly = true;
@@ -251,11 +251,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.pledgesBindingSource.DataMember = "Pledges";
 			this.pledgesBindingSource.DataSource = this.billingData;
 			// 
-			// billingData
-			// 
-			this.billingData.DataSetName = "BillingData";
-			this.billingData.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-			// 
 			// PledgeViewer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -282,7 +277,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		#endregion
 
 		private Controls.BaseGrid grid;
-		private BillingData billingData;
+		private ShomreiTorah.Data.UI.FrameworkBindingSource billingData;
 		private DevExpress.XtraGrid.Views.Grid.GridView gridView;
 		private System.Windows.Forms.BindingSource pledgesBindingSource;
 		private DevExpress.XtraGrid.Columns.GridColumn colDate;

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text.RegularExpressions;
+using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	///<summary>Holds information parsed from a seating chart.</summary>
@@ -42,7 +42,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 
 		public override string ToString() { return Name + " - " + SeatCount; }
 
-		public bool Matches(BillingData.MasterDirectoryRow person) {
+		public bool Matches(Person person) {
 			if (String.IsNullOrEmpty(person.LastName))
 				return false;
 			if (String.IsNullOrEmpty(person.HisName))

@@ -1,16 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
 using Microsoft.Office.Interop.Word;
-using Microsoft.Office.Interop.Word.Extensions;
-using ShomreiTorah.Common;
-using ShomreiTorah.WinForms;
+using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Statements.Word {
 	static partial class WordExport {
@@ -46,7 +39,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 	//a receiptLimit,
 	class WordStatementInfo : StatementInfo {
 		readonly DateTime receiptLimit;
-		public WordStatementInfo(BillingData.MasterDirectoryRow person, DateTime startDate, StatementKind kind, DateTime receiptLimit) : base(person, startDate, kind) { this.receiptLimit = receiptLimit; }
+		public WordStatementInfo(Person person, DateTime startDate, StatementKind kind, DateTime receiptLimit) : base(person, startDate, kind) { this.receiptLimit = receiptLimit; }
 
 		public override bool ShouldSend {
 			get {
@@ -54,7 +47,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 					return false;
 				if (Kind == StatementKind.Receipt) {
 					//Find all Word receipts for the year that we're generating.
-					var statements = Person.GetStatementLogRows().Where(s => s.StatementKind == "Receipt" && s.Media == "Word" && s.StartDate.Year == StartDate.Year);
+					var statements = Person.LoggedStatements.Where(s => s.StatementKind == "Receipt" && s.Media == "Word" && s.StartDate.Year == StartDate.Year);
 
 					if (!statements.Any()) return true;	//If we didn't make any Word receitps, send.
 					var lastStatement = statements.Max(s => s.DateGenerated);

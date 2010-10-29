@@ -35,7 +35,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colDepositAmount = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colPaymentCount = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.masterDirectoryBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.billingData = new ShomreiTorah.Billing.BillingData();
+			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource();
 			this.colId = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colYKID = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colLastName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -51,9 +51,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colTotalPledged = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colTotalPaid = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colBalanceDue = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.masterDirectoryTableAdapter = new ShomreiTorah.Billing.BillingDataTableAdapters.MasterDirectoryTableAdapter();
 			this.pledgesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.pledgesTableAdapter = new ShomreiTorah.Billing.BillingDataTableAdapters.PledgesTableAdapter();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
@@ -88,7 +86,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// colFullName1
 			// 
 			this.colFullName1.ColumnEdit = this.personRefEdit;
-			this.colFullName1.FieldName = "FullName";
+			this.colFullName1.FieldName = "Person";
 			this.colFullName1.Name = "colFullName1";
 			this.colFullName1.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
 			this.colFullName1.Visible = true;
@@ -188,7 +186,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.grid.DataMember = "Deposits";
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
 			gridLevelNode1.LevelTemplate = this.paymentsView;
-			gridLevelNode1.RelationName = "Deposit";
+			gridLevelNode1.RelationName = "Payments";
 			this.grid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
             gridLevelNode1});
 			this.grid.Location = new System.Drawing.Point(0, 0);
@@ -220,6 +218,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.depositsView.OptionsBehavior.AutoExpandAllGroups = true;
 			this.depositsView.OptionsDetail.ShowDetailTabs = false;
 			this.depositsView.OptionsView.ColumnAutoWidth = false;
+			this.depositsView.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
 			this.depositsView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colAccount, DevExpress.Data.ColumnSortOrder.Descending),
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colDepositDate, DevExpress.Data.ColumnSortOrder.Descending),
@@ -297,11 +296,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.masterDirectoryBindingSource.DataMember = "MasterDirectory";
 			this.masterDirectoryBindingSource.DataSource = this.billingData;
 			// 
-			// billingData
-			// 
-			this.billingData.DataSetName = "BillingData";
-			this.billingData.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-			// 
 			// colId
 			// 
 			this.colId.FieldName = "Id";
@@ -339,7 +333,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			// colFullName
 			// 
-			this.colFullName.FieldName = "FullName";
+			this.colFullName.FieldName = "Person";
 			this.colFullName.Name = "colFullName";
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 5;
@@ -410,18 +404,10 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colBalanceDue.Visible = true;
 			this.colBalanceDue.VisibleIndex = 14;
 			// 
-			// masterDirectoryTableAdapter
-			// 
-			this.masterDirectoryTableAdapter.ClearBeforeFill = true;
-			// 
 			// pledgesBindingSource
 			// 
 			this.pledgesBindingSource.DataMember = "Pledges";
 			this.pledgesBindingSource.DataSource = this.masterDirectoryBindingSource;
-			// 
-			// pledgesTableAdapter
-			// 
-			this.pledgesTableAdapter.ClearBeforeFill = true;
 			// 
 			// DepositViewer
 			// 
@@ -462,11 +448,9 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		private DevExpress.XtraGrid.Columns.GridColumn colTotalPaid;
 		private DevExpress.XtraGrid.Columns.GridColumn colBalanceDue;
 		private System.Windows.Forms.BindingSource masterDirectoryBindingSource;
-		private BillingData billingData;
-		private ShomreiTorah.Billing.BillingDataTableAdapters.MasterDirectoryTableAdapter masterDirectoryTableAdapter;
+		private ShomreiTorah.Data.UI.FrameworkBindingSource billingData;
 		private ShomreiTorah.Billing.Controls.BaseGrid grid;
 		private System.Windows.Forms.BindingSource pledgesBindingSource;
-		private ShomreiTorah.Billing.BillingDataTableAdapters.PledgesTableAdapter pledgesTableAdapter;
 		private DevExpress.XtraGrid.Views.Grid.GridView paymentsView;
 		private DevExpress.XtraGrid.Views.Grid.GridView depositsView;
 		private DevExpress.XtraGrid.Columns.GridColumn colFullName1;

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ShomreiTorah.Common;
+using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	static class ExcelExporter {
-		public static void ExportSeatingInfo(this IEnumerable<BillingData.SeatingReservationsRow> seats, string path) {
+		public static void ExportSeatingInfo(this IEnumerable<SeatingReservation> seats, string path) {
 			var file = DB.CreateFile(path);
 			using (var connection = file.OpenConnection()) {
 				connection.ExecuteNonQuery(@"
@@ -36,7 +37,7 @@ VALUES	(@LastName,		@HisName,	@HerName,	@FullName,		@Address,	@Phone,		@MensSeat
 				}
 			}
 		}
-		public static void ExportWomensSeats(this IEnumerable<BillingData.SeatingReservationsRow> seats, string path) {
+		public static void ExportWomensSeats(this IEnumerable<SeatingReservation> seats, string path) {
 			var file = DB.CreateFile(path);
 			using (var connection = file.OpenConnection()) {
 				connection.ExecuteNonQuery(@"

@@ -60,7 +60,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.importPayment = new DevExpress.XtraEditors.CheckEdit();
 			this.PaymentIdTextEdit = new DevExpress.XtraEditors.TextEdit();
 			this.paymentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.billingData = new ShomreiTorah.Billing.BillingData();
+			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource();
 			this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
 			this.textEdit2 = new DevExpress.XtraEditors.TextEdit();
 			this.dateEdit1 = new DevExpress.XtraEditors.DateEdit();
@@ -624,11 +624,6 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// 
 			this.paymentsBindingSource.DataMember = "Payments";
 			this.paymentsBindingSource.DataSource = this.billingData;
-			// 
-			// billingData
-			// 
-			this.billingData.DataSetName = "BillingData";
-			this.billingData.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
 			// 
 			// textEdit1
 			// 
@@ -1403,19 +1398,12 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			// 
 			// personSelector
 			// 
-			this.personSelector.Caption = "Select a person:";
-			this.personSelector.DefaultText = "Please click here to select a person";
 			this.personSelector.Dock = System.Windows.Forms.DockStyle.Top;
 			this.personSelector.Location = new System.Drawing.Point(0, 0);
 			this.personSelector.Name = "personSelector";
-			this.personSelector.PopupOpen = false;
-			this.personSelector.ScrollPosition = 0;
-			this.personSelector.SearchTable = null;
-			this.personSelector.SelectedIndex = -1;
 			this.personSelector.Size = new System.Drawing.Size(358, 20);
 			this.personSelector.TabIndex = 0;
 			this.personSelector.TabStop = false;
-			this.personSelector.Value = ((object)(resources.GetObject("personSelector.Value")));
 			// 
 			// JournalImporter
 			// 
@@ -1555,7 +1543,7 @@ namespace ShomreiTorah.Billing.Import.Journal {
 		private DevExpress.XtraEditors.MemoEdit personDetails;
 		private DevExpress.XtraDataLayout.DataLayoutControl pledgeData;
 		private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup2;
-		private BillingData billingData;
+		private ShomreiTorah.Data.UI.FrameworkBindingSource billingData;
 		private System.Windows.Forms.BindingSource pledgesBindingSource;
 		private DevExpress.XtraEditors.TextEdit PledgeIdTextEdit;
 		private DevExpress.XtraEditors.TextEdit PersonIdTextEdit;

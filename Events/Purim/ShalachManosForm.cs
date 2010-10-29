@@ -1,44 +1,43 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using DevExpress.Data.Filtering;
-using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
-using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
-using ShomreiTorah.Billing.Controls;
-using ShomreiTorah.WinForms.Controls;
+using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI.Controls;
+using ShomreiTorah.Singularity;
+using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Events.Purim {
 	partial class ShalachManosForm : Forms.GridFormBase {
 		public const string PledgeType = "Shalach Manos";
-		const string Account = "Operating Fund";
+		static readonly string Account = Names.DefaultAccount;
 		readonly int year;
+		readonly FilteredTable<Pledge> pledges;
 		public ShalachManosForm(int year) {
 			InitializeComponent();
 			this.year = year;
 
-			Program.Data.Pledges.AddLookupColumns();
-
-			var filterString = "Date > #1/1/" + year + "# AND Date < #12/31/" + year + "# AND Type='" + PledgeType + "'";
-
 			addPanel.Hide();
 			grid.DataMember = null;
-			grid.DataSource = new DataView(Program.Data.Pledges, filterString, "LastName", DataViewRowState.CurrentRows);
+
+			pledges = new FilteredTable<Pledge>(Program.Table<Pledge>(), p => p.Date.Year == year && p.Type == PledgeType);
+			searchLookup.Properties.DataSource = grid.DataSource = pledges;
 
 			ShowHideCheckGroup();
-
-			searchLookup.SearchTable = Program.Data.Pledges;
-			searchLookup.PresetFilter = filterString;
 		}
 
-		private void personSelector_SelectedPersonChanged(object sender, EventArgs e) {
+		///<summary>Releases the unmanaged resources used by the ShalachManosForm and optionally releases the managed resources.</summary>
+		///<param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+		protected override void Dispose(bool disposing) {
+			if (disposing) {
+				pledges.Dispose();
+				if (components != null) components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
+		private void personSelector_EditValueChanged(object sender, EventArgs e) {
 			addPanel.Visible = personSelector.SelectedPerson != null;
 			if (addPanel.Visible) {
 				amount.Value = 72;
@@ -48,7 +47,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			}
 		}
 		private void paymentMethod_SelectedIndexChanged(object sender, EventArgs e) { ShowHideCheckGroup(); }
-		void ShowHideCheckGroup(){
+		void ShowHideCheckGroup() {
 			checkGroup.Visibility = paymentMethod.Text == "Check" ? LayoutVisibility.Always : LayoutVisibility.Never;
 		}
 
@@ -75,16 +74,38 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			}
 			#endregion
 
-			Program.Data.Pledges.AddPledgesRow(personSelector.SelectedPerson, DateTime.Now, PledgeType, "", null, Account,
-											   amount.Value, String.IsNullOrEmpty(comments.Text) ? null : comments.Text);
-			switch ((string)paymentMethod.EditValue) {
+			var actualComments = String.IsNullOrWhiteSpace(this.comments.Text) ? null : this.comments.Text;
+			Program.Table<Pledge>().Rows.Add(new Pledge {
+				Person = personSelector.SelectedPerson,
+				Date = DateTime.Now,
+				Type = PledgeType,
+				SubType = "",
+				Account = Account,
+				Amount = amount.Value,
+				Comments = actualComments
+			});
+			switch (paymentMethod.Text) {
 				case "Unpaid": break;
 				case "Cash":
-					Program.Data.Payments.AddPaymentsRow(personSelector.SelectedPerson, DateTime.Now, "Cash", null, Account, amount.Value, comments.Text);
+					Program.Table<Payment>().Rows.Add(new Payment {
+						Person = personSelector.SelectedPerson,
+						Date = DateTime.Now,
+						Method = paymentMethod.Text,
+						Account = Account,
+						Amount = amount.Value,
+						Comments = actualComments
+					});
 					break;
 				case "Check":
-					Program.Data.Payments.AddPaymentsRow(personSelector.SelectedPerson, checkDate.DateTime, "Check",
-														 checkNumber.Text, Account, amount.Value, comments.Text);
+					Program.Table<Payment>().Rows.Add(new Payment {
+						Person = personSelector.SelectedPerson,
+						Date = checkDate.DateTime,
+						Method = paymentMethod.Text,
+						CheckNumber = checkNumber.Text,
+						Account = Account,
+						Amount = amount.Value,
+						Comments = actualComments
+					});
 					break;
 
 			}
@@ -93,15 +114,14 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			personSelector.Focus();
 		}
 
-		private void searchLookup_ItemSelected(object sender, ItemSelectionEventArgs e) {
-			gridView.FocusedRowHandle = gridView.LocateByValue(0, colPledgeId, (e.SelectedRow.Field<Guid>("PledgeId")));
+		private void searchLookup_EditValueChanged(object sender, EventArgs e) {
+			gridView.FocusedRowHandle = gridView.GetRowHandle(pledges.Rows.IndexOf((Pledge)searchLookup.EditValue));
 			gridView.Focus();
 		}
 
-		private void personSelector_SelectingPerson(object sender, SelectingPersonEventArgs e) {
-			if (Program.Data.Pledges.Any(p => p.PersonId == e.Person.Id && p.Date.Year == year && p.Type == PledgeType)) {
-				XtraMessageBox.Show(e.Person.FullName + " are already on the Shalach Manos list",
-									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		private void personSelector_PersonSelecting(object sender, PersonSelectingEventArgs e) {
+			if (e.Person.Pledges.Any(p => p.Date.Year == year && p.Type == PledgeType)) {
+				Dialog.ShowError(e.Person.FullName + " are already on the Shalach Manos list");
 				e.Cancel = true;
 			}
 		}

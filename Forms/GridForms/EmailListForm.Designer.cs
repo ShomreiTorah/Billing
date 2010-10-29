@@ -37,16 +37,17 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.personEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
 			this.emptyPersonEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-			this.personSelector = new ShomreiTorah.Billing.Controls.PersonSelector();
+			this.personSelector = new ShomreiTorah.Data.UI.Controls.PersonSelector();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.personSelector.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptyPersonEdit)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// grid
 			// 
-			this.grid.DataMember = "EmailList";
+			this.grid.DataMember = "EmailAddresses";
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.grid.Location = new System.Drawing.Point(0, 142);
 			this.grid.MainView = this.gridView;
@@ -92,7 +93,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// colJoinDate
 			// 
 			this.colJoinDate.Caption = "Date Joined";
-			this.colJoinDate.FieldName = "JoinDate";
+			this.colJoinDate.FieldName = "DateAdded";
 			this.colJoinDate.Name = "colJoinDate";
 			this.colJoinDate.OptionsColumn.AllowEdit = false;
 			this.colJoinDate.OptionsColumn.ReadOnly = true;
@@ -103,7 +104,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			this.colFullName.Caption = "Person";
 			this.colFullName.ColumnEdit = this.personEdit;
-			this.colFullName.FieldName = "FullName";
+			this.colFullName.FieldName = "Person";
 			this.colFullName.GroupInterval = DevExpress.XtraGrid.ColumnGroupInterval.Alphabetical;
 			this.colFullName.Name = "colFullName";
 			this.colFullName.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
@@ -134,19 +135,13 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			// personSelector
 			// 
-			this.personSelector.Caption = "Select a person:";
-			this.personSelector.DefaultText = "Please click here to select a person";
 			this.personSelector.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.personSelector.Location = new System.Drawing.Point(0, 482);
 			this.personSelector.Name = "personSelector";
-			this.personSelector.PopupOpen = false;
-			this.personSelector.ScrollPosition = 0;
-			this.personSelector.SearchTable = null;
 			this.personSelector.Size = new System.Drawing.Size(821, 20);
 			this.personSelector.TabIndex = 1;
 			this.personSelector.TabStop = false;
-			this.personSelector.Value = ((object)(resources.GetObject("personSelector.Value")));
-			this.personSelector.SelectedPersonChanged += new System.EventHandler(this.personSelector_SelectedPersonChanged);
+			this.personSelector.EditValueChanged += new System.EventHandler(this.personSelector_EditValueChanged);
 			// 
 			// EmailListForm
 			// 
@@ -164,6 +159,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptyPersonEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.personSelector.Properties)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -176,7 +172,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		private DevExpress.XtraGrid.Columns.GridColumn colEmail;
 		private DevExpress.XtraGrid.Columns.GridColumn colJoinDate;
 		private DevExpress.XtraGrid.Columns.GridColumn colFullName;
-		private ShomreiTorah.Billing.Controls.PersonSelector personSelector;
+		private ShomreiTorah.Data.UI.Controls.PersonSelector personSelector;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit emptyPersonEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit personEdit;
 	}
