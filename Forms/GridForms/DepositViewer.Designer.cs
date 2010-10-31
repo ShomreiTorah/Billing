@@ -19,7 +19,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colMethod = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colCheckNumber = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
-			this.checkNumberEdit = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemCheckNumberEdit();
+			this.checkNumberEdit = new Data.UI.Controls.RepositoryItemCheckNumberEdit();
 			this.colAmount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colComments = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colModified = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -452,6 +452,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		private Data.UI.Grid.SmartGridColumn colCheckNumber;
 		private Data.UI.Grid.SmartGridColumn colPaymentCount;
 		private Data.UI.Grid.SmartGridColumn colNumber;
-		private Controls.Editors.RepositoryItemCheckNumberEdit checkNumberEdit;
+		private Data.UI.Controls.RepositoryItemCheckNumberEdit checkNumberEdit;
 	}
 }

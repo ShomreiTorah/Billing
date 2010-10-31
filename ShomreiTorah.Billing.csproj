@@ -399,9 +399,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>ASPXCodeBehind</SubType>
     </None>
-    <Compile Include="Controls\Editors\CheckNumberEdit.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\Editors\AliyahNoteEdit.cs">
       <SubType>UserControl</SubType>
     </Compile>

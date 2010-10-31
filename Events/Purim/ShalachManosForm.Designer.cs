@@ -1,3 +1,4 @@
+using DevExpress.XtraEditors;
 namespace ShomreiTorah.Billing.Events.Purim {
 	partial class ShalachManosForm {
 		/// <summary>
@@ -40,7 +41,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.personSelector = new ShomreiTorah.Data.UI.Controls.PersonSelector();
 			this.amount = new DevExpress.XtraEditors.SpinEdit();
 			this.addPanel = new DevExpress.XtraLayout.LayoutControl();
-			this.checkNumber = new ShomreiTorah.Billing.Controls.Editors.CheckNumberEdit();
+			this.checkNumber = new DevExpress.XtraEditors.TextEdit();
 			this.checkDate = new DevExpress.XtraEditors.DateEdit();
 			this.comments = new DevExpress.XtraEditors.MemoEdit();
 			this.paymentMethod = new DevExpress.XtraEditors.RadioGroup();
@@ -476,7 +477,8 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.layoutControlItem1.CustomizationFormText = "Amount:";
 			this.layoutControlItem1.FillControlToClientArea = false;
 			this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
-			this.layoutControlItem1.MinSize = new System.Drawing.Size(101, 24);
+			this.layoutControlItem1.MaxSize = new System.Drawing.Size(180, 0);
+			this.layoutControlItem1.MinSize = new System.Drawing.Size(180, 24);
 			this.layoutControlItem1.Name = "layoutControlItem1";
 			this.layoutControlItem1.Size = new System.Drawing.Size(180, 25);
 			this.layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
@@ -591,7 +593,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-		private Controls.Editors.CheckNumberEdit  checkNumber;
+		private TextEdit checkNumber;
 		private DevExpress.XtraEditors.DateEdit checkDate;
 		private DevExpress.XtraEditors.SimpleButton add;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;

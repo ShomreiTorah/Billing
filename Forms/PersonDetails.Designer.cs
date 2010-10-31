@@ -64,7 +64,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colMethod = new Data.UI.Grid.SmartGridColumn();
 			this.paymentMethodEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.colCheckNumber = new Data.UI.Grid.SmartGridColumn();
-			this.checkNumberEdit = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemCheckNumberEdit();
+			this.checkNumberEdit = new Data.UI.Controls.RepositoryItemCheckNumberEdit();
 			this.colAmount1 = new Data.UI.Grid.SmartGridColumn();
 			this.colDeposit = new Data.UI.Grid.SmartGridColumn();
 			this.depositEdit = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
@@ -757,7 +757,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private Data.UI.Grid.SmartGridColumn colStartDate;
 		private Data.UI.Grid.SmartGridColumn colEndDate;
 		private Data.UI.Grid.SmartGridColumn colUserName;
-		private Controls.Editors.RepositoryItemCheckNumberEdit checkNumberEdit;
+		private Data.UI.Controls.RepositoryItemCheckNumberEdit checkNumberEdit;
 		private ShomreiTorah.Billing.Controls.Editors.RepositoryItemAliyahNoteEdit repositoryItemAliyahNoteEdit1;
 	}
 }

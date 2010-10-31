@@ -26,11 +26,11 @@ namespace ShomreiTorah.Billing.Controls {
 			this.components = new System.ComponentModel.Container();
 			this.editors = new DevExpress.XtraEditors.Repository.PersistentRepository(this.components);
 			this.currencyEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
-			this.checkNumberEdit = new Editors.RepositoryItemCheckNumberEdit();
+			this.checkNumberEdit = new Data.UI.Controls.RepositoryItemCheckNumberEdit();
 			this.paymentMethodEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.stateEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.accountEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
-			
+
 			this.personSourceEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.gridView1 = new Data.UI.Grid.SmartGridView();
 			this.depositEdit = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
@@ -39,7 +39,7 @@ namespace ShomreiTorah.Billing.Controls {
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethodEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.stateEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).BeginInit();
-			
+
 			((System.ComponentModel.ISupportInitialize)(this.personSourceEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).BeginInit();
@@ -195,7 +195,7 @@ namespace ShomreiTorah.Billing.Controls {
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethodEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.stateEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).EndInit();
-			
+
 			((System.ComponentModel.ISupportInitialize)(this.personSourceEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).EndInit();
@@ -208,12 +208,12 @@ namespace ShomreiTorah.Billing.Controls {
 
 		private DevExpress.XtraEditors.Repository.PersistentRepository editors;
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit currencyEdit;
-		private Editors.RepositoryItemCheckNumberEdit checkNumberEdit;
+		private Data.UI.Controls.RepositoryItemCheckNumberEdit checkNumberEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox paymentMethodEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox stateEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox accountEdit;
 		private Data.UI.Grid.SmartGridView gridView1;
-		
+
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox personSourceEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
 	}

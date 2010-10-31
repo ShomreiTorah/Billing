@@ -33,6 +33,7 @@ namespace ShomreiTorah.Billing {
 	//TODO: Replace most references to Names with designer ESA
 	//TODO: Replace RLBs with FilteredTables?
 	//TODO: Prevent duplicate emails
+	//TODO: Map doesn't work on first shown PersonDetails
 
 	class Program : AppFramework {
 		protected override DataSyncContext CreateDataContext() {

@@ -8,6 +8,7 @@ using ShomreiTorah.Data.UI.Controls;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
+using System.Globalization;
 
 namespace ShomreiTorah.Billing.Events.Purim {
 	partial class ShalachManosForm : Forms.GridFormBase {
@@ -72,6 +73,15 @@ namespace ShomreiTorah.Billing.Events.Purim {
 					XtraMessageBox.Show("Please enter the date on the check.",
 										"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
+				}
+				if (!String.IsNullOrWhiteSpace(checkNumber.Text)) {
+					Payment duplicate = personSelector.SelectedPerson.Payments
+							.FirstOrDefault(p => String.Equals(p.CheckNumber, checkNumber.Text, StringComparison.CurrentCultureIgnoreCase));
+
+					if (duplicate != null
+					 && !Dialog.Warn(String.Format(CultureInfo.CurrentCulture, "{0} #{1} for {2} has already been entered ({3:d}, {4:c}).\r\nIs that correct?",
+																			   duplicate.Method, duplicate.CheckNumber, duplicate.Person.FullName, duplicate.Date, duplicate.Amount)))
+						return;
 				}
 			}
 			#endregion

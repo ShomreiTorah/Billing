@@ -31,7 +31,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colMethod = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.paymentMethodEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.colCheckNumber = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
-			this.checkNumberEdit = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemCheckNumberEdit();
+			this.checkNumberEdit = new Data.UI.Controls.RepositoryItemCheckNumberEdit();
 			this.colAccount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.accountEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.colAmount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -322,6 +322,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		
 		private Data.UI.Grid.SmartGridColumn colDepositDate;
 		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
-		private Controls.Editors.RepositoryItemCheckNumberEdit checkNumberEdit;
+		private Data.UI.Controls.RepositoryItemCheckNumberEdit checkNumberEdit;
 	}
 }
