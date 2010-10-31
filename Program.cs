@@ -32,6 +32,7 @@ namespace ShomreiTorah.Billing {
 	//TODO: Use ESA on all forms & controls
 	//TODO: Replace most references to Names with designer ESA
 	//TODO: Replace RLBs with FilteredTables?
+	//TODO: Prevent duplicate emails
 
 	class Program : AppFramework {
 		protected override DataSyncContext CreateDataContext() {
@@ -44,13 +45,13 @@ namespace ShomreiTorah.Billing {
 			Person.Schema.Columns.AddCalculatedColumn<Person, decimal>("TotalPledged", person => person.Pledges.Sum(p => p.Amount));
 			Person.Schema.Columns.AddCalculatedColumn<decimal>("BalanceDue", person => person.Field<decimal>("TotalPledged") - person.Field<decimal>("TotalPaid"));
 
-			context.Tables.AddTable(Deposit.CreateTable());
 			context.Tables.AddTable(Payment.CreateTable());
 			context.Tables.AddTable(Pledge.CreateTable());
 			context.Tables.AddTable(SeatingReservation.CreateTable());
 			context.Tables.AddTable(EmailAddress.CreateTable());
 			context.Tables.AddTable(LoggedStatement.CreateTable());
 			context.Tables.AddTable(Person.CreateTable());
+			context.Tables.AddTable(Deposit.CreateTable());
 
 			var syncContext = new DataSyncContext(context, new SqlServerSqlProvider(DB.Default));
 			syncContext.Tables.AddPrimaryMappings();
