@@ -208,12 +208,6 @@
     <Compile Include="Forms\GridForms\PledgeViewer.Designer.cs">
       <DependentUpon>PledgeViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Splash.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Splash.Designer.cs">
-      <DependentUpon>Splash.cs</DependentUpon>
-    </Compile>
     <Compile Include="NativeMethods.cs" />
     <Compile Include="PersonData.cs" />
     <Compile Include="Program.cs" />
@@ -305,9 +299,6 @@
     <EmbeddedResource Include="Forms\GridForms\PledgeViewer.resx">
       <DependentUpon>PledgeViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Splash.resx">
-      <DependentUpon>Splash.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Import\Journal\JournalImporter.resx">
       <DependentUpon>JournalImporter.cs</DependentUpon>
     </EmbeddedResource>
@@ -382,6 +373,7 @@
     <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <None Include="Resources\SplashImage.png" />
     <None Include="Resources\WordWarning32.png" />
     <None Include="Resources\ExportExcel32.png" />
     <None Include="Resources\Loading16.gif" />

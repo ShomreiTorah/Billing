@@ -214,6 +214,13 @@ namespace ShomreiTorah.Billing.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap SplashImage {
+            get {
+                object obj = ResourceManager.GetObject("SplashImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Update16 {
             get {
                 object obj = ResourceManager.GetObject("Update16", resourceCulture);

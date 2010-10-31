@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -11,6 +12,7 @@ using System.Windows.Forms;
 using DevExpress.LookAndFeel;
 using DevExpress.Skins;
 using DevExpress.UserSkins;
+using ShomreiTorah.Billing.Properties;
 using ShomreiTorah.Common;
 using ShomreiTorah.Common.Updates;
 using ShomreiTorah.Data;
@@ -23,15 +25,11 @@ using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Controls.Lookup;
 
 namespace ShomreiTorah.Billing {
-	//TOOD: Replace BaseGrids
-	//TODO: Use SplashForm
 	//TODO: Eliminate all usages of DataRow / DataRowView
 	//TODO: Replace XtraMessageBox with Dialog class
 	//TODO: Use PledgeType class in TreeView
-	//TODO: CheckNumberEdit
 	//TODO: Use ESA on all forms & controls
 	//TODO: Replace most references to Names with designer ESA
-	//TODO: Replace RLBs with FilteredTables?
 	//TODO: Prevent duplicate emails
 	//TODO: Map doesn't work on first shown PersonDetails
 
@@ -99,7 +97,7 @@ namespace ShomreiTorah.Billing {
 			#endregion
 		}
 
-		static Forms.Splash Splash;
+		static ISplashScreen Splash;
 		public static void CloseSplash() { Splash.CloseSplash(); }
 
 		public const string SettingsPath = @"HKEY_CURRENT_USER\Software\Shomrei Torah\Billing\";
@@ -115,13 +113,13 @@ namespace ShomreiTorah.Billing {
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
 
-				Splash = new Forms.Splash();
-				var splashThread = new Thread(delegate() { Splash.ShowDialog(); }) { IsBackground = true };
+				Splash = new Data.UI.Forms.SplashForm(Resources.SplashImage, new Rectangle(165, 281, 169, 37), Color.Black);
+				var splashThread = new Thread(delegate() { Splash.RunSplash(); }) { IsBackground = true };
 				splashThread.SetApartmentState(ApartmentState.STA);
 				splashThread.Start();
 
 				AppDirectory = Path.GetDirectoryName(new Uri(typeof(Program).Assembly.CodeBase).LocalPath);
-				Splash.Caption = "Loading assemblies";
+				Splash.SetCaption("Loading assemblies");
 
 				//Calling these methods will load other assemblies after showing the splash.
 
@@ -156,7 +154,7 @@ namespace ShomreiTorah.Billing {
 		///<summary>Called in the original (non-ASP.Net) AppDomain to apply updates on launch.</summary>
 		///<returns>True if an update was applied (in which case the program should be restarted)</returns>
 		static bool CheckForUpdate() {
-			Splash.Caption = "Checking for updates";
+			Splash.SetCaption("Checking for updates");
 			var update = Updater.Checker.FindUpdate();
 			if (update != null) {
 				//All launch-time UI must be shown in the splash thread
@@ -164,8 +162,8 @@ namespace ShomreiTorah.Billing {
 				//be run in the original AppDomain unless everything is
 				//serializable.
 
-				Splash.Caption = "Update found";
-				if ((bool)Splash.Invoke(new Func<UpdateInfo, bool>(Updater.ApplyUpdate), update))
+				Splash.SetCaption("Update found");
+				if ((bool)((Control)Splash).Invoke(new Func<UpdateInfo, bool>(Updater.ApplyUpdate), update))
 					return true;
 			}
 			return false;
@@ -179,7 +177,7 @@ namespace ShomreiTorah.Billing {
 		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error message")]
 		[SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
 		static void CreateAspxDomain() {
-			Splash.Caption = "Initializing ASP.Net";
+			Splash.SetCaption("Initializing ASP.Net");
 
 			//ASP.Net loads assemblies from the bin folder; I need to copy 
 			//our exe their so that I can run my code in the new AppDomain.
@@ -189,7 +187,7 @@ namespace ShomreiTorah.Billing {
 			if (File.GetLastWriteTimeUtc(typeof(Program).Assembly.Location) != File.GetLastWriteTimeUtc(binCopyPath))
 				File.Copy(typeof(Program).Assembly.Location, binCopyPath, true);
 
-			Action<Forms.Splash> executor;
+			Action<ISplashScreen> executor;
 			try {
 				var cdc = Statements.Email.PageBuilder.CreateHost<CrossDomainCaller>();
 				cdc.InitAspxDomain(AppDirectory);
@@ -207,7 +205,7 @@ namespace ShomreiTorah.Billing {
 		///<param name="splash">The splash form from the initial AppDomain.</param>
 		///<remarks>This method is called in the ASP.Net AppDomain by CreateAspxDomain.
 		///If PageBuilder.CreateHost failed, it will be called in the original AppDomain.</remarks>
-		internal void Execute(Forms.Splash splash) {
+		internal void Execute(ISplashScreen splash) {
 			LaunchTime = DateTime.Now;
 			Splash = splash;
 
@@ -215,9 +213,11 @@ namespace ShomreiTorah.Billing {
 			Run();
 		}
 
+		//Since I manage the splash manually, I don't
+		//return anything.
 		protected override ISplashScreen CreateSplash() { return null; }
 		protected override void SetSplashCaption(string message) {
-			Splash.Caption = message;
+			Splash.SetCaption(message);
 		}
 
 		protected override Form CreateMainForm() { return new Forms.MainForm(); }
@@ -269,6 +269,6 @@ namespace ShomreiTorah.Billing {
 			Program.LoadConfig();
 			program = new Program();
 		}
-		public void Execute(Forms.Splash splash) { program.Execute(splash); }
+		public void Execute(ISplashScreen splash) { program.Execute(splash); }
 	}
 }
