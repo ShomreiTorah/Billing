@@ -21,6 +21,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.searchLookup = new ShomreiTorah.WinForms.Controls.Lookup.ItemSelector();
 			this.grid = new ShomreiTorah.Data.UI.Grid.SmartGrid(this.components);
 			this.gridView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
@@ -82,19 +83,29 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// 
 			// ribbon
 			// 
+			this.ribbon.ApplicationButtonText = null;
 			// 
 			// 
 			// 
 			this.ribbon.ExpandCollapseItem.Id = 0;
 			this.ribbon.ExpandCollapseItem.Name = "";
 			this.ribbon.ExpandCollapseItem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
+			this.ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.ribbon.ExpandCollapseItem});
+			this.ribbon.Location = new System.Drawing.Point(0, 0);
+			this.ribbon.MaxItemId = 4;
+			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
+			this.ribbon.Name = "ribbon";
 			this.ribbon.Size = new System.Drawing.Size(899, 114);
+			this.ribbon.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
 			// 
 			// searchLookup
 			// 
 			this.searchLookup.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.searchLookup.Location = new System.Drawing.Point(0, 641);
 			this.searchLookup.Name = "searchLookup";
+			this.searchLookup.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.DropDown)});
 			this.searchLookup.Properties.NullValuePrompt = "Click to search the list";
 			this.searchLookup.Size = new System.Drawing.Size(899, 20);
 			this.searchLookup.TabIndex = 3;
@@ -530,11 +541,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.MainView = this.gridView;
 			this.Name = "ShalachManosForm";
 			this.Text = "Shalach Manos";
-			this.Controls.SetChildIndex(this.ribbon, 0);
-			this.Controls.SetChildIndex(this.searchLookup, 0);
-			this.Controls.SetChildIndex(this.personSelector, 0);
-			this.Controls.SetChildIndex(this.addPanel, 0);
-			this.Controls.SetChildIndex(this.grid, 0);
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.searchLookup.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
@@ -598,5 +604,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
 		private DevExpress.XtraLayout.LayoutControlGroup checkGroup;
+		private DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
 	}
 }

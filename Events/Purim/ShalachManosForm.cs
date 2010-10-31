@@ -5,6 +5,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraLayout.Utils;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI.Controls;
+using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
 
@@ -23,6 +24,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 
 			pledges = new FilteredTable<Pledge>(Program.Table<Pledge>(), p => p.Date.Year == year && p.Type == PledgeType);
 			searchLookup.Properties.DataSource = grid.DataSource = pledges;
+			EditorRepository.PersonOwnedLookup.Apply(searchLookup.Properties);
 
 			ShowHideCheckGroup();
 		}
@@ -117,6 +119,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		private void searchLookup_EditValueChanged(object sender, EventArgs e) {
 			gridView.FocusedRowHandle = gridView.GetRowHandle(pledges.Rows.IndexOf((Pledge)searchLookup.EditValue));
 			gridView.Focus();
+			searchLookup.EditValue = null;
 		}
 
 		private void personSelector_PersonSelecting(object sender, PersonSelectingEventArgs e) {
