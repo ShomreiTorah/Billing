@@ -135,5 +135,13 @@ namespace ShomreiTorah.Billing.Forms {
 			}
 			Close();
 		}
+
+		private void gridView_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e) {
+			if (e.Column == colFullName) {
+				var person = e.Value as Person;
+				if (person != null)
+					e.DisplayText = person.FullName;
+			}
+		}
 	}
 }

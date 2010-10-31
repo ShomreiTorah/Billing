@@ -92,8 +92,8 @@ namespace ShomreiTorah.Billing.Forms {
             new DevExpress.XtraEditors.Controls.EditorButton()});
 			this.depositDate.Size = new System.Drawing.Size(735, 20);
 			this.depositDate.TabIndex = 0;
-			this.depositDate.EditValueChanged += new System.EventHandler(this.depositDate_EditValueChanged);
 			this.depositDate.DrawItem += new DevExpress.XtraEditors.Calendar.CustomDrawDayNumberCellEventHandler(this.depositDate_DrawItem);
+			this.depositDate.EditValueChanged += new System.EventHandler(this.depositDate_EditValueChanged);
 			// 
 			// labelControl1
 			// 
@@ -142,10 +142,11 @@ namespace ShomreiTorah.Billing.Forms {
 			this.gridView.OptionsView.ShowIndicator = false;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colFullName, DevExpress.Data.ColumnSortOrder.Ascending)});
+			this.gridView.BeforeLeaveRow += new DevExpress.XtraGrid.Views.Base.RowAllowEventHandler(this.gridView_BeforeLeaveRow);
 			this.gridView.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gridView_CustomUnboundColumnData);
+			this.gridView.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gridView_CustomColumnDisplayText);
 			this.gridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridView_KeyDown);
 			this.gridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridView_MouseUp);
-			this.gridView.BeforeLeaveRow += new DevExpress.XtraGrid.Views.Base.RowAllowEventHandler(this.gridView_BeforeLeaveRow);
 			// 
 			// colCheck
 			// 
@@ -173,9 +174,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colFullName.Name = "colFullName";
 			this.colFullName.OptionsColumn.AllowEdit = false;
 			this.colFullName.OptionsColumn.AllowFocus = false;
-			this.colFullName.OptionsColumn.ReadOnly = true;
 			this.colFullName.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
-			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Default;
+			this.colFullName.OptionsColumn.ReadOnly = true;
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 1;
 			this.colFullName.Width = 49;
@@ -320,7 +320,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancel;
-			this.ClientSize = new System.Drawing.Size(816, 585);
+			this.ClientSize = new System.Drawing.Size(818, 587);
 			this.ControlBox = false;
 			this.Controls.Add(this.labelControl2);
 			this.Controls.Add(this.depositNumber);
