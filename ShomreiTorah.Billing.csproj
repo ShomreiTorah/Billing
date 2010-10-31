@@ -119,12 +119,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\BaseGrid.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\BaseGrid.Designer.cs">
-      <DependentUpon>BaseGrid.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\CommitButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -208,13 +202,9 @@
     <Compile Include="Forms\GridForms\PledgeViewer.Designer.cs">
       <DependentUpon>PledgeViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="NativeMethods.cs" />
     <Compile Include="PersonData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Controls\BaseGrid.resx">
-      <DependentUpon>BaseGrid.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Editors\AliyahNoteEdit.resx">
       <DependentUpon>AliyahNoteEdit.cs</DependentUpon>
     </EmbeddedResource>
