@@ -19,7 +19,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colMethod = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colCheckNumber = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
-			this.checkNumberEdit = new Data.UI.Controls.RepositoryItemCheckNumberEdit();
+			this.checkNumberEdit = new ShomreiTorah.Data.UI.Controls.RepositoryItemCheckNumberEdit();
 			this.colAmount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colComments = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colModified = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -196,7 +196,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Amount", null, "Total deposited: {0:c}"),
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Custom, "", null, "Undeposited: {0:c}")});
 			this.depositsView.Name = "depositsView";
-			this.depositsView.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
 			this.depositsView.OptionsBehavior.AutoExpandAllGroups = true;
 			this.depositsView.OptionsDetail.ShowDetailTabs = false;
 			this.depositsView.OptionsView.ColumnAutoWidth = false;
@@ -229,7 +228,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colDepositDate.OptionsColumn.ReadOnly = true;
 			this.colDepositDate.Visible = true;
 			this.colDepositDate.VisibleIndex = 0;
-			this.colDepositDate.Width = 177;
+			this.colDepositDate.Width = 169;
 			// 
 			// colNumber
 			// 
@@ -271,7 +270,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colPaymentCount.OptionsColumn.ReadOnly = true;
 			this.colPaymentCount.Visible = true;
 			this.colPaymentCount.VisibleIndex = 3;
-			this.colPaymentCount.Width = 84;
 			// 
 			// masterDirectoryBindingSource
 			// 

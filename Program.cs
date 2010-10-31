@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -27,7 +28,6 @@ using ShomreiTorah.WinForms.Controls.Lookup;
 namespace ShomreiTorah.Billing {
 	//TODO: Eliminate all usages of DataRow / DataRowView
 	//TODO: Replace XtraMessageBox with Dialog class
-	//TODO: Use PledgeType class in TreeView
 	//TODO: Use ESA on all forms & controls
 	//TODO: Replace most references to Names with designer ESA
 	//TODO: Prevent duplicate emails
@@ -45,6 +45,15 @@ namespace ShomreiTorah.Billing {
 				Person.Schema.Columns.AddCalculatedColumn<Person, decimal>("TotalPledged", person => person.Pledges.Sum(p => p.Amount));
 				Person.Schema.Columns.AddCalculatedColumn<decimal>("BalanceDue", person => person.Field<decimal>("TotalPledged") - person.Field<decimal>("TotalPaid"));
 			}
+
+			GridManager.RegisterBehavior(Deposit.Schema,
+				DeletionBehavior.WithMessages<Deposit>(
+					singular: d => "Are you sure you want to delete this " + d.Amount.ToString("c", CultureInfo.CurrentCulture) + " deposit?\r\nThe payments will not be deleted.",
+					plural: deposits => "Are you sure you want to delete "
+										+ (deposits.Count().ToString(CultureInfo.InvariantCulture) + " pledges containing "
+										+ deposits.Sum(p => p.Amount).ToString("c", CultureInfo.CurrentCulture) + "?\r\nThe payments in the deposits will not be deleted.")
+			));
+
 
 			context.Tables.AddTable(Payment.CreateTable());
 			context.Tables.AddTable(Pledge.CreateTable());
