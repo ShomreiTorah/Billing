@@ -29,40 +29,59 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
-			this.grid = new Data.UI.Grid.SmartGrid(this.components);
-			this.gridView = new Data.UI.Grid.SmartGridView();
-			this.colName = new Data.UI.Grid.SmartGridColumn();
-			this.colEmail = new Data.UI.Grid.SmartGridColumn();
-			this.colJoinDate = new Data.UI.Grid.SmartGridColumn();
-			this.colFullName = new Data.UI.Grid.SmartGridColumn();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+			this.grid = new ShomreiTorah.Data.UI.Grid.SmartGrid(this.components);
+			this.gridView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
+			this.colName = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.colEmail = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.colJoinDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.colFullName = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.personEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
 			this.emptyPersonEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
 			this.personSelector = new ShomreiTorah.Data.UI.Controls.PersonSelector();
+			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personEdit)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.personSelector.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptyPersonEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.personSelector.Properties)).BeginInit();
 			this.SuspendLayout();
+			// 
+			// ribbon
+			// 
+			// 
+			// 
+			// 
+			this.ribbon.ExpandCollapseItem.Id = 0;
+			this.ribbon.ExpandCollapseItem.Name = "";
+			this.ribbon.ExpandCollapseItem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
+			this.ribbon.Size = new System.Drawing.Size(821, 114);
 			// 
 			// grid
 			// 
 			this.grid.DataMember = "EmailAddresses";
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.grid.Location = new System.Drawing.Point(0, 142);
+			this.grid.Location = new System.Drawing.Point(0, 114);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
+			this.grid.RegistrationCount = 38;
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.emptyPersonEdit,
             this.personEdit});
-			this.grid.Size = new System.Drawing.Size(821, 340);
+			this.grid.Size = new System.Drawing.Size(821, 368);
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
 			// 
 			// gridView
 			// 
-			this.gridView.Columns.AddRange(new Data.UI.Grid.SmartGridColumn[] {
+			this.gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colName,
             this.colEmail,
             this.colJoinDate,
@@ -72,8 +91,8 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.gridView.OptionsBehavior.SmartVertScrollBar = false;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colJoinDate, DevExpress.Data.ColumnSortOrder.Descending)});
-			this.gridView.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView_FocusedRowChanged);
 			this.gridView.CustomRowCellEdit += new DevExpress.XtraGrid.Views.Grid.CustomRowCellEditEventHandler(this.gridView_CustomRowCellEdit);
+			this.gridView.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView_FocusedRowChanged);
 			// 
 			// colName
 			// 
@@ -82,6 +101,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colName.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
 			this.colName.Visible = true;
 			this.colName.VisibleIndex = 0;
+			this.colName.Width = 46;
 			// 
 			// colEmail
 			// 
@@ -89,6 +109,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colEmail.Name = "colEmail";
 			this.colEmail.Visible = true;
 			this.colEmail.VisibleIndex = 1;
+			this.colEmail.Width = 43;
 			// 
 			// colJoinDate
 			// 
@@ -99,18 +120,23 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colJoinDate.OptionsColumn.ReadOnly = true;
 			this.colJoinDate.Visible = true;
 			this.colJoinDate.VisibleIndex = 2;
+			this.colJoinDate.Width = 89;
 			// 
 			// colFullName
 			// 
-			this.colFullName.Caption = "Person";
-			this.colFullName.ColumnEdit = this.personEdit;
+			this.colFullName.Caption = "Full Name";
+			this.colFullName.ColumnEditor = this.personEdit;
 			this.colFullName.FieldName = "Person";
 			this.colFullName.GroupInterval = DevExpress.XtraGrid.ColumnGroupInterval.Alphabetical;
 			this.colFullName.Name = "colFullName";
+			this.colFullName.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.True;
+			this.colFullName.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
+			this.colFullName.OptionsColumn.ReadOnly = true;
 			this.colFullName.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
 			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 3;
+			this.colFullName.Width = 74;
 			// 
 			// personEdit
 			// 
@@ -121,6 +147,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.personEdit.Name = "personEdit";
 			this.personEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 			this.personEdit.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.personEdit_ButtonClick);
+			this.personEdit.CustomDisplayText += new DevExpress.XtraEditors.Controls.CustomDisplayTextEventHandler(this.personEdit_CustomDisplayText);
 			// 
 			// emptyPersonEdit
 			// 
@@ -138,6 +165,15 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.personSelector.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.personSelector.Location = new System.Drawing.Point(0, 482);
 			this.personSelector.Name = "personSelector";
+			toolTipItem1.Text = "Click to select a person";
+			superToolTip1.Items.Add(toolTipItem1);
+			toolTipTitleItem1.Text = "New Person...";
+			toolTipItem2.Text = "Adds a new person to the master directory";
+			superToolTip2.Items.Add(toolTipTitleItem1);
+			superToolTip2.Items.Add(toolTipItem2);
+			this.personSelector.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, "", null, superToolTip1, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("personSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject6, "", null, superToolTip2, true)});
 			this.personSelector.Size = new System.Drawing.Size(821, 20);
 			this.personSelector.TabIndex = 1;
 			this.personSelector.TabStop = false;
@@ -153,8 +189,10 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.MainView = this.gridView;
 			this.Name = "EmailListForm";
 			this.Text = "Email List";
+			this.Controls.SetChildIndex(this.ribbon, 0);
 			this.Controls.SetChildIndex(this.personSelector, 0);
 			this.Controls.SetChildIndex(this.grid, 0);
+			((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personEdit)).EndInit();

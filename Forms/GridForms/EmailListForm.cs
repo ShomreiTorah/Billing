@@ -57,5 +57,10 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 				e.RepositoryItem = (e.CellValue == null) ? emptyPersonEdit : personEdit;
 			}
 		}
+
+		private void personEdit_CustomDisplayText(object sender, CustomDisplayTextEventArgs e) {
+			var person = e.Value as Person;
+			if (person != null) e.DisplayText = person.FullName;
+		}
 	}
 }

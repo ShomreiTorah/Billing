@@ -16,8 +16,8 @@ using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI.Controls;
 using ShomreiTorah.Singularity;
-using Word = Microsoft.Office.Interop.Word;
 using ShomreiTorah.WinForms;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	partial class SeatingForm : Forms.GridFormBase {

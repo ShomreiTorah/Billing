@@ -24,15 +24,13 @@ namespace ShomreiTorah.Billing.Controls {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OldBaseGrid));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			this.editors = new DevExpress.XtraEditors.Repository.PersistentRepository(this.components);
 			this.currencyEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.checkNumberEdit = new Editors.RepositoryItemCheckNumberEdit();
 			this.paymentMethodEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.stateEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.accountEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
-			this.personRefEdit = new Controls.Editors.RepositoryItemPersonRefEdit();
+			
 			this.personSourceEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.gridView1 = new Data.UI.Grid.SmartGridView();
 			this.depositEdit = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
@@ -41,7 +39,7 @@ namespace ShomreiTorah.Billing.Controls {
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethodEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.stateEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
+			
 			((System.ComponentModel.ISupportInitialize)(this.personSourceEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).BeginInit();
@@ -56,7 +54,6 @@ namespace ShomreiTorah.Billing.Controls {
             this.paymentMethodEdit,
             this.stateEdit,
             this.accountEdit,
-            this.personRefEdit,
             this.personSourceEdit,
             this.depositEdit});
 			// 
@@ -164,15 +161,6 @@ namespace ShomreiTorah.Billing.Controls {
             "Building Fund"});
 			this.accountEdit.Name = "accountEdit";
 			// 
-			// personRefEdit
-			// 
-			this.personRefEdit.AutoHeight = false;
-			this.personRefEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("personRefEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Person", null, null, true)});
-			this.personRefEdit.Name = "personRefEdit";
-			this.personRefEdit.ReadOnly = true;
-			this.personRefEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-			// 
 			// personSourceEdit
 			// 
 			this.personSourceEdit.AutoHeight = false;
@@ -207,7 +195,7 @@ namespace ShomreiTorah.Billing.Controls {
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethodEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.stateEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.accountEdit)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).EndInit();
+			
 			((System.ComponentModel.ISupportInitialize)(this.personSourceEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.depositEdit)).EndInit();
@@ -225,7 +213,7 @@ namespace ShomreiTorah.Billing.Controls {
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox stateEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox accountEdit;
 		private Data.UI.Grid.SmartGridView gridView1;
-		private Controls.Editors.RepositoryItemPersonRefEdit personRefEdit;
+		
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox personSourceEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
 	}
