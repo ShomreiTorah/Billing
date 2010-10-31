@@ -19,6 +19,13 @@ namespace ShomreiTorah.Billing.Controls {
 			account.Properties.Items.AddRange(Names.AccountNames);
 			account.Properties.DropDownRows = Names.AccountNames.Count;
 
+			typeTree.Nodes.Clear();
+			foreach (var type in Names.PledgeTypes) {
+				var node = typeTree.Nodes.Add(type.Name);
+				foreach (var subtype in type.Subtypes)
+					node.Nodes.Add(subtype);
+			}
+
 			if (Program.Current != null)	//Bugfix for nested designer
 				pledgesBindingSource.DataSource = Program.Current.DataContext;
 		}
