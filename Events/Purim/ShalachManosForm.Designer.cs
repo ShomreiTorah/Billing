@@ -16,21 +16,21 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShalachManosForm));
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			this.searchLookup = new ShomreiTorah.WinForms.Controls.Lookup.ItemSelector();
-			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
-			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colType = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colSubType = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colAccount = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.grid = new Data.UI.Grid.SmartGrid(this.components);
+			this.gridView = new Data.UI.Grid.SmartGridView();
+			this.colFullName = new Data.UI.Grid.SmartGridColumn();
+			this.colDate = new Data.UI.Grid.SmartGridColumn();
+			this.colType = new Data.UI.Grid.SmartGridColumn();
+			this.colSubType = new Data.UI.Grid.SmartGridColumn();
+			this.colAccount = new Data.UI.Grid.SmartGridColumn();
 			this.accountEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
-			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colAmount = new Data.UI.Grid.SmartGridColumn();
 			this.currencyEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
-			this.colNote = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colComments = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colPledgeId = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colNote = new Data.UI.Grid.SmartGridColumn();
+			this.colComments = new Data.UI.Grid.SmartGridColumn();
+			this.colModified = new Data.UI.Grid.SmartGridColumn();
+			this.colModifier = new Data.UI.Grid.SmartGridColumn();
+			this.colPledgeId = new Data.UI.Grid.SmartGridColumn();
 			this.personSelector = new ShomreiTorah.Data.UI.Controls.PersonSelector();
 			this.amount = new DevExpress.XtraEditors.SpinEdit();
 			this.addPanel = new DevExpress.XtraLayout.LayoutControl();
@@ -106,7 +106,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// 
 			// gridView
 			// 
-			this.gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+			this.gridView.Columns.AddRange(new Data.UI.Grid.SmartGridColumn[] {
             this.colFullName,
             this.colDate,
             this.colType,
@@ -533,18 +533,18 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		#endregion
 
 		private ShomreiTorah.WinForms.Controls.Lookup.ItemSelector searchLookup;
-		private Controls.BaseGrid grid;
-		private DevExpress.XtraGrid.Views.Grid.GridView gridView;
-		private DevExpress.XtraGrid.Columns.GridColumn colFullName;
-		private DevExpress.XtraGrid.Columns.GridColumn colDate;
-		private DevExpress.XtraGrid.Columns.GridColumn colType;
-		private DevExpress.XtraGrid.Columns.GridColumn colSubType;
-		private DevExpress.XtraGrid.Columns.GridColumn colAccount;
-		private DevExpress.XtraGrid.Columns.GridColumn colAmount;
-		private DevExpress.XtraGrid.Columns.GridColumn colNote;
-		private DevExpress.XtraGrid.Columns.GridColumn colComments;
-		private DevExpress.XtraGrid.Columns.GridColumn colModified;
-		private DevExpress.XtraGrid.Columns.GridColumn colModifier;
+		private Data.UI.Grid.SmartGrid grid;
+		private Data.UI.Grid.SmartGridView gridView;
+		private Data.UI.Grid.SmartGridColumn colFullName;
+		private Data.UI.Grid.SmartGridColumn colDate;
+		private Data.UI.Grid.SmartGridColumn colType;
+		private Data.UI.Grid.SmartGridColumn colSubType;
+		private Data.UI.Grid.SmartGridColumn colAccount;
+		private Data.UI.Grid.SmartGridColumn colAmount;
+		private Data.UI.Grid.SmartGridColumn colNote;
+		private Data.UI.Grid.SmartGridColumn colComments;
+		private Data.UI.Grid.SmartGridColumn colModified;
+		private Data.UI.Grid.SmartGridColumn colModifier;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox accountEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit currencyEdit;
 		private ShomreiTorah.Data.UI.Controls.PersonSelector personSelector;
@@ -564,7 +564,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
 		private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup2;
-		private DevExpress.XtraGrid.Columns.GridColumn colPledgeId;
+		private Data.UI.Grid.SmartGridColumn colPledgeId;
 		private Controls.Editors.RepositoryItemPersonRefEdit repositoryItemPersonRefEdit1;
 	}
 }

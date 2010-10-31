@@ -16,41 +16,41 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DepositViewer));
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
-			this.paymentsView = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.colFullName1 = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.paymentsView = new Data.UI.Grid.SmartGridView();
+			this.colFullName1 = new Data.UI.Grid.SmartGridColumn();
 			this.personRefEdit = new Controls.Editors.RepositoryItemPersonRefEdit();
-			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colMethod = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colCheckNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colDate = new Data.UI.Grid.SmartGridColumn();
+			this.colMethod = new Data.UI.Grid.SmartGridColumn();
+			this.colCheckNumber = new Data.UI.Grid.SmartGridColumn();
 			this.checkNumberEdit = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemCheckNumberEdit();
-			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colComments = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
-			this.depositsView = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.colAccount = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colDepositDate = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colNumber = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colDepositAmount = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colPaymentCount = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colAmount = new Data.UI.Grid.SmartGridColumn();
+			this.colComments = new Data.UI.Grid.SmartGridColumn();
+			this.colModified = new Data.UI.Grid.SmartGridColumn();
+			this.colModifier = new Data.UI.Grid.SmartGridColumn();
+			this.grid = new Data.UI.Grid.SmartGrid(this.components);
+			this.depositsView = new Data.UI.Grid.SmartGridView();
+			this.colAccount = new Data.UI.Grid.SmartGridColumn();
+			this.colDepositDate = new Data.UI.Grid.SmartGridColumn();
+			this.colNumber = new Data.UI.Grid.SmartGridColumn();
+			this.colDepositAmount = new Data.UI.Grid.SmartGridColumn();
+			this.colPaymentCount = new Data.UI.Grid.SmartGridColumn();
 			this.masterDirectoryBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource();
-			this.colId = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colYKID = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colLastName = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colHisName = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colHerName = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colAddress = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colCity = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colState = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colZip = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colPhone = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colSource = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colTotalPledged = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colTotalPaid = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colBalanceDue = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colId = new Data.UI.Grid.SmartGridColumn();
+			this.colYKID = new Data.UI.Grid.SmartGridColumn();
+			this.colLastName = new Data.UI.Grid.SmartGridColumn();
+			this.colHisName = new Data.UI.Grid.SmartGridColumn();
+			this.colHerName = new Data.UI.Grid.SmartGridColumn();
+			this.colFullName = new Data.UI.Grid.SmartGridColumn();
+			this.colAddress = new Data.UI.Grid.SmartGridColumn();
+			this.colCity = new Data.UI.Grid.SmartGridColumn();
+			this.colState = new Data.UI.Grid.SmartGridColumn();
+			this.colZip = new Data.UI.Grid.SmartGridColumn();
+			this.colPhone = new Data.UI.Grid.SmartGridColumn();
+			this.colSource = new Data.UI.Grid.SmartGridColumn();
+			this.colTotalPledged = new Data.UI.Grid.SmartGridColumn();
+			this.colTotalPaid = new Data.UI.Grid.SmartGridColumn();
+			this.colBalanceDue = new Data.UI.Grid.SmartGridColumn();
 			this.pledgesBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.paymentsView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
@@ -65,7 +65,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			// paymentsView
 			// 
-			this.paymentsView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+			this.paymentsView.Columns.AddRange(new Data.UI.Grid.SmartGridColumn[] {
             this.colFullName1,
             this.colDate,
             this.colMethod,
@@ -201,7 +201,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			// depositsView
 			// 
-			this.depositsView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+			this.depositsView.Columns.AddRange(new Data.UI.Grid.SmartGridColumn[] {
             this.colAccount,
             this.colDepositDate,
             this.colNumber,
@@ -432,41 +432,41 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 
 		#endregion
 
-		private DevExpress.XtraGrid.Columns.GridColumn colId;
-		private DevExpress.XtraGrid.Columns.GridColumn colYKID;
-		private DevExpress.XtraGrid.Columns.GridColumn colLastName;
-		private DevExpress.XtraGrid.Columns.GridColumn colHisName;
-		private DevExpress.XtraGrid.Columns.GridColumn colHerName;
-		private DevExpress.XtraGrid.Columns.GridColumn colFullName;
-		private DevExpress.XtraGrid.Columns.GridColumn colAddress;
-		private DevExpress.XtraGrid.Columns.GridColumn colCity;
-		private DevExpress.XtraGrid.Columns.GridColumn colState;
-		private DevExpress.XtraGrid.Columns.GridColumn colZip;
-		private DevExpress.XtraGrid.Columns.GridColumn colPhone;
-		private DevExpress.XtraGrid.Columns.GridColumn colSource;
-		private DevExpress.XtraGrid.Columns.GridColumn colTotalPledged;
-		private DevExpress.XtraGrid.Columns.GridColumn colTotalPaid;
-		private DevExpress.XtraGrid.Columns.GridColumn colBalanceDue;
+		private Data.UI.Grid.SmartGridColumn colId;
+		private Data.UI.Grid.SmartGridColumn colYKID;
+		private Data.UI.Grid.SmartGridColumn colLastName;
+		private Data.UI.Grid.SmartGridColumn colHisName;
+		private Data.UI.Grid.SmartGridColumn colHerName;
+		private Data.UI.Grid.SmartGridColumn colFullName;
+		private Data.UI.Grid.SmartGridColumn colAddress;
+		private Data.UI.Grid.SmartGridColumn colCity;
+		private Data.UI.Grid.SmartGridColumn colState;
+		private Data.UI.Grid.SmartGridColumn colZip;
+		private Data.UI.Grid.SmartGridColumn colPhone;
+		private Data.UI.Grid.SmartGridColumn colSource;
+		private Data.UI.Grid.SmartGridColumn colTotalPledged;
+		private Data.UI.Grid.SmartGridColumn colTotalPaid;
+		private Data.UI.Grid.SmartGridColumn colBalanceDue;
 		private System.Windows.Forms.BindingSource masterDirectoryBindingSource;
 		private ShomreiTorah.Data.UI.FrameworkBindingSource billingData;
-		private ShomreiTorah.Billing.Controls.BaseGrid grid;
+		private Data.UI.Grid.SmartGrid grid;
 		private System.Windows.Forms.BindingSource pledgesBindingSource;
-		private DevExpress.XtraGrid.Views.Grid.GridView paymentsView;
-		private DevExpress.XtraGrid.Views.Grid.GridView depositsView;
-		private DevExpress.XtraGrid.Columns.GridColumn colFullName1;
+		private Data.UI.Grid.SmartGridView paymentsView;
+		private Data.UI.Grid.SmartGridView depositsView;
+		private Data.UI.Grid.SmartGridColumn colFullName1;
 		private Controls.Editors.RepositoryItemPersonRefEdit personRefEdit;
-		private DevExpress.XtraGrid.Columns.GridColumn colDate;
-		private DevExpress.XtraGrid.Columns.GridColumn colAmount;
-		private DevExpress.XtraGrid.Columns.GridColumn colComments;
-		private DevExpress.XtraGrid.Columns.GridColumn colModified;
-		private DevExpress.XtraGrid.Columns.GridColumn colModifier;
-		private DevExpress.XtraGrid.Columns.GridColumn colAccount;
-		private DevExpress.XtraGrid.Columns.GridColumn colDepositDate;
-		private DevExpress.XtraGrid.Columns.GridColumn colDepositAmount;
-		private DevExpress.XtraGrid.Columns.GridColumn colMethod;
-		private DevExpress.XtraGrid.Columns.GridColumn colCheckNumber;
-		private DevExpress.XtraGrid.Columns.GridColumn colPaymentCount;
-		private DevExpress.XtraGrid.Columns.GridColumn colNumber;
+		private Data.UI.Grid.SmartGridColumn colDate;
+		private Data.UI.Grid.SmartGridColumn colAmount;
+		private Data.UI.Grid.SmartGridColumn colComments;
+		private Data.UI.Grid.SmartGridColumn colModified;
+		private Data.UI.Grid.SmartGridColumn colModifier;
+		private Data.UI.Grid.SmartGridColumn colAccount;
+		private Data.UI.Grid.SmartGridColumn colDepositDate;
+		private Data.UI.Grid.SmartGridColumn colDepositAmount;
+		private Data.UI.Grid.SmartGridColumn colMethod;
+		private Data.UI.Grid.SmartGridColumn colCheckNumber;
+		private Data.UI.Grid.SmartGridColumn colPaymentCount;
+		private Data.UI.Grid.SmartGridColumn colNumber;
 		private Controls.Editors.RepositoryItemCheckNumberEdit checkNumberEdit;
 	}
 }

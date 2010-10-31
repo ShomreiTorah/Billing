@@ -29,12 +29,12 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
-			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
-			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.colName = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colEmail = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colJoinDate = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.grid = new Data.UI.Grid.SmartGrid(this.components);
+			this.gridView = new Data.UI.Grid.SmartGridView();
+			this.colName = new Data.UI.Grid.SmartGridColumn();
+			this.colEmail = new Data.UI.Grid.SmartGridColumn();
+			this.colJoinDate = new Data.UI.Grid.SmartGridColumn();
+			this.colFullName = new Data.UI.Grid.SmartGridColumn();
 			this.personEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
 			this.emptyPersonEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
 			this.personSelector = new ShomreiTorah.Data.UI.Controls.PersonSelector();
@@ -62,7 +62,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			// gridView
 			// 
-			this.gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+			this.gridView.Columns.AddRange(new Data.UI.Grid.SmartGridColumn[] {
             this.colName,
             this.colEmail,
             this.colJoinDate,
@@ -166,12 +166,12 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 
 		#endregion
 
-		private Controls.BaseGrid grid;
-		private DevExpress.XtraGrid.Views.Grid.GridView gridView;
-		private DevExpress.XtraGrid.Columns.GridColumn colName;
-		private DevExpress.XtraGrid.Columns.GridColumn colEmail;
-		private DevExpress.XtraGrid.Columns.GridColumn colJoinDate;
-		private DevExpress.XtraGrid.Columns.GridColumn colFullName;
+		private Data.UI.Grid.SmartGrid grid;
+		private Data.UI.Grid.SmartGridView gridView;
+		private Data.UI.Grid.SmartGridColumn colName;
+		private Data.UI.Grid.SmartGridColumn colEmail;
+		private Data.UI.Grid.SmartGridColumn colJoinDate;
+		private Data.UI.Grid.SmartGridColumn colFullName;
 		private ShomreiTorah.Data.UI.Controls.PersonSelector personSelector;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit emptyPersonEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit personEdit;

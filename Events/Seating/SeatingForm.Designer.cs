@@ -18,21 +18,21 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
-			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid();
-			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.grid = new Data.UI.Grid.SmartGrid();
+			this.gridView = new Data.UI.Grid.SmartGridView();
+			this.colDate = new Data.UI.Grid.SmartGridColumn();
+			this.colFullName = new Data.UI.Grid.SmartGridColumn();
 			this.repositoryItemPersonRefEdit1 = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemPersonRefEdit();
-			this.colPledgeType = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colPledgeType = new Data.UI.Grid.SmartGridColumn();
+			this.colAmount = new Data.UI.Grid.SmartGridColumn();
 			this.currencyEditor = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
-			this.colMensSeats = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colMensSeats = new Data.UI.Grid.SmartGridColumn();
 			this.seatCountEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
-			this.colWomensSeats = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colBoysSeats = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colGirlsSeats = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colNotes = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colChartStatus = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colWomensSeats = new Data.UI.Grid.SmartGridColumn();
+			this.colBoysSeats = new Data.UI.Grid.SmartGridColumn();
+			this.colGirlsSeats = new Data.UI.Grid.SmartGridColumn();
+			this.colNotes = new Data.UI.Grid.SmartGridColumn();
+			this.colChartStatus = new Data.UI.Grid.SmartGridColumn();
 			this.gridLoadingEdit = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
 			this.personSelector = new ShomreiTorah.Data.UI.Controls.PersonSelector();
 			this.addNewPanel = new DevExpress.XtraEditors.PanelControl();
@@ -116,7 +116,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// 
 			// gridView
 			// 
-			this.gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+			this.gridView.Columns.AddRange(new Data.UI.Grid.SmartGridColumn[] {
             this.colDate,
             this.colFullName,
             this.colPledgeType,
@@ -530,24 +530,24 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		}
 		#endregion
 
-		private Controls.BaseGrid grid;
-		private DevExpress.XtraGrid.Views.Grid.GridView gridView;
+		private Data.UI.Grid.SmartGrid grid;
+		private Data.UI.Grid.SmartGridView gridView;
 		private PersonSelector personSelector;
 		private DevExpress.XtraEditors.PanelControl addNewPanel;
 		private DevExpress.XtraEditors.SimpleButton addEntry;
 		private SeatingReservationEdit addNewEdit;
-		private DevExpress.XtraGrid.Columns.GridColumn colFullName;
-		private DevExpress.XtraGrid.Columns.GridColumn colMensSeats;
-		private DevExpress.XtraGrid.Columns.GridColumn colWomensSeats;
-		private DevExpress.XtraGrid.Columns.GridColumn colBoysSeats;
-		private DevExpress.XtraGrid.Columns.GridColumn colGirlsSeats;
-		private DevExpress.XtraGrid.Columns.GridColumn colNotes;
-		private DevExpress.XtraGrid.Columns.GridColumn colChartStatus;
+		private Data.UI.Grid.SmartGridColumn colFullName;
+		private Data.UI.Grid.SmartGridColumn colMensSeats;
+		private Data.UI.Grid.SmartGridColumn colWomensSeats;
+		private Data.UI.Grid.SmartGridColumn colBoysSeats;
+		private Data.UI.Grid.SmartGridColumn colGirlsSeats;
+		private Data.UI.Grid.SmartGridColumn colNotes;
+		private Data.UI.Grid.SmartGridColumn colChartStatus;
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit seatCountEdit;
 		private DevExpress.XtraEditors.SimpleButton cancelAddEntry;
-		private DevExpress.XtraGrid.Columns.GridColumn colDate;
-		private DevExpress.XtraGrid.Columns.GridColumn colPledgeType;
-		private DevExpress.XtraGrid.Columns.GridColumn colAmount;
+		private Data.UI.Grid.SmartGridColumn colDate;
+		private Data.UI.Grid.SmartGridColumn colPledgeType;
+		private Data.UI.Grid.SmartGridColumn colAmount;
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit currencyEditor;
 		private DevExpress.XtraBars.BarButtonItem wordButton;
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;

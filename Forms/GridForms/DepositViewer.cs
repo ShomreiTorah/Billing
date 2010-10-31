@@ -7,6 +7,8 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
 using ShomreiTorah.Data;
 using ShomreiTorah.WinForms;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Base;
 
 namespace ShomreiTorah.Billing.Forms.GridForms {
 	partial class DepositViewer : XtraForm {
@@ -34,7 +36,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 
 		private void paymentsView_KeyUp(object sender, KeyEventArgs e) {
 			if (e.KeyData == Keys.Delete) {
-				var view = (sender as GridView) ?? (GridView)((Controls.BaseGrid)((BaseEdit)sender).Parent).FocusedView;
+				var view = (sender as GridView) ?? (ColumnView)((GridControl)((BaseEdit)sender).Parent).FocusedView;
 				var rows = view.GetSelectedRows().Select<int, object>(view.GetRow)
 							   .DefaultIfEmpty(view.GetFocusedRow())
 							   .Cast<Payment>()

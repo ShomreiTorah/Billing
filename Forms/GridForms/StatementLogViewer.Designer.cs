@@ -26,16 +26,16 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatementLogViewer));
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
-			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.grid = new Data.UI.Grid.SmartGrid(this.components);
+			this.gridView = new Data.UI.Grid.SmartGridView();
+			this.colFullName = new Data.UI.Grid.SmartGridColumn();
 			this.personRefEdit = new Controls.Editors.RepositoryItemPersonRefEdit();
-			this.colDateGenerated = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colMedia = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colStatementKind = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colStartDate = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colEndDate = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colUserName = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colDateGenerated = new Data.UI.Grid.SmartGridColumn();
+			this.colMedia = new Data.UI.Grid.SmartGridColumn();
+			this.colStatementKind = new Data.UI.Grid.SmartGridColumn();
+			this.colStartDate = new Data.UI.Grid.SmartGridColumn();
+			this.colEndDate = new Data.UI.Grid.SmartGridColumn();
+			this.colUserName = new Data.UI.Grid.SmartGridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
@@ -55,7 +55,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			// gridView
 			// 
-			this.gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+			this.gridView.Columns.AddRange(new Data.UI.Grid.SmartGridColumn[] {
             this.colFullName,
             this.colDateGenerated,
             this.colMedia,
@@ -171,15 +171,15 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 
 		#endregion
 
-		private Controls.BaseGrid grid;
-		private DevExpress.XtraGrid.Views.Grid.GridView gridView;
-		private DevExpress.XtraGrid.Columns.GridColumn colFullName;
+		private Data.UI.Grid.SmartGrid grid;
+		private Data.UI.Grid.SmartGridView gridView;
+		private Data.UI.Grid.SmartGridColumn colFullName;
 		private Controls.Editors.RepositoryItemPersonRefEdit personRefEdit;
-		private DevExpress.XtraGrid.Columns.GridColumn colDateGenerated;
-		private DevExpress.XtraGrid.Columns.GridColumn colMedia;
-		private DevExpress.XtraGrid.Columns.GridColumn colStatementKind;
-		private DevExpress.XtraGrid.Columns.GridColumn colStartDate;
-		private DevExpress.XtraGrid.Columns.GridColumn colEndDate;
-		private DevExpress.XtraGrid.Columns.GridColumn colUserName;
+		private Data.UI.Grid.SmartGridColumn colDateGenerated;
+		private Data.UI.Grid.SmartGridColumn colMedia;
+		private Data.UI.Grid.SmartGridColumn colStatementKind;
+		private Data.UI.Grid.SmartGridColumn colStartDate;
+		private Data.UI.Grid.SmartGridColumn colEndDate;
+		private Data.UI.Grid.SmartGridColumn colUserName;
 	}
 }

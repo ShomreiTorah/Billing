@@ -26,21 +26,21 @@ namespace ShomreiTorah.Billing.Controls {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModifiedPaymentsGrid));
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-			this.grid = new ShomreiTorah.Billing.Controls.BaseGrid(this.components);
-			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.colFullName = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.grid = new Data.UI.Grid.SmartGrid(this.components);
+			this.gridView = new Data.UI.Grid.SmartGridView();
+			this.colFullName = new Data.UI.Grid.SmartGridColumn();
 			this.personRefEdit = new Controls.Editors.RepositoryItemPersonRefEdit();
-			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colMethod = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colCheckNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colDate = new Data.UI.Grid.SmartGridColumn();
+			this.colMethod = new Data.UI.Grid.SmartGridColumn();
+			this.colCheckNumber = new Data.UI.Grid.SmartGridColumn();
 			this.checkNumberEdit = new ShomreiTorah.Billing.Controls.Editors.RepositoryItemCheckNumberEdit();
-			this.colAccount = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colDeposit = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colAccount = new Data.UI.Grid.SmartGridColumn();
+			this.colAmount = new Data.UI.Grid.SmartGridColumn();
+			this.colDeposit = new Data.UI.Grid.SmartGridColumn();
 			this.depositEdit = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
-			this.colComments = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colModified = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.colModifier = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colComments = new Data.UI.Grid.SmartGridColumn();
+			this.colModified = new Data.UI.Grid.SmartGridColumn();
+			this.colModifier = new Data.UI.Grid.SmartGridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personRefEdit)).BeginInit();
@@ -62,7 +62,7 @@ namespace ShomreiTorah.Billing.Controls {
 			// 
 			// gridView
 			// 
-			this.gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+			this.gridView.Columns.AddRange(new Data.UI.Grid.SmartGridColumn[] {
             this.colFullName,
             this.colDate,
             this.colMethod,
@@ -232,18 +232,18 @@ namespace ShomreiTorah.Billing.Controls {
 
 		#endregion
 
-		private BaseGrid grid;
-		private DevExpress.XtraGrid.Views.Grid.GridView gridView;
-		private DevExpress.XtraGrid.Columns.GridColumn colFullName;
-		private DevExpress.XtraGrid.Columns.GridColumn colDate;
-		private DevExpress.XtraGrid.Columns.GridColumn colMethod;
-		private DevExpress.XtraGrid.Columns.GridColumn colCheckNumber;
-		private DevExpress.XtraGrid.Columns.GridColumn colAccount;
-		private DevExpress.XtraGrid.Columns.GridColumn colAmount;
-		private DevExpress.XtraGrid.Columns.GridColumn colDeposit;
-		private DevExpress.XtraGrid.Columns.GridColumn colComments;
-		private DevExpress.XtraGrid.Columns.GridColumn colModified;
-		private DevExpress.XtraGrid.Columns.GridColumn colModifier;
+		private Data.UI.Grid.SmartGrid grid;
+		private Data.UI.Grid.SmartGridView gridView;
+		private Data.UI.Grid.SmartGridColumn colFullName;
+		private Data.UI.Grid.SmartGridColumn colDate;
+		private Data.UI.Grid.SmartGridColumn colMethod;
+		private Data.UI.Grid.SmartGridColumn colCheckNumber;
+		private Data.UI.Grid.SmartGridColumn colAccount;
+		private Data.UI.Grid.SmartGridColumn colAmount;
+		private Data.UI.Grid.SmartGridColumn colDeposit;
+		private Data.UI.Grid.SmartGridColumn colComments;
+		private Data.UI.Grid.SmartGridColumn colModified;
+		private Data.UI.Grid.SmartGridColumn colModifier;
 		private Controls.Editors.RepositoryItemPersonRefEdit personRefEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
 		private ShomreiTorah.Billing.Controls.Editors.RepositoryItemCheckNumberEdit checkNumberEdit;

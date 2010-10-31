@@ -19,10 +19,10 @@ using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Controls {
 	[ToolboxItem(false)]
-	sealed partial class BaseGrid : GridControl {
+	sealed partial class OldBaseGrid : GridControl {
 		bool initComponentFinished;
-		public BaseGrid() { Init(); }
-		public BaseGrid(IContainer container) { container.Add(this); Init(); }
+		public OldBaseGrid() { Init(); }
+		public OldBaseGrid(IContainer container) { container.Add(this); Init(); }
 
 		void Init() {
 			InitializeComponent();

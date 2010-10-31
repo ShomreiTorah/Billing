@@ -1,5 +1,5 @@
 namespace ShomreiTorah.Billing.Controls {
-	partial class BaseGrid {
+	partial class OldBaseGrid {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -24,7 +24,7 @@ namespace ShomreiTorah.Billing.Controls {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BaseGrid));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OldBaseGrid));
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			this.editors = new DevExpress.XtraEditors.Repository.PersistentRepository(this.components);
 			this.currencyEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
@@ -34,7 +34,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.accountEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.personRefEdit = new Controls.Editors.RepositoryItemPersonRefEdit();
 			this.personSourceEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
-			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.gridView1 = new Data.UI.Grid.SmartGridView();
 			this.depositEdit = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
 			((System.ComponentModel.ISupportInitialize)(this.currencyEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.checkNumberEdit)).BeginInit();
@@ -196,7 +196,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.depositEdit.NullText = "Undeposited";
 			this.depositEdit.ReadOnly = true;
 			// 
-			// BaseGrid
+			// Data.UI.Grid.SmartGrid
 			// 
 			this.ExternalRepository = this.editors;
 			this.MainView = this.gridView1;
@@ -224,7 +224,7 @@ namespace ShomreiTorah.Billing.Controls {
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox paymentMethodEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox stateEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox accountEdit;
-		private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+		private Data.UI.Grid.SmartGridView gridView1;
 		private Controls.Editors.RepositoryItemPersonRefEdit personRefEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox personSourceEdit;
 		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
