@@ -47,13 +47,13 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.add = new DevExpress.XtraEditors.SimpleButton();
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.checkGroup = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.checkGroup = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.searchLookup.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
@@ -71,13 +71,13 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethod.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.checkGroup)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.checkGroup)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ribbon
@@ -176,7 +176,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.colSubType.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
 			this.colSubType.Visible = true;
 			this.colSubType.VisibleIndex = 3;
-			this.colSubType.Width = 64;
+			this.colSubType.Width = 59;
 			// 
 			// colAccount
 			// 
@@ -297,7 +297,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
             0,
             0,
             0});
-			this.amount.Location = new System.Drawing.Point(82, 3);
+			this.amount.Location = new System.Drawing.Point(88, 2);
 			this.amount.MaximumSize = new System.Drawing.Size(90, 20);
 			this.amount.Name = "amount";
 			this.amount.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -330,7 +330,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// 
 			// checkNumber
 			// 
-			this.checkNumber.Location = new System.Drawing.Point(255, 27);
+			this.checkNumber.Location = new System.Drawing.Point(259, 26);
 			this.checkNumber.Name = "checkNumber";
 			this.checkNumber.Size = new System.Drawing.Size(80, 20);
 			this.checkNumber.StyleController = this.addPanel;
@@ -340,7 +340,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// checkDate
 			// 
 			this.checkDate.EditValue = null;
-			this.checkDate.Location = new System.Drawing.Point(255, 3);
+			this.checkDate.Location = new System.Drawing.Point(259, 2);
 			this.checkDate.Name = "checkDate";
 			this.checkDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -354,23 +354,26 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// 
 			// comments
 			// 
-			this.comments.Location = new System.Drawing.Point(340, 2);
+			this.comments.Location = new System.Drawing.Point(343, 2);
 			this.comments.Name = "comments";
 			this.comments.Properties.NullValuePrompt = "Comments (This will not appear on the bill)";
-			this.comments.Size = new System.Drawing.Size(487, 52);
+			this.comments.Size = new System.Drawing.Size(484, 52);
 			this.comments.StyleController = this.addPanel;
 			this.comments.TabIndex = 4;
 			// 
 			// paymentMethod
 			// 
-			this.paymentMethod.Location = new System.Drawing.Point(3, 27);
+			this.paymentMethod.Location = new System.Drawing.Point(2, 27);
 			this.paymentMethod.Name = "paymentMethod";
+			this.paymentMethod.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+			this.paymentMethod.Properties.Appearance.Options.UseBackColor = true;
+			this.paymentMethod.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
 			this.paymentMethod.Properties.EnableFocusRect = true;
 			this.paymentMethod.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
             new DevExpress.XtraEditors.Controls.RadioGroupItem("Unpaid", "&Unpaid"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem("Cash", "Ca&sh"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem("Check", "&Check")});
-			this.paymentMethod.Size = new System.Drawing.Size(169, 26);
+			this.paymentMethod.Size = new System.Drawing.Size(176, 27);
 			this.paymentMethod.StyleController = this.addPanel;
 			this.paymentMethod.TabIndex = 1;
 			this.paymentMethod.SelectedIndexChanged += new System.EventHandler(this.paymentMethod_SelectedIndexChanged);
@@ -396,9 +399,9 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.layoutControlGroup1.GroupBordersVisible = false;
 			this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem3,
-            this.checkGroup,
             this.layoutControlItem4,
-            this.layoutControlGroup2});
+            this.layoutControlGroup2,
+            this.checkGroup});
 			this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup1.Name = "layoutControlGroup1";
 			this.layoutControlGroup1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
@@ -411,50 +414,13 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// 
 			this.layoutControlItem3.Control = this.comments;
 			this.layoutControlItem3.CustomizationFormText = "layoutControlItem3";
-			this.layoutControlItem3.Location = new System.Drawing.Point(338, 0);
+			this.layoutControlItem3.Location = new System.Drawing.Point(341, 0);
 			this.layoutControlItem3.Name = "layoutControlItem3";
-			this.layoutControlItem3.Size = new System.Drawing.Size(491, 56);
+			this.layoutControlItem3.Size = new System.Drawing.Size(488, 56);
 			this.layoutControlItem3.Text = "layoutControlItem3";
 			this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem3.TextToControlDistance = 0;
 			this.layoutControlItem3.TextVisible = false;
-			// 
-			// checkGroup
-			// 
-			this.checkGroup.CustomizationFormText = "checkGroup";
-			this.checkGroup.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem6,
-            this.layoutControlItem5});
-			this.checkGroup.Location = new System.Drawing.Point(175, 0);
-			this.checkGroup.Name = "checkGroup";
-			this.checkGroup.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-			this.checkGroup.Size = new System.Drawing.Size(163, 56);
-			this.checkGroup.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-			this.checkGroup.Text = "checkGroup";
-			this.checkGroup.TextVisible = false;
-			// 
-			// layoutControlItem6
-			// 
-			this.layoutControlItem6.Control = this.checkNumber;
-			this.layoutControlItem6.CustomizationFormText = "Check Number:";
-			this.layoutControlItem6.Location = new System.Drawing.Point(0, 24);
-			this.layoutControlItem6.Name = "layoutControlItem6";
-			this.layoutControlItem6.Size = new System.Drawing.Size(161, 30);
-			this.layoutControlItem6.Text = "Check Number:";
-			this.layoutControlItem6.TextSize = new System.Drawing.Size(73, 13);
-			// 
-			// layoutControlItem5
-			// 
-			this.layoutControlItem5.Control = this.checkDate;
-			this.layoutControlItem5.CustomizationFormText = "Check Date:";
-			this.layoutControlItem5.Location = new System.Drawing.Point(0, 0);
-			this.layoutControlItem5.MaxSize = new System.Drawing.Size(161, 24);
-			this.layoutControlItem5.MinSize = new System.Drawing.Size(161, 24);
-			this.layoutControlItem5.Name = "layoutControlItem5";
-			this.layoutControlItem5.Size = new System.Drawing.Size(161, 24);
-			this.layoutControlItem5.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.layoutControlItem5.Text = "Check Date:";
-			this.layoutControlItem5.TextSize = new System.Drawing.Size(73, 13);
 			// 
 			// layoutControlItem4
 			// 
@@ -475,6 +441,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// layoutControlGroup2
 			// 
 			this.layoutControlGroup2.CustomizationFormText = "layoutControlGroup2";
+			this.layoutControlGroup2.GroupBordersVisible = false;
 			this.layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem2,
             this.layoutControlItem1});
@@ -483,7 +450,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.layoutControlGroup2.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
 			this.layoutControlGroup2.ShowInCustomizationForm = false;
 			this.layoutControlGroup2.ShowTabPageCloseButton = true;
-			this.layoutControlGroup2.Size = new System.Drawing.Size(175, 56);
+			this.layoutControlGroup2.Size = new System.Drawing.Size(180, 56);
 			this.layoutControlGroup2.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
 			this.layoutControlGroup2.Text = "layoutControlGroup2";
 			this.layoutControlGroup2.TextVisible = false;
@@ -492,9 +459,9 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			// 
 			this.layoutControlItem2.Control = this.paymentMethod;
 			this.layoutControlItem2.CustomizationFormText = "layoutControlItem2";
-			this.layoutControlItem2.Location = new System.Drawing.Point(0, 24);
+			this.layoutControlItem2.Location = new System.Drawing.Point(0, 25);
 			this.layoutControlItem2.Name = "layoutControlItem2";
-			this.layoutControlItem2.Size = new System.Drawing.Size(173, 30);
+			this.layoutControlItem2.Size = new System.Drawing.Size(180, 31);
 			this.layoutControlItem2.Text = "layoutControlItem2";
 			this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem2.TextToControlDistance = 0;
@@ -509,10 +476,47 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlItem1.MinSize = new System.Drawing.Size(101, 24);
 			this.layoutControlItem1.Name = "layoutControlItem1";
-			this.layoutControlItem1.Size = new System.Drawing.Size(173, 24);
+			this.layoutControlItem1.Size = new System.Drawing.Size(180, 25);
 			this.layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.layoutControlItem1.Text = "Amount:";
 			this.layoutControlItem1.TextSize = new System.Drawing.Size(73, 13);
+			// 
+			// checkGroup
+			// 
+			this.checkGroup.CustomizationFormText = "checkGroup";
+			this.checkGroup.GroupBordersVisible = false;
+			this.checkGroup.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem6,
+            this.layoutControlItem5});
+			this.checkGroup.Location = new System.Drawing.Point(180, 0);
+			this.checkGroup.Name = "checkGroup";
+			this.checkGroup.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+			this.checkGroup.Size = new System.Drawing.Size(161, 56);
+			this.checkGroup.Text = "checkGroup";
+			this.checkGroup.TextVisible = false;
+			// 
+			// layoutControlItem6
+			// 
+			this.layoutControlItem6.Control = this.checkNumber;
+			this.layoutControlItem6.CustomizationFormText = "Check Number:";
+			this.layoutControlItem6.Location = new System.Drawing.Point(0, 24);
+			this.layoutControlItem6.Name = "layoutControlItem6";
+			this.layoutControlItem6.Size = new System.Drawing.Size(161, 32);
+			this.layoutControlItem6.Text = "Check Number:";
+			this.layoutControlItem6.TextSize = new System.Drawing.Size(73, 13);
+			// 
+			// layoutControlItem5
+			// 
+			this.layoutControlItem5.Control = this.checkDate;
+			this.layoutControlItem5.CustomizationFormText = "Check Date:";
+			this.layoutControlItem5.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlItem5.MaxSize = new System.Drawing.Size(161, 24);
+			this.layoutControlItem5.MinSize = new System.Drawing.Size(161, 24);
+			this.layoutControlItem5.Name = "layoutControlItem5";
+			this.layoutControlItem5.Size = new System.Drawing.Size(161, 24);
+			this.layoutControlItem5.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.layoutControlItem5.Text = "Check Date:";
+			this.layoutControlItem5.TextSize = new System.Drawing.Size(73, 13);
 			// 
 			// ShalachManosForm
 			// 
@@ -548,13 +552,13 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			((System.ComponentModel.ISupportInitialize)(this.paymentMethod.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.checkGroup)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.checkGroup)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -589,10 +593,10 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		private DevExpress.XtraEditors.DateEdit checkDate;
 		private DevExpress.XtraEditors.SimpleButton add;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
-		private DevExpress.XtraLayout.LayoutControlGroup checkGroup;
-		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
-		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
 		private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup2;
 		private Data.UI.Grid.SmartGridColumn colPledgeId;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
+		private DevExpress.XtraLayout.LayoutControlGroup checkGroup;
 	}
 }
