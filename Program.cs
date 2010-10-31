@@ -41,9 +41,11 @@ namespace ShomreiTorah.Billing {
 			//These columns cannot be added in the strongly-typed row
 			//because the Person table must be usable without pledges
 			//or payments.  (eg, ListMaker)
-			Person.Schema.Columns.AddCalculatedColumn<Person, decimal>("TotalPaid", person => person.Payments.Sum(p => p.Amount));
-			Person.Schema.Columns.AddCalculatedColumn<Person, decimal>("TotalPledged", person => person.Pledges.Sum(p => p.Amount));
-			Person.Schema.Columns.AddCalculatedColumn<decimal>("BalanceDue", person => person.Field<decimal>("TotalPledged") - person.Field<decimal>("TotalPaid"));
+			if (!Person.Schema.Columns.Contains("TotalPaid")) {	//This can be called multiple times in the designer AppDomain
+				Person.Schema.Columns.AddCalculatedColumn<Person, decimal>("TotalPaid", person => person.Payments.Sum(p => p.Amount));
+				Person.Schema.Columns.AddCalculatedColumn<Person, decimal>("TotalPledged", person => person.Pledges.Sum(p => p.Amount));
+				Person.Schema.Columns.AddCalculatedColumn<decimal>("BalanceDue", person => person.Field<decimal>("TotalPledged") - person.Field<decimal>("TotalPaid"));
+			}
 
 			context.Tables.AddTable(Payment.CreateTable());
 			context.Tables.AddTable(Pledge.CreateTable());
