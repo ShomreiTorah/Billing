@@ -26,6 +26,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		readonly int year;
 		readonly FilteredTable<SeatingReservation> seats;
 		public SeatingForm(int year) {
+			Program.LoadTable<SeatingReservation>();	//Before setting DataMember
 			InitializeComponent();
 
 			loadingIconItem.EditValue = LoadingImage;

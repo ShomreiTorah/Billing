@@ -24,6 +24,7 @@ using ShomreiTorah.Singularity;
 using ShomreiTorah.Singularity.Sql;
 using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Controls.Lookup;
+using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing {
 	//TODO: Replace XtraMessageBox with Dialog class
@@ -33,6 +34,20 @@ namespace ShomreiTorah.Billing {
 	//TODO: Map doesn't work on first shown PersonDetails
 
 	class Program : AppFramework {
+		///<summary>Ensures that a table is loaded.</summary>
+		public static void LoadTable<TRow>() where TRow : Row {
+			if (Table<TRow>() != null) return;	//The table is already loaded
+
+			var table = new TypedTable<TRow>(TypedSchema<TRow>.Instance);	//TODO: Fast rowCreator
+			Current.DataContext.Tables.AddTable(table);
+			var syncer = new TableSynchronizer(table, SchemaMapping.GetPrimaryMapping(table.Schema), Current.SyncContext.SqlProvider);
+			Current.SyncContext.Tables.Add(syncer);
+			ProgressWorker.Execute(ui => {
+				ui.Caption = "Loading " + table.Schema.Name;
+			}, false);
+			syncer.ReadData();
+		}
+
 		protected override DataSyncContext CreateDataContext() {
 			var context = new DataContext();
 
@@ -56,11 +71,13 @@ namespace ShomreiTorah.Billing {
 
 			context.Tables.AddTable(Payment.CreateTable());
 			context.Tables.AddTable(Pledge.CreateTable());
-			context.Tables.AddTable(SeatingReservation.CreateTable());
 			context.Tables.AddTable(EmailAddress.CreateTable());
 			context.Tables.AddTable(LoggedStatement.CreateTable());
 			context.Tables.AddTable(Person.CreateTable());
 			context.Tables.AddTable(Deposit.CreateTable());
+			if (IsDesignTime) {	//These tables are only loaded when needed.  However, I still want them in the designer.
+				context.Tables.AddTable(SeatingReservation.CreateTable());
+			}
 
 			var syncContext = new DataSyncContext(context, new SqlServerSqlProvider(DB.Default));
 			syncContext.Tables.AddPrimaryMappings();
