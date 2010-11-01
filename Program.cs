@@ -26,7 +26,6 @@ using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Controls.Lookup;
 
 namespace ShomreiTorah.Billing {
-	//TODO: Eliminate all usages of DataRow / DataRowView
 	//TODO: Replace XtraMessageBox with Dialog class
 	//TODO: Use ESA on all forms & controls
 	//TODO: Replace most references to Names with designer ESA

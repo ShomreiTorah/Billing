@@ -59,7 +59,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.cancel.Location = new System.Drawing.Point(719, 540);
 			this.cancel.Name = "cancel";
 			this.cancel.Size = new System.Drawing.Size(75, 23);
-			this.cancel.TabIndex = 3;
+			this.cancel.TabIndex = 4;
 			this.cancel.Text = "Cancel";
 			// 
 			// add
@@ -69,7 +69,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.add.Location = new System.Drawing.Point(638, 540);
 			this.add.Name = "add";
 			this.add.Size = new System.Drawing.Size(75, 23);
-			this.add.TabIndex = 2;
+			this.add.TabIndex = 3;
 			this.add.Text = "Add Deposit";
 			this.add.Click += new System.EventHandler(this.add_Click);
 			// 
@@ -115,7 +115,7 @@ namespace ShomreiTorah.Billing.Forms {
             this.checkEdit,
             this.checkNumberEdit});
 			this.grid.Size = new System.Drawing.Size(782, 437);
-			this.grid.TabIndex = 1;
+			this.grid.TabIndex = 2;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
 			// 
@@ -304,7 +304,7 @@ namespace ShomreiTorah.Billing.Forms {
             0});
 			this.depositNumber.Properties.NullText = " ";
 			this.depositNumber.Size = new System.Drawing.Size(734, 20);
-			this.depositNumber.TabIndex = 6;
+			this.depositNumber.TabIndex = 1;
 			// 
 			// labelControl2
 			// 
@@ -320,7 +320,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancel;
-			this.ClientSize = new System.Drawing.Size(818, 587);
+			this.ClientSize = new System.Drawing.Size(820, 589);
 			this.ControlBox = false;
 			this.Controls.Add(this.labelControl2);
 			this.Controls.Add(this.depositNumber);

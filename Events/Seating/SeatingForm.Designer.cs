@@ -109,7 +109,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.grid.MainView = this.gridView;
 			this.grid.MenuManager = this.ribbon;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 38;
+			this.grid.RegistrationCount = 37;
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.seatCountEdit,
             this.currencyEditor,
