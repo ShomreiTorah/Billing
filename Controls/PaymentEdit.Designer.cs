@@ -235,7 +235,6 @@ namespace ShomreiTorah.Billing.Controls {
 			this.person.Name = "person";
 			this.person.Size = new System.Drawing.Size(347, 20);
 			this.person.TabIndex = 0;
-			this.person.TabStop = false;
 			this.person.PersonSelecting += new System.EventHandler<ShomreiTorah.Data.UI.Controls.PersonSelectingEventArgs>(this.person_PersonSelecting);
 			this.person.EditValueChanged += new System.EventHandler(this.person_EditValueChanged);
 			// 

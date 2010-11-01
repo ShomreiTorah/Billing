@@ -504,7 +504,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.lookup.Location = new System.Drawing.Point(0, 148);
 			this.lookup.Name = "lookup";
 			this.lookup.TabIndex = 5;
-			this.lookup.TabStop = false;
 			this.lookup.EditValueChanged += new System.EventHandler(this.lookup_EditValueChanged);
 			// 
 			// dockManager

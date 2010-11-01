@@ -176,7 +176,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("personSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject6, "", null, superToolTip2, true)});
 			this.personSelector.Size = new System.Drawing.Size(821, 20);
 			this.personSelector.TabIndex = 1;
-			this.personSelector.TabStop = false;
 			this.personSelector.EditValueChanged += new System.EventHandler(this.personSelector_EditValueChanged);
 			// 
 			// EmailListForm

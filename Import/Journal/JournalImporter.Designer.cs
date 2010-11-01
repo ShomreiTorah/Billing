@@ -1403,7 +1403,6 @@ namespace ShomreiTorah.Billing.Import.Journal {
 			this.personSelector.Name = "personSelector";
 			this.personSelector.Size = new System.Drawing.Size(358, 20);
 			this.personSelector.TabIndex = 0;
-			this.personSelector.TabStop = false;
 			// 
 			// JournalImporter
 			// 

@@ -315,7 +315,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("personSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, superToolTip3, true)});
 			this.personSelector.Size = new System.Drawing.Size(1011, 20);
 			this.personSelector.TabIndex = 0;
-			this.personSelector.TabStop = false;
 			this.personSelector.PersonSelecting += new System.EventHandler<ShomreiTorah.Data.UI.Controls.PersonSelectingEventArgs>(this.personSelector_PersonSelecting);
 			this.personSelector.EditValueChanged += new System.EventHandler(this.personSelector_EditValueChanged);
 			// 

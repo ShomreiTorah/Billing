@@ -101,7 +101,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			this.searchLookup.Properties.NullValuePrompt = "Click to search the list";
 			this.searchLookup.Size = new System.Drawing.Size(899, 20);
 			this.searchLookup.TabIndex = 3;
-			this.searchLookup.TabStop = false;
 			this.searchLookup.EditValueChanged += new System.EventHandler(this.searchLookup_EditValueChanged);
 			// 
 			// grid
@@ -289,7 +288,6 @@ namespace ShomreiTorah.Billing.Events.Purim {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("personSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, superToolTip2, true)});
 			this.personSelector.Size = new System.Drawing.Size(899, 20);
 			this.personSelector.TabIndex = 0;
-			this.personSelector.TabStop = false;
 			this.personSelector.PersonSelecting += new System.EventHandler<ShomreiTorah.Data.UI.Controls.PersonSelectingEventArgs>(this.personSelector_PersonSelecting);
 			this.personSelector.EditValueChanged += new System.EventHandler(this.personSelector_EditValueChanged);
 			// 
