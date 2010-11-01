@@ -33,7 +33,7 @@ namespace ShomreiTorah.Billing.Statements {
 		public virtual bool ShouldSend { get { return Accounts.Count > 0; } }
 
 		public void Recalculate() {
-			TotalBalance = Math.Max(0, Person.Field<decimal>(" BalanceDue"));
+			TotalBalance = Math.Max(0, Person.Field<decimal>("BalanceDue"));
 
 			Accounts = new ReadOnlyCollection<StatementAccount>(
 				Names.AccountNames.Select(a => new StatementAccount(this, a))
