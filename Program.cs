@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using DevExpress.LookAndFeel;
 using DevExpress.Skins;
 using DevExpress.UserSkins;
+using DevExpress.XtraGrid.Views.Base;
 using ShomreiTorah.Billing.Properties;
 using ShomreiTorah.Common;
 using ShomreiTorah.Common.Updates;
@@ -20,6 +21,7 @@ using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI;
 using ShomreiTorah.Data.UI.Controls;
 using ShomreiTorah.Data.UI.DisplaySettings;
+using ShomreiTorah.Data.UI.Grid;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.Singularity.Sql;
 using ShomreiTorah.WinForms;
@@ -98,6 +100,10 @@ namespace ShomreiTorah.Billing {
 			SeatingReservation.Schema.ToString();//Force static ctor
 			RegisterRowDetail<SeatingReservation>(p => new Events.Seating.SeatingReservationPopup(p).Show(MainForm));
 
+			GridManager.RegisterColumn((SmartGridColumn sgc) => {
+				return sgc.View.GetSourceSchema() == SeatingReservation.Schema && sgc.FieldName == "Person";
+			}, new MissingPersonController());
+
 			#region Person Lookup
 			EditorRepository.PersonLookup.AddConfigurator(properties => {
 				properties.Columns.RemoveAt(properties.Columns.Count - 1);
@@ -120,6 +126,14 @@ namespace ShomreiTorah.Billing {
 				}
 			});
 			#endregion
+		}
+
+		class MissingPersonController : PersonColumnController {
+			protected override void OnCustomUnboundColumnData(CustomColumnDataEventArgs e) {
+				var row = e.Column.View.DataController.GetRowByListSourceIndex(e.ListSourceRowIndex) as IOwnedObject;
+				if (e.IsGetData && row != null)
+					e.Value = row.Person;
+			}
 		}
 
 		static ISplashScreen Splash;
