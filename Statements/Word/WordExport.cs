@@ -13,6 +13,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		public static readonly string TemplateFolder = Path.Combine(Program.AppDirectory, "Word Templates");
 		public static readonly string MailingTemplateFolder = Path.Combine(TemplateFolder, "Mailings");
 
+		///<summary>Forces a document to close.</summary>
+		///<remarks>This method works around Office issues.</remarks>
 		public static void CloseDoc(this _Document doc) {
 			try {
 				doc.Close(ref dontSave, ref Missing, ref Missing);
