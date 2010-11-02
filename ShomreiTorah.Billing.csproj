@@ -380,6 +380,7 @@
     </None>
     <None Include="Email Templates\Standard Bill.aspx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>ASPXCodeBehind</SubType>
     </None>
     <Compile Include="Controls\Editors\AliyahNoteEdit.cs">
       <SubType>UserControl</SubType>
@@ -537,9 +538,7 @@
     <None Include="Resources\Refresh16.png" />
     <None Include="Resources\WebPreview.png" />
     <None Include="Resources\SendPreview.png" />
-    <None Include="Email Templates\Web.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="Email Templates\Web.config" />
     <None Include="Resources\ImportExcel32.png" />
     <None Include="Resources\ExportWord32.png" />
     <None Include="Resources\SendMail32.png" />
@@ -592,10 +591,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>attrib -r "$(TargetDir)Email Templates\Web.config"
-mkdir "$(ProjectDir)Email Templates\Bin\"
-copy "$(TargetPath)" "$(ProjectDir)Email Templates\Bin\"
-copy "$(TargetDir)ShomreiTorah.Singularity.dll" "$(ProjectDir)Email Templates\Bin\"
-copy "$(TargetDir)ShomreiTorah.Data.dll" "$(ProjectDir)Email Templates\Bin\"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

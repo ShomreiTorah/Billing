@@ -49,7 +49,7 @@ namespace ShomreiTorah.Billing {
 			}, false);
 			syncer.ReadData();
 		}
-
+		#region Config
 		protected override DataSyncContext CreateDataContext() {
 			var context = new DataContext();
 
@@ -135,6 +135,7 @@ namespace ShomreiTorah.Billing {
 					e.Value = row.Person;
 			}
 		}
+		#endregion
 
 		static ISplashScreen Splash;
 		public static void CloseSplash() { Splash.CloseSplash(); }
@@ -218,13 +219,14 @@ namespace ShomreiTorah.Billing {
 		static void CreateAspxDomain() {
 			Splash.SetCaption("Initializing ASP.Net");
 
+			//The old version has an incompatible Web.config; the new version doesn't need any.
+			File.Delete(Path.Combine(AspxPath, "Web.Config"));	//Won't throw if not found
+
 			//ASP.Net loads assemblies from the bin folder; I need to copy 
 			//our exe their so that I can run my code in the new AppDomain.
-			var binCopyPath = Path.Combine(AspxPath, @"Bin\" + Path.GetFileName(typeof(Program).Assembly.Location));
-			Directory.CreateDirectory(Path.GetDirectoryName(binCopyPath));
-			//GetLastWriteTime return 1/1/1601 for non-existant files
-			if (File.GetLastWriteTimeUtc(typeof(Program).Assembly.Location) != File.GetLastWriteTimeUtc(binCopyPath))
-				File.Copy(typeof(Program).Assembly.Location, binCopyPath, true);
+			CopyAspxBinAssembly(typeof(Program).Assembly);
+			CopyAspxBinAssembly(typeof(Person).Assembly);
+			CopyAspxBinAssembly(typeof(Table).Assembly);
 
 			Action<ISplashScreen> executor;
 			try {
@@ -237,6 +239,17 @@ namespace ShomreiTorah.Billing {
 				executor = instance.Execute;
 			}
 			executor(Splash);	//Outside the try block
+		}
+
+		///<summary>Ensures that a source assembly is present in the ASP.Net Bin folder.</summary>
+		///<remarks>This method must be called for assemblies needed by the C# compiler
+		///for the ASPX pages.</remarks>
+		static void CopyAspxBinAssembly(Assembly source) {
+			var binCopyPath = Path.Combine(AspxPath, @"Bin\" + Path.GetFileName(source.Location));
+			Directory.CreateDirectory(Path.GetDirectoryName(binCopyPath));
+			//GetLastWriteTime returns 1/1/1601 for non-existent files
+			if (File.GetLastWriteTimeUtc(source.Location) != File.GetLastWriteTimeUtc(binCopyPath))
+				File.Copy(source.Location, binCopyPath, true);
 		}
 		#endregion
 

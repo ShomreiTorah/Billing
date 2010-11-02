@@ -20,7 +20,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 
 		internal string RenderPage() {
 			var request = new SimpleWorkerRequest("", null, null);
-
+			HttpContext.Current = new HttpContext(request);
 			ProcessRequest(new HttpContext(request));
 			using (var writer = new StringWriter(CultureInfo.InvariantCulture)) {
 				using (var htmlWriter = new HtmlTextWriter(writer))

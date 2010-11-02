@@ -1,6 +1,5 @@
 <%@ Page Language="C#" Inherits="ShomreiTorah.Billing.Statements.Email.EmailPage, ShomreiTorah.Billing" MasterPageFile="EmailPage.master" %>
 
-<%@ Assembly Name="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" %>
 <%@ Import Namespace="System.Collections.Generic" %>
 <%@ Import Namespace="System.Linq" %>
 <%@ Import Namespace="ShomreiTorah.Billing.Statements" %>
@@ -98,7 +97,7 @@
 				<%=payment.Date.ToShortDateString() %></td>
 			<td style="<%=curStyle%>">
 				<%=Server.HtmlEncode(payment.Method.Replace("Unknown", "?")) %>
-				<%if (!payment.IsCheckNumberNull()) {%>#<%=payment.CheckNumber %><%} %></td>
+				<%if (!String.IsNullOrEmpty(payment.CheckNumber)) {%>#<%=Server.HtmlEncode(payment.CheckNumber) %><%} %></td>
 			<td style="text-align: right; <%=curStyle%>">
 				<%=payment.Amount.ToString("c") %></td>
 		</tr>
