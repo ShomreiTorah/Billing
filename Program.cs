@@ -43,12 +43,19 @@ namespace ShomreiTorah.Billing {
 
 			var table = new TypedTable<TRow>(TypedSchema<TRow>.Instance);	//TODO: Fast rowCreator
 			Current.DataContext.Tables.AddTable(table);
+
 			var syncer = new TableSynchronizer(table, SchemaMapping.GetPrimaryMapping(table.Schema), Current.SyncContext.SqlProvider);
 			Current.SyncContext.Tables.Add(syncer);
+
+			var threadContext = SynchronizationContext.Current;
 			ProgressWorker.Execute(ui => {
+				if (Current.HasDataChanged)
+					Current.SyncContext.WriteData(ui);	//I must save before loading in case a parent row was deleted.  (The DB is expected to cascade)
+
+				ui.Maximum = -1;
 				ui.Caption = "Loading " + table.Schema.Name;
+				Current.SyncContext.ReadData(threadContext);	//I must refresh everything to pick up potential changes in parent rows
 			}, false);
-			syncer.ReadData();
 		}
 		#region Config
 		protected override DataSyncContext CreateDataContext() {
