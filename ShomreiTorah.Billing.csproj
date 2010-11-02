@@ -363,6 +363,7 @@
     <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <None Include="Resources\Edit16.png" />
     <None Include="Resources\SplashImage.png" />
     <None Include="Resources\WordWarning32.png" />
     <None Include="Resources\ExportExcel32.png" />
@@ -379,7 +380,6 @@
     </None>
     <None Include="Email Templates\Standard Bill.aspx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>ASPXCodeBehind</SubType>
     </None>
     <Compile Include="Controls\Editors\AliyahNoteEdit.cs">
       <SubType>UserControl</SubType>
@@ -594,6 +594,8 @@
   <PropertyGroup>
     <PostBuildEvent>attrib -r "$(TargetDir)Email Templates\Web.config"
 mkdir "$(ProjectDir)Email Templates\Bin\"
-copy "$(TargetPath)" "$(ProjectDir)Email Templates\Bin\"</PostBuildEvent>
+copy "$(TargetPath)" "$(ProjectDir)Email Templates\Bin\"
+copy "$(TargetDir)ShomreiTorah.Singularity.dll" "$(ProjectDir)Email Templates\Bin\"
+copy "$(TargetDir)ShomreiTorah.Data.dll" "$(ProjectDir)Email Templates\Bin\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

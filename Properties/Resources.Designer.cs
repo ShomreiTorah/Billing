@@ -102,6 +102,13 @@ namespace ShomreiTorah.Billing.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Edit16 {
+            get {
+                object obj = ResourceManager.GetObject("Edit16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ExportExcel32 {
             get {
                 object obj = ResourceManager.GetObject("ExportExcel32", resourceCulture);
