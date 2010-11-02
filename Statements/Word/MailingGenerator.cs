@@ -26,12 +26,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 
 			Document sourceDoc = null;
 			try {
-				sourceDoc = Word.Documents.Open(new DocumentsOpenArgs {
-					FileName = templatePath,
-					ReadOnly = true,
-					//Visible = false,
-					AddToRecentFiles = false
-				});
+				sourceDoc = Word.Documents.Open(FileName: templatePath, ReadOnly: true, AddToRecentFiles: false);
+
 				Document doc = Word.Documents.Add();
 				doc.ShowGrammaticalErrors = doc.ShowSpellingErrors = false; ;
 

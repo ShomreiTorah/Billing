@@ -22,12 +22,11 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			Dictionary<StatementKind, Range> sourceRanges = new Dictionary<StatementKind, Range>();
 			try {
 				foreach (var kind in statements.Select(s => s.Kind).Distinct()) {
-					var sd = Word.Documents.Open(new DocumentsOpenArgs {
-						FileName = Path.Combine(WordExport.TemplateFolder, kind.ToString() + ".docx"),
-						ReadOnly = true,
-						//Visible = false,
-						AddToRecentFiles = false
-					});
+					var sd = Word.Documents.Open(
+						FileName: Path.Combine(WordExport.TemplateFolder, kind.ToString() + ".docx"),
+						ReadOnly: true,
+						AddToRecentFiles: false
+					);
 					sourceRanges.Add(kind, sd.Range());
 				}
 
@@ -176,7 +175,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 				foreach (var payment in account.Payments) {
 					row = table.AddRow().StyleAmount().Stripe();
 					row.Cells[1].Range.Text = payment.Date.ToShortDateString();
-					row.Cells[2].Range.Text = payment.Method.Replace("Unknown", "?") 
+					row.Cells[2].Range.Text = payment.Method.Replace("Unknown", "?")
 											+ (payment.CheckNumber == null ? "" : " #" + payment.CheckNumber.ToString(Culture));
 					row.Cells[3].Range.Text = payment.Amount.ToString("c", Culture);
 				}
