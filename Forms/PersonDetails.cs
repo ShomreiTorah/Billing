@@ -14,7 +14,6 @@ namespace ShomreiTorah.Billing.Forms {
 
 			exportEmail.Caption = exportWord.Caption = (person.FullName ?? person.VeryFullName).Replace("&", "&&");
 
-			emailGrid.DataSource = statementsGrid.DataSource = paymentsGrid.DataSource = pledgeGrid.DataSource = personBindingSource;
 			SetPerson();
 		}
 
@@ -37,5 +36,24 @@ namespace ShomreiTorah.Billing.Forms {
 
 		private void exportEmail_ItemClick(object sender, ItemClickEventArgs e) { Statements.Email.EmailExporter.Execute(this, person); }
 		private void exportWord_ItemClick(object sender, ItemClickEventArgs e) { Statements.Word.WordExporter.Execute(this, person); }
+
+		private void showPersonEdit_Click(object sender, EventArgs e) { ShowPersonEdit(true); }
+		private void closePersonEdit_Click(object sender, EventArgs e) { ShowPersonEdit(false); }
+
+		void ShowPersonEdit(bool visible) {
+			if (visible) {
+				details.Hide();
+				personEditor.Person = person;
+				personEditPanel.Show();
+				if (splitContainerControl1.SplitterPosition < 256)
+					splitContainerControl1.SplitterPosition = 256;
+				AcceptButton = closePersonEdit;
+			} else {
+				UpdateDetails();
+				personEditPanel.Hide();
+				details.Show();
+				AcceptButton = null;
+			}
+		}
 	}
 }
