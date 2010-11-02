@@ -35,6 +35,7 @@ namespace ShomreiTorah.Billing {
 	//TODO: Prevent duplicate emails
 	//TODO: Map doesn't work on first shown PersonDetails
 
+	[SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
 	class Program : AppFramework {
 		///<summary>Ensures that a table is loaded.</summary>
 		public static void LoadTable<TRow>() where TRow : Row {
@@ -103,7 +104,9 @@ namespace ShomreiTorah.Billing {
 			GridManager.RegisterColumn((SmartGridColumn sgc) => {
 				return sgc.View.GetSourceSchema() == SeatingReservation.Schema && sgc.FieldName == "Person";
 			}, new MissingPersonController());
-
+			RegisterLookupValidation();
+		}
+		static void RegisterLookupValidation() {
 			#region Person Lookup
 			EditorRepository.PersonLookup.AddConfigurator(properties => {
 				properties.Columns.RemoveAt(properties.Columns.Count - 1);
