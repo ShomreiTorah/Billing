@@ -151,6 +151,13 @@ namespace ShomreiTorah.Billing.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Invitations32 {
+            get {
+                object obj = ResourceManager.GetObject("Invitations32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Loading16 {
             get {
                 object obj = ResourceManager.GetObject("Loading16", resourceCulture);

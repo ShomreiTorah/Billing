@@ -100,6 +100,11 @@ namespace ShomreiTorah.Billing.Forms {
 
 		private void showSeatingForm_ItemClick(object sender, ItemClickEventArgs e) { new Events.Seating.SeatingForm(DateTime.Now.Year) { MdiParent = this }.Show(); }
 
+		private void showInvites_ItemClick(object sender, ItemClickEventArgs e) {
+			//We start using this in December of the previous year
+			new Events.MelaveMalka.InvitationsForm(DateTime.Now.AddMonths(5).Year) { MdiParent = this }.Show();
+		}
+
 		private void importYK_ItemClick(object sender, ItemClickEventArgs e) { Import.YKImporter.Execute(); }
 		private void importJournal_ItemClick(object sender, ItemClickEventArgs e) { Import.Journal.JournalImporter.Execute(); }
 		private void importRaffle_ItemClick(object sender, ItemClickEventArgs e) { Import.Raffle.RaffleImporter.Execute(); }
@@ -163,5 +168,6 @@ namespace ShomreiTorah.Billing.Forms {
 			if (childBar != null)
 				ribbonStatusBar.UnMergeStatusBar();
 		}
+
 	}
 }

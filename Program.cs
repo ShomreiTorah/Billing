@@ -87,6 +87,7 @@ namespace ShomreiTorah.Billing {
 			context.Tables.AddTable(Deposit.CreateTable());
 			if (IsDesignTime) {	//These tables are only loaded when needed.  However, I still want them in the designer.
 				context.Tables.AddTable(SeatingReservation.CreateTable());
+				context.Tables.AddTable(MelaveMalkaInvitation.CreateTable());
 			}
 
 			var syncContext = new DataSyncContext(context, new SqlServerSqlProvider(DB.Default));
@@ -113,8 +114,9 @@ namespace ShomreiTorah.Billing {
 			}, new MissingPersonController());
 			RegisterLookupValidation();
 		}
+		#region Person Lookup
+		const string SuppressValidate = "NoValidate";
 		static void RegisterLookupValidation() {
-			#region Person Lookup
 			EditorRepository.PersonLookup.AddConfigurator(properties => {
 				properties.Columns.RemoveAt(properties.Columns.Count - 1);
 				properties.Columns.Add(new DataSourceColumn {
@@ -127,7 +129,8 @@ namespace ShomreiTorah.Billing {
 				var ps = properties as RepositoryItemPersonSelector;
 				if (ps != null) {
 					ps.PersonSelecting += (sender, e) => {
-						if (e.Cancel) return;
+						if (e.Cancel || ps.Tag == (object)SuppressValidate) return;	//SuppressValidation will be called after EndInit
+
 						if (e.Method == PersonSelectionReason.ResultClick) {
 							if (!e.Person.Pledges.Any() && !e.Person.Payments.Any())
 								e.Cancel = !Dialog.Warn(e.Person.FullName + " has not made any pledges or payments.\r\nAre you sure you selected the correct person?");
@@ -135,8 +138,12 @@ namespace ShomreiTorah.Billing {
 					};
 				}
 			});
-			#endregion
 		}
+		///<summary>Prevents a PersonLookup from validating prior activity.</summary>
+		public static void SuppressValidation(RepositoryItemPersonSelector selector) {
+			selector.Tag = SuppressValidate;
+		}
+		#endregion
 
 		class MissingPersonController : PersonColumnController {
 			protected override void OnCustomUnboundColumnData(CustomColumnDataEventArgs e) {

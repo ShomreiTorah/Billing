@@ -65,6 +65,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.shalachManosColumnsItem = new DevExpress.XtraBars.BarEditItem();
 			this.shalachManosColumnsEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.showSeatingForm = new DevExpress.XtraBars.BarButtonItem();
+			this.showInvites = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -92,6 +93,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.shalachManosColumnsEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lookup.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
 			this.addPledgePanel.SuspendLayout();
 			this.dockPanel1_Container.SuspendLayout();
@@ -135,9 +137,10 @@ namespace ShomreiTorah.Billing.Forms {
             this.shalachManosExport,
             this.showEmailList,
             this.shalachManosColumnsItem,
-            this.showSeatingForm});
+            this.showSeatingForm,
+            this.showInvites});
 			this.ribbon.Location = new System.Drawing.Point(0, 0);
-			this.ribbon.MaxItemId = 25;
+			this.ribbon.MaxItemId = 26;
 			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
 			this.ribbon.Name = "ribbon";
 			this.ribbon.PageHeaderItemLinks.Add(this.checkUpdate);
@@ -149,7 +152,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbon.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.shalachManosColumnsEdit});
 			this.ribbon.SelectedPage = this.ribbonPage4;
-			this.ribbon.Size = new System.Drawing.Size(858, 148);
+			this.ribbon.Size = new System.Drawing.Size(858, 144);
 			this.ribbon.StatusBar = this.ribbonStatusBar;
 			this.ribbon.Toolbar.ItemLinks.Add(this.saveDb);
 			this.ribbon.Toolbar.ItemLinks.Add(this.refreshData);
@@ -370,6 +373,14 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showSeatingForm.Name = "showSeatingForm";
 			this.showSeatingForm.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showSeatingForm_ItemClick);
 			// 
+			// showInvites
+			// 
+			this.showInvites.Caption = "Invitations";
+			this.showInvites.Id = 25;
+			this.showInvites.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.Invitations32;
+			this.showInvites.Name = "showInvites";
+			this.showInvites.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showInvites_ItemClick);
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -454,6 +465,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// ribbonPageGroup5
 			// 
+			this.ribbonPageGroup5.ItemLinks.Add(this.showInvites);
 			this.ribbonPageGroup5.ItemLinks.Add(this.importJournal);
 			this.ribbonPageGroup5.ItemLinks.Add(this.importRaffle);
 			this.ribbonPageGroup5.Name = "ribbonPageGroup5";
@@ -492,17 +504,18 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// ribbonStatusBar
 			// 
-			this.ribbonStatusBar.Location = new System.Drawing.Point(0, 603);
+			this.ribbonStatusBar.Location = new System.Drawing.Point(0, 594);
 			this.ribbonStatusBar.Name = "ribbonStatusBar";
 			this.ribbonStatusBar.Ribbon = this.ribbon;
-			this.ribbonStatusBar.Size = new System.Drawing.Size(858, 23);
+			this.ribbonStatusBar.Size = new System.Drawing.Size(858, 32);
 			// 
 			// lookup
 			// 
-			this.lookup.Properties.NullValuePrompt = "Click here to search the Master Directory";
 			this.lookup.Dock = System.Windows.Forms.DockStyle.Top;
-			this.lookup.Location = new System.Drawing.Point(0, 148);
+			this.lookup.Location = new System.Drawing.Point(0, 144);
 			this.lookup.Name = "lookup";
+			this.lookup.Properties.NullValuePrompt = "Click here to search the Master Directory";
+			this.lookup.Size = new System.Drawing.Size(858, 20);
 			this.lookup.TabIndex = 5;
 			this.lookup.EditValueChanged += new System.EventHandler(this.lookup_EditValueChanged);
 			// 
@@ -537,9 +550,9 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.dockPanel1_Container.Controls.Add(this.modifiedPledgesGrid);
 			this.dockPanel1_Container.Controls.Add(this.pledgeEdit);
-			this.dockPanel1_Container.Location = new System.Drawing.Point(2, 22);
+			this.dockPanel1_Container.Location = new System.Drawing.Point(4, 25);
 			this.dockPanel1_Container.Name = "dockPanel1_Container";
-			this.dockPanel1_Container.Size = new System.Drawing.Size(664, 497);
+			this.dockPanel1_Container.Size = new System.Drawing.Size(660, 492);
 			this.dockPanel1_Container.TabIndex = 0;
 			// 
 			// modifiedPledgesGrid
@@ -547,7 +560,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.modifiedPledgesGrid.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.modifiedPledgesGrid.Location = new System.Drawing.Point(0, 203);
 			this.modifiedPledgesGrid.Name = "modifiedPledgesGrid";
-			this.modifiedPledgesGrid.Size = new System.Drawing.Size(664, 294);
+			this.modifiedPledgesGrid.Size = new System.Drawing.Size(660, 289);
 			this.modifiedPledgesGrid.TabIndex = 1;
 			// 
 			// pledgeEdit
@@ -556,7 +569,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.pledgeEdit.Location = new System.Drawing.Point(0, 0);
 			this.pledgeEdit.MinimumSize = new System.Drawing.Size(480, 123);
 			this.pledgeEdit.Name = "pledgeEdit";
-			this.pledgeEdit.Size = new System.Drawing.Size(664, 203);
+			this.pledgeEdit.Size = new System.Drawing.Size(660, 203);
 			this.pledgeEdit.TabIndex = 0;
 			// 
 			// addPaymentPanel
@@ -576,9 +589,9 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.controlContainer1.Controls.Add(this.modifiedPaymentsGrid);
 			this.controlContainer1.Controls.Add(this.paymentEdit);
-			this.controlContainer1.Location = new System.Drawing.Point(2, 22);
+			this.controlContainer1.Location = new System.Drawing.Point(4, 25);
 			this.controlContainer1.Name = "controlContainer1";
-			this.controlContainer1.Size = new System.Drawing.Size(669, 497);
+			this.controlContainer1.Size = new System.Drawing.Size(665, 492);
 			this.controlContainer1.TabIndex = 0;
 			// 
 			// modifiedPaymentsGrid
@@ -586,7 +599,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.modifiedPaymentsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.modifiedPaymentsGrid.Location = new System.Drawing.Point(0, 175);
 			this.modifiedPaymentsGrid.Name = "modifiedPaymentsGrid";
-			this.modifiedPaymentsGrid.Size = new System.Drawing.Size(669, 322);
+			this.modifiedPaymentsGrid.Size = new System.Drawing.Size(665, 317);
 			this.modifiedPaymentsGrid.TabIndex = 1;
 			// 
 			// paymentEdit
@@ -595,7 +608,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.paymentEdit.Location = new System.Drawing.Point(0, 0);
 			this.paymentEdit.MinimumSize = new System.Drawing.Size(347, 149);
 			this.paymentEdit.Name = "paymentEdit";
-			this.paymentEdit.Size = new System.Drawing.Size(669, 175);
+			this.paymentEdit.Size = new System.Drawing.Size(665, 175);
 			this.paymentEdit.TabIndex = 0;
 			// 
 			// mdiManager
@@ -620,6 +633,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.Text = "Shomrei Torah Billing";
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.shalachManosColumnsEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lookup.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).EndInit();
 			this.addPledgePanel.ResumeLayout(false);
 			this.dockPanel1_Container.ResumeLayout(false);
@@ -682,5 +696,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit shalachManosColumnsEdit;
 		private DevExpress.XtraBars.BarButtonItem showSeatingForm;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup6;
+		private DevExpress.XtraBars.BarButtonItem showInvites;
 	}
 }
