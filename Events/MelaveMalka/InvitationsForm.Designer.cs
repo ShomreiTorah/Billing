@@ -131,7 +131,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             this.colDateAdded,
             this.colSource});
 			this.gridView.GridControl = this.grid;
+			this.gridView.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "", null, "{0} People")});
 			this.gridView.Name = "gridView";
+			this.gridView.OptionsView.ShowFooter = true;
+			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colPerson, DevExpress.Data.ColumnSortOrder.Ascending)});
 			// 
 			// colPerson
 			// 
@@ -143,6 +148,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colPerson.OptionsColumn.ReadOnly = true;
 			this.colPerson.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
 			this.colPerson.ShowEditorOnMouseDown = true;
+			this.colPerson.SummaryItem.DisplayFormat = "{0} People";
+			this.colPerson.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
 			this.colPerson.Visible = true;
 			this.colPerson.VisibleIndex = 0;
 			this.colPerson.Width = 65;
@@ -157,7 +164,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colDateAdded.OptionsColumn.ReadOnly = true;
 			this.colDateAdded.Visible = true;
 			this.colDateAdded.VisibleIndex = 1;
-			this.colDateAdded.Width = 166;
+			this.colDateAdded.Width = 156;
 			// 
 			// colSource
 			// 
