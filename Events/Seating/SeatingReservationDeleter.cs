@@ -26,7 +26,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private void deleteBoth_Click(object sender, EventArgs e) {
 			seat.RemoveRow();
 			seat.Pledge.RemoveRow();
-			//TODO: The seat is not cascaded.
 			Close();
 		}
 	}
