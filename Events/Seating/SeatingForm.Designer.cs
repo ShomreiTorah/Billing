@@ -162,14 +162,12 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// 
 			this.colFullName.Caption = "Full Name";
 			this.colFullName.FieldName = "Person";
-			this.colFullName.GroupInterval = DevExpress.XtraGrid.ColumnGroupInterval.Alphabetical;
 			this.colFullName.Name = "colFullName";
 			this.colFullName.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.True;
 			this.colFullName.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
 			this.colFullName.OptionsColumn.ReadOnly = true;
 			this.colFullName.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
 			this.colFullName.ShowEditorOnMouseDown = true;
-			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
 			this.colFullName.SummaryItem.DisplayFormat = "{0} Reservations";
 			this.colFullName.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
 			this.colFullName.UnboundType = DevExpress.Data.UnboundColumnType.Object;

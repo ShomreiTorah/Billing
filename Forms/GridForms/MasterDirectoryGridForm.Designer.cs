@@ -523,7 +523,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// colFullName
 			// 
 			this.colFullName.FieldName = "FullName";
-			this.colFullName.GroupInterval = DevExpress.XtraGrid.ColumnGroupInterval.Alphabetical;
 			this.colFullName.Name = "colFullName";
 			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
 			this.colFullName.Visible = true;
