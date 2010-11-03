@@ -131,6 +131,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             this.colDateAdded,
             this.colSource});
 			this.gridView.GridControl = this.grid;
+			this.gridView.GroupFormat = "{0}: [#image]{1} ({2})";
 			this.gridView.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "", null, "{0} People")});
 			this.gridView.Name = "gridView";
@@ -152,7 +153,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colPerson.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
 			this.colPerson.Visible = true;
 			this.colPerson.VisibleIndex = 0;
-			this.colPerson.Width = 65;
+			this.colPerson.Width = 78;
 			// 
 			// colDateAdded
 			// 
@@ -164,7 +165,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colDateAdded.OptionsColumn.ReadOnly = true;
 			this.colDateAdded.Visible = true;
 			this.colDateAdded.VisibleIndex = 1;
-			this.colDateAdded.Width = 156;
+			this.colDateAdded.Width = 166;
 			// 
 			// colSource
 			// 
@@ -172,7 +173,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colSource.Name = "colSource";
 			this.colSource.Visible = true;
 			this.colSource.VisibleIndex = 2;
-			this.colSource.Width = 52;
+			this.colSource.Width = 65;
 			// 
 			// colId
 			// 
