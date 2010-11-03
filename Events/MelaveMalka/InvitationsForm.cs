@@ -10,6 +10,9 @@ using ShomreiTorah.Singularity;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.WinForms;
+using DevExpress.XtraBars;
+using ShomreiTorah.Data.UI.Controls;
+using System.Diagnostics;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	partial class InvitationsForm : XtraForm {
@@ -43,6 +46,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			base.Dispose(disposing);
 		}
 
+		private void personSelector_PersonSelecting(object sender, PersonSelectingEventArgs e) {
+			if (e.Method == PersonSelectionReason.Created)
+				e.Person.Source = "Melave Malka " + year;
+		}
 		private void personSelector_EditValueChanged(object sender, EventArgs e) {
 			if (personSelector.SelectedPerson == null) return;
 			if (String.IsNullOrWhiteSpace(source.Text)) {
@@ -65,6 +72,20 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			gridView.FocusedRowHandle = gridView.GetRowHandle(dataSource.Rows.IndexOf(row));
 			gridView.MakeRowVisible(gridView.FocusedRowHandle, false);
 			listSearch.EditValue = null;
+		}
+
+		private void saveExcel_ItemClick(object sender, ItemClickEventArgs e) {
+			string path;
+			using (var dialog = new SaveFileDialog {
+				Filter = "Excel 2003 Spreadsheet|*.xls|Excel 2007 Spreadsheet (*.xlsx)|*.xlsx",
+				FileName = "Melave Malka " + year + " Invites",
+				Title = "Save Melave Malka Invitations"
+			}) {
+				if (dialog.ShowDialog(MdiParent) != DialogResult.OK) return;
+				path = dialog.FileName;
+			}
+			dataSource.Rows.ExportExcel(path);
+			Process.Start(path);
 		}
 	}
 }

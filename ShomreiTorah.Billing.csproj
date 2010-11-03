@@ -137,6 +137,7 @@
     <Compile Include="Controls\PledgeEdit.Designer.cs">
       <DependentUpon>PledgeEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\MelaveMalka\ExcelExporter.cs" />
     <Compile Include="Events\MelaveMalka\InvitationsForm.cs">
       <SubType>Form</SubType>
     </Compile>

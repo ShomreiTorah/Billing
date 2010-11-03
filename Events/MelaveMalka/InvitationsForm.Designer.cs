@@ -33,6 +33,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colSource = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colId = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colRowId = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
+			this.saveExcel = new DevExpress.XtraBars.BarButtonItem();
+			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			((System.ComponentModel.ISupportInitialize)(this.listSearch.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personSelector.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
@@ -40,17 +44,18 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.source.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// listSearch
 			// 
 			this.listSearch.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.listSearch.Location = new System.Drawing.Point(0, 312);
+			this.listSearch.Location = new System.Drawing.Point(0, 469);
 			this.listSearch.Name = "listSearch";
 			this.listSearch.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.listSearch.Properties.NullValuePrompt = "Click here to search the invitations";
-			this.listSearch.Size = new System.Drawing.Size(515, 20);
+			this.listSearch.Size = new System.Drawing.Size(655, 20);
 			this.listSearch.TabIndex = 0;
 			this.listSearch.EditValueChanged += new System.EventHandler(this.listSearch_EditValueChanged);
 			// 
@@ -68,8 +73,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.personSelector.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, superToolTip1, true),
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("personSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, superToolTip2, true)});
-			this.personSelector.Size = new System.Drawing.Size(374, 20);
+			this.personSelector.Properties.NullValuePrompt = "Click to invite a person";
+			this.personSelector.Size = new System.Drawing.Size(514, 20);
 			this.personSelector.TabIndex = 1;
+			this.personSelector.PersonSelecting += new System.EventHandler<ShomreiTorah.Data.UI.Controls.PersonSelectingEventArgs>(this.personSelector_PersonSelecting);
 			this.personSelector.EditValueChanged += new System.EventHandler(this.personSelector_EditValueChanged);
 			// 
 			// panelControl1
@@ -79,15 +86,15 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.panelControl1.Controls.Add(this.labelControl1);
 			this.panelControl1.Controls.Add(this.source);
 			this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panelControl1.Location = new System.Drawing.Point(0, 0);
+			this.panelControl1.Location = new System.Drawing.Point(0, 114);
 			this.panelControl1.Name = "panelControl1";
-			this.panelControl1.Size = new System.Drawing.Size(515, 20);
+			this.panelControl1.Size = new System.Drawing.Size(655, 20);
 			this.panelControl1.TabIndex = 2;
 			// 
 			// labelControl1
 			// 
 			this.labelControl1.Dock = System.Windows.Forms.DockStyle.Right;
-			this.labelControl1.Location = new System.Drawing.Point(374, 0);
+			this.labelControl1.Location = new System.Drawing.Point(514, 0);
 			this.labelControl1.Name = "labelControl1";
 			this.labelControl1.Padding = new System.Windows.Forms.Padding(2);
 			this.labelControl1.Size = new System.Drawing.Size(41, 17);
@@ -97,7 +104,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// source
 			// 
 			this.source.Dock = System.Windows.Forms.DockStyle.Right;
-			this.source.Location = new System.Drawing.Point(415, 0);
+			this.source.Location = new System.Drawing.Point(555, 0);
 			this.source.Name = "source";
 			this.source.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -108,11 +115,11 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			this.grid.DataMember = "Invitees";
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.grid.Location = new System.Drawing.Point(0, 20);
+			this.grid.Location = new System.Drawing.Point(0, 134);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 39;
-			this.grid.Size = new System.Drawing.Size(515, 292);
+			this.grid.RegistrationCount = 41;
+			this.grid.Size = new System.Drawing.Size(655, 335);
 			this.grid.TabIndex = 3;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -150,7 +157,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colDateAdded.OptionsColumn.ReadOnly = true;
 			this.colDateAdded.Visible = true;
 			this.colDateAdded.VisibleIndex = 1;
-			this.colDateAdded.Width = 76;
+			this.colDateAdded.Width = 166;
 			// 
 			// colSource
 			// 
@@ -174,14 +181,58 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colRowId.Visible = true;
 			this.colRowId.VisibleIndex = 0;
 			// 
+			// ribbonControl1
+			// 
+			this.ribbonControl1.ApplicationButtonText = null;
+			// 
+			// 
+			// 
+			this.ribbonControl1.ExpandCollapseItem.Id = 0;
+			this.ribbonControl1.ExpandCollapseItem.Name = "";
+			this.ribbonControl1.ExpandCollapseItem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
+			this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.ribbonControl1.ExpandCollapseItem,
+            this.saveExcel});
+			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
+			this.ribbonControl1.MaxItemId = 2;
+			this.ribbonControl1.Name = "ribbonControl1";
+			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.ribbonPage1});
+			this.ribbonControl1.SelectedPage = this.ribbonPage1;
+			this.ribbonControl1.Size = new System.Drawing.Size(655, 114);
+			this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
+			// 
+			// saveExcel
+			// 
+			this.saveExcel.Caption = "Export to Excel";
+			this.saveExcel.Id = 1;
+			this.saveExcel.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ExportExcel32;
+			this.saveExcel.Name = "saveExcel";
+			this.saveExcel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.saveExcel_ItemClick);
+			// 
+			// ribbonPage1
+			// 
+			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup1});
+			this.ribbonPage1.Name = "ribbonPage1";
+			this.ribbonPage1.Text = "Events";
+			// 
+			// ribbonPageGroup1
+			// 
+			this.ribbonPageGroup1.ItemLinks.Add(this.saveExcel);
+			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+			this.ribbonPageGroup1.ShowCaptionButton = false;
+			this.ribbonPageGroup1.Text = "Melave Malka";
+			// 
 			// InvitationsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(515, 332);
+			this.ClientSize = new System.Drawing.Size(655, 489);
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.panelControl1);
 			this.Controls.Add(this.listSearch);
+			this.Controls.Add(this.ribbonControl1);
 			this.Name = "InvitationsForm";
 			this.Text = "InvitationsForm";
 			((System.ComponentModel.ISupportInitialize)(this.listSearch.Properties)).EndInit();
@@ -192,6 +243,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.source.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -210,5 +262,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private Data.UI.Grid.SmartGridColumn colDateAdded;
 		private Data.UI.Grid.SmartGridColumn colSource;
 		private Data.UI.Grid.SmartGridColumn colRowId;
+		private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
+		private DevExpress.XtraBars.BarButtonItem saveExcel;
+		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
 	}
 }
