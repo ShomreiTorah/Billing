@@ -131,6 +131,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             this.colDateAdded,
             this.colSource});
 			this.gridView.GridControl = this.grid;
+			this.gridView.OptionsSelection.MultiSelect = true;
+			this.gridView.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.RowSelect;
 			this.gridView.GroupFormat = "{0}: [#image]{1} ({2})";
 			this.gridView.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "", null, "{0} People")});

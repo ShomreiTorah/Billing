@@ -9,9 +9,20 @@ using ShomreiTorah.Data.UI.Controls;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
+using Microsoft.Win32;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	partial class InvitationsForm : XtraForm {
+		static string defaultSource = Registry.GetValue(Program.SettingsPath, "DefaultMelaveMalkaSource",  null) as string;
+		public static string DefaultSource {
+			get { return defaultSource; }
+			set {
+				defaultSource = value;
+				Registry.SetValue(Program.SettingsPath, "DefaultMelaveMalkaSource", value);
+			}
+		}
+
+
 		readonly int year;
 		readonly FilteredTable<MelaveMalkaInvitation> dataSource;
 		public InvitationsForm(int year) {
@@ -30,6 +41,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			EditorRepository.MelaveMalkaSourceEditor.Apply(source.Properties);
 			EditorRepository.PersonOwnedLookup.Apply(listSearch.Properties);
 			Program.SuppressValidation(personSelector.Properties);
+
+			if (Names.MelaveMalkaSources.Contains(DefaultSource))
+				source.Text = DefaultSource;
 		}
 
 		///<summary>Releases the unmanaged resources used by the InvitationsForm and optionally releases the managed resources.</summary>
@@ -67,6 +81,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				Source = source.Text
 			});
 			personSelector.SelectedPerson = null;
+			DefaultSource = source.Text;
 		}
 
 		private void listSearch_EditValueChanged(object sender, EventArgs e) {
