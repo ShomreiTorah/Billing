@@ -1,18 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
-using ShomreiTorah.Singularity;
-using ShomreiTorah.Data;
-using ShomreiTorah.Data.UI.DisplaySettings;
-using ShomreiTorah.WinForms;
-using DevExpress.XtraBars;
-using ShomreiTorah.Data.UI.Controls;
 using System.Diagnostics;
+using System.Linq;
+using System.Windows.Forms;
+using DevExpress.XtraBars;
+using DevExpress.XtraEditors;
+using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI.Controls;
+using ShomreiTorah.Data.UI.DisplaySettings;
+using ShomreiTorah.Singularity;
+using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	partial class InvitationsForm : XtraForm {
@@ -49,6 +45,13 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private void personSelector_PersonSelecting(object sender, PersonSelectingEventArgs e) {
 			if (e.Method == PersonSelectionReason.Created)
 				e.Person.Source = "Melave Malka " + year;
+			else {
+				var otherInvite = e.Person.Invitees.FirstOrDefault(i => i.Year == year);
+				if (otherInvite != null) {
+					e.Cancel = true;
+					Dialog.ShowError(e.Person.VeryFullName + " are already invited by the " + otherInvite.Source + ".");
+				}
+			}
 		}
 		private void personSelector_EditValueChanged(object sender, EventArgs e) {
 			if (personSelector.SelectedPerson == null) return;
