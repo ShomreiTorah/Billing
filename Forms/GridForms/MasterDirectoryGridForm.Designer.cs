@@ -111,7 +111,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
             this.colModifier});
 			this.paymentsView.GridControl = this.grid;
 			this.paymentsView.Name = "paymentsView";
-			this.paymentsView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
+			this.paymentsView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.Click;
 			this.paymentsView.OptionsSelection.MultiSelect = true;
 			this.paymentsView.OptionsView.ShowFooter = true;
 			this.paymentsView.OptionsView.ShowGroupPanel = false;
@@ -291,7 +291,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
             this.colModifier1});
 			this.pledgesView.GridControl = this.grid;
 			this.pledgesView.Name = "pledgesView";
-			this.pledgesView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
+			this.pledgesView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.Click;
 			this.pledgesView.OptionsSelection.MultiSelect = true;
 			this.pledgesView.OptionsView.ShowFooter = true;
 			this.pledgesView.OptionsView.ShowGroupPanel = false;
@@ -401,7 +401,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.emailView.GridControl = this.grid;
 			this.emailView.Name = "emailView";
 			this.emailView.NewItemRowText = "Click here to add an email address";
-			this.emailView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
+			this.emailView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.Click;
 			this.emailView.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
 			this.emailView.OptionsView.ShowGroupPanel = false;
 			// 
@@ -476,7 +476,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "BalanceDue", null, "Total Dues: {0:c}")});
 			this.gridView.Name = "gridView";
 			this.gridView.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
-			this.gridView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
+			this.gridView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.Click;
 			this.gridView.OptionsDetail.AllowExpandEmptyDetails = true;
 			this.gridView.OptionsDetail.EnableDetailToolTip = true;
 			this.gridView.OptionsDetail.SmartDetailExpandButtonMode = DevExpress.XtraGrid.Views.Grid.DetailExpandButtonMode.AlwaysEnabled;
