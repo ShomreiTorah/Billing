@@ -17,12 +17,12 @@ using PowerPointJournal;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.WinForms;
+using AdType = PowerPointJournal.AdType;
 
 namespace ShomreiTorah.Billing.Import.Journal {
 	sealed partial class JournalImporter : XtraForm {
 		static readonly string Account = Names.DefaultAccount;
 
-		//TODO: RejectChanges?
 		public static void Execute() {
 			Program.Current.RefreshDatabase();
 
