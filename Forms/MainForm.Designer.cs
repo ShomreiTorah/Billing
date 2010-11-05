@@ -514,6 +514,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.lookup.Dock = System.Windows.Forms.DockStyle.Top;
 			this.lookup.Location = new System.Drawing.Point(0, 144);
 			this.lookup.Name = "lookup";
+			this.lookup.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.DropDown)});
 			this.lookup.Properties.NullValuePrompt = "Click here to search the Master Directory";
 			this.lookup.Size = new System.Drawing.Size(858, 20);
 			this.lookup.TabIndex = 5;
