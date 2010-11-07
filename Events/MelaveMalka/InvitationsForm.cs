@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI;
 using ShomreiTorah.Data.UI.Controls;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
@@ -13,7 +14,7 @@ using Microsoft.Win32;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	partial class InvitationsForm : XtraForm {
-		static string defaultSource = Registry.GetValue(Program.SettingsPath, "DefaultMelaveMalkaSource",  null) as string;
+		static string defaultSource = Registry.GetValue(Program.SettingsPath, "DefaultMelaveMalkaSource", null) as string;
 		public static string DefaultSource {
 			get { return defaultSource; }
 			set {
@@ -87,8 +88,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private void listSearch_EditValueChanged(object sender, EventArgs e) {
 			var row = listSearch.EditValue as MelaveMalkaInvitation;
 			if (row == null) return;
-			gridView.FocusedRowHandle = gridView.GetRowHandle(dataSource.Rows.IndexOf(row));
-			gridView.MakeRowVisible(gridView.FocusedRowHandle, false);
+			gridView.SetSelection(gridView.GetRowHandle(dataSource.Rows.IndexOf(row)), makeVisible: true);
 			listSearch.EditValue = null;
 		}
 
