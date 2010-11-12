@@ -19,6 +19,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		public ShalachManosForm(int year) {
 			InitializeComponent();
 			this.year = year;
+			Text = "Shalach Manos " + year;
 
 			addPanel.Hide();
 			grid.DataMember = null;
