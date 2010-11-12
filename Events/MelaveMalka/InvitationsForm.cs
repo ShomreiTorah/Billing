@@ -4,13 +4,14 @@ using System.Linq;
 using System.Windows.Forms;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
+using Microsoft.Win32;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI;
 using ShomreiTorah.Data.UI.Controls;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
-using Microsoft.Win32;
+using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	partial class InvitationsForm : XtraForm {
@@ -22,7 +23,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				Registry.SetValue(Program.SettingsPath, "DefaultMelaveMalkaSource", value);
 			}
 		}
-
 
 		readonly int year;
 		readonly FilteredTable<MelaveMalkaInvitation> dataSource;
@@ -81,6 +81,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				Year = year,
 				Source = source.Text
 			});
+			InfoMessage.Show(MdiParent, personSelector.SelectedPerson.VeryFullName + " are now invited by the " + source.Text);
 			personSelector.SelectedPerson = null;
 			DefaultSource = source.Text;
 		}
