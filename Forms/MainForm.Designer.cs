@@ -40,6 +40,18 @@ namespace ShomreiTorah.Billing.Forms {
 			DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip8 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem8 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem8 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip9 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem9 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem9 = new DevExpress.Utils.ToolTipItem();
 			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.addPledge = new DevExpress.XtraBars.BarButtonItem();
 			this.viewPledges = new DevExpress.XtraBars.BarButtonItem();
@@ -321,15 +333,25 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showShalachManos.Id = 20;
 			this.showShalachManos.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("showShalachManos.LargeGlyph")));
 			this.showShalachManos.Name = "showShalachManos";
-			this.showShalachManos.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showShalachManos_ItemClick);
 			// 
 			// shalachManosExport
 			// 
 			this.shalachManosExport.Caption = "Create Scroll";
+			toolTipTitleItem4.Text = "Create Scroll";
+			toolTipItem4.LeftIndent = 6;
+			toolTipItem4.Text = "Creates a scroll listing the Shalach Manos donors in a specific year.";
+			superToolTip4.Items.Add(toolTipTitleItem4);
+			superToolTip4.Items.Add(toolTipItem4);
+			this.shalachManosExport.DropDownSuperTip = superToolTip4;
 			this.shalachManosExport.Id = 21;
 			this.shalachManosExport.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("shalachManosExport.LargeGlyph")));
 			this.shalachManosExport.Name = "shalachManosExport";
-			this.shalachManosExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.shalachManosExport_ItemClick);
+			toolTipTitleItem5.Text = "Create Scroll";
+			toolTipItem5.LeftIndent = 6;
+			toolTipItem5.Text = "Creates a scroll listing this year\'s Shalach Manos donors.";
+			superToolTip5.Items.Add(toolTipTitleItem5);
+			superToolTip5.Items.Add(toolTipItem5);
+			this.shalachManosExport.SuperTip = superToolTip5;
 			// 
 			// showEmailList
 			// 
@@ -371,15 +393,25 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showSeatingForm.Id = 24;
 			this.showSeatingForm.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("showSeatingForm.LargeGlyph")));
 			this.showSeatingForm.Name = "showSeatingForm";
-			this.showSeatingForm.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showSeatingForm_ItemClick);
 			// 
 			// showInvites
 			// 
 			this.showInvites.Caption = "Invitations";
+			toolTipTitleItem6.Text = "Melave Malka Invitations";
+			toolTipItem6.LeftIndent = 6;
+			toolTipItem6.Text = "Shows the Melave Malka invitation list for a specific year.";
+			superToolTip6.Items.Add(toolTipTitleItem6);
+			superToolTip6.Items.Add(toolTipItem6);
+			this.showInvites.DropDownSuperTip = superToolTip6;
 			this.showInvites.Id = 25;
 			this.showInvites.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.Invitations32;
 			this.showInvites.Name = "showInvites";
-			this.showInvites.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showInvites_ItemClick);
+			toolTipTitleItem7.Text = "Melave Malka Invitations";
+			toolTipItem7.LeftIndent = 6;
+			toolTipItem7.Text = "Shows the Melave Malka invitation list.";
+			superToolTip7.Items.Add(toolTipTitleItem7);
+			superToolTip7.Items.Add(toolTipItem7);
+			this.showInvites.SuperTip = superToolTip7;
 			// 
 			// ribbonPage1
 			// 
@@ -430,12 +462,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.emailGroup.ItemLinks.Add(this.emailAll);
 			this.emailGroup.ItemLinks.Add(this.emailModified);
 			this.emailGroup.Name = "emailGroup";
-			toolTipTitleItem4.Text = "Show Email Statement Log";
-			toolTipItem4.LeftIndent = 6;
-			toolTipItem4.Text = "Shows people who have received email statements.";
-			superToolTip4.Items.Add(toolTipTitleItem4);
-			superToolTip4.Items.Add(toolTipItem4);
-			this.emailGroup.SuperTip = superToolTip4;
+			toolTipTitleItem8.Text = "Show Email Statement Log";
+			toolTipItem8.LeftIndent = 6;
+			toolTipItem8.Text = "Shows people who have received email statements.";
+			superToolTip8.Items.Add(toolTipTitleItem8);
+			superToolTip8.Items.Add(toolTipItem8);
+			this.emailGroup.SuperTip = superToolTip8;
 			this.emailGroup.Text = "Send Emails to";
 			this.emailGroup.CaptionButtonClick += new DevExpress.XtraBars.Ribbon.RibbonPageGroupEventHandler(this.emailGroup_CaptionButtonClick);
 			// 
@@ -445,12 +477,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.wordGroup.ItemLinks.Add(this.wordAll);
 			this.wordGroup.ItemLinks.Add(this.wordModified);
 			this.wordGroup.Name = "wordGroup";
-			toolTipTitleItem5.Text = "Show Word Statement Log";
-			toolTipItem5.LeftIndent = 6;
-			toolTipItem5.Text = "Shows people who have received Word statements.";
-			superToolTip5.Items.Add(toolTipTitleItem5);
-			superToolTip5.Items.Add(toolTipItem5);
-			this.wordGroup.SuperTip = superToolTip5;
+			toolTipTitleItem9.Text = "Show Word Statement Log";
+			toolTipItem9.LeftIndent = 6;
+			toolTipItem9.Text = "Shows people who have received Word statements.";
+			superToolTip9.Items.Add(toolTipTitleItem9);
+			superToolTip9.Items.Add(toolTipItem9);
+			this.wordGroup.SuperTip = superToolTip9;
 			this.wordGroup.Text = "Create Word Documents for";
 			this.wordGroup.CaptionButtonClick += new DevExpress.XtraBars.Ribbon.RibbonPageGroupEventHandler(this.wordGroup_CaptionButtonClick);
 			// 

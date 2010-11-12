@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -32,6 +33,58 @@ namespace ShomreiTorah.Billing.Forms {
 			addPaymentPanel.Hide();
 
 			ribbon.SelectedPage = ribbon.Pages[0];
+
+			SetupYearlyButton<Pledge>(
+				showShalachManos,
+				p => p.Type == ShalachManosForm.PledgeType ? p.Date.Year : new int?(),	//Only count Shalach Manos pledges; don't show years that only have other types
+				year => new ShalachManosForm(year) { MdiParent = this }.Show()
+			);
+			SetupYearlyButton<Pledge>(
+				shalachManosExport,
+				p => p.Type == ShalachManosForm.PledgeType ? p.Date.Year : new int?(),
+				year => ShalachManosExport.CreateDocument(year)
+			);
+			SetupYearlyButton<SeatingReservation>(
+				showSeatingForm,
+				sr => sr.Pledge.Date.Year,
+				year => new Events.Seating.SeatingForm(year) { MdiParent = this }.Show()
+			);
+			SetupYearlyButton<MelaveMalkaInvitation>(
+				showInvites,
+				mms => mms.Year,
+				year => new Events.MelaveMalka.InvitationsForm(year) { MdiParent = this }.Show(),
+				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
+			);
+		}
+
+		void SetupYearlyButton<TRow>(BarButtonItem button, Func<TRow, int?> yearGetter, Action<int> showForm, int? defaultYear = null) where TRow : Row {
+			defaultYear = defaultYear ?? DateTime.Now.Year;
+			var menu = new PopupMenu(ribbon.Manager);
+
+			if (button.DropDownSuperTip == null)
+				button.DropDownSuperTip = Utilities.CreateSuperTip(button.Caption, "Shows a " + button.Caption + " for a specific year");
+
+			button.ButtonStyle = BarButtonStyle.DropDown;
+			button.DropDownControl = menu;
+			button.ItemClick += delegate { showForm(defaultYear.Value); };
+			menu.BeforePopup += delegate {
+				foreach (var link in menu.ItemLinks.Cast<BarItemLink>().ToList()) //Collection will be modified
+					ribbon.Manager.Items.Remove(link.Item);
+
+				menu.ItemLinks.Clear();
+
+				Program.LoadTable<TRow>();
+				foreach (int dontUse in Program.Table<TRow>().Rows.Select(yearGetter).Where(y => y.HasValue).Distinct()) {
+					int year = dontUse;	//Force separate variable per closure
+					var item = new BarButtonItem(ribbon.Manager, year.ToString(CultureInfo.CurrentCulture));
+
+					item.ItemClick += delegate { showForm(year); };
+					if (year == defaultYear)
+						item.Appearance.Font = new Font(item.Appearance.GetFont(), FontStyle.Bold);
+
+					menu.AddItem(item);
+				}
+			};
 		}
 
 		protected override void OnShown(EventArgs e) {
@@ -95,15 +148,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private void showCalendar_ItemClick(object sender, ItemClickEventArgs e) { new CalendarForm().Show(this); }
 		private void addDeposit_ListItemClick(object sender, ListItemClickEventArgs e) { DepositAdder.Execute(addDeposit.Strings[e.Index]); }
 
-		private void showShalachManos_ItemClick(object sender, ItemClickEventArgs e) { new ShalachManosForm(DateTime.Today.Year) { MdiParent = this }.Show(); }
-		private void shalachManosExport_ItemClick(object sender, ItemClickEventArgs e) { ShalachManosExport.CreateDocument(DateTime.Today.Year); }
-
-		private void showSeatingForm_ItemClick(object sender, ItemClickEventArgs e) { new Events.Seating.SeatingForm(DateTime.Now.Year) { MdiParent = this }.Show(); }
-
-		private void showInvites_ItemClick(object sender, ItemClickEventArgs e) {
-			//We start using this in December of the previous year
-			new Events.MelaveMalka.InvitationsForm(DateTime.Now.AddMonths(5).Year) { MdiParent = this }.Show();
-		}
 
 		private void importYK_ItemClick(object sender, ItemClickEventArgs e) { Import.YKImporter.Execute(); }
 		private void importJournal_ItemClick(object sender, ItemClickEventArgs e) { Import.Journal.JournalImporter.Execute(); }
