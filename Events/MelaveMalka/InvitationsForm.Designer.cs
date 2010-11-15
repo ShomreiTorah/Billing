@@ -131,12 +131,11 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             this.colDateAdded,
             this.colSource});
 			this.gridView.GridControl = this.grid;
-			this.gridView.OptionsSelection.MultiSelect = true;
-			this.gridView.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.RowSelect;
 			this.gridView.GroupFormat = "{0}: [#image]{1} ({2})";
 			this.gridView.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "", null, "{0} People")});
 			this.gridView.Name = "gridView";
+			this.gridView.OptionsSelection.MultiSelect = true;
 			this.gridView.OptionsView.ShowFooter = true;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colPerson, DevExpress.Data.ColumnSortOrder.Ascending)});
@@ -167,7 +166,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colDateAdded.OptionsColumn.ReadOnly = true;
 			this.colDateAdded.Visible = true;
 			this.colDateAdded.VisibleIndex = 1;
-			this.colDateAdded.Width = 166;
+			this.colDateAdded.Width = 147;
 			// 
 			// colSource
 			// 
@@ -175,7 +174,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colSource.Name = "colSource";
 			this.colSource.Visible = true;
 			this.colSource.VisibleIndex = 2;
-			this.colSource.Width = 65;
+			this.colSource.Width = 52;
 			// 
 			// colId
 			// 
@@ -225,14 +224,14 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
 			this.ribbonPage1.Name = "ribbonPage1";
-			this.ribbonPage1.Text = "Events";
+			this.ribbonPage1.Text = "Melave Malka";
 			// 
 			// ribbonPageGroup1
 			// 
 			this.ribbonPageGroup1.ItemLinks.Add(this.saveExcel);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			this.ribbonPageGroup1.ShowCaptionButton = false;
-			this.ribbonPageGroup1.Text = "Melave Malka";
+			this.ribbonPageGroup1.Text = "Invitations";
 			// 
 			// InvitationsForm
 			// 
