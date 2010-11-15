@@ -46,6 +46,12 @@ namespace ShomreiTorah.Billing.Forms {
 			DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip10 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem10 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem10 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip11 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem11 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem11 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip8 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem8 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem8 = new DevExpress.Utils.ToolTipItem();
@@ -85,8 +91,10 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPage3 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.emailGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.wordGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-			this.ribbonPage4 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+			this.ribbonPage5 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+			this.ribbonPageGroup7 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.ribbonPage4 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
@@ -103,8 +111,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.modifiedPaymentsGrid = new ShomreiTorah.Billing.Controls.ModifiedPaymentsGrid();
 			this.paymentEdit = new ShomreiTorah.Billing.Controls.PaymentEdit();
 			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
-			this.ribbonPage5 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-			this.ribbonPageGroup7 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.ribbonPageGroup9 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.showMMSeating = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.shalachManosColumnsEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lookup.Properties)).BeginInit();
@@ -152,9 +160,10 @@ namespace ShomreiTorah.Billing.Forms {
             this.showEmailList,
             this.shalachManosColumnsItem,
             this.showSeatingForm,
-            this.showInvites});
+            this.showInvites,
+            this.showMMSeating});
 			this.ribbon.Location = new System.Drawing.Point(0, 0);
-			this.ribbon.MaxItemId = 26;
+			this.ribbon.MaxItemId = 27;
 			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
 			this.ribbon.Name = "ribbon";
 			this.ribbon.PageHeaderItemLinks.Add(this.checkUpdate);
@@ -411,7 +420,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showInvites.Name = "showInvites";
 			toolTipTitleItem7.Text = "Melave Malka Invitations";
 			toolTipItem7.LeftIndent = 6;
-			toolTipItem7.Text = "Shows the Melave Malka invitation list.";
+			toolTipItem7.Text = "Shows the invitations for the current Melave Malka.";
 			superToolTip7.Items.Add(toolTipTitleItem7);
 			superToolTip7.Items.Add(toolTipItem7);
 			this.showInvites.SuperTip = superToolTip7;
@@ -465,12 +474,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.emailGroup.ItemLinks.Add(this.emailAll);
 			this.emailGroup.ItemLinks.Add(this.emailModified);
 			this.emailGroup.Name = "emailGroup";
-			toolTipTitleItem8.Text = "Show Email Statement Log";
-			toolTipItem8.LeftIndent = 6;
-			toolTipItem8.Text = "Shows people who have received email statements.";
-			superToolTip8.Items.Add(toolTipTitleItem8);
-			superToolTip8.Items.Add(toolTipItem8);
-			this.emailGroup.SuperTip = superToolTip8;
+			toolTipTitleItem10.Text = "Show Email Statement Log";
+			toolTipItem10.LeftIndent = 6;
+			toolTipItem10.Text = "Shows people who have received email statements.";
+			superToolTip10.Items.Add(toolTipTitleItem10);
+			superToolTip10.Items.Add(toolTipItem10);
+			this.emailGroup.SuperTip = superToolTip10;
 			this.emailGroup.Text = "Send Emails to";
 			this.emailGroup.CaptionButtonClick += new DevExpress.XtraBars.Ribbon.RibbonPageGroupEventHandler(this.emailGroup_CaptionButtonClick);
 			// 
@@ -480,22 +489,30 @@ namespace ShomreiTorah.Billing.Forms {
 			this.wordGroup.ItemLinks.Add(this.wordAll);
 			this.wordGroup.ItemLinks.Add(this.wordModified);
 			this.wordGroup.Name = "wordGroup";
-			toolTipTitleItem9.Text = "Show Word Statement Log";
-			toolTipItem9.LeftIndent = 6;
-			toolTipItem9.Text = "Shows people who have received Word statements.";
-			superToolTip9.Items.Add(toolTipTitleItem9);
-			superToolTip9.Items.Add(toolTipItem9);
-			this.wordGroup.SuperTip = superToolTip9;
+			toolTipTitleItem11.Text = "Show Word Statement Log";
+			toolTipItem11.LeftIndent = 6;
+			toolTipItem11.Text = "Shows people who have received Word statements.";
+			superToolTip11.Items.Add(toolTipTitleItem11);
+			superToolTip11.Items.Add(toolTipItem11);
+			this.wordGroup.SuperTip = superToolTip11;
 			this.wordGroup.Text = "Create Word Documents for";
 			this.wordGroup.CaptionButtonClick += new DevExpress.XtraBars.Ribbon.RibbonPageGroupEventHandler(this.wordGroup_CaptionButtonClick);
 			// 
-			// ribbonPage4
+			// ribbonPage5
 			// 
-			this.ribbonPage4.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup8,
-            this.ribbonPageGroup6});
-			this.ribbonPage4.Name = "ribbonPage4";
-			this.ribbonPage4.Text = "Events";
+			this.ribbonPage5.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup7,
+            this.ribbonPageGroup9,
+            this.ribbonPageGroup5});
+			this.ribbonPage5.Name = "ribbonPage5";
+			this.ribbonPage5.Text = "Melave Malka";
+			// 
+			// ribbonPageGroup7
+			// 
+			this.ribbonPageGroup7.ItemLinks.Add(this.showInvites);
+			this.ribbonPageGroup7.Name = "ribbonPageGroup7";
+			this.ribbonPageGroup7.ShowCaptionButton = false;
+			this.ribbonPageGroup7.Text = "Invitations";
 			// 
 			// ribbonPageGroup5
 			// 
@@ -504,6 +521,14 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPageGroup5.Name = "ribbonPageGroup5";
 			this.ribbonPageGroup5.ShowCaptionButton = false;
 			this.ribbonPageGroup5.Text = "Import";
+			// 
+			// ribbonPage4
+			// 
+			this.ribbonPage4.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup8,
+            this.ribbonPageGroup6});
+			this.ribbonPage4.Name = "ribbonPage4";
+			this.ribbonPage4.Text = "Events";
 			// 
 			// ribbonPageGroup8
 			// 
@@ -652,20 +677,30 @@ namespace ShomreiTorah.Billing.Forms {
 			this.mdiManager.MdiParent = this;
 			this.mdiManager.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mdiManager_MouseDown);
 			// 
-			// ribbonPage5
+			// ribbonPageGroup9
 			// 
-			this.ribbonPage5.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup7,
-            this.ribbonPageGroup5});
-			this.ribbonPage5.Name = "ribbonPage5";
-			this.ribbonPage5.Text = "Melave Malka";
+			this.ribbonPageGroup9.ItemLinks.Add(this.showMMSeating);
+			this.ribbonPageGroup9.Name = "ribbonPageGroup9";
+			this.ribbonPageGroup9.ShowCaptionButton = false;
+			this.ribbonPageGroup9.Text = "Seating";
 			// 
-			// ribbonPageGroup7
+			// showMMSeating
 			// 
-			this.ribbonPageGroup7.ItemLinks.Add(this.showInvites);
-			this.ribbonPageGroup7.Name = "ribbonPageGroup7";
-			this.ribbonPageGroup7.ShowCaptionButton = false;
-			this.ribbonPageGroup7.Text = "Invitations";
+			this.showMMSeating.Caption = "Seating Reservations";
+			toolTipTitleItem8.Text = "Melave Malka Seating";
+			toolTipItem8.LeftIndent = 6;
+			toolTipItem8.Text = "Shows the seating reservations for the a specific Melave Malka.";
+			superToolTip8.Items.Add(toolTipTitleItem8);
+			superToolTip8.Items.Add(toolTipItem8);
+			this.showMMSeating.DropDownSuperTip = superToolTip8;
+			this.showMMSeating.Id = 26;
+			this.showMMSeating.Name = "showMMSeating";
+			toolTipTitleItem9.Text = "Melave Malka Seating";
+			toolTipItem9.LeftIndent = 6;
+			toolTipItem9.Text = "Shows the seating reservations for the current Melave Malka.";
+			superToolTip9.Items.Add(toolTipTitleItem9);
+			superToolTip9.Items.Add(toolTipItem9);
+			this.showMMSeating.SuperTip = superToolTip9;
 			// 
 			// MainForm
 			// 
@@ -749,5 +784,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.BarButtonItem showInvites;
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage5;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup7;
+		private DevExpress.XtraBars.BarButtonItem showMMSeating;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup9;
 	}
 }

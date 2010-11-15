@@ -51,8 +51,14 @@ namespace ShomreiTorah.Billing.Forms {
 			);
 			SetupYearlyButton<MelaveMalkaInvitation>(
 				showInvites,
-				mms => mms.Year,
+				mmi => mmi.Year,
 				year => new Events.MelaveMalka.InvitationsForm(year) { MdiParent = this }.Show(),
+				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
+			);
+			SetupYearlyButton<MelaveMalkaSeat>(
+				showMMSeating,
+				mms => mms.Year,
+				year => new Events.MelaveMalka.SeatingForm(year) { MdiParent = this }.Show(),
 				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
 			);
 		}

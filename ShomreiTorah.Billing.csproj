@@ -146,6 +146,12 @@
     <Compile Include="Events\MelaveMalka\InvitationsForm.Designer.cs">
       <DependentUpon>InvitationsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\MelaveMalka\SeatingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Events\MelaveMalka\SeatingForm.Designer.cs">
+      <DependentUpon>SeatingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\Seating\ExcelExporter.cs" />
     <Compile Include="Events\Seating\ParsedSeatingChart.cs" />
     <Compile Include="Events\Seating\SeatingChartInfo.cs">
@@ -231,6 +237,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Events\MelaveMalka\InvitationsForm.resx">
       <DependentUpon>InvitationsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Events\MelaveMalka\SeatingForm.resx">
+      <DependentUpon>SeatingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Events\Purim\ShalachManosForm.resx">
       <DependentUpon>ShalachManosForm.cs</DependentUpon>
