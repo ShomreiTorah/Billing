@@ -25,16 +25,24 @@ namespace ShomreiTorah.Billing.Controls {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaymentEdit));
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
 			this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
 			this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
 			this.commit = new ShomreiTorah.Billing.Controls.CommitButton();
 			this.account = new DevExpress.XtraEditors.ComboBoxEdit();
 			this.paymentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource();
+			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource(this.components);
 			this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
 			this.amount = new DevExpress.XtraEditors.SpinEdit();
 			this.checkNumberLabel = new DevExpress.XtraEditors.LabelControl();
-			this.checkNumber = new CheckNumberEdit();
+			this.checkNumber = new ShomreiTorah.Data.UI.Controls.CheckNumberEdit();
 			this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
 			this.method = new DevExpress.XtraEditors.ComboBoxEdit();
 			this.comments = new DevExpress.XtraEditors.MemoEdit();
@@ -116,6 +124,11 @@ namespace ShomreiTorah.Billing.Controls {
 			// 
 			this.paymentsBindingSource.DataMember = "Payments";
 			this.paymentsBindingSource.DataSource = this.billingData;
+			this.paymentsBindingSource.Position = 0;
+			// 
+			// billingData
+			// 
+			this.billingData.Position = 0;
 			// 
 			// labelControl3
 			// 
@@ -217,6 +230,7 @@ namespace ShomreiTorah.Billing.Controls {
             new DevExpress.XtraEditors.Controls.EditorButton()});
 			this.date.Size = new System.Drawing.Size(126, 20);
 			this.date.TabIndex = 0;
+			this.date.EditValueChanging += new DevExpress.XtraEditors.Controls.ChangingEventHandler(this.date_EditValueChanging);
 			this.date.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
 			// 
 			// labelControl1
@@ -233,6 +247,15 @@ namespace ShomreiTorah.Billing.Controls {
 			this.person.Dock = System.Windows.Forms.DockStyle.Top;
 			this.person.Location = new System.Drawing.Point(0, 0);
 			this.person.Name = "person";
+			toolTipItem1.Text = "Click to select a person";
+			superToolTip1.Items.Add(toolTipItem1);
+			toolTipTitleItem1.Text = "New Person...";
+			toolTipItem2.Text = "Adds a new person to the master directory";
+			superToolTip2.Items.Add(toolTipTitleItem1);
+			superToolTip2.Items.Add(toolTipItem2);
+			this.person.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, superToolTip1, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("person.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, superToolTip2, true)});
 			this.person.Size = new System.Drawing.Size(347, 20);
 			this.person.TabIndex = 0;
 			this.person.PersonSelecting += new System.EventHandler<ShomreiTorah.Data.UI.Controls.PersonSelectingEventArgs>(this.person_PersonSelecting);

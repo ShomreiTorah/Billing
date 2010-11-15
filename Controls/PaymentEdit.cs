@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI;
@@ -172,6 +173,15 @@ Payment:	{4:c} {5} for {6} on {7:d}
 			 && DialogResult.No == XtraMessageBox.Show("Are you sure you want to change this payment to be associated with " + e.Person.VeryFullName + "?",
 													   "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
 				e.Cancel = true;
+		}
+
+		private void date_EditValueChanging(object sender, ChangingEventArgs e) {
+			if (!(e.NewValue is DateTime)) return;
+			var newDate = (DateTime)e.NewValue;
+			if (newDate.Date == DateTime.Today.AddDays(1))
+				e.Cancel = !Dialog.Warn("Are you sure you want to enter a payment dated tomorrow?");
+			else if (newDate.Date > DateTime.Now)
+				e.Cancel = !Dialog.Warn("Are you sure you want to enter a payment dated " + (newDate.Date - DateTime.Today).Days + " days in the future?");
 		}
 	}
 }
