@@ -70,24 +70,17 @@ namespace ShomreiTorah.Billing {
 				Person.Schema.Columns.AddCalculatedColumn<decimal>("BalanceDue", person => person.Field<decimal>("TotalPledged") - person.Field<decimal>("TotalPaid"));
 			}
 
-			GridManager.RegisterBehavior(Deposit.Schema,
-				DeletionBehavior.WithMessages<Deposit>(
-					singular: d => "Are you sure you want to delete this " + d.Amount.ToString("c", CultureInfo.CurrentCulture) + " deposit?\r\nThe payments will not be deleted.",
-					plural: deposits => "Are you sure you want to delete "
-										+ (deposits.Count().ToString(CultureInfo.InvariantCulture) + " pledges containing "
-										+ deposits.Sum(p => p.Amount).ToString("c", CultureInfo.CurrentCulture) + "?\r\nThe payments in the deposits will not be deleted.")
-			));
-
-
 			context.Tables.AddTable(Payment.CreateTable());
 			context.Tables.AddTable(Pledge.CreateTable());
 			context.Tables.AddTable(EmailAddress.CreateTable());
 			context.Tables.AddTable(LoggedStatement.CreateTable());
 			context.Tables.AddTable(Person.CreateTable());
 			context.Tables.AddTable(Deposit.CreateTable());
+
 			if (IsDesignTime) {	//These tables are only loaded when needed.  However, I still want them in the designer.
 				context.Tables.AddTable(SeatingReservation.CreateTable());
 				context.Tables.AddTable(MelaveMalkaInvitation.CreateTable());
+				context.Tables.AddTable(MelaveMalkaSeat.CreateTable());
 			}
 
 			var syncContext = new DataSyncContext(context, new SqlServerSqlProvider(DB.Default));
@@ -108,6 +101,14 @@ namespace ShomreiTorah.Billing {
 
 			SeatingReservation.Schema.ToString();//Force static ctor
 			RegisterRowDetail<SeatingReservation>(p => new Events.Seating.SeatingReservationPopup(p).Show(MainForm));
+
+			GridManager.RegisterBehavior(Deposit.Schema,
+				DeletionBehavior.WithMessages<Deposit>(
+					singular: d => "Are you sure you want to delete this " + d.Amount.ToString("c", CultureInfo.CurrentCulture) + " deposit?\r\nThe payments will not be deleted.",
+					plural: deposits => "Are you sure you want to delete "
+										+ (deposits.Count().ToString(CultureInfo.InvariantCulture) + " pledges containing "
+										+ deposits.Sum(p => p.Amount).ToString("c", CultureInfo.CurrentCulture) + "?\r\nThe payments in the deposits will not be deleted.")
+			));
 
 			GridManager.RegisterColumn((SmartGridColumn sgc) => {
 				return sgc.View.GetSourceSchema() == SeatingReservation.Schema && sgc.FieldName == "Person";
