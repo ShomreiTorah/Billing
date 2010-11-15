@@ -88,7 +88,7 @@
 	<p>
 		Sincerely,</p>
 	<p>
-		Jason P. (Yaacov) Gitstein<br />
+		Levi Krinsky<br />
 		Treasurer
 	</p>
 </asp:Content>
