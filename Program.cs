@@ -203,7 +203,7 @@ namespace ShomreiTorah.Billing {
 			if (File.Exists(configPath)) {
 				try {
 					File.Encrypt(configPath);
-				} catch (PlatformNotSupportedException) { } catch (NotSupportedException) { }
+				} catch (PlatformNotSupportedException) { } catch (NotSupportedException) { } catch (IOException) { }
 
 				Config.FilePath = configPath;
 			}
