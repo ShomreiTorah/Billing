@@ -18,7 +18,35 @@ using DevExpress.XtraEditors.Controls;
 
 namespace ShomreiTorah.Billing.Controls {
 	sealed class HebrewCalendarEdit : PopupContainerEdit {
-		static HebrewCalendarEdit() {
+		static HebrewCalendarEdit() { RepositoryItemHebrewCalendarEdit.Register(); }
+
+		[Category("Properties")]
+		[Description("Gets an object containing properties, methods and events specific to the spin edit control.")]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public new RepositoryItemHebrewCalendarEdit Properties { get { return base.Properties as RepositoryItemHebrewCalendarEdit; } }
+
+		public override string EditorTypeName {
+			get { return "HebrewCalendarEdit"; }
+		}
+
+		protected override void DoShowPopup() {
+			FlushPendingEditActions();
+			base.DoShowPopup();
+			if (EditValue == null || EditValue == DBNull.Value)
+				Properties.Calendar.SelectedDate = null;
+			else
+				Properties.Calendar.SelectedDate = (DateTime)EditValue;
+		}
+
+		public DateTime DateTime {
+			get { return (DateTime)EditValue; }
+			set { EditValue = value; }
+		}
+	}
+
+	[UserRepositoryItem("Register")]
+	sealed class RepositoryItemHebrewCalendarEdit : RepositoryItemPopupContainerEdit {
+		public static void Register() {
 			EditorRegistrationInfo.Default.Editors.Add(
 				new EditorClassInfo(
 					"HebrewCalendarEdit",
@@ -32,25 +60,6 @@ namespace ShomreiTorah.Billing.Controls {
 			);
 		}
 
-		[Category("Properties")]
-		[Description("Gets an object containing properties, methods and events specific to the spin edit control.")]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public new RepositoryItemHebrewCalendarEdit Properties { get { return base.Properties as RepositoryItemHebrewCalendarEdit; } }
-
-		public override string EditorTypeName {
-			get { return "HebrewCalendarEdit"; }
-		}
-
-		protected override void DoShowPopup() {
-			FlushPendingEditActions();
-			if (EditValue == null || EditValue == DBNull.Value)
-				Properties.Calendar.SelectedDate = null;
-			else
-				Properties.Calendar.SelectedDate = (DateTime)EditValue;
-			base.DoShowPopup();
-		}
-	}
-	sealed class RepositoryItemHebrewCalendarEdit : RepositoryItemPopupContainerEdit {
 		public RepositoryItemHebrewCalendarEdit() {
 			Calendar = new HebrewCalendar { Dock = DockStyle.Fill };
 			Calendar.KeyUp += Calendar_KeyUp;
