@@ -38,6 +38,8 @@ namespace ShomreiTorah.Billing.Controls {
 				Properties.Calendar.SelectedDate = (DateTime)EditValue;
 		}
 
+		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public DateTime DateTime {
 			get { return (DateTime)EditValue; }
 			set { EditValue = value; }
@@ -83,7 +85,6 @@ namespace ShomreiTorah.Billing.Controls {
 			if (e.KeyCode == Keys.Enter)
 				OwnerEdit.ClosePopup();
 		}
-
 		void Calendar_DateClicked(object sender, HebrewDateEventArgs e) {
 			OwnerEdit.ClosePopup();
 		}
