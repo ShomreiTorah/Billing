@@ -79,6 +79,7 @@ namespace ShomreiTorah.Billing {
 
 			if (IsDesignTime) {	//These tables are only loaded when needed.  However, I still want them in the designer.
 				context.Tables.AddTable(SeatingReservation.CreateTable());
+				context.Tables.AddTable(MelaveMalkaInfo.CreateTable());
 				context.Tables.AddTable(MelaveMalkaInvitation.CreateTable());
 				context.Tables.AddTable(MelaveMalkaSeat.CreateTable());
 			}

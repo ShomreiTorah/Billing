@@ -154,6 +154,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private void showCalendar_ItemClick(object sender, ItemClickEventArgs e) { new CalendarForm().Show(this); }
 		private void addDeposit_ListItemClick(object sender, ListItemClickEventArgs e) { DepositAdder.Execute(addDeposit.Strings[e.Index]); }
 
+		private void ribbonPageGroup7_CaptionButtonClick(object sender, RibbonPageGroupEventArgs e) { new Events.MelaveMalka.MMInfoForm().Show(this); }
 
 		private void importYK_ItemClick(object sender, ItemClickEventArgs e) { Import.YKImporter.Execute(); }
 		private void importJournal_ItemClick(object sender, ItemClickEventArgs e) { Import.Journal.JournalImporter.Execute(); }
@@ -218,6 +219,5 @@ namespace ShomreiTorah.Billing.Forms {
 			if (childBar != null)
 				ribbonStatusBar.UnMergeStatusBar();
 		}
-
 	}
 }

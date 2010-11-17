@@ -46,18 +46,21 @@ namespace ShomreiTorah.Billing.Forms {
 			DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip10 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem10 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem10 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip11 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem11 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem11 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip8 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem8 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem8 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip9 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem9 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem9 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip10 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem10 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem10 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip11 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem11 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem11 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip12 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem12 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem12 = new DevExpress.Utils.ToolTipItem();
 			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.addPledge = new DevExpress.XtraBars.BarButtonItem();
 			this.viewPledges = new DevExpress.XtraBars.BarButtonItem();
@@ -84,6 +87,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.shalachManosColumnsEdit = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
 			this.showSeatingForm = new DevExpress.XtraBars.BarButtonItem();
 			this.showInvites = new DevExpress.XtraBars.BarButtonItem();
+			this.showMMSeating = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -93,6 +97,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.wordGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPage5 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup7 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.ribbonPageGroup9 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPage4 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -111,8 +116,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.modifiedPaymentsGrid = new ShomreiTorah.Billing.Controls.ModifiedPaymentsGrid();
 			this.paymentEdit = new ShomreiTorah.Billing.Controls.PaymentEdit();
 			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
-			this.ribbonPageGroup9 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-			this.showMMSeating = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.shalachManosColumnsEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lookup.Properties)).BeginInit();
@@ -425,6 +428,24 @@ namespace ShomreiTorah.Billing.Forms {
 			superToolTip7.Items.Add(toolTipItem7);
 			this.showInvites.SuperTip = superToolTip7;
 			// 
+			// showMMSeating
+			// 
+			this.showMMSeating.Caption = "Seating Reservations";
+			toolTipTitleItem8.Text = "Melave Malka Seating";
+			toolTipItem8.LeftIndent = 6;
+			toolTipItem8.Text = "Shows the seating reservations for the a specific Melave Malka.";
+			superToolTip8.Items.Add(toolTipTitleItem8);
+			superToolTip8.Items.Add(toolTipItem8);
+			this.showMMSeating.DropDownSuperTip = superToolTip8;
+			this.showMMSeating.Id = 26;
+			this.showMMSeating.Name = "showMMSeating";
+			toolTipTitleItem9.Text = "Melave Malka Seating";
+			toolTipItem9.LeftIndent = 6;
+			toolTipItem9.Text = "Shows the seating reservations for the current Melave Malka.";
+			superToolTip9.Items.Add(toolTipTitleItem9);
+			superToolTip9.Items.Add(toolTipItem9);
+			this.showMMSeating.SuperTip = superToolTip9;
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -511,8 +532,21 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.ribbonPageGroup7.ItemLinks.Add(this.showInvites);
 			this.ribbonPageGroup7.Name = "ribbonPageGroup7";
-			this.ribbonPageGroup7.ShowCaptionButton = false;
+			toolTipTitleItem12.Text = "Melave Malka Info";
+			toolTipItem12.LeftIndent = 6;
+			toolTipItem12.Text = "Displays information about the Melave Malkas.";
+			superToolTip12.Items.Add(toolTipTitleItem12);
+			superToolTip12.Items.Add(toolTipItem12);
+			this.ribbonPageGroup7.SuperTip = superToolTip12;
 			this.ribbonPageGroup7.Text = "Invitations";
+			this.ribbonPageGroup7.CaptionButtonClick += new DevExpress.XtraBars.Ribbon.RibbonPageGroupEventHandler(this.ribbonPageGroup7_CaptionButtonClick);
+			// 
+			// ribbonPageGroup9
+			// 
+			this.ribbonPageGroup9.ItemLinks.Add(this.showMMSeating);
+			this.ribbonPageGroup9.Name = "ribbonPageGroup9";
+			this.ribbonPageGroup9.ShowCaptionButton = false;
+			this.ribbonPageGroup9.Text = "Seating";
 			// 
 			// ribbonPageGroup5
 			// 
@@ -676,31 +710,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.mdiManager.ClosePageButtonShowMode = DevExpress.XtraTab.ClosePageButtonShowMode.InAllTabPagesAndTabControlHeader;
 			this.mdiManager.MdiParent = this;
 			this.mdiManager.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mdiManager_MouseDown);
-			// 
-			// ribbonPageGroup9
-			// 
-			this.ribbonPageGroup9.ItemLinks.Add(this.showMMSeating);
-			this.ribbonPageGroup9.Name = "ribbonPageGroup9";
-			this.ribbonPageGroup9.ShowCaptionButton = false;
-			this.ribbonPageGroup9.Text = "Seating";
-			// 
-			// showMMSeating
-			// 
-			this.showMMSeating.Caption = "Seating Reservations";
-			toolTipTitleItem8.Text = "Melave Malka Seating";
-			toolTipItem8.LeftIndent = 6;
-			toolTipItem8.Text = "Shows the seating reservations for the a specific Melave Malka.";
-			superToolTip8.Items.Add(toolTipTitleItem8);
-			superToolTip8.Items.Add(toolTipItem8);
-			this.showMMSeating.DropDownSuperTip = superToolTip8;
-			this.showMMSeating.Id = 26;
-			this.showMMSeating.Name = "showMMSeating";
-			toolTipTitleItem9.Text = "Melave Malka Seating";
-			toolTipItem9.LeftIndent = 6;
-			toolTipItem9.Text = "Shows the seating reservations for the current Melave Malka.";
-			superToolTip9.Items.Add(toolTipTitleItem9);
-			superToolTip9.Items.Add(toolTipItem9);
-			this.showMMSeating.SuperTip = superToolTip9;
 			// 
 			// MainForm
 			// 
