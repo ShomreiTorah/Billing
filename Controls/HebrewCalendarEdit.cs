@@ -33,7 +33,7 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 
 		protected override void DoShowPopup() {
-			FlushPendingEditActions();	//Force the DateTime to be accurate
+			FlushPendingEditActions();	//Force the DateTime to reflect manual edits
 			base.DoShowPopup();
 		}
 
@@ -75,6 +75,7 @@ namespace ShomreiTorah.Billing.Controls {
 
 	[UserRepositoryItem("Register")]
 	sealed class RepositoryItemHebrewCalendarEdit : RepositoryItemPopupBase {
+		static RepositoryItemHebrewCalendarEdit() { Register(); }
 		public static void Register() {
 			EditorRegistrationInfo.Default.Editors.Add(
 				new EditorClassInfo(
