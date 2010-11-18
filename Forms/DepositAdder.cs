@@ -52,6 +52,7 @@ namespace ShomreiTorah.Billing.Forms {
 										 payments.Length, payments.Length == 1 ? "" : "s", payments.Sum(p => p.Amount));
 
 			UpdateSummary();
+			CheckableGridController.Handle(colCheck);
 		}
 		#region DateEdit
 		private void depositDate_DrawItem(object sender, CustomDrawDayNumberCellEventArgs e) {
@@ -79,39 +80,24 @@ namespace ShomreiTorah.Billing.Forms {
 														selPayments.Length, selPayments.Length == 1 ? "" : "s", selPayments.Sum(p => p.Amount));
 		}
 
-		#region Grid
 		private void gridView_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
-			if (e.IsGetData)
-				e.Value = selectedPayments[e.ListSourceRowIndex];
-			else
-				selectedPayments[e.ListSourceRowIndex] = (bool)e.Value;
-			UpdateSummary();
-			SetEnabled();
-		}
-
-		private void gridView_KeyDown(object sender, KeyEventArgs e) {
-			if (e.KeyData == Keys.Space) {
-				foreach (var handle in gridView.GetSelectedRows())
-					Invert(handle);
+			if (e.Column == colCheck) {
+				if (e.IsGetData)
+					e.Value = selectedPayments[e.ListSourceRowIndex];
+				else {
+					selectedPayments[e.ListSourceRowIndex] = (bool)e.Value;
+					UpdateSummary();
+					SetEnabled();
+				}
 			}
 		}
-		private void gridView_MouseUp(object sender, MouseEventArgs e) {
-			var hitInfo = gridView.CalcHitInfo(e.Location);
-			if (hitInfo.InRowCell && hitInfo.Column == colCheck && hitInfo.RowHandle >= 0)
-				Invert(hitInfo.RowHandle);
-		}
-
-		private void gridView_BeforeLeaveRow(object sender, RowAllowEventArgs e) {
-			if (MouseButtons == MouseButtons.Left) {	//Don't change focus when a checkbox is clicked
-				var hitInfo = gridView.CalcHitInfo(grid.PointToClient(MousePosition));
-				if (hitInfo.Column == colCheck)
-					e.Allow = false;
+		private void gridView_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e) {
+			if (e.Column == colFullName) {
+				var person = e.Value as Person;
+				if (person != null)
+					e.DisplayText = person.FullName;
 			}
 		}
-		void Invert(int rowHandle) {
-			gridView.SetRowCellValue(rowHandle, colCheck, !(bool)gridView.GetRowCellValue(rowHandle, colCheck));
-		}
-		#endregion
 
 		private void add_Click(object sender, EventArgs e) {
 			var depositRow = Program.Table<Deposit>().Rows.FirstOrDefault(d => d.Date == depositDate.DateTime.Date && d.Account == account && d.Number == depositNumber.Value);
@@ -134,14 +120,6 @@ namespace ShomreiTorah.Billing.Forms {
 				payment.Deposit = depositRow;
 			}
 			Close();
-		}
-
-		private void gridView_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e) {
-			if (e.Column == colFullName) {
-				var person = e.Value as Person;
-				if (person != null)
-					e.DisplayText = person.FullName;
-			}
 		}
 	}
 }
