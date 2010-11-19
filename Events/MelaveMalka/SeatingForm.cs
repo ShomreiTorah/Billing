@@ -19,8 +19,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		readonly FilteredTable<MelaveMalkaSeat> dataSource;
 
 		public SeatingForm(int year) {
-			Program.LoadTable<MelaveMalkaSeat>();		//Before DataMember is set in InitializeComponent
-			Program.LoadTable<MelaveMalkaInvitation>();	//Required for validation
+			//Load tables before DataMember is set in InitializeComponent
+			//Invitations are required for validation
+			Program.LoadTables(MelaveMalkaSeat.Schema, MelaveMalkaInvitation.Schema);
+
 			InitializeComponent();
 			this.year = year;
 			Text = "Melave Malka " + year + " Seating Reservations";

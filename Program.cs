@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -38,22 +39,35 @@ namespace ShomreiTorah.Billing {
 	[SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
 	class Program : AppFramework {
 		///<summary>Ensures that a table is loaded.</summary>
-		public static void LoadTable<TRow>() where TRow : Row {
-			if (Table<TRow>() != null) return;	//The table is already loaded
+		public static void LoadTable<TRow>() where TRow : Row { LoadTables(TypedSchema<TRow>.Instance); }
+		public static void LoadTables(params TableSchema[] schemas) { LoadTables((IEnumerable<TableSchema>)schemas); }
 
-			var table = new TypedTable<TRow>(TypedSchema<TRow>.Instance);	//TODO: Fast rowCreator
-			Current.DataContext.Tables.AddTable(table);
+		public static void LoadTables(IEnumerable<TableSchema> schemas) {
+			var allSchemas = new HashSet<TableSchema>();
+			foreach (var schema in schemas.Where(s => Current.DataContext.Tables[s] == null)) {
+				allSchemas.Add(schema);
+				allSchemas.UnionWith(schema.GetDependencies());
+			}
 
-			var syncer = new TableSynchronizer(table, SchemaMapping.GetPrimaryMapping(table.Schema), Current.SyncContext.SqlProvider);
-			Current.SyncContext.Tables.Add(syncer);
+			if (allSchemas.Count == 0) return;	//All of the tables are already loaded
+			var tables = allSchemas
+				.SortDependencies()
+				.Except(Current.DataContext.Tables.Select(t => t.Schema))	//Must be called after SortDependencies, since sorting requires all dependencies
+				.Select(ts => ts.CreateTable())
+				.ToList();
+
+			tables.ForEach(Current.DataContext.Tables.AddTable);
+
+			var syncers = tables.ConvertAll(t => new TableSynchronizer(t, SchemaMapping.GetPrimaryMapping(t.Schema), Current.SyncContext.SqlProvider));
+			syncers.ForEach(Current.SyncContext.Tables.Add);
 
 			var threadContext = SynchronizationContext.Current;
 			ProgressWorker.Execute(ui => {
 				if (Current.HasDataChanged)
-					Current.SyncContext.WriteData(ui);	//I must save before loading in case a parent row was deleted.  (The DB is expected to cascade)
+					Current.SyncContext.WriteData(ui);			//I must save before loading in case a parent row was deleted.  (The DB is expected to cascade)
 
 				ui.Maximum = -1;
-				ui.Caption = "Loading " + table.Schema.Name;
+				ui.Caption = "Loading " + tables.Join(", ", t => t.Schema.Name);
 				Current.SyncContext.ReadData(threadContext);	//I must refresh everything to pick up potential changes in parent rows
 			}, false);
 		}
