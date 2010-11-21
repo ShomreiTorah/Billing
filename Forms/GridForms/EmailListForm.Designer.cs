@@ -70,7 +70,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.grid.Location = new System.Drawing.Point(0, 114);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 38;
+			this.grid.RegistrationCount = 48;
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.emptyPersonEdit,
             this.personEdit});
@@ -132,6 +132,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colFullName.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
 			this.colFullName.OptionsColumn.ReadOnly = true;
 			this.colFullName.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+			this.colFullName.ShowEditorOnMouseDown = true;
 			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 3;
@@ -173,6 +174,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.personSelector.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, "", null, superToolTip1, true),
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("personSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject6, "", null, superToolTip2, true)});
+			this.personSelector.Properties.NullValuePrompt = "Click here to select the person that owns this email address";
 			this.personSelector.Size = new System.Drawing.Size(821, 20);
 			this.personSelector.TabIndex = 1;
 			this.personSelector.EditValueChanged += new System.EventHandler(this.personSelector_EditValueChanged);
