@@ -35,6 +35,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colPerson = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colDateAdded = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colEmailAddresses = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.emailLinkEdit = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
 			this.addCaller = new ShomreiTorah.WinForms.Controls.Lookup.ItemSelector();
 			this.colRowId = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colRowId1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -42,6 +43,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.calleesView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emailLinkEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.addCaller.Properties)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -99,7 +101,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.grid.Location = new System.Drawing.Point(0, 20);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 45;
+			this.grid.RegistrationCount = 48;
+			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.emailLinkEdit});
 			this.grid.Size = new System.Drawing.Size(514, 358);
 			this.grid.TabIndex = 1;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -114,6 +118,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             this.colEmailAddresses});
 			this.gridView.GridControl = this.grid;
 			this.gridView.Name = "gridView";
+			this.gridView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
 			// 
 			// colPerson
 			// 
@@ -133,17 +138,27 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			this.colDateAdded.FieldName = "DateAdded";
 			this.colDateAdded.Name = "colDateAdded";
+			this.colDateAdded.OptionsColumn.AllowEdit = false;
+			this.colDateAdded.OptionsColumn.ReadOnly = true;
 			this.colDateAdded.Width = 66;
 			// 
 			// colEmailAddresses
 			// 
+			this.colEmailAddresses.ColumnEditor = this.emailLinkEdit;
 			this.colEmailAddresses.FieldName = "EmailAddresses";
 			this.colEmailAddresses.Name = "colEmailAddresses";
-			this.colEmailAddresses.OptionsColumn.AllowEdit = false;
 			this.colEmailAddresses.OptionsColumn.ReadOnly = true;
 			this.colEmailAddresses.Visible = true;
 			this.colEmailAddresses.VisibleIndex = 1;
 			this.colEmailAddresses.Width = 96;
+			// 
+			// emailLinkEdit
+			// 
+			this.emailLinkEdit.AutoHeight = false;
+			this.emailLinkEdit.Name = "emailLinkEdit";
+			this.emailLinkEdit.ReadOnly = true;
+			this.emailLinkEdit.SingleClick = true;
+			this.emailLinkEdit.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.emailLinkEdit_OpenLink);
 			// 
 			// addCaller
 			// 
@@ -190,6 +205,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.calleesView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emailLinkEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.addCaller.Properties)).EndInit();
 			this.ResumeLayout(false);
 
@@ -210,5 +226,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private Data.UI.Grid.SmartGridColumn colAdAmount;
 		private Data.UI.Grid.SmartGridColumn colRowId1;
 		private Data.UI.Grid.SmartGridColumn colCaller;
+		private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit emailLinkEdit;
 	}
 }

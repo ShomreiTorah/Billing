@@ -6,6 +6,8 @@ using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
+using DevExpress.XtraEditors.Controls;
+using System.Diagnostics;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	partial class CallerList : XtraForm {
@@ -43,6 +45,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			});
 
 			InfoMessage.Show(person.FullName + " has been added as a caller for the " + year + " Melave Malka");
+		}
+
+		private void emailLinkEdit_OpenLink(object sender, OpenLinkEventArgs e) {
+			e.Handled = true;
+			if (!String.IsNullOrWhiteSpace(e.EditValue as string))
+				Process.Start("mailto: " + e.EditValue);
 		}
 	}
 }
