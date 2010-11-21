@@ -32,7 +32,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colAdAmount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.grid = new ShomreiTorah.Data.UI.Grid.SmartGrid(this.components);
 			this.gridView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
-			this.colPerson = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.colCallerPerson = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colDateAdded = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colEmailAddresses = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.emailLinkEdit = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
@@ -113,26 +113,26 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// gridView
 			// 
 			this.gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colPerson,
+            this.colCallerPerson,
             this.colDateAdded,
             this.colEmailAddresses});
 			this.gridView.GridControl = this.grid;
 			this.gridView.Name = "gridView";
 			this.gridView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
 			// 
-			// colPerson
+			// colCallerPerson
 			// 
-			this.colPerson.Caption = "Full Name";
-			this.colPerson.FieldName = "Person";
-			this.colPerson.Name = "colPerson";
-			this.colPerson.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.True;
-			this.colPerson.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
-			this.colPerson.OptionsColumn.ReadOnly = true;
-			this.colPerson.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
-			this.colPerson.ShowEditorOnMouseDown = true;
-			this.colPerson.Visible = true;
-			this.colPerson.VisibleIndex = 0;
-			this.colPerson.Width = 65;
+			this.colCallerPerson.Caption = "Full Name";
+			this.colCallerPerson.FieldName = "Person";
+			this.colCallerPerson.Name = "colCallerPerson";
+			this.colCallerPerson.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.True;
+			this.colCallerPerson.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
+			this.colCallerPerson.OptionsColumn.ReadOnly = true;
+			this.colCallerPerson.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+			this.colCallerPerson.ShowEditorOnMouseDown = true;
+			this.colCallerPerson.Visible = true;
+			this.colCallerPerson.VisibleIndex = 0;
+			this.colCallerPerson.Width = 65;
 			// 
 			// colDateAdded
 			// 
@@ -216,7 +216,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private WinForms.Controls.Lookup.ItemSelector addCaller;
 		private Data.UI.Grid.SmartGrid grid;
 		private Data.UI.Grid.SmartGridView gridView;
-		private Data.UI.Grid.SmartGridColumn colPerson;
+		private Data.UI.Grid.SmartGridColumn colCallerPerson;
 		private Data.UI.Grid.SmartGridColumn colDateAdded;
 		private Data.UI.Grid.SmartGridColumn colEmailAddresses;
 		private Data.UI.Grid.SmartGridColumn colRowId;

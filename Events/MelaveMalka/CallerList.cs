@@ -26,6 +26,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				Program.Table<Caller>(),
 				c => c.Year == year
 			);
+
+			colCallerPerson.ColumnEdit.DoubleClick += CallerPersonEdit_DoubleClick;
+		}
+
+		void CallerPersonEdit_DoubleClick(object sender, EventArgs e) {
+			gridView.SetMasterRowExpanded(gridView.FocusedRowHandle, !gridView.GetMasterRowExpanded(gridView.FocusedRowHandle));
 		}
 
 		private void addCaller_EditValueChanged(object sender, EventArgs e) {
