@@ -1,13 +1,14 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
+using DevExpress.Utils;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
-using DevExpress.XtraEditors.Controls;
-using System.Diagnostics;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	partial class CallerList : XtraForm {
@@ -30,8 +31,18 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			colCallerPerson.ColumnEdit.DoubleClick += CallerPersonEdit_DoubleClick;
 		}
 
-		void CallerPersonEdit_DoubleClick(object sender, EventArgs e) {
-			gridView.SetMasterRowExpanded(gridView.FocusedRowHandle, !gridView.GetMasterRowExpanded(gridView.FocusedRowHandle));
+		void CallerPersonEdit_DoubleClick(object sender, EventArgs e) { ToggleRow(gridView.FocusedRowHandle); }
+		private void gridView_DoubleClick(object sender, EventArgs e) {
+			var info = gridView.CalcHitInfo(grid.PointToClient(MousePosition));
+
+			if (info.RowHandle >= 0 && info.InRow) {
+				ToggleRow(info.RowHandle);
+				var dx = e as DXMouseEventArgs;
+				if (dx != null) dx.Handled = true;
+			}
+		}
+		void ToggleRow(int handle) {
+			gridView.SetMasterRowExpanded(handle, !gridView.GetMasterRowExpanded(handle));
 		}
 
 		private void addCaller_EditValueChanged(object sender, EventArgs e) {

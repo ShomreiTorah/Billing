@@ -34,6 +34,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.gridView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colCallerPerson = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colDateAdded = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.colCalleeCount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colEmailAddresses = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.emailLinkEdit = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
 			this.addCaller = new ShomreiTorah.WinForms.Controls.Lookup.ItemSelector();
@@ -55,6 +56,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             this.colAdAmount});
 			this.calleesView.GridControl = this.grid;
 			this.calleesView.Name = "calleesView";
+			this.calleesView.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+			this.calleesView.OptionsView.ShowFooter = true;
+			this.calleesView.OptionsView.ShowGroupPanel = false;
 			// 
 			// colPerson1
 			// 
@@ -66,8 +70,11 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colPerson1.OptionsColumn.ReadOnly = true;
 			this.colPerson1.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
 			this.colPerson1.ShowEditorOnMouseDown = true;
+			this.colPerson1.SummaryItem.DisplayFormat = "{0} Callees";
+			this.colPerson1.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
 			this.colPerson1.Visible = true;
 			this.colPerson1.VisibleIndex = 0;
+			this.colPerson1.Width = 65;
 			// 
 			// colDateAdded1
 			// 
@@ -77,6 +84,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colDateAdded1.OptionsColumn.AllowFocus = false;
 			this.colDateAdded1.Visible = true;
 			this.colDateAdded1.VisibleIndex = 1;
+			this.colDateAdded1.Width = 76;
 			// 
 			// colAdAmount
 			// 
@@ -87,8 +95,11 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colAdAmount.OptionsColumn.AllowEdit = false;
 			this.colAdAmount.OptionsColumn.AllowFocus = false;
 			this.colAdAmount.OptionsColumn.ReadOnly = true;
+			this.colAdAmount.SummaryItem.DisplayFormat = "{0:c} in ads";
+			this.colAdAmount.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
 			this.colAdAmount.Visible = true;
 			this.colAdAmount.VisibleIndex = 2;
+			this.colAdAmount.Width = 72;
 			// 
 			// grid
 			// 
@@ -115,10 +126,13 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colCallerPerson,
             this.colDateAdded,
+            this.colCalleeCount,
             this.colEmailAddresses});
 			this.gridView.GridControl = this.grid;
 			this.gridView.Name = "gridView";
 			this.gridView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
+			this.gridView.OptionsView.ShowFooter = true;
+			this.gridView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
 			// 
 			// colCallerPerson
 			// 
@@ -142,6 +156,17 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colDateAdded.OptionsColumn.ReadOnly = true;
 			this.colDateAdded.Width = 66;
 			// 
+			// colCalleeCount
+			// 
+			this.colCalleeCount.Caption = "Callees";
+			this.colCalleeCount.FieldName = "CalleeCount";
+			this.colCalleeCount.Name = "colCalleeCount";
+			this.colCalleeCount.OptionsColumn.AllowEdit = false;
+			this.colCalleeCount.OptionsColumn.ReadOnly = true;
+			this.colCalleeCount.Visible = true;
+			this.colCalleeCount.VisibleIndex = 1;
+			this.colCalleeCount.Width = 53;
+			// 
 			// colEmailAddresses
 			// 
 			this.colEmailAddresses.ColumnEditor = this.emailLinkEdit;
@@ -149,7 +174,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colEmailAddresses.Name = "colEmailAddresses";
 			this.colEmailAddresses.OptionsColumn.ReadOnly = true;
 			this.colEmailAddresses.Visible = true;
-			this.colEmailAddresses.VisibleIndex = 1;
+			this.colEmailAddresses.VisibleIndex = 2;
 			this.colEmailAddresses.Width = 96;
 			// 
 			// emailLinkEdit
@@ -167,6 +192,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.addCaller.Name = "addCaller";
 			this.addCaller.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.addCaller.Properties.NullValuePrompt = "Click here to add a caller";
 			this.addCaller.Size = new System.Drawing.Size(514, 20);
 			this.addCaller.TabIndex = 0;
 			this.addCaller.EditValueChanged += new System.EventHandler(this.addCaller_EditValueChanged);
@@ -227,5 +253,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private Data.UI.Grid.SmartGridColumn colRowId1;
 		private Data.UI.Grid.SmartGridColumn colCaller;
 		private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit emailLinkEdit;
+		private Data.UI.Grid.SmartGridColumn colCalleeCount;
 	}
 }
