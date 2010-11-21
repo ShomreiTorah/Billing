@@ -96,6 +96,7 @@ namespace ShomreiTorah.Billing {
 				context.Tables.AddTable(MelaveMalkaInfo.CreateTable());
 				context.Tables.AddTable(MelaveMalkaInvitation.CreateTable());
 				context.Tables.AddTable(MelaveMalkaSeat.CreateTable());
+				context.Tables.AddTable(Caller.CreateTable());
 			}
 
 			var syncContext = new DataSyncContext(context, new SqlServerSqlProvider(DB.Default));

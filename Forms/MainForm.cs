@@ -34,6 +34,8 @@ namespace ShomreiTorah.Billing.Forms {
 
 			ribbon.SelectedPage = ribbon.Pages[0];
 
+			#region Yearly Buttons
+
 			SetupYearlyButton<Pledge>(
 				showShalachManos,
 				p => p.Type == ShalachManosForm.PledgeType ? p.Date.Year : new int?(),	//Only count Shalach Manos pledges; don't show years that only have other types
@@ -49,6 +51,7 @@ namespace ShomreiTorah.Billing.Forms {
 				sr => sr.Pledge.Date.Year,
 				year => new Events.Seating.SeatingForm(year) { MdiParent = this }.Show()
 			);
+			#region Melave Malka
 			SetupYearlyButton<MelaveMalkaInvitation>(
 				showInvites,
 				mmi => mmi.Year,
@@ -61,6 +64,14 @@ namespace ShomreiTorah.Billing.Forms {
 				year => new Events.MelaveMalka.SeatingForm(year) { MdiParent = this }.Show(),
 				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
 			);
+			SetupYearlyButton<MelaveMalkaInvitation>(
+				showCallList,
+				mmi => mmi.Year,
+				year => new Events.MelaveMalka.CallListForm(year) { MdiParent = this }.Show(),
+				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
+			);
+			#endregion
+			#endregion
 		}
 
 		void SetupYearlyButton<TRow>(BarButtonItem button, Func<TRow, int?> yearGetter, Action<int> showForm, int? defaultYear = null) where TRow : Row {

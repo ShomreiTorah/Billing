@@ -139,6 +139,18 @@
     <Compile Include="Controls\PledgeEdit.Designer.cs">
       <DependentUpon>PledgeEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\MelaveMalka\CallerList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Events\MelaveMalka\CallerList.Designer.cs">
+      <DependentUpon>CallerList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\MelaveMalka\CallListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Events\MelaveMalka\CallListForm.Designer.cs">
+      <DependentUpon>CallListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\MelaveMalka\ExcelExporter.cs" />
     <Compile Include="Events\MelaveMalka\InvitationsForm.cs">
       <SubType>Form</SubType>
@@ -246,6 +258,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PledgeEdit.resx">
       <DependentUpon>PledgeEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Events\MelaveMalka\CallerList.resx">
+      <DependentUpon>CallerList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Events\MelaveMalka\CallListForm.resx">
+      <DependentUpon>CallListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Events\MelaveMalka\InvitationsForm.resx">
       <DependentUpon>InvitationsForm.cs</DependentUpon>
@@ -402,6 +420,8 @@
     <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <None Include="Resources\CallList32.png" />
+    <None Include="Resources\Phone16.png" />
     <None Include="Resources\Invitations32.png" />
     <None Include="Resources\Edit16.png" />
     <None Include="Resources\SplashImage.png" />

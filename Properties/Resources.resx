@@ -121,6 +121,9 @@
   <data name="Open16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Open16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Phone16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Phone16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="WordWarning32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WordWarning32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -129,6 +132,9 @@
   </data>
   <data name="Update16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Update16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Invitations32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Invitations32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ExportWord32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ExportWord32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -205,7 +211,7 @@
   <data name="Save16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\save16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Invitations32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Invitations32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="CallList32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CallList32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

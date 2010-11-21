@@ -88,6 +88,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showSeatingForm = new DevExpress.XtraBars.BarButtonItem();
 			this.showInvites = new DevExpress.XtraBars.BarButtonItem();
 			this.showMMSeating = new DevExpress.XtraBars.BarButtonItem();
+			this.showCallList = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -98,6 +99,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPage5 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup7 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup9 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.ribbonPageGroup10 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPage4 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -164,9 +166,10 @@ namespace ShomreiTorah.Billing.Forms {
             this.shalachManosColumnsItem,
             this.showSeatingForm,
             this.showInvites,
-            this.showMMSeating});
+            this.showMMSeating,
+            this.showCallList});
 			this.ribbon.Location = new System.Drawing.Point(0, 0);
-			this.ribbon.MaxItemId = 27;
+			this.ribbon.MaxItemId = 28;
 			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
 			this.ribbon.Name = "ribbon";
 			this.ribbon.PageHeaderItemLinks.Add(this.checkUpdate);
@@ -446,6 +449,13 @@ namespace ShomreiTorah.Billing.Forms {
 			superToolTip9.Items.Add(toolTipItem9);
 			this.showMMSeating.SuperTip = superToolTip9;
 			// 
+			// showCallList
+			// 
+			this.showCallList.Caption = "Call List";
+			this.showCallList.Id = 27;
+			this.showCallList.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.CallList32;
+			this.showCallList.Name = "showCallList";
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -524,6 +534,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPage5.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup7,
             this.ribbonPageGroup9,
+            this.ribbonPageGroup10,
             this.ribbonPageGroup5});
 			this.ribbonPage5.Name = "ribbonPage5";
 			this.ribbonPage5.Text = "Melave Malka";
@@ -547,6 +558,13 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPageGroup9.Name = "ribbonPageGroup9";
 			this.ribbonPageGroup9.ShowCaptionButton = false;
 			this.ribbonPageGroup9.Text = "Seating";
+			// 
+			// ribbonPageGroup10
+			// 
+			this.ribbonPageGroup10.ItemLinks.Add(this.showCallList);
+			this.ribbonPageGroup10.Name = "ribbonPageGroup10";
+			this.ribbonPageGroup10.ShowCaptionButton = false;
+			this.ribbonPageGroup10.Text = "Call List";
 			// 
 			// ribbonPageGroup5
 			// 
@@ -795,5 +813,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup7;
 		private DevExpress.XtraBars.BarButtonItem showMMSeating;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup9;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup10;
+		private DevExpress.XtraBars.BarButtonItem showCallList;
 	}
 }

@@ -95,6 +95,13 @@ namespace ShomreiTorah.Billing.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap CallList32 {
+            get {
+                object obj = ResourceManager.GetObject("CallList32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Close {
             get {
                 object obj = ResourceManager.GetObject("Close", resourceCulture);
@@ -168,6 +175,13 @@ namespace ShomreiTorah.Billing.Properties {
         internal static System.Drawing.Bitmap Open16 {
             get {
                 object obj = ResourceManager.GetObject("Open16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Phone16 {
+            get {
+                object obj = ResourceManager.GetObject("Phone16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
