@@ -56,6 +56,10 @@ namespace ShomreiTorah.Billing {
 				.Select(ts => ts.CreateTable())
 				.ToList();
 
+			//Calculated columns can use child rows. I must add the
+			//tables in reverse order to allow the RowDependencies 
+			//to register handlers for the child tables.
+			tables.Reverse();
 			tables.ForEach(Current.DataContext.Tables.AddTable);
 
 			var syncers = tables.ConvertAll(t => new TableSynchronizer(t, SchemaMapping.GetPrimaryMapping(t.Schema), Current.SyncContext.SqlProvider));
