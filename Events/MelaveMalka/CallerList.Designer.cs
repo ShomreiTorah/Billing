@@ -132,10 +132,13 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.gridView.Name = "gridView";
 			this.gridView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
 			this.gridView.OptionsView.ShowFooter = true;
+			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colCallerPerson, DevExpress.Data.ColumnSortOrder.Ascending)});
 			this.gridView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
 			// 
 			// colCallerPerson
 			// 
+			this.colCallerPerson.AllowKeyboardActivation = false;
 			this.colCallerPerson.Caption = "Full Name";
 			this.colCallerPerson.FieldName = "Person";
 			this.colCallerPerson.Name = "colCallerPerson";
@@ -144,6 +147,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colCallerPerson.OptionsColumn.ReadOnly = true;
 			this.colCallerPerson.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
 			this.colCallerPerson.ShowEditorOnMouseDown = true;
+			this.colCallerPerson.SummaryItem.DisplayFormat = "{0} callers";
+			this.colCallerPerson.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
 			this.colCallerPerson.Visible = true;
 			this.colCallerPerson.VisibleIndex = 0;
 			this.colCallerPerson.Width = 65;
@@ -163,9 +168,11 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colCalleeCount.Name = "colCalleeCount";
 			this.colCalleeCount.OptionsColumn.AllowEdit = false;
 			this.colCalleeCount.OptionsColumn.ReadOnly = true;
+			this.colCalleeCount.SummaryItem.DisplayFormat = "{0} assigned callees";
+			this.colCalleeCount.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
 			this.colCalleeCount.Visible = true;
 			this.colCalleeCount.VisibleIndex = 1;
-			this.colCalleeCount.Width = 53;
+			this.colCalleeCount.Width = 99;
 			// 
 			// colEmailAddresses
 			// 
