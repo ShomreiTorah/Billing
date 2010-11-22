@@ -5,17 +5,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing) {
-			if (disposing && (components != null)) {
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		#region Windows Form Designer generated code
 
 		/// <summary>
@@ -30,6 +19,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colPerson = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colSource = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colCaller = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.callerEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.colCallerNote = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colAdAmount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.listSearch = new ShomreiTorah.WinForms.Controls.Lookup.ItemSelector();
@@ -41,6 +31,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colRowId1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.callerEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.listSearch.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			this.SuspendLayout();
@@ -52,7 +43,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.grid.Location = new System.Drawing.Point(0, 114);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 45;
+			this.grid.RegistrationCount = 48;
+			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.callerEdit});
 			this.grid.Size = new System.Drawing.Size(712, 286);
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -70,6 +63,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.gridView.GridControl = this.grid;
 			this.gridView.Name = "gridView";
 			this.gridView.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+			this.gridView.OptionsSelection.MultiSelect = true;
+			this.gridView.InvalidValueException += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.gridView_InvalidValueException);
 			// 
 			// colShouldCall
 			// 
@@ -102,17 +97,32 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			this.colSource.FieldName = "Source";
 			this.colSource.Name = "colSource";
+			this.colSource.OptionsColumn.AllowEdit = false;
+			this.colSource.OptionsColumn.ReadOnly = true;
 			this.colSource.Visible = true;
 			this.colSource.VisibleIndex = 2;
 			this.colSource.Width = 52;
 			// 
 			// colCaller
 			// 
+			this.colCaller.ColumnEditor = this.callerEdit;
 			this.colCaller.FieldName = "Caller";
 			this.colCaller.Name = "colCaller";
+			this.colCaller.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+			this.colCaller.ShowEditorOnMouseDown = true;
 			this.colCaller.Visible = true;
 			this.colCaller.VisibleIndex = 3;
-			this.colCaller.Width = 46;
+			this.colCaller.Width = 55;
+			// 
+			// callerEdit
+			// 
+			this.callerEdit.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
+			this.callerEdit.AutoHeight = false;
+			this.callerEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.callerEdit.HighlightedItemStyle = DevExpress.XtraEditors.HighlightStyle.Skinned;
+			this.callerEdit.Name = "callerEdit";
+			this.callerEdit.NullText = "(none)";
 			// 
 			// colCallerNote
 			// 
@@ -130,9 +140,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colAdAmount.Name = "colAdAmount";
 			this.colAdAmount.OptionsColumn.AllowEdit = false;
 			this.colAdAmount.OptionsColumn.ReadOnly = true;
-			this.colAdAmount.Visible = true;
-			this.colAdAmount.VisibleIndex = 5;
-			this.colAdAmount.Width = 72;
+			this.colAdAmount.Width = 62;
 			// 
 			// listSearch
 			// 
@@ -144,6 +152,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.listSearch.Properties.NullValuePrompt = "Click here to search the list";
 			this.listSearch.Size = new System.Drawing.Size(712, 20);
 			this.listSearch.TabIndex = 1;
+			this.listSearch.EditValueChanged += new System.EventHandler(this.listSearch_EditValueChanged);
 			// 
 			// ribbonControl1
 			// 
@@ -168,7 +177,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// showCallers
 			// 
-			this.showCallers.Caption = "Callers...";
+			this.showCallers.Caption = "Callers";
 			this.showCallers.Glyph = global::ShomreiTorah.Billing.Properties.Resources.Phone16;
 			this.showCallers.Id = 1;
 			this.showCallers.Name = "showCallers";
@@ -214,6 +223,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.Text = "CallListForm";
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.callerEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.listSearch.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
 			this.ResumeLayout(false);
@@ -237,5 +247,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private Data.UI.Grid.SmartGridColumn colRowId;
 		private Data.UI.Grid.SmartGridColumn colRowId1;
 		private DevExpress.XtraBars.BarButtonItem showCallers;
+		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox callerEdit;
 	}
 }
