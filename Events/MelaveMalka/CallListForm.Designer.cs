@@ -13,6 +13,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
+			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
@@ -33,6 +36,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.colRowId = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colRowId1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.exportGlobalList = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.callerEdit)).BeginInit();
@@ -101,7 +105,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colPerson.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
 			this.colPerson.Visible = true;
 			this.colPerson.VisibleIndex = 1;
-			this.colPerson.Width = 65;
+			this.colPerson.Width = 78;
 			// 
 			// colSource
 			// 
@@ -176,9 +180,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
             this.showCallers,
-            this.autoAssign});
+            this.autoAssign,
+            this.exportGlobalList});
 			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl1.MaxItemId = 3;
+			this.ribbonControl1.MaxItemId = 4;
 			this.ribbonControl1.Name = "ribbonControl1";
 			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -199,13 +204,13 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.autoAssign.Caption = "Assign Callers";
 			this.autoAssign.Id = 2;
 			this.autoAssign.Name = "autoAssign";
-			toolTipTitleItem2.Text = "Assign Callers";
-			toolTipItem2.LeftIndent = 6;
-			toolTipItem2.Text = "Automatically distributes checked invitees who have not been assigned a caller to" +
+			toolTipTitleItem1.Text = "Assign Callers";
+			toolTipItem1.LeftIndent = 6;
+			toolTipItem1.Text = "Automatically distributes checked invitees who have not been assigned a caller to" +
 				" the callers.";
-			superToolTip2.Items.Add(toolTipTitleItem2);
-			superToolTip2.Items.Add(toolTipItem2);
-			this.autoAssign.SuperTip = superToolTip2;
+			superToolTip1.Items.Add(toolTipTitleItem1);
+			superToolTip1.Items.Add(toolTipItem1);
+			this.autoAssign.SuperTip = superToolTip1;
 			this.autoAssign.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.autoAssign_ItemClick);
 			// 
 			// ribbonPage1
@@ -219,6 +224,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			this.ribbonPageGroup1.ItemLinks.Add(this.showCallers);
 			this.ribbonPageGroup1.ItemLinks.Add(this.autoAssign);
+			this.ribbonPageGroup1.ItemLinks.Add(this.exportGlobalList);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			this.ribbonPageGroup1.ShowCaptionButton = false;
 			this.ribbonPageGroup1.Text = "Call List";
@@ -236,6 +242,21 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colRowId1.Name = "colRowId1";
 			this.colRowId1.Visible = true;
 			this.colRowId1.VisibleIndex = 0;
+			// 
+			// exportGlobalList
+			// 
+			this.exportGlobalList.Caption = "Export to Excel";
+			this.exportGlobalList.Id = 3;
+			this.exportGlobalList.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ExportExcel32;
+			this.exportGlobalList.Name = "exportGlobalList";
+			toolTipTitleItem2.Text = "Export To Excel";
+			toolTipItem2.LeftIndent = 6;
+			toolTipItem2.Text = "Creates an Excel spreadsheet containing everyone who stil needs to be called.\r\n\r\n" +
+				"To export lists for specific callers, use the Callers form.";
+			superToolTip2.Items.Add(toolTipTitleItem2);
+			superToolTip2.Items.Add(toolTipItem2);
+			this.exportGlobalList.SuperTip = superToolTip2;
+			this.exportGlobalList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportGlobalList_ItemClick);
 			// 
 			// CallListForm
 			// 
@@ -275,5 +296,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraBars.BarButtonItem showCallers;
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox callerEdit;
 		private DevExpress.XtraBars.BarButtonItem autoAssign;
+		private DevExpress.XtraBars.BarButtonItem exportGlobalList;
 	}
 }

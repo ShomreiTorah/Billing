@@ -8,6 +8,8 @@ using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
+using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	partial class CallListForm : XtraForm {
@@ -29,6 +31,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			EditorRepository.PersonOwnedLookup.Apply(listSearch.Properties);
 
 			gridView.ActiveFilterCriteria = new OperandProperty("AdAmount") == 0;
+			new AdvancedColumnsBehavior("ad amounts", fieldNames: new[] { "AdAmount" }).Apply(gridView);
 			CheckableGridController.Handle(colShouldCall);
 
 			Program.Table<Caller>().RowAdded += CallersTable_Changed;
@@ -121,6 +124,20 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 					callerIndex = (callerIndex + 1) % callers.Count;
 				}
 			}
+		}
+
+		private void exportGlobalList_ItemClick(object sender, ItemClickEventArgs e) {
+			string path;
+			using (var dialog = new SaveFileDialog {
+				Filter = "Excel 2003 Spreadsheet|*.xls|Excel 2007 Spreadsheet (*.xlsx)|*.xlsx",
+				FileName = "Melave Malka " + year + " Call List.xls",
+				Title = "Save Call List"
+			}) {
+				if (dialog.ShowDialog(MdiParent) != DialogResult.OK) return;
+				path = dialog.FileName;
+			}
+			ExcelExporter.CreateGlobalCallList(year, path);
+			Process.Start(path);
 		}
 	}
 }

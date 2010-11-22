@@ -116,6 +116,13 @@ namespace ShomreiTorah.Billing.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ExportExcel16 {
+            get {
+                object obj = ResourceManager.GetObject("ExportExcel16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ExportExcel32 {
             get {
                 object obj = ResourceManager.GetObject("ExportExcel32", resourceCulture);
@@ -214,9 +221,23 @@ namespace ShomreiTorah.Billing.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap SendMail16 {
+            get {
+                object obj = ResourceManager.GetObject("SendMail16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap SendMail32 {
             get {
                 object obj = ResourceManager.GetObject("SendMail32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap SendMails16 {
+            get {
+                object obj = ResourceManager.GetObject("SendMails16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

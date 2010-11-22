@@ -420,6 +420,9 @@
     <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <None Include="Resources\SendMails16.png" />
+    <None Include="Resources\SendMail16.png" />
+    <None Include="Resources\ExportExcel16.png" />
     <None Include="Resources\CallList32.png" />
     <None Include="Resources\Phone16.png" />
     <None Include="Resources\Invitations32.png" />

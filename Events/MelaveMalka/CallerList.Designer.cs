@@ -41,11 +41,21 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colRowId = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colRowId1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colCaller = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
+			this.bar1 = new DevExpress.XtraBars.Bar();
+			this.sendAllEmails = new DevExpress.XtraBars.BarButtonItem();
+			this.sendSingleEmail = new DevExpress.XtraBars.BarButtonItem();
+			this.exportCallList = new DevExpress.XtraBars.BarButtonItem();
+			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
+			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
+			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
+			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
 			((System.ComponentModel.ISupportInitialize)(this.calleesView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emailLinkEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.addCaller.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// calleesView
@@ -109,13 +119,13 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			gridLevelNode1.RelationName = "Callees";
 			this.grid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
             gridLevelNode1});
-			this.grid.Location = new System.Drawing.Point(0, 20);
+			this.grid.Location = new System.Drawing.Point(0, 49);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
 			this.grid.RegistrationCount = 48;
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.emailLinkEdit});
-			this.grid.Size = new System.Drawing.Size(514, 358);
+			this.grid.Size = new System.Drawing.Size(514, 329);
 			this.grid.TabIndex = 1;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView,
@@ -134,6 +144,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.gridView.OptionsView.ShowFooter = true;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colCallerPerson, DevExpress.Data.ColumnSortOrder.Ascending)});
+			this.gridView.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView_FocusedRowChanged);
 			this.gridView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
 			// 
 			// colCallerPerson
@@ -151,7 +162,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colCallerPerson.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
 			this.colCallerPerson.Visible = true;
 			this.colCallerPerson.VisibleIndex = 0;
-			this.colCallerPerson.Width = 65;
+			this.colCallerPerson.Width = 78;
 			// 
 			// colDateAdded
 			// 
@@ -172,7 +183,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colCalleeCount.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
 			this.colCalleeCount.Visible = true;
 			this.colCalleeCount.VisibleIndex = 1;
-			this.colCalleeCount.Width = 99;
+			this.colCalleeCount.Width = 111;
 			// 
 			// colEmailAddresses
 			// 
@@ -195,7 +206,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// addCaller
 			// 
 			this.addCaller.Dock = System.Windows.Forms.DockStyle.Top;
-			this.addCaller.Location = new System.Drawing.Point(0, 0);
+			this.addCaller.Location = new System.Drawing.Point(0, 29);
 			this.addCaller.Name = "addCaller";
 			this.addCaller.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -225,6 +236,86 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colCaller.Visible = true;
 			this.colCaller.VisibleIndex = 6;
 			// 
+			// barManager1
+			// 
+			this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
+            this.bar1});
+			this.barManager1.DockControls.Add(this.barDockControlTop);
+			this.barManager1.DockControls.Add(this.barDockControlBottom);
+			this.barManager1.DockControls.Add(this.barDockControlLeft);
+			this.barManager1.DockControls.Add(this.barDockControlRight);
+			this.barManager1.Form = this;
+			this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.exportCallList,
+            this.sendSingleEmail,
+            this.sendAllEmails});
+			this.barManager1.MaxItemId = 3;
+			// 
+			// bar1
+			// 
+			this.bar1.BarName = "Tools";
+			this.bar1.DockCol = 0;
+			this.bar1.DockRow = 0;
+			this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
+			this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.sendAllEmails),
+            new DevExpress.XtraBars.LinkPersistInfo(this.sendSingleEmail, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.exportCallList)});
+			this.bar1.OptionsBar.AllowQuickCustomization = false;
+			this.bar1.OptionsBar.DisableClose = true;
+			this.bar1.OptionsBar.DrawDragBorder = false;
+			this.bar1.OptionsBar.UseWholeRow = true;
+			this.bar1.Text = "Tools";
+			// 
+			// sendAllEmails
+			// 
+			this.sendAllEmails.Caption = "Email Everyone";
+			this.sendAllEmails.Glyph = global::ShomreiTorah.Billing.Properties.Resources.SendMails16;
+			this.sendAllEmails.Id = 2;
+			this.sendAllEmails.Name = "sendAllEmails";
+			this.sendAllEmails.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+			// 
+			// sendSingleEmail
+			// 
+			this.sendSingleEmail.Caption = "Email ";
+			this.sendSingleEmail.Glyph = global::ShomreiTorah.Billing.Properties.Resources.SendMail16;
+			this.sendSingleEmail.Id = 1;
+			this.sendSingleEmail.Name = "sendSingleEmail";
+			this.sendSingleEmail.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+			// 
+			// exportCallList
+			// 
+			this.exportCallList.Caption = "Create Personalized List";
+			this.exportCallList.Glyph = global::ShomreiTorah.Billing.Properties.Resources.ExportExcel16;
+			this.exportCallList.Id = 0;
+			this.exportCallList.Name = "exportCallList";
+			this.exportCallList.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+			this.exportCallList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportCallList_ItemClick);
+			// 
+			// barDockControlTop
+			// 
+			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
+			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
+			this.barDockControlTop.Size = new System.Drawing.Size(514, 29);
+			// 
+			// barDockControlBottom
+			// 
+			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.barDockControlBottom.Location = new System.Drawing.Point(0, 378);
+			this.barDockControlBottom.Size = new System.Drawing.Size(514, 0);
+			// 
+			// barDockControlLeft
+			// 
+			this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
+			this.barDockControlLeft.Location = new System.Drawing.Point(0, 29);
+			this.barDockControlLeft.Size = new System.Drawing.Size(0, 349);
+			// 
+			// barDockControlRight
+			// 
+			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
+			this.barDockControlRight.Location = new System.Drawing.Point(514, 29);
+			this.barDockControlRight.Size = new System.Drawing.Size(0, 349);
+			// 
 			// CallerList
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -232,6 +323,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.ClientSize = new System.Drawing.Size(514, 378);
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.addCaller);
+			this.Controls.Add(this.barDockControlLeft);
+			this.Controls.Add(this.barDockControlRight);
+			this.Controls.Add(this.barDockControlBottom);
+			this.Controls.Add(this.barDockControlTop);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "CallerList";
 			this.Text = "CallerList";
@@ -240,6 +335,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emailLinkEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.addCaller.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -261,5 +357,14 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private Data.UI.Grid.SmartGridColumn colCaller;
 		private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit emailLinkEdit;
 		private Data.UI.Grid.SmartGridColumn colCalleeCount;
+		private DevExpress.XtraBars.BarManager barManager1;
+		private DevExpress.XtraBars.Bar bar1;
+		private DevExpress.XtraBars.BarButtonItem exportCallList;
+		private DevExpress.XtraBars.BarDockControl barDockControlTop;
+		private DevExpress.XtraBars.BarDockControl barDockControlBottom;
+		private DevExpress.XtraBars.BarDockControl barDockControlLeft;
+		private DevExpress.XtraBars.BarDockControl barDockControlRight;
+		private DevExpress.XtraBars.BarButtonItem sendSingleEmail;
+		private DevExpress.XtraBars.BarButtonItem sendAllEmails;
 	}
 }

@@ -9,6 +9,9 @@ using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraBars;
+using System.Windows.Forms;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	partial class CallerList : XtraForm {
@@ -29,6 +32,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			);
 
 			colCallerPerson.ColumnEdit.DoubleClick += CallerPersonEdit_DoubleClick;
+			UpdateButtons();
 		}
 
 		void CallerPersonEdit_DoubleClick(object sender, EventArgs e) { ToggleRow(gridView.FocusedRowHandle); }
@@ -68,6 +72,38 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			e.Handled = true;
 			if (!String.IsNullOrWhiteSpace(e.EditValue as string))
 				Process.Start("mailto: " + e.EditValue);
+		}
+
+		private void gridView_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e) { UpdateButtons(); }
+		void UpdateButtons() {
+			var caller = gridView.GetFocusedRow() as Caller;
+			if (caller == null)
+				sendSingleEmail.Visibility = exportCallList.Visibility = BarItemVisibility.OnlyInCustomizing;
+			else {
+				sendSingleEmail.Visibility = exportCallList.Visibility = BarItemVisibility.Always;
+
+				sendSingleEmail.Caption = "Email " + caller.Person.HisName + " " + caller.Person.LastName;
+				exportCallList.Caption = "Export list for " + caller.Person.HisName + " " + caller.Person.LastName;
+			}
+		}
+
+		private void exportCallList_ItemClick(object sender, ItemClickEventArgs e) {
+			var caller = (Caller)gridView.GetFocusedRow();
+			if (caller == null)
+				Dialog.ShowError("Please select a caller");
+			else {
+				string path;
+				using (var dialog = new SaveFileDialog {
+					Filter = "Excel 2003 Spreadsheet|*.xls|Excel 2007 Spreadsheet (*.xlsx)|*.xlsx",
+					FileName = "Call List for " + caller.Person.HisName + " " + caller.Person.LastName + ".xls",
+					Title = "Save Call List"
+				}) {
+					if (dialog.ShowDialog(MdiParent) != DialogResult.OK) return;
+					path = dialog.FileName;
+				}
+				caller.CreateCallList(path);
+				Process.Start(path);
+			}
 		}
 	}
 }
