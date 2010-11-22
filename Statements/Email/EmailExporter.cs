@@ -51,7 +51,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 				return;
 			}
 
-			var fileNames = Array.ConvertAll<string, string>(Directory.GetFiles(Program.AspxPath, "*.aspx"), Path.GetFileNameWithoutExtension);
+			var fileNames = Array.ConvertAll<string, string>(Directory.GetFiles(Path.Combine(Program.AspxPath, "Statements"), "*.aspx"), Path.GetFileNameWithoutExtension);
 			if (fileNames.Length == 0) {
 				XtraMessageBox.Show("There are no email templates.\r\nPlese contact Schabse.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -106,7 +106,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 
 		MailMessage CreateMessage(Person person) { StatementInfo info; return CreateMessage(person, out info); }
 		MailMessage CreateMessage(Person person, out StatementInfo info) {
-			return PageBuilder.CreateMessage(person, "/" + emailTemplate.EditValue + ".aspx", startDate.DateTime, out info);
+			return PageBuilder.CreateMessage(person, "/Statements/" + emailTemplate.EditValue + ".aspx", startDate.DateTime, out info);
 		}
 
 		void SendBills() {
@@ -157,7 +157,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 				}
 			} else {
 				string html, subject;
-				using (var page = PageBuilder.CreatePage<EmailPage>("/" + emailTemplate.EditValue + ".aspx")) {
+				using (var page = PageBuilder.CreatePage<EmailPage>("/Statements/" + emailTemplate.EditValue + ".aspx")) {
 					page.ImagePrefix = PageBuilder.ImagesPath;
 					page.Info = new StatementInfo(row, startDate.DateTime, page.Kind);
 					if (!page.Info.ShouldSend) {

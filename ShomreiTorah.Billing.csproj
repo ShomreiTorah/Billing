@@ -437,11 +437,11 @@
     <None Include="Resources\Close.png" />
     <None Include="Resources\Add32.png" />
     <None Include="Resources\Seating32.png" />
-    <None Include="Email Templates\EmailPage.master">
+    <None Include="Email Templates\Statements\EmailPage.master">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>ASPXCodeBehind</SubType>
     </None>
-    <None Include="Email Templates\Standard Bill.aspx">
+    <None Include="Email Templates\Statements\Standard Bill.aspx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>ASPXCodeBehind</SubType>
     </None>
@@ -583,7 +583,7 @@
       <DependentUpon>YKImporter.cs</DependentUpon>
     </Compile>
     <Compile Include="Updater.cs" />
-    <None Include="Email Templates\Standard Receipt.aspx">
+    <None Include="Email Templates\Statements\Standard Receipt.aspx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>ASPXCodeBehind</SubType>
     </None>
