@@ -127,7 +127,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private void gridView_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e) {
 			if (e.PrevFocusedRowHandle < 0) return;
 			var prevRow = (MelaveMalkaSeat)gridView.GetRow(e.PrevFocusedRowHandle);
-			if (prevRow.MensSeats == null && prevRow.WomensSeats == null)
+			if (prevRow != null && prevRow.MensSeats == null && prevRow.WomensSeats == null)
 				prevRow.RemoveRow();
 		}
 	}
