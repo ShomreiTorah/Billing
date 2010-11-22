@@ -37,7 +37,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		}
 		private void showCallers_ItemClick(object sender, ItemClickEventArgs e) { new CallerList(year).Show(MdiParent); }
 
-
 		///<summary>Releases the unmanaged resources used by the CallListForm and optionally releases the managed resources.</summary>
 		///<param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
 		protected override void Dispose(bool disposing) {
@@ -57,7 +56,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				callerEdit.Items.Add(caller);
 			callerEdit.EndUpdate();
 		}
-
 
 		private void gridView_InvalidValueException(object sender, InvalidValueExceptionEventArgs e) {
 			//Deleting the text in the combobox will
@@ -83,6 +81,46 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			else
 				gridView.SetSelection(handle, makeVisible: true);
 			listSearch.EditValue = null;
+		}
+
+		private void autoAssign_ItemClick(object sender, ItemClickEventArgs e) {
+			var callers = Program.Table<Caller>().Rows.Where(c => c.Year == year).OrderBy(c => c.Person.LastName).ToList();
+			if (callers.Count == 0) {
+				new CallerList(year).Show(MdiParent);
+				Dialog.ShowError("Please select some callers");
+				return;
+			}
+
+			var newCallees = dataSource.Rows
+				.Where(c => c.ShouldCall && c.Caller == null && c.AdAmount == 0)
+				.OrderBy(c => c.Person.LastName)
+				.ToList();
+			if (newCallees.Count < 2) {
+				Dialog.ShowError("This feature is to be used when there are multiple unassigned callers");
+				return;
+			}
+
+			if (callers.Count == 1) {
+				if (!Dialog.Warn("Are you sure you want to assign " + newCallees.Count + " people to a single caller?"))
+					return;
+				foreach (var callee in newCallees)
+					callee.Caller = callers[0];
+			} else {		//Multiple callers
+				if (!Dialog.Warn("Are you sure you want to assign " + newCallees.Count + " people to " + callers.Count + " callers?"))
+					return;
+
+				//First, assign each caller to call himself, if he needs to be called
+				foreach (var selfCaller in callers.Join(newCallees, c => c.Person, c => c.Person, (Caller, Callee) => new { Caller, Callee }).ToList()) {
+					selfCaller.Callee.Caller = selfCaller.Caller;
+					newCallees.Remove(selfCaller.Callee);
+				}
+
+				int callerIndex = 0;
+				foreach (var callee in newCallees) {
+					callee.Caller = callers[callerIndex];
+					callerIndex = (callerIndex + 1) % callers.Count;
+				}
+			}
 		}
 	}
 }
