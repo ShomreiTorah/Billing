@@ -151,6 +151,9 @@
     <Compile Include="Events\MelaveMalka\CallListForm.Designer.cs">
       <DependentUpon>CallListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\MelaveMalka\EmailCreator.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Events\MelaveMalka\ExcelExporter.cs" />
     <Compile Include="Events\MelaveMalka\InvitationsForm.cs">
       <SubType>Form</SubType>
@@ -589,6 +592,10 @@
     </None>
     <None Include="Email Templates\Images\Logo.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Email Templates\Caller Emails\Introductory Email.aspx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>ASPXCodeBehind</SubType>
     </None>
     <Content Include="Icon.ico" />
     <None Include="Resources\ShalachManosList32.png" />

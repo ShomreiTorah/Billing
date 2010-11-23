@@ -5,17 +5,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing) {
-			if (disposing && (components != null)) {
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		#region Windows Form Designer generated code
 
 		/// <summary>
@@ -24,7 +13,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
+			DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CallerList));
 			this.calleesView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colPerson1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -43,13 +32,14 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colCaller = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
 			this.bar1 = new DevExpress.XtraBars.Bar();
-			this.sendAllEmails = new DevExpress.XtraBars.BarButtonItem();
-			this.sendSingleEmail = new DevExpress.XtraBars.BarButtonItem();
+			this.emailTemplateList = new DevExpress.XtraBars.BarListItem();
 			this.exportCallList = new DevExpress.XtraBars.BarButtonItem();
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+			this.sendSingleEmail = new DevExpress.XtraBars.BarSubItem();
+			this.sendAllEmails = new DevExpress.XtraBars.BarSubItem();
 			((System.ComponentModel.ISupportInitialize)(this.calleesView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
@@ -115,10 +105,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			this.grid.DataMember = "Callers";
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-			gridLevelNode1.LevelTemplate = this.calleesView;
-			gridLevelNode1.RelationName = "Callees";
+			gridLevelNode2.LevelTemplate = this.calleesView;
+			gridLevelNode2.RelationName = "Callees";
 			this.grid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode1});
+            gridLevelNode2});
 			this.grid.Location = new System.Drawing.Point(0, 49);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
@@ -247,9 +237,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.barManager1.Form = this;
 			this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.exportCallList,
+            this.emailTemplateList,
             this.sendSingleEmail,
             this.sendAllEmails});
-			this.barManager1.MaxItemId = 3;
+			this.barManager1.MaxItemId = 7;
 			// 
 			// bar1
 			// 
@@ -258,7 +249,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.bar1.DockRow = 0;
 			this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
 			this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.sendAllEmails),
+            new DevExpress.XtraBars.LinkPersistInfo(this.sendAllEmails, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.sendSingleEmail, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.exportCallList)});
 			this.bar1.OptionsBar.AllowQuickCustomization = false;
@@ -267,21 +258,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.bar1.OptionsBar.UseWholeRow = true;
 			this.bar1.Text = "Tools";
 			// 
-			// sendAllEmails
+			// emailTemplateList
 			// 
-			this.sendAllEmails.Caption = "Email Everyone";
-			this.sendAllEmails.Glyph = global::ShomreiTorah.Billing.Properties.Resources.SendMails16;
-			this.sendAllEmails.Id = 2;
-			this.sendAllEmails.Name = "sendAllEmails";
-			this.sendAllEmails.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
-			// 
-			// sendSingleEmail
-			// 
-			this.sendSingleEmail.Caption = "Email ";
-			this.sendSingleEmail.Glyph = global::ShomreiTorah.Billing.Properties.Resources.SendMail16;
-			this.sendSingleEmail.Id = 1;
-			this.sendSingleEmail.Name = "sendSingleEmail";
-			this.sendSingleEmail.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+			this.emailTemplateList.Caption = "Email Templates";
+			this.emailTemplateList.Id = 3;
+			this.emailTemplateList.Name = "emailTemplateList";
+			this.emailTemplateList.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.emailTemplateList_ListItemClick);
 			// 
 			// exportCallList
 			// 
@@ -315,6 +297,28 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
 			this.barDockControlRight.Location = new System.Drawing.Point(514, 29);
 			this.barDockControlRight.Size = new System.Drawing.Size(0, 349);
+			// 
+			// sendSingleEmail
+			// 
+			this.sendSingleEmail.Caption = "Email";
+			this.sendSingleEmail.Glyph = global::ShomreiTorah.Billing.Properties.Resources.SendMail16;
+			this.sendSingleEmail.Id = 4;
+			this.sendSingleEmail.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.emailTemplateList)});
+			this.sendSingleEmail.Name = "sendSingleEmail";
+			this.sendSingleEmail.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+			this.sendSingleEmail.Popup += new System.EventHandler(this.sendSingleEmail_Popup);
+			// 
+			// sendAllEmails
+			// 
+			this.sendAllEmails.Caption = "Email Everyone";
+			this.sendAllEmails.Glyph = global::ShomreiTorah.Billing.Properties.Resources.SendMails16;
+			this.sendAllEmails.Id = 6;
+			this.sendAllEmails.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.emailTemplateList)});
+			this.sendAllEmails.Name = "sendAllEmails";
+			this.sendAllEmails.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+			this.sendAllEmails.Popup += new System.EventHandler(this.sendAllEmails_Popup);
 			// 
 			// CallerList
 			// 
@@ -364,7 +368,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraBars.BarDockControl barDockControlBottom;
 		private DevExpress.XtraBars.BarDockControl barDockControlLeft;
 		private DevExpress.XtraBars.BarDockControl barDockControlRight;
-		private DevExpress.XtraBars.BarButtonItem sendSingleEmail;
-		private DevExpress.XtraBars.BarButtonItem sendAllEmails;
+		private DevExpress.XtraBars.BarListItem emailTemplateList;
+		private DevExpress.XtraBars.BarSubItem sendAllEmails;
+		private DevExpress.XtraBars.BarSubItem sendSingleEmail;
 	}
 }
