@@ -99,5 +99,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			//TODO: Send & log
 		}
 		#endregion
+
 	}
 }
