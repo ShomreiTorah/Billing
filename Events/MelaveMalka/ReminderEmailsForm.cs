@@ -1,9 +1,12 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using DevExpress.Data.Filtering;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid.Views.Base;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI.DisplaySettings;
@@ -24,8 +27,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.year = year;
 			Text = "Melave Malka " + year + " Reminder Emails";
 
-			grid.DataMember = null;
-			listSearch.Properties.DataSource = grid.DataSource = dataSource = new FilteredTable<MelaveMalkaInvitation>(
+			listSearch.Properties.DataSource = bindingSource.DataSource = dataSource = new FilteredTable<MelaveMalkaInvitation>(
 				Program.Table<MelaveMalkaInvitation>(),
 				mmi => mmi.Year == year //&& mmi.Person.EmailAddresses.Any()
 			);
@@ -59,10 +61,14 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			listSearch.EditValue = null;
 		}
 
+		MelaveMalkaInvitation SelectedInvitee { get { return bindingSource.Current as MelaveMalkaInvitation; } }
+
 		#region Send Emails
 		private void sendAll_ItemClick(object sender, ItemClickEventArgs args) {
-			var allRecipients = dataSource.Rows.Where(i => i.AdAmount == 0 && i.ShouldEmail).ToList();
-			var recentRecipients = allRecipients.Where(i => i.ReminderEmails.Any(e => e.Date.Date == DateTime.Today));
+			#region Validation
+			var allRecipients = dataSource.Rows.OrderBy(p => p.Person.LastName).Where(i => i.AdAmount == 0 && i.ShouldEmail).ToList();
+
+			var recentRecipients = allRecipients.Where(i => i.ReminderEmails.Any(e => e.Date.Date == DateTime.Today)).ToList();
 			if (recentRecipients.Any()) {
 				string message;
 				if (recentRecipients.Has(2))
@@ -72,8 +78,18 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 					message = recentRecipients.First().Person.FullName + " have already been emailed today and will not be emailed again.";
 				Dialog.Show(message, MessageBoxIcon.Warning);
 			}
+			var emptyRecipients = allRecipients.Where(i => String.IsNullOrWhiteSpace(i.EmailSubject) || String.IsNullOrWhiteSpace(i.EmailSource)).ToList();
+			if (emptyRecipients.Any()) {
+				string message;
+				if (emptyRecipients.Has(2))
+					message = "The following people do not have en email to send:\r\n\r\n  • "
+							+ emptyRecipients.Join("\r\n  • ", i => i.Person.FullName);
+				else
+					message = emptyRecipients.First().Person.FullName + " do not have en email to send.";
+				Dialog.Show(message, MessageBoxIcon.Warning);
+			}
 
-			allRecipients.RemoveAll(i => i.ReminderEmails.Any(e => e.Date.Date == DateTime.Today));
+			allRecipients.RemoveAll(i => recentRecipients.Contains(i) || emptyRecipients.Contains(i));
 			if (allRecipients.Count == 0) {
 				Dialog.Inform("There is no-one to email.");
 				return;
@@ -84,6 +100,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				if (!Dialog.Confirm("Would you like to email " + allRecipients.Count + " people?"))
 					return;
 			}
+			#endregion
 
 			ProgressWorker.Execute(progress => {
 				progress.Maximum = allRecipients.Count;
@@ -95,10 +112,52 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				}
 			}, true);
 		}
-		static void SendEmail(MelaveMalkaInvitation recipient) { 
-			//TODO: Send & log
+		private void sendSelected_ItemClick(object sender, ItemClickEventArgs args) {
+			#region Validation
+			var recipient = SelectedInvitee;
+			if (recipient == null) return;
+
+			if (String.IsNullOrWhiteSpace(recipient.EmailSubject) || String.IsNullOrWhiteSpace(recipient.EmailSource)) {
+				Dialog.ShowError("Please enter an email to send.");
+				return;
+			}
+
+			if (recipient.ReminderEmails.Any(e => e.Date.Date == DateTime.Today)) {
+				if (!Dialog.Warn(recipient.Person.FullName + " has already been emailed today.\r\nAre you sure you want to send another email?"))
+					return;
+			} else {
+				if (!Dialog.Confirm("Would you like to email " + recipient.Person.FullName + "?"))
+					return;
+			}
+			#endregion
+
+			ProgressWorker.Execute(progress => {
+				progress.Maximum = -1;
+				progress.Caption = "Emailing " + recipient.Person.FullName;
+				SendEmail(recipient);
+			}, false);
 		}
+		static void SendEmail(MelaveMalkaInvitation recipient) {
+			//TODO: Send
+			Program.Table<AdReminderEmail>().Rows.Add(new AdReminderEmail {
+				Recipient = recipient,
+				Date = DateTime.Now,
+				EmailSubject = recipient.EmailSubject,
+				EmailSource = recipient.EmailSource
+			});
+		}
+
 		#endregion
 
+		private void gridView_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e) {
+			splitContainerControl1.PanelVisibility = SelectedInvitee == null ? SplitPanelVisibility.Panel1 : SplitPanelVisibility.Both;
+		}
+
+		private void recipientAddresses_OpenLink(object sender, OpenLinkEventArgs e) {
+			var str = e.EditValue as string;
+			if (!String.IsNullOrWhiteSpace(str))
+				Process.Start("mailto: " + str);
+			e.Handled = true;
+		}
 	}
 }
