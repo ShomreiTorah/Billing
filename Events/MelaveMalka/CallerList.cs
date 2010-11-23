@@ -39,7 +39,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				c => c.Year == year
 			);
 
-			colCallerPerson.ColumnEdit.DoubleClick += CallerPersonEdit_DoubleClick;
+			ToggleRowsBehavior.Instance.Apply(gridView);
 			UpdateButtons();
 
 			emailTemplateList.Strings.AddRange(
@@ -55,21 +55,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			}
 			base.Dispose(disposing);
 		}
-
-		void CallerPersonEdit_DoubleClick(object sender, EventArgs e) { ToggleRow(gridView.FocusedRowHandle); }
-		private void gridView_DoubleClick(object sender, EventArgs e) {
-			var info = gridView.CalcHitInfo(grid.PointToClient(MousePosition));
-
-			if (info.RowHandle >= 0 && info.InRow) {
-				ToggleRow(info.RowHandle);
-				var dx = e as DXMouseEventArgs;
-				if (dx != null) dx.Handled = true;
-			}
-		}
-		void ToggleRow(int handle) {
-			gridView.SetMasterRowExpanded(handle, !gridView.GetMasterRowExpanded(handle));
-		}
-
 		private void addCaller_EditValueChanged(object sender, EventArgs e) {
 			var person = addCaller.EditValue as Person;
 			if (person == null) return;

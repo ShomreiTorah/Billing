@@ -4,16 +4,18 @@ using System.Linq;
 using System.Windows.Forms;
 using DevExpress.Data;
 using DevExpress.XtraEditors;
-using DevExpress.XtraGrid.Views.Grid;
-using ShomreiTorah.Data;
-using ShomreiTorah.WinForms;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
+using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI.DisplaySettings;
+using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Forms.GridForms {
 	partial class DepositViewer : XtraForm {
 		public DepositViewer() {
 			InitializeComponent();
+			ToggleRowsBehavior.Instance.Apply(depositsView);
 		}
 
 		protected override void Dispose(bool disposing) {
@@ -27,11 +29,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 				var account = (string)depositsView.GetGroupRowValue(e.GroupRowHandle);
 				e.TotalValue = Program.Table<Payment>().Rows.Where(p => p.Account == account && p.Deposit == null).Sum(p => p.Amount);
 			}
-		}
-		private void depositsView_DoubleClick(object sender, EventArgs e) {
-			var hitInfo = depositsView.CalcHitInfo(grid.PointToClient(MousePosition));
-			if (hitInfo.InRow && hitInfo.RowHandle >= 0)
-				depositsView.SetMasterRowExpanded(hitInfo.RowHandle, !depositsView.GetMasterRowExpanded(hitInfo.RowHandle));
 		}
 
 		private void paymentsView_KeyUp(object sender, KeyEventArgs e) {

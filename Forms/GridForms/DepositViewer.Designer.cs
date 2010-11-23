@@ -204,7 +204,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colDepositDate, DevExpress.Data.ColumnSortOrder.Descending),
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colNumber, DevExpress.Data.ColumnSortOrder.Descending)});
 			this.depositsView.CustomSummaryCalculate += new DevExpress.Data.CustomSummaryEventHandler(this.depositsView_CustomSummaryCalculate);
-			this.depositsView.DoubleClick += new System.EventHandler(this.depositsView_DoubleClick);
 			// 
 			// colAccount
 			// 

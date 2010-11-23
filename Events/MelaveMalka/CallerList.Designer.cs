@@ -135,7 +135,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colCallerPerson, DevExpress.Data.ColumnSortOrder.Ascending)});
 			this.gridView.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView_FocusedRowChanged);
-			this.gridView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
 			// 
 			// colCallerPerson
 			// 
