@@ -46,7 +46,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			if (disposing) {
 				Program.Table<Caller>().RowAdded -= CallersTable_Changed;
 				Program.Table<Caller>().RowRemoved -= CallersTable_Changed;
-
+				dataSource.Dispose();
 				if (components != null) components.Dispose();
 			}
 			base.Dispose(disposing);
