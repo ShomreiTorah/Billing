@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net.Mime;
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraBars;
@@ -111,12 +113,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			if (caller == null)
 				Dialog.ShowError("Please select a caller");
 			else if (caller.Callees.All(i => i.AdAmount > 0))
-				Dialog.ShowError(caller.Person.HisName + " " + caller.Person.LastName + " doesn't have anyone to call.");
+				Dialog.ShowError(caller.Name + " doesn't have anyone to call.");
 			else {
 				string path;
 				using (var dialog = new SaveFileDialog {
 					Filter = "Excel 2003 Spreadsheet|*.xls|Excel 2007 Spreadsheet (*.xlsx)|*.xlsx",
-					FileName = "Call List for " + caller.Person.HisName + " " + caller.Person.LastName + ".xls",
+					FileName = "Call List for " + caller.Name + ".xls",
 					Title = "Save Call List"
 				}) {
 					if (dialog.ShowDialog(MdiParent) != DialogResult.OK) return;
@@ -146,13 +148,18 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			var emptyCallers = clickedCallers.Where(c => c.Callees.All(i => i.AdAmount > 0)).ToList();
 			if (emptyCallers.Any()) {
 				Dialog.Show(emptyCallers.Join(", ", c => c.Person.FullName)
-						  + " do not have anyone to call and will not be emailed", MessageBoxIcon.Warning);
+						  + " do not have anyone to call and will not be emailed.", MessageBoxIcon.Warning);
 			}
-			var actualCallers = clickedCallers.Where(c => c.Callees.Any(i => i.AdAmount == 0)).ToList();
+
+			var nonEmailCallers = clickedCallers.Where(c => String.IsNullOrEmpty(c.EmailAddresses)).ToList();
+			if (nonEmailCallers.Any())
+				Dialog.Show(nonEmailCallers.Join(", ", c => c.Person.FullName) + " do not have email addresses.", MessageBoxIcon.Warning);
+
+			var actualCallers = clickedCallers.Where(c => c.Callees.Any(i => i.AdAmount == 0) && !String.IsNullOrEmpty(c.EmailAddresses)).ToList();
 			if (actualCallers.Count == 0) return;	//We already displayed an error
 
 			if (actualCallers.Count == 1) {
-				if (!Dialog.Confirm("Would you like to send an email to " + actualCallers[0].Person.HisName + " " + actualCallers[0].Person.LastName + "?"))
+				if (!Dialog.Confirm("Would you like to send an email to " + actualCallers[0].Name + "?"))
 					return;
 			} else {
 				if (!Dialog.Confirm("Would you like to send emails to " + actualCallers.Count + " callers?"))
@@ -161,7 +168,38 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			#endregion
 
 			var virtualPath = "/" + templateSubfolder + "/" + emailTemplateList.Strings[e.Index] + ".aspx";
-			Dialog.Inform("Sending " + virtualPath + " to " + actualCallers.Join(", ", c => c.Person.FullName));
+			ProgressWorker.Execute(progress => {
+				progress.Maximum = actualCallers.Count * 2;	//Two steps per caller
+
+				foreach (var caller in actualCallers) {
+					progress.Caption = "Creating spreadsheet for " + caller.Name;
+					string attachmentPath;
+					do {
+						attachmentPath = Path.GetTempFileName();
+						File.Delete(attachmentPath);
+						attachmentPath = Path.ChangeExtension(attachmentPath, ".xls");	//OleDB cannot write XLS with other extensions
+					} while (File.Exists(attachmentPath));
+
+					try {
+						caller.CreateCallList(attachmentPath);
+
+						progress.Progress++;
+						progress.Caption = "Emailing " + caller.Name;
+
+						using (var message = EmailCreator.CreateMessage(caller, virtualPath)) {
+							message.From = Email.JournalAddress;
+							message.To.Add(caller.EmailAddresses);	//Comma-separated string
+							message.Attachments.Add(new Attachment(attachmentPath, new ContentType {
+								MediaType = "application/vnd.ms-excel",
+								Name = "Call List for " + caller.Name + ".xls"
+							}));
+
+							Email.Default.Send(message);
+						}
+					} finally { File.Delete(attachmentPath); }
+					progress.Progress++;
+				}
+			}, true);
 		}
 	}
 }

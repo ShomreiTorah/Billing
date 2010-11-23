@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.UI;
-using System.Web;
-using System.IO;
 using System.Globalization;
-using System.Web.Hosting;
-using System.Web.Compilation;
+using System.IO;
 using System.Net.Mail;
+using System.Web;
+using System.Web.Compilation;
+using System.Web.Hosting;
+using System.Web.UI;
 using ShomreiTorah.Common;
+using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	static class EmailCreator {
@@ -23,7 +20,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			page.Row = row;
 
 			return new MailMessage {
-				Body = page.RenderPage(),
+				Body = page.RenderPage().Trim(),
+				IsBodyHtml = true,
 				Subject = page.EmailSubject,
 				SubjectEncoding = Email.DefaultEncoding,
 				BodyEncoding = Email.DefaultEncoding
@@ -31,6 +29,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		}
 	}
 
+	//For some reason, the hosted ASP.Net runtime cannot parse
+	//generic base types.  To avoid this, I make a non-generic
+	//inherited class for the ASPX pages to inherit.
+	//TODO: Remove after switching to Razor
 	public abstract class EmailPage<TRow> : Page {
 		public TRow Row { get; internal set; }
 
@@ -47,5 +49,5 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			}
 		}
 	}
-
+	public abstract class CallerEmailPage : EmailPage<Caller> { }
 }
