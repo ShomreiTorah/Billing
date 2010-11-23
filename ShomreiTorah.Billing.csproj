@@ -173,6 +173,12 @@
     <Compile Include="Events\MelaveMalka\MMInfoForm.Designer.cs">
       <DependentUpon>MMInfoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\MelaveMalka\ReminderEmailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Events\MelaveMalka\ReminderEmailsForm.Designer.cs">
+      <DependentUpon>ReminderEmailsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\MelaveMalka\SeatingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -276,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Events\MelaveMalka\MMInfoForm.resx">
       <DependentUpon>MMInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Events\MelaveMalka\ReminderEmailsForm.resx">
+      <DependentUpon>ReminderEmailsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Events\MelaveMalka\SeatingForm.resx">
       <DependentUpon>SeatingForm.cs</DependentUpon>
@@ -423,6 +432,7 @@
     <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <None Include="Resources\EmailList32.png" />
     <None Include="Resources\SendMails16.png" />
     <None Include="Resources\SendMail16.png" />
     <None Include="Resources\ExportExcel16.png" />

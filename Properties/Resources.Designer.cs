@@ -116,6 +116,13 @@ namespace ShomreiTorah.Billing.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap EmailList32 {
+            get {
+                object obj = ResourceManager.GetObject("EmailList32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ExportExcel16 {
             get {
                 object obj = ResourceManager.GetObject("ExportExcel16", resourceCulture);
