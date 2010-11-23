@@ -249,6 +249,13 @@ namespace ShomreiTorah.Billing.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap SendMails32 {
+            get {
+                object obj = ResourceManager.GetObject("SendMails32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap SendPreview {
             get {
                 object obj = ResourceManager.GetObject("SendPreview", resourceCulture);

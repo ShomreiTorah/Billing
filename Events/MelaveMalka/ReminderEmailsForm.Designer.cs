@@ -30,12 +30,17 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colRowId1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colRecipient = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
+			this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
+			this.sendAll = new DevExpress.XtraBars.BarButtonItem();
+			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			((System.ComponentModel.ISupportInitialize)(this.logView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.listSearch.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
 			this.splitContainerControl1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// logView
@@ -94,7 +99,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
 			this.grid.RegistrationCount = 48;
-			this.grid.Size = new System.Drawing.Size(306, 452);
+			this.grid.Size = new System.Drawing.Size(306, 338);
 			this.grid.TabIndex = 1;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView,
@@ -140,7 +145,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colPerson.ShowEditorOnMouseDown = true;
 			this.colPerson.Visible = true;
 			this.colPerson.VisibleIndex = 1;
-			this.colPerson.Width = 65;
+			this.colPerson.Width = 78;
 			// 
 			// colSource
 			// 
@@ -204,15 +209,59 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// splitContainerControl1
 			// 
 			this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainerControl1.Location = new System.Drawing.Point(0, 0);
+			this.splitContainerControl1.Location = new System.Drawing.Point(0, 114);
 			this.splitContainerControl1.Name = "splitContainerControl1";
 			this.splitContainerControl1.Panel1.Controls.Add(this.grid);
 			this.splitContainerControl1.Panel1.Text = "Panel1";
 			this.splitContainerControl1.Panel2.Text = "Panel2";
-			this.splitContainerControl1.Size = new System.Drawing.Size(685, 452);
+			this.splitContainerControl1.Size = new System.Drawing.Size(685, 338);
 			this.splitContainerControl1.SplitterPosition = 306;
 			this.splitContainerControl1.TabIndex = 2;
 			this.splitContainerControl1.Text = "splitContainerControl1";
+			// 
+			// ribbonControl1
+			// 
+			this.ribbonControl1.ApplicationButtonText = null;
+			// 
+			// 
+			// 
+			this.ribbonControl1.ExpandCollapseItem.Id = 0;
+			this.ribbonControl1.ExpandCollapseItem.Name = "";
+			this.ribbonControl1.ExpandCollapseItem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
+			this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.ribbonControl1.ExpandCollapseItem,
+            this.sendAll});
+			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
+			this.ribbonControl1.MaxItemId = 2;
+			this.ribbonControl1.Name = "ribbonControl1";
+			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.ribbonPage1});
+			this.ribbonControl1.SelectedPage = this.ribbonPage1;
+			this.ribbonControl1.Size = new System.Drawing.Size(685, 114);
+			this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
+			// 
+			// sendAll
+			// 
+			this.sendAll.Caption = "Email Everyone";
+			this.sendAll.Glyph = global::ShomreiTorah.Billing.Properties.Resources.SendMails16;
+			this.sendAll.Id = 1;
+			this.sendAll.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.SendMails32;
+			this.sendAll.Name = "sendAll";
+			this.sendAll.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.sendAll_ItemClick);
+			// 
+			// ribbonPage1
+			// 
+			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup1});
+			this.ribbonPage1.Name = "ribbonPage1";
+			this.ribbonPage1.Text = "Melave Malka";
+			// 
+			// ribbonPageGroup1
+			// 
+			this.ribbonPageGroup1.ItemLinks.Add(this.sendAll);
+			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+			this.ribbonPageGroup1.ShowCaptionButton = false;
+			this.ribbonPageGroup1.Text = "Emails";
 			// 
 			// ReminderEmailsForm
 			// 
@@ -221,6 +270,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.ClientSize = new System.Drawing.Size(685, 472);
 			this.Controls.Add(this.splitContainerControl1);
 			this.Controls.Add(this.listSearch);
+			this.Controls.Add(this.ribbonControl1);
 			this.Name = "ReminderEmailsForm";
 			this.Text = "ReminderEmailsForm";
 			((System.ComponentModel.ISupportInitialize)(this.logView)).EndInit();
@@ -229,6 +279,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.listSearch.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
 			this.splitContainerControl1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -251,5 +302,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private Data.UI.Grid.SmartGridColumn colRowId1;
 		private Data.UI.Grid.SmartGridColumn colRecipient;
 		private DevExpress.XtraEditors.SplitContainerControl splitContainerControl1;
+		private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
+		private DevExpress.XtraBars.BarButtonItem sendAll;
+		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
 	}
 }

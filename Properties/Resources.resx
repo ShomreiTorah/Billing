@@ -160,8 +160,14 @@
   <data name="SplashImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\splashimage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="EmailList32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EmailList32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Calendar16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Calendar16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Close" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Close.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Add24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Add24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -172,9 +178,6 @@
   <data name="ExportExcel32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ExportExcel32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Edit16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Edit16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ShalachManosList32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ShalachManosList32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -183,9 +186,6 @@
   </data>
   <data name="SendMail32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SendMail32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ImportRaffle32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ImportRaffle32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ExportScroll32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ExportScroll32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -196,14 +196,14 @@
   <data name="SendPreview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SendPreview.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Loading16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Loading16.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ImportRaffle32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ImportRaffle32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ImportExcel32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ImportExcel32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Close" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Close.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Edit16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Edit16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Seating32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Seating32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -217,13 +217,16 @@
   <data name="Add16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\add16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Loading16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Loading16.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Save16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\save16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ExportExcel16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ExportExcel16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="EmailList32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EmailList32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SendMails32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SendMails32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
