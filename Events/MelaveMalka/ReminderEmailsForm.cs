@@ -1,12 +1,20 @@
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using DevExpress.Data.Filtering;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Drawing;
+using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraEditors.ViewInfo;
 using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using DevExpress.XtraRichEdit;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI.DisplaySettings;
@@ -44,6 +52,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		///<param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
 		protected override void Dispose(bool disposing) {
 			if (disposing) {
+				if (emailLogRenderer.IsValueCreated) emailLogRenderer.Value.Dispose();
 				dataSource.Dispose();
 				if (components != null) components.Dispose();
 			}
@@ -157,6 +166,31 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			var str = e.EditValue as string;
 			if (!String.IsNullOrWhiteSpace(str))
 				Process.Start("mailto: " + str);
+			e.Handled = true;
+		}
+
+		readonly Lazy<RepositoryItemRichTextEdit> emailLogRenderer = new Lazy<RepositoryItemRichTextEdit>(
+			() => new RepositoryItemRichTextEdit { DocumentFormat = DocumentFormat.Html },
+			LazyThreadSafetyMode.None
+		);
+		private void logView_MeasurePreviewHeight(object sender, RowHeightEventArgs e) {
+			using (RichTextEditViewInfo vi = new RichTextEditViewInfo(emailLogRenderer.Value)) {
+				var view = ((GridView)sender);
+				var email = (AdReminderEmail)view.GetRow(e.RowHandle);
+				vi.LoadText(email.EmailSource);
+				e.RowHeight = vi.CalcHeight(((GridViewInfo)view.GetViewInfo()).CalcRowPreviewWidth(e.RowHandle) - 1) + 2;
+			}
+
+		}
+		private void logView_CustomDrawRowPreview(object sender, RowObjectCustomDrawEventArgs e) {
+			using (RichTextEditViewInfo vi = new RichTextEditViewInfo(emailLogRenderer.Value)) {
+				var view = ((GridView)sender);
+				var email = (AdReminderEmail)view.GetRow(e.RowHandle);
+				vi.LoadText(email.EmailSource);
+				vi.UpdatePaintAppearance();
+				vi.CalcViewInfo(e.Graphics, MouseButtons.None, Point.Empty, e.Bounds);
+				RichTextEditPainter.DrawRTF(vi, e.Cache);
+			}
 			e.Handled = true;
 		}
 	}
