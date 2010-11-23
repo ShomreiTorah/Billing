@@ -157,6 +157,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				progress.Maximum = actualCallers.Count * 2;	//Two steps per caller
 
 				foreach (var caller in actualCallers) {
+					if (progress.WasCanceled) return;
 					progress.Caption = "Creating spreadsheet for " + caller.Name;
 					string attachmentPath;
 					do {
@@ -167,6 +168,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 
 					try {
 						caller.CreateCallList(attachmentPath);
+						if (progress.WasCanceled) return;
 
 						progress.Progress++;
 						progress.Caption = "Emailing " + caller.Name;
