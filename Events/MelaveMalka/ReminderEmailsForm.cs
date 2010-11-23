@@ -15,6 +15,8 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraRichEdit;
+using DevExpress.XtraRichEdit.Export;
+using DevExpress.XtraRichEdit.Export.Html;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI.DisplaySettings;
@@ -45,7 +47,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			new AdvancedColumnsBehavior("ad amounts", fieldNames: new[] { "AdAmount" }).Apply(gridView);
 
 			CheckableGridController.Handle(colShouldEmail);
-			ToggleRowsBehavior.Instance.Apply(gridView);
+		}
+		protected override void OnShown(EventArgs e) {
+			base.OnShown(e);
+			ToggleRowsBehavior.Instance.Apply(gridView);	//Must happen after datasource application to handle PersonEditor events
 		}
 
 		///<summary>Releases the unmanaged resources used by the ReminderEmailsForm and optionally releases the managed resources.</summary>
@@ -146,14 +151,17 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				SendEmail(recipient);
 			}, false);
 		}
-		static void SendEmail(MelaveMalkaInvitation recipient) {
-			//TODO: Send
-			Program.Table<AdReminderEmail>().Rows.Add(new AdReminderEmail {
-				Recipient = recipient,
-				Date = DateTime.Now,
-				EmailSubject = recipient.EmailSubject,
-				EmailSource = recipient.EmailSource
-			});
+		void SendEmail(MelaveMalkaInvitation recipient) {
+			Thread.Sleep(1500);	//TODO: Send
+
+			BeginInvoke(new Action(delegate {	//The table can only be updated from the UI thread.
+				Program.Table<AdReminderEmail>().Rows.Add(new AdReminderEmail {
+					Recipient = recipient,
+					Date = DateTime.Now,
+					EmailSubject = recipient.EmailSubject,
+					EmailSource = recipient.EmailSource
+				});
+			}));
 		}
 
 		#endregion
@@ -168,6 +176,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				Process.Start("mailto: " + str);
 			e.Handled = true;
 		}
+		private void emailEditor_BeforeExport(object sender, BeforeExportEventArgs e) {
+			if (e.DocumentFormat == DocumentFormat.Html)	//Force inline CSS, since Gmail's web UI ignores <style> elements
+				((HtmlDocumentExporterOptions)e.Options).CssPropertiesExportType = CssPropertiesExportType.Inline;
+		}
 
 		readonly Lazy<RepositoryItemRichTextEdit> emailLogRenderer = new Lazy<RepositoryItemRichTextEdit>(
 			() => new RepositoryItemRichTextEdit { DocumentFormat = DocumentFormat.Html },
@@ -180,7 +192,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				vi.LoadText(email.EmailSource);
 				e.RowHeight = vi.CalcHeight(((GridViewInfo)view.GetViewInfo()).CalcRowPreviewWidth(e.RowHandle) - 1) + 2;
 			}
-
 		}
 		private void logView_CustomDrawRowPreview(object sender, RowObjectCustomDrawEventArgs e) {
 			using (RichTextEditViewInfo vi = new RichTextEditViewInfo(emailLogRenderer.Value)) {
