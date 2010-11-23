@@ -32,11 +32,11 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.showCallers = new DevExpress.XtraBars.BarButtonItem();
 			this.autoAssign = new DevExpress.XtraBars.BarButtonItem();
+			this.exportGlobalList = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.colRowId = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colRowId1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
-			this.exportGlobalList = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.callerEdit)).BeginInit();
@@ -54,6 +54,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.grid.RegistrationCount = 48;
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.callerEdit});
+			this.grid.ShowOnlyPredefinedDetails = true;
 			this.grid.Size = new System.Drawing.Size(712, 286);
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -88,7 +89,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colShouldCall.ToolTip = "Should Call?";
 			this.colShouldCall.Visible = true;
 			this.colShouldCall.VisibleIndex = 0;
-			this.colShouldCall.Width = 20;
+			this.colShouldCall.Width = 33;
 			// 
 			// colPerson
 			// 
@@ -213,6 +214,21 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.autoAssign.SuperTip = superToolTip1;
 			this.autoAssign.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.autoAssign_ItemClick);
 			// 
+			// exportGlobalList
+			// 
+			this.exportGlobalList.Caption = "Export to Excel";
+			this.exportGlobalList.Id = 3;
+			this.exportGlobalList.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ExportExcel32;
+			this.exportGlobalList.Name = "exportGlobalList";
+			toolTipTitleItem2.Text = "Export To Excel";
+			toolTipItem2.LeftIndent = 6;
+			toolTipItem2.Text = "Creates an Excel spreadsheet containing everyone who stil needs to be called.\r\n\r\n" +
+				"To export lists for specific callers, use the Callers form.";
+			superToolTip2.Items.Add(toolTipTitleItem2);
+			superToolTip2.Items.Add(toolTipItem2);
+			this.exportGlobalList.SuperTip = superToolTip2;
+			this.exportGlobalList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportGlobalList_ItemClick);
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -242,21 +258,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colRowId1.Name = "colRowId1";
 			this.colRowId1.Visible = true;
 			this.colRowId1.VisibleIndex = 0;
-			// 
-			// exportGlobalList
-			// 
-			this.exportGlobalList.Caption = "Export to Excel";
-			this.exportGlobalList.Id = 3;
-			this.exportGlobalList.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.ExportExcel32;
-			this.exportGlobalList.Name = "exportGlobalList";
-			toolTipTitleItem2.Text = "Export To Excel";
-			toolTipItem2.LeftIndent = 6;
-			toolTipItem2.Text = "Creates an Excel spreadsheet containing everyone who stil needs to be called.\r\n\r\n" +
-				"To export lists for specific callers, use the Callers form.";
-			superToolTip2.Items.Add(toolTipTitleItem2);
-			superToolTip2.Items.Add(toolTipItem2);
-			this.exportGlobalList.SuperTip = superToolTip2;
-			this.exportGlobalList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportGlobalList_ItemClick);
 			// 
 			// CallListForm
 			// 

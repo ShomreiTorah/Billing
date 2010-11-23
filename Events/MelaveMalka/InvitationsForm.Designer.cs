@@ -118,7 +118,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.grid.Location = new System.Drawing.Point(0, 134);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 41;
+			this.grid.RegistrationCount = 48;
+			this.grid.ShowOnlyPredefinedDetails = true;
 			this.grid.Size = new System.Drawing.Size(655, 335);
 			this.grid.TabIndex = 3;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -142,6 +143,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// colPerson
 			// 
+			this.colPerson.AllowKeyboardActivation = false;
 			this.colPerson.Caption = "Full Name";
 			this.colPerson.FieldName = "Person";
 			this.colPerson.Name = "colPerson";
