@@ -68,22 +68,22 @@ VALUES	(@LastName,		@HisName,	@HerName,	@FullName,		@Address,	@City,	@State,		@Z
 			Program.LoadTable<MelaveMalkaSeat>();
 			connection.ExecuteNonQuery(@"
 CREATE TABLE [" + sheetName + @"] (
-	[Last Name]				NVARCHAR(128),
-	[His Name]				NVARCHAR(128),
-	[Her Name]				NVARCHAR(128),
-	[Address]				NVARCHAR(128),
-	[Phone]					NVARCHAR(128),
-	[Caller]				NVARCHAR(128),
-	[Last Year's Ad]		NVARCHAR(64),
-	[Last Year's Seating]	NVARCHAR(64)
+	[Last Name]	NVARCHAR(128),
+	[His Name]	NVARCHAR(128),
+	[Her Name]	NVARCHAR(128),
+	[Address]	NVARCHAR(128),
+	[Phone]		NVARCHAR(128),
+	[Caller]	NVARCHAR(128),
+	[Last Year]	NVARCHAR(64),
+	[Seats]		NVARCHAR(64)
 );");
 
 			foreach (var callee in callees.OrderBy(s => s.Person.LastName)) {
 				var person = callee.Person;
 				connection.ExecuteNonQuery(
 					@"INSERT INTO [" + sheetName + @"]
-		([Last Name],	[His Name],	[Her Name],	[Address],	[Phone],	[Caller],	[Last Year's Ad],	[Last Year's Seating])
-VALUES	(@LastName,		@HisName,	@HerName,	@Address,	@Phone,		@Caller,	@LastAds,			@LastSeats);",
+		([Last Name],	[His Name],	[Her Name],	[Address],	[Phone],	[Caller],	[Last Year],	[Seats])
+VALUES	(@LastName,		@HisName,	@HerName,	@Address,	@Phone,		@Caller,	@LastAds,		@LastSeats);",
 					new {
 						person.LastName,
 						person.HisName,
@@ -95,7 +95,7 @@ VALUES	(@LastName,		@HisName,	@HerName,	@Address,	@Phone,		@Caller,	@LastAds,			
 						Caller = (callee.Caller == null) ? "(none)" : callee.Caller.ToString(),
 						LastAds = person.Pledges
 										.Where(p => p.ExternalSource == "Journal " + (callee.Year - 1))
-										.Select(p => p.SubType)
+										.Select(p => Names.AdTypes.First(a => a.PledgeSubType == p.SubType).Name)
 										.DefaultIfEmpty(person.Invitees.Any(i => i.Year == callee.Year - 1) ? "(no ad)" : "(not invited)")
 										.Join(", "),
 
