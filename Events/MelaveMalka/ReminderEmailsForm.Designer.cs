@@ -15,17 +15,23 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.components = new System.ComponentModel.Container();
 			DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
 			DevExpress.XtraSpellChecker.OptionsSpelling optionsSpelling1 = new DevExpress.XtraSpellChecker.OptionsSpelling();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReminderEmailsForm));
 			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.XtraSpellChecker.OptionsSpelling optionsSpelling2 = new DevExpress.XtraSpellChecker.OptionsSpelling();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReminderEmailsForm));
 			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.XtraSpellChecker.OptionsSpelling optionsSpelling2 = new DevExpress.XtraSpellChecker.OptionsSpelling();
+			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
 			this.logView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colEmailSubject1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -47,6 +53,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.sendAll = new DevExpress.XtraBars.BarButtonItem();
 			this.zoomItem = new DevExpress.XtraBars.BarEditItem();
 			this.zoomBarProperties = new DevExpress.XtraEditors.Repository.RepositoryItemZoomTrackBar();
+			this.resetSelected = new DevExpress.XtraBars.BarListItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
@@ -204,7 +211,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.grid.Name = "grid";
 			this.grid.RegistrationCount = 48;
 			this.grid.ShowOnlyPredefinedDetails = true;
-			this.grid.Size = new System.Drawing.Size(304, 450);
+			this.grid.Size = new System.Drawing.Size(314, 450);
 			this.grid.Source = this.bindingSource;
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -332,7 +339,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.splitContainerControl1.Panel2.Controls.Add(this.standaloneBarDockControl1);
 			this.splitContainerControl1.Panel2.Text = "Panel2";
 			this.splitContainerControl1.Size = new System.Drawing.Size(922, 450);
-			this.splitContainerControl1.SplitterPosition = 304;
+			this.splitContainerControl1.SplitterPosition = 314;
 			this.splitContainerControl1.TabIndex = 2;
 			this.splitContainerControl1.Text = "splitContainerControl1";
 			// 
@@ -349,7 +356,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.emailEditor.Options.Export.Html.CssPropertiesExportType = DevExpress.XtraRichEdit.Export.Html.CssPropertiesExportType.Inline;
 			this.emailEditor.Options.Export.Html.UriExportType = DevExpress.XtraRichEdit.Export.Html.UriExportType.Absolute;
 			this.spellChecker.SetShowSpellCheckMenu(this.emailEditor, false);
-			this.emailEditor.Size = new System.Drawing.Size(612, 306);
+			this.emailEditor.Size = new System.Drawing.Size(602, 306);
 			this.emailEditor.SpellChecker = this.spellChecker;
 			this.spellChecker.SetSpellCheckerOptions(this.emailEditor, optionsSpelling1);
 			this.emailEditor.TabIndex = 1;
@@ -369,9 +376,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
             this.sendAll,
-            this.zoomItem});
+            this.zoomItem,
+            this.resetSelected});
 			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl1.MaxItemId = 3;
+			this.ribbonControl1.MaxItemId = 5;
 			this.ribbonControl1.Name = "ribbonControl1";
 			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -389,6 +397,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.sendAll.Id = 1;
 			this.sendAll.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.SendMails32;
 			this.sendAll.Name = "sendAll";
+			toolTipTitleItem1.Text = "Email Everyone";
+			toolTipItem1.LeftIndent = 6;
+			toolTipItem1.Text = "Sends emails to every checked person that hasn\'t given an ad yet.";
+			superToolTip1.Items.Add(toolTipTitleItem1);
+			superToolTip1.Items.Add(toolTipItem1);
+			this.sendAll.SuperTip = superToolTip1;
 			this.sendAll.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.sendAll_ItemClick);
 			// 
 			// zoomItem
@@ -400,12 +414,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.zoomItem.Glyph = ((System.Drawing.Image)(resources.GetObject("zoomItem.Glyph")));
 			this.zoomItem.Id = 2;
 			this.zoomItem.Name = "zoomItem";
-			toolTipTitleItem1.Text = "Zoom";
-			toolTipItem1.LeftIndent = 6;
-			toolTipItem1.Text = "Sets the zoom factor of the email editor.";
-			superToolTip1.Items.Add(toolTipTitleItem1);
-			superToolTip1.Items.Add(toolTipItem1);
-			this.zoomItem.SuperTip = superToolTip1;
+			toolTipTitleItem2.Text = "Zoom";
+			toolTipItem2.LeftIndent = 6;
+			toolTipItem2.Text = "Sets the zoom factor of the email editor.";
+			superToolTip2.Items.Add(toolTipTitleItem2);
+			superToolTip2.Items.Add(toolTipItem2);
+			this.zoomItem.SuperTip = superToolTip2;
 			this.zoomItem.Width = 115;
 			// 
 			// zoomBarProperties
@@ -420,6 +434,19 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.zoomBarProperties.ScrollThumbStyle = DevExpress.XtraEditors.Repository.ScrollThumbStyle.ArrowDownRight;
 			this.zoomBarProperties.EditValueChanging += new DevExpress.XtraEditors.Controls.ChangingEventHandler(this.zoomBarProperties_EditValueChanging);
 			// 
+			// resetSelected
+			// 
+			this.resetSelected.Caption = "Apply Template";
+			this.resetSelected.Id = 4;
+			this.resetSelected.Name = "resetSelected";
+			toolTipTitleItem3.Text = "Apply Template";
+			toolTipItem3.LeftIndent = 6;
+			toolTipItem3.Text = "Applies a preset email template to the selected (not just checked) people.";
+			superToolTip3.Items.Add(toolTipTitleItem3);
+			superToolTip3.Items.Add(toolTipItem3);
+			this.resetSelected.SuperTip = superToolTip3;
+			this.resetSelected.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.resetSelected_ListItemClick);
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -430,6 +457,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// ribbonPageGroup1
 			// 
 			this.ribbonPageGroup1.ItemLinks.Add(this.sendAll);
+			this.ribbonPageGroup1.ItemLinks.Add(this.resetSelected);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			this.ribbonPageGroup1.ShowCaptionButton = false;
 			this.ribbonPageGroup1.Text = "Emails";
@@ -456,7 +484,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.emailSubject.MenuManager = this.ribbonControl1;
 			this.emailSubject.Name = "emailSubject";
 			this.spellChecker.SetShowSpellCheckMenu(this.emailSubject, true);
-			this.emailSubject.Size = new System.Drawing.Size(556, 20);
+			this.emailSubject.Size = new System.Drawing.Size(546, 20);
 			this.spellChecker.SetSpellCheckerOptions(this.emailSubject, optionsSpelling2);
 			this.emailSubject.TabIndex = 1;
 			// 
@@ -469,7 +497,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panelControl1.Location = new System.Drawing.Point(0, 87);
 			this.panelControl1.Name = "panelControl1";
-			this.panelControl1.Size = new System.Drawing.Size(612, 57);
+			this.panelControl1.Size = new System.Drawing.Size(602, 57);
 			this.panelControl1.TabIndex = 0;
 			// 
 			// recipientAddresses
@@ -483,7 +511,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.recipientAddresses.Properties.AppearanceReadOnly.BackColor = System.Drawing.SystemColors.Window;
 			this.recipientAddresses.Properties.AppearanceReadOnly.Options.UseBackColor = true;
 			this.recipientAddresses.Properties.ReadOnly = true;
-			this.recipientAddresses.Size = new System.Drawing.Size(556, 20);
+			this.recipientAddresses.Size = new System.Drawing.Size(546, 20);
 			this.recipientAddresses.TabIndex = 0;
 			this.recipientAddresses.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.recipientAddresses_OpenLink);
 			// 
@@ -962,12 +990,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.sendSelected.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Enter));
 			this.sendSelected.Name = "sendSelected";
 			this.sendSelected.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
-			toolTipTitleItem2.Text = "Send";
-			toolTipItem2.LeftIndent = 6;
-			toolTipItem2.Text = "Sends the email to this person.";
-			superToolTip2.Items.Add(toolTipTitleItem2);
-			superToolTip2.Items.Add(toolTipItem2);
-			this.sendSelected.SuperTip = superToolTip2;
+			toolTipTitleItem4.Text = "Send";
+			toolTipItem4.LeftIndent = 6;
+			toolTipItem4.Text = "Sends the email to this person.";
+			superToolTip4.Items.Add(toolTipTitleItem4);
+			superToolTip4.Items.Add(toolTipItem4);
+			this.sendSelected.SuperTip = superToolTip4;
 			this.sendSelected.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.sendSelected_ItemClick);
 			// 
 			// resetSingle
@@ -975,12 +1003,13 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.resetSingle.Caption = "Use Template";
 			this.resetSingle.Id = 70;
 			this.resetSingle.Name = "resetSingle";
-			toolTipTitleItem3.Text = "Use Template";
-			toolTipItem3.LeftIndent = 6;
-			toolTipItem3.Text = "Resets this person\'s email message to a standard template.";
-			superToolTip3.Items.Add(toolTipTitleItem3);
-			superToolTip3.Items.Add(toolTipItem3);
-			this.resetSingle.SuperTip = superToolTip3;
+			toolTipTitleItem5.Text = "Use Template";
+			toolTipItem5.LeftIndent = 6;
+			toolTipItem5.Text = "Resets this person\'s email message to a standard template.";
+			superToolTip5.Items.Add(toolTipTitleItem5);
+			superToolTip5.Items.Add(toolTipItem5);
+			this.resetSingle.SuperTip = superToolTip5;
+			this.resetSingle.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.resetSingle_ListItemClick);
 			// 
 			// bar2
 			// 
@@ -1398,5 +1427,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraBars.BarEditItem zoomItem;
 		private DevExpress.XtraEditors.Repository.RepositoryItemZoomTrackBar zoomBarProperties;
 		private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
+		private DevExpress.XtraBars.BarListItem resetSelected;
 	}
 }

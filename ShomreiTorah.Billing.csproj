@@ -623,6 +623,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>ASPXCodeBehind</SubType>
     </None>
+    <None Include="Email Templates\Ad Reminders\Invitation-style Email.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="Icon.ico" />
     <None Include="Resources\ShalachManosList32.png" />
     <None Include="Resources\ExportScroll32.png" />

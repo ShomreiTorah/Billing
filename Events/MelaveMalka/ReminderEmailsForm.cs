@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -30,6 +31,7 @@ using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	public partial class ReminderEmailsForm : XtraForm {
+		const string templateSubfolder = "Ad Reminders";
 		readonly int year;
 
 		readonly FilteredTable<MelaveMalkaInvitation> dataSource;
@@ -51,6 +53,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			new AdvancedColumnsBehavior("ad amounts", fieldNames: new[] { "AdAmount" }).Apply(gridView);
 
 			CheckableGridController.Handle(colShouldEmail);
+
+			var templates = Array.ConvertAll(Directory.GetFiles(Path.Combine(Program.AspxPath, templateSubfolder), "*.aspx"), Path.GetFileNameWithoutExtension);
+			resetSingle.Strings.AddRange(templates);
+			resetSelected.Strings.AddRange(templates);
 		}
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
@@ -177,7 +183,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private void grid_FocusedViewChanged(object sender, ViewFocusEventArgs e) {
 			if (e.View != null && e.View != gridView) {	//If the user clicked a detail clone,
 				var email = (AdReminderEmail)e.View.GetRow(0);
-				gridView.FocusedRowHandle = gridView.GetRowHandle(dataSource.Rows.IndexOf(email.Recipient));
+				gridView.SetSelection(gridView.GetRowHandle(dataSource.Rows.IndexOf(email.Recipient)), makeVisible: true);
 			}
 		}
 		private void logView_DoubleClick(object sender, EventArgs e) {
@@ -247,6 +253,39 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			zoomItem.Caption = emailEditor.ActiveView.ZoomFactor.ToString("p0", CultureInfo.CurrentCulture);
 			if (!suppressZoomItemChange)
 				zoomItem.EditValue = (int)Math.Round(emailEditor.ActiveView.ZoomFactor * 100);
+		}
+		#endregion
+
+		#region Templates
+		private void resetSingle_ListItemClick(object sender, ListItemClickEventArgs e) {
+			ApplyTemplate(resetSingle.Strings[e.Index], SelectedInvitee);
+		}
+
+		private void resetSelected_ListItemClick(object sender, ListItemClickEventArgs e) {
+			ApplyTemplate(resetSelected.Strings[e.Index], gridView.GetSelectedRows().Select(gridView.GetRow).Cast<MelaveMalkaInvitation>().ToArray());
+		}
+
+		static void ApplyTemplate(string templateName, params MelaveMalkaInvitation[] people) {
+			if (people.Length == 0) {
+				Dialog.ShowError("Please select people.");
+				return;
+			}
+			if (people.Length == 1) {
+				if (!Dialog.Confirm("Would you like to set " + people[0].Person.FullName + " to receive the " + templateName + " template?"))
+					return;
+			} else {
+				if (!Dialog.Confirm("Would you like to set " + people.Length + " people to receive the " + templateName + " template?"))
+					return;
+			}
+
+			Program.LoadTable<MelaveMalkaInfo>();		//Used by the templates
+			var virtualPath = "/" + templateSubfolder + "/" + templateName + ".aspx";
+			foreach (var recipient in people) {
+				using (var message = EmailCreator.CreateMessage(recipient, virtualPath)) {
+					recipient.EmailSubject = message.Subject;
+					recipient.EmailSource = message.Body;
+				}
+			}
 		}
 		#endregion
 	}
