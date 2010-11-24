@@ -16,16 +16,16 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
 			DevExpress.XtraSpellChecker.OptionsSpelling optionsSpelling1 = new DevExpress.XtraSpellChecker.OptionsSpelling();
 			DevExpress.XtraSpellChecker.OptionsSpelling optionsSpelling2 = new DevExpress.XtraSpellChecker.OptionsSpelling();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReminderEmailsForm));
-			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReminderEmailsForm));
+			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
 			this.logView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colEmailSubject1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -105,8 +105,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.bar2 = new DevExpress.XtraBars.Bar();
 			this.findItem1 = new DevExpress.XtraRichEdit.UI.FindItem();
 			this.replaceItem1 = new DevExpress.XtraRichEdit.UI.ReplaceItem();
-			this.zoomItem = new DevExpress.XtraBars.BarEditItem();
-			this.zoomBarProperties = new DevExpress.XtraEditors.Repository.RepositoryItemZoomTrackBar();
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -134,6 +132,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.fileSaveItem1 = new DevExpress.XtraRichEdit.UI.FileSaveItem();
 			this.fileSaveAsItem1 = new DevExpress.XtraRichEdit.UI.FileSaveAsItem();
 			this.richEditBarController1 = new DevExpress.XtraRichEdit.UI.RichEditBarController();
+			this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+			this.zoomItem = new DevExpress.XtraBars.BarEditItem();
+			this.zoomBarProperties = new DevExpress.XtraEditors.Repository.RepositoryItemZoomTrackBar();
 			((System.ComponentModel.ISupportInitialize)(this.logView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
@@ -147,8 +148,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.panelControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.recipientAddresses.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.zoomBarProperties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.richEditBarController1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.zoomBarProperties)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// logView
@@ -202,7 +203,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.grid.Name = "grid";
 			this.grid.RegistrationCount = 48;
 			this.grid.ShowOnlyPredefinedDetails = true;
-			this.grid.Size = new System.Drawing.Size(304, 475);
+			this.grid.Size = new System.Drawing.Size(304, 450);
 			this.grid.Source = this.bindingSource;
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -287,7 +288,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// listSearch
 			// 
 			this.listSearch.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.listSearch.Location = new System.Drawing.Point(0, 589);
+			this.listSearch.Location = new System.Drawing.Point(0, 564);
 			this.listSearch.Name = "listSearch";
 			this.listSearch.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -328,7 +329,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.splitContainerControl1.Panel2.Controls.Add(this.panelControl1);
 			this.splitContainerControl1.Panel2.Controls.Add(this.standaloneBarDockControl1);
 			this.splitContainerControl1.Panel2.Text = "Panel2";
-			this.splitContainerControl1.Size = new System.Drawing.Size(922, 475);
+			this.splitContainerControl1.Size = new System.Drawing.Size(922, 450);
 			this.splitContainerControl1.SplitterPosition = 304;
 			this.splitContainerControl1.TabIndex = 2;
 			this.splitContainerControl1.Text = "splitContainerControl1";
@@ -346,7 +347,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.emailEditor.Options.Export.Html.CssPropertiesExportType = DevExpress.XtraRichEdit.Export.Html.CssPropertiesExportType.Inline;
 			this.emailEditor.Options.Export.Html.UriExportType = DevExpress.XtraRichEdit.Export.Html.UriExportType.Absolute;
 			this.spellChecker.SetShowSpellCheckMenu(this.emailEditor, false);
-			this.emailEditor.Size = new System.Drawing.Size(612, 331);
+			this.emailEditor.Size = new System.Drawing.Size(612, 306);
 			this.emailEditor.SpellChecker = this.spellChecker;
 			this.spellChecker.SetSpellCheckerOptions(this.emailEditor, optionsSpelling1);
 			this.emailEditor.TabIndex = 1;
@@ -365,14 +366,18 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.ribbonControl1.ExpandCollapseItem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
 			this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
-            this.sendAll});
+            this.sendAll,
+            this.zoomItem});
 			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl1.MaxItemId = 2;
+			this.ribbonControl1.MaxItemId = 3;
 			this.ribbonControl1.Name = "ribbonControl1";
 			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
+			this.ribbonControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.zoomBarProperties});
 			this.ribbonControl1.SelectedPage = this.ribbonPage1;
 			this.ribbonControl1.Size = new System.Drawing.Size(922, 114);
+			this.ribbonControl1.StatusBar = this.ribbonStatusBar1;
 			this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
 			// 
 			// sendAll
@@ -549,11 +554,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             this.fileNewItem1,
             this.fileOpenItem1,
             this.fileSaveItem1,
-            this.fileSaveAsItem1,
-            this.zoomItem});
+            this.fileSaveAsItem1});
 			this.barManager1.MaxItemId = 95;
-			this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.zoomBarProperties});
 			// 
 			// mainBar
 			// 
@@ -910,7 +912,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.sendSelected),
             new DevExpress.XtraBars.LinkPersistInfo(this.resetSingle, true)});
-			this.bar1.OptionsBar.AllowQuickCustomization = false;
 			this.bar1.StandaloneBarDockControl = this.standaloneBarDockControl1;
 			this.bar1.Text = "Email";
 			// 
@@ -922,12 +923,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.sendSelected.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Enter));
 			this.sendSelected.Name = "sendSelected";
 			this.sendSelected.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
-			toolTipTitleItem1.Text = "Send";
-			toolTipItem1.LeftIndent = 6;
-			toolTipItem1.Text = "Sends the email to this person.";
-			superToolTip1.Items.Add(toolTipTitleItem1);
-			superToolTip1.Items.Add(toolTipItem1);
-			this.sendSelected.SuperTip = superToolTip1;
+			toolTipTitleItem2.Text = "Send";
+			toolTipItem2.LeftIndent = 6;
+			toolTipItem2.Text = "Sends the email to this person.";
+			superToolTip2.Items.Add(toolTipTitleItem2);
+			superToolTip2.Items.Add(toolTipItem2);
+			this.sendSelected.SuperTip = superToolTip2;
 			this.sendSelected.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.sendSelected_ItemClick);
 			// 
 			// resetSingle
@@ -935,25 +936,24 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.resetSingle.Caption = "Use Template";
 			this.resetSingle.Id = 70;
 			this.resetSingle.Name = "resetSingle";
-			toolTipTitleItem2.Text = "Use Template";
-			toolTipItem2.LeftIndent = 6;
-			toolTipItem2.Text = "Resets this person\'s email message to a standard template.";
-			superToolTip2.Items.Add(toolTipTitleItem2);
-			superToolTip2.Items.Add(toolTipItem2);
-			this.resetSingle.SuperTip = superToolTip2;
+			toolTipTitleItem3.Text = "Use Template";
+			toolTipItem3.LeftIndent = 6;
+			toolTipItem3.Text = "Resets this person\'s email message to a standard template.";
+			superToolTip3.Items.Add(toolTipTitleItem3);
+			superToolTip3.Items.Add(toolTipItem3);
+			this.resetSingle.SuperTip = superToolTip3;
 			// 
 			// bar2
 			// 
 			this.bar2.BarName = "View";
-			this.bar2.DockCol = 2;
-			this.bar2.DockRow = 0;
+			this.bar2.DockCol = 1;
+			this.bar2.DockRow = 1;
 			this.bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
 			this.bar2.FloatLocation = new System.Drawing.Point(850, 287);
 			this.bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.findItem1),
-            new DevExpress.XtraBars.LinkPersistInfo(this.replaceItem1),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.zoomItem, "", true, true, true, 103)});
-			this.bar2.Offset = 5555;
+            new DevExpress.XtraBars.LinkPersistInfo(this.replaceItem1)});
+			this.bar2.Offset = 382;
 			this.bar2.StandaloneBarDockControl = this.standaloneBarDockControl1;
 			this.bar2.Text = "View";
 			// 
@@ -970,40 +970,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.replaceItem1.Id = 50;
 			this.replaceItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("replaceItem1.LargeGlyph")));
 			this.replaceItem1.Name = "replaceItem1";
-			// 
-			// zoomItem
-			// 
-			this.zoomItem.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-			this.zoomItem.Caption = "100%";
-			this.zoomItem.Edit = this.zoomBarProperties;
-			this.zoomItem.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
-			this.zoomItem.EditValue = 100;
-			this.zoomItem.Glyph = ((System.Drawing.Image)(resources.GetObject("zoomItem.Glyph")));
-			this.zoomItem.Id = 74;
-			this.zoomItem.IEBehavior = true;
-			this.zoomItem.Name = "zoomItem";
-			this.zoomItem.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
-			toolTipTitleItem3.Text = "Zoom";
-			toolTipItem3.LeftIndent = 6;
-			toolTipItem3.Text = "Sets the zoom factor of the email editor.";
-			superToolTip3.Items.Add(toolTipTitleItem3);
-			superToolTip3.Items.Add(toolTipItem3);
-			this.zoomItem.SuperTip = superToolTip3;
-			this.zoomItem.VisibleWhenVertical = true;
-			// 
-			// zoomBarProperties
-			// 
-			this.zoomBarProperties.AppearanceFocused.BackColor = System.Drawing.Color.Transparent;
-			this.zoomBarProperties.AppearanceFocused.Options.UseBackColor = true;
-			this.zoomBarProperties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-			this.zoomBarProperties.LargeChange = 10;
-			this.zoomBarProperties.Maximum = 190;
-			this.zoomBarProperties.Minimum = 10;
-			this.zoomBarProperties.Name = "zoomBarProperties";
-			this.zoomBarProperties.ScrollThumbStyle = DevExpress.XtraEditors.Repository.ScrollThumbStyle.ArrowDownRight;
-			this.zoomBarProperties.ShowValueToolTip = true;
-			this.zoomBarProperties.SmallChange = 5;
-			this.zoomBarProperties.EditValueChanging += new DevExpress.XtraEditors.Controls.ChangingEventHandler(this.zoomBarProperties_EditValueChanging);
 			// 
 			// barDockControlTop
 			// 
@@ -1247,6 +1213,43 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.richEditBarController1.BarItems.Add(this.fileSaveAsItem1);
 			this.richEditBarController1.RichEditControl = this.emailEditor;
 			// 
+			// ribbonStatusBar1
+			// 
+			this.ribbonStatusBar1.ItemLinks.Add(this.zoomItem);
+			this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 584);
+			this.ribbonStatusBar1.Name = "ribbonStatusBar1";
+			this.ribbonStatusBar1.Ribbon = this.ribbonControl1;
+			this.ribbonStatusBar1.Size = new System.Drawing.Size(922, 25);
+			// 
+			// zoomItem
+			// 
+			this.zoomItem.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+			this.zoomItem.Caption = "100%";
+			this.zoomItem.Edit = this.zoomBarProperties;
+			this.zoomItem.EditValue = "100";
+			this.zoomItem.Glyph = ((System.Drawing.Image)(resources.GetObject("zoomItem.Glyph")));
+			this.zoomItem.Id = 2;
+			this.zoomItem.Name = "zoomItem";
+			toolTipTitleItem1.Text = "Zoom";
+			toolTipItem1.LeftIndent = 6;
+			toolTipItem1.Text = "Sets the zoom factor of the email editor.";
+			superToolTip1.Items.Add(toolTipTitleItem1);
+			superToolTip1.Items.Add(toolTipItem1);
+			this.zoomItem.SuperTip = superToolTip1;
+			this.zoomItem.Width = 115;
+			// 
+			// zoomBarProperties
+			// 
+			this.zoomBarProperties.AppearanceFocused.BackColor = System.Drawing.Color.Transparent;
+			this.zoomBarProperties.AppearanceFocused.Options.UseBackColor = true;
+			this.zoomBarProperties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+			this.zoomBarProperties.LargeChange = 10;
+			this.zoomBarProperties.Maximum = 190;
+			this.zoomBarProperties.Minimum = 10;
+			this.zoomBarProperties.Name = "zoomBarProperties";
+			this.zoomBarProperties.ScrollThumbStyle = DevExpress.XtraEditors.Repository.ScrollThumbStyle.ArrowDownRight;
+			this.zoomBarProperties.EditValueChanging += new DevExpress.XtraEditors.Controls.ChangingEventHandler(this.zoomBarProperties_EditValueChanging);
+			// 
 			// ReminderEmailsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1255,6 +1258,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.Controls.Add(this.splitContainerControl1);
 			this.Controls.Add(this.listSearch);
 			this.Controls.Add(this.ribbonControl1);
+			this.Controls.Add(this.ribbonStatusBar1);
 			this.Controls.Add(this.barDockControlLeft);
 			this.Controls.Add(this.barDockControlRight);
 			this.Controls.Add(this.barDockControlBottom);
@@ -1275,8 +1279,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.panelControl1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.recipientAddresses.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.zoomBarProperties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.richEditBarController1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.zoomBarProperties)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1371,8 +1375,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraEditors.HyperLinkEdit recipientAddresses;
 		private DevExpress.XtraEditors.LabelControl labelControl2;
 		private Data.UI.FrameworkBindingSource bindingSource;
-		private DevExpress.XtraBars.BarEditItem zoomItem;
-		private DevExpress.XtraEditors.Repository.RepositoryItemZoomTrackBar zoomBarProperties;
 		private DevExpress.XtraRichEdit.UI.SwitchToSimpleViewItem switchToSimpleViewItem1;
 		private DevExpress.XtraRichEdit.UI.SwitchToDraftViewItem switchToDraftViewItem1;
 		private DevExpress.XtraRichEdit.UI.SwitchToPrintLayoutViewItem switchToPrintLayoutViewItem1;
@@ -1391,5 +1393,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraRichEdit.UI.FileSaveItem fileSaveItem1;
 		private DevExpress.XtraRichEdit.UI.FileSaveAsItem fileSaveAsItem1;
 		private DevExpress.XtraBars.Bar bar2;
+		private DevExpress.XtraBars.BarEditItem zoomItem;
+		private DevExpress.XtraEditors.Repository.RepositoryItemZoomTrackBar zoomBarProperties;
+		private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
 	}
 }
