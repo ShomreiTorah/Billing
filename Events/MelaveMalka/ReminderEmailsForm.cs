@@ -83,6 +83,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 
 		#region Send Emails
 		private void sendAll_ItemClick(object sender, ItemClickEventArgs args) {
+			bindingSource.EndEdit();		//Commit any changes in the editor.  (Very important; otherwise, any changes made since the last time it lost focus will not be sent)
 			#region Validation
 			var allRecipients = dataSource.Rows.OrderBy(p => p.Person.LastName).Where(i => i.AdAmount == 0 && i.ShouldEmail).ToList();
 
@@ -131,6 +132,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			}, true);
 		}
 		private void sendSelected_ItemClick(object sender, ItemClickEventArgs args) {
+			bindingSource.EndEdit();		//Commit any changes in the editor.  (Very important; otherwise, any changes made since the last time it lost focus will not be sent)
 			#region Validation
 			var recipient = SelectedInvitee;
 			if (recipient == null) return;
@@ -159,6 +161,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			Thread.Sleep(1500);	//TODO: Send
 
 			BeginInvoke(new Action(delegate {	//The table can only be updated from the UI thread.
+				Dialog.Inform(recipient.EmailSource, recipient.EmailSubject);
+
 				Program.Table<AdReminderEmail>().Rows.Add(new AdReminderEmail {
 					Recipient = recipient,
 					Date = DateTime.Now,
@@ -170,13 +174,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		#endregion
 
 		#region Email log view
-		//private void logView_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e) {
-		//    var view = (SmartGridView)sender;
-		//    var email = (AdReminderEmail)view.GetFocusedRow();
-		//    gridView.FocusedRowHandle = gridView.GetRowHandle(dataSource.Rows.IndexOf(email.Recipient));
-		//}
 		private void grid_FocusedViewChanged(object sender, ViewFocusEventArgs e) {
-			if (e.View != gridView && e.View != null) {	//If we switched to a detail clone,
+			if (e.View != null && e.View != gridView) {	//If the user clicked a detail clone,
 				var email = (AdReminderEmail)e.View.GetRow(0);
 				gridView.FocusedRowHandle = gridView.GetRowHandle(dataSource.Rows.IndexOf(email.Recipient));
 			}
