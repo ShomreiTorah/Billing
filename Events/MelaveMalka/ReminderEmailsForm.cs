@@ -6,12 +6,14 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using DevExpress.Data.Filtering;
+using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Drawing;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraEditors.ViewInfo;
+using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
@@ -21,6 +23,7 @@ using DevExpress.XtraRichEdit.Export.Html;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI.DisplaySettings;
+using ShomreiTorah.Data.UI.Grid;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
@@ -59,8 +62,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		protected override void Dispose(bool disposing) {
 			if (disposing) {
 				if (emailLogRenderer.IsValueCreated) emailLogRenderer.Value.Dispose();
-				dataSource.Dispose();
 				if (components != null) components.Dispose();
+				dataSource.Dispose();
 			}
 			base.Dispose(disposing);
 		}
@@ -164,24 +167,35 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				});
 			}));
 		}
-
 		#endregion
 
-		private void gridView_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e) {
-			splitContainerControl1.PanelVisibility = SelectedInvitee == null ? SplitPanelVisibility.Panel1 : SplitPanelVisibility.Both;
+		#region Email log view
+		//private void logView_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e) {
+		//    var view = (SmartGridView)sender;
+		//    var email = (AdReminderEmail)view.GetFocusedRow();
+		//    gridView.FocusedRowHandle = gridView.GetRowHandle(dataSource.Rows.IndexOf(email.Recipient));
+		//}
+		private void grid_FocusedViewChanged(object sender, ViewFocusEventArgs e) {
+			if (e.View != gridView && e.View != null) {	//If we switched to a detail clone,
+				var email = (AdReminderEmail)e.View.GetRow(0);
+				gridView.FocusedRowHandle = gridView.GetRowHandle(dataSource.Rows.IndexOf(email.Recipient));
+			}
 		}
+		private void logView_DoubleClick(object sender, EventArgs e) {
+			var view = (SmartGridView)sender;
+			var info = view.CalcHitInfo(grid.PointToClient(MousePosition));
 
-		private void recipientAddresses_OpenLink(object sender, OpenLinkEventArgs e) {
-			var str = e.EditValue as string;
-			if (!String.IsNullOrWhiteSpace(str))
-				Process.Start("mailto: " + str);
-			e.Handled = true;
-		}
-		private void emailEditor_BeforeExport(object sender, BeforeExportEventArgs e) {
-			if (e.DocumentFormat == DocumentFormat.Html)	//Force inline CSS, since Gmail's web UI ignores <style> elements
-				((HtmlDocumentExporterOptions)e.Options).CssPropertiesExportType = CssPropertiesExportType.Inline;
-		}
+			if (info.RowHandle >= 0 && info.InRow) {
+				var dx = e as DXMouseEventArgs;
+				if (dx != null) dx.Handled = true;
 
+				var email = (AdReminderEmail)view.GetRow(info.RowHandle);
+				if (Dialog.Confirm("Would you like to set " + email.Recipient.Person.FullName + " to receive this email?")) {
+					email.Recipient.EmailSubject = email.EmailSubject;
+					email.Recipient.EmailSource = email.EmailSource;
+				}
+			}
+		}
 		readonly Lazy<RepositoryItemRichTextEdit> emailLogRenderer = new Lazy<RepositoryItemRichTextEdit>(
 			() => new RepositoryItemRichTextEdit { DocumentFormat = DocumentFormat.Html },
 			LazyThreadSafetyMode.None
@@ -205,6 +219,23 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			}
 			e.Handled = true;
 		}
+		#endregion
+
+		#region Composer
+		private void gridView_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e) {
+			splitContainerControl1.PanelVisibility = SelectedInvitee == null ? SplitPanelVisibility.Panel1 : SplitPanelVisibility.Both;
+		}
+
+		private void recipientAddresses_OpenLink(object sender, OpenLinkEventArgs e) {
+			var str = e.EditValue as string;
+			if (!String.IsNullOrWhiteSpace(str))
+				Process.Start("mailto: " + str);
+			e.Handled = true;
+		}
+		private void emailEditor_BeforeExport(object sender, BeforeExportEventArgs e) {
+			if (e.DocumentFormat == DocumentFormat.Html)	//Force inline CSS, since Gmail's web UI ignores <style> elements
+				((HtmlDocumentExporterOptions)e.Options).CssPropertiesExportType = CssPropertiesExportType.Inline;
+		}
 
 		bool suppressZoomItemChange;
 		private void zoomBarProperties_EditValueChanging(object sender, ChangingEventArgs e) {
@@ -218,5 +249,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			if (!suppressZoomItemChange)
 				zoomItem.EditValue = (int)Math.Round(emailEditor.ActiveView.ZoomFactor * 100);
 		}
+		#endregion
 	}
 }
