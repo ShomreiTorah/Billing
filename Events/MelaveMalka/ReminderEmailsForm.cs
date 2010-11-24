@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -203,6 +204,19 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				RichTextEditPainter.DrawRTF(vi, e.Cache);
 			}
 			e.Handled = true;
+		}
+
+		bool suppressZoomItemChange;
+		private void zoomBarProperties_EditValueChanging(object sender, ChangingEventArgs e) {
+			suppressZoomItemChange = true;
+			emailEditor.ActiveView.ZoomFactor = (int)e.NewValue / 100f;
+			suppressZoomItemChange = false;
+		}
+
+		private void emailEditor_ZoomChanged(object sender, EventArgs e) {
+			zoomItem.Caption = emailEditor.ActiveView.ZoomFactor.ToString("p0", CultureInfo.CurrentCulture);
+			if (!suppressZoomItemChange)
+				zoomItem.EditValue = (int)Math.Round(emailEditor.ActiveView.ZoomFactor * 100);
 		}
 	}
 }

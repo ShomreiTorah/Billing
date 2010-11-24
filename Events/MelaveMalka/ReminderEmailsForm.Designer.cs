@@ -23,6 +23,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
 			this.logView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colEmailSubject1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -52,13 +55,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
 			this.standaloneBarDockControl1 = new DevExpress.XtraBars.StandaloneBarDockControl();
 			this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
-			this.commonBar1 = new DevExpress.XtraRichEdit.UI.CommonBar();
-			this.undoItem1 = new DevExpress.XtraRichEdit.UI.UndoItem();
-			this.redoItem1 = new DevExpress.XtraRichEdit.UI.RedoItem();
-			this.clipboardBar1 = new DevExpress.XtraRichEdit.UI.ClipboardBar();
+			this.mainBar = new DevExpress.XtraRichEdit.UI.ClipboardBar();
 			this.cutItem1 = new DevExpress.XtraRichEdit.UI.CutItem();
 			this.copyItem1 = new DevExpress.XtraRichEdit.UI.CopyItem();
 			this.pasteItem1 = new DevExpress.XtraRichEdit.UI.PasteItem();
+			this.undoItem1 = new DevExpress.XtraRichEdit.UI.UndoItem();
+			this.redoItem1 = new DevExpress.XtraRichEdit.UI.RedoItem();
 			this.fontBar1 = new DevExpress.XtraRichEdit.UI.FontBar();
 			this.showFontFormItem1 = new DevExpress.XtraRichEdit.UI.ShowFontFormItem();
 			this.fontSizeIncreaseItem1 = new DevExpress.XtraRichEdit.UI.FontSizeIncreaseItem();
@@ -93,9 +95,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.increaseIndentItem1 = new DevExpress.XtraRichEdit.UI.IncreaseIndentItem();
 			this.toggleShowWhitespaceItem1 = new DevExpress.XtraRichEdit.UI.ToggleShowWhitespaceItem();
 			this.showParagraphFormItem1 = new DevExpress.XtraRichEdit.UI.ShowParagraphFormItem();
-			this.editingBar1 = new DevExpress.XtraRichEdit.UI.EditingBar();
-			this.findItem1 = new DevExpress.XtraRichEdit.UI.FindItem();
-			this.replaceItem1 = new DevExpress.XtraRichEdit.UI.ReplaceItem();
 			this.tablesBar1 = new DevExpress.XtraRichEdit.UI.TablesBar();
 			this.insertTableItem1 = new DevExpress.XtraRichEdit.UI.InsertTableItem();
 			this.insertSymbolItem1 = new DevExpress.XtraRichEdit.UI.InsertSymbolItem();
@@ -103,6 +102,11 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.bar1 = new DevExpress.XtraBars.Bar();
 			this.sendSelected = new DevExpress.XtraBars.BarButtonItem();
 			this.resetSingle = new DevExpress.XtraBars.BarListItem();
+			this.bar2 = new DevExpress.XtraBars.Bar();
+			this.findItem1 = new DevExpress.XtraRichEdit.UI.FindItem();
+			this.replaceItem1 = new DevExpress.XtraRichEdit.UI.ReplaceItem();
+			this.zoomItem = new DevExpress.XtraBars.BarEditItem();
+			this.zoomBarProperties = new DevExpress.XtraEditors.Repository.RepositoryItemZoomTrackBar();
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -110,20 +114,25 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.insertPageBreakItem1 = new DevExpress.XtraRichEdit.UI.InsertPageBreakItem();
 			this.insertPictureItem1 = new DevExpress.XtraRichEdit.UI.InsertPictureItem();
 			this.insertBookmarkItem1 = new DevExpress.XtraRichEdit.UI.InsertBookmarkItem();
-			this.editPageHeaderItem1 = new DevExpress.XtraRichEdit.UI.EditPageHeaderItem();
-			this.editPageFooterItem1 = new DevExpress.XtraRichEdit.UI.EditPageFooterItem();
-			this.insertPageNumberItem1 = new DevExpress.XtraRichEdit.UI.InsertPageNumberItem();
-			this.insertPageCountItem1 = new DevExpress.XtraRichEdit.UI.InsertPageCountItem();
-			this.goToPageHeaderItem1 = new DevExpress.XtraRichEdit.UI.GoToPageHeaderItem();
-			this.goToPageFooterItem1 = new DevExpress.XtraRichEdit.UI.GoToPageFooterItem();
-			this.goToPreviousHeaderFooterItem1 = new DevExpress.XtraRichEdit.UI.GoToPreviousHeaderFooterItem();
-			this.goToNextHeaderFooterItem1 = new DevExpress.XtraRichEdit.UI.GoToNextHeaderFooterItem();
-			this.toggleLinkToPreviousItem1 = new DevExpress.XtraRichEdit.UI.ToggleLinkToPreviousItem();
-			this.toggleDifferentFirstPageItem1 = new DevExpress.XtraRichEdit.UI.ToggleDifferentFirstPageItem();
-			this.toggleDifferentOddAndEvenPagesItem1 = new DevExpress.XtraRichEdit.UI.ToggleDifferentOddAndEvenPagesItem();
-			this.closePageHeaderFooterItem1 = new DevExpress.XtraRichEdit.UI.ClosePageHeaderFooterItem();
 			this.insertTableRowAboveItem1 = new DevExpress.XtraRichEdit.UI.InsertTableRowAboveItem();
 			this.insertTableRowBelowItem1 = new DevExpress.XtraRichEdit.UI.InsertTableRowBelowItem();
+			this.switchToSimpleViewItem1 = new DevExpress.XtraRichEdit.UI.SwitchToSimpleViewItem();
+			this.switchToDraftViewItem1 = new DevExpress.XtraRichEdit.UI.SwitchToDraftViewItem();
+			this.switchToPrintLayoutViewItem1 = new DevExpress.XtraRichEdit.UI.SwitchToPrintLayoutViewItem();
+			this.zoomOutItem1 = new DevExpress.XtraRichEdit.UI.ZoomOutItem();
+			this.zoomInItem1 = new DevExpress.XtraRichEdit.UI.ZoomInItem();
+			this.changeSectionPageMarginsItem1 = new DevExpress.XtraRichEdit.UI.ChangeSectionPageMarginsItem();
+			this.setNormalSectionPageMarginsItem1 = new DevExpress.XtraRichEdit.UI.SetNormalSectionPageMarginsItem();
+			this.setNarrowSectionPageMarginsItem1 = new DevExpress.XtraRichEdit.UI.SetNarrowSectionPageMarginsItem();
+			this.setModerateSectionPageMarginsItem1 = new DevExpress.XtraRichEdit.UI.SetModerateSectionPageMarginsItem();
+			this.setWideSectionPageMarginsItem1 = new DevExpress.XtraRichEdit.UI.SetWideSectionPageMarginsItem();
+			this.changeSectionPageOrientationItem1 = new DevExpress.XtraRichEdit.UI.ChangeSectionPageOrientationItem();
+			this.setPortraitPageOrientationItem1 = new DevExpress.XtraRichEdit.UI.SetPortraitPageOrientationItem();
+			this.setLandscapePageOrientationItem1 = new DevExpress.XtraRichEdit.UI.SetLandscapePageOrientationItem();
+			this.fileNewItem1 = new DevExpress.XtraRichEdit.UI.FileNewItem();
+			this.fileOpenItem1 = new DevExpress.XtraRichEdit.UI.FileOpenItem();
+			this.fileSaveItem1 = new DevExpress.XtraRichEdit.UI.FileSaveItem();
+			this.fileSaveAsItem1 = new DevExpress.XtraRichEdit.UI.FileSaveAsItem();
 			this.richEditBarController1 = new DevExpress.XtraRichEdit.UI.RichEditBarController();
 			((System.ComponentModel.ISupportInitialize)(this.logView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
@@ -138,6 +147,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.panelControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.recipientAddresses.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.zoomBarProperties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.richEditBarController1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -192,7 +202,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.grid.Name = "grid";
 			this.grid.RegistrationCount = 48;
 			this.grid.ShowOnlyPredefinedDetails = true;
-			this.grid.Size = new System.Drawing.Size(306, 475);
+			this.grid.Size = new System.Drawing.Size(304, 475);
 			this.grid.Source = this.bindingSource;
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -207,6 +217,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             this.colSource,
             this.colEmailSubject,
             this.colAdAmount});
+			this.gridView.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
 			this.gridView.GridControl = this.grid;
 			this.gridView.Name = "gridView";
 			this.gridView.OptionsSelection.MultiSelect = true;
@@ -281,7 +292,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.listSearch.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.listSearch.Properties.NullValuePrompt = "Click here to search the list";
-			this.listSearch.Size = new System.Drawing.Size(939, 20);
+			this.listSearch.Size = new System.Drawing.Size(922, 20);
 			this.listSearch.TabIndex = 3;
 			this.listSearch.EditValueChanged += new System.EventHandler(this.listSearch_EditValueChanged);
 			// 
@@ -317,8 +328,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.splitContainerControl1.Panel2.Controls.Add(this.panelControl1);
 			this.splitContainerControl1.Panel2.Controls.Add(this.standaloneBarDockControl1);
 			this.splitContainerControl1.Panel2.Text = "Panel2";
-			this.splitContainerControl1.Size = new System.Drawing.Size(939, 475);
-			this.splitContainerControl1.SplitterPosition = 306;
+			this.splitContainerControl1.Size = new System.Drawing.Size(922, 475);
+			this.splitContainerControl1.SplitterPosition = 304;
 			this.splitContainerControl1.TabIndex = 2;
 			this.splitContainerControl1.Text = "splitContainerControl1";
 			// 
@@ -335,11 +346,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.emailEditor.Options.Export.Html.CssPropertiesExportType = DevExpress.XtraRichEdit.Export.Html.CssPropertiesExportType.Inline;
 			this.emailEditor.Options.Export.Html.UriExportType = DevExpress.XtraRichEdit.Export.Html.UriExportType.Absolute;
 			this.spellChecker.SetShowSpellCheckMenu(this.emailEditor, false);
-			this.emailEditor.Size = new System.Drawing.Size(627, 331);
+			this.emailEditor.Size = new System.Drawing.Size(612, 331);
 			this.emailEditor.SpellChecker = this.spellChecker;
 			this.spellChecker.SetSpellCheckerOptions(this.emailEditor, optionsSpelling1);
 			this.emailEditor.TabIndex = 1;
 			this.emailEditor.Text = "richEditControl1";
+			this.emailEditor.ZoomChanged += new System.EventHandler(this.emailEditor_ZoomChanged);
 			this.emailEditor.BeforeExport += new DevExpress.XtraRichEdit.BeforeExportEventHandler(this.emailEditor_BeforeExport);
 			// 
 			// ribbonControl1
@@ -360,7 +372,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
 			this.ribbonControl1.SelectedPage = this.ribbonPage1;
-			this.ribbonControl1.Size = new System.Drawing.Size(939, 114);
+			this.ribbonControl1.Size = new System.Drawing.Size(922, 114);
 			this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
 			// 
 			// sendAll
@@ -400,7 +412,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.emailSubject.MenuManager = this.ribbonControl1;
 			this.emailSubject.Name = "emailSubject";
 			this.spellChecker.SetShowSpellCheckMenu(this.emailSubject, true);
-			this.emailSubject.Size = new System.Drawing.Size(571, 20);
+			this.emailSubject.Size = new System.Drawing.Size(556, 20);
 			this.spellChecker.SetSpellCheckerOptions(this.emailSubject, optionsSpelling2);
 			this.emailSubject.TabIndex = 1;
 			// 
@@ -413,7 +425,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panelControl1.Location = new System.Drawing.Point(0, 87);
 			this.panelControl1.Name = "panelControl1";
-			this.panelControl1.Size = new System.Drawing.Size(627, 57);
+			this.panelControl1.Size = new System.Drawing.Size(612, 57);
 			this.panelControl1.TabIndex = 0;
 			// 
 			// recipientAddresses
@@ -427,7 +439,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.recipientAddresses.Properties.AppearanceReadOnly.BackColor = System.Drawing.SystemColors.Window;
 			this.recipientAddresses.Properties.AppearanceReadOnly.Options.UseBackColor = true;
 			this.recipientAddresses.Properties.ReadOnly = true;
-			this.recipientAddresses.Size = new System.Drawing.Size(571, 20);
+			this.recipientAddresses.Size = new System.Drawing.Size(556, 20);
 			this.recipientAddresses.TabIndex = 0;
 			this.recipientAddresses.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.recipientAddresses_OpenLink);
 			// 
@@ -453,19 +465,18 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.standaloneBarDockControl1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.standaloneBarDockControl1.Location = new System.Drawing.Point(0, 0);
 			this.standaloneBarDockControl1.Name = "standaloneBarDockControl1";
-			this.standaloneBarDockControl1.Size = new System.Drawing.Size(498, 87);
+			this.standaloneBarDockControl1.Size = new System.Drawing.Size(612, 87);
 			this.standaloneBarDockControl1.Text = "standaloneBarDockControl1";
 			// 
 			// barManager1
 			// 
 			this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
-            this.commonBar1,
-            this.clipboardBar1,
+            this.mainBar,
             this.fontBar1,
             this.paragraphBar1,
-            this.editingBar1,
             this.tablesBar1,
-            this.bar1});
+            this.bar1,
+            this.bar2});
 			this.barManager1.DockControls.Add(this.barDockControlTop);
 			this.barManager1.DockControls.Add(this.barDockControlBottom);
 			this.barManager1.DockControls.Add(this.barDockControlLeft);
@@ -517,63 +528,48 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             this.insertPictureItem1,
             this.insertBookmarkItem1,
             this.insertHyperlinkItem1,
-            this.editPageHeaderItem1,
-            this.editPageFooterItem1,
-            this.insertPageNumberItem1,
-            this.insertPageCountItem1,
-            this.goToPageHeaderItem1,
-            this.goToPageFooterItem1,
-            this.goToPreviousHeaderFooterItem1,
-            this.goToNextHeaderFooterItem1,
-            this.toggleLinkToPreviousItem1,
-            this.toggleDifferentFirstPageItem1,
-            this.toggleDifferentOddAndEvenPagesItem1,
-            this.closePageHeaderFooterItem1,
             this.insertSymbolItem1,
             this.insertTableRowAboveItem1,
             this.insertTableRowBelowItem1,
             this.sendSelected,
-            this.resetSingle});
-			this.barManager1.MaxItemId = 73;
+            this.resetSingle,
+            this.switchToSimpleViewItem1,
+            this.switchToDraftViewItem1,
+            this.switchToPrintLayoutViewItem1,
+            this.zoomOutItem1,
+            this.zoomInItem1,
+            this.changeSectionPageMarginsItem1,
+            this.setNormalSectionPageMarginsItem1,
+            this.setNarrowSectionPageMarginsItem1,
+            this.setModerateSectionPageMarginsItem1,
+            this.setWideSectionPageMarginsItem1,
+            this.changeSectionPageOrientationItem1,
+            this.setPortraitPageOrientationItem1,
+            this.setLandscapePageOrientationItem1,
+            this.fileNewItem1,
+            this.fileOpenItem1,
+            this.fileSaveItem1,
+            this.fileSaveAsItem1,
+            this.zoomItem});
+			this.barManager1.MaxItemId = 95;
+			this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.zoomBarProperties});
 			// 
-			// commonBar1
+			// mainBar
 			// 
-			this.commonBar1.DockCol = 2;
-			this.commonBar1.DockRow = 0;
-			this.commonBar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
-			this.commonBar1.FloatLocation = new System.Drawing.Point(569, 297);
-			this.commonBar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.undoItem1),
-            new DevExpress.XtraBars.LinkPersistInfo(this.redoItem1)});
-			this.commonBar1.Offset = 249;
-			this.commonBar1.StandaloneBarDockControl = this.standaloneBarDockControl1;
-			// 
-			// undoItem1
-			// 
-			this.undoItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("undoItem1.Glyph")));
-			this.undoItem1.Id = 9;
-			this.undoItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("undoItem1.LargeGlyph")));
-			this.undoItem1.Name = "undoItem1";
-			// 
-			// redoItem1
-			// 
-			this.redoItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("redoItem1.Glyph")));
-			this.redoItem1.Id = 10;
-			this.redoItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("redoItem1.LargeGlyph")));
-			this.redoItem1.Name = "redoItem1";
-			// 
-			// clipboardBar1
-			// 
-			this.clipboardBar1.DockCol = 1;
-			this.clipboardBar1.DockRow = 0;
-			this.clipboardBar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
-			this.clipboardBar1.FloatLocation = new System.Drawing.Point(569, 638);
-			this.clipboardBar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+			this.mainBar.DockCol = 1;
+			this.mainBar.DockRow = 0;
+			this.mainBar.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
+			this.mainBar.FloatLocation = new System.Drawing.Point(569, 638);
+			this.mainBar.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.cutItem1),
             new DevExpress.XtraBars.LinkPersistInfo(this.copyItem1),
-            new DevExpress.XtraBars.LinkPersistInfo(this.pasteItem1)});
-			this.clipboardBar1.Offset = 146;
-			this.clipboardBar1.StandaloneBarDockControl = this.standaloneBarDockControl1;
+            new DevExpress.XtraBars.LinkPersistInfo(this.pasteItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.undoItem1, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.redoItem1)});
+			this.mainBar.Offset = 146;
+			this.mainBar.StandaloneBarDockControl = this.standaloneBarDockControl1;
+			this.mainBar.Text = "Main";
 			// 
 			// cutItem1
 			// 
@@ -595,6 +591,20 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.pasteItem1.Id = 13;
 			this.pasteItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("pasteItem1.LargeGlyph")));
 			this.pasteItem1.Name = "pasteItem1";
+			// 
+			// undoItem1
+			// 
+			this.undoItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("undoItem1.Glyph")));
+			this.undoItem1.Id = 9;
+			this.undoItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("undoItem1.LargeGlyph")));
+			this.undoItem1.Name = "undoItem1";
+			// 
+			// redoItem1
+			// 
+			this.redoItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("redoItem1.Glyph")));
+			this.redoItem1.Id = 10;
+			this.redoItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("redoItem1.LargeGlyph")));
+			this.redoItem1.Name = "redoItem1";
 			// 
 			// fontBar1
 			// 
@@ -856,32 +866,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.showParagraphFormItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("showParagraphFormItem1.LargeGlyph")));
 			this.showParagraphFormItem1.Name = "showParagraphFormItem1";
 			// 
-			// editingBar1
-			// 
-			this.editingBar1.DockCol = 1;
-			this.editingBar1.DockRow = 1;
-			this.editingBar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
-			this.editingBar1.FloatLocation = new System.Drawing.Point(891, 261);
-			this.editingBar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.findItem1),
-            new DevExpress.XtraBars.LinkPersistInfo(this.replaceItem1)});
-			this.editingBar1.Offset = 358;
-			this.editingBar1.StandaloneBarDockControl = this.standaloneBarDockControl1;
-			// 
-			// findItem1
-			// 
-			this.findItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("findItem1.Glyph")));
-			this.findItem1.Id = 49;
-			this.findItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("findItem1.LargeGlyph")));
-			this.findItem1.Name = "findItem1";
-			// 
-			// replaceItem1
-			// 
-			this.replaceItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("replaceItem1.Glyph")));
-			this.replaceItem1.Id = 50;
-			this.replaceItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("replaceItem1.LargeGlyph")));
-			this.replaceItem1.Name = "replaceItem1";
-			// 
 			// tablesBar1
 			// 
 			this.tablesBar1.DockCol = 1;
@@ -926,6 +910,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.sendSelected),
             new DevExpress.XtraBars.LinkPersistInfo(this.resetSingle, true)});
+			this.bar1.OptionsBar.AllowQuickCustomization = false;
 			this.bar1.StandaloneBarDockControl = this.standaloneBarDockControl1;
 			this.bar1.Text = "Email";
 			// 
@@ -957,17 +942,80 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			superToolTip2.Items.Add(toolTipItem2);
 			this.resetSingle.SuperTip = superToolTip2;
 			// 
+			// bar2
+			// 
+			this.bar2.BarName = "View";
+			this.bar2.DockCol = 2;
+			this.bar2.DockRow = 0;
+			this.bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
+			this.bar2.FloatLocation = new System.Drawing.Point(850, 287);
+			this.bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.findItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.replaceItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.zoomItem, "", true, true, true, 103)});
+			this.bar2.Offset = 5555;
+			this.bar2.StandaloneBarDockControl = this.standaloneBarDockControl1;
+			this.bar2.Text = "View";
+			// 
+			// findItem1
+			// 
+			this.findItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("findItem1.Glyph")));
+			this.findItem1.Id = 49;
+			this.findItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("findItem1.LargeGlyph")));
+			this.findItem1.Name = "findItem1";
+			// 
+			// replaceItem1
+			// 
+			this.replaceItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("replaceItem1.Glyph")));
+			this.replaceItem1.Id = 50;
+			this.replaceItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("replaceItem1.LargeGlyph")));
+			this.replaceItem1.Name = "replaceItem1";
+			// 
+			// zoomItem
+			// 
+			this.zoomItem.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+			this.zoomItem.Caption = "100%";
+			this.zoomItem.Edit = this.zoomBarProperties;
+			this.zoomItem.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
+			this.zoomItem.EditValue = 100;
+			this.zoomItem.Glyph = ((System.Drawing.Image)(resources.GetObject("zoomItem.Glyph")));
+			this.zoomItem.Id = 74;
+			this.zoomItem.IEBehavior = true;
+			this.zoomItem.Name = "zoomItem";
+			this.zoomItem.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+			toolTipTitleItem3.Text = "Zoom";
+			toolTipItem3.LeftIndent = 6;
+			toolTipItem3.Text = "Sets the zoom factor of the email editor.";
+			superToolTip3.Items.Add(toolTipTitleItem3);
+			superToolTip3.Items.Add(toolTipItem3);
+			this.zoomItem.SuperTip = superToolTip3;
+			this.zoomItem.VisibleWhenVertical = true;
+			// 
+			// zoomBarProperties
+			// 
+			this.zoomBarProperties.AppearanceFocused.BackColor = System.Drawing.Color.Transparent;
+			this.zoomBarProperties.AppearanceFocused.Options.UseBackColor = true;
+			this.zoomBarProperties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+			this.zoomBarProperties.LargeChange = 10;
+			this.zoomBarProperties.Maximum = 190;
+			this.zoomBarProperties.Minimum = 10;
+			this.zoomBarProperties.Name = "zoomBarProperties";
+			this.zoomBarProperties.ScrollThumbStyle = DevExpress.XtraEditors.Repository.ScrollThumbStyle.ArrowDownRight;
+			this.zoomBarProperties.ShowValueToolTip = true;
+			this.zoomBarProperties.SmallChange = 5;
+			this.zoomBarProperties.EditValueChanging += new DevExpress.XtraEditors.Controls.ChangingEventHandler(this.zoomBarProperties_EditValueChanging);
+			// 
 			// barDockControlTop
 			// 
 			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-			this.barDockControlTop.Size = new System.Drawing.Size(939, 0);
+			this.barDockControlTop.Size = new System.Drawing.Size(922, 0);
 			// 
 			// barDockControlBottom
 			// 
 			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.barDockControlBottom.Location = new System.Drawing.Point(0, 609);
-			this.barDockControlBottom.Size = new System.Drawing.Size(939, 0);
+			this.barDockControlBottom.Size = new System.Drawing.Size(922, 0);
 			// 
 			// barDockControlLeft
 			// 
@@ -978,7 +1026,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// barDockControlRight
 			// 
 			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-			this.barDockControlRight.Location = new System.Drawing.Point(939, 0);
+			this.barDockControlRight.Location = new System.Drawing.Point(922, 0);
 			this.barDockControlRight.Size = new System.Drawing.Size(0, 609);
 			// 
 			// insertPageBreakItem1
@@ -1002,90 +1050,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.insertBookmarkItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("insertBookmarkItem1.LargeGlyph")));
 			this.insertBookmarkItem1.Name = "insertBookmarkItem1";
 			// 
-			// editPageHeaderItem1
-			// 
-			this.editPageHeaderItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("editPageHeaderItem1.Glyph")));
-			this.editPageHeaderItem1.Id = 57;
-			this.editPageHeaderItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("editPageHeaderItem1.LargeGlyph")));
-			this.editPageHeaderItem1.Name = "editPageHeaderItem1";
-			// 
-			// editPageFooterItem1
-			// 
-			this.editPageFooterItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("editPageFooterItem1.Glyph")));
-			this.editPageFooterItem1.Id = 58;
-			this.editPageFooterItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("editPageFooterItem1.LargeGlyph")));
-			this.editPageFooterItem1.Name = "editPageFooterItem1";
-			// 
-			// insertPageNumberItem1
-			// 
-			this.insertPageNumberItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("insertPageNumberItem1.Glyph")));
-			this.insertPageNumberItem1.Id = 59;
-			this.insertPageNumberItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("insertPageNumberItem1.LargeGlyph")));
-			this.insertPageNumberItem1.Name = "insertPageNumberItem1";
-			// 
-			// insertPageCountItem1
-			// 
-			this.insertPageCountItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("insertPageCountItem1.Glyph")));
-			this.insertPageCountItem1.Id = 60;
-			this.insertPageCountItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("insertPageCountItem1.LargeGlyph")));
-			this.insertPageCountItem1.Name = "insertPageCountItem1";
-			// 
-			// goToPageHeaderItem1
-			// 
-			this.goToPageHeaderItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("goToPageHeaderItem1.Glyph")));
-			this.goToPageHeaderItem1.Id = 61;
-			this.goToPageHeaderItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("goToPageHeaderItem1.LargeGlyph")));
-			this.goToPageHeaderItem1.Name = "goToPageHeaderItem1";
-			// 
-			// goToPageFooterItem1
-			// 
-			this.goToPageFooterItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("goToPageFooterItem1.Glyph")));
-			this.goToPageFooterItem1.Id = 62;
-			this.goToPageFooterItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("goToPageFooterItem1.LargeGlyph")));
-			this.goToPageFooterItem1.Name = "goToPageFooterItem1";
-			// 
-			// goToPreviousHeaderFooterItem1
-			// 
-			this.goToPreviousHeaderFooterItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("goToPreviousHeaderFooterItem1.Glyph")));
-			this.goToPreviousHeaderFooterItem1.Id = 63;
-			this.goToPreviousHeaderFooterItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("goToPreviousHeaderFooterItem1.LargeGlyph")));
-			this.goToPreviousHeaderFooterItem1.Name = "goToPreviousHeaderFooterItem1";
-			// 
-			// goToNextHeaderFooterItem1
-			// 
-			this.goToNextHeaderFooterItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("goToNextHeaderFooterItem1.Glyph")));
-			this.goToNextHeaderFooterItem1.Id = 64;
-			this.goToNextHeaderFooterItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("goToNextHeaderFooterItem1.LargeGlyph")));
-			this.goToNextHeaderFooterItem1.Name = "goToNextHeaderFooterItem1";
-			// 
-			// toggleLinkToPreviousItem1
-			// 
-			this.toggleLinkToPreviousItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleLinkToPreviousItem1.Glyph")));
-			this.toggleLinkToPreviousItem1.Id = 65;
-			this.toggleLinkToPreviousItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleLinkToPreviousItem1.LargeGlyph")));
-			this.toggleLinkToPreviousItem1.Name = "toggleLinkToPreviousItem1";
-			// 
-			// toggleDifferentFirstPageItem1
-			// 
-			this.toggleDifferentFirstPageItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleDifferentFirstPageItem1.Glyph")));
-			this.toggleDifferentFirstPageItem1.Id = 66;
-			this.toggleDifferentFirstPageItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleDifferentFirstPageItem1.LargeGlyph")));
-			this.toggleDifferentFirstPageItem1.Name = "toggleDifferentFirstPageItem1";
-			// 
-			// toggleDifferentOddAndEvenPagesItem1
-			// 
-			this.toggleDifferentOddAndEvenPagesItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleDifferentOddAndEvenPagesItem1.Glyph")));
-			this.toggleDifferentOddAndEvenPagesItem1.Id = 67;
-			this.toggleDifferentOddAndEvenPagesItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleDifferentOddAndEvenPagesItem1.LargeGlyph")));
-			this.toggleDifferentOddAndEvenPagesItem1.Name = "toggleDifferentOddAndEvenPagesItem1";
-			// 
-			// closePageHeaderFooterItem1
-			// 
-			this.closePageHeaderFooterItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("closePageHeaderFooterItem1.Glyph")));
-			this.closePageHeaderFooterItem1.Id = 68;
-			this.closePageHeaderFooterItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("closePageHeaderFooterItem1.LargeGlyph")));
-			this.closePageHeaderFooterItem1.Name = "closePageHeaderFooterItem1";
-			// 
 			// insertTableRowAboveItem1
 			// 
 			this.insertTableRowAboveItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("insertTableRowAboveItem1.Glyph")));
@@ -1099,6 +1063,121 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.insertTableRowBelowItem1.Id = 72;
 			this.insertTableRowBelowItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("insertTableRowBelowItem1.LargeGlyph")));
 			this.insertTableRowBelowItem1.Name = "insertTableRowBelowItem1";
+			// 
+			// switchToSimpleViewItem1
+			// 
+			this.switchToSimpleViewItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("switchToSimpleViewItem1.Glyph")));
+			this.switchToSimpleViewItem1.Id = 75;
+			this.switchToSimpleViewItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("switchToSimpleViewItem1.LargeGlyph")));
+			this.switchToSimpleViewItem1.Name = "switchToSimpleViewItem1";
+			// 
+			// switchToDraftViewItem1
+			// 
+			this.switchToDraftViewItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("switchToDraftViewItem1.Glyph")));
+			this.switchToDraftViewItem1.Id = 76;
+			this.switchToDraftViewItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("switchToDraftViewItem1.LargeGlyph")));
+			this.switchToDraftViewItem1.Name = "switchToDraftViewItem1";
+			// 
+			// switchToPrintLayoutViewItem1
+			// 
+			this.switchToPrintLayoutViewItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("switchToPrintLayoutViewItem1.Glyph")));
+			this.switchToPrintLayoutViewItem1.Id = 77;
+			this.switchToPrintLayoutViewItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("switchToPrintLayoutViewItem1.LargeGlyph")));
+			this.switchToPrintLayoutViewItem1.Name = "switchToPrintLayoutViewItem1";
+			// 
+			// zoomOutItem1
+			// 
+			this.zoomOutItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("zoomOutItem1.Glyph")));
+			this.zoomOutItem1.Id = 78;
+			this.zoomOutItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("zoomOutItem1.LargeGlyph")));
+			this.zoomOutItem1.Name = "zoomOutItem1";
+			// 
+			// zoomInItem1
+			// 
+			this.zoomInItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("zoomInItem1.Glyph")));
+			this.zoomInItem1.Id = 79;
+			this.zoomInItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("zoomInItem1.LargeGlyph")));
+			this.zoomInItem1.Name = "zoomInItem1";
+			// 
+			// changeSectionPageMarginsItem1
+			// 
+			this.changeSectionPageMarginsItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("changeSectionPageMarginsItem1.Glyph")));
+			this.changeSectionPageMarginsItem1.Id = 80;
+			this.changeSectionPageMarginsItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("changeSectionPageMarginsItem1.LargeGlyph")));
+			this.changeSectionPageMarginsItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.setNormalSectionPageMarginsItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.setNarrowSectionPageMarginsItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.setModerateSectionPageMarginsItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.setWideSectionPageMarginsItem1)});
+			this.changeSectionPageMarginsItem1.Name = "changeSectionPageMarginsItem1";
+			// 
+			// setNormalSectionPageMarginsItem1
+			// 
+			this.setNormalSectionPageMarginsItem1.Id = 81;
+			this.setNormalSectionPageMarginsItem1.Name = "setNormalSectionPageMarginsItem1";
+			// 
+			// setNarrowSectionPageMarginsItem1
+			// 
+			this.setNarrowSectionPageMarginsItem1.Id = 82;
+			this.setNarrowSectionPageMarginsItem1.Name = "setNarrowSectionPageMarginsItem1";
+			// 
+			// setModerateSectionPageMarginsItem1
+			// 
+			this.setModerateSectionPageMarginsItem1.Id = 83;
+			this.setModerateSectionPageMarginsItem1.Name = "setModerateSectionPageMarginsItem1";
+			// 
+			// setWideSectionPageMarginsItem1
+			// 
+			this.setWideSectionPageMarginsItem1.Id = 84;
+			this.setWideSectionPageMarginsItem1.Name = "setWideSectionPageMarginsItem1";
+			// 
+			// changeSectionPageOrientationItem1
+			// 
+			this.changeSectionPageOrientationItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("changeSectionPageOrientationItem1.Glyph")));
+			this.changeSectionPageOrientationItem1.Id = 85;
+			this.changeSectionPageOrientationItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("changeSectionPageOrientationItem1.LargeGlyph")));
+			this.changeSectionPageOrientationItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.setPortraitPageOrientationItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.setLandscapePageOrientationItem1)});
+			this.changeSectionPageOrientationItem1.Name = "changeSectionPageOrientationItem1";
+			// 
+			// setPortraitPageOrientationItem1
+			// 
+			this.setPortraitPageOrientationItem1.Id = 86;
+			this.setPortraitPageOrientationItem1.Name = "setPortraitPageOrientationItem1";
+			// 
+			// setLandscapePageOrientationItem1
+			// 
+			this.setLandscapePageOrientationItem1.Id = 87;
+			this.setLandscapePageOrientationItem1.Name = "setLandscapePageOrientationItem1";
+			// 
+			// fileNewItem1
+			// 
+			this.fileNewItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("fileNewItem1.Glyph")));
+			this.fileNewItem1.Id = 88;
+			this.fileNewItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("fileNewItem1.LargeGlyph")));
+			this.fileNewItem1.Name = "fileNewItem1";
+			// 
+			// fileOpenItem1
+			// 
+			this.fileOpenItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("fileOpenItem1.Glyph")));
+			this.fileOpenItem1.Id = 89;
+			this.fileOpenItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("fileOpenItem1.LargeGlyph")));
+			this.fileOpenItem1.Name = "fileOpenItem1";
+			// 
+			// fileSaveItem1
+			// 
+			this.fileSaveItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("fileSaveItem1.Glyph")));
+			this.fileSaveItem1.Id = 90;
+			this.fileSaveItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("fileSaveItem1.LargeGlyph")));
+			this.fileSaveItem1.Name = "fileSaveItem1";
+			// 
+			// fileSaveAsItem1
+			// 
+			this.fileSaveAsItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("fileSaveAsItem1.Glyph")));
+			this.fileSaveAsItem1.Id = 91;
+			this.fileSaveAsItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("fileSaveAsItem1.LargeGlyph")));
+			this.fileSaveAsItem1.Name = "fileSaveAsItem1";
 			// 
 			// richEditBarController1
 			// 
@@ -1146,28 +1225,33 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.richEditBarController1.BarItems.Add(this.insertPictureItem1);
 			this.richEditBarController1.BarItems.Add(this.insertBookmarkItem1);
 			this.richEditBarController1.BarItems.Add(this.insertHyperlinkItem1);
-			this.richEditBarController1.BarItems.Add(this.editPageHeaderItem1);
-			this.richEditBarController1.BarItems.Add(this.editPageFooterItem1);
-			this.richEditBarController1.BarItems.Add(this.insertPageNumberItem1);
-			this.richEditBarController1.BarItems.Add(this.insertPageCountItem1);
-			this.richEditBarController1.BarItems.Add(this.goToPageHeaderItem1);
-			this.richEditBarController1.BarItems.Add(this.goToPageFooterItem1);
-			this.richEditBarController1.BarItems.Add(this.goToPreviousHeaderFooterItem1);
-			this.richEditBarController1.BarItems.Add(this.goToNextHeaderFooterItem1);
-			this.richEditBarController1.BarItems.Add(this.toggleLinkToPreviousItem1);
-			this.richEditBarController1.BarItems.Add(this.toggleDifferentFirstPageItem1);
-			this.richEditBarController1.BarItems.Add(this.toggleDifferentOddAndEvenPagesItem1);
-			this.richEditBarController1.BarItems.Add(this.closePageHeaderFooterItem1);
 			this.richEditBarController1.BarItems.Add(this.insertSymbolItem1);
 			this.richEditBarController1.BarItems.Add(this.insertTableRowAboveItem1);
 			this.richEditBarController1.BarItems.Add(this.insertTableRowBelowItem1);
+			this.richEditBarController1.BarItems.Add(this.switchToSimpleViewItem1);
+			this.richEditBarController1.BarItems.Add(this.switchToDraftViewItem1);
+			this.richEditBarController1.BarItems.Add(this.switchToPrintLayoutViewItem1);
+			this.richEditBarController1.BarItems.Add(this.zoomOutItem1);
+			this.richEditBarController1.BarItems.Add(this.zoomInItem1);
+			this.richEditBarController1.BarItems.Add(this.changeSectionPageMarginsItem1);
+			this.richEditBarController1.BarItems.Add(this.setNormalSectionPageMarginsItem1);
+			this.richEditBarController1.BarItems.Add(this.setNarrowSectionPageMarginsItem1);
+			this.richEditBarController1.BarItems.Add(this.setModerateSectionPageMarginsItem1);
+			this.richEditBarController1.BarItems.Add(this.setWideSectionPageMarginsItem1);
+			this.richEditBarController1.BarItems.Add(this.changeSectionPageOrientationItem1);
+			this.richEditBarController1.BarItems.Add(this.setPortraitPageOrientationItem1);
+			this.richEditBarController1.BarItems.Add(this.setLandscapePageOrientationItem1);
+			this.richEditBarController1.BarItems.Add(this.fileNewItem1);
+			this.richEditBarController1.BarItems.Add(this.fileOpenItem1);
+			this.richEditBarController1.BarItems.Add(this.fileSaveItem1);
+			this.richEditBarController1.BarItems.Add(this.fileSaveAsItem1);
 			this.richEditBarController1.RichEditControl = this.emailEditor;
 			// 
 			// ReminderEmailsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(939, 609);
+			this.ClientSize = new System.Drawing.Size(922, 609);
 			this.Controls.Add(this.splitContainerControl1);
 			this.Controls.Add(this.listSearch);
 			this.Controls.Add(this.ribbonControl1);
@@ -1191,6 +1275,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.panelControl1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.recipientAddresses.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.zoomBarProperties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.richEditBarController1)).EndInit();
 			this.ResumeLayout(false);
 
@@ -1221,10 +1306,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraSpellChecker.SpellChecker spellChecker;
 		private DevExpress.XtraBars.StandaloneBarDockControl standaloneBarDockControl1;
 		private DevExpress.XtraBars.BarManager barManager1;
-		private DevExpress.XtraRichEdit.UI.CommonBar commonBar1;
 		private DevExpress.XtraRichEdit.UI.UndoItem undoItem1;
 		private DevExpress.XtraRichEdit.UI.RedoItem redoItem1;
-		private DevExpress.XtraRichEdit.UI.ClipboardBar clipboardBar1;
+		private DevExpress.XtraRichEdit.UI.ClipboardBar mainBar;
 		private DevExpress.XtraRichEdit.UI.CutItem cutItem1;
 		private DevExpress.XtraRichEdit.UI.CopyItem copyItem1;
 		private DevExpress.XtraRichEdit.UI.PasteItem pasteItem1;
@@ -1262,7 +1346,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraRichEdit.UI.IncreaseIndentItem increaseIndentItem1;
 		private DevExpress.XtraRichEdit.UI.ToggleShowWhitespaceItem toggleShowWhitespaceItem1;
 		private DevExpress.XtraRichEdit.UI.ShowParagraphFormItem showParagraphFormItem1;
-		private DevExpress.XtraRichEdit.UI.EditingBar editingBar1;
 		private DevExpress.XtraRichEdit.UI.FindItem findItem1;
 		private DevExpress.XtraRichEdit.UI.ReplaceItem replaceItem1;
 		private DevExpress.XtraRichEdit.UI.TablesBar tablesBar1;
@@ -1276,18 +1359,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraRichEdit.UI.InsertPageBreakItem insertPageBreakItem1;
 		private DevExpress.XtraRichEdit.UI.InsertPictureItem insertPictureItem1;
 		private DevExpress.XtraRichEdit.UI.InsertBookmarkItem insertBookmarkItem1;
-		private DevExpress.XtraRichEdit.UI.EditPageHeaderItem editPageHeaderItem1;
-		private DevExpress.XtraRichEdit.UI.EditPageFooterItem editPageFooterItem1;
-		private DevExpress.XtraRichEdit.UI.InsertPageNumberItem insertPageNumberItem1;
-		private DevExpress.XtraRichEdit.UI.InsertPageCountItem insertPageCountItem1;
-		private DevExpress.XtraRichEdit.UI.GoToPageHeaderItem goToPageHeaderItem1;
-		private DevExpress.XtraRichEdit.UI.GoToPageFooterItem goToPageFooterItem1;
-		private DevExpress.XtraRichEdit.UI.GoToPreviousHeaderFooterItem goToPreviousHeaderFooterItem1;
-		private DevExpress.XtraRichEdit.UI.GoToNextHeaderFooterItem goToNextHeaderFooterItem1;
-		private DevExpress.XtraRichEdit.UI.ToggleLinkToPreviousItem toggleLinkToPreviousItem1;
-		private DevExpress.XtraRichEdit.UI.ToggleDifferentFirstPageItem toggleDifferentFirstPageItem1;
-		private DevExpress.XtraRichEdit.UI.ToggleDifferentOddAndEvenPagesItem toggleDifferentOddAndEvenPagesItem1;
-		private DevExpress.XtraRichEdit.UI.ClosePageHeaderFooterItem closePageHeaderFooterItem1;
 		private DevExpress.XtraRichEdit.UI.RichEditBarController richEditBarController1;
 		private DevExpress.XtraBars.Bar bar1;
 		private DevExpress.XtraBars.BarButtonItem sendSelected;
@@ -1300,5 +1371,25 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraEditors.HyperLinkEdit recipientAddresses;
 		private DevExpress.XtraEditors.LabelControl labelControl2;
 		private Data.UI.FrameworkBindingSource bindingSource;
+		private DevExpress.XtraBars.BarEditItem zoomItem;
+		private DevExpress.XtraEditors.Repository.RepositoryItemZoomTrackBar zoomBarProperties;
+		private DevExpress.XtraRichEdit.UI.SwitchToSimpleViewItem switchToSimpleViewItem1;
+		private DevExpress.XtraRichEdit.UI.SwitchToDraftViewItem switchToDraftViewItem1;
+		private DevExpress.XtraRichEdit.UI.SwitchToPrintLayoutViewItem switchToPrintLayoutViewItem1;
+		private DevExpress.XtraRichEdit.UI.ZoomOutItem zoomOutItem1;
+		private DevExpress.XtraRichEdit.UI.ZoomInItem zoomInItem1;
+		private DevExpress.XtraRichEdit.UI.ChangeSectionPageMarginsItem changeSectionPageMarginsItem1;
+		private DevExpress.XtraRichEdit.UI.SetNormalSectionPageMarginsItem setNormalSectionPageMarginsItem1;
+		private DevExpress.XtraRichEdit.UI.SetNarrowSectionPageMarginsItem setNarrowSectionPageMarginsItem1;
+		private DevExpress.XtraRichEdit.UI.SetModerateSectionPageMarginsItem setModerateSectionPageMarginsItem1;
+		private DevExpress.XtraRichEdit.UI.SetWideSectionPageMarginsItem setWideSectionPageMarginsItem1;
+		private DevExpress.XtraRichEdit.UI.ChangeSectionPageOrientationItem changeSectionPageOrientationItem1;
+		private DevExpress.XtraRichEdit.UI.SetPortraitPageOrientationItem setPortraitPageOrientationItem1;
+		private DevExpress.XtraRichEdit.UI.SetLandscapePageOrientationItem setLandscapePageOrientationItem1;
+		private DevExpress.XtraRichEdit.UI.FileNewItem fileNewItem1;
+		private DevExpress.XtraRichEdit.UI.FileOpenItem fileOpenItem1;
+		private DevExpress.XtraRichEdit.UI.FileSaveItem fileSaveItem1;
+		private DevExpress.XtraRichEdit.UI.FileSaveAsItem fileSaveAsItem1;
+		private DevExpress.XtraBars.Bar bar2;
 	}
 }
