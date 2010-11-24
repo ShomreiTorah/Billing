@@ -43,7 +43,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			UpdateButtons();
 
 			emailTemplateList.Strings.AddRange(
-				Array.ConvertAll<string, string>(Directory.GetFiles(Path.Combine(Program.AspxPath, templateSubfolder), "*.aspx"), Path.GetFileNameWithoutExtension)
+				Array.ConvertAll(Directory.GetFiles(Path.Combine(Program.AspxPath, templateSubfolder), "*.aspx"), Path.GetFileNameWithoutExtension)
 			);
 		}
 		///<summary>Releases the unmanaged resources used by the CallerList and optionally releases the managed resources.</summary>
@@ -151,6 +151,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 					return;
 			}
 			#endregion
+
+			Program.LoadTable<MelaveMalkaInfo>();		//Used by the templates
 
 			var virtualPath = "/" + templateSubfolder + "/" + emailTemplateList.Strings[e.Index] + ".aspx";
 			ProgressWorker.Execute(progress => {
