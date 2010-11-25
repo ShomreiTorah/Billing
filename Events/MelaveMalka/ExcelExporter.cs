@@ -12,7 +12,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			var file = DB.CreateFile(path);
 			using (var connection = file.OpenConnection()) {
 				connection.ExecuteNonQuery(@"
-CREATE TABLE [SeatingReservations] (
+CREATE TABLE [Invitations] (
 	[Last Name]		NVARCHAR(128),
 	[His Name]		NVARCHAR(128),
 	[Her Name]		NVARCHAR(128),
@@ -28,7 +28,7 @@ CREATE TABLE [SeatingReservations] (
 				foreach (var invite in invites.OrderBy(s => s.Person.LastName)) {
 					var person = invite.Person;
 					connection.ExecuteNonQuery(
-						@"INSERT INTO [SeatingReservations]
+						@"INSERT INTO [Invitations]
 		([Last Name],	[His Name],	[Her Name],	[Full Name],	[Address],	[City],	[State],	[Zip], 	[Phone],	[Source])
 VALUES	(@LastName,		@HisName,	@HerName,	@FullName,		@Address,	@City,	@State,		@Zip,	@Phone,		@Source);",
 		new { person.LastName, person.HisName, person.HerName, person.FullName, person.Address, person.City, person.State, person.Zip, person.Phone, invite.Source }
