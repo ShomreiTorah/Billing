@@ -32,6 +32,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
 			this.logView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colEmailSubject1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -111,6 +117,11 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.insertHyperlinkItem1 = new DevExpress.XtraRichEdit.UI.InsertHyperlinkItem();
 			this.bar1 = new DevExpress.XtraBars.Bar();
 			this.sendSelected = new DevExpress.XtraBars.BarButtonItem();
+			this.showPreview = new DevExpress.XtraBars.BarButtonItem();
+			this.sendPreview = new DevExpress.XtraBars.BarButtonItem();
+			this.previewDestinationPopup = new DevExpress.XtraBars.PopupMenu(this.components);
+			this.previewAddressItem = new DevExpress.XtraBars.BarEditItem();
+			this.previewAddressEdit = new DevExpress.XtraEditors.Repository.RepositoryItemMRUEdit();
 			this.resetSingle = new DevExpress.XtraBars.BarListItem();
 			this.bar2 = new DevExpress.XtraBars.Bar();
 			this.findItem1 = new DevExpress.XtraRichEdit.UI.FindItem();
@@ -156,6 +167,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.panelControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.recipientAddresses.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.previewDestinationPopup)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.previewAddressEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.richEditBarController1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -537,7 +550,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.standaloneBarDockControl1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.standaloneBarDockControl1.Location = new System.Drawing.Point(0, 0);
 			this.standaloneBarDockControl1.Name = "standaloneBarDockControl1";
-			this.standaloneBarDockControl1.Size = new System.Drawing.Size(498, 87);
+			this.standaloneBarDockControl1.Size = new System.Drawing.Size(546, 87);
 			this.standaloneBarDockControl1.Text = "standaloneBarDockControl1";
 			// 
 			// barManager1
@@ -621,8 +634,13 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             this.fileNewItem1,
             this.fileOpenItem1,
             this.fileSaveItem1,
-            this.fileSaveAsItem1});
-			this.barManager1.MaxItemId = 95;
+            this.fileSaveAsItem1,
+            this.showPreview,
+            this.sendPreview,
+            this.previewAddressItem});
+			this.barManager1.MaxItemId = 98;
+			this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.previewAddressEdit});
 			// 
 			// mainBar
 			// 
@@ -978,6 +996,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.bar1.FloatLocation = new System.Drawing.Point(563, 281);
 			this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.sendSelected),
+            new DevExpress.XtraBars.LinkPersistInfo(this.showPreview),
+            new DevExpress.XtraBars.LinkPersistInfo(this.sendPreview),
             new DevExpress.XtraBars.LinkPersistInfo(this.resetSingle, true)});
 			this.bar1.StandaloneBarDockControl = this.standaloneBarDockControl1;
 			this.bar1.Text = "Email";
@@ -998,17 +1018,73 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.sendSelected.SuperTip = superToolTip4;
 			this.sendSelected.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.sendSelected_ItemClick);
 			// 
+			// showPreview
+			// 
+			this.showPreview.Caption = "Show Preview";
+			this.showPreview.Glyph = global::ShomreiTorah.Billing.Properties.Resources.ShowPreview16;
+			this.showPreview.Id = 95;
+			this.showPreview.Name = "showPreview";
+			toolTipTitleItem5.Text = "Show Preview";
+			toolTipItem5.LeftIndent = 6;
+			toolTipItem5.Text = "Shows a preview of the message contents as HTML.";
+			superToolTip5.Items.Add(toolTipTitleItem5);
+			superToolTip5.Items.Add(toolTipItem5);
+			this.showPreview.SuperTip = superToolTip5;
+			this.showPreview.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showPreview_ItemClick);
+			// 
+			// sendPreview
+			// 
+			this.sendPreview.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
+			this.sendPreview.Caption = "Send Preview";
+			this.sendPreview.DropDownControl = this.previewDestinationPopup;
+			this.sendPreview.Glyph = global::ShomreiTorah.Billing.Properties.Resources.SendPreview16;
+			this.sendPreview.Id = 96;
+			this.sendPreview.Name = "sendPreview";
+			toolTipTitleItem6.Text = "Send Preview";
+			toolTipItem6.LeftIndent = 6;
+			toolTipItem6.Text = "Emails a preview of the message.\r\n\r\nTo set the destination address, click the dow" +
+				"n arrow.";
+			superToolTip6.Items.Add(toolTipTitleItem6);
+			superToolTip6.Items.Add(toolTipItem6);
+			this.sendPreview.SuperTip = superToolTip6;
+			this.sendPreview.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.sendPreview_ItemClick);
+			// 
+			// previewDestinationPopup
+			// 
+			this.previewDestinationPopup.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.previewAddressItem, "", false, true, true, 133)});
+			this.previewDestinationPopup.Manager = this.barManager1;
+			this.previewDestinationPopup.Name = "previewDestinationPopup";
+			// 
+			// previewAddressItem
+			// 
+			this.previewAddressItem.Caption = "Send Preview To:";
+			this.previewAddressItem.Edit = this.previewAddressEdit;
+			this.previewAddressItem.Id = 97;
+			this.previewAddressItem.Name = "previewAddressItem";
+			this.previewAddressItem.EditValueChanged += new System.EventHandler(this.previewAddressItem_EditValueChanged);
+			// 
+			// previewAddressEdit
+			// 
+			this.previewAddressEdit.AutoHeight = false;
+			this.previewAddressEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.previewAddressEdit.HighlightedItemStyle = DevExpress.XtraEditors.HighlightStyle.Skinned;
+			this.previewAddressEdit.Name = "previewAddressEdit";
+			this.previewAddressEdit.AddingMRUItem += new DevExpress.XtraEditors.Controls.AddingMRUItemEventHandler(this.previewAddressEdit_AddingMRUItem);
+			this.previewAddressEdit.Validating += new System.ComponentModel.CancelEventHandler(this.previewAddressEdit_Validating);
+			// 
 			// resetSingle
 			// 
 			this.resetSingle.Caption = "Use Template";
 			this.resetSingle.Id = 70;
 			this.resetSingle.Name = "resetSingle";
-			toolTipTitleItem5.Text = "Use Template";
-			toolTipItem5.LeftIndent = 6;
-			toolTipItem5.Text = "Resets this person\'s email message to a standard template.";
-			superToolTip5.Items.Add(toolTipTitleItem5);
-			superToolTip5.Items.Add(toolTipItem5);
-			this.resetSingle.SuperTip = superToolTip5;
+			toolTipTitleItem7.Text = "Use Template";
+			toolTipItem7.LeftIndent = 6;
+			toolTipItem7.Text = "Resets this person\'s email message to a standard template.";
+			superToolTip7.Items.Add(toolTipTitleItem7);
+			superToolTip7.Items.Add(toolTipItem7);
+			this.resetSingle.SuperTip = superToolTip7;
 			this.resetSingle.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.resetSingle_ListItemClick);
 			// 
 			// bar2
@@ -1311,6 +1387,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.panelControl1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.recipientAddresses.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.previewDestinationPopup)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.previewAddressEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.richEditBarController1)).EndInit();
 			this.ResumeLayout(false);
 
@@ -1428,5 +1506,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraEditors.Repository.RepositoryItemZoomTrackBar zoomBarProperties;
 		private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
 		private DevExpress.XtraBars.BarListItem resetSelected;
+		private DevExpress.XtraBars.BarButtonItem showPreview;
+		private DevExpress.XtraBars.BarButtonItem sendPreview;
+		private DevExpress.XtraBars.PopupMenu previewDestinationPopup;
+		private DevExpress.XtraBars.BarEditItem previewAddressItem;
+		private DevExpress.XtraEditors.Repository.RepositoryItemMRUEdit previewAddressEdit;
 	}
 }

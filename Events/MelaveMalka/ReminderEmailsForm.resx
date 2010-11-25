@@ -124,7 +124,7 @@
   <data name="zoomItem.Glyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADr0AAA69AUf7kK0AAAIoSURBVDhPpZPdT5JhGMat9Sd01HFnroNaB62P1XC5NSWV
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAIoSURBVDhPpZPdT5JhGMat9Sd01HFnroNaB62P1XC5NSWV
         GNBqa3PFaLMykGwtC5hFq5GlEs0mSz5q2Wj2mhxIoASZiYmfiaxwxoRCPgReXgJsVw8Hba29Sqt7u06e
         j999Xc+zu6yMVLu+b8tCIFhlHfZ06UxW1y1d70JTa9fyVY3R8ZiaO1o8s2ENvvEqtD3U5Ev7aNbm+Qjb
         bAAPKRcu3TODJ2mNCs6pT64L4EtubiMO3ttHpn5EaAYhJodAisFEhAY1uwyFfgCVJ5rzh0Wy7awQu9ur
@@ -1530,6 +1530,9 @@
         YII=
 </value>
   </data>
+  <metadata name="previewDestinationPopup.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>564, 17</value>
+  </metadata>
   <data name="findItem1.Glyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6

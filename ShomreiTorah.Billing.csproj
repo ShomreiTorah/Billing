@@ -139,6 +139,9 @@
     <Compile Include="Controls\CommitButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\CopyableWebBrowser.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\HebrewCalendarEdit.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -447,6 +450,8 @@
     <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <None Include="Resources\SendPreview16.png" />
+    <None Include="Resources\ShowPreview16.png" />
     <None Include="Resources\SendMails32.png" />
     <None Include="Resources\EmailList32.png" />
     <None Include="Resources\SendMails16.png" />

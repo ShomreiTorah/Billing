@@ -1,29 +1,25 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
-using System.Text;
 using System.Web;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Base;
-using DevExpress.XtraGrid.Views.Grid;
 using Microsoft.Win32;
+using ShomreiTorah.Billing.Controls;
 using ShomreiTorah.Common;
+using ShomreiTorah.Data;
+using ShomreiTorah.Singularity;
+using ShomreiTorah.Singularity.DataBinding;
 using ShomreiTorah.WinForms.Forms;
-using System.Globalization;
 
 namespace ShomreiTorah.Billing.Statements.Email {
-	using Email = ShomreiTorah.Common.Email;
-	using ShomreiTorah.Data;
-	using ShomreiTorah.Singularity.DataBinding;
-	using ShomreiTorah.Singularity;	//Force the name to not refer to this namespace
+	using Email = ShomreiTorah.Common.Email;//Force the name to not refer to this namespace
 
 	partial class EmailExporter : XtraForm {
 		readonly Person[] people;
@@ -169,43 +165,9 @@ namespace ShomreiTorah.Billing.Statements.Email {
 					html = page.RenderPage();
 					subject = page.EmailSubject;
 				}
-				var form = new XtraForm {
-					Text = "Email Preview: " + subject,
-					FormBorderStyle = FormBorderStyle.SizableToolWindow,
-					Size = new Size(800, 600),
-					StartPosition = FormStartPosition.CenterParent,
-					Icon = this.Icon
-				};
-				var browser = new CopyableWebBrowser {
-					Dock = DockStyle.Fill,
-					AllowNavigation = false,
-					AllowWebBrowserDrop = false,
-					DocumentText = html,
-					IsWebBrowserContextMenuEnabled = false,
-					WebBrowserShortcutsEnabled = false
-				};
-				form.Controls.Add(browser);
+				var form = CopyableWebBrowser.CreatePreviewForm("Email Preview: " + subject, html);
+				form.Icon = this.Icon;
 				form.Show(this);
-			}
-		}
-		class CopyableWebBrowser : WebBrowser {
-			public override bool PreProcessMessage(ref Message msg) {
-				if (msg.Msg == 0x101) {	//WM_KEYUP
-					var key = (Keys)msg.WParam.ToInt32();
-					if (key == Keys.C && ModifierKeys == Keys.Control) {
-						DoCopy();
-						return true;
-					} else if (key == Keys.Escape) {
-						FindForm().Close();
-						return true;
-					}
-				}
-				return base.PreProcessMessage(ref msg);
-			}
-			void DoCopy() {
-				Document.ExecCommand("SelectAll", false, null);
-				Document.ExecCommand("Copy", false, null);
-				Document.ExecCommand("Unselect", false, null);
 			}
 		}
 
