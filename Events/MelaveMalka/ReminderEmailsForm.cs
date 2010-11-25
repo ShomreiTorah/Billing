@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading;
 using System.Windows.Forms;
 using DevExpress.Data.Filtering;
@@ -45,7 +46,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 
 			listSearch.Properties.DataSource = bindingSource.DataSource = dataSource = new FilteredTable<MelaveMalkaInvitation>(
 				Program.Table<MelaveMalkaInvitation>(),
-				mmi => mmi.Year == year //&& mmi.Person.EmailAddresses.Any()
+				mmi => mmi.Year == year && mmi.Person.EmailAddresses.Any()
 			);
 			EditorRepository.PersonOwnedLookup.Apply(listSearch.Properties);
 
@@ -143,13 +144,16 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			var recipient = SelectedInvitee;
 			if (recipient == null) return;
 
+			if (recipient.AdAmount > 0) {
+				Dialog.ShowError(recipient.Person.FullName + " already gave an ad.");
+				return;
+			}
 			if (String.IsNullOrWhiteSpace(recipient.EmailSubject) || String.IsNullOrWhiteSpace(recipient.EmailSource)) {
 				Dialog.ShowError("Please enter an email to send.");
 				return;
 			}
-
 			if (recipient.ReminderEmails.Any(e => e.Date.Date == DateTime.Today)) {
-				if (!Dialog.Warn(recipient.Person.FullName + " has already been emailed today.\r\nAre you sure you want to send another email?"))
+				if (!Dialog.Warn(recipient.Person.FullName + " have already been emailed today.\r\nAre you sure you want to send another email?"))
 					return;
 			} else {
 				if (!Dialog.Confirm("Would you like to email " + recipient.Person.FullName + "?"))
@@ -164,11 +168,19 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			}, false);
 		}
 		void SendEmail(MelaveMalkaInvitation recipient) {
-			Thread.Sleep(1500);	//TODO: Send
+			using (var message = new MailMessage {
+				From = Email.JournalAddress,
+				SubjectEncoding = Email.DefaultEncoding,
+				BodyEncoding = Email.DefaultEncoding,
+				Subject = recipient.EmailSubject,
+				Body = recipient.EmailSource,
+				IsBodyHtml = true
+			}) {
+				message.To.Add(recipient.EmailAddresses);	//Comma-separated string
+				Email.Hosted.Send(message);
+			}
 
 			BeginInvoke(new Action(delegate {	//The table can only be updated from the UI thread.
-				Dialog.Inform(recipient.EmailSource, recipient.EmailSubject);
-
 				Program.Table<AdReminderEmail>().Rows.Add(new AdReminderEmail {
 					Recipient = recipient,
 					Date = DateTime.Now,
