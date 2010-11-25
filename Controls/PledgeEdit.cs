@@ -110,7 +110,7 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 		private void typeText_Leave(object sender, EventArgs e) { BeginInvoke(new Action(SetAccount)); }
 		void SetAccount() {
-			if (Names.AccountNames.Contains(account.Text))
+			if (String.IsNullOrWhiteSpace(account.Text) || Names.AccountNames.Contains(account.Text))
 				CurrentPledge.Account = account.Text = (typeText.Text == "Building Fund" ? "Building Fund" : "Operating Fund");
 		}
 		private void typeTree_AfterSelect(object sender, TreeViewEventArgs e) {
