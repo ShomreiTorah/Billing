@@ -40,18 +40,16 @@
 			We hope to see you there.
 		</p>
 		<p>
-			<%List<Pledge> lastYear = Row.Person.Pledges.Where(p => p.ExternalSource == "Journal " + (mm.Year - 1)).ToList(); %>
-			<% if (lastYear.Any()) { %>
+			<%List<Pledge> lastYear = Row.Person.Pledges.Where(p => p.ExternalSource == "Journal " + (mm.Year - 1)).ToList();
+			%>
+			<% if (lastYear.Any()) {
+		  var adTypes = lastYear.GroupBy(p => p.SubType, (subtype, set) => set.Has(2) ? (set.Count() + " " + subtype.ToLower() + "s") : "a " + subtype.ToLower()).ToList();
+			%>
 			Last year, you gave
-			<%if (lastYear.Count == 1) { %>
-			a
-			<%: lastYear[0].SubType.ToLower()%>
-			<%} else if (lastYear.Select(p => p.SubType).Distinct().Count() == 1) {%>
-			<%: lastYear.Count+" "+ lastYear[0].SubType.ToLower()+"s"%>
-			<%} else if (lastYear.Count == 2) {%>
-			<%:"a "+lastYear.Join(" and a ", p => p.SubType) %>
+			<%if (lastYear.Count <= 2) {%>
+			<%:adTypes.Join(" and ")%>
 			<%} else { %>
-			<%:("a "+lastYear.Take(lastYear.Count - 1).Join(", a ", p => p.SubType) + ", and a " + lastYear.Last().SubType).ToLower() %>
+			<%:(adTypes.Take(adTypes.Count - 1).Join(", ") + ", and " + lastYear.Last()).ToLower()%>
 			<%} %>
 			to the journal (for
 			<%:lastYear.Sum(p => p.Amount).ToString("c")%>). We hope that you will be able give the same (or higher) this year.
