@@ -19,6 +19,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
 			this.grid = new ShomreiTorah.Data.UI.Grid.SmartGrid(this.components);
 			this.gridView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colShouldCall = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -37,6 +40,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.colRowId = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colRowId1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.clearCallers = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.callerEdit)).BeginInit();
@@ -89,7 +93,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colShouldCall.ToolTip = "Should Call?";
 			this.colShouldCall.Visible = true;
 			this.colShouldCall.VisibleIndex = 0;
-			this.colShouldCall.Width = 33;
+			this.colShouldCall.Width = 20;
 			// 
 			// colPerson
 			// 
@@ -182,9 +186,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             this.ribbonControl1.ExpandCollapseItem,
             this.showCallers,
             this.autoAssign,
-            this.exportGlobalList});
+            this.exportGlobalList,
+            this.clearCallers});
 			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl1.MaxItemId = 4;
+			this.ribbonControl1.MaxItemId = 5;
 			this.ribbonControl1.Name = "ribbonControl1";
 			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -240,6 +245,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			this.ribbonPageGroup1.ItemLinks.Add(this.showCallers);
 			this.ribbonPageGroup1.ItemLinks.Add(this.autoAssign);
+			this.ribbonPageGroup1.ItemLinks.Add(this.clearCallers);
 			this.ribbonPageGroup1.ItemLinks.Add(this.exportGlobalList);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			this.ribbonPageGroup1.ShowCaptionButton = false;
@@ -258,6 +264,19 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colRowId1.Name = "colRowId1";
 			this.colRowId1.Visible = true;
 			this.colRowId1.VisibleIndex = 0;
+			// 
+			// clearCallers
+			// 
+			this.clearCallers.Caption = "Clear Callers";
+			this.clearCallers.Id = 4;
+			this.clearCallers.Name = "clearCallers";
+			toolTipTitleItem3.Text = "Clear Callers";
+			toolTipItem3.LeftIndent = 6;
+			toolTipItem3.Text = "Clears the Caller field for the selected people.";
+			superToolTip3.Items.Add(toolTipTitleItem3);
+			superToolTip3.Items.Add(toolTipItem3);
+			this.clearCallers.SuperTip = superToolTip3;
+			this.clearCallers.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.clearCallers_ItemClick);
 			// 
 			// CallListForm
 			// 
@@ -298,5 +317,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox callerEdit;
 		private DevExpress.XtraBars.BarButtonItem autoAssign;
 		private DevExpress.XtraBars.BarButtonItem exportGlobalList;
+		private DevExpress.XtraBars.BarButtonItem clearCallers;
 	}
 }

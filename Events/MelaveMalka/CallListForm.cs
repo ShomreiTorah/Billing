@@ -139,5 +139,24 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			ExcelExporter.CreateGlobalCallList(year, path);
 			Process.Start(path);
 		}
+
+		private void clearCallers_ItemClick(object sender, ItemClickEventArgs e) {
+			var callees = gridView.GetSelectedRows()
+								  .Select(gridView.GetRow)
+								  .Cast<MelaveMalkaInvitation>()
+								  .Where(i => i.Caller != null)
+								  .ToList();
+			if (callees.Count == 0)
+				return;
+			if (callees.Count > 1) {
+				if (!Dialog.Confirm("Would you like to clear the caller field for " + callees.Count + " people?"))
+					return;
+			} else {
+				if (!Dialog.Confirm("Would you like to clear the caller field for " + callees[0].Person.FullName + "?"))
+					return;
+			}
+			foreach (var person in callees)
+				person.Caller = null;
+		}
 	}
 }
