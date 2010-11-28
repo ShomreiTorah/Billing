@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -23,10 +22,10 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.Export;
 using DevExpress.XtraRichEdit.Export.Html;
-using Microsoft.Win32;
 using ShomreiTorah.Billing.Controls;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI.Controls;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Data.UI.Grid;
 using ShomreiTorah.Singularity;
@@ -61,18 +60,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			var templates = Array.ConvertAll(Directory.GetFiles(Path.Combine(Program.AspxPath, templateSubfolder), "*.aspx"), Path.GetFileNameWithoutExtension);
 			resetSingle.Strings.AddRange(templates);
 			resetSelected.Strings.AddRange(templates);
-
-			var recentEmails = (string[])Registry.GetValue(Program.SettingsPath, "RecentPreviewEmails", null);
-			if (recentEmails != null)
-				previewAddressEdit.Items.AddRange(recentEmails);
-			previewAddressItem.EditValue = Registry.GetValue(Program.SettingsPath, "LastPreviewEmail", null);
-		}
-		protected override void OnClosed(EventArgs e) {
-			base.OnClosed(e);
-			if (previewAddressEdit.Items.Count > 0)
-				Registry.SetValue(Program.SettingsPath, "RecentPreviewEmails", previewAddressEdit.Items.OfType<string>().ToArray(), RegistryValueKind.MultiString);
-			if (!String.IsNullOrEmpty(previewAddressItem.EditValue as string))
-				Registry.SetValue(Program.SettingsPath, "LastPreviewEmail", previewAddressItem.EditValue, RegistryValueKind.String);
+			previewAddressItem.EditValue = PreviewAddressEdit.DefaultAddress;	//It is impossible to have a non-default EditValue for a BarEditItem, so I apply the default manually.
 		}
 
 		protected override void OnShown(EventArgs e) {
@@ -321,8 +309,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			var form = CopyableWebBrowser.CreatePreviewForm("Email Preview: " + SelectedInvitee.EmailSubject, SelectedInvitee.EmailSource);
 			form.Show(MdiParent);
 		}
-
-
 		private void sendPreview_ItemClick(object sender, ItemClickEventArgs e) {
 			if (String.IsNullOrWhiteSpace(previewAddressItem.EditValue as string)) {
 				Dialog.ShowError("Please enter a preview address");
@@ -330,37 +316,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			}
 			Email.Hosted.Send(
 				from: Email.JournalAddress,
-				to: previewMailAddress,
+				to: new MailAddress(previewAddressItem.EditValue.ToString(), "Preview: " + Environment.UserName),
 				subject: SelectedInvitee.EmailSubject,
 				body: SelectedInvitee.EmailSource,
 				html: true
 			);
 			InfoMessage.Show("Sent preview to " + previewAddressItem.EditValue);
-		}
-
-		//TODO: Share PreviewAddress control
-		private void previewAddressEdit_AddingMRUItem(object sender, AddingMRUItemEventArgs e) {
-			if (e.Item is MailAddress) return;
-			try {
-				new MailAddress(e.Item as string).ToString();
-			} catch (FormatException) { e.Cancel = true; }
-		}
-
-		private void previewAddressItem_EditValueChanged(object sender, EventArgs e) { CheckPreviewAddress(); }
-		MailAddress previewMailAddress;
-		private void previewAddressEdit_Validating(object sender, CancelEventArgs e) {
-			CheckPreviewAddress();
-			e.Cancel = !String.IsNullOrEmpty(previewAddressItem.EditValue as string) && previewMailAddress == null;
-			if (e.Cancel) throw new InvalidOperationException("Invalid email address");
-		}
-		void CheckPreviewAddress() {
-			if (String.IsNullOrEmpty(previewAddressItem.EditValue as string)) {
-				previewMailAddress = null;
-			} else {
-				try {
-					previewMailAddress = new MailAddress(previewAddressItem.EditValue.ToString(), "Preview: " + Environment.UserName);
-				} catch (FormatException) { previewMailAddress = null; }
-			}
 		}
 	}
 }

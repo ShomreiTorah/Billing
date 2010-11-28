@@ -43,8 +43,8 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			this.colTotalPaid = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colBalanceDue = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colEmails = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.previewAddress = new DevExpress.XtraEditors.MRUEdit();
 			this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
+			this.previewAddress = new ShomreiTorah.Data.UI.Controls.PreviewAddressEdit();
 			((System.ComponentModel.ISupportInitialize)(this.emailTemplate.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties.VistaTimeProperties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.startDate.Properties)).BeginInit();
@@ -254,6 +254,14 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			this.colEmails.Visible = true;
 			this.colEmails.VisibleIndex = 6;
 			// 
+			// labelControl4
+			// 
+			this.labelControl4.Location = new System.Drawing.Point(12, 68);
+			this.labelControl4.Name = "labelControl4";
+			this.labelControl4.Size = new System.Drawing.Size(87, 13);
+			this.labelControl4.TabIndex = 8;
+			this.labelControl4.Text = "Send previews to:";
+			// 
 			// previewAddress
 			// 
 			this.previewAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -264,17 +272,6 @@ namespace ShomreiTorah.Billing.Statements.Email {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.DropDown)});
 			this.previewAddress.Size = new System.Drawing.Size(479, 20);
 			this.previewAddress.TabIndex = 7;
-			this.previewAddress.AddingMRUItem += new DevExpress.XtraEditors.Controls.AddingMRUItemEventHandler(this.previewAddress_AddingMRUItem);
-			this.previewAddress.Validating += new System.ComponentModel.CancelEventHandler(this.previewAddress_Validating);
-			this.previewAddress.TextChanged += new System.EventHandler(this.previewAddress_TextChanged);
-			// 
-			// labelControl4
-			// 
-			this.labelControl4.Location = new System.Drawing.Point(12, 68);
-			this.labelControl4.Name = "labelControl4";
-			this.labelControl4.Size = new System.Drawing.Size(87, 13);
-			this.labelControl4.TabIndex = 8;
-			this.labelControl4.Text = "Send previews to:";
 			// 
 			// EmailExporter
 			// 
@@ -283,7 +280,6 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			this.CancelButton = this.cancel;
 			this.ClientSize = new System.Drawing.Size(597, 372);
 			this.Controls.Add(this.labelControl4);
-			this.Controls.Add(this.previewAddress);
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.sendBills);
 			this.Controls.Add(this.cancel);
@@ -292,6 +288,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			this.Controls.Add(this.startDate);
 			this.Controls.Add(this.emailTemplate);
 			this.Controls.Add(this.labelControl1);
+			this.Controls.Add(this.previewAddress);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(269, 269);
 			this.Name = "EmailExporter";
@@ -326,8 +323,8 @@ namespace ShomreiTorah.Billing.Statements.Email {
 		private DevExpress.XtraGrid.Columns.GridColumn colTotalPaid;
 		private DevExpress.XtraGrid.Columns.GridColumn colBalanceDue;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit buttonEdit;
-		private DevExpress.XtraEditors.MRUEdit previewAddress;
 		private DevExpress.XtraEditors.LabelControl labelControl4;
 		private DevExpress.XtraGrid.Columns.GridColumn colEmails;
+		private Data.UI.Controls.PreviewAddressEdit previewAddress;
 	}
 }

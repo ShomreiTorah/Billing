@@ -121,7 +121,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.sendPreview = new DevExpress.XtraBars.BarButtonItem();
 			this.previewDestinationPopup = new DevExpress.XtraBars.PopupMenu(this.components);
 			this.previewAddressItem = new DevExpress.XtraBars.BarEditItem();
-			this.previewAddressEdit = new DevExpress.XtraEditors.Repository.RepositoryItemMRUEdit();
 			this.resetSingle = new DevExpress.XtraBars.BarListItem();
 			this.bar2 = new DevExpress.XtraBars.Bar();
 			this.findItem1 = new DevExpress.XtraRichEdit.UI.FindItem();
@@ -153,6 +152,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.fileSaveItem1 = new DevExpress.XtraRichEdit.UI.FileSaveItem();
 			this.fileSaveAsItem1 = new DevExpress.XtraRichEdit.UI.FileSaveAsItem();
 			this.richEditBarController1 = new DevExpress.XtraRichEdit.UI.RichEditBarController();
+			this.previewAddressEdit = new ShomreiTorah.Data.UI.Controls.RepositoryItemPreviewAddressEdit();
 			((System.ComponentModel.ISupportInitialize)(this.logView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
@@ -168,8 +168,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.recipientAddresses.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.previewDestinationPopup)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.previewAddressEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.richEditBarController1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.previewAddressEdit)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// logView
@@ -1062,17 +1062,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.previewAddressItem.Edit = this.previewAddressEdit;
 			this.previewAddressItem.Id = 97;
 			this.previewAddressItem.Name = "previewAddressItem";
-			this.previewAddressItem.EditValueChanged += new System.EventHandler(this.previewAddressItem_EditValueChanged);
-			// 
-			// previewAddressEdit
-			// 
-			this.previewAddressEdit.AutoHeight = false;
-			this.previewAddressEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.previewAddressEdit.HighlightedItemStyle = DevExpress.XtraEditors.HighlightStyle.Skinned;
-			this.previewAddressEdit.Name = "previewAddressEdit";
-			this.previewAddressEdit.AddingMRUItem += new DevExpress.XtraEditors.Controls.AddingMRUItemEventHandler(this.previewAddressEdit_AddingMRUItem);
-			this.previewAddressEdit.Validating += new System.ComponentModel.CancelEventHandler(this.previewAddressEdit_Validating);
 			// 
 			// resetSingle
 			// 
@@ -1357,6 +1346,13 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.richEditBarController1.BarItems.Add(this.fileSaveAsItem1);
 			this.richEditBarController1.RichEditControl = this.emailEditor;
 			// 
+			// previewAddressEdit
+			// 
+			this.previewAddressEdit.AutoHeight = false;
+			this.previewAddressEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.previewAddressEdit.Name = "previewAddressEdit";
+			// 
 			// ReminderEmailsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1388,8 +1384,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.recipientAddresses.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.previewDestinationPopup)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.previewAddressEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.richEditBarController1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.previewAddressEdit)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1510,6 +1506,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraBars.BarButtonItem sendPreview;
 		private DevExpress.XtraBars.PopupMenu previewDestinationPopup;
 		private DevExpress.XtraBars.BarEditItem previewAddressItem;
-		private DevExpress.XtraEditors.Repository.RepositoryItemMRUEdit previewAddressEdit;
+		private Data.UI.Controls.RepositoryItemPreviewAddressEdit previewAddressEdit;
 	}
 }

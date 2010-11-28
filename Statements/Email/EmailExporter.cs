@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -10,7 +9,6 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Base;
-using Microsoft.Win32;
 using ShomreiTorah.Billing.Controls;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
@@ -71,13 +69,6 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			startDate.DateTime = new DateTime(DateTime.Today.AddDays(-80).Year, 1, 1);
 			startDate.Properties.MaxValue = DateTime.Today;
 
-			var recentEmails = (string[])Registry.GetValue(Program.SettingsPath, "RecentPreviewEmails", null);
-			if (recentEmails != null)
-				previewAddress.Properties.Items.AddRange(recentEmails);
-			previewAddress.Text = Registry.GetValue(Program.SettingsPath, "LastPreviewEmail", null) as string;
-
-			CheckPreviewAddress();
-
 			grid.DataSource = new RowListBinder(Program.Table<Person>(), (Row[])people);
 			gridView.BestFitColumns();
 
@@ -86,18 +77,10 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			SetEnabled();
 		}
 
-		protected override void OnClosed(EventArgs e) {
-			base.OnClosed(e);
-			if (previewAddress.Properties.Items.Count > 0)
-				Registry.SetValue(Program.SettingsPath, "RecentPreviewEmails", previewAddress.Properties.Items.OfType<string>().ToArray(), RegistryValueKind.MultiString);
-			if (!String.IsNullOrEmpty(previewAddress.Text))
-				Registry.SetValue(Program.SettingsPath, "LastPreviewEmail", previewAddress.Text, RegistryValueKind.String);
-		}
-
 		private void EditValueChanged(object sender, EventArgs e) { SetEnabled(); }
 		void SetEnabled() {
 			showPreviewButton.Enabled = sendBills.Enabled = emailTemplate.EditValue != null && startDate.EditValue != null;
-			sendPreviewButton.Enabled = showPreviewButton.Enabled && previewMailAddress != null;
+			sendPreviewButton.Enabled = showPreviewButton.Enabled && previewAddress.Address != null;
 		}
 
 		MailMessage CreateMessage(Person person) { StatementInfo info; return CreateMessage(person, out info); }
@@ -148,7 +131,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 											"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
 						return;
 					}
-					message.To.Add(previewMailAddress);
+					message.To.Add(previewAddress.Address);
 					Email.Hosted.Send(message);
 				}
 			} else {
@@ -177,32 +160,6 @@ namespace ShomreiTorah.Billing.Statements.Email {
 				if (row != null)
 					e.Value = row.EmailAddresses.Select(m => m.Email).Join(", ");
 			}
-		}
-
-		MailAddress previewMailAddress;
-		private void previewAddress_TextChanged(object sender, EventArgs e) { CheckPreviewAddress(); }
-		void CheckPreviewAddress() {
-			if (String.IsNullOrEmpty(previewAddress.Text)) {
-				previewMailAddress = null;
-			} else {
-				try {
-					previewMailAddress = new MailAddress(previewAddress.Text, Environment.UserName);
-				} catch (FormatException) { previewMailAddress = null; }
-			}
-			SetEnabled();
-		}
-
-		private void previewAddress_AddingMRUItem(object sender, AddingMRUItemEventArgs e) {
-			if (e.Item is MailAddress) return;
-			try {
-				new MailAddress(e.Item as string).ToString();
-			} catch (FormatException) { e.Cancel = true; }
-		}
-
-		private void previewAddress_Validating(object sender, CancelEventArgs e) {
-			CheckPreviewAddress();
-			e.Cancel = !String.IsNullOrEmpty(previewAddress.Text) && previewMailAddress == null;
-			previewAddress.ErrorText = e.Cancel ? "Invalid email address" : null;
 		}
 
 		private void sendBills_Click(object sender, EventArgs e) { SendBills(); }
