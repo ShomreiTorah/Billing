@@ -23,15 +23,16 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MMInfoAdder));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
 			this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
+			this.mmTime = new DevExpress.XtraEditors.TimeEdit();
 			this.speaker = new DevExpress.XtraEditors.TextEdit();
 			this.honoree = new ShomreiTorah.Data.UI.Controls.PersonSelector();
 			this.melaveMalkaDate = new ShomreiTorah.Billing.Controls.HebrewCalendarEdit();
@@ -40,14 +41,16 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.cancel = new DevExpress.XtraEditors.SimpleButton();
 			this.ok = new DevExpress.XtraEditors.SimpleButton();
 			this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
 			((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
 			this.dataLayoutControl1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.mmTime.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.speaker.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.honoree.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.melaveMalkaDate.Properties)).BeginInit();
@@ -56,33 +59,47 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
 			this.panelControl1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// dataLayoutControl1
 			// 
+			this.dataLayoutControl1.Controls.Add(this.mmTime);
 			this.dataLayoutControl1.Controls.Add(this.speaker);
 			this.dataLayoutControl1.Controls.Add(this.honoree);
 			this.dataLayoutControl1.Controls.Add(this.melaveMalkaDate);
-			this.dataLayoutControl1.Controls.Add(this.adDeadline);
 			this.dataLayoutControl1.Controls.Add(this.year);
+			this.dataLayoutControl1.Controls.Add(this.adDeadline);
 			this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dataLayoutControl1.Location = new System.Drawing.Point(0, 0);
 			this.dataLayoutControl1.Name = "dataLayoutControl1";
 			this.dataLayoutControl1.Root = this.layoutControlGroup1;
-			this.dataLayoutControl1.Size = new System.Drawing.Size(574, 94);
+			this.dataLayoutControl1.Size = new System.Drawing.Size(650, 94);
 			this.dataLayoutControl1.TabIndex = 0;
 			this.dataLayoutControl1.Text = "dataLayoutControl1";
+			// 
+			// mmTime
+			// 
+			this.mmTime.EditValue = new System.DateTime(2010, 11, 28, 20, 30, 0, 0);
+			this.mmTime.Location = new System.Drawing.Point(568, 12);
+			this.mmTime.Name = "mmTime";
+			this.mmTime.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.mmTime.Properties.Mask.EditMask = "h:mm tt";
+			this.mmTime.Size = new System.Drawing.Size(70, 20);
+			this.mmTime.StyleController = this.dataLayoutControl1;
+			this.mmTime.TabIndex = 9;
 			// 
 			// speaker
 			// 
 			this.speaker.Location = new System.Drawing.Point(93, 60);
 			this.speaker.Name = "speaker";
-			this.speaker.Size = new System.Drawing.Size(469, 20);
+			this.speaker.Size = new System.Drawing.Size(545, 20);
 			this.speaker.StyleController = this.dataLayoutControl1;
 			this.speaker.TabIndex = 8;
 			// 
@@ -90,23 +107,23 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			this.honoree.Location = new System.Drawing.Point(93, 36);
 			this.honoree.Name = "honoree";
-			toolTipItem1.Text = "Click to select a person";
-			superToolTip1.Items.Add(toolTipItem1);
-			toolTipTitleItem1.Text = "New Person...";
-			toolTipItem2.Text = "Adds a new person to the master directory";
-			superToolTip2.Items.Add(toolTipTitleItem1);
-			superToolTip2.Items.Add(toolTipItem2);
+			toolTipItem3.Text = "Click to select a person";
+			superToolTip3.Items.Add(toolTipItem3);
+			toolTipTitleItem2.Text = "New Person...";
+			toolTipItem4.Text = "Adds a new person to the master directory";
+			superToolTip4.Items.Add(toolTipTitleItem2);
+			superToolTip4.Items.Add(toolTipItem4);
 			this.honoree.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, superToolTip1, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("honoree.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, superToolTip2, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject3, "", null, superToolTip3, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("honoree.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject4, "", null, superToolTip4, true)});
 			this.honoree.Properties.NullValuePrompt = "Click here to select the guest of honor";
-			this.honoree.Size = new System.Drawing.Size(469, 20);
+			this.honoree.Size = new System.Drawing.Size(545, 20);
 			this.honoree.StyleController = this.dataLayoutControl1;
 			this.honoree.TabIndex = 7;
 			// 
 			// melaveMalkaDate
 			// 
-			this.melaveMalkaDate.Location = new System.Drawing.Point(409, 12);
+			this.melaveMalkaDate.Location = new System.Drawing.Point(177, 12);
 			this.melaveMalkaDate.Name = "melaveMalkaDate";
 			this.melaveMalkaDate.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
 			this.melaveMalkaDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -117,13 +134,13 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.melaveMalkaDate.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
 			this.melaveMalkaDate.Properties.Mask.EditMask = "dddd, MMMM d";
 			this.melaveMalkaDate.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.DateTime;
-			this.melaveMalkaDate.Size = new System.Drawing.Size(153, 20);
+			this.melaveMalkaDate.Size = new System.Drawing.Size(143, 20);
 			this.melaveMalkaDate.StyleController = this.dataLayoutControl1;
 			this.melaveMalkaDate.TabIndex = 6;
 			// 
 			// adDeadline
 			// 
-			this.adDeadline.Location = new System.Drawing.Point(170, 12);
+			this.adDeadline.Location = new System.Drawing.Point(390, 12);
 			this.adDeadline.Name = "adDeadline";
 			this.adDeadline.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
 			this.adDeadline.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -134,7 +151,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.adDeadline.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
 			this.adDeadline.Properties.Mask.EditMask = "dddd, MMMM d";
 			this.adDeadline.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.DateTime;
-			this.adDeadline.Size = new System.Drawing.Size(162, 20);
+			this.adDeadline.Size = new System.Drawing.Size(143, 20);
 			this.adDeadline.StyleController = this.dataLayoutControl1;
 			this.adDeadline.TabIndex = 5;
 			// 
@@ -174,12 +191,13 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1,
             this.layoutControlItem2,
-            this.layoutControlItem3,
             this.layoutControlItem4,
-            this.layoutControlItem5});
+            this.layoutControlItem5,
+            this.layoutControlItem6,
+            this.layoutControlItem3});
 			this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup1.Name = "layoutControlGroup1";
-			this.layoutControlGroup1.Size = new System.Drawing.Size(574, 94);
+			this.layoutControlGroup1.Size = new System.Drawing.Size(650, 94);
 			this.layoutControlGroup1.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
 			this.layoutControlGroup1.Text = "layoutControlGroup1";
 			this.layoutControlGroup1.TextVisible = false;
@@ -203,25 +221,13 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			this.layoutControlItem2.Control = this.adDeadline;
 			this.layoutControlItem2.CustomizationFormText = "Ad Deadline:";
-			this.layoutControlItem2.Location = new System.Drawing.Point(92, 0);
+			this.layoutControlItem2.Location = new System.Drawing.Point(312, 0);
 			this.layoutControlItem2.Name = "layoutControlItem2";
-			this.layoutControlItem2.Size = new System.Drawing.Size(232, 24);
+			this.layoutControlItem2.Size = new System.Drawing.Size(213, 24);
 			this.layoutControlItem2.Text = "Ad Deadline:";
 			this.layoutControlItem2.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
 			this.layoutControlItem2.TextSize = new System.Drawing.Size(61, 13);
 			this.layoutControlItem2.TextToControlDistance = 5;
-			// 
-			// layoutControlItem3
-			// 
-			this.layoutControlItem3.Control = this.melaveMalkaDate;
-			this.layoutControlItem3.CustomizationFormText = "Melave Malka:";
-			this.layoutControlItem3.Location = new System.Drawing.Point(324, 0);
-			this.layoutControlItem3.Name = "layoutControlItem3";
-			this.layoutControlItem3.Size = new System.Drawing.Size(230, 24);
-			this.layoutControlItem3.Text = "Melave Malka:";
-			this.layoutControlItem3.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
-			this.layoutControlItem3.TextSize = new System.Drawing.Size(68, 13);
-			this.layoutControlItem3.TextToControlDistance = 5;
 			// 
 			// layoutControlItem4
 			// 
@@ -229,7 +235,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.layoutControlItem4.CustomizationFormText = "layoutControlItem4";
 			this.layoutControlItem4.Location = new System.Drawing.Point(0, 24);
 			this.layoutControlItem4.Name = "layoutControlItem4";
-			this.layoutControlItem4.Size = new System.Drawing.Size(554, 24);
+			this.layoutControlItem4.Size = new System.Drawing.Size(630, 24);
 			this.layoutControlItem4.Text = "Guest of Honor:";
 			this.layoutControlItem4.TextSize = new System.Drawing.Size(77, 13);
 			// 
@@ -239,15 +245,42 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.layoutControlItem5.CustomizationFormText = "Guest Speaker:";
 			this.layoutControlItem5.Location = new System.Drawing.Point(0, 48);
 			this.layoutControlItem5.Name = "layoutControlItem5";
-			this.layoutControlItem5.Size = new System.Drawing.Size(554, 26);
+			this.layoutControlItem5.Size = new System.Drawing.Size(630, 26);
 			this.layoutControlItem5.Text = "Guest Speaker:";
 			this.layoutControlItem5.TextSize = new System.Drawing.Size(77, 13);
+			// 
+			// layoutControlItem6
+			// 
+			this.layoutControlItem6.Control = this.mmTime;
+			this.layoutControlItem6.CustomizationFormText = "Time:";
+			this.layoutControlItem6.Location = new System.Drawing.Point(525, 0);
+			this.layoutControlItem6.MaxSize = new System.Drawing.Size(105, 24);
+			this.layoutControlItem6.MinSize = new System.Drawing.Size(105, 24);
+			this.layoutControlItem6.Name = "layoutControlItem6";
+			this.layoutControlItem6.Size = new System.Drawing.Size(105, 24);
+			this.layoutControlItem6.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.layoutControlItem6.Text = "Time:";
+			this.layoutControlItem6.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+			this.layoutControlItem6.TextSize = new System.Drawing.Size(26, 13);
+			this.layoutControlItem6.TextToControlDistance = 5;
+			// 
+			// layoutControlItem3
+			// 
+			this.layoutControlItem3.Control = this.melaveMalkaDate;
+			this.layoutControlItem3.CustomizationFormText = "Melave Malka:";
+			this.layoutControlItem3.Location = new System.Drawing.Point(92, 0);
+			this.layoutControlItem3.Name = "layoutControlItem3";
+			this.layoutControlItem3.Size = new System.Drawing.Size(220, 24);
+			this.layoutControlItem3.Text = "Melave Malka:";
+			this.layoutControlItem3.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+			this.layoutControlItem3.TextSize = new System.Drawing.Size(68, 13);
+			this.layoutControlItem3.TextToControlDistance = 5;
 			// 
 			// cancel
 			// 
 			this.cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cancel.Location = new System.Drawing.Point(487, 6);
+			this.cancel.Location = new System.Drawing.Point(563, 6);
 			this.cancel.Name = "cancel";
 			this.cancel.Size = new System.Drawing.Size(75, 23);
 			this.cancel.TabIndex = 1;
@@ -256,7 +289,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// ok
 			// 
 			this.ok.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ok.Location = new System.Drawing.Point(406, 6);
+			this.ok.Location = new System.Drawing.Point(482, 6);
 			this.ok.Name = "ok";
 			this.ok.Size = new System.Drawing.Size(75, 23);
 			this.ok.TabIndex = 0;
@@ -270,7 +303,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.panelControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.panelControl1.Location = new System.Drawing.Point(0, 94);
 			this.panelControl1.Name = "panelControl1";
-			this.panelControl1.Size = new System.Drawing.Size(574, 41);
+			this.panelControl1.Size = new System.Drawing.Size(650, 41);
 			this.panelControl1.TabIndex = 10;
 			// 
 			// MMInfoAdder
@@ -279,7 +312,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancel;
-			this.ClientSize = new System.Drawing.Size(574, 135);
+			this.ClientSize = new System.Drawing.Size(650, 135);
 			this.ControlBox = false;
 			this.Controls.Add(this.dataLayoutControl1);
 			this.Controls.Add(this.panelControl1);
@@ -289,6 +322,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.Text = "Add Melave Malka";
 			((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
 			this.dataLayoutControl1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.mmTime.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.speaker.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.honoree.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.melaveMalkaDate.Properties)).EndInit();
@@ -297,9 +331,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
 			this.panelControl1.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -323,5 +358,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraEditors.PanelControl panelControl1;
 		private DevExpress.XtraEditors.TextEdit speaker;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
+		private DevExpress.XtraEditors.TimeEdit mmTime;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
 	}
 }

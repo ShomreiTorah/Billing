@@ -23,6 +23,9 @@
 			p {
 				margin: 0 0 1em 0;
 			}
+			a {
+				color: Blue;
+			}
 		</style>
 	</head>
 
@@ -34,8 +37,7 @@
 		<p>
 			We are pleased to invite you to the annual Melave Malka of Bais Medrash Shomrei Torah, to take place on מוצאי שבת פרשת
 			<%:new HebrewDate(mm.MelaveMalkaDate).Parsha %>,
-			<%=mm.MelaveMalkaDate.ToString("MMMM d") %>
-			at 8:30 PM. Our guests of honor this year are
+			<%=mm.MelaveMalkaDate.ToString("MMMM d 'at' h:mm tt") %>. Our guests of honor this year are
 			<%:mm.Honoree.FullName %>.<br />
 			We hope to see you there.
 		</p>
@@ -73,7 +75,8 @@
 			The Melave Malka is the perfect chance to meet everyone in the shul, and is great fun. So please be sure to come.
 		</p>
 		<p>
-			Best wishes, Dovid Laks</p>
+			Best wishes,<br />
+			Dovid Laks</p>
 	</body>
 
 </html>

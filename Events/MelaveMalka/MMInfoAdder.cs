@@ -34,6 +34,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		}
 
 		private void ok_Click(object sender, EventArgs e) {
+			if (melaveMalkaDate.DateTime.DayOfWeek != DayOfWeek.Saturday) {
+				Dialog.ShowError("The Melave Malka must be on שבת");
+				return;
+			}
 			if (Program.Table<MelaveMalkaInfo>().Rows.Any(m => m.Year == year.Value)) {
 				Dialog.ShowError("Melave Malka info has already been added for " + year.Value);
 				return;
@@ -51,7 +55,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				Year = (int)year.Value,
 				Honoree = honoree.SelectedPerson,
 				Speaker = speaker.Text,
-				MelaveMalkaDate = melaveMalkaDate.DateTime,
+				MelaveMalkaDate = melaveMalkaDate.DateTime + ((DateTime)mmTime.EditValue).TimeOfDay,
 				AdDeadline = adDeadline.DateTime
 			});
 			Dispose();

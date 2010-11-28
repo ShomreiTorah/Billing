@@ -41,10 +41,13 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colHonoree = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colSpeaker = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colRowId = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.colMelaveMalkaDateTime = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.repositoryItemTimeEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTimeEdit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.hebrewCalendarEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.repositoryItemTimeEdit1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// barManager1
@@ -116,9 +119,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.grid.MainView = this.gridView;
 			this.grid.MenuManager = this.barManager1;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 45;
+			this.grid.RegistrationCount = 48;
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.hebrewCalendarEdit});
+            this.hebrewCalendarEdit,
+            this.repositoryItemTimeEdit1});
 			this.grid.Size = new System.Drawing.Size(760, 332);
 			this.grid.TabIndex = 4;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -131,7 +135,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             this.colAdDeadline,
             this.colMelaveMalkaDate,
             this.colHonoree,
-            this.colSpeaker});
+            this.colSpeaker,
+            this.colMelaveMalkaDateTime});
 			this.gridView.GridControl = this.grid;
 			this.gridView.Name = "gridView";
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
@@ -177,11 +182,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colMelaveMalkaDate.Name = "colMelaveMalkaDate";
 			this.colMelaveMalkaDate.Visible = true;
 			this.colMelaveMalkaDate.VisibleIndex = 2;
-			this.colMelaveMalkaDate.Width = 119;
+			this.colMelaveMalkaDate.Width = 117;
 			// 
 			// colHonoree
 			// 
-			this.colHonoree.Caption = "Full Name";
+			this.colHonoree.AllowKeyboardActivation = false;
+			this.colHonoree.Caption = "Honoree";
 			this.colHonoree.FieldName = "Honoree";
 			this.colHonoree.Name = "colHonoree";
 			this.colHonoree.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.True;
@@ -190,8 +196,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colHonoree.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
 			this.colHonoree.ShowEditorOnMouseDown = true;
 			this.colHonoree.Visible = true;
-			this.colHonoree.VisibleIndex = 3;
-			this.colHonoree.Width = 65;
+			this.colHonoree.VisibleIndex = 4;
+			this.colHonoree.Width = 181;
 			// 
 			// colSpeaker
 			// 
@@ -199,7 +205,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colSpeaker.FieldName = "Speaker";
 			this.colSpeaker.Name = "colSpeaker";
 			this.colSpeaker.Visible = true;
-			this.colSpeaker.VisibleIndex = 4;
+			this.colSpeaker.VisibleIndex = 5;
 			this.colSpeaker.Width = 89;
 			// 
 			// colRowId
@@ -208,6 +214,24 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colRowId.Name = "colRowId";
 			this.colRowId.Visible = true;
 			this.colRowId.VisibleIndex = 0;
+			// 
+			// colMelaveMalkaDateTime
+			// 
+			this.colMelaveMalkaDateTime.Caption = "Time";
+			this.colMelaveMalkaDateTime.ColumnEditor = this.repositoryItemTimeEdit1;
+			this.colMelaveMalkaDateTime.FieldName = "MelaveMalkaDate";
+			this.colMelaveMalkaDateTime.Name = "colMelaveMalkaDateTime";
+			this.colMelaveMalkaDateTime.Visible = true;
+			this.colMelaveMalkaDateTime.VisibleIndex = 3;
+			this.colMelaveMalkaDateTime.Width = 53;
+			// 
+			// repositoryItemTimeEdit1
+			// 
+			this.repositoryItemTimeEdit1.AutoHeight = false;
+			this.repositoryItemTimeEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.repositoryItemTimeEdit1.Mask.EditMask = "h:mm tt";
+			this.repositoryItemTimeEdit1.Name = "repositoryItemTimeEdit1";
 			// 
 			// MMInfoForm
 			// 
@@ -226,6 +250,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.hebrewCalendarEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.repositoryItemTimeEdit1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -248,5 +273,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private Data.UI.Grid.SmartGridColumn colSpeaker;
 		private Data.UI.Grid.SmartGridColumn colRowId;
 		private Controls.RepositoryItemHebrewCalendarEdit hebrewCalendarEdit;
+		private Data.UI.Grid.SmartGridColumn colMelaveMalkaDateTime;
+		private DevExpress.XtraEditors.Repository.RepositoryItemTimeEdit repositoryItemTimeEdit1;
 	}
 }
