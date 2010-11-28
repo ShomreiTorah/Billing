@@ -31,6 +31,11 @@ namespace ShomreiTorah.Billing.Controls {
 			get { return (DateTime)EditValue; }
 			set { EditValue = value; }
 		}
+		///<summary>Gets the time component of the current value, if any.</summary>
+		///<remarks>This property is used to preserve the TimeOfDay when 
+		///the user selects a date. Since HebrewDates do not store times,
+		///I need to manually re-add the time in MyPopupForm.ResultValue.</remarks>
+		private TimeSpan TimeSpan { get { return EditValue is DateTime ? DateTime.TimeOfDay : TimeSpan.Zero; } }
 
 		protected override void DoShowPopup() {
 			FlushPendingEditActions();	//Force the DateTime to reflect manual edits
@@ -39,6 +44,7 @@ namespace ShomreiTorah.Billing.Controls {
 
 		protected override PopupBaseForm CreatePopupForm() { return new MyPopupForm(this); }
 		class MyPopupForm : PopupBaseForm {
+			public new HebrewCalendarEdit OwnerEdit { get { return (HebrewCalendarEdit)base.OwnerEdit; } }
 			public HebrewCalendar Calendar { get; private set; }
 			public MyPopupForm(HebrewCalendarEdit owner)
 				: base(owner) {
@@ -68,7 +74,7 @@ namespace ShomreiTorah.Billing.Controls {
 				ClosePopup();
 			}
 			public override object ResultValue {
-				get { return Calendar.SelectedDate == null ? null : (object)Calendar.SelectedDate.Value.EnglishDate; }
+				get { return Calendar.SelectedDate == null ? null : (object)(Calendar.SelectedDate.Value.EnglishDate + OwnerEdit.TimeSpan); }
 			}
 		}
 	}
