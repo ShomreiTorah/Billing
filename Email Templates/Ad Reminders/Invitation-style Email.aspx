@@ -61,10 +61,11 @@
 		</p>
 		<p>
 			The deadline for ads is
-			<%: mm.AdDeadline.ToLongDateString() %>. You can download an ad blank by clicking here (TBD).
+			<%: mm.AdDeadline.ToLongDateString() %>.<br />
+			You can download an ad blank by clicking <a href="http://ShomreiTorah.us<%:mm.AdBlankPath %>">here</a>.
 			<br />
-			Ads can also be given by sending email to <a href="mailto:Journal@ShomreiTorah.us">Journal@ShomreiTorah.us</a>. Please remember
-			to include the following information:</p>
+			Ads can also be emailed to <a href="mailto:Journal@ShomreiTorah.us">Journal@ShomreiTorah.us</a>. Please remember to include
+			the following information:</p>
 		<ol>
 			<li>Your full name and address</li>
 			<li>Type of ad</li>
