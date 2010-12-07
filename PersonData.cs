@@ -79,18 +79,18 @@ namespace ShomreiTorah.Billing {
 			: this() {
 			if (row == null)
 				throw new ArgumentNullException("row");
-			FullName = row["FullName"].ToString();
+			FullName = row.Field<string>("FullName");
 
-			HisName = row["HisName"].ToString();
-			HerName = row["HerName"].ToString();
-			LastName = row["LastName"].ToString();
+			HisName = row.Field<string>("HisName");
+			HerName = row.Field<string>("HerName");
+			LastName = row.Field<string>("LastName");
 
-			Address = row["Address"].ToString();
-			City = row["City"].ToString();
-			State = row["State"].ToString();
-			Zip = row["Zip"].ToString();
+			Address = row.Field<string>("Address");
+			City = row.Field<string>("City");
+			State = row.Field<string>("State");
+			Zip = row.Field<string>("Zip");
 
-			pPhone = row["Phone"].ToString();
+			pPhone = row.Field<string>("Phone");
 		}
 
 		///<summary>Checks whether this instance contains any data.</summary>
