@@ -69,7 +69,7 @@
 		<ol>
 			<li>Your full name and address</li>
 			<li>Type of ad</li>
-			<li>Number of men & ladies Melave Malka reservations</li>
+			<li>Number of men's & ladies' Melave Malka reservations</li>
 			<li>Text of your ad</li>
 		</ol>
 		<p>
