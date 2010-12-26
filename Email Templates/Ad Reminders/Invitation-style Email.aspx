@@ -12,7 +12,7 @@
 	public override string EmailSubject { get { return "Shomrei Torah Melave Malka"; } }
 </script>
 
-<%MelaveMalkaInfo mm = DataContext.Table<MelaveMalkaInfo>().Rows.Single(m => m.Year == Row.Year); %>
+<%var mm = DataContext.Table<MelaveMalkaInfo>().Rows.Single(m => m.Year == Row.Year); %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 
@@ -32,7 +32,7 @@
 	<body>
 		<p>
 			Dear
-			<%:Row.Person.HisName ?? Row.Person.HerName %>,
+			<%:Row.Person.ActualSalutation %>,
 		</p>
 		<p>
 			We are pleased to invite you to the annual Melave Malka of Bais Medrash Shomrei Torah, to take place on מוצאי שבת פרשת
@@ -72,9 +72,11 @@
 			<li>Number of men's & ladies' Melave Malka reservations</li>
 			<li>Text of your ad</li>
 		</ol>
+		<%if (Row.Source == "Shul") { %>
 		<p>
 			The Melave Malka is the perfect chance to meet everyone in the shul, and is great fun. So please be sure to come.
 		</p>
+		<%} %>
 		<p>
 			Best wishes,<br />
 			Dovid Laks</p>
