@@ -9,7 +9,7 @@
 <%@ Import Namespace="ShomreiTorah.Data" %>
 
 <script runat="server">
-	public override string EmailSubject { get { return "Shomrei Torah Melave Malka"; } }
+	public override string EmailSubject { get { return "Shomrei Torah Melave Malka - Please give your ads!"; } }
 </script>
 
 <%var mm = DataContext.Table<MelaveMalkaInfo>().Rows.Single(m => m.Year == Row.Year); %>
@@ -35,9 +35,14 @@
 			<%:Row.Person.ActualSalutation %>,
 		</p>
 		<p>
-			We are pleased to invite you to the annual Melave Malka of Congregation Shomrei Torah, to take place on מוצאי שבת פרשת
+			The deadline for Shomrei Torah's Melave Malka journal is
+			<%:mm.AdDeadline.ToString("dddd, MMMM d") %>, just
+			<%=(mm.AdDeadline-DateTime.Today).Days %>
+			days away!</p>
+		<p>
+			The Melave Malka will take place on מוצאי שבת פרשת
 			<%:new HebrewDate(mm.MelaveMalkaDate).Parsha %>,
-			<%=mm.MelaveMalkaDate.ToString("MMMM d 'at' h:mm tt") %>. Our guests of honor this year are
+			<%=mm.MelaveMalkaDate.ToString("MMMM d 'at' h:mm tt") %>. This year, we are honoring
 			<%:mm.Honoree.FullName %>.<br />
 		</p>
 		<p>
@@ -60,8 +65,6 @@
 			<%} %>
 		</p>
 		<p>
-			The deadline for ads is
-			<%: mm.AdDeadline.ToLongDateString() %>.<br />
 			You can download an ad blank by clicking <a href="http://ShomreiTorah.us<%:mm.AdBlankPath %>">here</a>.
 			<br />
 			Ads can also be emailed to <a href="mailto:Journal@ShomreiTorah.us">Journal@ShomreiTorah.us</a>. Please remember to include
