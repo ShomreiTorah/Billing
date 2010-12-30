@@ -12,6 +12,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraTabbedMdi;
 using ShomreiTorah.Billing.Events.Purim;
 using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
@@ -37,79 +38,42 @@ namespace ShomreiTorah.Billing.Forms {
 		}
 		#region Yearly Buttons
 		void SetupYearlyButtons() {
-			SetupYearlyButton<Pledge>(
-				showShalachManos,
+			showShalachManos.SetupYearlyButton<Pledge>(
 				p => p.Type == ShalachManosForm.PledgeType ? p.Date.Year : new int?(),	//Only count Shalach Manos pledges; don't show years that only have other types
 				year => new ShalachManosForm(year) { MdiParent = this }.Show()
 			);
-			SetupYearlyButton<Pledge>(
-				shalachManosExport,
+			shalachManosExport.SetupYearlyButton<Pledge>(
 				p => p.Type == ShalachManosForm.PledgeType ? p.Date.Year : new int?(),
 				year => ShalachManosExport.CreateDocument(year)
 			);
-			SetupYearlyButton<SeatingReservation>(
-				showSeatingForm,
+			showSeatingForm.SetupYearlyButton<SeatingReservation>(
 				sr => sr.Pledge.Date.Year,
 				year => new Events.Seating.SeatingForm(year) { MdiParent = this }.Show()
 			);
 			#region Melave Malka
-			SetupYearlyButton<MelaveMalkaInvitation>(
-				showInvites,
+			showInvites.SetupYearlyButton<MelaveMalkaInvitation>(
 				mmi => mmi.Year,
 				year => new Events.MelaveMalka.InvitationsForm(year) { MdiParent = this }.Show(),
 				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
 			);
-			SetupYearlyButton<MelaveMalkaSeat>(
-				showMMSeating,
+			showMMSeating.SetupYearlyButton<MelaveMalkaSeat>(
 				mms => mms.Year,
 				year => new Events.MelaveMalka.SeatingForm(year) { MdiParent = this }.Show(),
 				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
 			);
-			SetupYearlyButton<MelaveMalkaInvitation>(
-				showCallList,
+			showCallList.SetupYearlyButton<MelaveMalkaInvitation>(
 				mmi => mmi.Year,
 				year => new Events.MelaveMalka.CallListForm(year) { MdiParent = this }.Show(),
 				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
 			);
-			SetupYearlyButton<MelaveMalkaInvitation>(
-				showReminderEmailsForm,
+			showReminderEmailsForm.SetupYearlyButton<MelaveMalkaInvitation>(
 				mmi => mmi.Year,
 				year => new Events.MelaveMalka.ReminderEmailsForm(year) { MdiParent = this }.Show(),
 				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
 			);
 			#endregion
+		}
 		#endregion
-		}
-
-		void SetupYearlyButton<TRow>(BarButtonItem button, Func<TRow, int?> yearGetter, Action<int> showForm, int? defaultYear = null) where TRow : Row {
-			defaultYear = defaultYear ?? DateTime.Now.Year;
-			var menu = new PopupMenu(ribbon.Manager);
-
-			if (button.DropDownSuperTip == null)
-				button.DropDownSuperTip = Utilities.CreateSuperTip(button.Caption, "Shows a " + button.Caption + " for a specific year");
-
-			button.ButtonStyle = BarButtonStyle.DropDown;
-			button.DropDownControl = menu;
-			button.ItemClick += delegate { showForm(defaultYear.Value); };
-			menu.BeforePopup += delegate {
-				foreach (var link in menu.ItemLinks.Cast<BarItemLink>().ToList()) //Collection will be modified
-					ribbon.Manager.Items.Remove(link.Item);
-
-				menu.ItemLinks.Clear();
-
-				Program.LoadTable<TRow>();
-				foreach (int dontUse in Program.Table<TRow>().Rows.Select(yearGetter).Where(y => y.HasValue).Distinct()) {
-					int year = dontUse;	//Force separate variable per closure
-					var item = new BarButtonItem(ribbon.Manager, year.ToString(CultureInfo.CurrentCulture));
-
-					item.ItemClick += delegate { showForm(year); };
-					if (year == defaultYear)
-						item.Appearance.Font = new Font(item.Appearance.GetFont(), FontStyle.Bold);
-
-					menu.AddItem(item);
-				}
-			};
-		}
 
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
