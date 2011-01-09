@@ -71,6 +71,11 @@ namespace ShomreiTorah.Billing.Forms {
 				year => new Events.MelaveMalka.ReminderEmailsForm(year) { MdiParent = this }.Show(),
 				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
 			);
+			importRaffle.SetupYearlyButton<RaffleTicket>(
+				t => t.Year,
+				year => new Import.Raffle.RaffleImporter(year).Show(this),
+				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
+			);
 			#endregion
 		}
 		#endregion
@@ -140,7 +145,6 @@ namespace ShomreiTorah.Billing.Forms {
 
 		private void importYK_ItemClick(object sender, ItemClickEventArgs e) { Import.YKImporter.Execute(); }
 		private void importJournal_ItemClick(object sender, ItemClickEventArgs e) { Import.Journal.JournalImporter.Execute(); }
-		private void importRaffle_ItemClick(object sender, ItemClickEventArgs e) { Import.Raffle.RaffleImporter.Execute(); }
 
 		private void viewPayments_ItemClick(object sender, ItemClickEventArgs e) { new GridForms.PaymentViewer { MdiParent = this }.Show(); }
 		private void viewPledges_ItemClick(object sender, ItemClickEventArgs e) { new GridForms.PledgeViewer { MdiParent = this }.Show(); }

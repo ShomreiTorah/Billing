@@ -113,10 +113,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Journal\PowerPointJournal\bin\Debug\PowerPointJournal.dll</HintPath>
     </Reference>
-    <Reference Include="Rafflizer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f94338bd970638c2, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Utilities\Rafflizer\bin\Debug\Rafflizer.exe</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -382,9 +378,6 @@
     <EmbeddedResource Include="Import\Journal\YearPrompt.resx">
       <DependentUpon>YearPrompt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Import\Raffle\DatePrompt.resx">
-      <DependentUpon>DatePrompt.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Import\Raffle\RaffleImporter.resx">
       <DependentUpon>RaffleImporter.cs</DependentUpon>
     </EmbeddedResource>
@@ -596,12 +589,6 @@
     </Compile>
     <Compile Include="Import\Journal\YearPrompt.Designer.cs">
       <DependentUpon>YearPrompt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Import\Raffle\DatePrompt.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Import\Raffle\DatePrompt.Designer.cs">
-      <DependentUpon>DatePrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Import\Raffle\RaffleImporter.cs">
       <SubType>Form</SubType>

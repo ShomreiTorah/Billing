@@ -1,66 +1,43 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Repository;
-using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
-using Rafflizer;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
-using ShomreiTorah.WinForms;
+using ShomreiTorah.Data.UI.Controls;
+using ShomreiTorah.Data.UI.DisplaySettings;
+using ShomreiTorah.Singularity;
+using ShomreiTorah.Singularity.DataBinding;
+using DevExpress.XtraGrid;
 
 namespace ShomreiTorah.Billing.Import.Raffle {
 	partial class RaffleImporter : XtraForm {
-		public static void Execute() {
-			string dbPath;
-			using (var dialog = new OpenFileDialog {
-				Filter = "ListMaker Database (Data.lmdb.gz)|Data.lmdb.gz|ListMaker Databases|*.lmdb.gz|All Files|*.*",
-				Title = "Open ListMaker Database"
-			}) {
-				try {
-					dialog.FileName = Config.ReadAttribute("ListMaker", "DatabasePath");
-					dialog.InitialDirectory = Path.GetFileName(dialog.InitialDirectory);
-				} catch (ConfigurationException) { }
-
-				if (dialog.ShowDialog() == DialogResult.Cancel) return;
-				dbPath = dialog.FileName;
-			}
-
-			DateTime? raffleDate = DatePrompt.Prompt();
-			if (raffleDate == null) return;
-			using (var database = new RaffleDB()) {
-				database.ReadGzip(dbPath);
-
-				new RaffleImporter(database, raffleDate.Value).ShowDisposingDialog();
-			}
-		}
-		readonly Resolver resolver = new Resolver("Raffle " + DateTime.Now.Year);
 		readonly List<ImportedTicket> tickets;
-		readonly DateTime raffleDate;
-		RaffleImporter(RaffleDB database, DateTime raffleDate) {
+
+		public RaffleImporter(int year) {
+			Program.LoadTable<RaffleTicket>();
 			InitializeComponent();
 
-			accountEdit.Items.AddRange(Names.AccountNames);
-			accountEdit.DropDownRows = Names.AccountNames.Count;
+			colAccount.ColumnEdit = EditorRepository.AccountEditor.CreateItem();
+			colCheckNumber.ColumnEdit = new RepositoryItemCheckNumberEdit();	//TODO: Fix (we don't have payments)
+			colAmount.ColumnEdit = colAmountPaid.ColumnEdit = EditorRepository.CurrencyEditor.CreateItem();
 
-			this.raffleDate = raffleDate;
-			tickets = (
-				from DataRowView person in database.AllPeople.DefaultView
-				let t = person.CreateChildView(database.Raffle_Tickets.ParentRelations[0].RelationName)
-				where t.Count > 0
-				select new ImportedTicket(resolver.Resolve(new PersonData(person.Row)), t)
-			).ToList();
+			colPerson.ApplyController(new PersonColumnController());
 
-			grid.DataSource = tickets;
-			importedTicketsView.BestFitColumns();
+			grid.DataSource = tickets = Program.Table<RaffleTicket>().Rows
+				.Where(t => t.Year == year)
+				.GroupBy(t => t.Person, (person, set) => new ImportedTicket(set.OrderBy(t => t.TicketId).ToList()))
+				.ToList();
+
+			ToggleRowsBehavior.Instance.Apply(importedTicketsView);
 		}
+
 		#region UI
 		private void grid_ViewRegistered(object sender, ViewOperationEventArgs e) {
 			var gridView = e.View as GridView;
@@ -78,52 +55,45 @@ namespace ShomreiTorah.Billing.Import.Raffle {
 				e.Cancel = it.AmountPaid == 0;
 			}
 		}
-		#endregion
+
+		private void cancel_Click(object sender, EventArgs e) { Close(); }
 		private void ok_Click(object sender, EventArgs e) {
 			foreach (var it in tickets)
-				it.DoImport(raffleDate);
+				it.DoImport();
+			Close();
 		}
-		private void cancel_Click(object sender, EventArgs e) {
-			foreach (var it in tickets)
-				it.Person.UndoAction();
-		}
-		class ImportedTicket : INotifyPropertyChanged {
-			public ImportedTicket(ResolvedPerson person, DataView ticketsView) {
-				Person = person;
+		#endregion
+
+		class ImportedTicket : INotifyPropertyChanged, IOwnedObject {
+			readonly IList<RaffleTicket> originals;
+			public ImportedTicket(IList<RaffleTicket> originals) {
+				this.originals = originals;
+				Person = originals.First().Person;
 				Account = "Operating Fund";
 				Type = "Melave Malka Raffle";
 
-				Tickets = ticketsView;
-				var tickets = ticketsView.Rows<RaffleDB.Raffle_TicketsRow>();
+				Tickets = ((IListSource)new RowListBinder(Program.Table<RaffleTicket>(), originals.Cast<Row>().ToList())).GetList();
 
-				if (ticketsView.Count > 1)
-					SubType = "tickets #" + tickets.Join(", #", t => t.TicketID.ToString(CultureInfo.InvariantCulture));
+				if (originals.Count > 1)
+					SubType = "tickets #" + originals.Join(", #", t => t.TicketId.ToString(CultureInfo.InvariantCulture));
 				else
-					SubType = "ticket #" + tickets.First().TicketID.ToString(CultureInfo.InvariantCulture);
-				Amount = RaffleDB.CalcPrice(ticketsView.Count);
+					SubType = "ticket #" + originals.First().TicketId.ToString(CultureInfo.InvariantCulture);
+				Amount = RaffleTicket.CalcPrice(originals.Count);
 
-				Comments = "Imported from Rafflizer\r\n" + tickets
-					.Select(t => (t.Notes ?? "").Trim())
-					.Distinct(StringComparer.OrdinalIgnoreCase)
-					.Join(Environment.NewLine);
+				Comments = (originals.Select(t => (t.Comments ?? "").Trim())
+									.Distinct(StringComparer.OrdinalIgnoreCase)
+									.Join(Environment.NewLine)
+						+ "\r\n(imported from Rafflizer)").Trim();
 
-				AmountPaid = RaffleDB.CalcPrice(tickets.Count(t => t.Paid));
+				AmountPaid = RaffleTicket.CalcPrice(originals.Count(t => t.Paid));
 				PaymentMethod = AmountPaid > 0 ? "Cash" : "Unpaid";
 			}
 
-			public ResolvedPerson Person { get; private set; }
+			public Person Person { get; private set; }
+			public DateTime Date { get { return originals[0].DateAdded; } }
 
 			[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Data binding")]
-			public string HisName { get { return Person.ResolvedRow.HisName; } }
-			[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Data binding")]
-			public string HerName { get { return Person.ResolvedRow.HerName; } }
-			[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Data binding")]
-			public string LastName { get { return Person.ResolvedRow.LastName; } }
-			[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Data binding")]
-			public string Address { get { return Person.ResolvedRow.Address; } }
-
-			[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Data binding")]
-			public DataView Tickets { get; private set; }
+			public IList Tickets { get; private set; }
 
 			public string Account { get; set; }
 			public string Type { get; set; }
@@ -168,10 +138,10 @@ namespace ShomreiTorah.Billing.Import.Raffle {
 			}
 
 			const string Modifier = "Raffle Import";
-			public void DoImport(DateTime raffleDate) {
+			public void DoImport() {
 				var pledge = new Pledge {
-					Person = Person.ResolvedRow,
-					Date = raffleDate,
+					Person = Person,
+					Date = Date,
 					Type = Type,
 					SubType = SubType,
 					Note = Note,
@@ -184,8 +154,8 @@ namespace ShomreiTorah.Billing.Import.Raffle {
 
 				if (AmountPaid != 0) {
 					var payment = new Payment {
-						Person = Person.ResolvedRow,
-						Date = raffleDate,
+						Person = Person,
+						Date = Date,
 						Method = PaymentMethod,
 						CheckNumber = CheckNumber,
 						Account = Account,
@@ -208,12 +178,5 @@ namespace ShomreiTorah.Billing.Import.Raffle {
 					PropertyChanged(this, e);
 			}
 		}
-
-		private void importedTicketsView_DoubleClick(object sender, EventArgs e) {
-			var hitInfo = importedTicketsView.CalcHitInfo(grid.PointToClient(MousePosition));
-			if (hitInfo.InRow && hitInfo.RowHandle >= 0)
-				importedTicketsView.SetMasterRowExpanded(hitInfo.RowHandle, !importedTicketsView.GetMasterRowExpanded(hitInfo.RowHandle));
-		}
-
 	}
 }

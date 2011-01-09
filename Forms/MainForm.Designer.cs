@@ -352,7 +352,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.importRaffle.Id = 19;
 			this.importRaffle.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("importRaffle.LargeGlyph")));
 			this.importRaffle.Name = "importRaffle";
-			this.importRaffle.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.importRaffle_ItemClick);
 			// 
 			// showShalachManos
 			// 
