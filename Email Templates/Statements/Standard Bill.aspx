@@ -9,7 +9,8 @@
 	public override StatementKind Kind { get { return StatementKind.Bill; } }
 	public override IEnumerable<string> ImageNames {
 		get {
-			yield return "Logo.gif";
+            yield return "LeviKrinsky.png";
+            yield return "Logo.gif";
 		}
 	}
 </script>
@@ -143,7 +144,8 @@
 	<p>
 		Sincerely,</p>
 	<p>
-		Levi Krinsky<br />
-		Treasurer
+        Levi Krinsky<br />
+        <img src="<%=ImagePrefix %>LeviKrinsky.png" alt="Signature" /> <br />
+        Treasurer
 	</p>
 </asp:Content>
