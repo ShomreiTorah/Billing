@@ -42,7 +42,7 @@
 	<p>
 		Your total balance due is <b>
 			<%=Info.TotalBalance.ToString("c") %></b>. Please review the summary below. If you have any questions regarding the
-		pledges or payments contained herein, please reply to this email or contact Yaacov Gitstein at (732) 516 - 5583.
+		pledges or payments contained herein, please reply to this email or contact Levi Krinsky at (973) 594 - 7972.
 	</p>
 	<p>
 		Thank you.</p>

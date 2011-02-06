@@ -46,7 +46,7 @@
     <p>
         Below is your
         <%=Info.StartDate.Year %>
-        annual contributions summary. If you have any questions, please reply to this email or call me at (732) 516 - 5583.</p>
+        annual contributions summary. If you have any questions, please reply to this email or call Levi Krinsky at (973) 594 - 7972.</p>
     <p>
         May your support of our Shul bring you ברכה and הצלחה in all of your endeavors.
     </p>
