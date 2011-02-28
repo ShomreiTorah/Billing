@@ -41,8 +41,10 @@ namespace ShomreiTorah.Billing {
 		///<param name="person">The Person row to update.</param>
 		///<param name="newData">The data to set to.  Empty fields are ignored.</param>
 		internal static void Update(this Person person, PersonData newData) {
-			if (!String.IsNullOrEmpty(newData.FullName))
+			if (!String.IsNullOrEmpty(newData.FullName)) {
 				person.FullName = newData.FullName;
+				person.Salutation = newData.FullName.Replace(" " + newData.HisName + " ", " ").Replace(" " + newData.HerName + " ", " ");
+			}
 
 			if (!String.IsNullOrEmpty(newData.HisName))
 				person.HisName = newData.HisName;
@@ -68,6 +70,7 @@ namespace ShomreiTorah.Billing {
 		///<param name="data">The data to set to.  Fields that are empty in data will be emptied in the row.</param>
 		internal static void Set(this Person person, PersonData data) {
 			person.FullName = data.FullName;
+			person.Salutation = data.FullName.Replace(" " + data.HisName + " ", " ").Replace(" " + data.HerName + " ", " ");
 
 			person.HisName = data.HisName;
 			person.HerName = data.HerName;
