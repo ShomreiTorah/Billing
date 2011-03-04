@@ -43,6 +43,7 @@ namespace ShomreiTorah.Billing.Import {
 			this.colState = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colZip = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colPhone = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colAction = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
 			this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
 			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
@@ -50,7 +51,7 @@ namespace ShomreiTorah.Billing.Import {
 			this.mdDetails = new DevExpress.XtraEditors.MemoEdit();
 			this.doImport = new DevExpress.XtraEditors.SimpleButton();
 			this.cancel = new DevExpress.XtraEditors.SimpleButton();
-			this.colAction = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
@@ -91,6 +92,7 @@ namespace ShomreiTorah.Billing.Import {
             this.colState,
             this.colZip,
             this.colPhone,
+            this.gridColumn1,
             this.colAction,
             this.colMatchState});
 			styleFormatCondition1.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
@@ -218,6 +220,17 @@ namespace ShomreiTorah.Billing.Import {
 			this.colPhone.Visible = true;
 			this.colPhone.VisibleIndex = 9;
 			// 
+			// colAction
+			// 
+			this.colAction.Caption = "Action";
+			this.colAction.FieldName = "Action";
+			this.colAction.Name = "colAction";
+			this.colAction.OptionsColumn.AllowEdit = false;
+			this.colAction.OptionsColumn.AllowFocus = false;
+			this.colAction.OptionsColumn.ReadOnly = true;
+			this.colAction.Visible = true;
+			this.colAction.VisibleIndex = 11;
+			// 
 			// panelControl1
 			// 
 			this.panelControl1.Controls.Add(this.labelControl2);
@@ -273,7 +286,7 @@ namespace ShomreiTorah.Billing.Import {
 			// doImport
 			// 
 			this.doImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.doImport.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.doImport.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.doImport.Location = new System.Drawing.Point(15, 503);
 			this.doImport.Name = "doImport";
 			this.doImport.Size = new System.Drawing.Size(135, 23);
@@ -291,20 +304,24 @@ namespace ShomreiTorah.Billing.Import {
 			this.cancel.TabIndex = 0;
 			this.cancel.Text = "Cancel";
 			// 
-			// colAction
+			// gridColumn1
 			// 
-			this.colAction.Caption = "Action";
-			this.colAction.FieldName = "Action";
-			this.colAction.Name = "colAction";
-			this.colAction.Visible = true;
-			this.colAction.VisibleIndex = 10;
+			this.gridColumn1.Caption = "Total Pledges";
+			this.gridColumn1.DisplayFormat.FormatString = "c";
+			this.gridColumn1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.gridColumn1.FieldName = "TotalPledged";
+			this.gridColumn1.Name = "gridColumn1";
+			this.gridColumn1.OptionsColumn.AllowEdit = false;
+			this.gridColumn1.OptionsColumn.ReadOnly = true;
+			this.gridColumn1.Visible = true;
+			this.gridColumn1.VisibleIndex = 10;
 			// 
 			// YKImporter
 			// 
-			this.AcceptButton = this.cancel;
+			this.AcceptButton = this.doImport;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.CancelButton = this.doImport;
+			this.CancelButton = this.cancel;
 			this.ClientSize = new System.Drawing.Size(1022, 538);
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.panelControl1);
@@ -346,5 +363,6 @@ namespace ShomreiTorah.Billing.Import {
 		private DevExpress.XtraEditors.MemoEdit ykDetails;
 		private DevExpress.XtraEditors.MemoEdit mdDetails;
 		private DevExpress.XtraGrid.Columns.GridColumn colAction;
+		private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
 	}
 }

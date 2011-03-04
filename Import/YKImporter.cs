@@ -35,7 +35,7 @@ namespace ShomreiTorah.Billing.Import {
 		}
 		static readonly Dictionary<MatchState, ImportAction> DefaultActions = new Dictionary<MatchState, ImportAction>{
 			{ MatchState.Identical, ImportAction.Ignore	},
-			{ MatchState.Added,		ImportAction.Add		},
+			{ MatchState.Added,		ImportAction.Add	},
 			{ MatchState.Deleted,	ImportAction.Delete	},
 			{ MatchState.Updated,	ImportAction.Update	},
 			{ MatchState.NonYK,		ImportAction.Ignore	},
@@ -71,6 +71,7 @@ namespace ShomreiTorah.Billing.Import {
 				processedRows.Columns.Add("State", typeof(string));
 				processedRows.Columns.Add("Zip", typeof(string));
 				processedRows.Columns.Add("Phone", typeof(string));
+				processedRows.Columns.Add("TotalPledged", typeof(decimal));
 				processedRows.Columns.Add("Action", typeof(ImportAction));
 				processedRows.Columns.Add("MatchState", typeof(MatchState));
 				#endregion
@@ -112,7 +113,7 @@ namespace ShomreiTorah.Billing.Import {
 								var candidates = masterDirectory.Rows
 									.Where(md => md.LastName == ykPerson.LastName
 											  && md.YKID != null
-											  && ykData.Select("YKID=" + md.YKID).Length == 0
+											  && ykData.Select("IDNUM=" + md.YKID).Length == 0
 									).ToArray();
 								if (candidates.Length == 1)
 									mdRow = candidates[0];
@@ -141,6 +142,7 @@ namespace ShomreiTorah.Billing.Import {
 								(object)personId ?? DBNull.Value, ykid,
 								ykPerson.FullName, ykPerson.HisName, ykPerson.HerName, ykPerson.LastName,
 								ykPerson.Address, ykPerson.City, ykPerson.State, ykPerson.Zip, ykPerson.Phone,
+								mdRow == null ? null : mdRow["TotalPledged"],
 								DefaultActions[state], state
 							);
 						}
@@ -155,13 +157,18 @@ namespace ShomreiTorah.Billing.Import {
 							if (processedRows.Select("PersonId = '" + mdRow.Id + "'").Length > 0)
 								continue;		//Skip people we've already added.
 
-							var state = mdRow.YKID.HasValue ? MatchState.NonYK : MatchState.Deleted;
+							var state = mdRow.YKID.HasValue ? MatchState.Deleted : MatchState.NonYK;
+							var action = DefaultActions[state];
+							if (action == ImportAction.Delete && mdRow.Pledges.Any() || mdRow.Payments.Any() || mdRow.EmailAddresses.Any())
+								action = ImportAction.Ignore;
+
 							//TODO: Try to match custom people
 							processedRows.Rows.Add(
 								mdRow.Id, null,	//YKID here is new YKID; thereisn't any
 								mdRow.FullName, mdRow.HisName, mdRow.HerName, mdRow.LastName,
 								mdRow.Address, mdRow.City, mdRow.State, mdRow.Zip, mdRow.Phone,
-								DefaultActions[state], state
+								mdRow["TotalPledged"],
+								action, state
 							);
 						}
 
