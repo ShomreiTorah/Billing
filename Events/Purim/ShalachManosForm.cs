@@ -9,6 +9,7 @@ using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
 using System.Globalization;
+using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Events.Purim {
 	partial class ShalachManosForm : Forms.GridFormBase {
@@ -44,6 +45,12 @@ namespace ShomreiTorah.Billing.Events.Purim {
 		private void personSelector_EditValueChanged(object sender, EventArgs e) {
 			addPanel.Visible = personSelector.SelectedPerson != null;
 			if (addPanel.Visible) {
+				if (year != DateTime.Now.Year
+				 && !Dialog.Warn("You're trying to add someone to the " + year + " Shalach Manos list.\nAre you sure you want to do that?")) {
+					personSelector.SelectedPerson = null;
+					return;
+				}
+
 				amount.Value = 72;
 				amount.Focus();
 				paymentMethod.SelectedIndex = -1;
@@ -97,8 +104,12 @@ namespace ShomreiTorah.Billing.Events.Purim {
 				Amount = amount.Value,
 				Comments = actualComments
 			});
+
+			string messagePrefix = personSelector.SelectedPerson.FullName + " have been added to the Shalach Manos list with a " + amount.Value.ToString("c0", CultureInfo.CurrentCulture);
 			switch (paymentMethod.Text) {
-				case "Unpaid": break;
+				case "Unpaid":
+					InfoMessage.Show(messagePrefix + " unpaid pledge.");
+					break;
 				case "Cash":
 					Program.Table<Payment>().Rows.Add(new Payment {
 						Person = personSelector.SelectedPerson,
@@ -108,6 +119,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 						Amount = amount.Value,
 						Comments = actualComments
 					});
+					InfoMessage.Show(messagePrefix + " cash payment.");
 					break;
 				case "Check":
 					Program.Table<Payment>().Rows.Add(new Payment {
@@ -119,6 +131,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 						Amount = amount.Value,
 						Comments = actualComments
 					});
+					InfoMessage.Show(messagePrefix + " check.");
 					break;
 
 			}
