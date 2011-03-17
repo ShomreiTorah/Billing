@@ -159,7 +159,13 @@ namespace ShomreiTorah.Billing.Import {
 
 							var state = mdRow.YKID.HasValue ? MatchState.Deleted : MatchState.NonYK;
 							var action = DefaultActions[state];
-							if (action == ImportAction.Delete && mdRow.Pledges.Any() || mdRow.Payments.Any() || mdRow.EmailAddresses.Any())
+
+							//Don't delete people who have any kind of child records
+							if (action == ImportAction.Delete
+							 && Person.Schema.ChildRelations.Any(
+									cr => Program.Current.DataContext.Tables[cr.ChildSchema] != null	//Skip tables that haven't been loaded
+									   && mdRow.ChildRows(cr).Any()
+								))
 								action = ImportAction.Ignore;
 
 							//TODO: Try to match custom people
