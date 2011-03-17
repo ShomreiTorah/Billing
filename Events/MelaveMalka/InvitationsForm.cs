@@ -70,6 +70,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		}
 		private void personSelector_EditValueChanged(object sender, EventArgs e) {
 			if (personSelector.SelectedPerson == null) return;
+			if (year != MelaveMalkaInfo.CurrentYear
+			 && !Dialog.Warn("You're trying to invite someone to the " + year + " Melave Malka.\nAre you sure you want to do that?")) {
+				personSelector.SelectedPerson = null;
+				return;
+			}
+
 			if (String.IsNullOrWhiteSpace(source.Text)) {
 				Dialog.ShowError("Please select a source");
 				personSelector.SelectedPerson = null;

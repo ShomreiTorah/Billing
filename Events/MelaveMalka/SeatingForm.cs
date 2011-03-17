@@ -73,6 +73,11 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		}
 		private void personSelector_EditValueChanged(object sender, EventArgs e) {
 			if (personSelector.EditValue == null) return;
+			if (year != MelaveMalkaInfo.CurrentYear
+			 && !Dialog.Warn("You're trying to add a seating reservation for the " + year + " Melave Malka.\nAre you sure you want to do that?")) {
+				personSelector.SelectedPerson = null;
+				return;
+			}
 
 			var person = personSelector.SelectedPerson;
 			var existingRow = dataSource.Rows.FindIndex(r => r.Person == person);

@@ -90,6 +90,11 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		#region AddEntry Panel
 		private void personSelector_EditValueChanged(object sender, EventArgs e) {
 			if (personSelector.SelectedPerson == null) return;
+			if (year != DateTime.Now.Year
+			 && !Dialog.Warn("You're trying to add a " + year + " seating reservation.\nAre you sure you want to do that?")) {
+				personSelector.SelectedPerson = null;
+				return;
+			}
 			addNewPanel.Show();
 			addNewEdit.BeginAddNew(personSelector.SelectedPerson);
 		}

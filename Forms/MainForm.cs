@@ -54,27 +54,27 @@ namespace ShomreiTorah.Billing.Forms {
 			showInvites.SetupYearlyButton<MelaveMalkaInvitation>(
 				mmi => mmi.Year,
 				year => new Events.MelaveMalka.InvitationsForm(year) { MdiParent = this }.Show(),
-				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
+				defaultYear: MelaveMalkaInfo.CurrentYear
 			);
 			showMMSeating.SetupYearlyButton<MelaveMalkaSeat>(
 				mms => mms.Year,
 				year => new Events.MelaveMalka.SeatingForm(year) { MdiParent = this }.Show(),
-				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
+				defaultYear: MelaveMalkaInfo.CurrentYear
 			);
 			showCallList.SetupYearlyButton<MelaveMalkaInvitation>(
 				mmi => mmi.Year,
 				year => new Events.MelaveMalka.CallListForm(year) { MdiParent = this }.Show(),
-				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
+				defaultYear: MelaveMalkaInfo.CurrentYear
 			);
 			showReminderEmailsForm.SetupYearlyButton<MelaveMalkaInvitation>(
 				mmi => mmi.Year,
 				year => new Events.MelaveMalka.ReminderEmailsForm(year) { MdiParent = this }.Show(),
-				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
+				defaultYear: MelaveMalkaInfo.CurrentYear
 			);
 			importRaffle.SetupYearlyButton<RaffleTicket>(
 				t => t.Year,
 				year => new Import.Raffle.RaffleImporter(year).Show(this),
-				defaultYear: DateTime.Now.AddMonths(5).Year	//We start using this in December of the previous year
+				defaultYear: MelaveMalkaInfo.CurrentYear
 			);
 			#endregion
 		}
