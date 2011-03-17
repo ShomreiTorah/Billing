@@ -672,7 +672,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.xtraTabPage2.Controls.Add(this.statementsGrid);
 			this.xtraTabPage2.Name = "xtraTabPage2";
 			this.xtraTabPage2.Size = new System.Drawing.Size(655, 504);
-			this.xtraTabPage2.Text = "Statements";
+			this.xtraTabPage2.Text = "Statements Received";
 			// 
 			// statementsGrid
 			// 
