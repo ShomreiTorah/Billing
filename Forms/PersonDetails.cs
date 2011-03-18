@@ -3,6 +3,8 @@ using System.Globalization;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using ShomreiTorah.Data;
+using ShomreiTorah.Singularity;
+using DevExpress.XtraGrid.Views.Grid;
 
 namespace ShomreiTorah.Billing.Forms {
 	partial class PersonDetails : XtraForm {
@@ -14,6 +16,7 @@ namespace ShomreiTorah.Billing.Forms {
 
 			exportEmail.Caption = exportWord.Caption = (person.FullName ?? person.VeryFullName).Replace("&", "&&");
 
+			relativesGrid.DataMember = null;
 			SetPerson();
 		}
 
@@ -22,6 +25,8 @@ namespace ShomreiTorah.Billing.Forms {
 
 			personBindingSource.DataSource = Program.Table<Person>();
 			personBindingSource.Position = Program.Table<Person>().Rows.IndexOf(person);
+
+			relativesGrid.DataSource = Program.Table<RelativeLink>().Filter(r => r.Member == person || r.Relative == person);
 
 			UpdateDetails();
 		}
@@ -37,8 +42,23 @@ namespace ShomreiTorah.Billing.Forms {
 		private void exportEmail_ItemClick(object sender, ItemClickEventArgs e) { Statements.Email.EmailExporter.Execute(this, person); }
 		private void exportWord_ItemClick(object sender, ItemClickEventArgs e) { Statements.Word.WordExporter.Execute(this, person); }
 
-		private void addRLAsMember_ItemClick(object sender, ItemClickEventArgs e) { RelationCreator.Execute(member: person); }
-		private void addRLAsRelative_ItemClick(object sender, ItemClickEventArgs e) { RelationCreator.Execute(relative: person); }
+		#region Relatives
+		private void addRLAsMember_ItemClick(object sender, ItemClickEventArgs e) { RelationCreator.Execute(member: person); relativesView.BestFitColumns();}
+		private void addRLAsRelative_ItemClick(object sender, ItemClickEventArgs e) { RelationCreator.Execute(relative: person); relativesView.BestFitColumns(); }
+
+		private void relativesView_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e) {
+			if (e.Column == colRelative || e.Column == colMember) {
+				if (e.CellValue == person)
+					e.RepositoryItem = labelLikeEdit;
+			}
+		}
+		private void relativesView_ShowingEditor(object sender, System.ComponentModel.CancelEventArgs e) {
+			if (relativesView.FocusedColumn == colRelative || relativesView.FocusedColumn == colMember) {
+				if (relativesView.GetFocusedValue() == person)
+					e.Cancel = true;
+			}
+		}
+		#endregion
 
 		private void showPersonEdit_Click(object sender, EventArgs e) { ShowPersonEdit(true); }
 		private void closePersonEdit_Click(object sender, EventArgs e) { ShowPersonEdit(false); }
