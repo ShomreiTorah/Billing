@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Windows.Forms;
 using DevExpress.Data.Filtering;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
@@ -8,8 +10,6 @@ using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
-using System.Diagnostics;
-using System.Windows.Forms;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	partial class CallListForm : XtraForm {
@@ -24,10 +24,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			Text = "Melave Malka " + year + " Call List";
 
 			grid.DataMember = null;
-			listSearch.Properties.DataSource = grid.DataSource = dataSource = new FilteredTable<MelaveMalkaInvitation>(
-					Program.Table<MelaveMalkaInvitation>(),
-					mmi => mmi.Year == year
-				);
+			listSearch.Properties.DataSource = grid.DataSource = dataSource 
+				= Program.Table<MelaveMalkaInvitation>().Filter(mmi => mmi.Year == year);
+
 			EditorRepository.PersonOwnedLookup.Apply(listSearch.Properties);
 
 			gridView.ActiveFilterCriteria = new OperandProperty("AdAmount") == 0;

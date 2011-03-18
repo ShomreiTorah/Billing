@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Windows.Forms;
-using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -34,10 +33,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			EditorRepository.PersonLookup.Apply(addCaller.Properties);
 
 			grid.DataMember = null;
-			grid.DataSource = dataSource = new FilteredTable<Caller>(
-				Program.Table<Caller>(),
-				c => c.Year == year
-			);
+			grid.DataSource = dataSource = Program.Table<Caller>().Filter(c => c.Year == year);
 
 			ToggleRowsBehavior.Instance.Apply(gridView);
 			UpdateButtons();

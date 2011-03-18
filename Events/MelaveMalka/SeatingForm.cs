@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using DevExpress.XtraGrid.Views.Base;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
-using ShomreiTorah.Data.UI;
 using ShomreiTorah.Data.UI.Controls;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
@@ -27,10 +26,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.year = year;
 			Text = "Melave Malka " + year + " Seating Reservations";
 
-			dataSource = new FilteredTable<MelaveMalkaSeat>(
-				Program.Table<MelaveMalkaSeat>(),
-				mms => mms.Year == year
-			);
+			dataSource = Program.Table<MelaveMalkaSeat>().Filter(mms => mms.Year == year);
 			grid.DataMember = null;
 			grid.DataSource = searchLookup.Properties.DataSource = dataSource;
 

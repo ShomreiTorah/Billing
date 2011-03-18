@@ -6,7 +6,6 @@ using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using Microsoft.Win32;
 using ShomreiTorah.Data;
-using ShomreiTorah.Data.UI;
 using ShomreiTorah.Data.UI.Controls;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
@@ -32,10 +31,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.year = year;
 			Text = "Melave Malka " + year + " Invitations";
 
-			dataSource = new FilteredTable<MelaveMalkaInvitation>(
-				Program.Table<MelaveMalkaInvitation>(),
-				mmi => mmi.Year == year
-			);
+			dataSource = Program.Table<MelaveMalkaInvitation>().Filter(mmi => mmi.Year == year);
 			grid.DataMember = null;
 			grid.DataSource = listSearch.Properties.DataSource = dataSource;
 

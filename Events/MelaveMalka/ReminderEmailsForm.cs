@@ -46,10 +46,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.year = year;
 			Text = "Melave Malka " + year + " Reminder Emails";
 
-			listSearch.Properties.DataSource = bindingSource.DataSource = dataSource = new FilteredTable<MelaveMalkaInvitation>(
-				Program.Table<MelaveMalkaInvitation>(),
-				mmi => mmi.Year == year && mmi.Person.EmailAddresses.Any()
-			);
+			listSearch.Properties.DataSource = bindingSource.DataSource = dataSource
+				= Program.Table<MelaveMalkaInvitation>().Filter(mmi => mmi.Year == year && mmi.Person.EmailAddresses.Any());
 			EditorRepository.PersonOwnedLookup.Apply(listSearch.Properties);
 
 			gridView.ActiveFilterCriteria = new OperandProperty("AdAmount") == 0;

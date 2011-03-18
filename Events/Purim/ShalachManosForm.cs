@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
@@ -8,7 +9,6 @@ using ShomreiTorah.Data.UI.Controls;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
-using System.Globalization;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Events.Purim {
@@ -25,7 +25,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			addPanel.Hide();
 			grid.DataMember = null;
 
-			pledges = new FilteredTable<Pledge>(Program.Table<Pledge>(), p => p.Date.Year == year && p.Type == PledgeType);
+			pledges = Program.Table<Pledge>().Filter(p => p.Date.Year == year && p.Type == PledgeType);
 			searchLookup.Properties.DataSource = grid.DataSource = pledges;
 			EditorRepository.PersonOwnedLookup.Apply(searchLookup.Properties);
 

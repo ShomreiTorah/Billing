@@ -34,10 +34,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.year = year;
 
 			grid.DataMember = null;
-			grid.DataSource = seats = new FilteredTable<SeatingReservation>(
-				Program.Table<SeatingReservation>(),
-				sr => sr.Pledge.Date.Year == year
-			);
+			grid.DataSource = seats = Program.Table<SeatingReservation>().Filter(sr => sr.Pledge.Date.Year == year);
 
 			Text = year.ToString(CultureInfo.CurrentCulture) + " Seating Reservations";
 			colChartStatus.Visible = colChartStatus.OptionsColumn.ShowInCustomizationForm = false;
