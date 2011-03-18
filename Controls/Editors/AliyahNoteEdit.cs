@@ -15,16 +15,11 @@ using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraEditors.Controls;
 using System.Text.RegularExpressions;
 using DevExpress.XtraEditors.Popup;
+using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Controls.Editors {
 	partial class AliyahNotePopup : XtraUserControl {
 		const string EmptyRelative = "(None)";
-		static readonly string[] RelativeNames = new[]{
-			"Brother", "Brother-in-law",
-			"Father", "Father-in-law",
-			"Son", "Son-in-law",
-			"Guest"
-		};
 		readonly AliyahNoteEdit edit;
 		public AliyahNotePopup(AliyahNoteEdit edit) {
 			InitializeComponent();
@@ -49,9 +44,9 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			relative.BeginUpdate();
 			relative.Items.Clear();
 			relative.Items.Add(EmptyRelative);
-			relative.Items.AddRange(RelativeNames);
+			relative.Items.AddRange(Names.Relatives.ToArray());
 
-			if (!String.IsNullOrEmpty(name) && !RelativeNames.Contains(name, StringComparer.CurrentCultureIgnoreCase))
+			if (!String.IsNullOrEmpty(name) && !Names.Relatives.Contains(name, StringComparer.CurrentCultureIgnoreCase))
 				relative.Items.Add(name);
 			if (String.IsNullOrEmpty(name))
 				relative.SelectedValue = EmptyRelative;
