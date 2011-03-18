@@ -44,9 +44,9 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			relative.BeginUpdate();
 			relative.Items.Clear();
 			relative.Items.Add(EmptyRelative);
-			relative.Items.AddRange(Names.Relatives.ToArray());
+			relative.Items.AddRange(Names.RelationNames.ToArray());
 
-			if (!String.IsNullOrEmpty(name) && !Names.Relatives.Contains(name, StringComparer.CurrentCultureIgnoreCase))
+			if (!String.IsNullOrEmpty(name) && !Names.RelationNames.Contains(name, StringComparer.CurrentCultureIgnoreCase))
 				relative.Items.Add(name);
 			if (String.IsNullOrEmpty(name))
 				relative.SelectedValue = EmptyRelative;
