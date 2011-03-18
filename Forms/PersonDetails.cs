@@ -37,6 +37,9 @@ namespace ShomreiTorah.Billing.Forms {
 		private void exportEmail_ItemClick(object sender, ItemClickEventArgs e) { Statements.Email.EmailExporter.Execute(this, person); }
 		private void exportWord_ItemClick(object sender, ItemClickEventArgs e) { Statements.Word.WordExporter.Execute(this, person); }
 
+		private void addRLAsMember_ItemClick(object sender, ItemClickEventArgs e) { RelationCreator.Execute(member: person); }
+		private void addRLAsRelative_ItemClick(object sender, ItemClickEventArgs e) { RelationCreator.Execute(relative: person); }
+
 		private void showPersonEdit_Click(object sender, EventArgs e) { ShowPersonEdit(true); }
 		private void closePersonEdit_Click(object sender, EventArgs e) { ShowPersonEdit(false); }
 

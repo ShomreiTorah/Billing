@@ -55,6 +55,7 @@ namespace ShomreiTorah.Billing {
 			context.Tables.AddTable(LoggedStatement.CreateTable());
 			context.Tables.AddTable(Person.CreateTable());
 			context.Tables.AddTable(Deposit.CreateTable());
+			context.Tables.AddTable(RelativeLink.CreateTable());
 
 			if (IsDesignTime) {	//These tables are only loaded when needed.  However, I still want them in the designer.
 				context.Tables.AddTable(SeatingReservation.CreateTable());

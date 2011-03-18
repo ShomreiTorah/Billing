@@ -155,6 +155,8 @@ namespace ShomreiTorah.Billing.Forms {
 		private void wordGroup_CaptionButtonClick(object sender, RibbonPageGroupEventArgs e) { new GridForms.StatementLogViewer("Word") { MdiParent = this }.Show(); }
 		private void emailGroup_CaptionButtonClick(object sender, RibbonPageGroupEventArgs e) { new GridForms.StatementLogViewer("Email") { MdiParent = this }.Show(); }
 
+		private void addRelativeLink_ItemClick(object sender, ItemClickEventArgs e) { RelationCreator.Execute(); }
+		
 		private void addPayment_ItemClick(object sender, ItemClickEventArgs e) {
 			addPaymentPanel.Show();
 			paymentEdit.Focus();
