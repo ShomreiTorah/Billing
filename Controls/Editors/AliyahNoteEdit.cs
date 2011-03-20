@@ -19,70 +19,64 @@ using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Controls.Editors {
 	partial class AliyahNotePopup : XtraUserControl {
-		const string EmptyRelative = "(None)";
 		readonly AliyahNoteEdit edit;
 		public AliyahNotePopup(AliyahNoteEdit edit) {
 			InitializeComponent();
 			UpdateUI();
 			this.edit = edit;
-		}
-
-		static readonly Regex MatanahMatcher = new Regex(@"(^|\s|[;,|/\+-])+(מתנה|Matanah?)(\s|[;,|/\+-]|$)+", RegexOptions.IgnoreCase);
-		public string NoteText {
-			get { return fullText.Text; }
-			set { fullText.Text = value.Trim(); }
-		}
-
-		private void fullText_EditValueChanged(object sender, EventArgs e) { UpdateUI(); }
-		bool isUpdatingUI;
-		void UpdateUI() {
-			isUpdatingUI = true;
-			isMatanah.Checked = MatanahMatcher.IsMatch(NoteText);
-			var name = isMatanah.Checked ? MatanahMatcher.Replace(NoteText, "") : NoteText;
-			name = name.Trim();
 
 			relative.BeginUpdate();
 			relative.Items.Clear();
-			relative.Items.Add(EmptyRelative);
+			relative.Items.Add(AliyahNote.EmptyRelative);
 			relative.Items.AddRange(Names.RelationNames.ToArray());
-
-			if (!String.IsNullOrEmpty(name) && !Names.RelationNames.Contains(name, StringComparer.CurrentCultureIgnoreCase))
-				relative.Items.Add(name);
-			if (String.IsNullOrEmpty(name))
-				relative.SelectedValue = EmptyRelative;
-			else
-				relative.SelectedValue = name;
-
 			relative.EndUpdate();
+		}
+
+		readonly AliyahNote parsed = new AliyahNote();
+		public string NoteText {
+			get { return fullText.Text; }
+			set {
+				parsed.Text = value;
+				fullText.Text = parsed.Text;	//After normalization
+			}
+		}
+
+		private void fullText_EditValueChanged(object sender, EventArgs e) {
+			if (isUpdatingUI) return;
+			parsed.Text = fullText.Text;
+			UpdateUI();
+		}
+		private void fullText_Leave(object sender, EventArgs e) {
+			fullText.Text = parsed.Text;	//Normalize the text after the user edits it.
+		}
+
+		bool isUpdatingUI;
+		void UpdateUI() {
+			isUpdatingUI = true;
+			isMatanah.Checked = parsed.Isמתנה;
+
+			if (String.IsNullOrEmpty(parsed.Relative))
+				relative.SelectedValue = AliyahNote.EmptyRelative;
+			else
+				relative.SelectedValue = parsed.Relative;
+
 			isUpdatingUI = false;
 		}
 
-		private void relative_SelectedIndexChanged(object sender, EventArgs e) { GenerateText(); }
-		private void isMatanah_CheckedChanged(object sender, EventArgs e) { GenerateText(); }
-		private void relative_Click(object sender, EventArgs e) { GenerateText(); }
-
-		void GenerateText() {
+		private void isMatanah_CheckedChanged(object sender, EventArgs e) {
 			if (isUpdatingUI) return;
-
-			string text = "";
-
-			if (relative.SelectedValue != null && relative.SelectedValue.ToString() != EmptyRelative)
-				text = relative.SelectedValue.ToString();
-
-			if (isMatanah.Checked) {
-				if (text.Length > 0)
-					text += ", מתנה";
-				else
-					text = "מתנה";
-			}
-			
-			fullText.Text = text;
+			parsed.Isמתנה = isMatanah.Checked;
+			fullText.Text = parsed.Text;
+		}
+		private void relative_SelectedIndexChanged(object sender, EventArgs e) {
+			if (isUpdatingUI) return;
+			parsed.Relative = relative.Text;
+			fullText.Text = parsed.Text;
 		}
 
 		private void relative_KeyUp(object sender, KeyEventArgs e) {
 			if (e.KeyCode == Keys.Enter) edit.ClosePopup();
 		}
-
 		private void relative_DoubleClick(object sender, EventArgs e) { edit.ClosePopup(); }
 	}
 	[UserRepositoryItem("Register")]
@@ -104,7 +98,6 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		public override void CreateDefaultButton() {
 			Buttons.Add(new EditorButton(ButtonPredefines.Ellipsis) { IsDefaultButton = true });
 		}
-
 
 		public override string EditorTypeName { get { return "AliyahNoteEdit"; } }
 	}

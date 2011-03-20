@@ -36,19 +36,20 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			// 
 			// fullText
 			// 
-			this.fullText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.fullText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.fullText.Location = new System.Drawing.Point(4, 4);
 			this.fullText.Name = "fullText";
 			this.fullText.Size = new System.Drawing.Size(223, 87);
 			this.fullText.TabIndex = 0;
 			this.fullText.EditValueChanged += new System.EventHandler(this.fullText_EditValueChanged);
+			this.fullText.Leave += new System.EventHandler(this.fullText_Leave);
 			// 
 			// groupControl1
 			// 
-			this.groupControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupControl1.Controls.Add(this.relative);
 			this.groupControl1.Controls.Add(this.isMatanah);
 			this.groupControl1.Location = new System.Drawing.Point(4, 98);
@@ -59,9 +60,9 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			// 
 			// relative
 			// 
-			this.relative.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.relative.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.relative.HighlightedItemStyle = DevExpress.XtraEditors.HighlightStyle.Skinned;
 			this.relative.HotTrackItems = true;
 			this.relative.HotTrackSelectMode = DevExpress.XtraEditors.HotTrackSelectMode.SelectItemOnClick;
@@ -70,19 +71,19 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			this.relative.Name = "relative";
 			this.relative.Size = new System.Drawing.Size(213, 147);
 			this.relative.TabIndex = 1;
-			this.relative.DoubleClick += new System.EventHandler(this.relative_DoubleClick);
-			this.relative.Click += new System.EventHandler(this.relative_Click);
-			this.relative.KeyUp += new System.Windows.Forms.KeyEventHandler(this.relative_KeyUp);
 			this.relative.SelectedIndexChanged += new System.EventHandler(this.relative_SelectedIndexChanged);
+			this.relative.Click += new System.EventHandler(this.relative_SelectedIndexChanged);
+			this.relative.DoubleClick += new System.EventHandler(this.relative_DoubleClick);
+			this.relative.KeyUp += new System.Windows.Forms.KeyEventHandler(this.relative_KeyUp);
 			// 
 			// isMatanah
 			// 
-			this.isMatanah.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.isMatanah.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.isMatanah.Location = new System.Drawing.Point(5, 26);
 			this.isMatanah.Name = "isMatanah";
 			this.isMatanah.Properties.Caption = "מתנה";
-			this.isMatanah.Size = new System.Drawing.Size(213, 18);
+			this.isMatanah.Size = new System.Drawing.Size(213, 19);
 			this.isMatanah.TabIndex = 0;
 			this.isMatanah.CheckedChanged += new System.EventHandler(this.isMatanah_CheckedChanged);
 			this.isMatanah.KeyUp += new System.Windows.Forms.KeyEventHandler(this.relative_KeyUp);
