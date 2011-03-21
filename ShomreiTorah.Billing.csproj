@@ -270,6 +270,12 @@
     <Compile Include="Forms\RelationCreator.Designer.cs">
       <DependentUpon>RelationCreator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PledgeMigrator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PledgeMigrator.Designer.cs">
+      <DependentUpon>PledgeMigrator.cs</DependentUpon>
+    </Compile>
     <Compile Include="PersonData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -335,6 +341,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RelationCreator.resx">
       <DependentUpon>RelationCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PledgeMigrator.resx">
+      <DependentUpon>PledgeMigrator.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Statements\Email\EmailExporter.resx">
       <DependentUpon>EmailExporter.cs</DependentUpon>

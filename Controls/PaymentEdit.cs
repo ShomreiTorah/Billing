@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -54,6 +55,7 @@ namespace ShomreiTorah.Billing.Controls {
 			person.Focus();
 		}
 
+		#region Creation
 		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error message")]
 		private void commit_Click(object sender, EventArgs e) {
 			if (!commit.Visible) {
@@ -104,6 +106,27 @@ namespace ShomreiTorah.Billing.Controls {
 				return;
 			}
 
+			var memberPledges = person.SelectedPerson.RelatedMembers
+				.SelectMany(r => r.Member.Pledges.Where(p => new AliyahNote(p.Note).Relative == r.RelationType))
+				.ToList();
+			if (memberPledges.Any()) {
+				using (var dialog = new Forms.PledgeMigrator(person.SelectedPerson, memberPledges)) {
+					if (dialog.ShowDialog() != DialogResult.OK)
+						return;
+					foreach (var pledge in dialog.SelectedPledges) {	//This query is based purely on the dialog and isn't modified by the loop.
+						//Move the relative from the Note to the Comments
+						var note = new AliyahNote(pledge.Note);
+
+						pledge.Comments = ("Moved from " + pledge.Person.FullName + " to his " + note.Relative.ToLower() + "\r\n" + pledge.Comments).Trim();
+
+						note.Relative = null;
+						pledge.Note = note.Text;	//Without the relative
+
+						pledge.Person = person.SelectedPerson;
+					}
+				}
+			}
+
 			decimal autoPledgeAmount = 0;
 			decimal currentBalance = person.SelectedPerson.GetBalance(account.Text);
 			if (payment.Amount > currentBalance) {
@@ -150,6 +173,7 @@ Payment:	{4:c} {5} for {6} on {7:d}
 				AddNew();
 			}
 		}
+		#endregion
 
 		private void method_EditValueChanged(object sender, EventArgs e) {
 			//EditValue can be DBNull
