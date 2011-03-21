@@ -41,8 +41,8 @@ namespace ShomreiTorah.Billing {
 			var context = new DataContext();
 
 			//These columns cannot be added in the strongly-typed row
-			//because the Person table must be usable without pledges
-			//or payments.  (eg, ListMaker)
+			//because the People table must be usable without pledges
+			//or payments.  (eg, ListMaker or Rafflizer)
 			if (!Person.Schema.Columns.Contains("TotalPaid")) {	//This can be called multiple times in the designer AppDomain
 				Person.Schema.Columns.AddCalculatedColumn<Person, decimal>("TotalPaid", person => person.Payments.Sum(p => p.Amount));
 				Person.Schema.Columns.AddCalculatedColumn<Person, decimal>("TotalPledged", person => person.Pledges.Sum(p => p.Amount));
@@ -57,19 +57,23 @@ namespace ShomreiTorah.Billing {
 			context.Tables.AddTable(Deposit.CreateTable());
 			context.Tables.AddTable(RelativeLink.CreateTable());
 
-			if (IsDesignTime) {	//These tables are only loaded when needed.  However, I still want them in the designer.
-				context.Tables.AddTable(SeatingReservation.CreateTable());
-				context.Tables.AddTable(MelaveMalkaInfo.CreateTable());
-				context.Tables.AddTable(MelaveMalkaInvitation.CreateTable());
-				context.Tables.AddTable(MelaveMalkaSeat.CreateTable());
-				context.Tables.AddTable(Caller.CreateTable());
-				context.Tables.AddTable(AdReminderEmail.CreateTable());
-				context.Tables.AddTable(RaffleTicket.CreateTable());
-			}
+			if (IsDesignTime)
+				AddDesignTimeTables(context);
 
 			var syncContext = new DataSyncContext(context, new SqlServerSqlProvider(DB.Default));
 			syncContext.Tables.AddPrimaryMappings();
 			return syncContext;
+		}
+		///<summary>Creates tables that should only be loaded at design-time.</summary>
+		///<remarks>At runtime, these tables are loaded when needed.  However, I still want them in the designer.</remarks>
+		static void AddDesignTimeTables(DataContext context) {
+			context.Tables.AddTable(SeatingReservation.CreateTable());
+			context.Tables.AddTable(MelaveMalkaInfo.CreateTable());
+			context.Tables.AddTable(MelaveMalkaInvitation.CreateTable());
+			context.Tables.AddTable(MelaveMalkaSeat.CreateTable());
+			context.Tables.AddTable(Caller.CreateTable());
+			context.Tables.AddTable(AdReminderEmail.CreateTable());
+			context.Tables.AddTable(RaffleTicket.CreateTable());
 		}
 		protected override void RegisterSettings() {
 			SkinManager.EnableFormSkinsIfNotVista();

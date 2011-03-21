@@ -27,7 +27,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
 			DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
 			DevExpress.XtraGrid.GridLevelNode gridLevelNode3 = new DevExpress.XtraGrid.GridLevelNode();
-			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.paymentsView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colMethod = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -819,7 +818,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
 		private Data.UI.Controls.RepositoryItemCheckNumberEdit checkNumberEdit;
 		private ShomreiTorah.Billing.Controls.Editors.RepositoryItemAliyahNoteEdit repositoryItemAliyahNoteEdit1;
-		private DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
 		private Data.UI.Grid.SmartGridColumn colSalutation;
 	}
 }

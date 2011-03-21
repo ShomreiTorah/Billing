@@ -48,6 +48,41 @@ namespace ShomreiTorah.Billing.Import {
 			{ MatchState.NonYK,		"People not in YK"	},
 		};
 
+		private static DataTable CreateProcessedTable() {
+			DataTable table = new DataTable { Locale = CultureInfo.InvariantCulture };
+			table.Columns.Add("PersonId", typeof(Guid));
+			table.Columns.Add("YKID", typeof(int));
+			table.Columns.Add("FullName", typeof(string));
+			table.Columns.Add("HisName", typeof(string));
+			table.Columns.Add("HerName", typeof(string));
+			table.Columns.Add("LastName", typeof(string));
+			table.Columns.Add("Address", typeof(string));
+			table.Columns.Add("City", typeof(string));
+			table.Columns.Add("State", typeof(string));
+			table.Columns.Add("Zip", typeof(string));
+			table.Columns.Add("Phone", typeof(string));
+			table.Columns.Add("TotalPledged", typeof(decimal));
+			table.Columns.Add("Action", typeof(ImportAction));
+			table.Columns.Add("MatchState", typeof(MatchState));
+			return table;
+		}
+		static PersonData ImportRow(DataRow ykRow) {
+			var ykPerson = new PersonData {
+				FullName = ykRow.Field<string>("Address1MM").Cleanup(),
+				HisName = ykRow.Field<string>("HIS_FIRST").Cleanup(),
+				HerName = ykRow.Field<string>("HER_FIRST").Cleanup(),
+				LastName = ykRow.Field<string>("Company").Cleanup(),
+				Address = ykRow.Field<string>("Address").Cleanup(),
+				City = ykRow.Field<string>("City").Cleanup(),
+				State = ykRow.Field<string>("State").Cleanup(),
+				Zip = ykRow.Field<string>("Zip").Cleanup(),
+				Phone = ykRow.Field<string>("Telephone").Cleanup().FormatPhoneNumber()
+			};
+
+			if (ykPerson.Address == null)
+				ykPerson.City = ykPerson.State = ykPerson.Zip = null;
+			return ykPerson;
+		}
 		public static void Execute() {
 			Program.Current.RefreshDatabase();
 			using (var fileDialog = new OpenFileDialog {
@@ -58,23 +93,7 @@ namespace ShomreiTorah.Billing.Import {
 
 				bool workerSucceeded = false;
 				DataTable ykData;
-				#region Initialize processedRows
-				DataTable processedRows = new DataTable { Locale = CultureInfo.InvariantCulture };
-				processedRows.Columns.Add("PersonId", typeof(Guid));
-				processedRows.Columns.Add("YKID", typeof(int));
-				processedRows.Columns.Add("FullName", typeof(string));
-				processedRows.Columns.Add("HisName", typeof(string));
-				processedRows.Columns.Add("HerName", typeof(string));
-				processedRows.Columns.Add("LastName", typeof(string));
-				processedRows.Columns.Add("Address", typeof(string));
-				processedRows.Columns.Add("City", typeof(string));
-				processedRows.Columns.Add("State", typeof(string));
-				processedRows.Columns.Add("Zip", typeof(string));
-				processedRows.Columns.Add("Phone", typeof(string));
-				processedRows.Columns.Add("TotalPledged", typeof(decimal));
-				processedRows.Columns.Add("Action", typeof(ImportAction));
-				processedRows.Columns.Add("MatchState", typeof(MatchState));
-				#endregion
+				var processedRows = CreateProcessedTable();
 				try {
 					ProgressWorker.Execute(ui => {
 						ui.Caption = "Opening " + Path.GetFileName(fileDialog.FileName);
@@ -91,22 +110,7 @@ namespace ShomreiTorah.Billing.Import {
 							var ykRow = ykData.Rows[i];
 							var ykid = Convert.ToInt32(ykRow["IDNUM"], CultureInfo.InvariantCulture);
 
-							#region Populate ykPerson
-							var ykPerson = new PersonData {
-								FullName = ykRow.Field<string>("Address1MM").Cleanup(),
-								HisName = ykRow.Field<string>("HIS_FIRST").Cleanup(),
-								HerName = ykRow.Field<string>("HER_FIRST").Cleanup(),
-								LastName = ykRow.Field<string>("Company").Cleanup(),
-								Address = ykRow.Field<string>("Address").Cleanup(),
-								City = ykRow.Field<string>("City").Cleanup(),
-								State = ykRow.Field<string>("State").Cleanup(),
-								Zip = ykRow.Field<string>("Zip").Cleanup(),
-								Phone = ykRow.Field<string>("Telephone").Cleanup().FormatPhoneNumber()
-							};
-							#endregion
-							if (ykPerson.Address == null)
-								ykPerson.City = ykPerson.State = ykPerson.Zip = null;
-
+							var ykPerson = ImportRow(ykRow);
 							var mdRow = masterDirectory.Rows.FirstOrDefault(p => p.YKID == ykid);
 
 							if (mdRow != null && mdRow.LastName != ykPerson.LastName) {

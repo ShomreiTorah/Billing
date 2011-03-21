@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -35,7 +36,6 @@ using ShomreiTorah.WinForms.Forms;
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	public partial class ReminderEmailsForm : XtraForm {
 		const string templateSubfolder = "Ad Reminders";
-		readonly int year;
 
 		readonly FilteredTable<MelaveMalkaInvitation> dataSource;
 		public ReminderEmailsForm(int year) {
@@ -43,7 +43,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			Program.LoadTable<AdReminderEmail>();		//Will load invites as a dependency
 			InitializeComponent();
 
-			this.year = year;
 			Text = "Melave Malka " + year + " Reminder Emails";
 
 			listSearch.Properties.DataSource = bindingSource.DataSource = dataSource
@@ -91,9 +90,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		MelaveMalkaInvitation SelectedInvitee { get { return bindingSource.Current as MelaveMalkaInvitation; } }
 
 		#region Send Emails
-		private void sendAll_ItemClick(object sender, ItemClickEventArgs args) {
-			bindingSource.EndEdit();		//Commit any changes in the editor.  (Very important; otherwise, any changes made since the last time it lost focus will not be sent)
-			#region Validation
+		private List<MelaveMalkaInvitation> ConfirmSendAll() {
 			var allRecipients = dataSource.Rows.OrderBy(p => p.Person.LastName).Where(i => i.AdAmount == 0 && i.ShouldEmail).ToList();
 
 			var recentRecipients = allRecipients.Where(i => i.ReminderEmails.Any(e => e.Date.Date == DateTime.Today)).ToList();
@@ -120,15 +117,21 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			allRecipients.RemoveAll(i => recentRecipients.Contains(i) || emptyRecipients.Contains(i));
 			if (allRecipients.Count == 0) {
 				Dialog.Inform("There is no-one to email.");
-				return;
+				return null;
 			} else if (allRecipients.Count == 1) {
 				if (!Dialog.Confirm("Would you like to email " + allRecipients[0].Person.FullName + "?"))
-					return;
+					return null;
 			} else {
 				if (!Dialog.Confirm("Would you like to email " + allRecipients.Count + " people?"))
-					return;
+					return null;
 			}
-			#endregion
+
+			return allRecipients;
+		}
+		private void sendAll_ItemClick(object sender, ItemClickEventArgs args) {
+			bindingSource.EndEdit();		//Commit any changes in the editor.  (Very important; otherwise, any changes made since the last time it lost focus will not be sent)
+			var allRecipients = ConfirmSendAll();
+			if (allRecipients == null) return;
 
 			ProgressWorker.Execute(progress => {
 				progress.Maximum = allRecipients.Count;

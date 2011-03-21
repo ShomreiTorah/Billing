@@ -120,11 +120,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			clickedCallers = (IList<Caller>)dataSource.Rows;
 		}
 
-		private void emailTemplateList_ListItemClick(object sender, ListItemClickEventArgs e) {
-			#region Validation / Confirmation
+		private List<Caller> ConfirmSendEmailTemplate() {
 			if (clickedCallers.Count == 0) {
 				Dialog.ShowError("Please select a caller");
-				return;
+				return null;
 			}
 			var emptyCallers = clickedCallers.Where(c => c.Callees.All(i => i.AdAmount > 0)).ToList();
 			if (emptyCallers.Any()) {
@@ -137,17 +136,20 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				Dialog.Show(nonEmailCallers.Join(", ", c => c.Person.FullName) + " do not have email addresses.", MessageBoxIcon.Warning);
 
 			var actualCallers = clickedCallers.Where(c => c.Callees.Any(i => i.AdAmount == 0) && !String.IsNullOrEmpty(c.EmailAddresses)).ToList();
-			if (actualCallers.Count == 0) return;	//We already displayed an error
+			if (actualCallers.Count == 0) return null;	//We already displayed an error
 
 			if (actualCallers.Count == 1) {
 				if (!Dialog.Confirm("Would you like to send an email to " + actualCallers[0].Name + "?"))
-					return;
+					return null;
 			} else {
 				if (!Dialog.Confirm("Would you like to send emails to " + actualCallers.Count + " callers?"))
-					return;
+					return null;
 			}
-			#endregion
-
+			return actualCallers;
+		}
+		private void emailTemplateList_ListItemClick(object sender, ListItemClickEventArgs e) {
+			var actualCallers = ConfirmSendEmailTemplate();
+			if (actualCallers == null) return;
 			Program.LoadTable<MelaveMalkaInfo>();		//Used by the templates
 
 			var virtualPath = "/" + templateSubfolder + "/" + emailTemplateList.Strings[e.Index] + ".aspx";
