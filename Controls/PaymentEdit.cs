@@ -56,63 +56,59 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 
 		#region Creation
-		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error message")]
-		private void commit_Click(object sender, EventArgs e) {
-			if (!commit.Visible) {
-				Debug.Assert(false, "How was commit clicked?");
-				return;
-			}
+		private bool ValidateCreation() {
 			var payment = CurrentPayment;
-			if (payment == null) {
-				XtraMessageBox.Show("Something's wrong.");
-				return;
-			}
-			#region Check for errors
+
 			if (person.SelectedPerson == null) {
 				XtraMessageBox.Show("Please select the person who made the payment.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
+				return false;
 			}
+
+			//The strongly-typed properties aren't nullable, so I can't use them
 			if (payment["Date"] == null) {
 				XtraMessageBox.Show("Please enter a date.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
+				return false;
 			}
 			if (payment["Amount"] == null) {
 				XtraMessageBox.Show("Please enter the amount paid.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
+				return false;
 			}
 			if (payment["Account"] == null) {
 				XtraMessageBox.Show("Please select the account.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
+				return false;
 			}
 			if (payment["Method"] == null) {
 				XtraMessageBox.Show("Please enter select the payment method.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
+				return false;
+			}
+			if (payment.Amount <= 0) {
+				XtraMessageBox.Show("Amount must be positive",
+									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return false;
 			}
 			Payment duplicate = CurrentPayment.FindDuplicate(checkNumber.Text);
 			if (duplicate != null
 			 && !Dialog.Warn(String.Format(CultureInfo.CurrentCulture, "{0} #{1} for {2} has already been entered ({3:d}, {4:c}).\r\nIs that correct?",
 																	  duplicate.Method, duplicate.CheckNumber, duplicate.Person.FullName, duplicate.Date, duplicate.Amount)))
-				return;
+				return false;
 
-			#endregion
-			if (payment.Amount <= 0) {
-				XtraMessageBox.Show("Amount must be positive",
-									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
+			return true;
+		}
 
+		[SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower", Justification = "UI casing")]
+		private bool CheckMigration() {
 			var memberPledges = person.SelectedPerson.RelatedMembers
 				.SelectMany(r => r.Member.Pledges.Where(p => new AliyahNote(p.Note).Relative == r.RelationType))
 				.ToList();
 			if (memberPledges.Any()) {
 				using (var dialog = new Forms.PledgeMigrator(person.SelectedPerson, memberPledges)) {
 					if (dialog.ShowDialog() != DialogResult.OK)
-						return;
+						return false;
 					foreach (var pledge in dialog.SelectedPledges) {	//This query is based purely on the dialog and isn't modified by the loop.
 						//Move the relative from the Note to the Comments
 						var note = new AliyahNote(pledge.Note);
@@ -126,13 +122,17 @@ namespace ShomreiTorah.Billing.Controls {
 					}
 				}
 			}
+			return true;
+		}
 
+		decimal? CheckAutoPledge() {
+			var payment = CurrentPayment;
 			decimal autoPledgeAmount = 0;
 			decimal currentBalance = person.SelectedPerson.GetBalance(account.Text);
 			if (payment.Amount > currentBalance) {
 				using (var prompt = new Forms.AutoPledgePrompt(payment)) {
 					switch (prompt.ShowDialog()) {
-						case DialogResult.Cancel: return;
+						case DialogResult.Cancel: return null;
 						case DialogResult.Ignore:	//Do nothing, and keep a negative balance
 							Email.Notify("Negative balance for " + person.SelectedPerson.FullName,
 								String.Format(CultureInfo.CurrentCulture, @"Added by {0}\{1}
@@ -158,13 +158,36 @@ Payment:	{4:c} {5} for {6} on {7:d}
 					}
 				}
 			}
+			return autoPledgeAmount;
+		}
 
+		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error message")]
+		private void commit_Click(object sender, EventArgs e) {
+			if (!commit.Visible) {
+				Debug.Assert(false, "How was commit clicked?");
+				return;
+			}
+			var payment = CurrentPayment;
+			if (payment == null) {
+				XtraMessageBox.Show("Something's wrong.");
+				return;
+			}
+			if (!ValidateCreation())
+				return;
+			if (!CheckMigration())
+				return;
+
+
+			decimal? autoPledgeAmount = CheckAutoPledge();
+			if (autoPledgeAmount == null)
+				return;
 			try {
 				paymentsBindingSource.EndEdit();
 			} catch (Exception ex) {
 				XtraMessageBox.Show("Couldn't add payment.\r\n" + ex.Message, "Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
+
 			if (commit.CommitType == CommitType.Create) {
 				if (autoPledgeAmount > 0)
 					InfoMessage.Show(String.Format(CultureInfo.CurrentCulture, "A {0:c} payment and a {1:c} donation pledge have been added for {2}", payment.Amount, autoPledgeAmount, payment.Person.FullName));
