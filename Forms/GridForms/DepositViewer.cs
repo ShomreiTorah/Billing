@@ -27,7 +27,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		private void depositsView_CustomSummaryCalculate(object sender, CustomSummaryEventArgs e) {
 			if (e.SummaryProcess == CustomSummaryProcess.Finalize) {
 				var account = (string)depositsView.GetGroupRowValue(e.GroupRowHandle);
-				e.TotalValue = Program.Table<Payment>().Rows.Where(p => p.Account == account && p.Deposit == null).Sum(p => p.Amount);
+				e.TotalValue = Program.Table<Payment>().Rows.Where(p => p.Account == account && p.Deposit == null && p.NeedsDeposit).Sum(p => p.Amount);
 			}
 		}
 
