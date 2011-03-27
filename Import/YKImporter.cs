@@ -13,6 +13,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
+using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
 
@@ -83,6 +84,25 @@ namespace ShomreiTorah.Billing.Import {
 				ykPerson.City = ykPerson.State = ykPerson.Zip = null;
 			return ykPerson;
 		}
+		static Person FindPerson(TypedTable<Person> masterDirectory, DataTable ykData, PersonData ykPerson, int ykid) {
+			var mdRow = masterDirectory.Rows.FirstOrDefault(p => p.YKID == ykid);
+
+			if (mdRow != null && mdRow.LastName != ykPerson.LastName) {
+				var candidates = masterDirectory.Rows
+					.Where(md => md.LastName == ykPerson.LastName
+							  && md.YKID != null
+							  && ykData.Select("IDNUM=" + md.YKID).Length == 0
+					).ToArray();
+				if (candidates.Length == 1)
+					mdRow = candidates[0];
+				else if (candidates.Length > 1) {
+					candidates = candidates.Where(md => md.Phone == ykPerson.Phone).ToArray();
+					if (candidates.Length == 1)
+						mdRow = candidates[0];
+				}
+			}
+			return mdRow;
+		}
 		public static void Execute() {
 			Program.Current.RefreshDatabase();
 			using (var fileDialog = new OpenFileDialog {
@@ -107,26 +127,11 @@ namespace ShomreiTorah.Billing.Import {
 						for (int i = 0; i < ykData.Rows.Count; i++) {
 							if (ui.WasCanceled) return;
 							ui.Progress = i;
+
 							var ykRow = ykData.Rows[i];
 							var ykid = Convert.ToInt32(ykRow["IDNUM"], CultureInfo.InvariantCulture);
-
 							var ykPerson = ImportRow(ykRow);
-							var mdRow = masterDirectory.Rows.FirstOrDefault(p => p.YKID == ykid);
-
-							if (mdRow != null && mdRow.LastName != ykPerson.LastName) {
-								var candidates = masterDirectory.Rows
-									.Where(md => md.LastName == ykPerson.LastName
-											  && md.YKID != null
-											  && ykData.Select("IDNUM=" + md.YKID).Length == 0
-									).ToArray();
-								if (candidates.Length == 1)
-									mdRow = candidates[0];
-								else if (candidates.Length > 1) {
-									candidates = candidates.Where(md => md.Phone == ykPerson.Phone).ToArray();
-									if (candidates.Length == 1)
-										mdRow = candidates[0];
-								}
-							}
+							var mdRow = FindPerson(masterDirectory, ykData, ykPerson, ykid);
 
 							Guid? personId;
 							MatchState state;
