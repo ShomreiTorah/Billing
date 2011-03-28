@@ -113,6 +113,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Journal\PowerPointJournal\bin\Debug\PowerPointJournal.dll</HintPath>
     </Reference>
+    <Reference Include="ShomreiTorah.Billing, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a618b678561bfa4a, processorArchitecture=x86">
+      <ExecutableExtension>.exe</ExecutableExtension>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -152,6 +155,19 @@
     </Compile>
     <Compile Include="Controls\PledgeEdit.Designer.cs">
       <DependentUpon>PledgeEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\Auctions\AuctionGroupSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Events\Auctions\AuctionGroupSelector.Designer.cs">
+      <DependentUpon>AuctionGroupSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\Auctions\AuctionInfo.cs" />
+    <Compile Include="Events\Auctions\EntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Events\Auctions\EntryForm.Designer.cs">
+      <DependentUpon>EntryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\MelaveMalka\CallerList.cs">
       <SubType>Form</SubType>
@@ -293,6 +309,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PledgeEdit.resx">
       <DependentUpon>PledgeEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Events\Auctions\AuctionGroupSelector.resx">
+      <DependentUpon>AuctionGroupSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Events\Auctions\EntryForm.resx">
+      <DependentUpon>EntryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Events\MelaveMalka\CallerList.resx">
       <DependentUpon>CallerList.cs</DependentUpon>
