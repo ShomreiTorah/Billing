@@ -18,9 +18,9 @@ namespace ShomreiTorah.Billing.Forms {
 			var payments = Program.Table<Payment>().Rows
 				.Where(p => p.Account == account && p.Deposit == null && p.NeedsDeposit)
 				.OrderBy(p => p.Person.LastName)
-				.ToList();
+				.ToArray();
 
-			if (payments.Count == 0) {
+			if (payments.Length == 0) {
 				XtraMessageBox.Show("There are no undeposited " + account.ToLower(CultureInfo.CurrentCulture) + " payments.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return;
@@ -32,24 +32,24 @@ namespace ShomreiTorah.Billing.Forms {
 		readonly IList<Payment> payments;
 		readonly bool[] selectedPayments;
 		readonly string totalSummary;
-		DepositAdder(IList<Payment> payments) {
+		DepositAdder(Payment[] payments) {
 			InitializeComponent();
 
 			this.payments = payments;
 			account = (string)payments[0]["Account"];
 
-			selectedPayments = new bool[payments.Count];
-			for (int i = 0; i < 16; i++)
+			selectedPayments = new bool[payments.Length];
+			for (int i = 0; i < Math.Min(16, payments.Length); i++)
 				selectedPayments[i] = true;
 
 			Text = "Add " + account + " Deposit";
-			grid.DataSource = new RowListBinder(Program.Table<Payment>(), (Row[])payments);
+			grid.DataSource = new RowListBinder(Program.Table<Payment>(), payments);
 			gridView.BestFitColumns();
 
 			depositNumber.EditValue = null;
 
 			totalSummary = String.Format(CultureInfo.CurrentCulture, "Total: {0:#,0} undeposited payment{1}, {2:c}\r\n",
-										 payments.Count, payments.Count == 1 ? "" : "s", payments.Sum(p => p.Amount));
+										 payments.Length, payments.Length == 1 ? "" : "s", payments.Sum(p => p.Amount));
 
 			UpdateSummary();
 			CheckableGridController.Handle(colCheck);
