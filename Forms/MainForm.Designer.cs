@@ -58,6 +58,9 @@ namespace ShomreiTorah.Billing.Forms {
 			DevExpress.Utils.SuperToolTip superToolTip11 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem11 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem11 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip12 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem12 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem12 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip13 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem13 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem13 = new DevExpress.Utils.ToolTipItem();
@@ -67,9 +70,6 @@ namespace ShomreiTorah.Billing.Forms {
 			DevExpress.Utils.SuperToolTip superToolTip15 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem15 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem15 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip12 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem12 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem12 = new DevExpress.Utils.ToolTipItem();
 			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.addPledge = new DevExpress.XtraBars.BarButtonItem();
 			this.viewPledges = new DevExpress.XtraBars.BarButtonItem();
@@ -99,6 +99,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showMMSeating = new DevExpress.XtraBars.BarButtonItem();
 			this.showCallList = new DevExpress.XtraBars.BarButtonItem();
 			this.showReminderEmailsForm = new DevExpress.XtraBars.BarButtonItem();
+			this.addRelativeLink = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -129,7 +130,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.modifiedPaymentsGrid = new ShomreiTorah.Billing.Controls.ModifiedPaymentsGrid();
 			this.paymentEdit = new ShomreiTorah.Billing.Controls.PaymentEdit();
 			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
-			this.addRelativeLink = new DevExpress.XtraBars.BarButtonItem();
+			this.ribbonPageGroup12 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.showAuctionForm = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.shalachManosColumnsEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lookup.Properties)).BeginInit();
@@ -180,9 +182,10 @@ namespace ShomreiTorah.Billing.Forms {
             this.showMMSeating,
             this.showCallList,
             this.showReminderEmailsForm,
-            this.addRelativeLink});
+            this.addRelativeLink,
+            this.showAuctionForm});
 			this.ribbon.Location = new System.Drawing.Point(0, 0);
-			this.ribbon.MaxItemId = 30;
+			this.ribbon.MaxItemId = 31;
 			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
 			this.ribbon.Name = "ribbon";
 			this.ribbon.PageHeaderItemLinks.Add(this.checkUpdate);
@@ -194,7 +197,7 @@ namespace ShomreiTorah.Billing.Forms {
             this.ribbonPage2});
 			this.ribbon.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.shalachManosColumnsEdit});
-			this.ribbon.SelectedPage = this.ribbonPage1;
+			this.ribbon.SelectedPage = this.ribbonPage4;
 			this.ribbon.Size = new System.Drawing.Size(858, 144);
 			this.ribbon.StatusBar = this.ribbonStatusBar;
 			this.ribbon.Toolbar.ItemLinks.Add(this.saveDb);
@@ -489,6 +492,19 @@ namespace ShomreiTorah.Billing.Forms {
 			superToolTip11.Items.Add(toolTipItem11);
 			this.showReminderEmailsForm.SuperTip = superToolTip11;
 			// 
+			// addRelativeLink
+			// 
+			this.addRelativeLink.Caption = "Create Relative Link";
+			this.addRelativeLink.Id = 29;
+			this.addRelativeLink.Name = "addRelativeLink";
+			toolTipTitleItem12.Text = "Create Relative Link";
+			toolTipItem12.LeftIndent = 6;
+			toolTipItem12.Text = "Adds a new (unpopulated) relative link";
+			superToolTip12.Items.Add(toolTipTitleItem12);
+			superToolTip12.Items.Add(toolTipItem12);
+			this.addRelativeLink.SuperTip = superToolTip12;
+			this.addRelativeLink.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addRelativeLink_ItemClick);
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -619,6 +635,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// ribbonPage4
 			// 
 			this.ribbonPage4.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup12,
             this.ribbonPageGroup8,
             this.ribbonPageGroup6});
 			this.ribbonPage4.Name = "ribbonPage4";
@@ -771,18 +788,19 @@ namespace ShomreiTorah.Billing.Forms {
 			this.mdiManager.MdiParent = this;
 			this.mdiManager.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mdiManager_MouseDown);
 			// 
-			// addRelativeLink
+			// ribbonPageGroup12
 			// 
-			this.addRelativeLink.Caption = "Create Relative Link";
-			this.addRelativeLink.Id = 29;
-			this.addRelativeLink.Name = "addRelativeLink";
-			toolTipTitleItem12.Text = "Create Relative Link";
-			toolTipItem12.LeftIndent = 6;
-			toolTipItem12.Text = "Adds a new (unpopulated) relative link";
-			superToolTip12.Items.Add(toolTipTitleItem12);
-			superToolTip12.Items.Add(toolTipItem12);
-			this.addRelativeLink.SuperTip = superToolTip12;
-			this.addRelativeLink.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addRelativeLink_ItemClick);
+			this.ribbonPageGroup12.ItemLinks.Add(this.showAuctionForm);
+			this.ribbonPageGroup12.Name = "ribbonPageGroup12";
+			this.ribbonPageGroup12.ShowCaptionButton = false;
+			this.ribbonPageGroup12.Text = "יום טוב";
+			// 
+			// showAuctionForm
+			// 
+			this.showAuctionForm.Caption = "Enter Auction Results";
+			this.showAuctionForm.Id = 30;
+			this.showAuctionForm.Name = "showAuctionForm";
+			this.showAuctionForm.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showAuctionForm_ItemClick);
 			// 
 			// MainForm
 			// 
@@ -873,5 +891,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.BarButtonItem showReminderEmailsForm;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup11;
 		private DevExpress.XtraBars.BarButtonItem addRelativeLink;
+		private DevExpress.XtraBars.BarButtonItem showAuctionForm;
+		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup12;
 	}
 }

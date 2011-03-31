@@ -25,13 +25,19 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		public int SelectedYear { get; private set; }
 
 		private void buttonEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
-			if (e.Button.IsLeft && SelectedGroup == AuctionInfo.Groups.First())
+			MoveBy(e.Button.IsLeft ? -1 : +1);
+		}
+		private void buttonEdit_Properties_Spin(object sender, SpinEventArgs e) {
+			MoveBy(e.IsSpinUp ? +1 : -1);
+			e.Handled = true;
+		}
+		public void MoveBy(int direction) {
+			if (direction < 0 && SelectedGroup == AuctionInfo.Groups.First())
 				SetSelection(SelectedYear - 1, AuctionInfo.Groups.Last());
-			else if (!e.Button.IsLeft && SelectedGroup == AuctionInfo.Groups.Last())
+			else if (direction > 0 && SelectedGroup == AuctionInfo.Groups.Last())
 				SetSelection(SelectedYear + 1, AuctionInfo.Groups.First());
 			else {
 				var groupIndex = AuctionInfo.Groups.IndexOf(SelectedGroup);
-				int direction = e.Button.IsLeft ? -1 : +1;
 				SetSelection(SelectedYear, AuctionInfo.Groups[groupIndex + direction]);
 			}
 		}
@@ -42,6 +48,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			SelectedGroup = group;
 
 			buttonEdit.Text = group.Name + ", " + (year - 5000).ToHebrewString(HebrewNumberFormat.LetterQuoted);
+			OnSelectionChanged();
 		}
 
 		///<summary>Occurs when the selected AuctionGroup changes.</summary>
@@ -56,5 +63,32 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			if (SelectionChanged != null)
 				SelectionChanged(this, e);
 		}
+
+		private void buttonEdit_KeyDown(object sender, KeyEventArgs e) {
+			switch (e.KeyCode) {
+				case Keys.Left:
+				case Keys.Down:
+					MoveBy(-1);
+					break;
+				case Keys.Right:
+				case Keys.Up:
+					MoveBy(+1);
+					break;
+				case Keys.PageDown:
+					SetSelection(SelectedYear - 1, SelectedGroup);
+					break;
+				case Keys.PageUp:
+					SetSelection(SelectedYear + 1, SelectedGroup);
+					break;
+
+				case Keys.Home:
+					SetSelection(SelectedYear, AuctionInfo.Groups.First());
+					break;
+				case Keys.End:
+					SetSelection(SelectedYear, AuctionInfo.Groups.Last());
+					break;
+			}
+		}
+
 	}
 }

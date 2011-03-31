@@ -36,13 +36,15 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			this.buttonEdit.Location = new System.Drawing.Point(0, 0);
 			this.buttonEdit.Name = "buttonEdit";
 			this.buttonEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.SpinLeft, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Previous", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.SpinRight, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Next", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Left, "", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.Left), serializableAppearanceObject1, "Previous", null, null, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Right, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.Right), serializableAppearanceObject2, "Next", null, null, true)});
 			this.buttonEdit.Properties.NullValuePrompt = "Select an auction";
 			this.buttonEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+			this.buttonEdit.Properties.Spin += new DevExpress.XtraEditors.Controls.SpinEventHandler(this.buttonEdit_Properties_Spin);
 			this.buttonEdit.Size = new System.Drawing.Size(229, 20);
 			this.buttonEdit.TabIndex = 0;
 			this.buttonEdit.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.buttonEdit_ButtonClick);
+			this.buttonEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.buttonEdit_KeyDown);
 			// 
 			// AuctionGroupSelector
 			// 
