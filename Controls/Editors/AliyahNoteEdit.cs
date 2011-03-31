@@ -118,6 +118,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		public override void ShowPopupForm() {
 			control.NoteText = OwnerEdit.Text;
 			base.ShowPopupForm();
+			control.Focus();
 		}
 	}
 
