@@ -8,15 +8,56 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using ShomreiTorah.Data;
 using System.Globalization;
+using DevExpress.Utils.Menu;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.Utils;
+using ShomreiTorah.WinForms;
+using DevExpress.XtraEditors.ViewInfo;
+using DevExpress.XtraEditors.Drawing;
 
 namespace ShomreiTorah.Billing.Events.Auctions {
 	partial class EntryForm : XtraForm {
+		readonly DXPopupMenu recentMenu;
+		readonly EditorButton recentButton;
 		public EntryForm() {
 			InitializeComponent();
 			UpdateSummary();
-			//TODO: Recent menu
+
+			personSelector.Properties.Buttons.Add(recentButton = new EditorButton {
+				Caption = "Recent",
+				ImageLocation = ImageLocation.MiddleRight,
+				Kind = ButtonPredefines.DropDown,
+				Shortcut = new KeyShortcut(Keys.Control | Keys.R),
+				SuperTip = Utilities.CreateSuperTip(title: "Recent people", body: "Shows people whom you've already selected in this session."),
+				Visible = false
+			});
+			recentMenu = new DXPopupMenu();
 		}
 
+		void AddRecentMenuItem(Person person) {
+			if (recentMenu.Items.Cast<DXMenuItem>().Any(m => m.Tag == person))
+				return;
+			recentMenu.Items.Insert(0,
+				new DXMenuItem(person.FullName, delegate { personSelector.EditValue = person; }) {
+					ShowHotKeyPrefix = false,
+					Tag = person
+				}
+			);
+			recentButton.Visible = true;
+		}
+		private void personSelector_ButtonPressed(object sender, ButtonPressedEventArgs e) {
+			if (e.Button.Index == recentButton.Index) {
+				if (recentMenu.OwnerPopup != null)
+					recentMenu.HidePopup();
+				else {
+					var evi = personSelector.GetViewInfo() as ButtonEditViewInfo;
+					var bvi = evi.ButtonInfoByButton(e.Button);
+					var pt = new Point(bvi.Bounds.Left, bvi.Bounds.Bottom);
+
+					MenuManagerHelper.GetMenuManager(LookAndFeel).ShowPopupMenu(recentMenu, personSelector, pt);
+				}
+			}
+		}
 
 		private void groupSelector_SelectionChanged(object sender, EventArgs e) { SetGroup(); }
 		private void personSelector_EditValueChanged(object sender, EventArgs e) { SetGroup(); }
@@ -27,6 +68,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 				UpdateSummary();	//Even if no person is selected, we still need to update the summary for the entire group
 				return;
 			}
+			AddRecentMenuItem(personSelector.SelectedPerson);	//If the person didn't change, this is a no-op.
 
 			//TODO: Confirm save
 			entryGrid.BindTo(groupSelector.SelectedGroup.Auctions
@@ -107,5 +149,6 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			personSelector.SelectedPerson = null;
 			personSelector.Focus();
 		}
+
 	}
 }
