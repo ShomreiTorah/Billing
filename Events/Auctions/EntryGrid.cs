@@ -18,7 +18,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		public EntryGrid() {
 			InitializeComponent();
 			grid.DataSource = gridDataSource;
-			amountEdit.Buttons[1].Shortcut = new KeyShortcut(Keys.M);
+			amountEdit.Buttons[0].Shortcut = new KeyShortcut(Keys.M);
 		}
 
 		private BindingList<AuctionItem> dataSource;
@@ -35,6 +35,10 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 
 		private void amountEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
 			gridView.SetFocusedValue(0m);
+			//Switch to the Note cell - this commits the editor. 
+			//After clicking מתנה, there's no reason to edit the
+			//value.
+			gridView.FocusedColumn = gridView.Columns[gridView.FocusedColumn.AbsoluteIndex + 1];
 		}
 
 		///<summary>Gets the total pledges shown in the grid, including any pledges that already exist</summary>
@@ -101,6 +105,10 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 				throw new ArgumentOutOfRangeException("column");
 		}
 		#endregion
+
+		//This logic assumes that all rows have bids. 
+		//If that changes, you should probably get rid
+		//of this code; it's not necessary.
 		#region Prevent Empty Cell Focus
 		private void gridView_FocusedColumnChanged(object sender, FocusedColumnChangedEventArgs e) {
 			//If the user focuses a non-pledge column, force focus

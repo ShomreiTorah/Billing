@@ -14,7 +14,9 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		public EntryForm() {
 			InitializeComponent();
 			UpdateSummary();
+			//TODO: Recent menu
 		}
+
 
 		private void groupSelector_SelectionChanged(object sender, EventArgs e) { SetGroup(); }
 		private void personSelector_EditValueChanged(object sender, EventArgs e) { SetGroup(); }
@@ -97,6 +99,13 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			#endregion
 
 			summaryLabel.Text = summary.ToString();
+		}
+
+		private void save_Click(object sender, EventArgs e) {
+			return;
+			Program.Current.SaveDatabase();
+			personSelector.SelectedPerson = null;
+			personSelector.Focus();
 		}
 	}
 }
