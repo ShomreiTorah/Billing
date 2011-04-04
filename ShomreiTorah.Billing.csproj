@@ -160,6 +160,7 @@
       <DependentUpon>AuctionGroupSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\Auctions\AuctionInfo.cs" />
+    <Compile Include="Events\Auctions\AuctionItem.cs" />
     <Compile Include="Events\Auctions\EntryForm.cs">
       <SubType>Form</SubType>
     </Compile>
