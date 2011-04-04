@@ -131,7 +131,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			new AuctionGroup("פסח",				new AuctionInfo(Holiday.פסח[1]),		new AuctionInfo(Holiday.פסח[2])),
 			new AuctionGroup("אחרון של פסח",	new AuctionInfo(Holiday.פסח[7]),		new AuctionInfo(Holiday.פסח[8])),
 
-			new AuctionGroup("שבועות",			new AuctionInfo(Holiday.שבועות[1]),		new AuctionInfo(Holiday.שבועות[2])),
+			new AuctionGroup("שבועות",			/*new AuctionInfo(Holiday.שבועות[1]),*/	new AuctionInfo(Holiday.שבועות[2])),
 		});
 		#endregion
 	}
