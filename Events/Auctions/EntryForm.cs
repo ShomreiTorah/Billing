@@ -34,6 +34,16 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			recentMenu = new DXPopupMenu();
 		}
 
+		///<summary>Releases the unmanaged resources used by the EntryForm and optionally releases the managed resources.</summary>
+		///<param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+		protected override void Dispose(bool disposing) {
+			if (disposing) {
+				recentMenu.Dispose();
+				if (components != null) components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
 		void AddRecentMenuItem(Person person) {
 			if (recentMenu.Items.Cast<DXMenuItem>().Any(m => m.Tag == person))
 				return;
@@ -62,7 +72,39 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		private void groupSelector_SelectionChanged(object sender, EventArgs e) { SetGroup(); }
 		private void personSelector_EditValueChanged(object sender, EventArgs e) { SetGroup(); }
 
+		private bool ConfirmChange() {
+			if (!entryGrid.HasChanges())
+				return true;
+			switch (Dialog.Show("Do you want to save your changes?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning)) {
+				case DialogResult.Yes:
+					SaveChanges();
+					return true;
+				case DialogResult.No:
+					return true;
+
+				case DialogResult.Cancel:
+					isReverting = true;
+					groupSelector.SetSelection(currentYear, currentGroup);
+					personSelector.EditValue = entryGrid.CurrentPerson;	//Go back to the current selection.  This won't recurse due to isReverting.
+					isReverting = false;
+					return false;
+
+				default:
+					throw new InvalidProgramException();
+			}
+		}
+		private AuctionGroup currentGroup;
+		private int currentYear;
+		private bool isReverting;
 		void SetGroup() {
+			if (isReverting)	//Prevent recursion if the user hits Cancel
+				return;
+			if (!ConfirmChange())
+				return;
+
+			currentGroup = groupSelector.SelectedGroup;
+			currentYear = groupSelector.SelectedYear;
+
 			if (personSelector.SelectedPerson == null) {
 				entryGrid.Hide();
 				UpdateSummary();	//Even if no person is selected, we still need to update the summary for the entire group
@@ -70,7 +112,6 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			}
 			AddRecentMenuItem(personSelector.SelectedPerson);	//If the person didn't change, this is a no-op.
 
-			//TODO: Confirm save
 			entryGrid.BindTo(groupSelector.SelectedGroup.Auctions
 								.SelectMany(a => a.CreateItems(groupSelector.SelectedYear, personSelector.SelectedPerson))
 			);
@@ -78,12 +119,19 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			UpdateSummary();
 		}
 
+		private void save_Click(object sender, EventArgs e) { SaveChanges(); }
+		void SaveChanges() {
+			return;
+			Program.Current.SaveDatabase();
+			personSelector.SelectedPerson = null;
+			personSelector.Focus();
+		}
 		private void cancel_Click(object sender, EventArgs e) {
 			SetGroup();	//This will re-bind the grid and discard all changes.  It will also show a confirm dialog.
 		}
 
+		#region Summaries
 		private void entryGrid_Changed(object sender, EventArgs e) { UpdateSummary(); }
-
 		void UpdateSummary() {
 			var summary = new StringBuilder();
 
@@ -142,13 +190,6 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 
 			summaryLabel.Text = summary.ToString();
 		}
-
-		private void save_Click(object sender, EventArgs e) {
-			return;
-			Program.Current.SaveDatabase();
-			personSelector.SelectedPerson = null;
-			personSelector.Focus();
-		}
-
+		#endregion
 	}
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using ShomreiTorah.Data;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ShomreiTorah.Billing.Events.Auctions {
 	///<summary>Describes a single item in an auction, optionally including a מי שברך.</summary>
@@ -60,6 +61,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		//be databound. For non-existent pledges, they will
 		//always be null.  PropertyChanged events for these
 		//properties are forwarded in the constructor.
+		[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",Justification= "Data-bound property")]
 		public decimal? BidAmount {
 			get { return BidPledge == null ? new Decimal?() : BidPledge.Amount; }
 			set {
@@ -67,6 +69,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 					BidPledge.Amount = value;
 			}
 		}
+		[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Data-bound property")]
 		public string BidNote {
 			get { return BidPledge == null ? null : BidPledge.Note; }
 			set {
@@ -74,6 +77,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 					BidPledge.Note = value;
 			}
 		}
+		[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Data-bound property")]
 		public decimal? MBAmount {
 			get { return MBPledge == null ? new Decimal?() : MBPledge.Amount; }
 			set {
@@ -81,6 +85,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 					MBPledge.Amount = value;
 			}
 		}
+		[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Data-bound property")]
 		public string MBNote {
 			get { return MBPledge == null ? null : MBPledge.Note; }
 			set {
@@ -113,6 +118,38 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		public AuctionItem Item { get; private set; }
 		///<summary>Gets the pledge type (Auction or מי שברך).  The subtype is stored in the item.</summary>
 		public string PledgeType { get; private set; }
+
+		#region Pledge Synchronization
+		///<summary>Finds an existing pledge that matches this instance, if any.</summary>
+		public Pledge FindPledge() {
+			return Program.Table<Pledge>().Rows.FirstOrDefault(p =>
+				p.Date == Item.Date && p.Person == Item.Person && p.Type == PledgeType && p.SubType == Item.ItemName
+			);
+		}
+
+		///<summary>Updates this instance's values after a change in a corresponding pledge.</summary>
+		///<param name="existingPledge">The pledge to update from, or null to null out this pledge.</param>
+		public void UpdateFromPledge(Pledge existingPledge) {
+			if (existingPledge != null) {
+				Amount = existingPledge.Amount;
+				Note = existingPledge.Note;
+			} else
+				Note = null;
+		}
+
+		///<summary>Checks whether this pledge is different from its current state in the Pledges table.</summary>
+		public bool HasChanges() {
+			var existingPledge = FindPledge();
+			if (existingPledge == null && Amount == null)
+				return false;		//Neither this pledge nor the corresponding DB pledge exist.
+
+			if (existingPledge != null && Amount != null) {
+				if (Amount == existingPledge.Amount && Note == existingPledge.Note)
+					return false;	//Both pledges exist and their contents match exactly.
+			}
+			return true;
+		}
+		#endregion
 
 		decimal? amount;
 		AliyahNote note;

@@ -11,7 +11,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 	///<summary>Describes a single auction.</summary>
 	class AuctionInfo {
 		private AuctionInfo(Holiday holiday) : this(holiday.Date, TimeSpan.Zero, holiday.Name) { }
-		private AuctionInfo(IHebrewEvent date, string name) : this(date, TimeSpan.Zero, name) { }
+		//private AuctionInfo(IHebrewEvent date, string name) : this(date, TimeSpan.Zero, name) { }
 		private AuctionInfo(IHebrewEvent date, TimeSpan time, string name) {
 			Date = date;
 			Time = time;
