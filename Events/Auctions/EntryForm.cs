@@ -72,6 +72,11 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		private void groupSelector_SelectionChanged(object sender, EventArgs e) { SetGroup(); }
 		private void personSelector_EditValueChanged(object sender, EventArgs e) { SetGroup(); }
 
+		protected override void OnFormClosing(FormClosingEventArgs e) {
+			base.OnFormClosing(e);
+			e.Cancel = !ConfirmChange();
+		}
+
 		private bool ConfirmChange() {
 			if (!entryGrid.HasChanges())
 				return true;
@@ -96,10 +101,10 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		private AuctionGroup currentGroup;
 		private int currentYear;
 		private bool isReverting;
-		void SetGroup() {
+		void SetGroup(bool confirm = true) {
 			if (isReverting)	//Prevent recursion if the user hits Cancel
 				return;
-			if (!ConfirmChange())
+			if (confirm && !ConfirmChange())
 				return;
 
 			currentGroup = groupSelector.SelectedGroup;
@@ -119,15 +124,18 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			UpdateSummary();
 		}
 
-		private void save_Click(object sender, EventArgs e) { SaveChanges(); }
-		void SaveChanges() {
-			return;
-			Program.Current.SaveDatabase();
+		private void save_Click(object sender, EventArgs e) {
+			SaveChanges();
 			personSelector.SelectedPerson = null;
 			personSelector.Focus();
 		}
+		void SaveChanges() {
+			entryGrid.CommitChanges();
+			Program.Current.SaveDatabase();
+		}
 		private void cancel_Click(object sender, EventArgs e) {
-			SetGroup();	//This will re-bind the grid and discard all changes.  It will also show a confirm dialog.
+			if (Dialog.Warn("Are you sure you want to discard your changes?"))
+				SetGroup(confirm: false);	//This will re-bind the grid and discard all changes.
 		}
 
 		#region Summaries

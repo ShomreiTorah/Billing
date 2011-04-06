@@ -45,7 +45,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 
 		///<summary>Gets the pledge for the auction's bid.</summary>
 		public AuctionPledge BidPledge { get; private set; }
-		///<summary>Gets the pledge for the associated מי שברך, if any.</summary>
+		///<summary>Gets the pledge for the associated מי שברך or null if this item cannot have a מי שברך.</summary>
 		public AuctionPledge MBPledge { get; private set; }
 
 		///<summary>Gets the item's potential pledges.  These pledges may have null values.</summary>
@@ -61,7 +61,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		//be databound. For non-existent pledges, they will
 		//always be null.  PropertyChanged events for these
 		//properties are forwarded in the constructor.
-		[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",Justification= "Data-bound property")]
+		[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Data-bound property")]
 		public decimal? BidAmount {
 			get { return BidPledge == null ? new Decimal?() : BidPledge.Amount; }
 			set {
@@ -148,6 +148,30 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 					return false;	//Both pledges exist and their contents match exactly.
 			}
 			return true;
+		}
+
+		///<summary>Commits changes made in this instance to the Pledges table.</summary>
+		public void CommitToPledge() {
+			var existingPledge = FindPledge();
+			if (existingPledge == null) {
+				if (Amount == null)
+					return;	 //The pledge already doesn't exist.
+				//The pledge doesn't exist, so we need to add it
+				Program.Table<Pledge>().Rows.Add(new Pledge {
+					Person = Item.Person,
+					Date = Item.Date,
+					Account = Names.DefaultAccount,
+					Type = PledgeType,
+					SubType = Item.ItemName,
+					Amount = Amount.Value,
+					Note = Note
+				});
+			} else if (Amount == null) {	//The pledge already exists, but we're deleting it.
+				existingPledge.RemoveRow();
+			} else {						//The pledge already exists
+				existingPledge.Amount = amount.Value;
+				existingPledge.Note = Note;
+			}
 		}
 		#endregion
 

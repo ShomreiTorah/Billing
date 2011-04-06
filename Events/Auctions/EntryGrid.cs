@@ -58,6 +58,8 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		private HashSet<DateTime> currentDates;
 		private BindingList<AuctionItem> dataSource;
 
+		private bool isSaving;
+
 		public EntryGrid() {
 			InitializeComponent();
 			grid.DataSource = gridDataSource;
@@ -102,6 +104,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 
 		#region Track changes
 		void RescanPledges() {
+			if (isSaving) return;
 			thirdPartyPledges.Clear();
 			foreach (var pledge in Program.Table<Pledge>().Rows) {
 				CheckAdd(pledge);
@@ -113,6 +116,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		static readonly string[] pledgeTypes = { "Auction", "מי שברך" };
 		void Pledges_RowAdded(object sender, RowListEventArgs<Pledge> e) { CheckAdd(e.Row); }
 		void CheckAdd(Pledge row) {
+			if (isSaving) return;
 			if (currentDates.Contains(row.Date) && pledgeTypes.Contains(row.Type)) {
 				if (row.Person != CurrentPerson) {
 					thirdPartyPledges.Add(new PledgeKey(row), row);
@@ -125,6 +129,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			}
 		}
 		void Pledges_ValueChanged(object sender, ValueChangedEventArgs<Pledge> e) {
+			if (isSaving) return;
 			//TODO: Check contains for old and new values
 			if (e.Column == Pledge.TypeColumn || e.Column == Pledge.SubTypeColumn || e.Column == Pledge.PersonColumn || e.Column == Pledge.DateColumn) {
 				RescanPledges();	//FIXME: It would be faster to check for the specific change, and remove rows that changed out.
@@ -137,6 +142,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			}
 		}
 		void Pledges_RowRemoved(object sender, RowListEventArgs<Pledge> e) {
+			if (isSaving) return;
 			if (currentDates.Contains(e.Row.Date) && pledgeTypes.Contains(e.Row.Type)) {
 				if (e.Row.Person != CurrentPerson) {
 					if (thirdPartyPledges.Remove(new PledgeKey(e.Row), e.Row))
@@ -149,6 +155,15 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			}
 		}
 		#endregion
+
+		public void CommitChanges() {
+			try {
+				isSaving = true;
+				foreach (var pledge in auctionPledges.Values) {
+					pledge.CommitToPledge();
+				}
+			} finally { isSaving = false; }
+		}
 
 		private void amountEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
 			gridView.SetFocusedValue(0m);
