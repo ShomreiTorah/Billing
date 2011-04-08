@@ -128,7 +128,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			this.entryGrid.Size = new System.Drawing.Size(621, 521);
 			this.entryGrid.TabIndex = 2;
 			this.entryGrid.Visible = false;
-			this.entryGrid.Changed += new System.EventHandler(this.entryGrid_Changed);
+			this.entryGrid.SummaryChanged += new System.EventHandler(this.entryGrid_SummaryChanged);
 			// 
 			// groupSelector
 			// 

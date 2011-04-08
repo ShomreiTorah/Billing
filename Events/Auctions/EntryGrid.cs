@@ -21,6 +21,14 @@ using ShomreiTorah.WinForms;
 namespace ShomreiTorah.Billing.Events.Auctions {
 	partial class EntryGrid : XtraUserControl {
 		struct PledgeKey : IEquatable<PledgeKey> {
+			public static PledgeKey OldValues(ValueChangedEventArgs<Pledge> changedPledge) {
+				var key = new PledgeKey();
+				key.PledgeType = changedPledge.GetOldValue(p => p.Type);
+				key.SubType = changedPledge.GetOldValue(p => p.SubType);
+				key.Date = changedPledge.GetOldValue(p => p.Date);
+				return key;
+			}
+
 			public PledgeKey(Pledge pledge)
 				: this() {
 				PledgeType = pledge.Type;
@@ -90,7 +98,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 				AllowNew = false,
 				AllowRemove = false
 			};
-			dataSource.ListChanged += delegate { OnChanged(); };
+			dataSource.ListChanged += delegate { OnSummaryChanged(); };
 			CurrentPerson = dataSource[0].Person;
 			currentDates = new HashSet<DateTime>(dataSource.Select(a => a.Date));	//The HashSet will ignore duplicates
 
@@ -104,14 +112,18 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 
 		#region Track changes
 		void RescanPledges() {
-			if (isSaving) return;
 			thirdPartyPledges.Clear();
 			foreach (var pledge in Program.Table<Pledge>().Rows) {
 				CheckAdd(pledge);
 			}
 		}
 
-		//When changing thirdPartyPledges, we need to refresh the grid's highlighting
+		//When changing thirdPartyPledges, we need to
+		//refresh the grid's highlighting, and raise 
+		//SummaryChanged.
+		//When changing AuctionPledges, we don't need
+		//to; the SummaryChanged event will be raised
+		//by the BindingList handler in BindTo.
 		///<summary>The pledge types that are shown on the grid.</summary>
 		static readonly string[] pledgeTypes = { "Auction", "מי שברך" };
 		void Pledges_RowAdded(object sender, RowListEventArgs<Pledge> e) { CheckAdd(e.Row); }
@@ -121,6 +133,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 				if (row.Person != CurrentPerson) {
 					thirdPartyPledges.Add(new PledgeKey(row), row);
 					gridView.RefreshData();
+					OnSummaryChanged();
 				} else {
 					AuctionPledge ap;
 					if (auctionPledges.TryGetValue(new PledgeKey(row), out ap))
@@ -130,15 +143,50 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		}
 		void Pledges_ValueChanged(object sender, ValueChangedEventArgs<Pledge> e) {
 			if (isSaving) return;
-			//TODO: Check contains for old and new values
 			if (e.Column == Pledge.TypeColumn || e.Column == Pledge.SubTypeColumn || e.Column == Pledge.PersonColumn || e.Column == Pledge.DateColumn) {
-				RescanPledges();	//FIXME: It would be faster to check for the specific change, and remove rows that changed out.
+				AuctionPledge ap;
+				Person oldPerson = e.GetOldValue(r => r.Person), newPerson = e.Row.Person;
+				PledgeKey oldKey = PledgeKey.OldValues(e), newKey = new PledgeKey(e.Row);
+
+				//PledgeKeys do not include people
+				if (oldPerson == newPerson && oldKey == newKey) return;
+
+				//Clear the AuctionPledge for the old row, if any
+				if (oldPerson == CurrentPerson					//If it used to be from the person we're showing
+				 && auctionPledges.TryGetValue(oldKey, out ap))
+					ap.Amount = null;
+
+				//Update the AuctionPledge for the new row, if any
+				if (newPerson == CurrentPerson					//If it's now from the person we're showing
+				 && auctionPledges.TryGetValue(newKey, out ap))
+					ap.UpdateFromPledge(e.Row);
+
+				//Update the set of 3rd-party pledges.
+				//If the person changed from or to the
+				//current person, this means adding or
+				//removing the row from the dictionary
+				//(respectively).  Otherwise, it means
+				//moving the row from one PledgeKey to
+				//another one.
+
+				if (oldPerson != CurrentPerson)		//If it used to be third-party, remove it from its old bucket
+					thirdPartyPledges.Remove(oldKey, e.Row);
+				if (newPerson != CurrentPerson)		//If it's still third-party, add it to the correct bucket
+					thirdPartyPledges.Add(newKey, e.Row);
 				gridView.RefreshData();
-				return;
-			}
-			if (e.Row.Person == CurrentPerson && currentDates.Contains(e.Row.Date)) {
-				if (e.Column == Pledge.AmountColumn || e.Column == Pledge.NoteColumn)
-					auctionPledges[new PledgeKey(e.Row)].UpdateFromPledge(e.Row);
+
+				//If the person changed, we already raised
+				//the SummaryChanged event when we updated
+				//his AuctionPledge.
+				if (oldPerson != CurrentPerson || newPerson != CurrentPerson)
+					OnSummaryChanged();
+			} else if (e.Column == Pledge.AmountColumn || e.Column == Pledge.NoteColumn) {
+				if (currentDates.Contains(e.Row.Date)) {
+					if (e.Row.Person == CurrentPerson)
+						auctionPledges[new PledgeKey(e.Row)].UpdateFromPledge(e.Row);
+					else
+						OnSummaryChanged();
+				}
 			}
 		}
 		void Pledges_RowRemoved(object sender, RowListEventArgs<Pledge> e) {
@@ -147,6 +195,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 				if (e.Row.Person != CurrentPerson) {
 					if (thirdPartyPledges.Remove(new PledgeKey(e.Row), e.Row))
 						gridView.RefreshData();
+					OnSummaryChanged();
 				} else {
 					AuctionPledge ap;
 					if (auctionPledges.TryGetValue(new PledgeKey(e.Row), out ap))
@@ -190,15 +239,15 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			get { return dataSource.SelectMany(a => a.Pledges).Count(p => p.Amount == 0); }
 		}
 
-		///<summary>Occurs when the data in the grid changes.</summary>
-		public event EventHandler Changed;
-		///<summary>Raises the Changed event.</summary>
-		internal protected virtual void OnChanged() { OnChanged(EventArgs.Empty); }
-		///<summary>Raises the Changed event.</summary>
+		///<summary>Occurs when the data for summaries change.</summary>
+		public event EventHandler SummaryChanged;
+		///<summary>Raises the SummaryChanged event.</summary>
+		internal protected virtual void OnSummaryChanged() { OnSummaryChanged(EventArgs.Empty); }
+		///<summary>Raises the SummaryChanged event.</summary>
 		///<param name="e">An EventArgs object that provides the event data.</param>
-		internal protected virtual void OnChanged(EventArgs e) {
-			if (Changed != null)
-				Changed(this, e);
+		internal protected virtual void OnSummaryChanged(EventArgs e) {
+			if (SummaryChanged != null)
+				SummaryChanged(this, e);
 		}
 
 		#region Cell Styling
@@ -235,10 +284,9 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 				} else {
 					e.SuperTip = Utilities.CreateSuperTip(
 						title: "Other " + auctionPledge.PledgeType.ToLowerInvariant() + " pledges for " + auctionPledge.Item.ItemName + " on " + auctionPledge.Item.AuctionName + ":",
-						body: " • "
-							+ otherPledges.Join("\r\n\r\n • ",
+						body: otherPledges.Join(Environment.NewLine,
 								p => String.Format(CultureInfo.CurrentCulture,
-												   "{0}:  {1:c}  {2}",
+												   " • {0}:  {1:c}  {2}",
 												   p.Person.FullName, p.Amount, p.Note
 												  ).Replace("&", "&&").TrimEnd(' ')
 							)

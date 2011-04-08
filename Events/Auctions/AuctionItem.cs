@@ -26,7 +26,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			BidPledge.PropertyChanged += (sender, e) => OnPropertyChanged("Bid" + e.PropertyName);
 			if (includeמישברך) {
 				MBPledge = new AuctionPledge(this, "מי שברך");
-				BidPledge.PropertyChanged += (sender, e) => OnPropertyChanged("MB" + e.PropertyName);
+				MBPledge.PropertyChanged += (sender, e) => OnPropertyChanged("MB" + e.PropertyName);
 			}
 		}
 

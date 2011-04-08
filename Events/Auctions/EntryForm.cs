@@ -139,7 +139,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		}
 
 		#region Summaries
-		private void entryGrid_Changed(object sender, EventArgs e) { UpdateSummary(); }
+		private void entryGrid_SummaryChanged(object sender, EventArgs e) { UpdateSummary(); }
 		void UpdateSummary() {
 			var summary = new StringBuilder();
 
