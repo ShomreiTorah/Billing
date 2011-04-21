@@ -70,7 +70,11 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		}
 
 		private void groupSelector_SelectionChanged(object sender, EventArgs e) { SetGroup(); }
-		private void personSelector_EditValueChanged(object sender, EventArgs e) { SetGroup(); }
+		private void personSelector_EditValueChanged(object sender, EventArgs e) {
+			SetGroup();
+			if (personSelector.SelectedPerson != null)
+				entryGrid.Controls[0].Focus();	//To allow easy keyboard entry, focus the grid after selecting a person.
+		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e) {
 			base.OnFormClosing(e);
