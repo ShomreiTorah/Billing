@@ -134,5 +134,11 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		protected override PopupBaseForm CreatePopupForm() { return new AliyahNotePopupForm(this); }
 
 		public override string EditorTypeName { get { return "AliyahNoteEdit"; } }
+
+		protected override void AcceptPopupValue(object val) {
+			if (EditValue == null && "".Equals(val))	//Suppress value changes from null to "".  Otherwise, merely showing the popup will create an item in the auction grid.
+				return;
+			base.AcceptPopupValue(val);
+		}
 	}
 }
