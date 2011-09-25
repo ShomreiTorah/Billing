@@ -40,14 +40,15 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			colChartStatus.Visible = colChartStatus.OptionsColumn.ShowInCustomizationForm = false;
 
 			Program.Table<Pledge>().ValueChanged += Pledge_ValueChanged;
-			Program.Table<SeatingReservation>().RowRemoved += SeatingReservation_RowRemoved;
+			Program.Table<SeatingReservation>().RowRemoved += SeatingReservation_RowChanged;
 			Program.Table<SeatingReservation>().ValueChanged += SeatingReservation_ValueChanged;
+			Program.Table<SeatingReservation>().RowAdded += SeatingReservation_RowChanged;
 
 			UpdateTotals();
 		}
 
 
-		void SeatingReservation_RowRemoved(object sender, RowListEventArgs<SeatingReservation> e) {
+		void SeatingReservation_RowChanged(object sender, RowListEventArgs<SeatingReservation> e) {
 			if (e.Row.Pledge.Date.Year != year)
 				return;
 			UpdateTotals();
@@ -65,7 +66,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			if (disposing) {
 				seats.Dispose();
 				Program.Table<Pledge>().ValueChanged -= Pledge_ValueChanged;
-				Program.Table<SeatingReservation>().RowRemoved -= SeatingReservation_RowRemoved;
+				Program.Table<SeatingReservation>().RowRemoved -= SeatingReservation_RowChanged;
+				Program.Table<SeatingReservation>().RowAdded -= SeatingReservation_RowChanged;
 				Program.Table<SeatingReservation>().ValueChanged -= SeatingReservation_ValueChanged;
 
 				if (components != null) components.Dispose();
@@ -153,9 +155,12 @@ namespace ShomreiTorah.Billing.Events.Seating {
 					var row = seats.Rows[e.ListSourceRowIndex];
 
 					var seat = FindSeatGroup(row.Person);
-					if (seat == null)
-						e.Value = null;
-					else {
+					if (seat == null) {
+						if (row.MensSeats + row.BoysSeats == 0)
+							e.Value = 0;	//Not in chart, but has no seats
+						else
+							e.Value = null;
+					} else {
 						var reservedSeats = row.MensSeats + row.BoysSeats;
 						e.Value = reservedSeats - seat.SeatCount;
 					}
