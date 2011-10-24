@@ -73,6 +73,14 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 				yield return creator("הגבהה", None);
 			}
 		}
+		class ShminiAtzeresShacharis : AuctionInfo {
+			public ShminiAtzeresShacharis() : base(Holiday.סוכות[8]) { }
+			protected override IEnumerable<AuctionItem> CreateItems(HebrewDate date, Func<string, bool, AuctionItem> creator) {
+				foreach (var item in base.CreateItems(date, creator))
+					yield return item;
+				yield return creator("פתיחה דגשם", None);
+			}
+		}
 		class SimchasTorahMaariv : AuctionInfo {
 			public SimchasTorahMaariv() : base(Holiday.סוכות.Days.Last().Date, TimeSpan.FromHours(1), "שמחת תורה מעריב") { }
 			protected override IEnumerable<AuctionItem> CreateItems(HebrewDate date, Func<string, bool, AuctionItem> creator) {
@@ -100,6 +108,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 				//for (int a = 0; a < 5; a++)
 				//    yield return creator(AliyahNames[a], מישברך);
 
+				yield return creator("כל הנערים", מישברך);
 				yield return creator("חתן תורה", מישברך);
 				yield return creator("חתן בראשית", מישברך);
 				yield return creator("מפטיר", מישברך);
@@ -111,7 +120,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			new AuctionGroup("יום כיפור", new AuctionInfo(Holiday.יום٠כיפור.Date, new TimeSpan(7, 45, 00), "יום כיפור שחרית"), new YomKippurMincha());
 
 		static readonly AuctionGroup שמיני٠עצרת = new AuctionGroup("שמיני עצרת",
-			new AuctionInfo(Holiday.סוכות[8]),
+			new ShminiAtzeresShacharis(),
 			new SimchasTorahMaariv(),
 			new SimchasTorahShacharis(TimeSpan.FromHours(6.5), "שמחת תורה השכמה שחרית"),
 			new SimchasTorahShacharis(TimeSpan.FromHours(8.5), "שמחת תורה שחרית")
@@ -138,7 +147,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 
 		///<summary>Gets the name of the entire group.</summary>
 		public string Name { get; private set; }
-		///<summary>Gets the aucitons in the group.</summary>
+		///<summary>Gets the auctions in the group.</summary>
 		public ReadOnlyCollection<AuctionInfo> Auctions { get; private set; }
 
 		public override string ToString() {
