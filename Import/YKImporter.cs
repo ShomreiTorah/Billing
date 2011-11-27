@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.Data.OleDb;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Base;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
@@ -147,13 +149,15 @@ namespace ShomreiTorah.Billing.Import {
 								state = MatchState.Identical;
 							}
 
-							processedRows.Rows.Add(
+							var row = processedRows.Rows.Add(
 								(object)personId ?? DBNull.Value, ykid,
 								ykPerson.FullName, ykPerson.HisName, ykPerson.HerName, ykPerson.LastName,
 								ykPerson.Address, ykPerson.City, ykPerson.State, ykPerson.Zip, ykPerson.Phone,
 								mdRow == null ? null : mdRow["TotalPledged"],
 								DefaultActions[state], state
 							);
+							if (mdRow != null && mdRow.LastName != ykPerson.LastName)
+								row["Action"] = ImportAction.Add;
 						}
 
 						ui.Caption = "Scanning for deleted people";
@@ -179,7 +183,7 @@ namespace ShomreiTorah.Billing.Import {
 
 							//TODO: Try to match custom people
 							processedRows.Rows.Add(
-								mdRow.Id, null,	//YKID here is new YKID; thereisn't any
+								mdRow.Id, null,	//YKID here is new YKID; there isn't any
 								mdRow.FullName, mdRow.HisName, mdRow.HerName, mdRow.LastName,
 								mdRow.Address, mdRow.City, mdRow.State, mdRow.Zip, mdRow.Phone,
 								mdRow["TotalPledged"],
@@ -229,7 +233,9 @@ namespace ShomreiTorah.Billing.Import {
 			InitializeComponent();
 			this.processedRows = processedRows;
 			grid.DataSource = processedRows;
+			mdSelector.Properties.Buttons.RemoveAt(1);	//Delete the Add Person button; it doesn't make sense to add a new member here
 		}
+
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
 			gridView.BestFitColumns();
@@ -260,8 +266,14 @@ namespace ShomreiTorah.Billing.Import {
 						mdRow.Source = "YK Directory";
 						break;
 					case ImportAction.Add:
-						var row = Program.Table<Person>().AddPerson(new PersonData(ykRow), "YK Directory");
-						row.YKID = ykRow.Field<int>("YKID");
+						var newRow = Program.Table<Person>().AddPerson(new PersonData(ykRow), "YK Directory");
+						newRow.YKID = ykRow.Field<int>("YKID");
+
+						if (!ykRow.IsNull("PersonId")) {
+							var oldRow = Program.Table<Person>().Rows.First(p => p.Id == ykRow.Field<Guid>("PersonId"));
+							if (oldRow.YKID == newRow.YKID)
+								oldRow.YKID = null;
+						}
 						break;
 					case ImportAction.Delete:
 						Program.Table<Person>().Rows.First(p => p.Id == ykRow.Field<Guid>("PersonId")).RemoveRow();
@@ -271,6 +283,7 @@ namespace ShomreiTorah.Billing.Import {
 			Close();
 		}
 
+		#region Action DropDown
 		private void gridView_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e) {
 			if (e.Column == colMatchState)
 				e.DisplayText = MatchStateNames[(MatchState)e.Value];
@@ -281,6 +294,12 @@ namespace ShomreiTorah.Billing.Import {
 					e.DisplayText = GetActionName(gridView.GetDataRow(e.RowHandle).Field<MatchState>("MatchState"), (ImportAction)e.Value);
 			}
 		}
+
+		void actionDropDown_CustomDisplayText(object sender, CustomDisplayTextEventArgs e) {
+			var ykRow = gridView.GetFocusedDataRow();
+			e.DisplayText = GetActionName(ykRow.Field<MatchState>("MatchState"), (ImportAction)e.Value);
+		}
+
 		static string GetActionName(MatchState state, ImportAction action) {
 			switch (state) {
 				case MatchState.Added:
@@ -302,33 +321,116 @@ namespace ShomreiTorah.Billing.Import {
 		}
 
 		private void gridView_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e) {
+			UpdateDisplay();
+		}
+		private void gridView_RowUpdated(object sender, RowObjectEventArgs e) {
+			UpdateDisplay();
+		}
+
+		void UpdateDisplay() {
 			var ykRow = gridView.GetFocusedDataRow();
 			if (ykRow == null) {
 				mdDetails.Text = ykDetails.Text = "Please select a person in the grid.";
+				mdSelector.SelectedPerson = null;
+				mdSelector.Enabled = false;
 			} else {
 				var mdRow = ykRow.IsNull("PersonId") ? null : Program.Table<Person>().Rows.FirstOrDefault(p => p.Id == ykRow.Field<Guid>("PersonId"));
+				mdSelector.SelectedPerson = mdRow;
+				mdSelector.Enabled = true;
 
-				switch (ykRow.Field<MatchState>("MatchState")) {
-					case MatchState.Identical:
-					case MatchState.Updated:
-						ykDetails.Text = new PersonData(ykRow).ToFullString();
-						mdDetails.Text = new PersonData(mdRow).ToFullString();
+				if (mdRow != null)
+					mdDetails.Text = new PersonData(mdRow).ToFullString();
+				if (ykRow != null)
+					ykDetails.Text = new PersonData(ykRow).ToFullString();
+				switch (ykRow.Field<ImportAction>("Action")) {
+					case ImportAction.Ignore:
+						switch (ykRow.Field<MatchState>("MatchState")) {
+							case MatchState.Identical:
+								ykDetails.Text = "This person already matches and will not be changed.";
+								break;
+							case MatchState.Updated:
+								ykDetails.Text = "This person has been updated in the YK directory, but will not be changed by the import.";
+								break;
+							case MatchState.Added:
+								ykDetails.Text = "This person is not in the master directory, but will not be added.";
+								break;
+							case MatchState.Deleted:
+								ykDetails.Text = "This person has been removed from the YK directory, but will be kept by the import.";
+								break;
+							case MatchState.NonYK:
+								ykDetails.Text = "This person is not in the YK directory and will be ignored by the import.";
+								break;
+						}
 						break;
-					case MatchState.Added:
-						ykDetails.Text = new PersonData(ykRow).ToFullString();
-						mdDetails.Text = "This person is not yet in the master directory and will be added by the import.";
+					case ImportAction.Update:
+						break;	//Texts were already set above
+					case ImportAction.Add:
+						switch (ykRow.Field<MatchState>("MatchState")) {
+							case MatchState.Added:
+								mdDetails.Text = "This person is not yet in the master directory and will be added by the import.";
+								break;
+							case MatchState.Updated:
+								mdDetails.Text = "This person matches someone in the master directory, but will be added as separate person by the import.\r\nThe matching person, displayed below, will not be changed:\r\n\r\n" + mdDetails.Text;
+								break;
+						}
 						break;
-					case MatchState.Deleted:
-						ykDetails.Text = "This person has been removed from the YK directory and will be deleted by the import.";
-						mdDetails.Text = new PersonData(mdRow).ToFullString();
-						break;
-					case MatchState.NonYK:
-						ykDetails.Text = "This person is not in the YK directory and will be ignored by the import.";
-						mdDetails.Text = new PersonData(mdRow).ToFullString();
+					case ImportAction.Delete:
+						ykDetails.Text = "This person has been removed from the YK directory, but will be kept by the import.";
 						break;
 				}
 			}
 		}
+
+		private void gridView_ShowingEditor(object sender, CancelEventArgs e) {
+			if (gridView.FocusedColumn != colAction)
+				return;
+			var ykRow = gridView.GetFocusedDataRow();
+
+			actionDropDown.Items.Clear();
+			switch (ykRow.Field<MatchState>("MatchState")) {
+				case MatchState.NonYK:
+				case MatchState.Identical:
+					e.Cancel = true;
+					break;
+				case MatchState.Added:
+					actionDropDown.Items.Add(ImportAction.Add);
+					actionDropDown.Items.Add(ImportAction.Ignore);
+					if (!ykRow.IsNull("PersonId"))
+						actionDropDown.Items.Add(ImportAction.Update);
+					break;
+				case MatchState.Deleted:
+					actionDropDown.Items.Add(ImportAction.Delete);
+					actionDropDown.Items.Add(ImportAction.Ignore);
+					break;
+				case MatchState.Updated:
+					actionDropDown.Items.Add(ImportAction.Add);
+					actionDropDown.Items.Add(ImportAction.Ignore);
+					actionDropDown.Items.Add(ImportAction.Update);
+					break;
+			}
+			actionDropDown.DropDownRows = actionDropDown.Items.Count;
+
+		}
+		private void actionDropDown_EditValueChanged(object sender, EventArgs e) {
+			gridView.CloseEditor();
+			UpdateDisplay();
+		}
+		#endregion
+
+		private void mdSelector_EditValueChanged(object sender, EventArgs e) {
+			var ykRow = gridView.GetFocusedDataRow();
+			var personId = mdSelector.SelectedPerson == null ? new Guid?() : mdSelector.SelectedPerson.Id;
+
+			if (ykRow.Field<Guid?>("PersonId") == personId)
+				return;
+
+			ykRow.SetField("PersonId", personId);
+			if (mdSelector.SelectedPerson != null) {
+				ykRow["Action"] = ImportAction.Update;
+				UpdateDisplay();
+			}
+		}
+
 	}
 	static class Extensions {
 		public static string Cleanup(this string str) {

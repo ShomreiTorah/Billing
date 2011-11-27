@@ -28,7 +28,14 @@ namespace ShomreiTorah.Billing.Import {
 			DevExpress.XtraGrid.StyleFormatCondition styleFormatCondition3 = new DevExpress.XtraGrid.StyleFormatCondition();
 			DevExpress.XtraGrid.StyleFormatCondition styleFormatCondition4 = new DevExpress.XtraGrid.StyleFormatCondition();
 			DevExpress.XtraGrid.StyleFormatCondition styleFormatCondition5 = new DevExpress.XtraGrid.StyleFormatCondition();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(YKImporter));
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
 			this.colMatchState = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.grid = new DevExpress.XtraGrid.GridControl();
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -43,19 +50,24 @@ namespace ShomreiTorah.Billing.Import {
 			this.colState = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colZip = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colPhone = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colAction = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.actionDropDown = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+			this.mdSelector = new ShomreiTorah.Data.UI.Controls.PersonSelector();
+			this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
 			this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
 			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
 			this.ykDetails = new DevExpress.XtraEditors.MemoEdit();
 			this.mdDetails = new DevExpress.XtraEditors.MemoEdit();
 			this.doImport = new DevExpress.XtraEditors.SimpleButton();
 			this.cancel = new DevExpress.XtraEditors.SimpleButton();
-			this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.actionDropDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
 			this.panelControl1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.mdSelector.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ykDetails.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.mdDetails.Properties)).BeginInit();
 			this.SuspendLayout();
@@ -73,6 +85,8 @@ namespace ShomreiTorah.Billing.Import {
 			this.grid.Location = new System.Drawing.Point(0, 0);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
+			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.actionDropDown});
 			this.grid.Size = new System.Drawing.Size(779, 538);
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -141,7 +155,9 @@ namespace ShomreiTorah.Billing.Import {
 			this.gridView.OptionsView.ShowGroupPanel = false;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colMatchState, DevExpress.Data.ColumnSortOrder.Ascending)});
+			this.gridView.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gridView_ShowingEditor);
 			this.gridView.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView_FocusedRowChanged);
+			this.gridView.RowUpdated += new DevExpress.XtraGrid.Views.Base.RowObjectEventHandler(this.gridView_RowUpdated);
 			this.gridView.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gridView_CustomColumnDisplayText);
 			// 
 			// colId
@@ -220,19 +236,42 @@ namespace ShomreiTorah.Billing.Import {
 			this.colPhone.Visible = true;
 			this.colPhone.VisibleIndex = 9;
 			// 
+			// gridColumn1
+			// 
+			this.gridColumn1.Caption = "Total Pledges";
+			this.gridColumn1.DisplayFormat.FormatString = "c";
+			this.gridColumn1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.gridColumn1.FieldName = "TotalPledged";
+			this.gridColumn1.Name = "gridColumn1";
+			this.gridColumn1.OptionsColumn.AllowEdit = false;
+			this.gridColumn1.OptionsColumn.ReadOnly = true;
+			this.gridColumn1.Visible = true;
+			this.gridColumn1.VisibleIndex = 10;
+			// 
 			// colAction
 			// 
 			this.colAction.Caption = "Action";
+			this.colAction.ColumnEdit = this.actionDropDown;
 			this.colAction.FieldName = "Action";
 			this.colAction.Name = "colAction";
-			this.colAction.OptionsColumn.AllowEdit = false;
-			this.colAction.OptionsColumn.AllowFocus = false;
-			this.colAction.OptionsColumn.ReadOnly = true;
 			this.colAction.Visible = true;
 			this.colAction.VisibleIndex = 11;
 			// 
+			// actionDropDown
+			// 
+			this.actionDropDown.AutoHeight = false;
+			this.actionDropDown.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.actionDropDown.HighlightedItemStyle = DevExpress.XtraEditors.HighlightStyle.Skinned;
+			this.actionDropDown.Name = "actionDropDown";
+			this.actionDropDown.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+			this.actionDropDown.EditValueChanged += new System.EventHandler(this.actionDropDown_EditValueChanged);
+			this.actionDropDown.CustomDisplayText += new DevExpress.XtraEditors.Controls.CustomDisplayTextEventHandler(this.actionDropDown_CustomDisplayText);
+			// 
 			// panelControl1
 			// 
+			this.panelControl1.Controls.Add(this.mdSelector);
+			this.panelControl1.Controls.Add(this.labelControl3);
 			this.panelControl1.Controls.Add(this.labelControl2);
 			this.panelControl1.Controls.Add(this.labelControl1);
 			this.panelControl1.Controls.Add(this.ykDetails);
@@ -245,9 +284,36 @@ namespace ShomreiTorah.Billing.Import {
 			this.panelControl1.Size = new System.Drawing.Size(243, 538);
 			this.panelControl1.TabIndex = 1;
 			// 
+			// mdSelector
+			// 
+			this.mdSelector.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.mdSelector.Location = new System.Drawing.Point(6, 31);
+			this.mdSelector.Name = "mdSelector";
+			toolTipItem1.Text = "Click to select a person";
+			superToolTip1.Items.Add(toolTipItem1);
+			toolTipTitleItem1.Text = "New Person...";
+			toolTipItem2.Text = "Adds a new person to the master directory";
+			superToolTip2.Items.Add(toolTipTitleItem1);
+			superToolTip2.Items.Add(toolTipItem2);
+			this.mdSelector.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, superToolTip1, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("mdSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, superToolTip2, true)});
+			this.mdSelector.Size = new System.Drawing.Size(225, 20);
+			this.mdSelector.TabIndex = 5;
+			this.mdSelector.EditValueChanged += new System.EventHandler(this.mdSelector_EditValueChanged);
+			// 
+			// labelControl3
+			// 
+			this.labelControl3.Location = new System.Drawing.Point(5, 12);
+			this.labelControl3.Name = "labelControl3";
+			this.labelControl3.Size = new System.Drawing.Size(190, 13);
+			this.labelControl3.TabIndex = 4;
+			this.labelControl3.Text = "Matching person from master directory:";
+			// 
 			// labelControl2
 			// 
-			this.labelControl2.Location = new System.Drawing.Point(7, 158);
+			this.labelControl2.Location = new System.Drawing.Point(6, 247);
 			this.labelControl2.Name = "labelControl2";
 			this.labelControl2.Size = new System.Drawing.Size(99, 13);
 			this.labelControl2.TabIndex = 4;
@@ -255,7 +321,7 @@ namespace ShomreiTorah.Billing.Import {
 			// 
 			// labelControl1
 			// 
-			this.labelControl1.Location = new System.Drawing.Point(6, 13);
+			this.labelControl1.Location = new System.Drawing.Point(6, 58);
 			this.labelControl1.Name = "labelControl1";
 			this.labelControl1.Size = new System.Drawing.Size(75, 13);
 			this.labelControl1.TabIndex = 3;
@@ -263,24 +329,24 @@ namespace ShomreiTorah.Billing.Import {
 			// 
 			// ykDetails
 			// 
-			this.ykDetails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.ykDetails.Location = new System.Drawing.Point(6, 177);
+			this.ykDetails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ykDetails.Location = new System.Drawing.Point(5, 266);
 			this.ykDetails.Name = "ykDetails";
 			this.ykDetails.Properties.ReadOnly = true;
 			this.ykDetails.Properties.ScrollBars = System.Windows.Forms.ScrollBars.None;
-			this.ykDetails.Size = new System.Drawing.Size(225, 110);
+			this.ykDetails.Size = new System.Drawing.Size(225, 164);
 			this.ykDetails.TabIndex = 2;
 			// 
 			// mdDetails
 			// 
-			this.mdDetails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.mdDetails.Location = new System.Drawing.Point(6, 32);
+			this.mdDetails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.mdDetails.Location = new System.Drawing.Point(6, 77);
 			this.mdDetails.Name = "mdDetails";
 			this.mdDetails.Properties.ReadOnly = true;
 			this.mdDetails.Properties.ScrollBars = System.Windows.Forms.ScrollBars.None;
-			this.mdDetails.Size = new System.Drawing.Size(225, 110);
+			this.mdDetails.Size = new System.Drawing.Size(225, 164);
 			this.mdDetails.TabIndex = 2;
 			// 
 			// doImport
@@ -304,18 +370,6 @@ namespace ShomreiTorah.Billing.Import {
 			this.cancel.TabIndex = 0;
 			this.cancel.Text = "Cancel";
 			// 
-			// gridColumn1
-			// 
-			this.gridColumn1.Caption = "Total Pledges";
-			this.gridColumn1.DisplayFormat.FormatString = "c";
-			this.gridColumn1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-			this.gridColumn1.FieldName = "TotalPledged";
-			this.gridColumn1.Name = "gridColumn1";
-			this.gridColumn1.OptionsColumn.AllowEdit = false;
-			this.gridColumn1.OptionsColumn.ReadOnly = true;
-			this.gridColumn1.Visible = true;
-			this.gridColumn1.VisibleIndex = 10;
-			// 
 			// YKImporter
 			// 
 			this.AcceptButton = this.doImport;
@@ -330,9 +384,11 @@ namespace ShomreiTorah.Billing.Import {
 			this.Text = "YK Directory Importer";
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.actionDropDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
 			this.panelControl1.ResumeLayout(false);
 			this.panelControl1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.mdSelector.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.ykDetails.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.mdDetails.Properties)).EndInit();
 			this.ResumeLayout(false);
@@ -364,5 +420,8 @@ namespace ShomreiTorah.Billing.Import {
 		private DevExpress.XtraEditors.MemoEdit mdDetails;
 		private DevExpress.XtraGrid.Columns.GridColumn colAction;
 		private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+		private DevExpress.XtraEditors.Repository.RepositoryItemComboBox actionDropDown;
+		private Data.UI.Controls.PersonSelector mdSelector;
+		private DevExpress.XtraEditors.LabelControl labelControl3;
 	}
 }
