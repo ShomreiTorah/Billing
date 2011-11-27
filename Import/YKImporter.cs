@@ -106,7 +106,16 @@ namespace ShomreiTorah.Billing.Import {
 			return mdRow;
 		}
 		public static void Execute() {
-			Program.Current.RefreshDatabase();
+			//Before deleting people,  we need to check that
+			//they aren't used by any child tables, to avoid
+			//violating foreign key constraints.  Therefore,
+			//I load all child tables here.
+			var missingTables = Person.Schema.ChildRelations.Select(cr => cr.ChildSchema);
+			if (missingTables.Any())
+				Program.LoadTables(missingTables);
+			else
+				Program.Current.RefreshDatabase();
+
 			using (var fileDialog = new OpenFileDialog {
 				Filter = "Excel Files (*.xls, *.xlsx)|*.xls;*.xlsx|All Files|*.*",
 				Title = "Open YK Directory"
