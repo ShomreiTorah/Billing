@@ -722,6 +722,10 @@
       <Project>{53C1A3A0-B443-4C28-895B-5E4DFE803A1C}</Project>
       <Name>ShomreiTorah.Singularity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\ShomreiTorah.Statements\ShomreiTorah.Statements.csproj">
+      <Project>{416CB9C4-DCCC-47A2-AB58-A7F066C16462}</Project>
+      <Name>ShomreiTorah.Statements</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\ShomreiTorah.WinForms\ShomreiTorah.WinForms.csproj">
       <Project>{0B927F97-8CDD-47CB-B775-CA1E0AB2409C}</Project>
       <Name>ShomreiTorah.WinForms</Name>
