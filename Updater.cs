@@ -94,7 +94,7 @@ namespace ShomreiTorah.Billing {
 			if (!File.Exists(Path.Combine(Program.AppDirectory, "ShomreiTorah.Billing.Config.xml")))
 				File.Delete(Path.Combine(updatePath, "ShomreiTorah.Billing.Config.xml"));	//File.Delete doesn't throw FileNotFound
 
-			if (Program.Current != null)	//If an update was applied at launch, the AppFramework will not have been registered yet.
+			if (Program.Current.SyncContext != null)	//If an update was applied at launch, the database will not have been loaded yet.
 				Program.Current.SaveDatabase();
 			UpdateChecker.ApplyUpdate(updatePath, Program.AppDirectory);
 

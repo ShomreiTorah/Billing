@@ -4,7 +4,7 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using ShomreiTorah.Common.Updates;
 
-[assembly: Updatable("ShomreiTorah.Billing", "5.9.4")]
+[assembly: Updatable("ShomreiTorah.Billing", "6.0")]
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
@@ -39,4 +39,4 @@ using ShomreiTorah.Common.Updates;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
-[assembly: CLSCompliant(true)]
+[assembly: CLSCompliant(false)]

@@ -4,8 +4,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using Microsoft.Office.Interop.Word;
-using Microsoft.Office.Interop.Word.Extensions;
 using ShomreiTorah.Common;
+using ShomreiTorah.Statements;
 using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Statements.Word {

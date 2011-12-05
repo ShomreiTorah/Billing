@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Microsoft.Office.Interop.Word;
 using ShomreiTorah.Data;
+using ShomreiTorah.Statements;
 
 namespace ShomreiTorah.Billing.Statements.Word {
 	static partial class WordExport {

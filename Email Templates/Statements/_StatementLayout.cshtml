@@ -1,0 +1,35 @@
+@inherits ShomreiTorah.Statements.Email.StatementPage
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <title>@EmailSubject</title>
+    </head>
+
+    <body style="font-family: Verdana">
+        <!-- I know that using tables here is wrong, but Outlook 2007 doesn't support floats. -->
+        <div style="border-bottom: solid 2px navy">
+            <table cellspacing="0" width="100%">
+                <tr>
+                    <td style="width: 210px">
+                        <img src="@ImageUrl("Logo.gif")" alt="Shomrei Torah Logo" style="float: left;" />
+                    </td>
+                    <td>
+                        <h1 style="font-size: large; text-align: center; padding-top: 20px;">
+                            @RenderSection("Title")
+                        </h1>
+                    </td>
+                    <td style="width: 250px">
+                        <p>
+                            Federal Tax ID: 47-0953005</p>
+                        Congregation Shomrei Torah<br />
+                        of Passaic Clifton<br />
+                        1360 Clifton Ave. #908<br />
+                        Clifton, NJ 07012 </td>
+                </tr>
+            </table>
+        </div>
+        @RenderBody()
+    </body>
+
+</html>

@@ -10,17 +10,21 @@ using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Base;
+using RazorEngine.Configuration;
+using RazorEngine.Templating;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
+using ShomreiTorah.Statements.Email;
 using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	partial class CallerList : XtraForm {
-		const string templateSubfolder = "Caller Emails";
+		static readonly DirectoryTemplateResolver Resolver = new DirectoryTemplateResolver(Path.Combine(Program.AppDirectory, @"Email Templates\Caller Emails"));
 
+		readonly ITemplateService razor;
 		readonly FilteredTable<Caller> dataSource;
 		readonly int year;
 		public CallerList(int year) {
@@ -38,15 +42,15 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			ToggleRowsBehavior.Instance.Apply(gridView);
 			UpdateButtons();
 
-			emailTemplateList.Strings.AddRange(
-				Array.ConvertAll(Directory.GetFiles(Path.Combine(Program.AspxPath, templateSubfolder), "*.aspx"), Path.GetFileNameWithoutExtension)
-			);
+			razor = new TemplateService(new TemplateServiceConfiguration { Resolver = Resolver });
+			emailTemplateList.Strings.AddRange(Resolver.Templates.ToArray());
 		}
 		///<summary>Releases the unmanaged resources used by the CallerList and optionally releases the managed resources.</summary>
 		///<param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
 		protected override void Dispose(bool disposing) {
 			if (disposing) {
 				dataSource.Dispose();
+				if (razor != null) razor.Dispose();
 				if (components != null) components.Dispose();
 			}
 			base.Dispose(disposing);
@@ -150,9 +154,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private void emailTemplateList_ListItemClick(object sender, ListItemClickEventArgs e) {
 			var actualCallers = ConfirmSendEmailTemplate();
 			if (actualCallers == null) return;
-			Program.LoadTable<MelaveMalkaInfo>();		//Used by the templates
+			Program.LoadTables(MelaveMalkaInfo.Schema, MelaveMalkaSeat.Schema, MelaveMalkaInvitation.Schema);		//Used by the templates
 
-			var virtualPath = "/" + templateSubfolder + "/" + emailTemplateList.Strings[e.Index] + ".aspx";
+			var template = emailTemplateList.Strings[e.Index];
 			ProgressWorker.Execute(progress => {
 				progress.Maximum = actualCallers.Count * 2;	//Two steps per caller
 
@@ -173,7 +177,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 						progress.Progress++;
 						progress.Caption = "Emailing " + caller.Name;
 
-						using (var message = EmailCreator.CreateMessage(caller, virtualPath)) {
+						using (var message = razor.CreateMessage(caller, template)) {
 							message.From = Email.JournalAddress;
 							message.To.Add(caller.EmailAddresses);	//Comma-separated string
 							message.Attachments.Add(new Attachment(attachmentPath, new ContentType {

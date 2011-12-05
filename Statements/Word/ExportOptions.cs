@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
+using ShomreiTorah.Statements;
 
 namespace ShomreiTorah.Billing.Statements.Word {
 	partial class ExportOptions : XtraForm {

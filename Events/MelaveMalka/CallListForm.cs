@@ -24,7 +24,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			Text = "Melave Malka " + year + " Call List";
 
 			grid.DataMember = null;
-			listSearch.Properties.DataSource = grid.DataSource = dataSource 
+			listSearch.Properties.DataSource = grid.DataSource = dataSource
 				= Program.Table<MelaveMalkaInvitation>().Filter(mmi => mmi.Year == year);
 
 			EditorRepository.PersonOwnedLookup.Apply(listSearch.Properties);
@@ -61,7 +61,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 
 		private void gridView_InvalidValueException(object sender, InvalidValueExceptionEventArgs e) {
 			//Deleting the text in the combobox will
-			//try to set the cell value to an empty 
+			//try to set the cell value to an empty
 			//string, and fail with an invalid cast.
 			//I handle this case and actually set it
 			//to null.
@@ -98,7 +98,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				.OrderBy(c => c.Person.LastName)
 				.ToList();
 			if (newCallees.Count < 2) {
-				Dialog.ShowError("This feature is to be used when there are multiple unassigned callers");
+				Dialog.ShowError("This feature is to be used when there are multiple unassigned callers.\r\nMake sure that there are people who are checked, but do not have a caller.");
 				return;
 			}
 

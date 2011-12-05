@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -82,7 +81,6 @@ namespace ShomreiTorah.Billing.Forms {
 
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
-			Program.CloseSplash();
 			Program.UIInvoker = this;
 			Updater.RunBackground();
 			if (Environment.GetCommandLineArgs().Contains("Updated"))

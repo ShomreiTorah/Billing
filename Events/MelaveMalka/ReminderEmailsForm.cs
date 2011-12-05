@@ -23,6 +23,8 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.Export;
 using DevExpress.XtraRichEdit.Export.Html;
+using RazorEngine.Configuration;
+using RazorEngine.Templating;
 using ShomreiTorah.Billing.Controls;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
@@ -30,13 +32,15 @@ using ShomreiTorah.Data.UI.Controls;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Data.UI.Grid;
 using ShomreiTorah.Singularity;
+using ShomreiTorah.Statements.Email;
 using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	public partial class ReminderEmailsForm : XtraForm {
-		const string templateSubfolder = "Ad Reminders";
+		static readonly DirectoryTemplateResolver Resolver = new DirectoryTemplateResolver(Path.Combine(Program.AppDirectory, @"Email Templates\Ad Reminders"));
 
+		readonly ITemplateService razor;
 		readonly FilteredTable<MelaveMalkaInvitation> dataSource;
 		public ReminderEmailsForm(int year) {
 			AdReminderEmail.Schema.ToString();			//Force static ctor
@@ -54,9 +58,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 
 			CheckableGridController.Handle(colShouldEmail);
 
-			var templates = Array.ConvertAll(Directory.GetFiles(Path.Combine(Program.AspxPath, templateSubfolder), "*.aspx"), Path.GetFileNameWithoutExtension);
-			resetSingle.Strings.AddRange(templates);
-			resetSelected.Strings.AddRange(templates);
+			razor = new TemplateService(new TemplateServiceConfiguration { Resolver = Resolver });
+			resetSingle.Strings.AddRange(Resolver.Templates.ToArray());
+			resetSelected.Strings.AddRange(Resolver.Templates.ToArray());
 			previewAddressItem.EditValue = PreviewAddressEdit.DefaultAddress;	//It is impossible to have a non-default EditValue for a BarEditItem, so I apply the default manually.
 		}
 
@@ -70,6 +74,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		protected override void Dispose(bool disposing) {
 			if (disposing) {
 				if (emailLogRenderer.IsValueCreated) emailLogRenderer.Value.Dispose();
+				if (razor != null) razor.Dispose();
 				if (components != null) components.Dispose();
 				dataSource.Dispose();
 			}
@@ -282,7 +287,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			ApplyTemplate(resetSelected.Strings[e.Index], gridView.GetSelectedRows().Select(gridView.GetRow).Cast<MelaveMalkaInvitation>().ToArray());
 		}
 
-		static void ApplyTemplate(string templateName, params MelaveMalkaInvitation[] people) {
+		void ApplyTemplate(string templateName, params MelaveMalkaInvitation[] people) {
 			if (people.Length == 0) {
 				Dialog.ShowError("Please select people.");
 				return;
@@ -296,9 +301,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			}
 
 			Program.LoadTable<MelaveMalkaInfo>();		//Used by the templates
-			var virtualPath = "/" + templateSubfolder + "/" + templateName + ".aspx";
 			foreach (var recipient in people) {
-				using (var message = EmailCreator.CreateMessage(recipient, virtualPath)) {
+				using (var message = razor.CreateMessage(recipient, templateName)) {
 					recipient.EmailSubject = message.Subject;
 					recipient.EmailSource = message.Body;
 				}
