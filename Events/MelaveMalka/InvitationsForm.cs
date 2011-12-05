@@ -53,6 +53,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			base.Dispose(disposing);
 		}
 
+		private void showCopyDialog_ItemClick(object sender, ItemClickEventArgs e) {
+			InvitationsCopier.Execute(year);
+		}
 		private void personSelector_PersonSelecting(object sender, PersonSelectingEventArgs e) {
 			if (e.Method == PersonSelectionReason.Created)
 				e.Person.Source = "Melave Malka " + year;

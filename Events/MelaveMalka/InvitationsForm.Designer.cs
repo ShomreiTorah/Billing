@@ -21,6 +21,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
 			this.listSearch = new ShomreiTorah.WinForms.Controls.Lookup.ItemSelector();
 			this.personSelector = new ShomreiTorah.Data.UI.Controls.PersonSelector();
 			this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
@@ -35,6 +38,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colRowId = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.saveExcel = new DevExpress.XtraBars.BarButtonItem();
+			this.showCopyDialog = new DevExpress.XtraBars.BarButtonItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			((System.ComponentModel.ISupportInitialize)(this.listSearch.Properties)).BeginInit();
@@ -118,7 +122,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.grid.Location = new System.Drawing.Point(0, 134);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 48;
+			this.grid.RegistrationCount = 52;
 			this.grid.ShowOnlyPredefinedDetails = true;
 			this.grid.Size = new System.Drawing.Size(655, 335);
 			this.grid.TabIndex = 3;
@@ -168,7 +172,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colDateAdded.OptionsColumn.ReadOnly = true;
 			this.colDateAdded.Visible = true;
 			this.colDateAdded.VisibleIndex = 1;
-			this.colDateAdded.Width = 147;
+			this.colDateAdded.Width = 144;
 			// 
 			// colSource
 			// 
@@ -200,12 +204,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			this.ribbonControl1.ExpandCollapseItem.Id = 0;
 			this.ribbonControl1.ExpandCollapseItem.Name = "";
-			this.ribbonControl1.ExpandCollapseItem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
 			this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
-            this.saveExcel});
+            this.saveExcel,
+            this.showCopyDialog});
 			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl1.MaxItemId = 2;
+			this.ribbonControl1.MaxItemId = 3;
 			this.ribbonControl1.Name = "ribbonControl1";
 			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -221,6 +225,20 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.saveExcel.Name = "saveExcel";
 			this.saveExcel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.saveExcel_ItemClick);
 			// 
+			// showCopyDialog
+			// 
+			this.showCopyDialog.Caption = "Copy from last year";
+			this.showCopyDialog.Id = 2;
+			this.showCopyDialog.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.Copy32;
+			this.showCopyDialog.Name = "showCopyDialog";
+			toolTipTitleItem2.Text = "Copy from last year";
+			toolTipItem3.LeftIndent = 6;
+			toolTipItem3.Text = "Allows you to copy the invitations from last year\'s Melave Malka.";
+			superToolTip3.Items.Add(toolTipTitleItem2);
+			superToolTip3.Items.Add(toolTipItem3);
+			this.showCopyDialog.SuperTip = superToolTip3;
+			this.showCopyDialog.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showCopyDialog_ItemClick);
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -230,6 +248,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// ribbonPageGroup1
 			// 
+			this.ribbonPageGroup1.ItemLinks.Add(this.showCopyDialog);
 			this.ribbonPageGroup1.ItemLinks.Add(this.saveExcel);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			this.ribbonPageGroup1.ShowCaptionButton = false;
@@ -277,5 +296,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraBars.BarButtonItem saveExcel;
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
+		private DevExpress.XtraBars.BarButtonItem showCopyDialog;
 	}
 }
