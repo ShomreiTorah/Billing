@@ -27,6 +27,10 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WordExporter));
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
 			this.grid = new DevExpress.XtraGrid.GridControl();
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colLastName = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -44,18 +48,20 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+			this.duplexMode = new DevExpress.XtraEditors.CheckEdit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.buttonEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.mailingDocuments)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.duplexMode.Properties)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// grid
 			// 
-			this.grid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.grid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.grid.Location = new System.Drawing.Point(12, 12);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
@@ -170,7 +176,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.createDoc.Name = "createDoc";
 			this.createDoc.Size = new System.Drawing.Size(135, 23);
 			this.createDoc.TabIndex = 17;
-			this.createDoc.Text = "Create Document";
+			this.createDoc.Text = "&Create Document";
 			this.createDoc.Click += new System.EventHandler(this.createDoc_Click);
 			// 
 			// mailingDocuments
@@ -187,6 +193,54 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.barManager.Form = this;
 			this.barManager.MaxItemId = 0;
 			// 
+			// barDockControlTop
+			// 
+			this.barDockControlTop.CausesValidation = false;
+			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
+			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
+			this.barDockControlTop.Size = new System.Drawing.Size(588, 0);
+			// 
+			// barDockControlBottom
+			// 
+			this.barDockControlBottom.CausesValidation = false;
+			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.barDockControlBottom.Location = new System.Drawing.Point(0, 343);
+			this.barDockControlBottom.Size = new System.Drawing.Size(588, 0);
+			// 
+			// barDockControlLeft
+			// 
+			this.barDockControlLeft.CausesValidation = false;
+			this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
+			this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
+			this.barDockControlLeft.Size = new System.Drawing.Size(0, 343);
+			// 
+			// barDockControlRight
+			// 
+			this.barDockControlRight.CausesValidation = false;
+			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
+			this.barDockControlRight.Location = new System.Drawing.Point(588, 0);
+			this.barDockControlRight.Size = new System.Drawing.Size(0, 343);
+			// 
+			// duplexMode
+			// 
+			this.duplexMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.duplexMode.EditValue = true;
+			this.duplexMode.Location = new System.Drawing.Point(166, 309);
+			this.duplexMode.Name = "duplexMode";
+			this.duplexMode.Properties.AutoWidth = true;
+			this.duplexMode.Properties.Caption = "Generate for &double-sided printing";
+			this.duplexMode.Size = new System.Drawing.Size(188, 19);
+			toolTipTitleItem1.Text = "Duplex Mode";
+			toolTipItem1.LeftIndent = 6;
+			toolTipItem1.Text = resources.GetString("toolTipItem1.Text");
+			toolTipTitleItem2.LeftIndent = 6;
+			toolTipTitleItem2.Text = "This does not affect envelopes or labels";
+			superToolTip1.Items.Add(toolTipTitleItem1);
+			superToolTip1.Items.Add(toolTipItem1);
+			superToolTip1.Items.Add(toolTipTitleItem2);
+			this.duplexMode.SuperTip = superToolTip1;
+			this.duplexMode.TabIndex = 22;
+			// 
 			// WordExporter
 			// 
 			this.AcceptButton = this.createDoc;
@@ -194,6 +248,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancel;
 			this.ClientSize = new System.Drawing.Size(588, 343);
+			this.Controls.Add(this.duplexMode);
 			this.Controls.Add(this.createDoc);
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.cancel);
@@ -209,7 +264,9 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			((System.ComponentModel.ISupportInitialize)(this.buttonEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.mailingDocuments)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.duplexMode.Properties)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -232,5 +289,6 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		private DevExpress.XtraBars.BarDockControl barDockControlBottom;
 		private DevExpress.XtraBars.BarDockControl barDockControlLeft;
 		private DevExpress.XtraBars.BarDockControl barDockControlRight;
+		private DevExpress.XtraEditors.CheckEdit duplexMode;
 	}
 }

@@ -69,7 +69,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			cancel.Text = "Close";
 		}
 		void createDoc_Click(object sender, EventArgs e) {
-			ProgressWorker.Execute(ui => StatementGenerator.CreateBills(statements, ui), true);
+			ProgressWorker.Execute(ui => StatementGenerator.CreateBills(statements, ui, duplexMode.Checked), true);
 			if (DialogResult.Yes == XtraMessageBox.Show("Would you like to log these statements?",
 														"Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Question)) {
 				foreach (var statement in statements) {

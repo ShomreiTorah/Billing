@@ -12,7 +12,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 	static class StatementGenerator {
 		static Application Word { get { return Office<ApplicationClass>.App; } }
 
-		public static Document CreateBills(ICollection<WordStatementInfo> statements, IProgressReporter progress) {
+		public static Document CreateBills(ICollection<WordStatementInfo> statements, IProgressReporter progress, bool duplexMode) {
 			if (statements == null) throw new ArgumentNullException("statements");
 
 			progress = progress ?? new EmptyProgressReporter();
@@ -49,7 +49,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 						if (firstPage)
 							firstPage = false;
 						else
-							range.BreakPage();
+							range.BreakPage(forceOddPage: duplexMode);
 
 						sourceRanges[info.Kind].Copy();
 						range.Paste();
@@ -69,12 +69,13 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			}
 		}
 		///<summary>Appends a page break to a range, replacing any trailing whitespace.</summary>
-		static void BreakPage(this Range range) {
+		static void BreakPage(this Range range, bool forceOddPage) {
 			range.Start = range.End - 1;
 			while (range.Text.Trim().Length == 0)
 				range.Start--;
 			range.Start++;
-			range.Text = "\f";
+			range.Text = "";
+			range.InsertBreak(forceOddPage ? WdBreakType.wdSectionBreakOddPage : WdBreakType.wdPageBreak);
 			range.Collapse(WdCollapseDirection.wdCollapseEnd);
 		}
 
