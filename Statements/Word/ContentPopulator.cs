@@ -1,4 +1,5 @@
 using System.IO;
+using System.Runtime.InteropServices;
 using Microsoft.Office.Interop.Word;
 using Microsoft.Office.Interop.Word.Extensions;
 using ShomreiTorah.Data;
@@ -8,11 +9,16 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		protected abstract void Fill(Range range, string name);
 
 		public void Populate(Range range) {
-			while (range.ContentControls.Count > 0) {
-				var cc = range.ContentControls.Item(1);	//I remove them as we go along
+			int i = 0;
+			while (range.ContentControls.Count > i) {
+				var cc = range.ContentControls.Item(i + 1);	//I remove them as we go along, except where deletion fails.  Item() is one-based.
 				var targetRange = cc.Range;
 
-				cc.Delete(false);
+				try {
+					cc.Delete(false);
+				} catch (COMException) {
+					i++;	//Sometimes (in shapes?), the deletion fails.  When that happens, just skip it in the next iteration
+				}
 
 				Fill(targetRange, targetRange.Text);
 			}
