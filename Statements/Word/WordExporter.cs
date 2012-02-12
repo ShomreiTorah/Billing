@@ -4,12 +4,23 @@ using System.Linq;
 using System.Windows.Forms;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
+using Microsoft.Win32;
 using ShomreiTorah.Data;
 using ShomreiTorah.Singularity.DataBinding;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Statements.Word {
 	partial class WordExporter : XtraForm {
+		static bool defaultDuplexMode = 0 != (int)Registry.GetValue(Program.SettingsPath, "DefaultMelaveMalkaSource", defaultValue: 1);
+		public static bool DefaultDuplexMode {
+			get { return defaultDuplexMode; }
+			set {
+				defaultDuplexMode = value;
+				Registry.SetValue(Program.SettingsPath, "DefaultMelaveMalkaSource", value ? 1 : 0);
+			}
+		}
+
+
 		public static void Execute(Form parent, params Person[] people) {
 			if (people == null) throw new ArgumentNullException("people");
 			if (people.Length == 0) return;
@@ -57,6 +68,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			);
 
 			gridView.BestFitColumns();
+			duplexMode.Checked = DefaultDuplexMode;
 		}
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
@@ -69,6 +81,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			cancel.Text = "Close";
 		}
 		void createDoc_Click(object sender, EventArgs e) {
+			DefaultDuplexMode = duplexMode.Checked;
 			ProgressWorker.Execute(ui => StatementGenerator.CreateBills(statements, ui, duplexMode.Checked), true);
 			if (DialogResult.Yes == XtraMessageBox.Show("Would you like to log these statements?",
 														"Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Question)) {
