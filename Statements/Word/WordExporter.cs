@@ -11,12 +11,12 @@ using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Statements.Word {
 	partial class WordExporter : XtraForm {
-		static bool defaultDuplexMode = 0 != (int)Registry.GetValue(Program.SettingsPath, "DefaultMelaveMalkaSource", defaultValue: 1);
+		static bool defaultDuplexMode = 0 != (int)Registry.GetValue(Program.SettingsPath, "DefaultDuplexMode", defaultValue: 1);
 		public static bool DefaultDuplexMode {
 			get { return defaultDuplexMode; }
 			set {
 				defaultDuplexMode = value;
-				Registry.SetValue(Program.SettingsPath, "DefaultMelaveMalkaSource", value ? 1 : 0);
+				Registry.SetValue(Program.SettingsPath, "DefaultDuplexMode", value ? 1 : 0);
 			}
 		}
 
