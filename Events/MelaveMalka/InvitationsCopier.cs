@@ -13,6 +13,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				.Rows.Select(r => r.Year)
 					 .Where(y => y != toYear)
 					 .Distinct()
+					 .OrderByDescending(y => y)
 					 .ToArray();
 
 			if (sourceYears.Length == 0) {
