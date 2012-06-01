@@ -3,12 +3,12 @@
 @using ShomreiTorah.Statements.Email;
 @inherits StatementPage
 @{
-    EmailSubject = "Shomrei Torah Receipt";
+    EmailSubject = "K'hal Tiferes Boruch Receipt";
     Kind = StatementKind.Receipt;
     _Layout = "_StatementLayout";
 }
 @section Title {
-    Congregation Shomrei Torah<br />
+    K'hal Tiferes Boruch<br />
     @Info.StartDate.Year
 Contributions Summary
 }
@@ -24,8 +24,8 @@ Contributions Summary
 <p>
     Dear @Info.Person.FullName,</p>
 <p>
-    On behalf of Rabbi Weinberger and Congregation Shomrei Torah of Passaic Clifton,
-    I would like to express my sincere gratitude and appreciation for your generous
+    On behalf of Rabbi Weinberger and K'hal Tiferes Boruch, I would like to express
+    my sincere gratitude and appreciation for your generous
     @(Info.Accounts.Sum(a => a.Payments.Count) == 1 ? "contribution" : "contributions")
     to our Shul.
 </p>
