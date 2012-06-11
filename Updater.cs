@@ -57,7 +57,7 @@ namespace ShomreiTorah.Billing {
 					Application.Exit();
 				return true;
 			}
-			OfficeSkins.Register();
+
 			UserLookAndFeel.Default.SkinName = "Office 2010 Blue";		//This must be set here in case we're on the splash thread at launch time.
 			SkinManager.EnableFormSkins();
 			var parent = (IWin32Window)Program.UIInvoker;	//For some reason, I must set the parent to MainForm or it won't be properly modal.

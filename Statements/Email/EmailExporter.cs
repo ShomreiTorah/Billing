@@ -147,7 +147,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 
 		private void gridView_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
 			if (e.Column == colEmails) {
-				var row = (Person)gridView.GetRow(e.RowHandle);
+				var row = (Person)e.Row;
 				if (row != null)
 					e.Value = row.EmailAddresses.Select(m => m.Email).Join(", ");
 			}

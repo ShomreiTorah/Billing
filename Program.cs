@@ -73,7 +73,7 @@ namespace ShomreiTorah.Billing {
 		}
 		protected override void RegisterSettings() {
 			SkinManager.EnableFormSkinsIfNotVista();
-			OfficeSkins.Register();
+
 			UserLookAndFeel.Default.SkinName = "Office 2010 Blue";
 			Dialog.DefaultTitle = "Shomrei Torah Billing";
 
