@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -17,8 +17,9 @@
     <SccAuxPath>
     </SccAuxPath>
     <SccProvider>MSSCCI:Perforce SCM</SccProvider>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>Shul.pfx</AssemblyOriginatorKeyFile>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <FileUpgradeFlags>
@@ -51,7 +52,7 @@
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisRuleSet>..\..\ShomreiTorah Minimal.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\Setup\Common\ShomreiTorah Minimal.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -70,7 +71,6 @@
     <Reference Include="DevExpress.Data.v11.2, Version=11.2.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    
     <Reference Include="DevExpress.RichEdit.v11.2.Core, Version=11.2.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>True</Private>
     </Reference>
@@ -104,18 +104,20 @@
     <Reference Include="Microsoft.Office.Interop.Word, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Office.Interop.Word.Extensions, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\..\Assemblies\Microsoft.Office.Interop.Word.Extensions.dll</HintPath>
+    <Reference Include="Microsoft.Office.Interop.Word.Extensions">
+      <HintPath>packages\Microsoft.Office.Interop.Word.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack">
+      <HintPath>packages\Windows7APICodePack-Core.1.1.0.0\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
+      <HintPath>packages\Windows7APICodePack-Shell.1.1.0.0\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
     <Reference Include="Office, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="PowerPointJournal, Version=1.4.2.0, Culture=neutral, PublicKeyToken=a618b678561bfa4a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Journal\PowerPointJournal\bin\Debug\PowerPointJournal.dll</HintPath>
-    </Reference>
     <Reference Include="RazorEngine">
-      <HintPath>..\..\packages\RazorEngine.3.0.3\lib\net40\RazorEngine.dll</HintPath>
+      <HintPath>packages\RazorEngine.3.0.8\lib\net40\RazorEngine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -123,7 +125,7 @@
     </Reference>
     <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\..\packages\RazorEngine.3.0.3\lib\net40\System.Web.Razor.dll</HintPath>
+      <HintPath>packages\RazorEngine.3.0.8\lib\net40\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -433,12 +435,6 @@
     <EmbeddedResource Include="Forms\GridForms\PledgeViewer.resx">
       <DependentUpon>PledgeViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Import\Journal\JournalImporter.resx">
-      <DependentUpon>JournalImporter.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Import\Journal\YearPrompt.resx">
-      <DependentUpon>YearPrompt.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Import\Raffle\RaffleImporter.resx">
       <DependentUpon>RaffleImporter.cs</DependentUpon>
     </EmbeddedResource>
@@ -480,7 +476,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Shul.pfx" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -520,9 +515,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
-      <Link>CustomDictionary.xml</Link>
-    </CodeAnalysisDictionary>
     <None Include="Resources\Copy32.png" />
     <None Include="Resources\SendPreview16.png" />
     <None Include="Resources\ShowPreview16.png" />
@@ -646,18 +638,6 @@
     <Compile Include="Forms\PledgeEditPopup.Designer.cs">
       <DependentUpon>PledgeEditPopup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Import\Journal\JournalImporter.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Import\Journal\JournalImporter.Designer.cs">
-      <DependentUpon>JournalImporter.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Import\Journal\YearPrompt.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Import\Journal\YearPrompt.Designer.cs">
-      <DependentUpon>YearPrompt.cs</DependentUpon>
-    </Compile>
     <Compile Include="Import\Raffle\RaffleImporter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -678,6 +658,9 @@
     <None Include="Email Templates\Images\LeviKrinsky.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <CodeAnalysisDictionary Include="..\..\Setup\Common\CustomDictionary.xml">
+      <Link>CustomDictionary.xml</Link>
+    </CodeAnalysisDictionary>
     <Content Include="Icon.ico" />
     <None Include="Resources\ShalachManosList32.png" />
     <None Include="Resources\ExportScroll32.png" />

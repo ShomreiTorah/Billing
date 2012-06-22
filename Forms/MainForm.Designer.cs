@@ -83,7 +83,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.viewDeposits = new DevExpress.XtraBars.BarButtonItem();
 			this.addDeposit = new DevExpress.XtraBars.BarListItem();
 			this.checkUpdate = new DevExpress.XtraBars.BarButtonItem();
-			this.importJournal = new DevExpress.XtraBars.BarButtonItem();
 			this.emailAll = new DevExpress.XtraBars.BarButtonItem();
 			this.emailModified = new DevExpress.XtraBars.BarButtonItem();
 			this.wordAll = new DevExpress.XtraBars.BarButtonItem();
@@ -167,7 +166,6 @@ namespace ShomreiTorah.Billing.Forms {
             this.viewDeposits,
             this.addDeposit,
             this.checkUpdate,
-            this.importJournal,
             this.emailAll,
             this.emailModified,
             this.wordAll,
@@ -312,14 +310,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.checkUpdate.Id = 12;
 			this.checkUpdate.Name = "checkUpdate";
 			this.checkUpdate.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.checkUpdate_ItemClick);
-			// 
-			// importJournal
-			// 
-			this.importJournal.Caption = "Import Journal";
-			this.importJournal.Id = 14;
-			this.importJournal.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("importJournal.LargeGlyph")));
-			this.importJournal.Name = "importJournal";
-			this.importJournal.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.importJournal_ItemClick);
 			// 
 			// emailAll
 			// 
@@ -626,7 +616,6 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// ribbonPageGroup5
 			// 
-			this.ribbonPageGroup5.ItemLinks.Add(this.importJournal);
 			this.ribbonPageGroup5.ItemLinks.Add(this.importRaffle);
 			this.ribbonPageGroup5.Name = "ribbonPageGroup5";
 			this.ribbonPageGroup5.ShowCaptionButton = false;
@@ -861,7 +850,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.BarListItem addDeposit;
 		private DevExpress.XtraBars.BarButtonItem checkUpdate;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
-		private DevExpress.XtraBars.BarButtonItem importJournal;
 		private DevExpress.XtraBars.BarButtonItem emailAll;
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage3;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup emailGroup;

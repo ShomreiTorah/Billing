@@ -142,7 +142,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private void ribbonPageGroup7_CaptionButtonClick(object sender, RibbonPageGroupEventArgs e) { new Events.MelaveMalka.MMInfoForm().Show(this); }
 
 		private void importYK_ItemClick(object sender, ItemClickEventArgs e) { Import.YKImporter.Execute(); }
-		private void importJournal_ItemClick(object sender, ItemClickEventArgs e) { Import.Journal.JournalImporter.Execute(); }
 
 		private void viewPayments_ItemClick(object sender, ItemClickEventArgs e) { new GridForms.PaymentViewer { MdiParent = this }.Show(); }
 		private void viewPledges_ItemClick(object sender, ItemClickEventArgs e) { new GridForms.PledgeViewer { MdiParent = this }.Show(); }
