@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.Office.Interop.Word;
 using ShomreiTorah.Common;
 using ShomreiTorah.Statements;
@@ -104,17 +105,25 @@ namespace ShomreiTorah.Billing.Statements.Word {
 				return true;
 			}
 		}
+
+		//This regex strips extra whitespace from well-indented XML.
+		static readonly Regex addressCleaner = new Regex(@"[ \t]+");
+		static readonly Regex addressLiner = new Regex(@"\r?\n\s*");
+		static readonly string mailingAddress = addressCleaner.Replace(
+					addressLiner.Replace(Config.MailingAddress.Trim(), "\v"),
+				 " ");
+
 		static void InsertPayTo(Range range, StatementInfo info) {
 			if (info.TotalBalance == 0)
 				range.Text = "";
 			else {
 				range.Text = "Please make your checks payable to ";
-				var subRange = range.AppendText("Congregation Shomrei Torah of Passaic-Clifton");
+				var subRange = range.AppendText(Config.LegalName);
 				range.InsertAfter(", and mail your remittance to:");
 				range.InsertParagraphAfter();
 				subRange.Font.Bold = 1;
 
-				subRange = range.AppendText("Congregation Shomrei Torah of Passaic-Clifton\v1360 Clifton Ave. # 908\vClifton, NJ 07012");
+				subRange = range.AppendText(mailingAddress);
 				range.InsertParagraphAfter();
 
 				subRange.ParagraphFormat.LeftIndent = 36;
