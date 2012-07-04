@@ -64,6 +64,9 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.Printing.v11.2.Core, Version=11.2.11.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -453,24 +456,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="Email Templates\Ad Reminders\Invitation-style Email.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Email Templates\Ad Reminders\Reminder Email.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Email Templates\Caller Emails\Introductory Email.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Email Templates\Statements\Standard Bill.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Email Templates\Statements\Standard Receipt.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Email Templates\Statements\_StatementLayout.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -652,12 +637,6 @@
       <DependentUpon>YKImporter.cs</DependentUpon>
     </Compile>
     <Compile Include="Updater.cs" />
-    <None Include="Email Templates\Images\Logo.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Email Templates\Images\LeviKrinsky.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <CodeAnalysisDictionary Include="..\..\Setup\Common\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
@@ -679,18 +658,6 @@
     <None Include="Resources\Save16.png" />
     <None Include="Resources\Add16.png" />
     <None Include="Resources\Ribbon Icon.png" />
-    <None Include="Word Templates\Bill.docx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Word Templates\Receipt.docx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Word Templates\Mailings\Envelopes.docx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Word Templates\Mailings\Labels.docx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\ShomreiTorah.Common\ShomreiTorah.Common.csproj">
@@ -728,7 +695,13 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>xcopy "$(SolutionDir)..\..\Config\Word Templates" "$(TargetDir)Word Templates\" /d /s
+
+xcopy "$(SolutionDir)..\..\Config\Email Templates\*.cshtml" "$(TargetDir)Email Templates\" /d /s
+xcopy "$(SolutionDir)..\..\Config\Email Templates\*.vbhtml" "$(TargetDir)Email Templates\" /d /s
+xcopy "$(SolutionDir)..\..\Config\Email Templates\*.png" "$(TargetDir)Email Templates\" /d /s
+xcopy "$(SolutionDir)..\..\Config\Email Templates\*.gif" "$(TargetDir)Email Templates\" /d /s
+xcopy "$(SolutionDir)..\..\Config\Email Templates\*.jpg" "$(TargetDir)Email Templates\" /d /s
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
