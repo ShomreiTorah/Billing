@@ -21,6 +21,8 @@ namespace ShomreiTorah.Billing.Forms {
 		public MainForm() {
 			InitializeComponent();
 
+			checkUpdate.Visibility = Updater.Checker == null ? BarItemVisibility.Never : BarItemVisibility.Always;
+
 			EditorRepository.PersonLookup.Apply(lookup.Properties);
 			addDeposit.Strings.AddRange(Names.AccountNames.ToArray());
 

@@ -18,12 +18,15 @@ using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing {
 	static class Updater {
-		public static readonly UpdateChecker Checker = new UpdateChecker();
-		static readonly System.Timers.Timer timer = new System.Timers.Timer(TimeSpan.FromMinutes(30).TotalMilliseconds) { AutoReset = false };
-		///<summary>If true, an update has been downloaded and will be applied after the prgoram exits.</summary>
+		public static readonly UpdateChecker Checker = UpdateChecker.CreateForCaller();
+		static readonly System.Timers.Timer timer = Checker == null ? null :
+			new System.Timers.Timer(TimeSpan.FromMinutes(30).TotalMilliseconds) { AutoReset = false };
+
+		///<summary>If true, an update has been downloaded and will be applied after the program exits.</summary>
 		public static bool RestartPending { get; private set; }
 
 		public static void RunBackground() {
+			if (Checker == null) return;
 			if (RestartPending) return;
 			timer.Elapsed += timer_Elapsed;
 			timer.Start();
@@ -34,6 +37,7 @@ namespace ShomreiTorah.Billing {
 		}
 
 		public static void RunCheck() {
+			if (Checker == null) return;
 			if (RestartPending) return;
 
 			UpdateInfo update = null;

@@ -74,7 +74,10 @@ namespace ShomreiTorah.Billing {
 		protected override void RegisterSettings() {
 			SkinManager.EnableFormSkinsIfNotVista();
 
-			UserLookAndFeel.Default.SkinName = "Office 2010 Blue";
+			if (Config.IsDebug)
+				UserLookAndFeel.Default.SkinName = "Office 2010 Black";
+			else
+				UserLookAndFeel.Default.SkinName = "Office 2010 Blue";
 			Dialog.DefaultTitle = "Shomrei Torah Billing";
 
 			//TODO: Register HebrewDate editor
@@ -181,6 +184,9 @@ namespace ShomreiTorah.Billing {
 		///<summary>Apply updates on launch.</summary>
 		///<returns>True if an update was applied (in which case the program should be restarted).</returns>
 		bool CheckForUpdate() {
+			if (Updater.Checker == null)
+				return false;
+
 			SetSplashCaption("Checking for updates");
 			var update = Updater.Checker.FindUpdate();
 			if (update != null) {
