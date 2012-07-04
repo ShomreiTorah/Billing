@@ -184,7 +184,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.addRLAsMember.Name = "addRLAsMember";
 			toolTipTitleItem4.Text = "Link to Relative";
 			toolTipItem4.LeftIndent = 6;
-			toolTipItem4.Text = "Links to member to a relative";
+			toolTipItem4.Text = "Links this member to a relative";
 			superToolTip4.Items.Add(toolTipTitleItem4);
 			superToolTip4.Items.Add(toolTipItem4);
 			this.addRLAsMember.SuperTip = superToolTip4;
