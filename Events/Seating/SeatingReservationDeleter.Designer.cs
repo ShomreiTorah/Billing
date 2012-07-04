@@ -41,8 +41,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.message.Name = "message";
 			this.message.Size = new System.Drawing.Size(306, 26);
 			this.message.TabIndex = 0;
-			this.message.Text = "Are you sure you want to delete this $500 reservation for 3 seats for David & Cha" +
-				"na Laks?";
+			this.message.Text = "Are you sure you want to delete this $500 reservation for 3 seats for this person?";
 			this.message.UseMnemonic = false;
 			// 
 			// cancel

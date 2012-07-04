@@ -48,7 +48,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			if (lines.Length != 2)
 				return null;
 
-			//D Laks
+			//S Laks
 			//4 Seats
 			var seatCount = lines[1].Trim();
 			return new WordSeatGroup(

@@ -42,7 +42,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.message.Name = "message";
 			this.message.Size = new System.Drawing.Size(380, 64);
 			this.message.TabIndex = 0;
-			this.message.Text = "Mr. & Mrs. David Laks has $80.00 due, and you are adding a $120.00 payment.\r\nWhat" +
+			this.message.Text = "This person has $80.00 due, and you are adding a $120.00 payment.\r\nWhat" +
 				" would you like to do?";
 			this.message.UseMnemonic = false;
 			// 
