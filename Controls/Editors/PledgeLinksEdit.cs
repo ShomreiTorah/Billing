@@ -13,6 +13,7 @@ using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Data;
 using System.Globalization;
 using ShomreiTorah.Singularity;
+using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Controls.Editors {
 	public partial class PledgeLinksEdit : XtraUserControl {
@@ -25,9 +26,12 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		}
 
 		private void pledgesView_CustomSuperTip(object sender, CustomToolTipEventArgs e) {
-			if (e.HitInfo.Column == colLinkAmount && e.HitInfo.InRowCell) {
-				var row = pledgesView.GetRow(e.HitInfo.RowHandle);
-
+			if (e.HitInfo.Column == colAmount && e.HitInfo.InRowCell) {
+				var row = (Pledge)pledgesView.GetRow(e.HitInfo.RowHandle);
+				if (row != null)
+					e.SuperTip = Utilities.CreateSuperTip("Unpaid Amount", controller.GetLinkedAmountDescription(row));
+			} else if (e.HitInfo.Column == colLinkAmount) {
+				e.SuperTip = Utilities.CreateSuperTip("Amount to Link", "Enter the portion of this pledge that this payment is intended to pay.");
 			}
 		}
 
@@ -81,6 +85,5 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			}
 			#endregion
 		}
-
 	}
 }

@@ -49,7 +49,7 @@
 			this.pledgesGrid.Location = new System.Drawing.Point(0, 0);
 			this.pledgesGrid.MainView = this.pledgesView;
 			this.pledgesGrid.Name = "pledgesGrid";
-			this.pledgesGrid.RegistrationCount = 52;
+			this.pledgesGrid.RegistrationCount = 53;
 			this.pledgesGrid.ShowOnlyPredefinedDetails = true;
 			this.pledgesGrid.Size = new System.Drawing.Size(493, 284);
 			this.pledgesGrid.TabIndex = 0;
@@ -80,6 +80,8 @@
 			// 
 			this.colDate.FieldName = "Date";
 			this.colDate.Name = "colDate";
+			this.colDate.OptionsColumn.AllowEdit = false;
+			this.colDate.OptionsColumn.ReadOnly = true;
 			this.colDate.Visible = true;
 			this.colDate.VisibleIndex = 0;
 			this.colDate.Width = 51;
@@ -88,6 +90,8 @@
 			// 
 			this.colType.FieldName = "Type";
 			this.colType.Name = "colType";
+			this.colType.OptionsColumn.AllowEdit = false;
+			this.colType.OptionsColumn.ReadOnly = true;
 			this.colType.Visible = true;
 			this.colType.VisibleIndex = 1;
 			this.colType.Width = 43;
@@ -97,6 +101,8 @@
 			this.colSubType.Caption = "Subtype";
 			this.colSubType.FieldName = "SubType";
 			this.colSubType.Name = "colSubType";
+			this.colSubType.OptionsColumn.AllowEdit = false;
+			this.colSubType.OptionsColumn.ReadOnly = true;
 			this.colSubType.Visible = true;
 			this.colSubType.VisibleIndex = 2;
 			this.colSubType.Width = 59;
@@ -106,6 +112,7 @@
 			this.colAmount.Caption = "Unpaid";
 			this.colAmount.MaxWidth = 85;
 			this.colAmount.Name = "colAmount";
+			this.colAmount.OptionsColumn.AllowEdit = false;
 			this.colAmount.OptionsColumn.ReadOnly = true;
 			this.colAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Amount", "{0:c} Total unpaid pledges")});
