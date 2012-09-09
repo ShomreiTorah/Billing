@@ -25,6 +25,16 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			colLinkAmount.ColumnEditor = EditorRepository.CurrencyEditor.CreateItem();
 		}
 
+		///<summary>Gets or sets the payment to display links for.</summary>
+		public Payment HostPayment {
+			get { return controller.CurrentPayment; }
+			set {
+				controller.CurrentPayment = value;
+				pledgesGrid.DataSource = controller.Pledges;
+				pledgesGrid.DataMember = null;
+			}
+		}
+
 		private void pledgesView_CustomSuperTip(object sender, CustomToolTipEventArgs e) {
 			if (e.HitInfo.Column == colAmount && e.HitInfo.InRowCell) {
 				var row = (Pledge)pledgesView.GetRow(e.HitInfo.RowHandle);
@@ -39,6 +49,11 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			if (e.Column == colAmount)
 				e.Value = controller.GetLinkedAmount((Pledge)e.Row);
 			else if (e.Column == colLinkAmount) {
+				var pledge = (Pledge)e.Row;
+				if (e.IsGetData)
+					e.Value = controller.GetAmount(pledge);
+				else
+					controller.SetAmount(pledge, (decimal)e.Value);
 			}
 		}
 		private void pledgesView_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e) {
@@ -47,18 +62,21 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		}
 
 		private class MyController {
-			readonly Payment currentPayment;
+			Payment currentPayment;
 
-			public FilteredTable<Pledge> Pledges { get; private set; }
-
-			public void Refresh() {
-				Pledges = Program.Table<Pledge>().Filter(p => p.Person == currentPayment.Person && p.Account == currentPayment.Account);
+			public Payment CurrentPayment {
+				get { return currentPayment; }
+				set {
+					currentPayment = value;
+					Pledges = Program.Table<Pledge>().Filter(p => p.Person == CurrentPayment.Person && p.Account == CurrentPayment.Account);
+				}
 			}
+			public FilteredTable<Pledge> Pledges { get; private set; }
 
 			#region Linked Amount Texts
 			public decimal GetLinkedAmount(Pledge pledge) {
 				//Unlike, GetAmountDescription(), I don't need ToList()
-				var payments = pledge.LinkedPayments.Where(o => o.Payment != currentPayment);
+				var payments = pledge.LinkedPayments.Where(o => o.Payment != CurrentPayment);
 				return payments.Sum(p => p.Amount);
 			}
 
@@ -68,7 +86,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 									 pledge.Amount, linkedAmount, pledge.Amount - linkedAmount);
 			}
 			public string GetLinkedAmountDescription(Pledge pledge) {
-				var payments = pledge.LinkedPayments.Where(o => o.Payment != currentPayment).ToList();
+				var payments = pledge.LinkedPayments.Where(o => o.Payment != CurrentPayment).ToList();
 				decimal linkedAmount = payments.Sum(p => p.Amount);
 				if (linkedAmount == 0)
 					return String.Format(CultureInfo.CurrentCulture,
@@ -84,6 +102,26 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 										 pledge.Amount, linkedAmount, payments.Count, payments.Count == 1 ? "" : "s", pledge.Amount - linkedAmount);
 			}
 			#endregion
+
+			public decimal GetAmount(Pledge pledge) {
+				//FirstOrDefault() will return 0 if there are no rows.
+				return CurrentPayment.LinkedPledges
+									 .Where(o => o.Pledge == pledge)
+									 .Select(o => o.Amount)
+									 .FirstOrDefault();
+			}
+			public void SetAmount(Pledge pledge, decimal value) {
+				var link = CurrentPayment.LinkedPledges.FirstOrDefault(o => o.Pledge == pledge);
+
+				if (value == 0) {
+					Program.Table<PledgeLink>().Rows.Remove(link);
+				} else {
+					if (link != null)
+						link.Amount = value;
+					else
+						Program.Table<PledgeLink>().Rows.Add(new PledgeLink { Pledge = pledge, Payment = CurrentPayment, Amount = value });
+				}
+			}
 		}
 	}
 }

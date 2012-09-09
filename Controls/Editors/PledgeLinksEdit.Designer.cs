@@ -58,6 +58,7 @@
 			// 
 			// pledgesView
 			// 
+			this.pledgesView.ActiveFilterString = "[UnlinkedAmount] <> 0.0m";
 			this.pledgesView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colDate,
             this.colType,
@@ -109,13 +110,16 @@
 			// 
 			// colAmount
 			// 
+			this.colAmount.AppearanceCell.Options.UseTextOptions = true;
+			this.colAmount.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
 			this.colAmount.Caption = "Unpaid";
+			this.colAmount.FieldName = "UnlinkedAmount";
 			this.colAmount.MaxWidth = 85;
 			this.colAmount.Name = "colAmount";
 			this.colAmount.OptionsColumn.AllowEdit = false;
 			this.colAmount.OptionsColumn.ReadOnly = true;
 			this.colAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Amount", "{0:c} Total unpaid pledges")});
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Amount", "{0:c} Total Unpaid-for")});
 			this.colAmount.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
 			this.colAmount.Visible = true;
 			this.colAmount.VisibleIndex = 3;
@@ -158,10 +162,11 @@
 			this.colLinkAmount.Caption = "Link?";
 			this.colLinkAmount.DisplayFormat.FormatString = "c";
 			this.colLinkAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.colLinkAmount.FieldName = "AmountToLink";
 			this.colLinkAmount.MaxWidth = 85;
 			this.colLinkAmount.Name = "colLinkAmount";
 			this.colLinkAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "", "{0:c} Total Pledged")});
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "AmountToLink", "{0:c} Total Pledged")});
 			this.colLinkAmount.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
 			this.colLinkAmount.Visible = true;
 			this.colLinkAmount.VisibleIndex = 6;
