@@ -95,7 +95,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 			#endregion
 
 			var actualComments = String.IsNullOrWhiteSpace(this.comments.Text) ? null : this.comments.Text;
-			Program.Table<Pledge>().Rows.Add(new Pledge {
+			Pledge pledge = new Pledge {
 				Person = personSelector.SelectedPerson,
 				Date = DateTime.Now,
 				Type = PledgeType,
@@ -103,15 +103,18 @@ namespace ShomreiTorah.Billing.Events.Purim {
 				Account = Account,
 				Amount = amount.Value,
 				Comments = actualComments
-			});
+			};
+			Program.Table<Pledge>().Rows.Add(pledge);
 
 			string messagePrefix = personSelector.SelectedPerson.FullName + " have been added to the Shalach Manos list with a " + amount.Value.ToString("c0", CultureInfo.CurrentCulture);
+
+			Payment payment = null;
 			switch (paymentMethod.Text) {
 				case "Unpaid":
 					InfoMessage.Show(messagePrefix + " unpaid pledge.");
 					break;
 				case "Cash":
-					Program.Table<Payment>().Rows.Add(new Payment {
+					Program.Table<Payment>().Rows.Add(payment = new Payment {
 						Person = personSelector.SelectedPerson,
 						Date = DateTime.Now,
 						Method = paymentMethod.Text,
@@ -122,7 +125,7 @@ namespace ShomreiTorah.Billing.Events.Purim {
 					InfoMessage.Show(messagePrefix + " cash payment.");
 					break;
 				case "Check":
-					Program.Table<Payment>().Rows.Add(new Payment {
+					Program.Table<Payment>().Rows.Add(payment = new Payment {
 						Person = personSelector.SelectedPerson,
 						Date = checkDate.DateTime,
 						Method = paymentMethod.Text,
@@ -133,8 +136,13 @@ namespace ShomreiTorah.Billing.Events.Purim {
 					});
 					InfoMessage.Show(messagePrefix + " check.");
 					break;
-
 			}
+			if (payment != null)
+				Program.Table<PledgeLink>().Rows.Add(new PledgeLink {
+					Amount = amount.Value,
+					Payment = payment,
+					Pledge = pledge
+				});
 
 			personSelector.SelectedPerson = null;
 			personSelector.Focus();
