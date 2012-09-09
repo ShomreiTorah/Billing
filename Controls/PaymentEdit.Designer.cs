@@ -27,13 +27,20 @@ namespace ShomreiTorah.Billing.Controls {
 			this.components = new System.ComponentModel.Container();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaymentEdit));
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaymentEdit));
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
 			this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+			this.linkPopup = new DevExpress.XtraEditors.PopupContainerControl();
+			this.pledgeLinks = new ShomreiTorah.Billing.Controls.Editors.PledgeLinksEdit();
+			this.linkDropDownEdit = new DevExpress.XtraEditors.PopupContainerEdit();
 			this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
 			this.commit = new ShomreiTorah.Billing.Controls.CommitButton();
 			this.account = new DevExpress.XtraEditors.ComboBoxEdit();
@@ -51,6 +58,9 @@ namespace ShomreiTorah.Billing.Controls {
 			this.person = new ShomreiTorah.Data.UI.Controls.PersonSelector();
 			((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
 			this.groupControl1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.linkPopup)).BeginInit();
+			this.linkPopup.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.linkDropDownEdit.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.account.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).BeginInit();
@@ -67,6 +77,8 @@ namespace ShomreiTorah.Billing.Controls {
 			// 
 			this.groupControl1.AppearanceCaption.Options.UseTextOptions = true;
 			this.groupControl1.AppearanceCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+			this.groupControl1.Controls.Add(this.linkPopup);
+			this.groupControl1.Controls.Add(this.linkDropDownEdit);
 			this.groupControl1.Controls.Add(this.labelControl6);
 			this.groupControl1.Controls.Add(this.commit);
 			this.groupControl1.Controls.Add(this.account);
@@ -82,9 +94,46 @@ namespace ShomreiTorah.Billing.Controls {
 			this.groupControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupControl1.Location = new System.Drawing.Point(0, 20);
 			this.groupControl1.Name = "groupControl1";
-			this.groupControl1.Size = new System.Drawing.Size(347, 155);
+			this.groupControl1.Size = new System.Drawing.Size(789, 344);
 			this.groupControl1.TabIndex = 1;
 			this.groupControl1.Text = "Details";
+			// 
+			// linkPopup
+			// 
+			this.linkPopup.Controls.Add(this.pledgeLinks);
+			this.linkPopup.Location = new System.Drawing.Point(279, 28);
+			this.linkPopup.Name = "linkPopup";
+			this.linkPopup.Size = new System.Drawing.Size(449, 232);
+			this.linkPopup.TabIndex = 17;
+			// 
+			// pledgeLinks
+			// 
+			this.pledgeLinks.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pledgeLinks.HostPayment = null;
+			this.pledgeLinks.Location = new System.Drawing.Point(0, 0);
+			this.pledgeLinks.Name = "pledgeLinks";
+			this.pledgeLinks.Size = new System.Drawing.Size(449, 232);
+			this.pledgeLinks.TabIndex = 0;
+			// 
+			// linkDropDownEdit
+			// 
+			this.linkDropDownEdit.Location = new System.Drawing.Point(191, 51);
+			this.linkDropDownEdit.Name = "linkDropDownEdit";
+			toolTipTitleItem1.Text = "Linked Pledges";
+			toolTipItem1.LeftIndent = 6;
+			toolTipItem1.Text = "Shows this person\'s unpaid pledges, allowing you to specify which pledges this pa" +
+    "yment is covering.";
+			superToolTip1.Items.Add(toolTipTitleItem1);
+			superToolTip1.Items.Add(toolTipItem1);
+			this.linkDropDownEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.DropDown, "Pledges", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleRight, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, superToolTip1, true)});
+			this.linkDropDownEdit.Properties.PopupControl = this.linkPopup;
+			this.linkDropDownEdit.Properties.PopupResizeMode = DevExpress.XtraEditors.Controls.ResizeMode.LiveResize;
+			this.linkDropDownEdit.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
+			this.linkDropDownEdit.Size = new System.Drawing.Size(59, 20);
+			this.linkDropDownEdit.TabIndex = 16;
+			this.linkDropDownEdit.QueryPopUp += new System.ComponentModel.CancelEventHandler(this.linkDropDownEdit_QueryPopUp);
+			this.linkDropDownEdit.Closed += new DevExpress.XtraEditors.Controls.ClosedEventHandler(this.linkDropDownEdit_Closed);
 			// 
 			// labelControl6
 			// 
@@ -97,7 +146,7 @@ namespace ShomreiTorah.Billing.Controls {
 			// commit
 			// 
 			this.commit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.commit.Location = new System.Drawing.Point(267, 127);
+			this.commit.Location = new System.Drawing.Point(709, 316);
 			this.commit.Name = "commit";
 			this.commit.Size = new System.Drawing.Size(75, 23);
 			this.commit.TabIndex = 6;
@@ -116,7 +165,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.account.Properties.Items.AddRange(new object[] {
             "Operating Fund",
             "Building Fund"});
-			this.account.Size = new System.Drawing.Size(126, 20);
+			this.account.Size = new System.Drawing.Size(154, 20);
 			this.account.TabIndex = 2;
 			this.account.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
 			// 
@@ -124,7 +173,6 @@ namespace ShomreiTorah.Billing.Controls {
 			// 
 			this.paymentsBindingSource.DataMember = "Payments";
 			this.paymentsBindingSource.DataSource = this.billingData;
-			this.paymentsBindingSource.Position = 0;
 			// 
 			// billingData
 			// 
@@ -142,7 +190,7 @@ namespace ShomreiTorah.Billing.Controls {
 			// 
 			this.amount.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.paymentsBindingSource, "Amount", true));
 			this.amount.EditValue = new decimal(new int[] {
-            0,
+            4556,
             0,
             0,
             0});
@@ -155,7 +203,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.amount.Properties.EditFormat.FormatString = "c";
 			this.amount.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
 			this.amount.Properties.Mask.EditMask = "c";
-			this.amount.Size = new System.Drawing.Size(126, 20);
+			this.amount.Size = new System.Drawing.Size(96, 20);
 			this.amount.TabIndex = 1;
 			this.amount.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
 			// 
@@ -173,7 +221,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.checkNumber.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.paymentsBindingSource, "CheckNumber", true));
 			this.checkNumber.Location = new System.Drawing.Point(96, 130);
 			this.checkNumber.Name = "checkNumber";
-			this.checkNumber.Size = new System.Drawing.Size(126, 20);
+			this.checkNumber.Size = new System.Drawing.Size(154, 20);
 			this.checkNumber.TabIndex = 4;
 			this.checkNumber.Visible = false;
 			this.checkNumber.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
@@ -199,22 +247,22 @@ namespace ShomreiTorah.Billing.Controls {
 			this.method.Properties.Items.AddRange(new object[] {
             "Cash",
             "Check"});
-			this.method.Size = new System.Drawing.Size(126, 20);
+			this.method.Size = new System.Drawing.Size(154, 20);
 			this.method.TabIndex = 3;
 			this.method.EditValueChanged += new System.EventHandler(this.method_EditValueChanged);
 			this.method.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
 			// 
 			// comments
 			// 
-			this.comments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.comments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.comments.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.paymentsBindingSource, "Comments", true));
-			this.comments.Location = new System.Drawing.Point(228, 25);
+			this.comments.Location = new System.Drawing.Point(256, 25);
 			this.comments.Name = "comments";
 			this.comments.Properties.NullValuePrompt = "Comments (will not show on invoice)";
 			this.comments.Properties.NullValuePromptShowForEmptyValue = true;
-			this.comments.Size = new System.Drawing.Size(114, 98);
+			this.comments.Size = new System.Drawing.Size(528, 287);
 			this.comments.TabIndex = 5;
 			// 
 			// date
@@ -228,7 +276,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.date.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.True;
 			this.date.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.date.Size = new System.Drawing.Size(126, 20);
+			this.date.Size = new System.Drawing.Size(154, 20);
 			this.date.TabIndex = 0;
 			this.date.EditValueChanging += new DevExpress.XtraEditors.Controls.ChangingEventHandler(this.date_EditValueChanging);
 			this.date.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
@@ -247,16 +295,16 @@ namespace ShomreiTorah.Billing.Controls {
 			this.person.Dock = System.Windows.Forms.DockStyle.Top;
 			this.person.Location = new System.Drawing.Point(0, 0);
 			this.person.Name = "person";
-			toolTipItem1.Text = "Click to select a person";
-			superToolTip1.Items.Add(toolTipItem1);
-			toolTipTitleItem1.Text = "New Person...";
-			toolTipItem2.Text = "Adds a new person to the master directory";
-			superToolTip2.Items.Add(toolTipTitleItem1);
+			toolTipItem2.Text = "Click to select a person";
 			superToolTip2.Items.Add(toolTipItem2);
+			toolTipTitleItem2.Text = "New Person...";
+			toolTipItem3.Text = "Adds a new person to the master directory";
+			superToolTip3.Items.Add(toolTipTitleItem2);
+			superToolTip3.Items.Add(toolTipItem3);
 			this.person.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, superToolTip1, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("person.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, superToolTip2, true)});
-			this.person.Size = new System.Drawing.Size(347, 20);
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, superToolTip2, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("person.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject3, "", null, superToolTip3, true)});
+			this.person.Size = new System.Drawing.Size(789, 20);
 			this.person.TabIndex = 0;
 			this.person.PersonSelecting += new System.EventHandler<ShomreiTorah.Data.UI.Controls.PersonSelectingEventArgs>(this.person_PersonSelecting);
 			this.person.EditValueChanged += new System.EventHandler(this.person_EditValueChanged);
@@ -269,10 +317,13 @@ namespace ShomreiTorah.Billing.Controls {
 			this.Controls.Add(this.person);
 			this.MinimumSize = new System.Drawing.Size(347, 175);
 			this.Name = "PaymentEdit";
-			this.Size = new System.Drawing.Size(347, 175);
+			this.Size = new System.Drawing.Size(789, 364);
 			((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
 			this.groupControl1.ResumeLayout(false);
 			this.groupControl1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.linkPopup)).EndInit();
+			this.linkPopup.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.linkDropDownEdit.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.account.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).EndInit();
@@ -305,6 +356,9 @@ namespace ShomreiTorah.Billing.Controls {
 		private DevExpress.XtraEditors.LabelControl labelControl2;
 		private DevExpress.XtraEditors.LabelControl labelControl6;
 		private DevExpress.XtraEditors.ComboBoxEdit account;
+		private DevExpress.XtraEditors.PopupContainerControl linkPopup;
+		private DevExpress.XtraEditors.PopupContainerEdit linkDropDownEdit;
+		private Editors.PledgeLinksEdit pledgeLinks;
 
 	}
 }

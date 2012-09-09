@@ -230,5 +230,15 @@ Payment:	{4:c} {5} for {6} on {7:d}
 			else if (newDate.Date > DateTime.Now)
 				e.Cancel = !Dialog.Warn("Are you sure you want to enter a payment dated " + (newDate.Date - DateTime.Today).Days + " days in the future?");
 		}
+
+		private void linkDropDownEdit_QueryPopUp(object sender, CancelEventArgs e) {
+			//The grid depends on the account and person. I only bind it
+			//when the popup is open so that I don't need to worry about
+			//changes in the payment.
+			pledgeLinks.HostPayment = CurrentPayment;
+		}
+		private void linkDropDownEdit_Closed(object sender, ClosedEventArgs e) {
+			pledgeLinks.HostPayment = null;
+		}
 	}
 }

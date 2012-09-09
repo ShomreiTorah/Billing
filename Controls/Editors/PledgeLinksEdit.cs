@@ -23,15 +23,31 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			InitializeComponent();
 
 			colLinkAmount.ColumnEditor = EditorRepository.CurrencyEditor.CreateItem();
+			controller = new MyController();
+		}
+
+
+		///<summary>Releases the unmanaged resources used by the PledgeLinksEdit and optionally releases the managed resources.</summary>
+		///<param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+		protected override void Dispose(bool disposing) {
+			if (disposing) {
+				controller.Dispose();
+				if (components != null) components.Dispose();
+			}
+			base.Dispose(disposing);
 		}
 
 		///<summary>Gets or sets the payment to display links for.</summary>
+		[Bindable(true)]
 		public Payment HostPayment {
 			get { return controller.CurrentPayment; }
 			set {
 				controller.CurrentPayment = value;
-				pledgesGrid.DataSource = controller.Pledges;
-				pledgesGrid.DataMember = null;
+				pledgesGrid.Enabled = value != null;
+				if (value != null) {
+					pledgesGrid.DataSource = controller.Pledges;
+					pledgesGrid.DataMember = null;
+				}
 			}
 		}
 
@@ -61,17 +77,32 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 				e.DisplayText = controller.GetLinkedAmountText(controller.Pledges.Rows[e.ListSourceRowIndex], (decimal)e.Value);
 		}
 
-		private class MyController {
+		private sealed class MyController : IDisposable {
 			Payment currentPayment;
 
 			public Payment CurrentPayment {
 				get { return currentPayment; }
 				set {
+					if (Pledges != null) Pledges.Dispose();
 					currentPayment = value;
-					Pledges = Program.Table<Pledge>().Filter(p => p.Person == CurrentPayment.Person && p.Account == CurrentPayment.Account);
+
+					if (value == null)
+						return;
+					SetFilter(value);
 				}
 			}
 			public FilteredTable<Pledge> Pledges { get; private set; }
+
+			private void SetFilter(Payment value) {
+				if (Pledges != null) Pledges.Dispose();
+				Person person = value.Person;
+				string account = value.Account;
+				Pledges = Program.Table<Pledge>().Filter(p => p.Person == person && p.Account == account);
+			}
+
+			public void Dispose() {
+				if (Pledges != null) Pledges.Dispose();
+			}
 
 			#region Linked Amount Texts
 			public decimal GetLinkedAmount(Pledge pledge) {
