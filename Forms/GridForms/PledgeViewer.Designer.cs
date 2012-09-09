@@ -42,6 +42,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colModifier = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.pledgesBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource(this.components);
+			this.colUnlinkedAmount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
@@ -55,26 +56,22 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			// ribbon
 			// 
-			// 
-			// 
-			// 
 			this.ribbon.ExpandCollapseItem.Id = 0;
 			this.ribbon.ExpandCollapseItem.Name = "";
-			this.ribbon.ExpandCollapseItem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
-			this.ribbon.Size = new System.Drawing.Size(772, 114);
+			this.ribbon.Size = new System.Drawing.Size(772, 115);
 			// 
 			// grid
 			// 
 			this.grid.DataMember = "Pledges";
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.grid.Location = new System.Drawing.Point(0, 114);
+			this.grid.Location = new System.Drawing.Point(0, 115);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 38;
+			this.grid.RegistrationCount = 53;
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemMemoExEdit1,
             this.repositoryItemAliyahNoteEdit1});
-			this.grid.Size = new System.Drawing.Size(772, 445);
+			this.grid.Size = new System.Drawing.Size(772, 444);
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -91,7 +88,8 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
             this.colNote,
             this.colComments,
             this.colModified,
-            this.colModifier});
+            this.colModifier,
+            this.colUnlinkedAmount});
 			this.gridView.GridControl = this.grid;
 			this.gridView.GroupFormat = "{0}: [#image]{1}: {2}";
 			this.gridView.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
@@ -107,6 +105,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			// colFullName
 			// 
+			this.colFullName.AllowKeyboardActivation = false;
 			this.colFullName.Caption = "Full Name";
 			this.colFullName.FieldName = "Person";
 			this.colFullName.Name = "colFullName";
@@ -114,12 +113,13 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colFullName.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
 			this.colFullName.OptionsColumn.ReadOnly = true;
 			this.colFullName.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+			this.colFullName.ShowEditorOnMouseDown = true;
 			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
-			this.colFullName.SummaryItem.DisplayFormat = "{0:#,0} Pledges";
-			this.colFullName.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
+			this.colFullName.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, "Person", "{0:#,0} Pledges")});
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 0;
-			this.colFullName.Width = 71;
+			this.colFullName.Width = 81;
 			// 
 			// colDate
 			// 
@@ -127,7 +127,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colDate.Name = "colDate";
 			this.colDate.Visible = true;
 			this.colDate.VisibleIndex = 1;
-			this.colDate.Width = 63;
+			this.colDate.Width = 51;
 			// 
 			// colType
 			// 
@@ -176,8 +176,8 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colAmount.FieldName = "Amount";
 			this.colAmount.MaxWidth = 85;
 			this.colAmount.Name = "colAmount";
-			this.colAmount.SummaryItem.DisplayFormat = "{0:c} Total Pledged";
-			this.colAmount.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+			this.colAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Amount", "{0:c} Total Pledged")});
 			this.colAmount.Visible = true;
 			this.colAmount.VisibleIndex = 5;
 			this.colAmount.Width = 85;
@@ -205,7 +205,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colNote.MaxWidth = 300;
 			this.colNote.Name = "colNote";
 			this.colNote.Visible = true;
-			this.colNote.VisibleIndex = 6;
+			this.colNote.VisibleIndex = 7;
 			this.colNote.Width = 42;
 			// 
 			// repositoryItemAliyahNoteEdit1
@@ -221,7 +221,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colComments.FieldName = "Comments";
 			this.colComments.Name = "colComments";
 			this.colComments.Visible = true;
-			this.colComments.VisibleIndex = 7;
+			this.colComments.VisibleIndex = 8;
 			this.colComments.Width = 69;
 			// 
 			// repositoryItemMemoExEdit1
@@ -241,7 +241,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colModified.OptionsColumn.AllowEdit = false;
 			this.colModified.OptionsColumn.AllowFocus = false;
 			this.colModified.OptionsColumn.ReadOnly = true;
-			this.colModified.Width = 112;
+			this.colModified.Width = 100;
 			// 
 			// colModifier
 			// 
@@ -261,6 +261,18 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// billingData
 			// 
 			this.billingData.Position = 0;
+			// 
+			// colUnlinkedAmount
+			// 
+			this.colUnlinkedAmount.DisplayFormat.FormatString = "c";
+			this.colUnlinkedAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.colUnlinkedAmount.FieldName = "UnlinkedAmount";
+			this.colUnlinkedAmount.MaxWidth = 85;
+			this.colUnlinkedAmount.Name = "colUnlinkedAmount";
+			this.colUnlinkedAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "UnlinkedAmount", "{0:c} Total Unpaid-for")});
+			this.colUnlinkedAmount.Visible = true;
+			this.colUnlinkedAmount.VisibleIndex = 6;
 			// 
 			// PledgeViewer
 			// 
@@ -307,5 +319,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		
 		private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit repositoryItemMemoExEdit1;
 		private ShomreiTorah.Billing.Controls.Editors.RepositoryItemAliyahNoteEdit repositoryItemAliyahNoteEdit1;
+		private Data.UI.Grid.SmartGridColumn colUnlinkedAmount;
 	}
 }

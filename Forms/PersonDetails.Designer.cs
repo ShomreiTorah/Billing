@@ -24,15 +24,15 @@ namespace ShomreiTorah.Billing.Forms {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
 			this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.exportEmail = new DevExpress.XtraBars.BarButtonItem();
 			this.exportWord = new DevExpress.XtraBars.BarButtonItem();
@@ -106,6 +106,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colEndDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colUserName = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colRowId = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.colUnlinkedAmount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
@@ -142,9 +143,6 @@ namespace ShomreiTorah.Billing.Forms {
 			// ribbonControl1
 			// 
 			this.ribbonControl1.ApplicationButtonText = null;
-			// 
-			// 
-			// 
 			this.ribbonControl1.ExpandCollapseItem.Id = 0;
 			this.ribbonControl1.ExpandCollapseItem.Name = "";
 			this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
@@ -159,8 +157,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage2,
             this.ribbonPage1});
-			this.ribbonControl1.SelectedPage = this.ribbonPage2;
-			this.ribbonControl1.Size = new System.Drawing.Size(954, 114);
+			this.ribbonControl1.Size = new System.Drawing.Size(954, 115);
 			this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
 			// 
 			// exportEmail
@@ -182,12 +179,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.addRLAsMember.Caption = "Link to Relative";
 			this.addRLAsMember.Id = 2;
 			this.addRLAsMember.Name = "addRLAsMember";
-			toolTipTitleItem4.Text = "Link to Relative";
-			toolTipItem4.LeftIndent = 6;
-			toolTipItem4.Text = "Links this member to a relative";
-			superToolTip4.Items.Add(toolTipTitleItem4);
-			superToolTip4.Items.Add(toolTipItem4);
-			this.addRLAsMember.SuperTip = superToolTip4;
+			toolTipTitleItem1.Text = "Link to Relative";
+			toolTipItem1.LeftIndent = 6;
+			toolTipItem1.Text = "Links this member to a relative";
+			superToolTip1.Items.Add(toolTipTitleItem1);
+			superToolTip1.Items.Add(toolTipItem1);
+			this.addRLAsMember.SuperTip = superToolTip1;
 			this.addRLAsMember.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addRLAsMember_ItemClick);
 			// 
 			// addRLAsRelative
@@ -195,12 +192,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.addRLAsRelative.Caption = "Link to Member";
 			this.addRLAsRelative.Id = 3;
 			this.addRLAsRelative.Name = "addRLAsRelative";
-			toolTipTitleItem5.Text = "Link to Member";
-			toolTipItem5.LeftIndent = 6;
-			toolTipItem5.Text = "Links this relative to an existing member";
-			superToolTip5.Items.Add(toolTipTitleItem5);
-			superToolTip5.Items.Add(toolTipItem5);
-			this.addRLAsRelative.SuperTip = superToolTip5;
+			toolTipTitleItem2.Text = "Link to Member";
+			toolTipItem2.LeftIndent = 6;
+			toolTipItem2.Text = "Links this relative to an existing member";
+			superToolTip2.Items.Add(toolTipTitleItem2);
+			superToolTip2.Items.Add(toolTipItem2);
+			this.addRLAsRelative.SuperTip = superToolTip2;
 			this.addRLAsRelative.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addRLAsRelative_ItemClick);
 			// 
 			// ribbonPage2
@@ -250,7 +247,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// splitContainerControl1
 			// 
 			this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainerControl1.Location = new System.Drawing.Point(0, 114);
+			this.splitContainerControl1.Location = new System.Drawing.Point(0, 115);
 			this.splitContainerControl1.Name = "splitContainerControl1";
 			this.splitContainerControl1.Panel1.Controls.Add(this.emailGrid);
 			this.splitContainerControl1.Panel1.Controls.Add(this.personEditPanel);
@@ -261,7 +258,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.splitContainerControl1.Panel1.Text = "Panel1";
 			this.splitContainerControl1.Panel2.Controls.Add(this.xtraTabControl1);
 			this.splitContainerControl1.Panel2.Text = "Panel2";
-			this.splitContainerControl1.Size = new System.Drawing.Size(954, 664);
+			this.splitContainerControl1.Size = new System.Drawing.Size(954, 663);
 			this.splitContainerControl1.SplitterPosition = 200;
 			this.splitContainerControl1.TabIndex = 2;
 			this.splitContainerControl1.Text = "splitContainerControl1";
@@ -274,8 +271,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.emailGrid.MainView = this.emailView;
 			this.emailGrid.MenuManager = this.ribbonControl1;
 			this.emailGrid.Name = "emailGrid";
-			this.emailGrid.RegistrationCount = 52;
-			this.emailGrid.Size = new System.Drawing.Size(200, 137);
+			this.emailGrid.RegistrationCount = 53;
+			this.emailGrid.Size = new System.Drawing.Size(200, 136);
 			this.emailGrid.Source = this.personBindingSource;
 			this.emailGrid.TabIndex = 5;
 			this.emailGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -361,12 +358,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showPersonEdit.Location = new System.Drawing.Point(177, 292);
 			this.showPersonEdit.Name = "showPersonEdit";
 			this.showPersonEdit.Size = new System.Drawing.Size(23, 23);
-			toolTipTitleItem6.Text = "Edit";
-			toolTipItem6.LeftIndent = 6;
-			toolTipItem6.Text = "Edits the person\'s name or address";
-			superToolTip6.Items.Add(toolTipTitleItem6);
-			superToolTip6.Items.Add(toolTipItem6);
-			this.showPersonEdit.SuperTip = superToolTip6;
+			toolTipTitleItem3.Text = "Edit";
+			toolTipItem3.LeftIndent = 6;
+			toolTipItem3.Text = "Edits the person\'s name or address";
+			superToolTip3.Items.Add(toolTipTitleItem3);
+			superToolTip3.Items.Add(toolTipItem3);
+			this.showPersonEdit.SuperTip = superToolTip3;
 			this.showPersonEdit.TabIndex = 6;
 			this.showPersonEdit.Text = "Edit";
 			this.showPersonEdit.Click += new System.EventHandler(this.showPersonEdit_Click);
@@ -397,7 +394,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.xtraTabControl1.Location = new System.Drawing.Point(0, 0);
 			this.xtraTabControl1.Name = "xtraTabControl1";
 			this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
-			this.xtraTabControl1.Size = new System.Drawing.Size(748, 664);
+			this.xtraTabControl1.Size = new System.Drawing.Size(748, 663);
 			this.xtraTabControl1.TabIndex = 0;
 			this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
@@ -408,7 +405,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.xtraTabPage1.Controls.Add(this.splitContainerControl2);
 			this.xtraTabPage1.Name = "xtraTabPage1";
-			this.xtraTabPage1.Size = new System.Drawing.Size(742, 637);
+			this.xtraTabPage1.Size = new System.Drawing.Size(742, 635);
 			this.xtraTabPage1.Text = "Payments && Pledges";
 			// 
 			// splitContainerControl2
@@ -422,7 +419,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.splitContainerControl2.Panel1.Text = "Panel1";
 			this.splitContainerControl2.Panel2.Controls.Add(this.paymentsGrid);
 			this.splitContainerControl2.Panel2.Text = "Panel2";
-			this.splitContainerControl2.Size = new System.Drawing.Size(742, 637);
+			this.splitContainerControl2.Size = new System.Drawing.Size(742, 635);
 			this.splitContainerControl2.SplitterPosition = 295;
 			this.splitContainerControl2.TabIndex = 0;
 			this.splitContainerControl2.Text = "splitContainerControl2";
@@ -435,7 +432,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.pledgeGrid.MainView = this.pledgeView;
 			this.pledgeGrid.MenuManager = this.ribbonControl1;
 			this.pledgeGrid.Name = "pledgeGrid";
-			this.pledgeGrid.RegistrationCount = 52;
+			this.pledgeGrid.RegistrationCount = 53;
 			this.pledgeGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemAliyahNoteEdit1});
 			this.pledgeGrid.ShowOnlyPredefinedDetails = true;
@@ -456,7 +453,8 @@ namespace ShomreiTorah.Billing.Forms {
             this.colNote,
             this.colComments,
             this.colModified,
-            this.colModifier});
+            this.colModifier,
+            this.colUnlinkedAmount});
 			this.pledgeView.GridControl = this.pledgeGrid;
 			this.pledgeView.Name = "pledgeView";
 			this.pledgeView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.Click;
@@ -470,8 +468,8 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.colDate.FieldName = "Date";
 			this.colDate.Name = "colDate";
-			this.colDate.SummaryItem.DisplayFormat = "{0} Pledges";
-			this.colDate.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
+			this.colDate.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, "Date", "{0} Pledges")});
 			this.colDate.Visible = true;
 			this.colDate.VisibleIndex = 0;
 			this.colDate.Width = 59;
@@ -523,8 +521,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colAmount.FieldName = "Amount";
 			this.colAmount.MaxWidth = 85;
 			this.colAmount.Name = "colAmount";
-			this.colAmount.SummaryItem.DisplayFormat = "{0:c} Total Pledged";
-			this.colAmount.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+			this.colAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Amount", "{0:c} Total Pledged")});
 			this.colAmount.Visible = true;
 			this.colAmount.VisibleIndex = 4;
 			this.colAmount.Width = 85;
@@ -551,7 +549,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colNote.FieldName = "Note";
 			this.colNote.Name = "colNote";
 			this.colNote.Visible = true;
-			this.colNote.VisibleIndex = 5;
+			this.colNote.VisibleIndex = 6;
 			this.colNote.Width = 42;
 			// 
 			// repositoryItemAliyahNoteEdit1
@@ -566,7 +564,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colComments.FieldName = "Comments";
 			this.colComments.Name = "colComments";
 			this.colComments.Visible = true;
-			this.colComments.VisibleIndex = 6;
+			this.colComments.VisibleIndex = 7;
 			this.colComments.Width = 69;
 			// 
 			// colModified
@@ -578,7 +576,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colModified.OptionsColumn.AllowEdit = false;
 			this.colModified.OptionsColumn.AllowFocus = false;
 			this.colModified.OptionsColumn.ReadOnly = true;
-			this.colModified.Width = 49;
+			this.colModified.Width = 100;
 			// 
 			// colModifier
 			// 
@@ -597,8 +595,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.paymentsGrid.MainView = this.paymentsView;
 			this.paymentsGrid.MenuManager = this.ribbonControl1;
 			this.paymentsGrid.Name = "paymentsGrid";
-			this.paymentsGrid.RegistrationCount = 52;
-			this.paymentsGrid.Size = new System.Drawing.Size(742, 336);
+			this.paymentsGrid.RegistrationCount = 53;
+			this.paymentsGrid.Size = new System.Drawing.Size(742, 334);
 			this.paymentsGrid.Source = this.personBindingSource;
 			this.paymentsGrid.TabIndex = 0;
 			this.paymentsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -627,8 +625,8 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.colDate1.FieldName = "Date";
 			this.colDate1.Name = "colDate1";
-			this.colDate1.SummaryItem.DisplayFormat = "{0} Payments";
-			this.colDate1.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
+			this.colDate1.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, "Date", "{0} Payments")});
 			this.colDate1.Visible = true;
 			this.colDate1.VisibleIndex = 0;
 			this.colDate1.Width = 69;
@@ -685,8 +683,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colAmount1.FieldName = "Amount";
 			this.colAmount1.MaxWidth = 85;
 			this.colAmount1.Name = "colAmount1";
-			this.colAmount1.SummaryItem.DisplayFormat = "{0:c} Total Paid";
-			this.colAmount1.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+			this.colAmount1.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Amount", "{0:c} Total Paid")});
 			this.colAmount1.Visible = true;
 			this.colAmount1.VisibleIndex = 4;
 			this.colAmount1.Width = 85;
@@ -748,7 +746,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.xtraTabPage3.Controls.Add(this.relativesGrid);
 			this.xtraTabPage3.Name = "xtraTabPage3";
-			this.xtraTabPage3.Size = new System.Drawing.Size(742, 637);
+			this.xtraTabPage3.Size = new System.Drawing.Size(742, 636);
 			this.xtraTabPage3.Text = "Relatives";
 			// 
 			// relativesGrid
@@ -759,10 +757,10 @@ namespace ShomreiTorah.Billing.Forms {
 			this.relativesGrid.MainView = this.relativesView;
 			this.relativesGrid.MenuManager = this.ribbonControl1;
 			this.relativesGrid.Name = "relativesGrid";
-			this.relativesGrid.RegistrationCount = 52;
+			this.relativesGrid.RegistrationCount = 53;
 			this.relativesGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.labelLikeEdit});
-			this.relativesGrid.Size = new System.Drawing.Size(742, 637);
+			this.relativesGrid.Size = new System.Drawing.Size(742, 636);
 			this.relativesGrid.TabIndex = 0;
 			this.relativesGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.relativesView});
@@ -798,7 +796,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colMember.ShowEditorOnMouseDown = true;
 			this.colMember.Visible = true;
 			this.colMember.VisibleIndex = 4;
-			this.colMember.Width = 176;
+			this.colMember.Width = 57;
 			// 
 			// smartGridColumn1
 			// 
@@ -877,7 +875,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colRelative.ShowEditorOnMouseDown = true;
 			this.colRelative.Visible = true;
 			this.colRelative.VisibleIndex = 0;
-			this.colRelative.Width = 161;
+			this.colRelative.Width = 58;
 			// 
 			// labelLikeEdit
 			// 
@@ -891,7 +889,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.xtraTabPage2.Controls.Add(this.statementsGrid);
 			this.xtraTabPage2.Name = "xtraTabPage2";
-			this.xtraTabPage2.Size = new System.Drawing.Size(742, 637);
+			this.xtraTabPage2.Size = new System.Drawing.Size(742, 636);
 			this.xtraTabPage2.Text = "Statements Received";
 			// 
 			// statementsGrid
@@ -902,8 +900,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.statementsGrid.MainView = this.statementsView;
 			this.statementsGrid.MenuManager = this.ribbonControl1;
 			this.statementsGrid.Name = "statementsGrid";
-			this.statementsGrid.RegistrationCount = 52;
-			this.statementsGrid.Size = new System.Drawing.Size(742, 637);
+			this.statementsGrid.RegistrationCount = 53;
+			this.statementsGrid.Size = new System.Drawing.Size(742, 636);
 			this.statementsGrid.Source = this.personBindingSource;
 			this.statementsGrid.TabIndex = 0;
 			this.statementsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -998,6 +996,18 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colRowId.Name = "colRowId";
 			this.colRowId.Visible = true;
 			this.colRowId.VisibleIndex = 0;
+			// 
+			// colUnlinkedAmount
+			// 
+			this.colUnlinkedAmount.DisplayFormat.FormatString = "c";
+			this.colUnlinkedAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.colUnlinkedAmount.FieldName = "UnlinkedAmount";
+			this.colUnlinkedAmount.MaxWidth = 85;
+			this.colUnlinkedAmount.Name = "colUnlinkedAmount";
+			this.colUnlinkedAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "UnlinkedAmount", "{0:c} Total Unpaid-for")});
+			this.colUnlinkedAmount.Visible = true;
+			this.colUnlinkedAmount.VisibleIndex = 5;
 			// 
 			// PersonDetails
 			// 
@@ -1118,5 +1128,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private Data.UI.Grid.SmartGridColumn colRelation;
 		private Data.UI.Grid.SmartGridColumn colRowId;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit labelLikeEdit;
+		private Data.UI.Grid.SmartGridColumn colUnlinkedAmount;
 	}
 }
