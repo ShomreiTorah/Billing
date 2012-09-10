@@ -24,6 +24,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 			colLinkAmount.ColumnEditor = EditorRepository.CurrencyEditor.CreateItem();
 			controller = new MyController();
+			pledgesGrid.DataMember = null;
 		}
 
 
@@ -44,10 +45,10 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			set {
 				controller.CurrentPayment = value;
 				pledgesGrid.Enabled = value != null;
-				if (value != null) {
+				if (value == null)
+					pledgesGrid.DataSource = null;
+				else
 					pledgesGrid.DataSource = controller.Pledges;
-					pledgesGrid.DataMember = null;
-				}
 			}
 		}
 
@@ -55,15 +56,18 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			if (e.HitInfo.Column == colAmount && e.HitInfo.InRowCell) {
 				var row = (Pledge)pledgesView.GetRow(e.HitInfo.RowHandle);
 				if (row != null)
-					e.SuperTip = Utilities.CreateSuperTip("Unpaid Amount", controller.GetLinkedAmountDescription(row));
+					e.SuperTip = Utilities.CreateSuperTip("Unpaid Amount", controller.GetUnlinkedAmountDescription(row));
 			} else if (e.HitInfo.Column == colLinkAmount) {
 				e.SuperTip = Utilities.CreateSuperTip("Amount to Link", "Enter the portion of this pledge that this payment is intended to pay.");
 			}
 		}
 
 		private void pledgesView_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
+			//Before binding to a pledge grid, we can get weird results.
+			if (!(e.Row is Pledge))
+				return;
 			if (e.Column == colAmount)
-				e.Value = controller.GetLinkedAmount((Pledge)e.Row);
+				e.Value = controller.GetUnlinkedAmount((Pledge)e.Row);
 			else if (e.Column == colLinkAmount) {
 				var pledge = (Pledge)e.Row;
 				if (e.IsGetData)
@@ -73,76 +77,78 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			}
 		}
 		private void pledgesView_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e) {
+			if (e.ListSourceRowIndex < 0)
+				return;
 			if (e.Column == colAmount)
-				e.DisplayText = controller.GetLinkedAmountText(controller.Pledges.Rows[e.ListSourceRowIndex], (decimal)e.Value);
+				e.DisplayText = controller.GetUnlinkedAmountText(controller.Pledges.Rows[e.ListSourceRowIndex], (decimal)e.Value);
 		}
 
 		private sealed class MyController : IDisposable {
 			Payment currentPayment;
+			Person person;
+			string account;
+
+			public MyController() {
+				Pledges = Program.Table<Pledge>().Filter(p => p.Person == person && p.Account == account);
+			}
 
 			public Payment CurrentPayment {
 				get { return currentPayment; }
 				set {
-					if (Pledges != null) Pledges.Dispose();
 					currentPayment = value;
 
 					if (value == null)
 						return;
-					SetFilter(value);
+					person = value.Person;
+					account = value.Account;
+					Pledges.Rescan();
 				}
 			}
 			public FilteredTable<Pledge> Pledges { get; private set; }
 
-			private void SetFilter(Payment value) {
-				if (Pledges != null) Pledges.Dispose();
-				Person person = value.Person;
-				string account = value.Account;
-				Pledges = Program.Table<Pledge>().Filter(p => p.Person == person && p.Account == account);
-			}
-
 			public void Dispose() {
-				if (Pledges != null) Pledges.Dispose();
+				Pledges.Dispose();
 			}
 
 			#region Linked Amount Texts
-			public decimal GetLinkedAmount(Pledge pledge) {
+			public decimal GetUnlinkedAmount(Pledge pledge) {
 				//Unlike, GetAmountDescription(), I don't need ToList()
 				var payments = pledge.LinkedPayments.Where(o => o.Payment != CurrentPayment);
-				return payments.Sum(p => p.Amount);
+				return pledge.Amount - payments.Sum(p => p.Amount);
 			}
 
-			public string GetLinkedAmountText(Pledge pledge, decimal linkedAmount) {
+			public string GetUnlinkedAmountText(Pledge pledge, decimal unlinkedAmount) {
 				return String.Format(CultureInfo.CurrentCulture,
 									 "{0:c} − {1:c} = {2:c}",
-									 pledge.Amount, linkedAmount, pledge.Amount - linkedAmount);
+									 pledge.Amount, pledge.Amount - unlinkedAmount, unlinkedAmount);
 			}
-			public string GetLinkedAmountDescription(Pledge pledge) {
+			public string GetUnlinkedAmountDescription(Pledge pledge) {
 				var payments = pledge.LinkedPayments.Where(o => o.Payment != CurrentPayment).ToList();
 				decimal linkedAmount = payments.Sum(p => p.Amount);
 				if (linkedAmount == 0)
 					return String.Format(CultureInfo.CurrentCulture,
-										 "This pledge was for {0:c}.\r\nIt has not been linked to any payments.",
+										 "This pledge was for {0:c}.\r\nIt has not been linked to any other payments.",
 										 pledge.Amount);
 				else if (linkedAmount == pledge.Amount)
 					return String.Format(CultureInfo.CurrentCulture,
-										 "This pledge was for {0:c}.\r\nThe entire amount has already been linked to {1} payment{2}.",
+										 "This pledge was for {0:c}.\r\nThe entire amount has already been linked to {1} other payment{2}.",
 										 pledge.Amount, payments.Count, payments.Count == 1 ? "" : "s");
 				else
 					return String.Format(CultureInfo.CurrentCulture,
-										 "This pledge was for {0:c}.\r\nOf that amount, {1:c} have already been linked to {2} payment{3}.\r\n{4:c} is unlinked.",
+										 "This pledge was for {0:c}.\r\nOf that amount, {1:c} have already been linked to {2} other payment{3}.\r\n{4:c} is unlinked.",
 										 pledge.Amount, linkedAmount, payments.Count, payments.Count == 1 ? "" : "s", pledge.Amount - linkedAmount);
 			}
 			#endregion
 
 			public decimal GetAmount(Pledge pledge) {
 				//FirstOrDefault() will return 0 if there are no rows.
-				return CurrentPayment.LinkedPledges
-									 .Where(o => o.Pledge == pledge)
+				return pledge.LinkedPayments
+									 .Where(o => o.Payment == currentPayment)
 									 .Select(o => o.Amount)
 									 .FirstOrDefault();
 			}
 			public void SetAmount(Pledge pledge, decimal value) {
-				var link = CurrentPayment.LinkedPledges.FirstOrDefault(o => o.Pledge == pledge);
+				var link = pledge.LinkedPayments.FirstOrDefault(o => o.Payment == currentPayment);
 
 				if (value == 0) {
 					Program.Table<PledgeLink>().Rows.Remove(link);

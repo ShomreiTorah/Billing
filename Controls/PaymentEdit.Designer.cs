@@ -24,7 +24,6 @@ namespace ShomreiTorah.Billing.Controls {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.components = new System.ComponentModel.Container();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
@@ -44,8 +43,8 @@ namespace ShomreiTorah.Billing.Controls {
 			this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
 			this.commit = new ShomreiTorah.Billing.Controls.CommitButton();
 			this.account = new DevExpress.XtraEditors.ComboBoxEdit();
-			this.paymentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource(this.components);
+			this.paymentsBindingSource = new System.Windows.Forms.BindingSource();
+			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource();
 			this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
 			this.amount = new DevExpress.XtraEditors.SpinEdit();
 			this.checkNumberLabel = new DevExpress.XtraEditors.LabelControl();
@@ -77,7 +76,6 @@ namespace ShomreiTorah.Billing.Controls {
 			// 
 			this.groupControl1.AppearanceCaption.Options.UseTextOptions = true;
 			this.groupControl1.AppearanceCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-			this.groupControl1.Controls.Add(this.linkPopup);
 			this.groupControl1.Controls.Add(this.linkDropDownEdit);
 			this.groupControl1.Controls.Add(this.labelControl6);
 			this.groupControl1.Controls.Add(this.commit);
@@ -91,6 +89,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.groupControl1.Controls.Add(this.comments);
 			this.groupControl1.Controls.Add(this.date);
 			this.groupControl1.Controls.Add(this.labelControl1);
+			this.groupControl1.Controls.Add(this.linkPopup);
 			this.groupControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupControl1.Location = new System.Drawing.Point(0, 20);
 			this.groupControl1.Name = "groupControl1";
@@ -101,9 +100,9 @@ namespace ShomreiTorah.Billing.Controls {
 			// linkPopup
 			// 
 			this.linkPopup.Controls.Add(this.pledgeLinks);
-			this.linkPopup.Location = new System.Drawing.Point(279, 28);
+			this.linkPopup.Location = new System.Drawing.Point(38, 99);
 			this.linkPopup.Name = "linkPopup";
-			this.linkPopup.Size = new System.Drawing.Size(449, 232);
+			this.linkPopup.Size = new System.Drawing.Size(708, 234);
 			this.linkPopup.TabIndex = 17;
 			// 
 			// pledgeLinks
@@ -112,7 +111,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.pledgeLinks.HostPayment = null;
 			this.pledgeLinks.Location = new System.Drawing.Point(0, 0);
 			this.pledgeLinks.Name = "pledgeLinks";
-			this.pledgeLinks.Size = new System.Drawing.Size(449, 232);
+			this.pledgeLinks.Size = new System.Drawing.Size(708, 234);
 			this.pledgeLinks.TabIndex = 0;
 			// 
 			// linkDropDownEdit
@@ -173,6 +172,7 @@ namespace ShomreiTorah.Billing.Controls {
 			// 
 			this.paymentsBindingSource.DataMember = "Payments";
 			this.paymentsBindingSource.DataSource = this.billingData;
+			this.paymentsBindingSource.Position = 0;
 			// 
 			// billingData
 			// 

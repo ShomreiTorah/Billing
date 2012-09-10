@@ -12,8 +12,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.components = new System.ComponentModel.Container();
-			this.pledgesGrid = new ShomreiTorah.Data.UI.Grid.SmartGrid(this.components);
+			this.pledgesGrid = new ShomreiTorah.Data.UI.Grid.SmartGrid();
 			this.pledgesView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colType = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -47,7 +46,7 @@
 			// 
 			// pledgesView
 			// 
-			this.pledgesView.ActiveFilterString = "[UnlinkedAmount] <> 0.0m";
+			this.pledgesView.ActiveFilterString = "[Unlinked] <> 0.0m";
 			this.pledgesView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colDate,
             this.colType,
@@ -61,7 +60,7 @@
 			this.pledgesView.GridControl = this.pledgesGrid;
 			this.pledgesView.Name = "pledgesView";
 			this.pledgesView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
-            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colAmount, DevExpress.Data.ColumnSortOrder.Descending)});
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colDate, DevExpress.Data.ColumnSortOrder.Descending)});
 			this.pledgesView.CustomSuperTip += new System.EventHandler<ShomreiTorah.Data.UI.Grid.CustomToolTipEventArgs>(this.pledgesView_CustomSuperTip);
 			this.pledgesView.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.pledgesView_CustomUnboundColumnData);
 			this.pledgesView.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.pledgesView_CustomColumnDisplayText);
@@ -74,7 +73,7 @@
 			this.colDate.OptionsColumn.ReadOnly = true;
 			this.colDate.Visible = true;
 			this.colDate.VisibleIndex = 0;
-			this.colDate.Width = 51;
+			this.colDate.Width = 55;
 			// 
 			// colType
 			// 
@@ -102,21 +101,24 @@
 			this.colAmount.AppearanceCell.Options.UseTextOptions = true;
 			this.colAmount.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
 			this.colAmount.Caption = "Unpaid";
-			this.colAmount.FieldName = "UnlinkedAmount";
-			this.colAmount.MaxWidth = 85;
+			this.colAmount.DisplayFormat.FormatString = "c";
+			this.colAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+			this.colAmount.FieldName = "Unlinked";
+			this.colAmount.MinWidth = 100;
 			this.colAmount.Name = "colAmount";
 			this.colAmount.OptionsColumn.AllowEdit = false;
 			this.colAmount.OptionsColumn.ReadOnly = true;
 			this.colAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Amount", "{0:c} Total Unpaid-for")});
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "UnlinkedAmount", "{0:c} Total Unpaid-for")});
 			this.colAmount.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
 			this.colAmount.Visible = true;
 			this.colAmount.VisibleIndex = 3;
-			this.colAmount.Width = 65;
+			this.colAmount.Width = 100;
 			// 
 			// colNote
 			// 
 			this.colNote.FieldName = "Note";
+			this.colNote.MaxWidth = 200;
 			this.colNote.Name = "colNote";
 			this.colNote.Visible = true;
 			this.colNote.VisibleIndex = 4;
@@ -125,6 +127,7 @@
 			// colComments
 			// 
 			this.colComments.FieldName = "Comments";
+			this.colComments.MaxWidth = 200;
 			this.colComments.Name = "colComments";
 			this.colComments.Visible = true;
 			this.colComments.VisibleIndex = 5;
@@ -153,13 +156,15 @@
 			this.colLinkAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
 			this.colLinkAmount.FieldName = "AmountToLink";
 			this.colLinkAmount.MaxWidth = 85;
+			this.colLinkAmount.MinWidth = 85;
 			this.colLinkAmount.Name = "colLinkAmount";
+			this.colLinkAmount.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
 			this.colLinkAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "AmountToLink", "{0:c} Total Pledged")});
 			this.colLinkAmount.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
 			this.colLinkAmount.Visible = true;
 			this.colLinkAmount.VisibleIndex = 6;
-			this.colLinkAmount.Width = 42;
+			this.colLinkAmount.Width = 85;
 			// 
 			// colPledgeId
 			// 

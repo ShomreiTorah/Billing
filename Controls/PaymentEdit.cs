@@ -232,6 +232,12 @@ Payment:	{4:c} {5} for {6} on {7:d}
 		}
 
 		private void linkDropDownEdit_QueryPopUp(object sender, CancelEventArgs e) {
+			if (person.SelectedPerson == null || String.IsNullOrEmpty(account.Text)) {
+				Dialog.ShowError("You must select a person and account before you can link pledges");
+				e.Cancel = true;
+				return;
+			}
+
 			//The grid depends on the account and person. I only bind it
 			//when the popup is open so that I don't need to worry about
 			//changes in the payment.
