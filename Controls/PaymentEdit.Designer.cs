@@ -37,9 +37,9 @@ namespace ShomreiTorah.Billing.Controls {
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
 			this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+			this.linkDropDownEdit = new DevExpress.XtraEditors.PopupContainerEdit();
 			this.linkPopup = new DevExpress.XtraEditors.PopupContainerControl();
 			this.pledgeLinks = new ShomreiTorah.Billing.Controls.Editors.PledgeLinksEdit();
-			this.linkDropDownEdit = new DevExpress.XtraEditors.PopupContainerEdit();
 			this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
 			this.commit = new ShomreiTorah.Billing.Controls.CommitButton();
 			this.account = new DevExpress.XtraEditors.ComboBoxEdit();
@@ -57,9 +57,9 @@ namespace ShomreiTorah.Billing.Controls {
 			this.person = new ShomreiTorah.Data.UI.Controls.PersonSelector();
 			((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
 			this.groupControl1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.linkDropDownEdit.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.linkPopup)).BeginInit();
 			this.linkPopup.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.linkDropDownEdit.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.account.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).BeginInit();
@@ -97,23 +97,6 @@ namespace ShomreiTorah.Billing.Controls {
 			this.groupControl1.TabIndex = 1;
 			this.groupControl1.Text = "Details";
 			// 
-			// linkPopup
-			// 
-			this.linkPopup.Controls.Add(this.pledgeLinks);
-			this.linkPopup.Location = new System.Drawing.Point(38, 99);
-			this.linkPopup.Name = "linkPopup";
-			this.linkPopup.Size = new System.Drawing.Size(708, 234);
-			this.linkPopup.TabIndex = 17;
-			// 
-			// pledgeLinks
-			// 
-			this.pledgeLinks.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pledgeLinks.HostPayment = null;
-			this.pledgeLinks.Location = new System.Drawing.Point(0, 0);
-			this.pledgeLinks.Name = "pledgeLinks";
-			this.pledgeLinks.Size = new System.Drawing.Size(708, 234);
-			this.pledgeLinks.TabIndex = 0;
-			// 
 			// linkDropDownEdit
 			// 
 			this.linkDropDownEdit.Location = new System.Drawing.Point(191, 51);
@@ -133,6 +116,23 @@ namespace ShomreiTorah.Billing.Controls {
 			this.linkDropDownEdit.TabIndex = 16;
 			this.linkDropDownEdit.QueryPopUp += new System.ComponentModel.CancelEventHandler(this.linkDropDownEdit_QueryPopUp);
 			this.linkDropDownEdit.Closed += new DevExpress.XtraEditors.Controls.ClosedEventHandler(this.linkDropDownEdit_Closed);
+			// 
+			// linkPopup
+			// 
+			this.linkPopup.Controls.Add(this.pledgeLinks);
+			this.linkPopup.Location = new System.Drawing.Point(38, 99);
+			this.linkPopup.Name = "linkPopup";
+			this.linkPopup.Size = new System.Drawing.Size(708, 234);
+			this.linkPopup.TabIndex = 17;
+			// 
+			// pledgeLinks
+			// 
+			this.pledgeLinks.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pledgeLinks.HostPayment = null;
+			this.pledgeLinks.Location = new System.Drawing.Point(0, 0);
+			this.pledgeLinks.Name = "pledgeLinks";
+			this.pledgeLinks.Size = new System.Drawing.Size(708, 234);
+			this.pledgeLinks.TabIndex = 0;
 			// 
 			// labelControl6
 			// 
@@ -166,6 +166,7 @@ namespace ShomreiTorah.Billing.Controls {
             "Building Fund"});
 			this.account.Size = new System.Drawing.Size(154, 20);
 			this.account.TabIndex = 2;
+			this.account.TextChanged += new System.EventHandler(this.account_TextChanged);
 			this.account.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
 			// 
 			// paymentsBindingSource
@@ -321,9 +322,9 @@ namespace ShomreiTorah.Billing.Controls {
 			((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
 			this.groupControl1.ResumeLayout(false);
 			this.groupControl1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.linkDropDownEdit.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.linkPopup)).EndInit();
 			this.linkPopup.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.linkDropDownEdit.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.account.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).EndInit();

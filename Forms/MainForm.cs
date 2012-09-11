@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Docking;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraTabbedMdi;
@@ -207,6 +208,13 @@ namespace ShomreiTorah.Billing.Forms {
 			var childBar = e.MergedChild.StatusBar;
 			if (childBar != null)
 				ribbonStatusBar.UnMergeStatusBar();
+		}
+
+		private void addPaymentPanel_VisibilityChanged(object sender, DevExpress.XtraBars.Docking.VisibilityChangedEventArgs e) {
+			if (addPaymentPanel.Visibility == DockVisibility.Hidden) {
+				//If the user closes the add popup, cancel the new payment.
+				paymentEdit.AddNew();
+			}
 		}
 	}
 }

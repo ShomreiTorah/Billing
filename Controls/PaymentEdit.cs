@@ -49,10 +49,24 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 
 		public void AddNew() {
+			if (CurrentPayment.Table == null)
+				RemoveLinks();
+			paymentsBindingSource.CancelEdit();
+
 			commit.CommitType = CommitType.Create;
 			commit.Show();
 			paymentsBindingSource.AddNew();
 			person.Focus();
+		}
+
+
+		///<summary>Removes all PledgeLinks created by the user when creating an uncommitted payment.</summary>
+		///<remarks>This method should not be called for payments that are already in the table; the Payment class will handle those automatically.</remarks>
+		public void RemoveLinks() {
+			//I can't use the payments CRC property since it doesn't have a parent table.
+			foreach (var link in Program.Table<PledgeLink>().Rows.Where(p => p.Payment == CurrentPayment)) {
+				link.RemoveRow();
+			}
 		}
 
 		#region Creation
@@ -204,7 +218,14 @@ Payment:	{4:c} {5} for {6} on {7:d}
 			checkNumber.EditValue = null;
 		}
 
+		private void account_TextChanged(object sender, EventArgs e) {
+			if (CurrentPayment.Table == null)
+				RemoveLinks();
+		}
 		private void person_EditValueChanged(object sender, EventArgs e) {
+			if (CurrentPayment.Table == null)
+				RemoveLinks();
+
 			date.Focus();
 		}
 
@@ -246,5 +267,6 @@ Payment:	{4:c} {5} for {6} on {7:d}
 		private void linkDropDownEdit_Closed(object sender, ClosedEventArgs e) {
 			pledgeLinks.HostPayment = null;
 		}
+
 	}
 }

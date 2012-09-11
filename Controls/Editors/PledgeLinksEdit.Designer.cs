@@ -156,7 +156,7 @@
 			this.colLinkAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
 			this.colLinkAmount.FieldName = "AmountToLink";
 			this.colLinkAmount.MaxWidth = 85;
-			this.colLinkAmount.MinWidth = 85;
+			this.colLinkAmount.MinWidth = 65;
 			this.colLinkAmount.Name = "colLinkAmount";
 			this.colLinkAmount.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
 			this.colLinkAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
