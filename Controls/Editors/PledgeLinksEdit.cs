@@ -14,6 +14,7 @@ using ShomreiTorah.Data;
 using System.Globalization;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
+using System.Diagnostics;
 
 namespace ShomreiTorah.Billing.Controls.Editors {
 	public partial class PledgeLinksEdit : XtraUserControl {
@@ -52,6 +53,8 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			}
 		}
 
+		public IList<PledgeLink> Links { get { return controller.Links; } }
+
 		private void pledgesView_CustomSuperTip(object sender, CustomToolTipEventArgs e) {
 			if (e.HitInfo.Column == colAmount && e.HitInfo.InRowCell) {
 				var row = (Pledge)pledgesView.GetRow(e.HitInfo.RowHandle);
@@ -88,22 +91,90 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			Person person;
 			string account;
 
+			///<summary>Holds the PledgeLinks created for the current detached Payment.</summary>
+			///<remarks>This collection is re-used to allow the Payment editor to re-bind 
+			///the grid whenever the dropdown is shown, without losing all data.
+			///
+			/// Before switching to a new payment, this must be cleared.</remarks>
+			IList<PledgeLink> detachedLinks = new List<PledgeLink>();
+
 			public MyController() {
 				Pledges = Program.Table<Pledge>().Filter(p => p.Person == person && p.Account == account);
+			}
+
+			///<summary>A mutable wrapper around a ChildRowCollection, which adds and deletes rows from the underlying foreign table.</summary>
+			private class ChildRowList<TChildRow> : IList<TChildRow> where TChildRow : Row {
+				private readonly IChildRowCollection<TChildRow> rows;
+
+				public ChildRowList(IChildRowCollection<TChildRow> rows) { this.rows = rows; }
+
+				public bool Contains(TChildRow item) { return rows.Contains(item); }
+				public void CopyTo(TChildRow[] array, int arrayIndex) { rows.CopyTo(array, arrayIndex); }
+				public IEnumerator<TChildRow> GetEnumerator() { return rows.GetEnumerator(); }
+				System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { return GetEnumerator(); }
+				public int IndexOf(TChildRow item) { return rows.IndexOf(item); }
+				public int Count { get { return rows.Count; } }
+				public bool IsReadOnly { get { return false; } }
+
+				public void Insert(int index, TChildRow item) {
+					throw new NotSupportedException();
+				}
+				public TChildRow this[int index] {
+					get { return rows[index]; }
+					set { throw new NotSupportedException(); }
+				}
+
+				public void Add(TChildRow row) {
+					if (row == null) throw new ArgumentNullException("row");
+
+					if (row[rows.Relation.ChildColumn] != rows.ParentRow)
+						throw new ArgumentException("New child rows must already be assigned their parent", "row");
+
+					rows.ChildTable.Rows.Add(row);
+					Debug.Assert(Contains(row), "Row did not get added to CRC");
+				}
+
+				public bool Remove(TChildRow item) {
+					if (!Contains(item))
+						return false;
+					item.RemoveRow();
+					return true;
+				}
+				public void RemoveAt(int index) {
+					this[index].RemoveRow();
+				}
+				public void Clear() {
+					//Calling RemoveRow() will remove the row from the ChildRowCollection.
+					for (int i = Count - 1; i >= 0; i--)
+						this[i].RemoveRow();
+
+					Debug.Assert(Count == 0, "RemoveRow() didn't empty the CRC");
+				}
 			}
 
 			public Payment CurrentPayment {
 				get { return currentPayment; }
 				set {
+					if (value != null && Links == detachedLinks && detachedLinks.Any(o => o.Payment != value))
+						throw new InvalidOperationException("Before switching Payments, the detached Links collection must be cleared.");
 					currentPayment = value;
 
-					if (value == null)
+					if (value == null) {
+						if (Links != detachedLinks)
+							Links = null;
 						return;
+					}
 					person = value.Person;
 					account = value.Account;
 					Pledges.Rescan();
+
+					if (value.Table == null)
+						Links = detachedLinks;
+					else
+						Links = new ChildRowList<PledgeLink>(value.LinkedPledges);
 				}
 			}
+			public IList<PledgeLink> Links { get; private set; }
 			public FilteredTable<Pledge> Pledges { get; private set; }
 
 			public void Dispose() {
@@ -142,21 +213,20 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 			public decimal GetAmount(Pledge pledge) {
 				//FirstOrDefault() will return 0 if there are no rows.
-				return pledge.LinkedPayments
-									 .Where(o => o.Payment == currentPayment)
-									 .Select(o => o.Amount)
-									 .FirstOrDefault();
+				return Links.Where(o => o.Pledge == pledge)
+							.Select(o => o.Amount)
+							.FirstOrDefault();
 			}
 			public void SetAmount(Pledge pledge, decimal value) {
-				var link = pledge.LinkedPayments.FirstOrDefault(o => o.Payment == currentPayment);
+				var link = Links.FirstOrDefault(o => o.Pledge == pledge);
 
 				if (value == 0) {
-					Program.Table<PledgeLink>().Rows.Remove(link);
+					Links.Remove(link);
 				} else {
 					if (link != null)
 						link.Amount = value;
 					else
-						Program.Table<PledgeLink>().Rows.Add(new PledgeLink { Pledge = pledge, Payment = CurrentPayment, Amount = value });
+						Links.Add(new PledgeLink { Pledge = pledge, Payment = CurrentPayment, Amount = value });
 				}
 			}
 		}
