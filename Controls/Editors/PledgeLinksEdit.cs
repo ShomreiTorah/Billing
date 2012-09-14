@@ -48,13 +48,16 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 				pledgesGrid.Enabled = value != null;
 				if (value == null)
 					pledgesGrid.DataSource = null;
-				else
+				else {
 					pledgesGrid.DataSource = controller.Pledges;
+					UpdateSummary();
+				}
 			}
 		}
 
 		public IList<PledgeLink> Links { get { return controller.Links; } }
 
+		#region Grid
 		private void pledgesView_CustomSuperTip(object sender, CustomToolTipEventArgs e) {
 			if (e.HitInfo.Column == colAmount && e.HitInfo.InRowCell) {
 				var row = (Pledge)pledgesView.GetRow(e.HitInfo.RowHandle);
@@ -75,8 +78,10 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 				var pledge = (Pledge)e.Row;
 				if (e.IsGetData)
 					e.Value = controller.GetAmount(pledge);
-				else
+				else {
 					controller.SetAmount(pledge, (decimal)e.Value);
+					UpdateSummary();
+				}
 			}
 		}
 		private void pledgesView_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e) {
@@ -85,6 +90,15 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			if (e.Column == colAmount)
 				e.DisplayText = controller.GetUnlinkedAmountText(controller.Pledges.Rows[e.ListSourceRowIndex], (decimal)e.Value);
 		}
+		#endregion
+
+		#region Toolbar
+		void UpdateSummary() {
+			var s = controller.GetPaymentSummary();
+			paymentSummary.Caption = "Payment: " + s.Short;
+			paymentSummary.SuperTip = Utilities.CreateSuperTip("Payment Information", s.Long);
+		}
+		#endregion
 
 		private sealed class MyController : IDisposable {
 			Payment currentPayment;
@@ -211,6 +225,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			}
 			#endregion
 
+			#region Mutable Amount
 			public decimal GetAmount(Pledge pledge) {
 				//FirstOrDefault() will return 0 if there are no rows.
 				return Links.Where(o => o.Pledge == pledge)
@@ -229,6 +244,30 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 						Links.Add(new PledgeLink { Pledge = pledge, Payment = CurrentPayment, Amount = value });
 				}
 			}
+			#endregion
+
+			public SummaryInfo GetPaymentSummary() {
+				var linked = Links.Sum(o => o.Amount);
+				var personBalance = CurrentPayment.Person.Transactions.Where(t => t.Account == CurrentPayment.Account)
+																	  .Sum(t => t.SignedAmount);
+
+				if (currentPayment.Table != null)
+					personBalance += CurrentPayment.Amount;
+
+				return new SummaryInfo {
+					Short = String.Format(CultureInfo.CurrentCulture,
+										  "{0:c} − {1:c} = {2:c}",
+										  CurrentPayment.Amount, linked, currentPayment.Amount - linked),
+					Long = String.Format(CultureInfo.CurrentCulture,
+										 "{0:c} of this {1:c} payment is linked to {2} pledge{3}.\r\n{4:c} remain unaccounted for.\r\n\r\n{5} owe {6:c} for the {7} account (before accounting for this payment).",
+										 linked, CurrentPayment.Amount, Links.Count, Links.Count > 1 ? "s" : "", currentPayment.Amount - linked,
+										 CurrentPayment.Person.FullName, personBalance, CurrentPayment.Account)
+				};
+			}
+		}
+		class SummaryInfo {
+			public string Short { get; set; }
+			public string Long { get; set; }
 		}
 	}
 }

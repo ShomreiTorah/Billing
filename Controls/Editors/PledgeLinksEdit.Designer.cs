@@ -26,20 +26,28 @@
 			this.colPledgeId = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colExternalSource = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colExternalId = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.barManager1 = new DevExpress.XtraBars.BarManager();
+			this.bar1 = new DevExpress.XtraBars.Bar();
+			this.paymentSummary = new DevExpress.XtraBars.BarStaticItem();
+			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
+			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
+			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
+			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesGrid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pledgesGrid
 			// 
 			this.pledgesGrid.DataMember = "Pledges";
 			this.pledgesGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pledgesGrid.Location = new System.Drawing.Point(0, 0);
+			this.pledgesGrid.Location = new System.Drawing.Point(0, 29);
 			this.pledgesGrid.MainView = this.pledgesView;
 			this.pledgesGrid.Name = "pledgesGrid";
 			this.pledgesGrid.RegistrationCount = 53;
 			this.pledgesGrid.ShowOnlyPredefinedDetails = true;
-			this.pledgesGrid.Size = new System.Drawing.Size(493, 284);
+			this.pledgesGrid.Size = new System.Drawing.Size(493, 255);
 			this.pledgesGrid.TabIndex = 0;
 			this.pledgesGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.pledgesView});
@@ -164,7 +172,7 @@
 			this.colLinkAmount.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
 			this.colLinkAmount.Visible = true;
 			this.colLinkAmount.VisibleIndex = 6;
-			this.colLinkAmount.Width = 85;
+			this.colLinkAmount.Width = 65;
 			// 
 			// colPledgeId
 			// 
@@ -181,15 +189,83 @@
 			this.colExternalId.FieldName = "ExternalId";
 			this.colExternalId.Name = "colExternalId";
 			// 
+			// barManager1
+			// 
+			this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
+            this.bar1});
+			this.barManager1.DockControls.Add(this.barDockControlTop);
+			this.barManager1.DockControls.Add(this.barDockControlBottom);
+			this.barManager1.DockControls.Add(this.barDockControlLeft);
+			this.barManager1.DockControls.Add(this.barDockControlRight);
+			this.barManager1.Form = this;
+			this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.paymentSummary});
+			this.barManager1.MaxItemId = 1;
+			// 
+			// bar1
+			// 
+			this.bar1.BarName = "Tools";
+			this.bar1.DockCol = 0;
+			this.bar1.DockRow = 0;
+			this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
+			this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.paymentSummary)});
+			this.bar1.OptionsBar.AllowQuickCustomization = false;
+			this.bar1.OptionsBar.DisableClose = true;
+			this.bar1.OptionsBar.DisableCustomization = true;
+			this.bar1.OptionsBar.DrawDragBorder = false;
+			this.bar1.OptionsBar.UseWholeRow = true;
+			this.bar1.Text = "Tools";
+			// 
+			// paymentSummary
+			// 
+			this.paymentSummary.Caption = "$456 − $123 = $333";
+			this.paymentSummary.Id = 0;
+			this.paymentSummary.Name = "paymentSummary";
+			this.paymentSummary.TextAlignment = System.Drawing.StringAlignment.Near;
+			// 
+			// barDockControlTop
+			// 
+			this.barDockControlTop.CausesValidation = false;
+			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
+			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
+			this.barDockControlTop.Size = new System.Drawing.Size(493, 29);
+			// 
+			// barDockControlBottom
+			// 
+			this.barDockControlBottom.CausesValidation = false;
+			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.barDockControlBottom.Location = new System.Drawing.Point(0, 284);
+			this.barDockControlBottom.Size = new System.Drawing.Size(493, 0);
+			// 
+			// barDockControlLeft
+			// 
+			this.barDockControlLeft.CausesValidation = false;
+			this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
+			this.barDockControlLeft.Location = new System.Drawing.Point(0, 29);
+			this.barDockControlLeft.Size = new System.Drawing.Size(0, 255);
+			// 
+			// barDockControlRight
+			// 
+			this.barDockControlRight.CausesValidation = false;
+			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
+			this.barDockControlRight.Location = new System.Drawing.Point(493, 29);
+			this.barDockControlRight.Size = new System.Drawing.Size(0, 255);
+			// 
 			// PledgeLinksEdit
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.pledgesGrid);
+			this.Controls.Add(this.barDockControlLeft);
+			this.Controls.Add(this.barDockControlRight);
+			this.Controls.Add(this.barDockControlBottom);
+			this.Controls.Add(this.barDockControlTop);
 			this.Name = "PledgeLinksEdit";
 			this.Size = new System.Drawing.Size(493, 284);
 			((System.ComponentModel.ISupportInitialize)(this.pledgesGrid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -210,6 +286,13 @@
 		private Data.UI.Grid.SmartGridColumn colExternalSource;
 		private Data.UI.Grid.SmartGridColumn colExternalId;
 		private Data.UI.Grid.SmartGridColumn colLinkAmount;
+		private DevExpress.XtraBars.BarManager barManager1;
+		private DevExpress.XtraBars.Bar bar1;
+		private DevExpress.XtraBars.BarDockControl barDockControlTop;
+		private DevExpress.XtraBars.BarDockControl barDockControlBottom;
+		private DevExpress.XtraBars.BarDockControl barDockControlLeft;
+		private DevExpress.XtraBars.BarDockControl barDockControlRight;
+		private DevExpress.XtraBars.BarStaticItem paymentSummary;
 
 	}
 }
