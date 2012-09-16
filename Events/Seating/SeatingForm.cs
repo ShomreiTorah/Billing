@@ -154,15 +154,15 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				else {
 					var row = seats.Rows[e.ListSourceRowIndex];
 
-					var seat = FindSeatGroup(row.Person);
-					if (seat == null) {
+					var chartCount = FindChartCount(row.Person);
+					if (chartCount == null) {
 						if (row.MensSeats + row.BoysSeats == 0)
 							e.Value = 0;	//Not in chart, but has no seats
 						else
 							e.Value = null;
 					} else {
 						var reservedSeats = row.MensSeats + row.BoysSeats;
-						e.Value = reservedSeats - seat.SeatCount;
+						e.Value = reservedSeats - chartCount;
 					}
 				}
 			}
@@ -247,7 +247,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				BeginInvoke(new Action(delegate {
 					try {
 						if (seatGroups == null)
-							seatGroups = new Dictionary<Person, SeatGroup>();
+							seatGroups = new Dictionary<Person, int>();
 						else
 							seatGroups.Clear();
 
@@ -268,12 +268,12 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			);
 		}
 
-		SeatGroup FindSeatGroup(Person person) {
-			SeatGroup retVal;
+		int FindChartCount(Person person) {
+			int retVal;
 			if (seatGroups.TryGetValue(person, out retVal))
 				return retVal;
 
-			retVal = chart.AllSeats.FirstOrDefault(s => s.Matches(person));
+			retVal = chart.AllSeats.Where(s => s.Matches(person)).Sum(s => s.SeatCount);
 			seatGroups.Add(person, retVal);
 
 			return retVal;
@@ -307,7 +307,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		ParsedSeatingChart chart;
 
 		///<summary>Contains the SeatGroups corresponding to people in the master directory.</summary>
-		Dictionary<Person, SeatGroup> seatGroups;
+		Dictionary<Person, int> seatGroups;
 		#endregion
 
 		private void exportLadiesInfo_ItemClick(object sender, ItemClickEventArgs e) {
