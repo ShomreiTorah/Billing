@@ -155,11 +155,11 @@ namespace ShomreiTorah.Billing.Events.Seating {
 					var row = seats.Rows[e.ListSourceRowIndex];
 
 					var chartCount = FindChartCount(row.Person);
-					if (chartCount == null) {
+					if (chartCount == 0) {
 						if (row.MensSeats + row.BoysSeats == 0)
 							e.Value = 0;	//Not in chart, but has no seats
 						else
-							e.Value = null;
+							e.Value = null;	//Missing
 					} else {
 						var reservedSeats = row.MensSeats + row.BoysSeats;
 						e.Value = reservedSeats - chartCount;
