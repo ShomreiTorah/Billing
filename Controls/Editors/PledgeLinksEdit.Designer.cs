@@ -12,13 +12,16 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PledgeLinksEdit));
+			DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
 			this.pledgesGrid = new ShomreiTorah.Data.UI.Grid.SmartGrid();
 			this.pledgesView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -43,6 +46,7 @@
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
 			this.htmlDisplay = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+			this.addDonation = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesGrid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
@@ -216,8 +220,9 @@
 			this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.paymentSummary,
             this.clearLinks,
-            this.fillLinks});
-			this.barManager1.MaxItemId = 3;
+            this.fillLinks,
+            this.addDonation});
+			this.barManager1.MaxItemId = 4;
 			// 
 			// bar1
 			// 
@@ -228,7 +233,8 @@
 			this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.paymentSummary),
             new DevExpress.XtraBars.LinkPersistInfo(this.clearLinks),
-            new DevExpress.XtraBars.LinkPersistInfo(this.fillLinks)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.fillLinks),
+            new DevExpress.XtraBars.LinkPersistInfo(this.addDonation, true)});
 			this.bar1.OptionsBar.AllowQuickCustomization = false;
 			this.bar1.OptionsBar.DisableClose = true;
 			this.bar1.OptionsBar.DisableCustomization = true;
@@ -248,12 +254,12 @@
 			this.clearLinks.Caption = "Clear";
 			this.clearLinks.Id = 1;
 			this.clearLinks.Name = "clearLinks";
-			toolTipTitleItem3.Text = "Clear";
-			toolTipItem3.LeftIndent = 6;
-			toolTipItem3.Text = "Resets the links for this payment, unlinking it from all pledges.";
-			superToolTip3.Items.Add(toolTipTitleItem3);
-			superToolTip3.Items.Add(toolTipItem3);
-			this.clearLinks.SuperTip = superToolTip3;
+			toolTipTitleItem5.Text = "Clear";
+			toolTipItem5.LeftIndent = 6;
+			toolTipItem5.Text = "Resets the links for this payment, unlinking it from all pledges.";
+			superToolTip5.Items.Add(toolTipTitleItem5);
+			superToolTip5.Items.Add(toolTipItem5);
+			this.clearLinks.SuperTip = superToolTip5;
 			this.clearLinks.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.clearLinks_ItemClick);
 			// 
 			// fillLinks
@@ -261,12 +267,12 @@
 			this.fillLinks.Caption = "Fill Down";
 			this.fillLinks.Id = 2;
 			this.fillLinks.Name = "fillLinks";
-			toolTipTitleItem4.Text = "Fill Down";
-			toolTipItem4.LeftIndent = 6;
-			toolTipItem4.Text = resources.GetString("toolTipItem4.Text");
-			superToolTip4.Items.Add(toolTipTitleItem4);
-			superToolTip4.Items.Add(toolTipItem4);
-			this.fillLinks.SuperTip = superToolTip4;
+			toolTipTitleItem6.Text = "Fill Down";
+			toolTipItem6.LeftIndent = 6;
+			toolTipItem6.Text = resources.GetString("toolTipItem6.Text");
+			superToolTip6.Items.Add(toolTipTitleItem6);
+			superToolTip6.Items.Add(toolTipItem6);
+			this.fillLinks.SuperTip = superToolTip6;
 			this.fillLinks.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.fillLinks_ItemClick);
 			// 
 			// barDockControlTop
@@ -303,6 +309,19 @@
 			this.htmlDisplay.AutoHeight = false;
 			this.htmlDisplay.Name = "htmlDisplay";
 			this.htmlDisplay.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+			// 
+			// addDonation
+			// 
+			this.addDonation.Caption = "Add donation pledge";
+			this.addDonation.Id = 3;
+			this.addDonation.Name = "addDonation";
+			toolTipTitleItem7.Text = "Add Donation Pledge";
+			toolTipItem7.LeftIndent = 6;
+			toolTipItem7.Text = resources.GetString("toolTipItem7.Text");
+			superToolTip7.Items.Add(toolTipTitleItem7);
+			superToolTip7.Items.Add(toolTipItem7);
+			this.addDonation.SuperTip = superToolTip7;
+			this.addDonation.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addDonation_ItemClick);
 			// 
 			// PledgeLinksEdit
 			// 
@@ -349,6 +368,7 @@
 		private DevExpress.XtraBars.BarButtonItem clearLinks;
 		private DevExpress.XtraBars.BarButtonItem fillLinks;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit htmlDisplay;
+		private DevExpress.XtraBars.BarButtonItem addDonation;
 
 	}
 }

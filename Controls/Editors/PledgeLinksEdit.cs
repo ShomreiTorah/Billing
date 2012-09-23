@@ -282,7 +282,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 			decimal paymentRemaining = HostPayment.Amount - Links.Sum(o => o.Amount);
 			if (paymentRemaining == 0) {
-				Dialog.Inform("This payment has already been completely linked");
+				Dialog.Inform("This payment has already been completely linked.");
 				return;
 			}
 
@@ -304,9 +304,38 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 				if (paymentRemaining == 0)
 					break;
 			}
-			
+
 			UpdateSummary();
 			pledgesGrid.RefreshDataSource();
+		}
+
+		private void addDonation_ItemClick(object sender, ItemClickEventArgs e) {
+			decimal paymentRemaining = HostPayment.Amount - Links.Sum(o => o.Amount);
+			if (paymentRemaining == 0) {
+				Dialog.Inform("This payment has already been completely linked; there is no need for a donation pledge.");
+				return;
+			}
+
+			if (controller.Pledges.Rows.Any(r => controller.GetAmount(r) < controller.GetUnlinkedAmount(r))) {
+				if (!Dialog.Warn("There are still other pledges that have not been paid off.  Presumably, " + HostPayment.Person.FullName + " intended to pay them rather than creating a new donation.\r\n\r\nAre you sure you want to create a donation pledge anyway?"))
+					return;
+			}
+
+			var pledge = new Pledge {
+				Account = HostPayment.Account,
+				Amount = paymentRemaining,
+				Comments = "Automatically created donation pledge for " + HostPayment.Amount.ToString("c", CultureInfo.InvariantCulture) + " " + HostPayment.Method,
+				Date = HostPayment.Date,
+				Person = HostPayment.Person,
+				Type = "Donation"
+			};
+			Links.Add(new PledgeLink {
+				Amount = paymentRemaining,
+				Payment = HostPayment,
+				Pledge = pledge,
+			});
+			Program.Table<Pledge>().Rows.Add(pledge);
+			UpdateSummary();
 		}
 	}
 }
