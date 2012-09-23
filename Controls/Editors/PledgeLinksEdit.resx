@@ -120,7 +120,7 @@
   <metadata name="barManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="toolTipItem2.Text" xml:space="preserve">
+  <data name="toolTipItem4.Text" xml:space="preserve">
     <value>Assigns the remaining amount of this payment to the pledges in the grid.
 
 This will start with the first pledge currently shown, then assign as much as possible to each pledge, until the payment is completely accounted for, or until there are no more pledges.

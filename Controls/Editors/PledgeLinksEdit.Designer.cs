@@ -12,12 +12,12 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PledgeLinksEdit));
 			this.pledgesGrid = new ShomreiTorah.Data.UI.Grid.SmartGrid();
 			this.pledgesView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
@@ -42,9 +42,11 @@
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+			this.htmlDisplay = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesGrid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.htmlDisplay)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pledgesGrid
@@ -55,6 +57,8 @@
 			this.pledgesGrid.MainView = this.pledgesView;
 			this.pledgesGrid.Name = "pledgesGrid";
 			this.pledgesGrid.RegistrationCount = 53;
+			this.pledgesGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.htmlDisplay});
 			this.pledgesGrid.ShowOnlyPredefinedDetails = true;
 			this.pledgesGrid.Size = new System.Drawing.Size(493, 255);
 			this.pledgesGrid.TabIndex = 0;
@@ -118,6 +122,7 @@
 			this.colAmount.AppearanceCell.Options.UseTextOptions = true;
 			this.colAmount.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
 			this.colAmount.Caption = "Unpaid";
+			this.colAmount.ColumnEditor = this.htmlDisplay;
 			this.colAmount.DisplayFormat.FormatString = "c";
 			this.colAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
 			this.colAmount.FieldName = "Unlinked";
@@ -125,6 +130,7 @@
 			this.colAmount.Name = "colAmount";
 			this.colAmount.OptionsColumn.AllowEdit = false;
 			this.colAmount.OptionsColumn.ReadOnly = true;
+			this.colAmount.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
 			this.colAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "UnlinkedAmount", "{0:c} Total Unpaid-for")});
 			this.colAmount.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
@@ -242,12 +248,12 @@
 			this.clearLinks.Caption = "Clear";
 			this.clearLinks.Id = 1;
 			this.clearLinks.Name = "clearLinks";
-			toolTipTitleItem1.Text = "Clear";
-			toolTipItem1.LeftIndent = 6;
-			toolTipItem1.Text = "Resets the links for this payment, unlinking it from all pledges.";
-			superToolTip1.Items.Add(toolTipTitleItem1);
-			superToolTip1.Items.Add(toolTipItem1);
-			this.clearLinks.SuperTip = superToolTip1;
+			toolTipTitleItem3.Text = "Clear";
+			toolTipItem3.LeftIndent = 6;
+			toolTipItem3.Text = "Resets the links for this payment, unlinking it from all pledges.";
+			superToolTip3.Items.Add(toolTipTitleItem3);
+			superToolTip3.Items.Add(toolTipItem3);
+			this.clearLinks.SuperTip = superToolTip3;
 			this.clearLinks.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.clearLinks_ItemClick);
 			// 
 			// fillLinks
@@ -255,12 +261,12 @@
 			this.fillLinks.Caption = "Fill Down";
 			this.fillLinks.Id = 2;
 			this.fillLinks.Name = "fillLinks";
-			toolTipTitleItem2.Text = "Fill Down";
-			toolTipItem2.LeftIndent = 6;
-			toolTipItem2.Text = resources.GetString("toolTipItem2.Text");
-			superToolTip2.Items.Add(toolTipTitleItem2);
-			superToolTip2.Items.Add(toolTipItem2);
-			this.fillLinks.SuperTip = superToolTip2;
+			toolTipTitleItem4.Text = "Fill Down";
+			toolTipItem4.LeftIndent = 6;
+			toolTipItem4.Text = resources.GetString("toolTipItem4.Text");
+			superToolTip4.Items.Add(toolTipTitleItem4);
+			superToolTip4.Items.Add(toolTipItem4);
+			this.fillLinks.SuperTip = superToolTip4;
 			this.fillLinks.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.fillLinks_ItemClick);
 			// 
 			// barDockControlTop
@@ -291,6 +297,13 @@
 			this.barDockControlRight.Location = new System.Drawing.Point(493, 29);
 			this.barDockControlRight.Size = new System.Drawing.Size(0, 255);
 			// 
+			// htmlDisplay
+			// 
+			this.htmlDisplay.AllowHtmlDraw = DevExpress.Utils.DefaultBoolean.True;
+			this.htmlDisplay.AutoHeight = false;
+			this.htmlDisplay.Name = "htmlDisplay";
+			this.htmlDisplay.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+			// 
 			// PledgeLinksEdit
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -305,6 +318,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pledgesGrid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.htmlDisplay)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -334,6 +348,7 @@
 		private DevExpress.XtraBars.BarStaticItem paymentSummary;
 		private DevExpress.XtraBars.BarButtonItem clearLinks;
 		private DevExpress.XtraBars.BarButtonItem fillLinks;
+		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit htmlDisplay;
 
 	}
 }

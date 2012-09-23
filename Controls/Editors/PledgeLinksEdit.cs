@@ -205,7 +205,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 			public string GetUnlinkedAmountText(Pledge pledge, decimal unlinkedAmount) {
 				return String.Format(CultureInfo.CurrentCulture,
-									 "{0:c} − {1:c} = {2:c}",
+									 "<color=gray>{0:c} − {1:c} =</color> {2:c}",
 									 pledge.Amount, pledge.Amount - unlinkedAmount, unlinkedAmount);
 			}
 			public string GetUnlinkedAmountDescription(Pledge pledge) {
@@ -304,7 +304,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 				if (paymentRemaining == 0)
 					break;
 			}
-
+			
 			UpdateSummary();
 			pledgesGrid.RefreshDataSource();
 		}
