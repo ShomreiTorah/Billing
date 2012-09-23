@@ -26,6 +26,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 			colLinkAmount.ColumnEditor = EditorRepository.CurrencyEditor.CreateItem();
 			controller = new MyController();
+			controller.DataChanged += delegate { UpdateSummary(); };
 			pledgesGrid.DataMember = null;
 		}
 
@@ -56,6 +57,11 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			}
 		}
 
+		public event EventHandler DataChanged {
+			add { controller.DataChanged += value; }
+			remove { controller.DataChanged -= value; }
+		}
+
 		public IList<PledgeLink> Links { get { return controller.Links; } }
 
 		#region Grid
@@ -81,7 +87,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 					e.Value = controller.GetAmount(pledge);
 				else {
 					controller.SetAmount(pledge, (decimal)e.Value);
-					UpdateSummary();
+					controller.OnDataChanged();
 				}
 			}
 		}
@@ -115,6 +121,9 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 			public MyController() {
 				Pledges = Program.Table<Pledge>().Filter(p => p.Person == person && p.Account == account);
+				Pledges.RowAdded += delegate { OnDataChanged(); };
+				Pledges.RowRemoved += delegate { OnDataChanged(); };
+				Pledges.ValueChanged += (s, e) => { if (e.Column == Pledge.AmountColumn)OnDataChanged(); };
 			}
 
 			///<summary>A mutable wrapper around a ChildRowCollection, which adds and deletes rows from the underlying foreign table.</summary>
@@ -181,16 +190,28 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 					}
 					person = value.Person;
 					account = value.Account;
-					Pledges.Rescan();
 
 					if (value.Table == null)
 						Links = detachedLinks;
 					else
 						Links = new ChildRowList<PledgeLink>(value.LinkedPledges);
+
+					Pledges.Rescan();
 				}
 			}
 			public IList<PledgeLink> Links { get; private set; }
 			public FilteredTable<Pledge> Pledges { get; private set; }
+
+			///<summary>Occurs when the pledges, links or payment data changes.</summary>
+			public event EventHandler DataChanged;
+			///<summary>Raises the DataChanged event.</summary>
+			internal void OnDataChanged() { OnDataChanged(EventArgs.Empty); }
+			///<summary>Raises the DataChanged event.</summary>
+			///<param name="e">An EventArgs object that provides the event data.</param>
+			internal void OnDataChanged(EventArgs e) {
+				if (DataChanged != null)
+					DataChanged(this, e);
+			}
 
 			public void Dispose() {
 				Pledges.Dispose();
@@ -273,7 +294,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 		private void clearLinks_ItemClick(object sender, ItemClickEventArgs e) {
 			controller.Links.Clear();
-			UpdateSummary();
+			controller.OnDataChanged();
 			pledgesGrid.RefreshDataSource();
 		}
 
@@ -305,7 +326,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 					break;
 			}
 
-			UpdateSummary();
+			controller.OnDataChanged();
 			pledgesGrid.RefreshDataSource();
 		}
 
@@ -324,7 +345,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			var pledge = new Pledge {
 				Account = HostPayment.Account,
 				Amount = paymentRemaining,
-				Comments = "Automatically created donation pledge for " + HostPayment.Amount.ToString("c", CultureInfo.InvariantCulture) + " " + HostPayment.Method,
+				Comments = "Automatically created donation pledge for " + HostPayment.Amount.ToString("c", CultureInfo.CurrentCulture) + " " + HostPayment.Method,
 				Date = HostPayment.Date,
 				Person = HostPayment.Person,
 				Type = "Donation"
@@ -335,7 +356,6 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 				Pledge = pledge,
 			});
 			Program.Table<Pledge>().Rows.Add(pledge);
-			UpdateSummary();
 		}
 	}
 }
