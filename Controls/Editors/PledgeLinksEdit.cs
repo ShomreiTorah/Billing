@@ -15,6 +15,7 @@ using System.Globalization;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
 using System.Diagnostics;
+using DevExpress.XtraBars;
 
 namespace ShomreiTorah.Billing.Controls.Editors {
 	public partial class PledgeLinksEdit : XtraUserControl {
@@ -268,6 +269,44 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		class SummaryInfo {
 			public string Short { get; set; }
 			public string Long { get; set; }
+		}
+
+		private void clearLinks_ItemClick(object sender, ItemClickEventArgs e) {
+			controller.Links.Clear();
+			UpdateSummary();
+			pledgesGrid.RefreshDataSource();
+		}
+
+		private void fillLinks_ItemClick(object sender, ItemClickEventArgs e) {
+			//See the button's tooltip for a detailed description of this method.
+
+			decimal paymentRemaining = HostPayment.Amount - Links.Sum(o => o.Amount);
+			if (paymentRemaining == 0) {
+				Dialog.Inform("This payment has already been completely linked");
+				return;
+			}
+
+			//Row handles are indexed by visual order, and include
+			//all applicable rows, even collapsed group rows. It's
+			//exactly what I need here.
+			//http://documentation.devexpress.com/#WindowsForms/CustomDocument642
+			for (int i = 0; i < pledgesView.RowCount; i++) {
+				var pledge = (Pledge)pledgesView.GetRow(i);
+
+				var linkedToUs = controller.GetAmount(pledge);
+				var unlinked = controller.GetUnlinkedAmount(pledge) - linkedToUs;
+
+				var additional = Math.Min(paymentRemaining, unlinked);
+
+				controller.SetAmount(pledge, linkedToUs + additional);
+				paymentRemaining -= additional;
+
+				if (paymentRemaining == 0)
+					break;
+			}
+
+			UpdateSummary();
+			pledgesGrid.RefreshDataSource();
 		}
 	}
 }

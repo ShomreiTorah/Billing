@@ -12,6 +12,13 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PledgeLinksEdit));
 			this.pledgesGrid = new ShomreiTorah.Data.UI.Grid.SmartGrid();
 			this.pledgesView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -29,6 +36,8 @@
 			this.barManager1 = new DevExpress.XtraBars.BarManager();
 			this.bar1 = new DevExpress.XtraBars.Bar();
 			this.paymentSummary = new DevExpress.XtraBars.BarStaticItem();
+			this.clearLinks = new DevExpress.XtraBars.BarButtonItem();
+			this.fillLinks = new DevExpress.XtraBars.BarButtonItem();
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -81,7 +90,7 @@
 			this.colDate.OptionsColumn.ReadOnly = true;
 			this.colDate.Visible = true;
 			this.colDate.VisibleIndex = 0;
-			this.colDate.Width = 55;
+			this.colDate.Width = 57;
 			// 
 			// colType
 			// 
@@ -147,7 +156,7 @@
 			this.colModified.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
 			this.colModified.FieldName = "Modified";
 			this.colModified.Name = "colModified";
-			this.colModified.Width = 100;
+			this.colModified.Width = 106;
 			// 
 			// colModifier
 			// 
@@ -199,8 +208,10 @@
 			this.barManager1.DockControls.Add(this.barDockControlRight);
 			this.barManager1.Form = this;
 			this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.paymentSummary});
-			this.barManager1.MaxItemId = 1;
+            this.paymentSummary,
+            this.clearLinks,
+            this.fillLinks});
+			this.barManager1.MaxItemId = 3;
 			// 
 			// bar1
 			// 
@@ -209,7 +220,9 @@
 			this.bar1.DockRow = 0;
 			this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
 			this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.paymentSummary)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.paymentSummary),
+            new DevExpress.XtraBars.LinkPersistInfo(this.clearLinks),
+            new DevExpress.XtraBars.LinkPersistInfo(this.fillLinks)});
 			this.bar1.OptionsBar.AllowQuickCustomization = false;
 			this.bar1.OptionsBar.DisableClose = true;
 			this.bar1.OptionsBar.DisableCustomization = true;
@@ -223,6 +236,32 @@
 			this.paymentSummary.Id = 0;
 			this.paymentSummary.Name = "paymentSummary";
 			this.paymentSummary.TextAlignment = System.Drawing.StringAlignment.Near;
+			// 
+			// clearLinks
+			// 
+			this.clearLinks.Caption = "Clear";
+			this.clearLinks.Id = 1;
+			this.clearLinks.Name = "clearLinks";
+			toolTipTitleItem1.Text = "Clear";
+			toolTipItem1.LeftIndent = 6;
+			toolTipItem1.Text = "Resets the links for this payment, unlinking it from all pledges.";
+			superToolTip1.Items.Add(toolTipTitleItem1);
+			superToolTip1.Items.Add(toolTipItem1);
+			this.clearLinks.SuperTip = superToolTip1;
+			this.clearLinks.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.clearLinks_ItemClick);
+			// 
+			// fillLinks
+			// 
+			this.fillLinks.Caption = "Fill Down";
+			this.fillLinks.Id = 2;
+			this.fillLinks.Name = "fillLinks";
+			toolTipTitleItem2.Text = "Fill Down";
+			toolTipItem2.LeftIndent = 6;
+			toolTipItem2.Text = resources.GetString("toolTipItem2.Text");
+			superToolTip2.Items.Add(toolTipTitleItem2);
+			superToolTip2.Items.Add(toolTipItem2);
+			this.fillLinks.SuperTip = superToolTip2;
+			this.fillLinks.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.fillLinks_ItemClick);
 			// 
 			// barDockControlTop
 			// 
@@ -293,6 +332,8 @@
 		private DevExpress.XtraBars.BarDockControl barDockControlLeft;
 		private DevExpress.XtraBars.BarDockControl barDockControlRight;
 		private DevExpress.XtraBars.BarStaticItem paymentSummary;
+		private DevExpress.XtraBars.BarButtonItem clearLinks;
+		private DevExpress.XtraBars.BarButtonItem fillLinks;
 
 	}
 }
