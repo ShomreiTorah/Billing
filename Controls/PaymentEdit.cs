@@ -43,6 +43,7 @@ namespace ShomreiTorah.Billing.Controls {
 			set {
 				if (value == null) return;
 				paymentsBindingSource.Position = paymentsBindingSource.IndexOf(value);
+				pledgeLinks.HostPayment = value;
 				commit.Hide();
 				SetCommentsHeight();	//For some reason, VisibleChanged doesn't fire.
 			}
@@ -56,6 +57,7 @@ namespace ShomreiTorah.Billing.Controls {
 			commit.CommitType = CommitType.Create;
 			commit.Show();
 			paymentsBindingSource.AddNew();
+			pledgeLinks.HostPayment = CurrentPayment;
 			person.Focus();
 		}
 
@@ -63,9 +65,10 @@ namespace ShomreiTorah.Billing.Controls {
 		///<summary>Removes all PledgeLinks created by the user when creating an uncommitted payment.</summary>
 		///<remarks>This method should not be called for payments that are already in the table; the Payment class will handle those automatically.</remarks>
 		public void RemoveLinks() {
-			//If there is no current payment, this will be null.
-			if (pledgeLinks.Links != null)
-				pledgeLinks.Links.Clear();
+			if (pledgeLinks.HostPayment == null)
+				return;
+			pledgeLinks.Links.Clear();
+			pledgeLinks.RefreshAll();
 		}
 
 		#region Creation
@@ -229,6 +232,13 @@ Payment:	{4:c} {5} for {6} on {7:d}
 
 			date.Focus();
 		}
+		private void amount_Leave(object sender, System.EventArgs e) {
+			BeginInvoke(new Action(delegate {
+				//This event fires before data-binding, so I need to wait until the payment changes.
+				if (pledgeLinks.HostPayment != null)
+					pledgeLinks.RefreshAll();
+			}));
+		}
 
 		private void Input_KeyDown(object sender, KeyEventArgs e) {
 			if (e.KeyData == Keys.Enter && commit.Visible)
@@ -254,19 +264,10 @@ Payment:	{4:c} {5} for {6} on {7:d}
 		}
 
 		private void linkDropDownEdit_QueryPopUp(object sender, CancelEventArgs e) {
-			if (person.SelectedPerson == null || String.IsNullOrEmpty(account.Text)) {
-				Dialog.ShowError("You must select a person and account before you can link pledges");
+			if (person.SelectedPerson == null || String.IsNullOrEmpty(account.Text) || amount.Value <= 0) {
+				Dialog.ShowError("You must select a person and account, and enter the payment amount, before you can link pledges.");
 				e.Cancel = true;
-				return;
 			}
-
-			//The grid depends on the account and person. I only bind it
-			//when the popup is open so that I don't need to worry about
-			//changes in the payment.
-			pledgeLinks.HostPayment = CurrentPayment;
-		}
-		private void linkDropDownEdit_Closed(object sender, ClosedEventArgs e) {
-			pledgeLinks.HostPayment = null;
 		}
 	}
 }

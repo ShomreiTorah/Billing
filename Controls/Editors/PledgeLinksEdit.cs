@@ -63,6 +63,10 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		}
 
 		public IList<PledgeLink> Links { get { return controller.Links; } }
+		public void RefreshAll() {
+			controller.OnDataChanged();
+			pledgesGrid.RefreshDataSource();
+		}
 
 		#region Grid
 		private void pledgesView_CustomSuperTip(object sender, CustomToolTipEventArgs e) {
@@ -101,6 +105,10 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 		#region Toolbar
 		void UpdateSummary() {
+			//If the user hasn't set the amount of a new payment yet, do nothing.
+			if (HostPayment.Person == null || HostPayment[Payment.AmountColumn] == null)
+				return;
+
 			var s = controller.GetPaymentSummary();
 			paymentSummary.Caption = "Payment: " + s.Short;
 			paymentSummary.SuperTip = Utilities.CreateSuperTip("Payment Information", s.Long);

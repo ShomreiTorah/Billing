@@ -115,7 +115,6 @@ namespace ShomreiTorah.Billing.Controls {
 			this.linkDropDownEdit.Size = new System.Drawing.Size(59, 20);
 			this.linkDropDownEdit.TabIndex = 16;
 			this.linkDropDownEdit.QueryPopUp += new System.ComponentModel.CancelEventHandler(this.linkDropDownEdit_QueryPopUp);
-			this.linkDropDownEdit.Closed += new DevExpress.XtraEditors.Controls.ClosedEventHandler(this.linkDropDownEdit_Closed);
 			// 
 			// linkPopup
 			// 
@@ -207,6 +206,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.amount.Size = new System.Drawing.Size(96, 20);
 			this.amount.TabIndex = 1;
 			this.amount.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
+			this.amount.Leave += new System.EventHandler(this.amount_Leave);
 			// 
 			// checkNumberLabel
 			// 
