@@ -221,7 +221,12 @@ Payment:	{4:c} {5} for {6} on {7:d}
 		}
 		#endregion
 
-		public void RefreshStatus() {
+		private void RefreshStatus() {
+			//Changing the button while the dropdown is open closes the dropdown.
+			//Therefore, I reset it to black while the dropdown is open.
+			if (linkDropDownEdit.IsPopupOpen)
+				return;
+
 			if (person.SelectedPerson == null || String.IsNullOrEmpty(account.Text) || amount.Value <= 0) {
 				linkDropDownEdit.Properties.Buttons[0].Appearance.Options.UseForeColor = false;
 				return;
@@ -234,6 +239,7 @@ Payment:	{4:c} {5} for {6} on {7:d}
 			else
 				linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.Yellow;
 
+			linkDropDownEdit.Properties.Buttons[0].Appearance.Options.UseForeColor = true;
 		}
 
 		private void method_EditValueChanged(object sender, EventArgs e) {
@@ -285,7 +291,12 @@ Payment:	{4:c} {5} for {6} on {7:d}
 			if (person.SelectedPerson == null || String.IsNullOrEmpty(account.Text) || amount.Value <= 0) {
 				Dialog.ShowError("You must select a person and account, and enter the payment amount, before you can link pledges.");
 				e.Cancel = true;
-			}
+			} else
+				linkDropDownEdit.Properties.Buttons[0].Appearance.Options.UseForeColor = false;
+		}
+
+		private void linkDropDownEdit_CloseUp(object sender, CloseUpEventArgs e) {
+			RefreshStatus();
 		}
 	}
 }

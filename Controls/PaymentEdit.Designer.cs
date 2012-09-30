@@ -24,6 +24,7 @@ namespace ShomreiTorah.Billing.Controls {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			this.components = new System.ComponentModel.Container();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
@@ -43,8 +44,8 @@ namespace ShomreiTorah.Billing.Controls {
 			this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
 			this.commit = new ShomreiTorah.Billing.Controls.CommitButton();
 			this.account = new DevExpress.XtraEditors.ComboBoxEdit();
-			this.paymentsBindingSource = new System.Windows.Forms.BindingSource();
-			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource();
+			this.paymentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource(this.components);
 			this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
 			this.amount = new DevExpress.XtraEditors.SpinEdit();
 			this.checkNumberLabel = new DevExpress.XtraEditors.LabelControl();
@@ -115,6 +116,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.linkDropDownEdit.Size = new System.Drawing.Size(59, 20);
 			this.linkDropDownEdit.TabIndex = 16;
 			this.linkDropDownEdit.QueryPopUp += new System.ComponentModel.CancelEventHandler(this.linkDropDownEdit_QueryPopUp);
+			this.linkDropDownEdit.CloseUp += new DevExpress.XtraEditors.Controls.CloseUpEventHandler(this.linkDropDownEdit_CloseUp);
 			// 
 			// linkPopup
 			// 
@@ -167,7 +169,6 @@ namespace ShomreiTorah.Billing.Controls {
 			this.account.TabIndex = 2;
 			this.account.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
 			this.account.Leave += new System.EventHandler(this.LinksField_Leave);
-
 			// 
 			// paymentsBindingSource
 			// 
