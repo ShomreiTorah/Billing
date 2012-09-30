@@ -64,7 +64,11 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 		public IList<PledgeLink> Links { get { return controller.Links; } }
 		public void RefreshAll() {
+			//In case the account or person changed
+			controller.Pledges.Rescan();
+			//Trigger all other changes
 			controller.OnDataChanged();
+			//In case the pledge link amounts changed
 			pledgesGrid.RefreshDataSource();
 		}
 
@@ -106,7 +110,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		#region Toolbar
 		void UpdateSummary() {
 			//If the user hasn't set the amount of a new payment yet, do nothing.
-			if (HostPayment.Person == null || HostPayment[Payment.AmountColumn] == null)
+			if (HostPayment == null || HostPayment.Person == null || HostPayment[Payment.AmountColumn] == null)
 				return;
 
 			var s = controller.GetPaymentSummary();
@@ -117,8 +121,9 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 		private sealed class MyController : IDisposable {
 			Payment currentPayment;
-			Person person;
-			string account;
+
+			Person Person { get { return CurrentPayment == null ? null : CurrentPayment.Person; } }
+			string Account { get { return CurrentPayment == null ? null : CurrentPayment.Account; } }
 
 			///<summary>Holds the PledgeLinks created for the current detached Payment.</summary>
 			///<remarks>This collection is re-used to allow the Payment editor to re-bind 
@@ -128,7 +133,8 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			IList<PledgeLink> detachedLinks = new List<PledgeLink>();
 
 			public MyController() {
-				Pledges = Program.Table<Pledge>().Filter(p => p.Person == person && p.Account == account);
+				Pledges = Program.Table<Pledge>().Filter(p => p.Person == Person && p.Account == Account);
+
 				Pledges.RowAdded += delegate { OnDataChanged(); };
 				Pledges.RowRemoved += delegate { OnDataChanged(); };
 				Pledges.ValueChanged += (s, e) => { if (e.Column == Pledge.AmountColumn)OnDataChanged(); };
@@ -196,8 +202,6 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 							Links = null;
 						return;
 					}
-					person = value.Person;
-					account = value.Account;
 
 					if (value.Table == null)
 						Links = detachedLinks;

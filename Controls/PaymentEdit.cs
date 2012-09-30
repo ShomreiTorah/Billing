@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
@@ -25,6 +26,8 @@ namespace ShomreiTorah.Billing.Controls {
 			method.Properties.Items.Clear();
 			method.Properties.Items.AddRange(Names.PaymentMethods);
 
+			pledgeLinks.DataChanged += delegate { RefreshStatus(); };
+
 			paymentsBindingSource.DataSource = Program.Current.DataContext;
 		}
 
@@ -45,6 +48,7 @@ namespace ShomreiTorah.Billing.Controls {
 				paymentsBindingSource.Position = paymentsBindingSource.IndexOf(value);
 				pledgeLinks.HostPayment = value;
 				commit.Hide();
+				RefreshStatus();
 				SetCommentsHeight();	//For some reason, VisibleChanged doesn't fire.
 			}
 		}
@@ -58,6 +62,7 @@ namespace ShomreiTorah.Billing.Controls {
 			commit.Show();
 			paymentsBindingSource.AddNew();
 			pledgeLinks.HostPayment = CurrentPayment;
+			RefreshStatus();
 			person.Focus();
 		}
 
@@ -216,6 +221,21 @@ Payment:	{4:c} {5} for {6} on {7:d}
 		}
 		#endregion
 
+		public void RefreshStatus() {
+			if (person.SelectedPerson == null || String.IsNullOrEmpty(account.Text) || amount.Value <= 0) {
+				linkDropDownEdit.Properties.Buttons[0].Appearance.Options.UseForeColor = false;
+				return;
+			}
+			decimal linked = pledgeLinks.Links.Sum(o => o.Amount);
+			if (linked == 0)
+				linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.Red;
+			else if (linked == CurrentPayment.Amount)
+				linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.Green;
+			else
+				linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.Yellow;
+
+		}
+
 		private void method_EditValueChanged(object sender, EventArgs e) {
 			//EditValue can be DBNull
 			checkNumber.Visible = checkNumberLabel.Visible = method.EditValue as string == "Check";
@@ -225,10 +245,14 @@ Payment:	{4:c} {5} for {6} on {7:d}
 		private void account_TextChanged(object sender, EventArgs e) {
 			if (CurrentPayment.Table == null)
 				RemoveLinks();
+			else
+				pledgeLinks.RefreshAll();	//Reload the pledges grid (RemoveLinks() already does this)
 		}
 		private void person_EditValueChanged(object sender, EventArgs e) {
 			if (CurrentPayment.Table == null)
 				RemoveLinks();
+			else
+				pledgeLinks.RefreshAll();	//Reload the pledges grid (RemoveLinks() already does this)
 
 			date.Focus();
 		}
