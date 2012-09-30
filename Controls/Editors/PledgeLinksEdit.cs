@@ -349,11 +349,16 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 			public PledgeLinksStatus Status {
 				get {
+					if (Links.Any(o => o.Amount < 0 || o.Amount > o.Pledge.Amount))
+						return PledgeLinksStatus.Error;
+
 					decimal linked = Links.Sum(o => o.Amount);
 					if (linked == 0)
 						return PledgeLinksStatus.Empty;
 					else if (linked == CurrentPayment.Amount)
 						return PledgeLinksStatus.Complete;
+					else if (linked > CurrentPayment.Amount)
+						return PledgeLinksStatus.Error;
 					else
 						return PledgeLinksStatus.Partial;
 				}
