@@ -67,6 +67,9 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 		public IList<PledgeLink> Links { get { return controller.Links; } }
 		public PledgeLinksStatus Status { get { return controller.Status; } }
+		///<summary>Indicates whether there are any available pledges which this payment does not fully compensate.</summary>
+		private bool HasUnlinkedPledges { get { return controller.HasUnlinkedPledges; } }
+
 		public void RefreshAll() {
 			//In case the account or person changed
 			controller.Pledges.Rescan();
@@ -190,7 +193,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			controller.OnDataChanged();
 			pledgesGrid.RefreshDataSource();
 		}
-
+		
 		private void addDonation_ItemClick(object sender, ItemClickEventArgs e) {
 			decimal paymentRemaining = HostPayment.Amount - Links.Sum(o => o.Amount);
 			if (paymentRemaining == 0) {
@@ -198,7 +201,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 				return;
 			}
 
-			if (controller.Pledges.Rows.Any(r => controller.GetAmount(r) < controller.GetUnlinkedAmount(r))) {
+			if (HasUnlinkedPledges) {
 				if (!Dialog.Warn("There are still other pledges that have not been paid off.  Presumably, " + HostPayment.Person.FullName + " intended to pay them rather than creating a new donation.\r\n\r\nAre you sure you want to create a donation pledge anyway?"))
 					return;
 			}
@@ -398,6 +401,13 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 						return PledgeLinksStatus.Error;
 					else
 						return PledgeLinksStatus.Partial;
+				}
+			}
+
+			///<summary>Indicates whether there are any available pledges which this payment does not fully compensate.</summary>
+			public bool HasUnlinkedPledges {
+				get {
+					return Pledges.Rows.Any(r => GetAmount(r) < GetUnlinkedAmount(r));
 				}
 			}
 

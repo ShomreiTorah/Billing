@@ -411,9 +411,6 @@
     <EmbeddedResource Include="Statements\Word\WordExporter.resx">
       <DependentUpon>WordExporter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AutoPledgePrompt.resx">
-      <DependentUpon>AutoPledgePrompt.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\CalendarForm.resx">
       <DependentUpon>CalendarForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -593,12 +590,6 @@
     </Compile>
     <Compile Include="Statements\Word\WordExporter.Designer.cs">
       <DependentUpon>WordExporter.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\AutoPledgePrompt.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AutoPledgePrompt.Designer.cs">
-      <DependentUpon>AutoPledgePrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\DepositAdder.cs">
       <SubType>Form</SubType>

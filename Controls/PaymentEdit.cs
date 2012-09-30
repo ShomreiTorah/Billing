@@ -119,6 +119,22 @@ namespace ShomreiTorah.Billing.Controls {
 																	  duplicate.Method, duplicate.CheckNumber, duplicate.Person.FullName, duplicate.Date, duplicate.Amount)))
 				return false;
 
+			switch (pledgeLinks.Status) {
+				case PledgeLinksStatus.Empty:
+					return Dialog.Warn("Are you sure you want to add a payment without linking it to any pledges?");
+				case PledgeLinksStatus.Partial:
+					var unlinked = CurrentPayment.Amount - pledgeLinks.Links.Sum(o => o.Amount);
+					string message = String.Format(CultureInfo.CurrentCulture, "{0:c} of this payment have not been linked to any pledges.\r\nAre you sure you want to add it anyway?", unlinked);
+					if (!pledgeLinks.HasUnlinkedPledges)
+						message += "\r\n\r\nThere are no more pledges to compensate for, so you may want to go back to the Pledges dropdown and add a donation pledge to cover the rest.";
+					return Dialog.Warn(message);
+				case PledgeLinksStatus.Error:
+					Dialog.ShowError("The pledge links are invalid.  Please click the Pledges button and correct any red rows.");
+					return false;
+				case PledgeLinksStatus.Complete:
+					break;	//Fine
+			}
+
 			return true;
 		}
 
@@ -147,42 +163,6 @@ namespace ShomreiTorah.Billing.Controls {
 			return true;
 		}
 
-		decimal? CheckAutoPledge() {
-			var payment = CurrentPayment;
-			decimal autoPledgeAmount = 0;
-			decimal currentBalance = person.SelectedPerson.GetBalance(account.Text);
-			if (payment.Amount > currentBalance) {
-				using (var prompt = new Forms.AutoPledgePrompt(payment)) {
-					switch (prompt.ShowDialog()) {
-						case DialogResult.Cancel: return null;
-						case DialogResult.Ignore:	//Do nothing, and keep a negative balance
-							Email.Notify("Negative balance for " + person.SelectedPerson.FullName,
-								String.Format(CultureInfo.CurrentCulture, @"Added by {0}\{1}
-{2}
-
-Current balance:	{3:c}
-Payment:	{4:c} {5} for {6} on {7:d}
-{8}", Environment.MachineName, Environment.UserName,
- new PersonData(person.SelectedPerson).ToFullString(),
- currentBalance,
- payment.Amount, payment.Method.ToLower(CultureInfo.CurrentCulture), payment.Account.ToLower(CultureInfo.CurrentCulture), payment.Date, payment.Comments));
-							break;
-						case DialogResult.Yes:				//Add pledge
-							Program.Table<Pledge>().Rows.Add(new Pledge {
-								Person = person.SelectedPerson,
-								Date = date.DateTime,
-								Type = "Donation",
-								Account = account.Text,
-								Amount = autoPledgeAmount = payment.Amount - currentBalance,
-								Comments = ("Automatically added donation pledge\r\n\r\n" + comments.Text).Trim()
-							});
-							break;
-					}
-				}
-			}
-			return autoPledgeAmount;
-		}
-
 		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error message")]
 		private void commit_Click(object sender, EventArgs e) {
 			if (!commit.Visible) {
@@ -199,10 +179,6 @@ Payment:	{4:c} {5} for {6} on {7:d}
 			if (!CheckMigration())
 				return;
 
-
-			decimal? autoPledgeAmount = CheckAutoPledge();
-			if (autoPledgeAmount == null)
-				return;
 			try {
 				paymentsBindingSource.EndEdit();
 			} catch (Exception ex) {
@@ -213,10 +189,7 @@ Payment:	{4:c} {5} for {6} on {7:d}
 			if (commit.CommitType == CommitType.Create) {
 				Program.Table<PledgeLink>().Rows.AddRange(pledgeLinks.Links);
 
-				if (autoPledgeAmount > 0)
-					InfoMessage.Show(String.Format(CultureInfo.CurrentCulture, "A {0:c} payment and a {1:c} donation pledge have been added for {2}", payment.Amount, autoPledgeAmount, payment.Person.FullName));
-				else
-					InfoMessage.Show(String.Format(CultureInfo.CurrentCulture, "A {0:c} payment has been added for {1}", payment.Amount, payment.Person.FullName));
+				InfoMessage.Show(String.Format(CultureInfo.CurrentCulture, "A {0:c} payment has been added for {1}", payment.Amount, payment.Person.FullName));
 				AddNew();
 			}
 		}
