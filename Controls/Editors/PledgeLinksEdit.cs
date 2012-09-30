@@ -17,6 +17,8 @@ using ShomreiTorah.WinForms;
 using System.Diagnostics;
 using DevExpress.XtraBars;
 using ShomreiTorah.Billing.Properties;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid.Views.Grid;
 
 namespace ShomreiTorah.Billing.Controls.Editors {
 	public partial class PledgeLinksEdit : XtraUserControl {
@@ -106,6 +108,28 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 				return;
 			if (e.Column == colAmount)
 				e.DisplayText = controller.GetUnlinkedAmountText(controller.Pledges.Rows[e.ListSourceRowIndex], (decimal)e.Value);
+		}
+
+		private void pledgesView_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e) {
+			if (pledgesView.FocusedColumn != colLinkAmount)
+				return;
+			var pledge = (Pledge)pledgesView.GetFocusedRow();
+			e.ErrorText = controller.GetErrorText(pledge, (decimal)e.Value);
+			e.Valid = String.IsNullOrEmpty(e.ErrorText);
+		}
+
+		private void pledgesView_ValidateRow(object sender, ValidateRowEventArgs e) {
+			var pledge = (Pledge)e.Row;
+			e.ErrorText = controller.GetErrorText(pledge);
+			e.Valid = String.IsNullOrEmpty(e.ErrorText);
+		}
+
+		private void pledgesView_RowStyle(object sender, RowStyleEventArgs e) {
+			if (e.RowHandle < 0) return;
+			var pledge = (Pledge)pledgesView.GetRow(e.RowHandle);
+			bool isValid = String.IsNullOrEmpty(controller.GetErrorText(pledge));
+			if (!isValid)
+				e.Appearance.ForeColor = Color.Red;
 		}
 		#endregion
 
@@ -307,6 +331,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			}
 
 			#region Linked Amount Texts
+			///<summary>Gets the portion of a pledge that has not already been linked to other payments.  This will not include the portion linked to this payment, even when editing existing payments.</summary>
 			public decimal GetUnlinkedAmount(Pledge pledge) {
 				//Unlike, GetAmountDescription(), I don't need ToList()
 				var payments = pledge.LinkedPayments.Where(o => o.Payment != CurrentPayment);
@@ -337,12 +362,14 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			#endregion
 
 			#region Mutable Amount
+			///<summary>Gets the portion of a pledge to link to this payment.</summary>
 			public decimal GetAmount(Pledge pledge) {
 				//FirstOrDefault() will return 0 if there are no rows.
 				return Links.Where(o => o.Pledge == pledge)
 							.Select(o => o.Amount)
 							.FirstOrDefault();
 			}
+			///<summary>Sets the portion of a pledge to link to this payment.</summary>
 			public void SetAmount(Pledge pledge, decimal value) {
 				var link = Links.FirstOrDefault(o => o.Pledge == pledge);
 
@@ -359,7 +386,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 			public PledgeLinksStatus Status {
 				get {
-					if (Links.Any(o => o.Amount < 0 || o.Amount > o.Pledge.Amount))
+					if (Links.Any(o => !String.IsNullOrEmpty(GetErrorText(o.Pledge))))
 						return PledgeLinksStatus.Error;
 
 					decimal linked = Links.Sum(o => o.Amount);
@@ -391,6 +418,25 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 										 linked, CurrentPayment.Amount, Links.Count, Links.Count > 1 ? "s" : "", currentPayment.Amount - linked,
 										 CurrentPayment.Person.FullName, personBalance, CurrentPayment.Account)
 				};
+			}
+
+			///<summary>Checks whether a proposed amount is valid for a linked pledge.</summary>
+			///<param name="pledge">The pledge to check for.</param>
+			///<param name="newAmount">The new amount specified by the user, or null (optional) to check the current amount.</param>
+			///<returns>An error message, or null if the pledge is valid.</returns>
+			public string GetErrorText(Pledge pledge, decimal? newAmount = null) {
+				newAmount = newAmount ?? GetAmount(pledge);
+
+				if (newAmount < 0)
+					return "Amount to link cannot be negative.  If you don't want to link this payment, set it to zero.";
+				if (newAmount > CurrentPayment.Amount)
+					return "Amount to link cannot be more than the entire payment.";
+				if (newAmount > pledge.Amount)
+					return "Amount to link cannot be more than the amount of the pledge.";
+				if (newAmount > GetUnlinkedAmount(pledge))
+					return "Amount to link cannot be more than the portion of the pledge that has not already been linked to other payments";
+
+				return null;
 			}
 		}
 		class SummaryInfo {

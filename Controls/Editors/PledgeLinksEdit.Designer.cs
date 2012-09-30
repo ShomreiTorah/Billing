@@ -87,8 +87,11 @@
 			this.pledgesView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colDate, DevExpress.Data.ColumnSortOrder.Descending)});
 			this.pledgesView.CustomSuperTip += new System.EventHandler<ShomreiTorah.Data.UI.Grid.CustomToolTipEventArgs>(this.pledgesView_CustomSuperTip);
+			this.pledgesView.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.pledgesView_RowStyle);
+			this.pledgesView.ValidateRow += new DevExpress.XtraGrid.Views.Base.ValidateRowEventHandler(this.pledgesView_ValidateRow);
 			this.pledgesView.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.pledgesView_CustomUnboundColumnData);
 			this.pledgesView.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.pledgesView_CustomColumnDisplayText);
+			this.pledgesView.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.pledgesView_ValidatingEditor);
 			// 
 			// colDate
 			// 
