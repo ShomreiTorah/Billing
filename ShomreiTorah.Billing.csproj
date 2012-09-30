@@ -509,6 +509,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\StatusGreen16.png" />
+    <None Include="Resources\StatusError16.png" />
+    <None Include="Resources\StatusRed16.png" />
+    <None Include="Resources\StatusYellow16.png" />
     <None Include="Resources\Copy32.png" />
     <None Include="Resources\SendPreview16.png" />
     <None Include="Resources\ShowPreview16.png" />

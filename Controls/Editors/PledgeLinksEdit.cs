@@ -16,6 +16,7 @@ using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
 using System.Diagnostics;
 using DevExpress.XtraBars;
+using ShomreiTorah.Billing.Properties;
 
 namespace ShomreiTorah.Billing.Controls.Editors {
 	public partial class PledgeLinksEdit : XtraUserControl {
@@ -109,6 +110,13 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		#endregion
 
 		#region Toolbar
+		static Dictionary<PledgeLinksStatus, Image> statusIcons = new Dictionary<PledgeLinksStatus, Image> {
+			{ PledgeLinksStatus.Empty,		Resources.StatusRed16	},
+			{ PledgeLinksStatus.Partial,	Resources.StatusYellow16},
+			{ PledgeLinksStatus.Complete,	Resources.StatusGreen16	},
+			{ PledgeLinksStatus.Error,		Resources.StatusError16	},
+		};
+
 		void UpdateSummary() {
 			//If the user hasn't set the amount of a new payment yet, do nothing.
 			if (HostPayment == null || HostPayment.Person == null || HostPayment[Payment.AmountColumn] == null)
@@ -117,6 +125,8 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			var s = controller.GetPaymentSummary();
 			paymentSummary.Caption = "Payment: " + s.Short;
 			paymentSummary.SuperTip = Utilities.CreateSuperTip("Payment Information", s.Long);
+
+			paymentSummary.Glyph = statusIcons[controller.Status];
 		}
 
 		private void clearLinks_ItemClick(object sender, ItemClickEventArgs e) {

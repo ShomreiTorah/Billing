@@ -12,22 +12,23 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PledgeLinksEdit));
-			DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
 			this.pledgesGrid = new ShomreiTorah.Data.UI.Grid.SmartGrid();
 			this.pledgesView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colType = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colSubType = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colAmount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.htmlDisplay = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
 			this.colNote = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colComments = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colModified = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -41,30 +42,29 @@
 			this.paymentSummary = new DevExpress.XtraBars.BarStaticItem();
 			this.clearLinks = new DevExpress.XtraBars.BarButtonItem();
 			this.fillLinks = new DevExpress.XtraBars.BarButtonItem();
+			this.addDonation = new DevExpress.XtraBars.BarButtonItem();
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-			this.htmlDisplay = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-			this.addDonation = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesGrid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesView)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.htmlDisplay)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pledgesGrid
 			// 
 			this.pledgesGrid.DataMember = "Pledges";
 			this.pledgesGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pledgesGrid.Location = new System.Drawing.Point(0, 29);
+			this.pledgesGrid.Location = new System.Drawing.Point(0, 31);
 			this.pledgesGrid.MainView = this.pledgesView;
 			this.pledgesGrid.Name = "pledgesGrid";
 			this.pledgesGrid.RegistrationCount = 53;
 			this.pledgesGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.htmlDisplay});
 			this.pledgesGrid.ShowOnlyPredefinedDetails = true;
-			this.pledgesGrid.Size = new System.Drawing.Size(493, 255);
+			this.pledgesGrid.Size = new System.Drawing.Size(493, 253);
 			this.pledgesGrid.TabIndex = 0;
 			this.pledgesGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.pledgesView});
@@ -141,6 +141,13 @@
 			this.colAmount.Visible = true;
 			this.colAmount.VisibleIndex = 3;
 			this.colAmount.Width = 100;
+			// 
+			// htmlDisplay
+			// 
+			this.htmlDisplay.AllowHtmlDraw = DevExpress.Utils.DefaultBoolean.True;
+			this.htmlDisplay.AutoHeight = false;
+			this.htmlDisplay.Name = "htmlDisplay";
+			this.htmlDisplay.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 			// 
 			// colNote
 			// 
@@ -245,8 +252,10 @@
 			// paymentSummary
 			// 
 			this.paymentSummary.Caption = "$456 − $123 = $333";
+			this.paymentSummary.Glyph = global::ShomreiTorah.Billing.Properties.Resources.StatusGreen16;
 			this.paymentSummary.Id = 0;
 			this.paymentSummary.Name = "paymentSummary";
+			this.paymentSummary.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
 			this.paymentSummary.TextAlignment = System.Drawing.StringAlignment.Near;
 			// 
 			// clearLinks
@@ -254,12 +263,12 @@
 			this.clearLinks.Caption = "Clear";
 			this.clearLinks.Id = 1;
 			this.clearLinks.Name = "clearLinks";
-			toolTipTitleItem5.Text = "Clear";
-			toolTipItem5.LeftIndent = 6;
-			toolTipItem5.Text = "Resets the links for this payment, unlinking it from all pledges.";
-			superToolTip5.Items.Add(toolTipTitleItem5);
-			superToolTip5.Items.Add(toolTipItem5);
-			this.clearLinks.SuperTip = superToolTip5;
+			toolTipTitleItem1.Text = "Clear";
+			toolTipItem1.LeftIndent = 6;
+			toolTipItem1.Text = "Resets the links for this payment, unlinking it from all pledges.";
+			superToolTip1.Items.Add(toolTipTitleItem1);
+			superToolTip1.Items.Add(toolTipItem1);
+			this.clearLinks.SuperTip = superToolTip1;
 			this.clearLinks.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.clearLinks_ItemClick);
 			// 
 			// fillLinks
@@ -267,20 +276,33 @@
 			this.fillLinks.Caption = "Fill Down";
 			this.fillLinks.Id = 2;
 			this.fillLinks.Name = "fillLinks";
-			toolTipTitleItem6.Text = "Fill Down";
-			toolTipItem6.LeftIndent = 6;
-			toolTipItem6.Text = resources.GetString("toolTipItem6.Text");
-			superToolTip6.Items.Add(toolTipTitleItem6);
-			superToolTip6.Items.Add(toolTipItem6);
-			this.fillLinks.SuperTip = superToolTip6;
+			toolTipTitleItem2.Text = "Fill Down";
+			toolTipItem2.LeftIndent = 6;
+			toolTipItem2.Text = resources.GetString("toolTipItem2.Text");
+			superToolTip2.Items.Add(toolTipTitleItem2);
+			superToolTip2.Items.Add(toolTipItem2);
+			this.fillLinks.SuperTip = superToolTip2;
 			this.fillLinks.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.fillLinks_ItemClick);
+			// 
+			// addDonation
+			// 
+			this.addDonation.Caption = "Add donation pledge";
+			this.addDonation.Id = 3;
+			this.addDonation.Name = "addDonation";
+			toolTipTitleItem3.Text = "Add Donation Pledge";
+			toolTipItem3.LeftIndent = 6;
+			toolTipItem3.Text = resources.GetString("toolTipItem3.Text");
+			superToolTip3.Items.Add(toolTipTitleItem3);
+			superToolTip3.Items.Add(toolTipItem3);
+			this.addDonation.SuperTip = superToolTip3;
+			this.addDonation.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addDonation_ItemClick);
 			// 
 			// barDockControlTop
 			// 
 			this.barDockControlTop.CausesValidation = false;
 			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-			this.barDockControlTop.Size = new System.Drawing.Size(493, 29);
+			this.barDockControlTop.Size = new System.Drawing.Size(493, 31);
 			// 
 			// barDockControlBottom
 			// 
@@ -293,35 +315,15 @@
 			// 
 			this.barDockControlLeft.CausesValidation = false;
 			this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-			this.barDockControlLeft.Location = new System.Drawing.Point(0, 29);
-			this.barDockControlLeft.Size = new System.Drawing.Size(0, 255);
+			this.barDockControlLeft.Location = new System.Drawing.Point(0, 31);
+			this.barDockControlLeft.Size = new System.Drawing.Size(0, 253);
 			// 
 			// barDockControlRight
 			// 
 			this.barDockControlRight.CausesValidation = false;
 			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-			this.barDockControlRight.Location = new System.Drawing.Point(493, 29);
-			this.barDockControlRight.Size = new System.Drawing.Size(0, 255);
-			// 
-			// htmlDisplay
-			// 
-			this.htmlDisplay.AllowHtmlDraw = DevExpress.Utils.DefaultBoolean.True;
-			this.htmlDisplay.AutoHeight = false;
-			this.htmlDisplay.Name = "htmlDisplay";
-			this.htmlDisplay.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-			// 
-			// addDonation
-			// 
-			this.addDonation.Caption = "Add donation pledge";
-			this.addDonation.Id = 3;
-			this.addDonation.Name = "addDonation";
-			toolTipTitleItem7.Text = "Add Donation Pledge";
-			toolTipItem7.LeftIndent = 6;
-			toolTipItem7.Text = resources.GetString("toolTipItem7.Text");
-			superToolTip7.Items.Add(toolTipTitleItem7);
-			superToolTip7.Items.Add(toolTipItem7);
-			this.addDonation.SuperTip = superToolTip7;
-			this.addDonation.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addDonation_ItemClick);
+			this.barDockControlRight.Location = new System.Drawing.Point(493, 31);
+			this.barDockControlRight.Size = new System.Drawing.Size(0, 253);
 			// 
 			// PledgeLinksEdit
 			// 
@@ -336,8 +338,8 @@
 			this.Size = new System.Drawing.Size(493, 284);
 			((System.ComponentModel.ISupportInitialize)(this.pledgesGrid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesView)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.htmlDisplay)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
