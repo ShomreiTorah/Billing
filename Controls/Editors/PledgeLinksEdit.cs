@@ -63,6 +63,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		}
 
 		public IList<PledgeLink> Links { get { return controller.Links; } }
+		public PledgeLinksStatus Status { get { return controller.Status; } }
 		public void RefreshAll() {
 			//In case the account or person changed
 			controller.Pledges.Rescan();
@@ -116,6 +117,72 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			var s = controller.GetPaymentSummary();
 			paymentSummary.Caption = "Payment: " + s.Short;
 			paymentSummary.SuperTip = Utilities.CreateSuperTip("Payment Information", s.Long);
+		}
+
+		private void clearLinks_ItemClick(object sender, ItemClickEventArgs e) {
+			controller.Links.Clear();
+			controller.OnDataChanged();
+			pledgesGrid.RefreshDataSource();
+		}
+
+		private void fillLinks_ItemClick(object sender, ItemClickEventArgs e) {
+			//See the button's tooltip for a detailed description of this method.
+
+			decimal paymentRemaining = HostPayment.Amount - Links.Sum(o => o.Amount);
+			if (paymentRemaining == 0) {
+				Dialog.Inform("This payment has already been completely linked.");
+				return;
+			}
+
+			//Row handles are indexed by visual order, and include
+			//all applicable rows, even collapsed group rows. It's
+			//exactly what I need here.
+			//http://documentation.devexpress.com/#WindowsForms/CustomDocument642
+			for (int i = 0; i < pledgesView.RowCount; i++) {
+				var pledge = (Pledge)pledgesView.GetRow(i);
+
+				var linkedToUs = controller.GetAmount(pledge);
+				var unlinked = controller.GetUnlinkedAmount(pledge) - linkedToUs;
+
+				var additional = Math.Min(paymentRemaining, unlinked);
+
+				controller.SetAmount(pledge, linkedToUs + additional);
+				paymentRemaining -= additional;
+
+				if (paymentRemaining == 0)
+					break;
+			}
+
+			controller.OnDataChanged();
+			pledgesGrid.RefreshDataSource();
+		}
+
+		private void addDonation_ItemClick(object sender, ItemClickEventArgs e) {
+			decimal paymentRemaining = HostPayment.Amount - Links.Sum(o => o.Amount);
+			if (paymentRemaining == 0) {
+				Dialog.Inform("This payment has already been completely linked; there is no need for a donation pledge.");
+				return;
+			}
+
+			if (controller.Pledges.Rows.Any(r => controller.GetAmount(r) < controller.GetUnlinkedAmount(r))) {
+				if (!Dialog.Warn("There are still other pledges that have not been paid off.  Presumably, " + HostPayment.Person.FullName + " intended to pay them rather than creating a new donation.\r\n\r\nAre you sure you want to create a donation pledge anyway?"))
+					return;
+			}
+
+			var pledge = new Pledge {
+				Account = HostPayment.Account,
+				Amount = paymentRemaining,
+				Comments = "Automatically created donation pledge for " + HostPayment.Amount.ToString("c", CultureInfo.CurrentCulture) + " " + HostPayment.Method,
+				Date = HostPayment.Date,
+				Person = HostPayment.Person,
+				Type = "Donation"
+			};
+			Links.Add(new PledgeLink {
+				Amount = paymentRemaining,
+				Payment = HostPayment,
+				Pledge = pledge,
+			});
+			Program.Table<Pledge>().Rows.Add(pledge);
 		}
 		#endregion
 
@@ -280,6 +347,18 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			}
 			#endregion
 
+			public PledgeLinksStatus Status {
+				get {
+					decimal linked = Links.Sum(o => o.Amount);
+					if (linked == 0)
+						return PledgeLinksStatus.Empty;
+					else if (linked == CurrentPayment.Amount)
+						return PledgeLinksStatus.Complete;
+					else
+						return PledgeLinksStatus.Partial;
+				}
+			}
+
 			public SummaryInfo GetPaymentSummary() {
 				var linked = Links.Sum(o => o.Amount);
 				var personBalance = CurrentPayment.Person.Transactions.Where(t => t.Account == CurrentPayment.Account)
@@ -303,71 +382,17 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			public string Short { get; set; }
 			public string Long { get; set; }
 		}
+	}
 
-		private void clearLinks_ItemClick(object sender, ItemClickEventArgs e) {
-			controller.Links.Clear();
-			controller.OnDataChanged();
-			pledgesGrid.RefreshDataSource();
-		}
+	public enum PledgeLinksStatus {
+		///<summary>The payment has no linked pledges.</summary>
+		Empty,
+		///<summary>Only some of the amount of the payment is linked.</summary>
+		Partial,
+		///<summary>The payment is completely linked.</summary>
+		Complete,
 
-		private void fillLinks_ItemClick(object sender, ItemClickEventArgs e) {
-			//See the button's tooltip for a detailed description of this method.
-
-			decimal paymentRemaining = HostPayment.Amount - Links.Sum(o => o.Amount);
-			if (paymentRemaining == 0) {
-				Dialog.Inform("This payment has already been completely linked.");
-				return;
-			}
-
-			//Row handles are indexed by visual order, and include
-			//all applicable rows, even collapsed group rows. It's
-			//exactly what I need here.
-			//http://documentation.devexpress.com/#WindowsForms/CustomDocument642
-			for (int i = 0; i < pledgesView.RowCount; i++) {
-				var pledge = (Pledge)pledgesView.GetRow(i);
-
-				var linkedToUs = controller.GetAmount(pledge);
-				var unlinked = controller.GetUnlinkedAmount(pledge) - linkedToUs;
-
-				var additional = Math.Min(paymentRemaining, unlinked);
-
-				controller.SetAmount(pledge, linkedToUs + additional);
-				paymentRemaining -= additional;
-
-				if (paymentRemaining == 0)
-					break;
-			}
-
-			controller.OnDataChanged();
-			pledgesGrid.RefreshDataSource();
-		}
-
-		private void addDonation_ItemClick(object sender, ItemClickEventArgs e) {
-			decimal paymentRemaining = HostPayment.Amount - Links.Sum(o => o.Amount);
-			if (paymentRemaining == 0) {
-				Dialog.Inform("This payment has already been completely linked; there is no need for a donation pledge.");
-				return;
-			}
-
-			if (controller.Pledges.Rows.Any(r => controller.GetAmount(r) < controller.GetUnlinkedAmount(r))) {
-				if (!Dialog.Warn("There are still other pledges that have not been paid off.  Presumably, " + HostPayment.Person.FullName + " intended to pay them rather than creating a new donation.\r\n\r\nAre you sure you want to create a donation pledge anyway?"))
-					return;
-			}
-
-			var pledge = new Pledge {
-				Account = HostPayment.Account,
-				Amount = paymentRemaining,
-				Comments = "Automatically created donation pledge for " + HostPayment.Amount.ToString("c", CultureInfo.CurrentCulture) + " " + HostPayment.Method,
-				Date = HostPayment.Date,
-				Person = HostPayment.Person,
-				Type = "Donation"
-			};
-			Links.Add(new PledgeLink {
-				Amount = paymentRemaining,
-				Payment = HostPayment,
-				Pledge = pledge,
-			});
-			Program.Table<Pledge>().Rows.Add(pledge);
-		}
+		///<summary>The links are invalid.</summary>
+		Error
 	}
 }

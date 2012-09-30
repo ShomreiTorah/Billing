@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using ShomreiTorah.Billing.Controls.Editors;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI;
@@ -231,14 +232,20 @@ Payment:	{4:c} {5} for {6} on {7:d}
 				linkDropDownEdit.Properties.Buttons[0].Appearance.Options.UseForeColor = false;
 				return;
 			}
-			decimal linked = pledgeLinks.Links.Sum(o => o.Amount);
-			if (linked == 0)
-				linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.Red;
-			else if (linked == CurrentPayment.Amount)
-				linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.Green;
-			else
-				linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.Yellow;
-
+			switch (pledgeLinks.Status) {
+				case PledgeLinksStatus.Empty:
+					linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.Red;
+					break;
+				case PledgeLinksStatus.Partial:
+					linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.Yellow;
+					break;
+				case PledgeLinksStatus.Complete:
+					linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.Green;
+					break;
+				case PledgeLinksStatus.Error:
+					linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.DarkRed;
+					break;
+			}
 			linkDropDownEdit.Properties.Buttons[0].Appearance.Options.UseForeColor = true;
 		}
 
