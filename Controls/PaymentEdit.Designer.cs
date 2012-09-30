@@ -165,8 +165,9 @@ namespace ShomreiTorah.Billing.Controls {
             "Building Fund"});
 			this.account.Size = new System.Drawing.Size(154, 20);
 			this.account.TabIndex = 2;
-			this.account.TextChanged += new System.EventHandler(this.account_TextChanged);
 			this.account.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
+			this.account.Leave += new System.EventHandler(this.LinksField_Leave);
+
 			// 
 			// paymentsBindingSource
 			// 
@@ -206,7 +207,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.amount.Size = new System.Drawing.Size(96, 20);
 			this.amount.TabIndex = 1;
 			this.amount.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
-			this.amount.Leave += new System.EventHandler(this.amount_Leave);
+			this.amount.Leave += new System.EventHandler(this.LinksField_Leave);
 			// 
 			// checkNumberLabel
 			// 

@@ -242,12 +242,6 @@ Payment:	{4:c} {5} for {6} on {7:d}
 			checkNumber.EditValue = null;
 		}
 
-		private void account_TextChanged(object sender, EventArgs e) {
-			if (CurrentPayment.Table == null)
-				RemoveLinks();
-			else
-				pledgeLinks.RefreshAll();	//Reload the pledges grid (RemoveLinks() already does this)
-		}
 		private void person_EditValueChanged(object sender, EventArgs e) {
 			if (CurrentPayment.Table == null)
 				RemoveLinks();
@@ -256,7 +250,7 @@ Payment:	{4:c} {5} for {6} on {7:d}
 
 			date.Focus();
 		}
-		private void amount_Leave(object sender, System.EventArgs e) {
+		private void LinksField_Leave(object sender, System.EventArgs e) {
 			BeginInvoke(new Action(delegate {
 				//This event fires before data-binding, so I need to wait until the payment changes.
 				if (pledgeLinks.HostPayment != null)
