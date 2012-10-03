@@ -22,6 +22,9 @@
 			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
 			this.pledgesGrid = new ShomreiTorah.Data.UI.Grid.SmartGrid();
 			this.pledgesView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -43,6 +46,7 @@
 			this.clearLinks = new DevExpress.XtraBars.BarButtonItem();
 			this.fillLinks = new DevExpress.XtraBars.BarButtonItem();
 			this.addDonation = new DevExpress.XtraBars.BarButtonItem();
+			this.migratePledges = new DevExpress.XtraBars.BarButtonItem();
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -64,7 +68,7 @@
 			this.pledgesGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.htmlDisplay});
 			this.pledgesGrid.ShowOnlyPredefinedDetails = true;
-			this.pledgesGrid.Size = new System.Drawing.Size(493, 253);
+			this.pledgesGrid.Size = new System.Drawing.Size(614, 253);
 			this.pledgesGrid.TabIndex = 0;
 			this.pledgesGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.pledgesView});
@@ -231,8 +235,9 @@
             this.paymentSummary,
             this.clearLinks,
             this.fillLinks,
-            this.addDonation});
-			this.barManager1.MaxItemId = 4;
+            this.addDonation,
+            this.migratePledges});
+			this.barManager1.MaxItemId = 5;
 			// 
 			// bar1
 			// 
@@ -244,7 +249,8 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.paymentSummary),
             new DevExpress.XtraBars.LinkPersistInfo(this.clearLinks),
             new DevExpress.XtraBars.LinkPersistInfo(this.fillLinks),
-            new DevExpress.XtraBars.LinkPersistInfo(this.addDonation, true)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.addDonation, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.migratePledges)});
 			this.bar1.OptionsBar.AllowQuickCustomization = false;
 			this.bar1.OptionsBar.DisableClose = true;
 			this.bar1.OptionsBar.DisableCustomization = true;
@@ -300,19 +306,34 @@
 			this.addDonation.SuperTip = superToolTip3;
 			this.addDonation.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addDonation_ItemClick);
 			// 
+			// migratePledges
+			// 
+			this.migratePledges.Caption = "Migrate pledges from member";
+			this.migratePledges.Id = 4;
+			this.migratePledges.ItemAppearance.Normal.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+			this.migratePledges.ItemAppearance.Normal.Options.UseFont = true;
+			this.migratePledges.Name = "migratePledges";
+			toolTipTitleItem4.Text = "Migrate pledges from member";
+			toolTipItem4.LeftIndent = 6;
+			toolTipItem4.Text = resources.GetString("toolTipItem4.Text");
+			superToolTip4.Items.Add(toolTipTitleItem4);
+			superToolTip4.Items.Add(toolTipItem4);
+			this.migratePledges.SuperTip = superToolTip4;
+			this.migratePledges.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.migratePledges_ItemClick);
+			// 
 			// barDockControlTop
 			// 
 			this.barDockControlTop.CausesValidation = false;
 			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-			this.barDockControlTop.Size = new System.Drawing.Size(493, 31);
+			this.barDockControlTop.Size = new System.Drawing.Size(614, 31);
 			// 
 			// barDockControlBottom
 			// 
 			this.barDockControlBottom.CausesValidation = false;
 			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.barDockControlBottom.Location = new System.Drawing.Point(0, 284);
-			this.barDockControlBottom.Size = new System.Drawing.Size(493, 0);
+			this.barDockControlBottom.Size = new System.Drawing.Size(614, 0);
 			// 
 			// barDockControlLeft
 			// 
@@ -325,7 +346,7 @@
 			// 
 			this.barDockControlRight.CausesValidation = false;
 			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-			this.barDockControlRight.Location = new System.Drawing.Point(493, 31);
+			this.barDockControlRight.Location = new System.Drawing.Point(614, 31);
 			this.barDockControlRight.Size = new System.Drawing.Size(0, 253);
 			// 
 			// PledgeLinksEdit
@@ -338,7 +359,7 @@
 			this.Controls.Add(this.barDockControlBottom);
 			this.Controls.Add(this.barDockControlTop);
 			this.Name = "PledgeLinksEdit";
-			this.Size = new System.Drawing.Size(493, 284);
+			this.Size = new System.Drawing.Size(614, 284);
 			((System.ComponentModel.ISupportInitialize)(this.pledgesGrid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.htmlDisplay)).EndInit();
@@ -374,6 +395,7 @@
 		private DevExpress.XtraBars.BarButtonItem fillLinks;
 		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit htmlDisplay;
 		private DevExpress.XtraBars.BarButtonItem addDonation;
+		private DevExpress.XtraBars.BarButtonItem migratePledges;
 
 	}
 }

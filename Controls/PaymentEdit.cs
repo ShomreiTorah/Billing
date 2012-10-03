@@ -32,6 +32,10 @@ namespace ShomreiTorah.Billing.Controls {
 			paymentsBindingSource.DataSource = Program.Current.DataContext;
 		}
 
+		///<summary>Indicates whether the user has clicked the Pledges dropdown yet.</summary>
+		///<remarks>This is used to prompt for relative pledges when the dialog is first shown.</remarks>
+		private bool hasShownPledgeLinks;
+
 		void SetCommentsHeight() {
 			if (commit.Visible)
 				comments.Height = method.Bottom - comments.Top;
@@ -59,6 +63,7 @@ namespace ShomreiTorah.Billing.Controls {
 				RemoveLinks();
 			paymentsBindingSource.CancelEdit();
 
+			hasShownPledgeLinks = false;
 			commit.CommitType = CommitType.Create;
 			commit.Show();
 			paymentsBindingSource.AddNew();
@@ -138,31 +143,6 @@ namespace ShomreiTorah.Billing.Controls {
 			return true;
 		}
 
-		[SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower", Justification = "UI casing")]
-		private bool CheckMigration() {
-			var memberPledges = person.SelectedPerson.RelatedMembers
-				.SelectMany(r => r.Member.Pledges.Where(p => new AliyahNote(p.Note).Relative == r.RelationType))
-				.ToList();
-			if (memberPledges.Any()) {
-				using (var dialog = new Forms.PledgeMigrator(person.SelectedPerson, memberPledges)) {
-					if (dialog.ShowDialog() != DialogResult.OK)
-						return false;
-					foreach (var pledge in dialog.SelectedPledges) {	//This query is based purely on the dialog and isn't modified by the loop.
-						//Move the relative from the Note to the Comments
-						var note = new AliyahNote(pledge.Note);
-
-						pledge.Comments = ("Moved from " + pledge.Person.FullName + " to his " + note.Relative.ToLower() + "\r\n" + pledge.Comments).Trim();
-
-						note.Relative = null;
-						pledge.Note = note.Text;	//Without the relative
-
-						pledge.Person = person.SelectedPerson;
-					}
-				}
-			}
-			return true;
-		}
-
 		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error message")]
 		private void commit_Click(object sender, EventArgs e) {
 			if (!commit.Visible) {
@@ -175,8 +155,6 @@ namespace ShomreiTorah.Billing.Controls {
 				return;
 			}
 			if (!ValidateCreation())
-				return;
-			if (!CheckMigration())
 				return;
 
 			try {
@@ -234,6 +212,7 @@ namespace ShomreiTorah.Billing.Controls {
 			else
 				pledgeLinks.RefreshAll();	//Reload the pledges grid (RemoveLinks() already does this)
 
+			hasShownPledgeLinks = false;
 			date.Focus();
 		}
 		private void LinksField_Leave(object sender, System.EventArgs e) {
@@ -271,8 +250,13 @@ namespace ShomreiTorah.Billing.Controls {
 			if (person.SelectedPerson == null || String.IsNullOrEmpty(account.Text) || amount.Value <= 0) {
 				Dialog.ShowError("You must select a person and account, and enter the payment amount, before you can link pledges.");
 				e.Cancel = true;
-			} else
+			} else {
+				if (!hasShownPledgeLinks)
+					pledgeLinks.ShowMigrationDialog();
+				hasShownPledgeLinks = true;
+
 				linkDropDownEdit.Properties.Buttons[0].Appearance.Options.UseForeColor = false;
+			}
 		}
 
 		private void linkDropDownEdit_CloseUp(object sender, CloseUpEventArgs e) {

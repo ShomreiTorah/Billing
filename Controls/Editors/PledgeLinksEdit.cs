@@ -68,7 +68,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		public IList<PledgeLink> Links { get { return controller.Links; } }
 		public PledgeLinksStatus Status { get { return controller.Status; } }
 		///<summary>Indicates whether there are any available pledges which this payment does not fully compensate.</summary>
-		private bool HasUnlinkedPledges { get { return controller.HasUnlinkedPledges; } }
+		public bool HasUnlinkedPledges { get { return controller.HasUnlinkedPledges; } }
 
 		public void RefreshAll() {
 			//In case the account or person changed
@@ -154,6 +154,8 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			paymentSummary.SuperTip = Utilities.CreateSuperTip("Payment Information", s.Long);
 
 			paymentSummary.Glyph = statusIcons[controller.Status];
+
+			migratePledges.Visibility = controller.GetMemberPledges().Any() ? BarItemVisibility.Always : BarItemVisibility.OnlyInCustomizing;
 		}
 
 		private void clearLinks_ItemClick(object sender, ItemClickEventArgs e) {
@@ -165,8 +167,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		private void fillLinks_ItemClick(object sender, ItemClickEventArgs e) {
 			//See the button's tooltip for a detailed description of this method.
 
-			decimal paymentRemaining = HostPayment.Amount - Links.Sum(o => o.Amount);
-			if (paymentRemaining == 0) {
+			if (HostPayment.Amount == Links.Sum(o => o.Amount)) {
 				Dialog.Inform("This payment has already been completely linked.");
 				return;
 			}
@@ -175,25 +176,14 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			//all applicable rows, even collapsed group rows. It's
 			//exactly what I need here.
 			//http://documentation.devexpress.com/#WindowsForms/CustomDocument642
-			for (int i = 0; i < pledgesView.RowCount; i++) {
-				var pledge = (Pledge)pledgesView.GetRow(i);
 
-				var linkedToUs = controller.GetAmount(pledge);
-				var unlinked = controller.GetUnlinkedAmount(pledge) - linkedToUs;
-
-				var additional = Math.Min(paymentRemaining, unlinked);
-
-				controller.SetAmount(pledge, linkedToUs + additional);
-				paymentRemaining -= additional;
-
-				if (paymentRemaining == 0)
-					break;
-			}
-
-			controller.OnDataChanged();
+			controller.FillPledges(Enumerable.Range(0, pledgesView.RowCount)
+											 .Select(pledgesView.GetRow)
+											 .Cast<Pledge>()
+								  );
 			pledgesGrid.RefreshDataSource();
 		}
-		
+
 		private void addDonation_ItemClick(object sender, ItemClickEventArgs e) {
 			decimal paymentRemaining = HostPayment.Amount - Links.Sum(o => o.Amount);
 			if (paymentRemaining == 0) {
@@ -209,7 +199,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			var pledge = new Pledge {
 				Account = HostPayment.Account,
 				Amount = paymentRemaining,
-				Comments = "Automatically created donation pledge for " + HostPayment.Amount.ToString("c", CultureInfo.CurrentCulture) + " " + HostPayment.Method,
+				Comments = "Automatically created donation pledge for " + HostPayment.Amount.ToString("c", CultureInfo.CurrentCulture) + " " + HostPayment.Method.ToLowerInvariant(),
 				Date = HostPayment.Date,
 				Person = HostPayment.Person,
 				Type = "Donation"
@@ -221,13 +211,32 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			});
 			Program.Table<Pledge>().Rows.Add(pledge);
 		}
+
+
+		private void migratePledges_ItemClick(object sender, ItemClickEventArgs e) {
+			ShowMigrationDialog();
+		}
+		public void ShowMigrationDialog() {
+			var memberPledges = controller.GetMemberPledges().ToList();
+
+			if (!memberPledges.Any())
+				return;
+
+			using (var dialog = new Forms.PledgeMigrator(controller.Person, memberPledges)) {
+				if (dialog.ShowDialog() != DialogResult.OK)
+					return;
+
+				controller.MovePledges(dialog.SelectedPledges);
+				pledgesGrid.RefreshDataSource();
+			}
+		}
 		#endregion
 
 		private sealed class MyController : IDisposable {
 			Payment currentPayment;
 
-			Person Person { get { return CurrentPayment == null ? null : CurrentPayment.Person; } }
-			string Account { get { return CurrentPayment == null ? null : CurrentPayment.Account; } }
+			public Person Person { get { return CurrentPayment == null ? null : CurrentPayment.Person; } }
+			public string Account { get { return CurrentPayment == null ? null : CurrentPayment.Account; } }
 
 			///<summary>Holds the PledgeLinks created for the current detached Payment.</summary>
 			///<remarks>This collection is re-used to allow the Payment editor to re-bind 
@@ -332,6 +341,46 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			public void Dispose() {
 				Pledges.Dispose();
 			}
+
+			public IEnumerable<Pledge> GetMemberPledges() {
+				return Person.RelatedMembers
+								.SelectMany(r => r.Member.Pledges.Where(p => new AliyahNote(p.Note).Relative == r.RelationType));
+			}
+			///<summary>Moves a collection of pledges from a member to a relative.</summary>
+			public void MovePledges(IEnumerable<Pledge> pledges) {
+				foreach (var pledge in pledges) {
+					//Move the relative from the Note to the Comments
+					var note = new AliyahNote(pledge.Note);
+					pledge.Comments = ("Moved from " + pledge.Person.FullName + " to his " + note.Relative.ToLower() + "\r\n" + pledge.Comments).Trim();
+
+					note.Relative = null;
+					pledge.Note = note.Text;	//Without the relative
+
+					pledge.Person = this.Person;
+				}
+				FillPledges(pledges.OrderByDescending(p => p.Date));
+			}
+
+			///<summary>Fills the links of an ordered collection of pledges with any remaining unlinked amount in this payment.</summary>
+			public void FillPledges(IEnumerable<Pledge> pledges) {
+				decimal paymentRemaining = CurrentPayment.Amount - Links.Sum(o => o.Amount);
+
+				foreach (var pledge in pledges) {
+					var linkedToUs = GetAmount(pledge);
+					var unlinked = GetUnlinkedAmount(pledge) - linkedToUs;
+
+					var additional = Math.Min(paymentRemaining, unlinked);
+
+					SetAmount(pledge, linkedToUs + additional);
+					paymentRemaining -= additional;
+
+					if (paymentRemaining == 0)
+						break;
+				}
+
+				OnDataChanged();
+			}
+
 
 			#region Linked Amount Texts
 			///<summary>Gets the portion of a pledge that has not already been linked to other payments.  This will not include the portion linked to this payment, even when editing existing payments.</summary>
