@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -173,6 +174,12 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 		#endregion
 
+		static readonly Dictionary<PledgeLinksStatus, Color> statusColors = new Dictionary<PledgeLinksStatus, Color> {
+			{ PledgeLinksStatus.Empty,		Color.Red		},
+			{ PledgeLinksStatus.Partial,	Color.Yellow	},
+			{ PledgeLinksStatus.Complete,	Color.Green		},
+			{ PledgeLinksStatus.Error,		Color.DarkRed	},
+		};
 		private void RefreshStatus() {
 			//Changing the button while the dropdown is open closes the dropdown.
 			//Therefore, I reset it to black while the dropdown is open.
@@ -183,20 +190,7 @@ namespace ShomreiTorah.Billing.Controls {
 				linkDropDownEdit.Properties.Buttons[0].Appearance.Options.UseForeColor = false;
 				return;
 			}
-			switch (pledgeLinks.Status) {
-				case PledgeLinksStatus.Empty:
-					linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.Red;
-					break;
-				case PledgeLinksStatus.Partial:
-					linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.Yellow;
-					break;
-				case PledgeLinksStatus.Complete:
-					linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.Green;
-					break;
-				case PledgeLinksStatus.Error:
-					linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = Color.DarkRed;
-					break;
-			}
+			linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = statusColors[pledgeLinks.Status];
 			linkDropDownEdit.Properties.Buttons[0].Appearance.Options.UseForeColor = true;
 		}
 

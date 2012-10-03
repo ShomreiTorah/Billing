@@ -137,7 +137,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 		#endregion
 
 		#region Toolbar
-		static Dictionary<PledgeLinksStatus, Image> statusIcons = new Dictionary<PledgeLinksStatus, Image> {
+		static readonly Dictionary<PledgeLinksStatus, Image> statusIcons = new Dictionary<PledgeLinksStatus, Image> {
 			{ PledgeLinksStatus.Empty,		Resources.StatusRed16	},
 			{ PledgeLinksStatus.Partial,	Resources.StatusYellow16},
 			{ PledgeLinksStatus.Complete,	Resources.StatusGreen16	},
