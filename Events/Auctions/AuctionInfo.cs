@@ -59,6 +59,19 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			yield return creator("הגבהה", None);
 		}
 
+		class YomKippurShacharis : AuctionInfo {
+			public YomKippurShacharis() : base(Holiday.יום٠כיפור.Date, new TimeSpan(7, 45, 00), "יום כיפור שחרית") { }
+			protected override IEnumerable<AuctionItem> CreateItems(HebrewDate date, Func<string, bool, AuctionItem> creator) {
+				yield return creator("פתיחה", None);
+
+				//יום כיפור has 6 עליות on weekdays
+				for (int a = 0; a < (date.Info.Isשבת ? 7 : 6); a++)
+					yield return creator(AliyahNames[a], מישברך);
+
+				yield return creator("מפטיר", מישברך);
+				yield return creator("הגבהה", None);
+			}
+		}
 		class YomKippurMincha : AuctionInfo {
 			public YomKippurMincha() : base(Holiday.יום٠כיפור.Date, TimeSpan.FromHours(16), "יום כיפור מנחה") { }
 			protected override IEnumerable<AuctionItem> CreateItems(HebrewDate date, Func<string, bool, AuctionItem> creator) {
@@ -117,7 +130,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		}
 
 		static readonly AuctionGroup יום٠כיפור =
-			new AuctionGroup("יום כיפור", new AuctionInfo(Holiday.יום٠כיפור.Date, new TimeSpan(7, 45, 00), "יום כיפור שחרית"), new YomKippurMincha());
+			new AuctionGroup("יום כיפור", new YomKippurShacharis(), new YomKippurMincha());
 
 		static readonly AuctionGroup שמיני٠עצרת = new AuctionGroup("שמיני עצרת",
 			new ShminiAtzeresShacharis(),
