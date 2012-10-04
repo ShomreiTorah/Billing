@@ -342,9 +342,14 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 				Pledges.Dispose();
 			}
 
+			///<summary>Gets pledges from members that this relative is related to that (may have been) made in his name.</summary>
 			public IEnumerable<Pledge> GetMemberPledges() {
-				return Person.RelatedMembers
-								.SelectMany(r => r.Member.Pledges.Where(p => new AliyahNote(p.Note).Relative == r.RelationType));
+				//Only look for pledges that are associated with a relative and have not been paid off.
+				return from r in Person.RelatedMembers
+					   from p in r.Member.Pledges
+					   where !p.LinkedPayments.Any()
+						  && new AliyahNote(p.Note).Relative == r.RelationType
+					   select p;
 			}
 			///<summary>Moves a collection of pledges from a member to a relative.</summary>
 			public void MovePledges(IEnumerable<Pledge> pledges) {
