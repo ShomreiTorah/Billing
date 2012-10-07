@@ -117,17 +117,6 @@ namespace ShomreiTorah.Billing.Forms {
 			Program.Current.ShowDetails(row);
 		}
 
-		private void mdiManager_MouseDown(object sender, MouseEventArgs e) {
-			if (e.Button == MouseButtons.Middle) {
-				var hitInfo = mdiManager.CalcHitInfo(e.Location);
-				if (hitInfo.InPageCloseButton) return;
-
-				var tab = hitInfo.Page as XtraMdiTabPage;
-				if (tab == null) return;
-				tab.MdiChild.Close();
-			}
-		}
-
 		private void checkUpdate_ItemClick(object sender, ItemClickEventArgs e) {
 			if (Updater.RestartPending) {
 				if (DialogResult.Yes == XtraMessageBox.Show("An update has already been downloaded.\r\nDo you want to restart the program and apply the update?",

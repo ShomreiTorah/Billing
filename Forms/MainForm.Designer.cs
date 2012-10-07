@@ -785,7 +785,6 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.mdiManager.ClosePageButtonShowMode = DevExpress.XtraTab.ClosePageButtonShowMode.InAllTabPagesAndTabControlHeader;
 			this.mdiManager.MdiParent = this;
-			this.mdiManager.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mdiManager_MouseDown);
 			// 
 			// MainForm
 			// 
