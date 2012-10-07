@@ -246,7 +246,7 @@ namespace ShomreiTorah.Billing.Controls {
 				e.Cancel = true;
 			} else {
 				if (!hasShownPledgeLinks)
-					pledgeLinks.ShowMigrationDialog();
+					pledgeLinks.ShowMigrationDialog(FindForm());
 				hasShownPledgeLinks = true;
 
 				linkDropDownEdit.Properties.Buttons[0].Appearance.Options.UseForeColor = false;

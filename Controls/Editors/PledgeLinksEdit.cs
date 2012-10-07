@@ -214,16 +214,26 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 
 		private void migratePledges_ItemClick(object sender, ItemClickEventArgs e) {
+			//Clicking the dialog closes the popup form.
+			//Therefore, I show it again.
+			PopupContainerEdit ownerEdit = null;
+			var ppc = this.Parent as PopupContainerControl;
+			if (ppc != null)
+				ownerEdit = ppc.OwnerEdit;	//After the popup closes, OwnerEdit is null.
+
 			ShowMigrationDialog();
+
+			if (ownerEdit != null && !ownerEdit.IsPopupOpen)
+				ownerEdit.ShowPopup();
 		}
-		public void ShowMigrationDialog() {
+		public void ShowMigrationDialog(Form parentForm = null) {
 			var memberPledges = controller.GetMemberPledges().ToList();
 
 			if (!memberPledges.Any())
 				return;
 
 			using (var dialog = new Forms.PledgeMigrator(controller.Person, memberPledges)) {
-				if (dialog.ShowDialog() != DialogResult.OK)
+				if (dialog.ShowDialog(parentForm ?? GetOwningForm()) != DialogResult.OK)
 					return;
 
 				controller.MovePledges(dialog.SelectedPledges);
@@ -231,6 +241,13 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			}
 		}
 		#endregion
+
+		private Form GetOwningForm() {
+			var ppc = this.Parent as PopupContainerControl;
+			if (ppc == null)
+				return null;
+			return ppc.OwnerEdit.FindForm();
+		}
 
 		private sealed class MyController : IDisposable {
 			Payment currentPayment;
