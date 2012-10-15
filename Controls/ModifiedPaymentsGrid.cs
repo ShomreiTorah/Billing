@@ -12,7 +12,9 @@ namespace ShomreiTorah.Billing.Controls {
 				Program.Table<Payment>().ValueChanged += Payments_ValueChanged;
 		}
 
+		//Wait until we get some visible data before auto-sizing the grid.
 		void Payments_ValueChanged(object sender, ValueChangedEventArgs<Payment> e) {
+			if (((Table)sender).IsLoadingData) return;
 			gridView.BestFitColumns();
 			Program.Table<Payment>().ValueChanged -= Payments_ValueChanged;
 		}
