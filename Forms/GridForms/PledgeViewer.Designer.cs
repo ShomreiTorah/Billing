@@ -40,9 +40,9 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.repositoryItemMemoExEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit();
 			this.colModified = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colModifier = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.colUnlinkedAmount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.pledgesBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource(this.components);
-			this.colUnlinkedAmount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
@@ -94,7 +94,8 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.gridView.GroupFormat = "{0}: [#image]{1}: {2}";
 			this.gridView.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "", null, "{0} Pledges"),
-            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Amount", null, "{0:c}")});
+            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Amount", null, "{0:c} pledged"),
+            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "UnlinkedAmount", null, "{0:c} unpaid")});
 			this.gridView.Name = "gridView";
 			this.gridView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.Click;
 			this.gridView.OptionsSelection.MultiSelect = true;
@@ -119,7 +120,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, "Person", "{0:#,0} Pledges")});
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 0;
-			this.colFullName.Width = 81;
+			this.colFullName.Width = 61;
 			// 
 			// colDate
 			// 
@@ -127,7 +128,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colDate.Name = "colDate";
 			this.colDate.Visible = true;
 			this.colDate.VisibleIndex = 1;
-			this.colDate.Width = 51;
+			this.colDate.Width = 59;
 			// 
 			// colType
 			// 
@@ -135,7 +136,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colType.Name = "colType";
 			this.colType.Visible = true;
 			this.colType.VisibleIndex = 2;
-			this.colType.Width = 43;
+			this.colType.Width = 40;
 			// 
 			// colSubType
 			// 
@@ -241,7 +242,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colModified.OptionsColumn.AllowEdit = false;
 			this.colModified.OptionsColumn.AllowFocus = false;
 			this.colModified.OptionsColumn.ReadOnly = true;
-			this.colModified.Width = 100;
+			this.colModified.Width = 112;
 			// 
 			// colModifier
 			// 
@@ -251,16 +252,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colModifier.OptionsColumn.AllowFocus = false;
 			this.colModifier.OptionsColumn.ReadOnly = true;
 			this.colModifier.Width = 47;
-			// 
-			// pledgesBindingSource
-			// 
-			this.pledgesBindingSource.DataMember = "Pledges";
-			this.pledgesBindingSource.DataSource = this.billingData;
-			this.pledgesBindingSource.Position = 0;
-			// 
-			// billingData
-			// 
-			this.billingData.Position = 0;
 			// 
 			// colUnlinkedAmount
 			// 
@@ -273,6 +264,17 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "UnlinkedAmount", "{0:c} Total Unpaid-for")});
 			this.colUnlinkedAmount.Visible = true;
 			this.colUnlinkedAmount.VisibleIndex = 6;
+			this.colUnlinkedAmount.Width = 85;
+			// 
+			// pledgesBindingSource
+			// 
+			this.pledgesBindingSource.DataMember = "Pledges";
+			this.pledgesBindingSource.DataSource = this.billingData;
+			this.pledgesBindingSource.Position = 0;
+			// 
+			// billingData
+			// 
+			this.billingData.Position = 0;
 			// 
 			// PledgeViewer
 			// 
