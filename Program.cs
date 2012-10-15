@@ -7,9 +7,10 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using DevExpress.Data;
 using DevExpress.LookAndFeel;
 using DevExpress.Skins;
-using DevExpress.UserSkins;
+using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Base;
 using ShomreiTorah.Billing.Properties;
 using ShomreiTorah.Common;
@@ -43,8 +44,11 @@ namespace ShomreiTorah.Billing {
 				Person.Schema.Columns.AddCalculatedColumn<Person, decimal>("TotalPaid", person => person.Payments.Sum(p => p.Amount));
 				Person.Schema.Columns.AddCalculatedColumn<Person, decimal>("TotalPledged", person => person.Pledges.Sum(p => p.Amount));
 				Person.Schema.Columns.AddCalculatedColumn<decimal>("BalanceDue", person => person.Field<decimal>("TotalPledged") - person.Field<decimal>("TotalPaid"));
+
+				Pledge.Schema.Columns.AddCalculatedColumn<Pledge, decimal>("UnlinkedAmount", p => p.Amount - p.LinkedPayments.Sum(o => o.Amount));
 			}
 
+			context.Tables.AddTable(PledgeLink.CreateTable());
 			context.Tables.AddTable(Payment.CreateTable());
 			context.Tables.AddTable(Pledge.CreateTable());
 			context.Tables.AddTable(EmailAddress.CreateTable());
@@ -88,6 +92,17 @@ namespace ShomreiTorah.Billing {
 
 			SeatingReservation.Schema.ToString();//Force static ctor
 			RegisterRowDetail<SeatingReservation>(p => new Events.Seating.SeatingReservationPopup(p).Show(MainForm));
+
+			GridManager.RegisterColumn(Pledge.Schema.Columns["UnlinkedAmount"],
+				new ColumnController(c => {
+					c.DisplayFormat.FormatType = FormatType.Numeric;
+					c.DisplayFormat.FormatString = "c";
+
+					c.MaxWidth = 85;
+					c.SummaryItem.DisplayFormat = "{0:c} Total Unpaid-for";
+					c.SummaryItem.SummaryType = SummaryItemType.Sum;
+				})
+			);
 
 			GridManager.RegisterBehavior(Deposit.Schema,
 				DeletionBehavior.WithMessages<Deposit>(

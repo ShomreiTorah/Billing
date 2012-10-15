@@ -149,6 +149,12 @@
     <Compile Include="Controls\CopyableWebBrowser.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\Editors\PledgeLinksEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Editors\PledgeLinksEdit.Designer.cs">
+      <DependentUpon>PledgeLinksEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\HebrewCalendarEdit.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -317,6 +323,9 @@
     <EmbeddedResource Include="Controls\Editors\AliyahNoteEdit.resx">
       <DependentUpon>AliyahNoteEdit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Editors\PledgeLinksEdit.resx">
+      <DependentUpon>PledgeLinksEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ModifiedPaymentsGrid.resx">
       <DependentUpon>ModifiedPaymentsGrid.cs</DependentUpon>
     </EmbeddedResource>
@@ -401,9 +410,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Statements\Word\WordExporter.resx">
       <DependentUpon>WordExporter.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AutoPledgePrompt.resx">
-      <DependentUpon>AutoPledgePrompt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CalendarForm.resx">
       <DependentUpon>CalendarForm.cs</DependentUpon>
@@ -500,6 +506,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\StatusGreen16.png" />
+    <None Include="Resources\StatusError16.png" />
+    <None Include="Resources\StatusRed16.png" />
+    <None Include="Resources\StatusYellow16.png" />
     <None Include="Resources\Copy32.png" />
     <None Include="Resources\SendPreview16.png" />
     <None Include="Resources\ShowPreview16.png" />
@@ -580,12 +590,6 @@
     </Compile>
     <Compile Include="Statements\Word\WordExporter.Designer.cs">
       <DependentUpon>WordExporter.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\AutoPledgePrompt.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AutoPledgePrompt.Designer.cs">
-      <DependentUpon>AutoPledgePrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\DepositAdder.cs">
       <SubType>Form</SubType>

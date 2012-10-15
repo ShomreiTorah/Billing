@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -112,9 +112,30 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="barManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="toolTipItem2.Text" xml:space="preserve">
+    <value>Assigns the remaining amount of this payment to the pledges in the grid.
+
+This will start with the first pledge currently shown, then assign as much as possible to each pledge, until the payment is completely accounted for, or until there are no more pledges.
+
+Any portions of this payment, or of the pledges, that have already been linked will not be affected.</value>
+  </data>
+  <data name="toolTipItem3.Text" xml:space="preserve">
+    <value>Creates a new donation pledge for this person and links all remaining money in the payment to this new pledge.
+
+This is intended to be used if the payment still has money left after paying off all existing pledges.</value>
+  </data>
+  <data name="toolTipItem4.Text" xml:space="preserve">
+    <value>This person is a relative of a member of the Shul.
+We have pledges assoicated with the member that were actually made by this relative. 
+
+Click this button to move those pledges from the member to the relative.</value>
+  </data>
 </root>

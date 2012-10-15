@@ -70,10 +70,10 @@ namespace ShomreiTorah.Billing.Forms {
 			this.instructions.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Vertical;
 			this.instructions.Location = new System.Drawing.Point(12, 12);
 			this.instructions.Name = "instructions";
-			this.instructions.Size = new System.Drawing.Size(691, 52);
+			this.instructions.Size = new System.Drawing.Size(691, 13);
 			this.instructions.StyleController = this.layoutControl1;
 			this.instructions.TabIndex = 0;
-			this.instructions.Text = resources.GetString("instructions.Text");
+			this.instructions.Text = "Hello there!";
 			// 
 			// layoutControl1
 			// 
@@ -99,7 +99,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ok.Size = new System.Drawing.Size(106, 23);
 			this.ok.StyleController = this.layoutControl1;
 			this.ok.TabIndex = 6;
-			this.ok.Text = "OK";
+			this.ok.Text = "Move Pledges";
 			// 
 			// cancel
 			// 
@@ -115,14 +115,14 @@ namespace ShomreiTorah.Billing.Forms {
 			// grid
 			// 
 			this.grid.DataMember = "Pledges";
-			this.grid.Location = new System.Drawing.Point(12, 72);
+			this.grid.Location = new System.Drawing.Point(12, 33);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 52;
+			this.grid.RegistrationCount = 53;
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemCheckEdit1});
 			this.grid.ShowOnlyPredefinedDetails = true;
-			this.grid.Size = new System.Drawing.Size(691, 242);
+			this.grid.Size = new System.Drawing.Size(691, 281);
 			this.grid.TabIndex = 4;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -224,8 +224,8 @@ namespace ShomreiTorah.Billing.Forms {
 			this.colAmount.FieldName = "Amount";
 			this.colAmount.MaxWidth = 85;
 			this.colAmount.Name = "colAmount";
-			this.colAmount.SummaryItem.DisplayFormat = "{0:c} Total Pledged";
-			this.colAmount.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+			this.colAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Amount", "{0:c} Total Pledged")});
 			this.colAmount.Visible = true;
 			this.colAmount.VisibleIndex = 6;
 			this.colAmount.Width = 56;
@@ -274,7 +274,6 @@ namespace ShomreiTorah.Billing.Forms {
 			this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlGroup1.Name = "Root";
 			this.layoutControlGroup1.Size = new System.Drawing.Size(715, 357);
-			this.layoutControlGroup1.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
 			this.layoutControlGroup1.Text = "Root";
 			this.layoutControlGroup1.TextVisible = false;
 			// 
@@ -284,7 +283,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.topLabel.CustomizationFormText = "topLabel";
 			this.topLabel.Location = new System.Drawing.Point(0, 0);
 			this.topLabel.Name = "topLabel";
-			this.topLabel.Size = new System.Drawing.Size(695, 56);
+			this.topLabel.Size = new System.Drawing.Size(695, 17);
 			this.topLabel.Text = "topLabel";
 			this.topLabel.TextSize = new System.Drawing.Size(0, 0);
 			this.topLabel.TextToControlDistance = 0;
@@ -294,10 +293,10 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.layoutControlItem1.Control = this.grid;
 			this.layoutControlItem1.CustomizationFormText = "layoutControlItem1";
-			this.layoutControlItem1.Location = new System.Drawing.Point(0, 56);
+			this.layoutControlItem1.Location = new System.Drawing.Point(0, 17);
 			this.layoutControlItem1.Name = "layoutControlItem1";
 			this.layoutControlItem1.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 6, 6);
-			this.layoutControlItem1.Size = new System.Drawing.Size(695, 254);
+			this.layoutControlItem1.Size = new System.Drawing.Size(695, 293);
 			this.layoutControlItem1.Text = "layoutControlItem1";
 			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem1.TextToControlDistance = 0;
@@ -331,6 +330,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// emptySpaceItem1
 			// 
+			this.emptySpaceItem1.AllowHotTrack = false;
 			this.emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
 			this.emptySpaceItem1.Location = new System.Drawing.Point(0, 310);
 			this.emptySpaceItem1.Name = "emptySpaceItem1";

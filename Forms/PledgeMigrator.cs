@@ -39,9 +39,10 @@ namespace ShomreiTorah.Billing.Forms {
 				text.AppendLine().AppendLine();
 				text.AppendFormat(CultureInfo.CurrentCulture, "{0:#,0} pledge{1} selected, {2:c}",
 								  count, count == 1 ? "" : "s", SelectedPledges.Sum(p => p.Amount));
-				ok.Text = "Move pledges";
+				ok.Enabled = true;
 			} else
-				ok.Text = "Close";
+				ok.Enabled = false;
+
 			instructions.Text = text.ToString();
 		}
 

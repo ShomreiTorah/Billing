@@ -753,6 +753,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.addPaymentPanel.OriginalSize = new System.Drawing.Size(433, 199);
 			this.addPaymentPanel.Size = new System.Drawing.Size(673, 406);
 			this.addPaymentPanel.Text = "Add Payment";
+			this.addPaymentPanel.VisibilityChanged += new DevExpress.XtraBars.Docking.VisibilityChangedEventHandler(this.addPaymentPanel_VisibilityChanged);
 			// 
 			// controlContainer1
 			// 
@@ -784,7 +785,6 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.mdiManager.ClosePageButtonShowMode = DevExpress.XtraTab.ClosePageButtonShowMode.InAllTabPagesAndTabControlHeader;
 			this.mdiManager.MdiParent = this;
-			this.mdiManager.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mdiManager_MouseDown);
 			// 
 			// MainForm
 			// 

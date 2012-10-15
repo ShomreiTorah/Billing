@@ -1,12 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using ShomreiTorah.Billing.Controls.Editors;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI;
@@ -25,8 +28,14 @@ namespace ShomreiTorah.Billing.Controls {
 			method.Properties.Items.Clear();
 			method.Properties.Items.AddRange(Names.PaymentMethods);
 
+			pledgeLinks.DataChanged += delegate { RefreshStatus(); };
+
 			paymentsBindingSource.DataSource = Program.Current.DataContext;
 		}
+
+		///<summary>Indicates whether the user has clicked the Pledges dropdown yet.</summary>
+		///<remarks>This is used to prompt for relative pledges when the dialog is first shown.</remarks>
+		private bool hasShownPledgeLinks;
 
 		void SetCommentsHeight() {
 			if (commit.Visible)
@@ -43,16 +52,35 @@ namespace ShomreiTorah.Billing.Controls {
 			set {
 				if (value == null) return;
 				paymentsBindingSource.Position = paymentsBindingSource.IndexOf(value);
+				pledgeLinks.HostPayment = value;
 				commit.Hide();
+				RefreshStatus();
 				SetCommentsHeight();	//For some reason, VisibleChanged doesn't fire.
 			}
 		}
 
 		public void AddNew() {
+			if (CurrentPayment.Table == null)
+				RemoveLinks();
+			paymentsBindingSource.CancelEdit();
+
+			hasShownPledgeLinks = false;
 			commit.CommitType = CommitType.Create;
 			commit.Show();
 			paymentsBindingSource.AddNew();
+			pledgeLinks.HostPayment = CurrentPayment;
+			RefreshStatus();
 			person.Focus();
+		}
+
+
+		///<summary>Removes all PledgeLinks created by the user when creating an uncommitted payment.</summary>
+		///<remarks>This method should not be called for payments that are already in the table; the Payment class will handle those automatically.</remarks>
+		public void RemoveLinks() {
+			if (pledgeLinks.HostPayment == null)
+				return;
+			pledgeLinks.Links.Clear();
+			pledgeLinks.RefreshAll();
 		}
 
 		#region Creation
@@ -97,68 +125,23 @@ namespace ShomreiTorah.Billing.Controls {
 																	  duplicate.Method, duplicate.CheckNumber, duplicate.Person.FullName, duplicate.Date, duplicate.Amount)))
 				return false;
 
-			return true;
-		}
-
-		[SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower", Justification = "UI casing")]
-		private bool CheckMigration() {
-			var memberPledges = person.SelectedPerson.RelatedMembers
-				.SelectMany(r => r.Member.Pledges.Where(p => new AliyahNote(p.Note).Relative == r.RelationType))
-				.ToList();
-			if (memberPledges.Any()) {
-				using (var dialog = new Forms.PledgeMigrator(person.SelectedPerson, memberPledges)) {
-					if (dialog.ShowDialog() != DialogResult.OK)
-						return false;
-					foreach (var pledge in dialog.SelectedPledges) {	//This query is based purely on the dialog and isn't modified by the loop.
-						//Move the relative from the Note to the Comments
-						var note = new AliyahNote(pledge.Note);
-
-						pledge.Comments = ("Moved from " + pledge.Person.FullName + " to his " + note.Relative.ToLower() + "\r\n" + pledge.Comments).Trim();
-
-						note.Relative = null;
-						pledge.Note = note.Text;	//Without the relative
-
-						pledge.Person = person.SelectedPerson;
-					}
-				}
+			switch (pledgeLinks.Status) {
+				case PledgeLinksStatus.Empty:
+					return Dialog.Warn("Are you sure you want to add a payment without linking it to any pledges?");
+				case PledgeLinksStatus.Partial:
+					var unlinked = CurrentPayment.Amount - pledgeLinks.Links.Sum(o => o.Amount);
+					string message = String.Format(CultureInfo.CurrentCulture, "{0:c} of this payment have not been linked to any pledges.\r\nAre you sure you want to add it anyway?", unlinked);
+					if (!pledgeLinks.HasUnlinkedPledges)
+						message += "\r\n\r\nThere are no more pledges to compensate for, so you may want to go back to the Pledges dropdown and add a donation pledge to cover the rest.";
+					return Dialog.Warn(message);
+				case PledgeLinksStatus.Error:
+					Dialog.ShowError("The pledge links are invalid.  Please click the Pledges button and correct any red rows.");
+					return false;
+				case PledgeLinksStatus.Complete:
+					break;	//Fine
 			}
+
 			return true;
-		}
-
-		decimal? CheckAutoPledge() {
-			var payment = CurrentPayment;
-			decimal autoPledgeAmount = 0;
-			decimal currentBalance = person.SelectedPerson.GetBalance(account.Text);
-			if (payment.Amount > currentBalance) {
-				using (var prompt = new Forms.AutoPledgePrompt(payment)) {
-					switch (prompt.ShowDialog()) {
-						case DialogResult.Cancel: return null;
-						case DialogResult.Ignore:	//Do nothing, and keep a negative balance
-							Email.Notify("Negative balance for " + person.SelectedPerson.FullName,
-								String.Format(CultureInfo.CurrentCulture, @"Added by {0}\{1}
-{2}
-
-Current balance:	{3:c}
-Payment:	{4:c} {5} for {6} on {7:d}
-{8}", Environment.MachineName, Environment.UserName,
- new PersonData(person.SelectedPerson).ToFullString(),
- currentBalance,
- payment.Amount, payment.Method.ToLower(CultureInfo.CurrentCulture), payment.Account.ToLower(CultureInfo.CurrentCulture), payment.Date, payment.Comments));
-							break;
-						case DialogResult.Yes:				//Add pledge
-							Program.Table<Pledge>().Rows.Add(new Pledge {
-								Person = person.SelectedPerson,
-								Date = date.DateTime,
-								Type = "Donation",
-								Account = account.Text,
-								Amount = autoPledgeAmount = payment.Amount - currentBalance,
-								Comments = ("Automatically added donation pledge\r\n\r\n" + comments.Text).Trim()
-							});
-							break;
-					}
-				}
-			}
-			return autoPledgeAmount;
 		}
 
 		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error message")]
@@ -174,13 +157,7 @@ Payment:	{4:c} {5} for {6} on {7:d}
 			}
 			if (!ValidateCreation())
 				return;
-			if (!CheckMigration())
-				return;
 
-
-			decimal? autoPledgeAmount = CheckAutoPledge();
-			if (autoPledgeAmount == null)
-				return;
 			try {
 				paymentsBindingSource.EndEdit();
 			} catch (Exception ex) {
@@ -189,14 +166,33 @@ Payment:	{4:c} {5} for {6} on {7:d}
 			}
 
 			if (commit.CommitType == CommitType.Create) {
-				if (autoPledgeAmount > 0)
-					InfoMessage.Show(String.Format(CultureInfo.CurrentCulture, "A {0:c} payment and a {1:c} donation pledge have been added for {2}", payment.Amount, autoPledgeAmount, payment.Person.FullName));
-				else
-					InfoMessage.Show(String.Format(CultureInfo.CurrentCulture, "A {0:c} payment has been added for {1}", payment.Amount, payment.Person.FullName));
+				Program.Table<PledgeLink>().Rows.AddRange(pledgeLinks.Links);
+
+				InfoMessage.Show(String.Format(CultureInfo.CurrentCulture, "A {0:c} payment has been added for {1}", payment.Amount, payment.Person.FullName));
 				AddNew();
 			}
 		}
 		#endregion
+
+		static readonly Dictionary<PledgeLinksStatus, Color> statusColors = new Dictionary<PledgeLinksStatus, Color> {
+			{ PledgeLinksStatus.Empty,		Color.Red		},
+			{ PledgeLinksStatus.Partial,	Color.Yellow	},
+			{ PledgeLinksStatus.Complete,	Color.Green		},
+			{ PledgeLinksStatus.Error,		Color.DarkRed	},
+		};
+		private void RefreshStatus() {
+			//Changing the button while the dropdown is open closes the dropdown.
+			//Therefore, I reset it to black while the dropdown is open.
+			if (linkDropDownEdit.IsPopupOpen)
+				return;
+
+			if (person.SelectedPerson == null || String.IsNullOrEmpty(account.Text) || amount.Value <= 0) {
+				linkDropDownEdit.Properties.Buttons[0].Appearance.Options.UseForeColor = false;
+				return;
+			}
+			linkDropDownEdit.Properties.Buttons[0].Appearance.ForeColor = statusColors[pledgeLinks.Status];
+			linkDropDownEdit.Properties.Buttons[0].Appearance.Options.UseForeColor = true;
+		}
 
 		private void method_EditValueChanged(object sender, EventArgs e) {
 			//EditValue can be DBNull
@@ -205,7 +201,20 @@ Payment:	{4:c} {5} for {6} on {7:d}
 		}
 
 		private void person_EditValueChanged(object sender, EventArgs e) {
+			if (CurrentPayment.Table == null)
+				RemoveLinks();
+			else
+				pledgeLinks.RefreshAll();	//Reload the pledges grid (RemoveLinks() already does this)
+
+			hasShownPledgeLinks = false;
 			date.Focus();
+		}
+		private void LinksField_Leave(object sender, System.EventArgs e) {
+			BeginInvoke(new Action(delegate {
+				//This event fires before data-binding, so I need to wait until the payment changes.
+				if (pledgeLinks.HostPayment != null)
+					pledgeLinks.RefreshAll();
+			}));
 		}
 
 		private void Input_KeyDown(object sender, KeyEventArgs e) {
@@ -229,6 +238,23 @@ Payment:	{4:c} {5} for {6} on {7:d}
 				e.Cancel = !Dialog.Warn("Are you sure you want to enter a payment dated tomorrow?");
 			else if (newDate.Date > DateTime.Now)
 				e.Cancel = !Dialog.Warn("Are you sure you want to enter a payment dated " + (newDate.Date - DateTime.Today).Days + " days in the future?");
+		}
+
+		private void linkDropDownEdit_QueryPopUp(object sender, CancelEventArgs e) {
+			if (person.SelectedPerson == null || String.IsNullOrEmpty(account.Text) || amount.Value <= 0) {
+				Dialog.ShowError("You must select a person and account, and enter the payment amount, before you can link pledges.");
+				e.Cancel = true;
+			} else {
+				if (!hasShownPledgeLinks)
+					pledgeLinks.ShowMigrationDialog(FindForm());
+				hasShownPledgeLinks = true;
+
+				linkDropDownEdit.Properties.Buttons[0].Appearance.Options.UseForeColor = false;
+			}
+		}
+
+		private void linkDropDownEdit_CloseUp(object sender, CloseUpEventArgs e) {
+			RefreshStatus();
 		}
 	}
 }

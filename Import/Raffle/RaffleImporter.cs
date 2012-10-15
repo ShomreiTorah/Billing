@@ -164,6 +164,12 @@ namespace ShomreiTorah.Billing.Import.Raffle {
 					};
 					Program.Table<Payment>().Rows.Add(payment);
 					payment.Modifier = Modifier;
+
+					Program.Table<PledgeLink>().Rows.Add(new PledgeLink {
+						Amount = AmountPaid,
+						Payment = payment,
+						Pledge = pledge
+					});
 				}
 			}
 			///<summary>Occurs when a property value is changed.</summary>
