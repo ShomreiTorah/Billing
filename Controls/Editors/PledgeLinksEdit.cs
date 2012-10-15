@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
-using ShomreiTorah.Data.UI.Grid;
-using DevExpress.XtraGrid.Views.Base;
-using ShomreiTorah.Data.UI.DisplaySettings;
-using ShomreiTorah.Data;
 using System.Globalization;
+using System.Linq;
+using System.Windows.Forms;
+using DevExpress.XtraBars;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
+using ShomreiTorah.Billing.Properties;
+using ShomreiTorah.Common;
+using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI.DisplaySettings;
+using ShomreiTorah.Data.UI.Grid;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
-using System.Diagnostics;
-using DevExpress.XtraBars;
-using ShomreiTorah.Billing.Properties;
-using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraGrid.Views.Grid;
 
 namespace ShomreiTorah.Billing.Controls.Editors {
 	public partial class PledgeLinksEdit : XtraUserControl {
@@ -186,14 +185,17 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 
 		private void addDonation_ItemClick(object sender, ItemClickEventArgs e) {
 			decimal paymentRemaining = HostPayment.Amount - Links.Sum(o => o.Amount);
-			if (paymentRemaining == 0) {
-				Dialog.Inform("This payment has already been completely linked; there is no need for a donation pledge.");
-				return;
-			}
 
-			if (HasUnlinkedPledges) {
-				if (!Dialog.Warn("There are still other pledges that have not been paid off.  Presumably, " + HostPayment.Person.FullName + " intended to pay them rather than creating a new donation.\r\n\r\nAre you sure you want to create a donation pledge anyway?"))
+			using (KeepPopup()) {
+				if (paymentRemaining == 0) {
+					Dialog.Inform("This payment has already been completely linked; there is no need for a donation pledge.");
 					return;
+				}
+
+				if (HasUnlinkedPledges) {
+					if (!Dialog.Warn("There are still other pledges that have not been paid off.  Presumably, " + HostPayment.Person.FullName + " intended to pay them rather than creating a new donation.\r\n\r\nAre you sure you want to create a donation pledge anyway?"))
+						return;
+				}
 			}
 
 			var pledge = new Pledge {
@@ -211,20 +213,11 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			});
 			Program.Table<Pledge>().Rows.Add(pledge);
 		}
-
-
+		
 		private void migratePledges_ItemClick(object sender, ItemClickEventArgs e) {
-			//Clicking the dialog closes the popup form.
-			//Therefore, I show it again.
-			PopupContainerEdit ownerEdit = null;
-			var ppc = this.Parent as PopupContainerControl;
-			if (ppc != null)
-				ownerEdit = ppc.OwnerEdit;	//After the popup closes, OwnerEdit is null.
-
-			ShowMigrationDialog();
-
-			if (ownerEdit != null && !ownerEdit.IsPopupOpen)
-				ownerEdit.ShowPopup();
+			using (KeepPopup()) {
+				ShowMigrationDialog();
+			}
 		}
 		public void ShowMigrationDialog(Form parentForm = null) {
 			var memberPledges = controller.GetMemberPledges().ToList();
@@ -241,6 +234,20 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			}
 		}
 		#endregion
+
+		private IDisposable KeepPopup() {
+			//Clicking a dialog closes the popup form.
+			//Therefore, I show it again afterwards.
+			PopupContainerEdit ownerEdit = null;
+			var ppc = this.Parent as PopupContainerControl;
+			if (ppc != null)
+				ownerEdit = ppc.OwnerEdit;	//After the popup closes, OwnerEdit is null.
+
+			return new Disposable(delegate {
+				if (ownerEdit != null && !ownerEdit.IsPopupOpen)
+					ownerEdit.ShowPopup();
+			});
+		}
 
 		private Form GetOwningForm() {
 			var ppc = this.Parent as PopupContainerControl;
