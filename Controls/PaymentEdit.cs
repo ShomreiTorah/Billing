@@ -60,7 +60,7 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 
 		public void AddNew() {
-			if (CurrentPayment.Table == null)
+			if (CurrentPayment != null && CurrentPayment.Table == null)
 				RemoveLinks();
 			paymentsBindingSource.CancelEdit();
 
@@ -201,6 +201,7 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 
 		private void person_EditValueChanged(object sender, EventArgs e) {
+			if (CurrentPayment == null) return;
 			if (CurrentPayment.Table == null)
 				RemoveLinks();
 			else
