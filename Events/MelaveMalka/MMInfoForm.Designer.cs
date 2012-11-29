@@ -28,6 +28,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
 			this.bar1 = new DevExpress.XtraBars.Bar();
 			this.showAddForm = new DevExpress.XtraBars.BarButtonItem();
+			this.uploadAdBlank = new DevExpress.XtraBars.BarButtonItem();
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -43,7 +44,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colMelaveMalkaDateTime = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.repositoryItemTimeEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTimeEdit();
 			this.colRowId = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
-			this.uploadAdBlank = new DevExpress.XtraBars.BarButtonItem();
+			this.colHonoreeTitle = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.colHonoree2 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
+			this.colHonoree2Title = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
@@ -90,26 +93,37 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.showAddForm.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
 			this.showAddForm.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showAddForm_ItemClick);
 			// 
+			// uploadAdBlank
+			// 
+			this.uploadAdBlank.Caption = "Upload Ad Blank";
+			this.uploadAdBlank.Id = 1;
+			this.uploadAdBlank.Name = "uploadAdBlank";
+			this.uploadAdBlank.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.uploadAdBlank_ItemClick);
+			// 
 			// barDockControlTop
 			// 
+			this.barDockControlTop.CausesValidation = false;
 			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
 			this.barDockControlTop.Size = new System.Drawing.Size(760, 29);
 			// 
 			// barDockControlBottom
 			// 
+			this.barDockControlBottom.CausesValidation = false;
 			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.barDockControlBottom.Location = new System.Drawing.Point(0, 361);
 			this.barDockControlBottom.Size = new System.Drawing.Size(760, 0);
 			// 
 			// barDockControlLeft
 			// 
+			this.barDockControlLeft.CausesValidation = false;
 			this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
 			this.barDockControlLeft.Location = new System.Drawing.Point(0, 29);
 			this.barDockControlLeft.Size = new System.Drawing.Size(0, 332);
 			// 
 			// barDockControlRight
 			// 
+			this.barDockControlRight.CausesValidation = false;
 			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
 			this.barDockControlRight.Location = new System.Drawing.Point(760, 29);
 			this.barDockControlRight.Size = new System.Drawing.Size(0, 332);
@@ -122,7 +136,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.grid.MainView = this.gridView;
 			this.grid.MenuManager = this.barManager1;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 48;
+			this.grid.RegistrationCount = 53;
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.hebrewCalendarEdit,
             this.repositoryItemTimeEdit1});
@@ -138,6 +152,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             this.colAdDeadline,
             this.colMelaveMalkaDate,
             this.colHonoree,
+            this.colHonoreeTitle,
+            this.colHonoree2,
+            this.colHonoree2Title,
             this.colSpeaker,
             this.colMelaveMalkaDateTime});
 			this.gridView.GridControl = this.grid;
@@ -209,7 +226,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colSpeaker.FieldName = "Speaker";
 			this.colSpeaker.Name = "colSpeaker";
 			this.colSpeaker.Visible = true;
-			this.colSpeaker.VisibleIndex = 5;
+			this.colSpeaker.VisibleIndex = 8;
 			this.colSpeaker.Width = 89;
 			// 
 			// colMelaveMalkaDateTime
@@ -237,12 +254,34 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colRowId.Visible = true;
 			this.colRowId.VisibleIndex = 0;
 			// 
-			// uploadAdBlank
+			// colHonoreeTitle
 			// 
-			this.uploadAdBlank.Caption = "Upload Ad Blank";
-			this.uploadAdBlank.Id = 1;
-			this.uploadAdBlank.Name = "uploadAdBlank";
-			this.uploadAdBlank.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.uploadAdBlank_ItemClick);
+			this.colHonoreeTitle.FieldName = "HonoreeTitle";
+			this.colHonoreeTitle.Name = "colHonoreeTitle";
+			this.colHonoreeTitle.Visible = true;
+			this.colHonoreeTitle.VisibleIndex = 5;
+			// 
+			// colHonoree2
+			// 
+			this.colHonoree2.AllowKeyboardActivation = false;
+			this.colHonoree2.Caption = "Secondary Honoree";
+			this.colHonoree2.FieldName = "Honoree2";
+			this.colHonoree2.Name = "colHonoree2";
+			this.colHonoree2.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.True;
+			this.colHonoree2.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
+			this.colHonoree2.OptionsColumn.ReadOnly = true;
+			this.colHonoree2.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+			this.colHonoree2.ShowEditorOnMouseDown = true;
+			this.colHonoree2.Visible = true;
+			this.colHonoree2.VisibleIndex = 6;
+			// 
+			// colHonoree2Title
+			// 
+			this.colHonoree2Title.Caption = "Secondary Honoree Title";
+			this.colHonoree2Title.FieldName = "Honoree2Title";
+			this.colHonoree2Title.Name = "colHonoree2Title";
+			this.colHonoree2Title.Visible = true;
+			this.colHonoree2Title.VisibleIndex = 7;
 			// 
 			// MMInfoForm
 			// 
@@ -287,5 +326,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private Data.UI.Grid.SmartGridColumn colMelaveMalkaDateTime;
 		private DevExpress.XtraEditors.Repository.RepositoryItemTimeEdit repositoryItemTimeEdit1;
 		private DevExpress.XtraBars.BarButtonItem uploadAdBlank;
+		private Data.UI.Grid.SmartGridColumn colHonoreeTitle;
+		private Data.UI.Grid.SmartGridColumn colHonoree2;
+		private Data.UI.Grid.SmartGridColumn colHonoree2Title;
 	}
 }

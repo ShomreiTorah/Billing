@@ -1,11 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
+using System.Linq;
 using ShomreiTorah.Common.Calendar;
 using ShomreiTorah.Data;
 using ShomreiTorah.WinForms;
@@ -46,14 +41,21 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				Dialog.ShowError("Please choose a guest of honor.");
 				return;
 			}
-			if (String.IsNullOrWhiteSpace(speaker.Text)) {
-				Dialog.ShowError("Please enter the guest speaker.");
+
+			if ((honoree2.SelectedPerson == null) != (String.IsNullOrWhiteSpace(honoree2Title.Text))) {
+				Dialog.ShowError("If there is a secondary honoree, you must enter the honoree and the title.");
 				return;
 			}
 
 			Program.Table<MelaveMalkaInfo>().Rows.Add(new MelaveMalkaInfo {
 				Year = (int)year.Value,
+
 				Honoree = honoree.SelectedPerson,
+				HonoreeTitle = honoreeTitle.Text,
+
+				Honoree2 = honoree2.SelectedPerson,
+				Honoree2Title = honoree2Title.Text,
+
 				Speaker = speaker.Text,
 				MelaveMalkaDate = melaveMalkaDate.DateTime + ((DateTime)mmTime.EditValue).TimeOfDay,
 				AdDeadline = adDeadline.DateTime
