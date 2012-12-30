@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ShomreiTorah.Data;
-using ShomreiTorah.Common;
 using System.Data.Common;
+using System.Linq;
+using ShomreiTorah.Common;
+using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	static class ExcelExporter {
@@ -95,7 +93,8 @@ VALUES	(@LastName,		@HisName,	@HerName,	@Address,	@Phone,		@Caller,	@LastAds,		@
 						Caller = (callee.Caller == null) ? "(none)" : callee.Caller.ToString(),
 						LastAds = person.Pledges
 										.Where(p => p.ExternalSource == "Journal " + (callee.Year - 1))
-										.Select(p => Names.AdTypes.First(a => a.PledgeSubType == p.SubType).Name)
+										.Select(p => Names.AdTypes.FirstOrDefault(a => a.PledgeSubType == p.SubType))
+										.Select(t => t == null ? "(other)" : t.Name)	// Handle custom pledges with unrecognized subtypes
 										.DefaultIfEmpty(person.Invitees.Any(i => i.Year == callee.Year - 1) ? "(no ad)" : "(not invited)")
 										.Join(", "),
 
