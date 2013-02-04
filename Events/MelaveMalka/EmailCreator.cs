@@ -25,6 +25,11 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 
 		public string EmailSubject { get; protected set; }
 
-		public string RenderPage() { return ((ITemplate)this).Run(new ExecuteContext()); }
+		internal string RenderPage() { return ((ITemplate)this).Run(new ExecuteContext()); }
+	}
+
+	public abstract class PartialPage<TModel> : TemplateBase, ITemplate<TModel> {
+		public DataContext DataContext { get { return Program.Current.DataContext; } }
+		public TModel Model { get; set; }
 	}
 }
