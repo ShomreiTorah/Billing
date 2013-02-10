@@ -196,8 +196,9 @@ namespace ShomreiTorah.Billing.Controls {
 
 		private void method_EditValueChanged(object sender, EventArgs e) {
 			//EditValue can be DBNull
-			checkNumber.Visible = checkNumberLabel.Visible = method.EditValue as string == "Check";
-			checkNumber.EditValue = null;
+			checkNumber.Visible = checkNumberLabel.Visible = method.EditValue as string != "Cash";
+			if (!checkNumber.Visible)
+				checkNumber.EditValue = null;
 		}
 
 		private void person_EditValueChanged(object sender, EventArgs e) {
