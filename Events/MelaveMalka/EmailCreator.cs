@@ -6,7 +6,7 @@ using ShomreiTorah.Singularity;
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	static class EmailCreator {
 		public static MailMessage CreateMessage<TRow>(this ITemplateService service, TRow row, string name) {
-			var page = (EmailPage<TRow>)service.Resolve(name);
+			var page = (EmailPage<TRow>)service.Resolve(name,null);
 			page.Row = row;
 
 			return new MailMessage {

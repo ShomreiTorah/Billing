@@ -125,11 +125,10 @@ namespace ShomreiTorah.Billing.Statements.Email {
 					Email.Hosted.Send(message);
 				}
 			} else {
-				var page = (StatementPage)PageBuilder.TemplateService.Resolve(emailTemplate.Text);
-				page.ImageService = new LocalFileImageService(PageBuilder.ImagesPath);
+				var page = (StatementPage)PageBuilder.TemplateService.Resolve(emailTemplate.Text, null);
 				page.SetInfo(row, startDate.DateTime);
 
-				string html = page.RenderPage();
+				string html = page.RenderPage(new LocalFileImageService(PageBuilder.ImagesPath));
 
 				if (!page.ShouldSend) {
 					XtraMessageBox.Show(row.FullName + " do not have any relevant data and will not receive an email.",
