@@ -117,7 +117,9 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			if (info.TotalBalance == 0)
 				range.Text = "";
 			else {
-				range.Text = "Please make your checks payable to ";
+				range.Text = "To pay your balance securely by credit card, go to https://" + Config.DomainName + "/Donate.";
+				range.InsertParagraphAfter();
+				range.InsertAfter("If you prefer to pay by check, please make your checks payable to ");
 				var subRange = range.AppendText(Config.LegalName);
 				range.InsertAfter(", and mail your remittance to:");
 				range.InsertParagraphAfter();
