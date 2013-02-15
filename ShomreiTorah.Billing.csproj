@@ -709,6 +709,11 @@ xcopy "$(SolutionDir)..\..\Config\Email Templates\*.cshtml" "$(TargetDir)Email T
 xcopy "$(SolutionDir)..\..\Config\Email Templates\*.vbhtml" "$(TargetDir)Email Templates\" /d /s /y
 xcopy "$(SolutionDir)..\..\Config\Email Templates\*.png" "$(TargetDir)Email Templates\" /d /s /y
 xcopy "$(SolutionDir)..\..\Config\Email Templates\*.gif" "$(TargetDir)Email Templates\" /d /s /y
-xcopy "$(SolutionDir)..\..\Config\Email Templates\*.jpg" "$(TargetDir)Email Templates\" /d /s /y</PostBuildEvent>
+xcopy "$(SolutionDir)..\..\Config\Email Templates\*.jpg" "$(TargetDir)Email Templates\" /d /s /y
+
+rmdir /s /q "$(TargetDir)de"
+rmdir /s /q "$(TargetDir)es"
+rmdir /s /q "$(TargetDir)ja"
+rmdir /s /q "$(TargetDir)ru"</PostBuildEvent>
   </PropertyGroup>
 </Project>
