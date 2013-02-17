@@ -46,13 +46,18 @@ namespace ShomreiTorah.Billing.Statements.Word {
 
 		public override bool ShouldSend {
 			get {
+
 				if (!base.ShouldSend)
 					return false;
+
+				if (Kind == StatementKind.Bill && Accounts.All(a => a.BalanceDue == 0))
+					return false;
+
 				if (Kind == StatementKind.Receipt) {
 					//Find all Word receipts for the year that we're generating.
 					var statements = Person.LoggedStatements.Where(s => s.StatementKind == "Receipt" && s.Media == "Word" && s.StartDate.Year == StartDate.Year);
 
-					if (!statements.Any()) return true;	//If we didn't make any Word receitps, send.
+					if (!statements.Any()) return true;	//If we didn't make any Word receipts, send.
 					var lastStatement = statements.Max(s => s.DateGenerated);
 
 					if (lastStatement >= receiptLimit)
