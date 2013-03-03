@@ -2,11 +2,13 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using DevExpress.Data.Filtering;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using Microsoft.Win32;
 using ShomreiTorah.Data;
 using ShomreiTorah.Singularity.DataBinding;
+using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Statements.Word {
@@ -76,9 +78,13 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		}
 
 		private void MailingExport_ItemClick(object sender, ItemClickEventArgs e) {
-			ProgressWorker.Execute(ui => MailingGenerator.CreateMailing(statements, e.Item.Caption + ".docx", ui), true);
+			ProgressWorker.Execute(ui =>
+				MailingGenerator.CreateMailing(statements.Where(wsi => !String.IsNullOrWhiteSpace(wsi.Person.Address)).ToList(), e.Item.Caption + ".docx", ui),
+			true);
 
 			cancel.Text = "Close";
+
+			NotifyMissingAddresses(e.Item.Caption.ToLowerInvariant());
 		}
 		void createDoc_Click(object sender, EventArgs e) {
 			DefaultDuplexMode = duplexMode.Checked;
@@ -91,9 +97,19 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			}
 
 			if (cancel.Text != "Close")
-				XtraMessageBox.Show("To create mailing labels or envelopes, click the down arrow next to Create Documents.",
-									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				Dialog.Inform("To create mailing labels or envelopes, click the down arrow next to Create Documents.");
+
 			cancel.Text = "Close";
+
+			NotifyMissingAddresses("statements");
+		}
+
+		private void NotifyMissingAddresses(string noun) {
+			var missingAddresses = statements.Count(wsi => String.IsNullOrWhiteSpace(wsi.Person.Address));
+			if (missingAddresses == 0) return;
+
+			Dialog.Inform("These " + noun + " include " + missingAddresses + (missingAddresses == 1 ? " person" : " people") + " with no mailing address.\r\nSee the filtered grid for details");
+			gridView.ActiveFilterCriteria = new NullOperator("Address") | new BinaryOperator("Address", "", BinaryOperatorType.Equal);
 		}
 
 		private void cancel_Click(object sender, EventArgs e) { Close(); }
