@@ -28,6 +28,9 @@ namespace ShomreiTorah.Billing.Statements.Word {
 						ReadOnly: true,
 						AddToRecentFiles: false
 					);
+					// Fix Word 2013 bug 
+					// http://blogs.msmvps.com/wordmeister/2013/02/22/word2013bug-not-available-for-reading/
+					sd.ActiveWindow.View.Type = WdViewType.wdPrintView;
 					sourceRanges.Add(kind, sd.Range());
 				}
 
