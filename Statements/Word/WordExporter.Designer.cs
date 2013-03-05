@@ -24,22 +24,21 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WordExporter));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WordExporter));
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+			this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
 			this.grid = new DevExpress.XtraGrid.GridControl();
 			this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.colIsChecked = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colLastName = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colHisName = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colHerName = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colAddress = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colTotalPaid = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colBalanceDue = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.buttonEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
 			this.cancel = new DevExpress.XtraEditors.SimpleButton();
 			this.createDoc = new DevExpress.XtraEditors.DropDownButton();
 			this.mailingDocuments = new DevExpress.XtraBars.PopupMenu(this.components);
@@ -49,26 +48,31 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
 			this.duplexMode = new DevExpress.XtraEditors.CheckEdit();
+			this.label = new DevExpress.XtraEditors.LabelControl();
+			((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.buttonEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.mailingDocuments)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.duplexMode.Properties)).BeginInit();
 			this.SuspendLayout();
+			// 
+			// repositoryItemCheckEdit1
+			// 
+			this.repositoryItemCheckEdit1.AutoHeight = false;
+			this.repositoryItemCheckEdit1.Name = "repositoryItemCheckEdit1";
+			this.repositoryItemCheckEdit1.NullStyle = DevExpress.XtraEditors.Controls.StyleIndeterminate.Unchecked;
 			// 
 			// grid
 			// 
 			this.grid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.grid.Location = new System.Drawing.Point(12, 12);
+			this.grid.Location = new System.Drawing.Point(12, 31);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.buttonEdit});
 			this.grid.ShowOnlyPredefinedDetails = true;
-			this.grid.Size = new System.Drawing.Size(563, 290);
+			this.grid.Size = new System.Drawing.Size(563, 271);
 			this.grid.TabIndex = 16;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -76,6 +80,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			// gridView
 			// 
 			this.gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colIsChecked,
             this.colLastName,
             this.colHisName,
             this.colHerName,
@@ -84,10 +89,32 @@ namespace ShomreiTorah.Billing.Statements.Word {
             this.colBalanceDue});
 			this.gridView.GridControl = this.grid;
 			this.gridView.Name = "gridView";
+			this.gridView.OptionsSelection.EnableAppearanceFocusedCell = false;
+			this.gridView.OptionsSelection.MultiSelect = true;
 			this.gridView.OptionsView.ShowGroupPanel = false;
 			this.gridView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colLastName, DevExpress.Data.ColumnSortOrder.Ascending)});
+			this.gridView.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gridView_CustomUnboundColumnData);
+			// 
+			// colIsChecked
+			// 
+			this.colIsChecked.Caption = " ";
+			this.colIsChecked.ColumnEdit = this.repositoryItemCheckEdit1;
+			this.colIsChecked.FieldName = "IsChecked";
+			this.colIsChecked.MaxWidth = 22;
+			this.colIsChecked.MinWidth = 22;
+			this.colIsChecked.Name = "colIsChecked";
+			this.colIsChecked.OptionsColumn.AllowMove = false;
+			this.colIsChecked.OptionsColumn.AllowShowHide = false;
+			this.colIsChecked.OptionsColumn.AllowSize = false;
+			this.colIsChecked.OptionsColumn.FixedWidth = true;
+			this.colIsChecked.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+			this.colIsChecked.ToolTip = "Generate?";
+			this.colIsChecked.UnboundType = DevExpress.Data.UnboundColumnType.Boolean;
+			this.colIsChecked.Visible = true;
+			this.colIsChecked.VisibleIndex = 0;
+			this.colIsChecked.Width = 22;
 			// 
 			// colLastName
 			// 
@@ -96,7 +123,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.colLastName.OptionsColumn.AllowEdit = false;
 			this.colLastName.OptionsColumn.ReadOnly = true;
 			this.colLastName.Visible = true;
-			this.colLastName.VisibleIndex = 0;
+			this.colLastName.VisibleIndex = 1;
+			this.colLastName.Width = 87;
 			// 
 			// colHisName
 			// 
@@ -105,7 +133,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.colHisName.OptionsColumn.AllowEdit = false;
 			this.colHisName.OptionsColumn.ReadOnly = true;
 			this.colHisName.Visible = true;
-			this.colHisName.VisibleIndex = 1;
+			this.colHisName.VisibleIndex = 2;
+			this.colHisName.Width = 87;
 			// 
 			// colHerName
 			// 
@@ -114,7 +143,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.colHerName.OptionsColumn.AllowEdit = false;
 			this.colHerName.OptionsColumn.ReadOnly = true;
 			this.colHerName.Visible = true;
-			this.colHerName.VisibleIndex = 2;
+			this.colHerName.VisibleIndex = 3;
+			this.colHerName.Width = 87;
 			// 
 			// colAddress
 			// 
@@ -123,7 +153,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.colAddress.OptionsColumn.AllowEdit = false;
 			this.colAddress.OptionsColumn.ReadOnly = true;
 			this.colAddress.Visible = true;
-			this.colAddress.VisibleIndex = 3;
+			this.colAddress.VisibleIndex = 4;
+			this.colAddress.Width = 87;
 			// 
 			// colTotalPaid
 			// 
@@ -134,7 +165,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.colTotalPaid.OptionsColumn.AllowEdit = false;
 			this.colTotalPaid.OptionsColumn.ReadOnly = true;
 			this.colTotalPaid.Visible = true;
-			this.colTotalPaid.VisibleIndex = 4;
+			this.colTotalPaid.VisibleIndex = 5;
+			this.colTotalPaid.Width = 87;
 			// 
 			// colBalanceDue
 			// 
@@ -145,17 +177,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.colBalanceDue.OptionsColumn.AllowEdit = false;
 			this.colBalanceDue.OptionsColumn.ReadOnly = true;
 			this.colBalanceDue.Visible = true;
-			this.colBalanceDue.VisibleIndex = 5;
-			// 
-			// buttonEdit
-			// 
-			this.buttonEdit.AutoHeight = false;
-			this.buttonEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Show Preview", -1, true, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("buttonEdit.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "Show Preview", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Send Preview", -1, false, true, true, DevExpress.XtraEditors.ImageLocation.MiddleCenter, ((System.Drawing.Image)(resources.GetObject("buttonEdit.Buttons1"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "Send Preview", null, null, true)});
-			this.buttonEdit.Name = "buttonEdit";
-			this.buttonEdit.ReadOnly = true;
-			this.buttonEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+			this.colBalanceDue.VisibleIndex = 6;
+			this.colBalanceDue.Width = 109;
 			// 
 			// cancel
 			// 
@@ -241,6 +264,16 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.duplexMode.SuperTip = superToolTip1;
 			this.duplexMode.TabIndex = 22;
 			// 
+			// label
+			// 
+			this.label.AutoEllipsis = true;
+			this.label.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Horizontal;
+			this.label.Location = new System.Drawing.Point(12, 12);
+			this.label.Name = "label";
+			this.label.Size = new System.Drawing.Size(63, 13);
+			this.label.TabIndex = 27;
+			this.label.Text = "labelControl1";
+			// 
 			// WordExporter
 			// 
 			this.AcceptButton = this.createDoc;
@@ -248,6 +281,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancel;
 			this.ClientSize = new System.Drawing.Size(588, 343);
+			this.Controls.Add(this.label);
 			this.Controls.Add(this.duplexMode);
 			this.Controls.Add(this.createDoc);
 			this.Controls.Add(this.grid);
@@ -259,9 +293,9 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "WordExporter";
 			this.Text = "Create Word Statements";
+			((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.buttonEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.mailingDocuments)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.duplexMode.Properties)).EndInit();
@@ -277,7 +311,6 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		private DevExpress.XtraGrid.Columns.GridColumn colHisName;
 		private DevExpress.XtraGrid.Columns.GridColumn colTotalPaid;
 		private DevExpress.XtraGrid.Columns.GridColumn colBalanceDue;
-		private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit buttonEdit;
 		private DevExpress.XtraGrid.Columns.GridColumn colLastName;
 		private DevExpress.XtraGrid.GridControl grid;
 		private DevExpress.XtraGrid.Views.Grid.GridView gridView;
@@ -290,5 +323,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		private DevExpress.XtraBars.BarDockControl barDockControlLeft;
 		private DevExpress.XtraBars.BarDockControl barDockControlRight;
 		private DevExpress.XtraEditors.CheckEdit duplexMode;
+		private DevExpress.XtraGrid.Columns.GridColumn colIsChecked;
+		private DevExpress.XtraEditors.LabelControl label;
+		private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
 	}
 }
