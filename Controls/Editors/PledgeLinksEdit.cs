@@ -201,7 +201,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			var pledge = new Pledge {
 				Account = HostPayment.Account,
 				Amount = paymentRemaining,
-				Comments = "Automatically created donation pledge for " + HostPayment.Amount.ToString("c", CultureInfo.CurrentCulture) + " " + HostPayment.Method.ToLowerInvariant(),
+				Comments = "Automatically created donation pledge for " + HostPayment.Amount.ToString("c", CultureInfo.CurrentCulture) + " " + (HostPayment.Method ?? "payment").ToLowerInvariant(),
 				Date = HostPayment.Date,
 				Person = HostPayment.Person,
 				Type = "Donation"
@@ -213,7 +213,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			});
 			Program.Table<Pledge>().Rows.Add(pledge);
 		}
-		
+
 		private void migratePledges_ItemClick(object sender, ItemClickEventArgs e) {
 			using (KeepPopup()) {
 				ShowMigrationDialog();
