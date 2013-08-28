@@ -167,6 +167,7 @@ namespace ShomreiTorah.Billing.Controls {
 
 			if (commit.CommitType == CommitType.Create) {
 				Program.Table<PledgeLink>().Rows.AddRange(pledgeLinks.Links);
+				pledgeLinks.Links.Clear();
 
 				InfoMessage.Show(String.Format(CultureInfo.CurrentCulture, "A {0:c} payment has been added for {1}", payment.Amount, payment.Person.FullName));
 				AddNew();
