@@ -203,13 +203,20 @@ namespace ShomreiTorah.Billing.Controls {
 
 		private void person_EditValueChanged(object sender, EventArgs e) {
 			if (CurrentPayment == null) return;
-			if (CurrentPayment.Table == null)
-				RemoveLinks();
-			else
-				pledgeLinks.RefreshAll();	//Reload the pledges grid (RemoveLinks() already does this)
 
 			hasShownPledgeLinks = false;
 			date.Focus();
+
+			// Wait for the bound Payment.Person property to update before rescanning pledges
+			// If the handle hasn't been created yet, we don't have other data anyway.
+			if (IsHandleCreated) {
+				BeginInvoke(new Action(delegate {
+					if (CurrentPayment.Table == null)
+						RemoveLinks();
+					else
+						pledgeLinks.RefreshAll();	//Reload the pledges grid (RemoveLinks() already does this)
+				}));
+			}
 		}
 		private void LinksField_Leave(object sender, System.EventArgs e) {
 			BeginInvoke(new Action(delegate {
