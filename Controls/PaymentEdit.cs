@@ -30,7 +30,28 @@ namespace ShomreiTorah.Billing.Controls {
 
 			pledgeLinks.DataChanged += delegate { RefreshStatus(); };
 
-			paymentsBindingSource.DataSource = Program.Current.DataContext;
+			if (Program.Current != null) {	//Bugfix for nested designer
+				paymentsBindingSource.DataSource = Program.Current.DataContext;
+				Program.Table<Payment>().LoadCompleted += Table_LoadCompleted;
+			}
+		}
+
+		void Table_LoadCompleted(object sender, EventArgs e) {
+			// Make sure that new items inserted during load don't steal the PhantomItem's position
+			if (commit.CommitType == CommitType.Create) {
+				paymentsBindingSource.Position = paymentsBindingSource.Count;
+			}
+		}
+
+
+		///<summary>Releases the unmanaged resources used by the PaymentEdit and optionally releases the managed resources.</summary>
+		///<param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+		protected override void Dispose(bool disposing) {
+			if (disposing) {
+				Program.Table<Payment>().LoadCompleted -= Table_LoadCompleted;
+				if (components != null) components.Dispose();
+			}
+			base.Dispose(disposing);
 		}
 
 		///<summary>Indicates whether the user has clicked the Pledges dropdown yet.</summary>

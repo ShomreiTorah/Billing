@@ -26,8 +26,28 @@ namespace ShomreiTorah.Billing.Controls {
 					node.Nodes.Add(subtype);
 			}
 
-			if (Program.Current != null)	//Bugfix for nested designer
+			if (Program.Current != null) {	//Bugfix for nested designer
 				pledgesBindingSource.DataSource = Program.Current.DataContext;
+				Program.Table<Pledge>().LoadCompleted += Table_LoadCompleted;
+			}
+		}
+
+		void Table_LoadCompleted(object sender, EventArgs e) {
+			// Make sure that new items inserted during load don't steal the PhantomItem's position
+			if (commit.CommitType == CommitType.Create) {
+				pledgesBindingSource.Position = pledgesBindingSource.Count;
+			}
+		}
+
+
+		///<summary>Releases the unmanaged resources used by the PaymentEdit and optionally releases the managed resources.</summary>
+		///<param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+		protected override void Dispose(bool disposing) {
+			if (disposing) {
+				Program.Table<Pledge>().LoadCompleted -= Table_LoadCompleted;
+				if (components != null) components.Dispose();
+			}
+			base.Dispose(disposing);
 		}
 		void SetCommentsHeight() {
 			if (commit.Visible)
