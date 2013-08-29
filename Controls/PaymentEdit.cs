@@ -39,7 +39,7 @@ namespace ShomreiTorah.Billing.Controls {
 		void Table_LoadCompleted(object sender, EventArgs e) {
 			// Make sure that new items inserted during load don't steal the PhantomItem's position
 			if (commit.CommitType == CommitType.Create) {
-				paymentsBindingSource.Position = paymentsBindingSource.Count;
+				paymentsBindingSource.Position = paymentsBindingSource.Count - 1;
 			}
 		}
 
