@@ -188,7 +188,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				if (openDialog.ShowDialog() == DialogResult.Cancel) return;
 				fileName = openDialog.FileName;
 			}
-			BeginOpenChart(Word.Documents.Open(fileName));
+			BeginOpenWordChart(Word.Documents.Open(fileName));
 		}
 
 		private void wordDocsMenu_BeforePopup(object sender, CancelEventArgs e) {
@@ -206,7 +206,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 
 		private void wordDocList_ListItemClick(object sender, ListItemClickEventArgs e) {
 			var name = wordDocList.Strings[e.Index];
-			BeginOpenChart(Word.Documents.Items().Single(d => d.Name == name));
+			BeginOpenWordChart(Word.Documents.Items().Single(d => d.Name == name));
 		}
 		#endregion
 		#region SeatingChart
@@ -223,15 +223,22 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			}
 		}
 
-		void BeginOpenChart(Word.Document document) {
+		void BeginOpenWordChart(Word.Document document) {
+			BeginLoadChart(document.Name, () => {
+				try {
+					Word.ScreenUpdating = false;
+					return WordParser.ParseChart(document);
+				} finally { Word.ScreenUpdating = true; }
+			});
+		}
+		void BeginLoadChart(string name, Func<ParsedSeatingChart> loader) {
 			colChartStatus.Visible = colChartStatus.OptionsColumn.ShowInCustomizationForm = true;
 
-			LoadingCaption = "Reading " + document.Name + "...";
+			LoadingCaption = "Reading " + name + "...";
 			colChartStatus.ColumnEdit = gridLoadingEdit;
 			ThreadPool.QueueUserWorkItem(delegate {
 				try {
-					Word.ScreenUpdating = false;
-					chart = WordParser.ParseChart(document);
+					chart = loader();
 				} catch (Exception ex) {
 					BeginInvoke(new Action(delegate {
 						LoadingCaption = null;
@@ -242,8 +249,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 
 					if (Debugger.IsAttached)
 						Debugger.Break();
-				} finally { Word.ScreenUpdating = true; }
-
+				}
 				BeginInvoke(new Action(delegate {
 					try {
 						if (seatGroups == null)
@@ -257,6 +263,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				}));
 			});
 		}
+
+
 
 		void SeatingReservation_ValueChanged(object sender, ValueChangedEventArgs<SeatingReservation> e) {
 			if (e.Row.Pledge.Date.Year != year)
