@@ -42,7 +42,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 
 		public override string ToString() { return Name + " - " + SeatCount; }
 
-		public bool Matches(Person person) {
+		public virtual bool Matches(Person person) {
 			if (String.IsNullOrEmpty(person.LastName))
 				return false;
 			if (String.IsNullOrEmpty(person.HisName))

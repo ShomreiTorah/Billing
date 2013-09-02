@@ -209,6 +209,18 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			BeginOpenWordChart(Word.Documents.Items().Single(d => d.Name == name));
 		}
 		#endregion
+		private void openHtmlChart_ItemClick(object sender, ItemClickEventArgs e) {
+			string fileName;
+			using (var openDialog = new OpenFileDialog {
+				Filter = "HTML Files|*.html|All Files|*.*",
+				Title = "Open HTML Seating Chart"
+			}) {
+				if (openDialog.ShowDialog() == DialogResult.Cancel) return;
+				fileName = openDialog.FileName;
+			}
+			BeginLoadChart(Path.GetFileNameWithoutExtension(fileName), () => HtmlChartParser.ParseChart(fileName));
+		}
+
 		#region SeatingChart
 		string LoadingCaption {
 			get { return loadingIconItem.Caption; }
@@ -231,7 +243,17 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				} finally { Word.ScreenUpdating = true; }
 			});
 		}
+
+		string lastChartName;
+		Func<ParsedSeatingChart> lastChartLoader;
+		private void refreshChart_ItemClick(object sender, ItemClickEventArgs e) {
+			BeginLoadChart(lastChartName, lastChartLoader);
+		}
+
 		void BeginLoadChart(string name, Func<ParsedSeatingChart> loader) {
+			lastChartName = name;
+			lastChartLoader = loader;
+
 			colChartStatus.Visible = colChartStatus.OptionsColumn.ShowInCustomizationForm = true;
 
 			LoadingCaption = "Reading " + name + "...";
@@ -257,6 +279,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 						else
 							seatGroups.Clear();
 
+						refreshChart.Enabled = true;
 						showChartInfo.Enabled = true;
 					} finally {
 						LoadingCaption = null;

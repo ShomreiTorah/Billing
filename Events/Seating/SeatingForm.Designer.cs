@@ -14,17 +14,17 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SeatingForm));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.Utils.SuperToolTip superToolTip8 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem8 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
 			this.grid = new ShomreiTorah.Data.UI.Grid.SmartGrid(this.components);
 			this.gridView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -51,6 +51,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.wordDocsMenu = new DevExpress.XtraBars.PopupMenu(this.components);
 			this.wordDocList = new DevExpress.XtraBars.BarListItem();
 			this.openWordDoc = new DevExpress.XtraBars.BarButtonItem();
+			this.openHtmlChart = new DevExpress.XtraBars.BarButtonItem();
+			this.refreshChart = new DevExpress.XtraBars.BarButtonItem();
 			this.showChartInfo = new DevExpress.XtraBars.BarButtonItem();
 			this.excelMenu = new DevExpress.XtraBars.BarSubItem();
 			this.exportLadiesInfo = new DevExpress.XtraBars.BarButtonItem();
@@ -87,8 +89,10 @@ namespace ShomreiTorah.Billing.Events.Seating {
             this.mensTotal,
             this.womensTotal,
             this.excelMenu,
-            this.exportAllInfo});
-			this.ribbon.MaxItemId = 20;
+            this.exportAllInfo,
+            this.openHtmlChart,
+            this.refreshChart});
+			this.ribbon.MaxItemId = 22;
 			this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
 			this.ribbon.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -152,7 +156,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colDate.UnboundType = DevExpress.Data.UnboundColumnType.DateTime;
 			this.colDate.Visible = true;
 			this.colDate.VisibleIndex = 6;
-			this.colDate.Width = 29;
+			this.colDate.Width = 51;
 			// 
 			// colFullName
 			// 
@@ -170,7 +174,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colFullName.UnboundType = DevExpress.Data.UnboundColumnType.Object;
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 0;
-			this.colFullName.Width = 217;
+			this.colFullName.Width = 97;
 			// 
 			// colPledgeType
 			// 
@@ -180,7 +184,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colPledgeType.UnboundType = DevExpress.Data.UnboundColumnType.String;
 			this.colPledgeType.Visible = true;
 			this.colPledgeType.VisibleIndex = 7;
-			this.colPledgeType.Width = 56;
+			this.colPledgeType.Width = 78;
 			// 
 			// colAmount
 			// 
@@ -194,7 +198,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colAmount.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
 			this.colAmount.Visible = true;
 			this.colAmount.VisibleIndex = 8;
-			this.colAmount.Width = 74;
+			this.colAmount.Width = 72;
 			// 
 			// currencyEditor
 			// 
@@ -224,7 +228,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MensSeats", "{0} Men")});
 			this.colMensSeats.Visible = true;
 			this.colMensSeats.VisibleIndex = 2;
-			this.colMensSeats.Width = 35;
+			this.colMensSeats.Width = 50;
 			// 
 			// seatCountEdit
 			// 
@@ -251,7 +255,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "WomensSeats", "{0} Women")});
 			this.colWomensSeats.Visible = true;
 			this.colWomensSeats.VisibleIndex = 4;
-			this.colWomensSeats.Width = 35;
+			this.colWomensSeats.Width = 50;
 			// 
 			// colBoysSeats
 			// 
@@ -264,7 +268,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "BoysSeats", "{0} Boys")});
 			this.colBoysSeats.Visible = true;
 			this.colBoysSeats.VisibleIndex = 3;
-			this.colBoysSeats.Width = 35;
+			this.colBoysSeats.Width = 50;
 			// 
 			// colGirlsSeats
 			// 
@@ -277,7 +281,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "GirlsSeats", "{0} Girls")});
 			this.colGirlsSeats.Visible = true;
 			this.colGirlsSeats.VisibleIndex = 5;
-			this.colGirlsSeats.Width = 34;
+			this.colGirlsSeats.Width = 48;
 			// 
 			// colNotes
 			// 
@@ -286,7 +290,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colNotes.Name = "colNotes";
 			this.colNotes.Visible = true;
 			this.colNotes.VisibleIndex = 9;
-			this.colNotes.Width = 463;
+			this.colNotes.Width = 47;
 			// 
 			// colChartStatus
 			// 
@@ -299,7 +303,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colChartStatus.UnboundType = DevExpress.Data.UnboundColumnType.Integer;
 			this.colChartStatus.Visible = true;
 			this.colChartStatus.VisibleIndex = 1;
-			this.colChartStatus.Width = 60;
+			this.colChartStatus.Width = 80;
 			// 
 			// gridLoadingEdit
 			// 
@@ -313,15 +317,15 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.personSelector.Dock = System.Windows.Forms.DockStyle.Top;
 			this.personSelector.Location = new System.Drawing.Point(0, 115);
 			this.personSelector.Name = "personSelector";
-			toolTipItem6.Text = "Click to select a person";
-			superToolTip6.Items.Add(toolTipItem6);
-			toolTipTitleItem6.Text = "New Person...";
-			toolTipItem8.Text = "Adds a new person to the master directory";
-			superToolTip8.Items.Add(toolTipTitleItem6);
-			superToolTip8.Items.Add(toolTipItem8);
+			toolTipItem2.Text = "Click to select a person";
+			superToolTip2.Items.Add(toolTipItem2);
+			toolTipTitleItem2.Text = "New Person...";
+			toolTipItem3.Text = "Adds a new person to the master directory";
+			superToolTip3.Items.Add(toolTipTitleItem2);
+			superToolTip3.Items.Add(toolTipItem3);
 			this.personSelector.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject3, "", null, superToolTip6, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("personSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject4, "", null, superToolTip8, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, superToolTip2, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("personSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, superToolTip3, true)});
 			this.personSelector.Size = new System.Drawing.Size(1011, 20);
 			this.personSelector.TabIndex = 0;
 			this.personSelector.PersonSelecting += new System.EventHandler<ShomreiTorah.Data.UI.Controls.PersonSelectingEventArgs>(this.personSelector_PersonSelecting);
@@ -389,6 +393,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// ribbonPageGroup1
 			// 
 			this.ribbonPageGroup1.ItemLinks.Add(this.wordButton);
+			this.ribbonPageGroup1.ItemLinks.Add(this.openHtmlChart);
+			this.ribbonPageGroup1.ItemLinks.Add(this.refreshChart);
 			this.ribbonPageGroup1.ItemLinks.Add(this.showChartInfo);
 			this.ribbonPageGroup1.ItemLinks.Add(this.excelMenu, true);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
@@ -430,6 +436,23 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.openWordDoc.Name = "openWordDoc";
 			this.openWordDoc.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.openWordDoc_ItemClick);
 			// 
+			// openHtmlChart
+			// 
+			this.openHtmlChart.Caption = "Open HTML Chart";
+			this.openHtmlChart.Id = 20;
+			this.openHtmlChart.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.OpenHTML32;
+			this.openHtmlChart.Name = "openHtmlChart";
+			this.openHtmlChart.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.openHtmlChart_ItemClick);
+			// 
+			// refreshChart
+			// 
+			this.refreshChart.Caption = "Reload Chart";
+			this.refreshChart.Enabled = false;
+			this.refreshChart.Id = 21;
+			this.refreshChart.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.Refresh32;
+			this.refreshChart.Name = "refreshChart";
+			this.refreshChart.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.refreshChart_ItemClick);
+			// 
 			// showChartInfo
 			// 
 			this.showChartInfo.Caption = "Analyze Chart";
@@ -437,12 +460,12 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.showChartInfo.Id = 14;
 			this.showChartInfo.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.WordWarning32;
 			this.showChartInfo.Name = "showChartInfo";
-			toolTipTitleItem4.Text = "Analyze Seating Chart";
-			toolTipItem5.LeftIndent = 6;
-			toolTipItem5.Text = "Analyzes the selected seating chart and displays any problems found.";
-			superToolTip5.Items.Add(toolTipTitleItem4);
-			superToolTip5.Items.Add(toolTipItem5);
-			this.showChartInfo.SuperTip = superToolTip5;
+			toolTipTitleItem1.Text = "Analyze Seating Chart";
+			toolTipItem1.LeftIndent = 6;
+			toolTipItem1.Text = "Analyzes the selected seating chart and displays any problems found.";
+			superToolTip1.Items.Add(toolTipTitleItem1);
+			superToolTip1.Items.Add(toolTipItem1);
+			this.showChartInfo.SuperTip = superToolTip1;
 			this.showChartInfo.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showChartInfo_ItemClick);
 			// 
 			// excelMenu
@@ -585,5 +608,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private DevExpress.XtraBars.BarStaticItem womensTotal;
 		private DevExpress.XtraBars.BarSubItem excelMenu;
 		private DevExpress.XtraBars.BarButtonItem exportAllInfo;
+		private DevExpress.XtraBars.BarButtonItem openHtmlChart;
+		private DevExpress.XtraBars.BarButtonItem refreshChart;
 	}
 }

@@ -246,6 +246,7 @@
     <Compile Include="Events\MelaveMalka\SeatingForm.Designer.cs">
       <DependentUpon>SeatingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\Seating\HtmlChartParser.cs" />
     <Compile Include="Events\Seating\ExcelExporter.cs" />
     <Compile Include="Events\Seating\ParsedSeatingChart.cs" />
     <Compile Include="Events\Seating\SeatingChartInfo.cs">
@@ -512,6 +513,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Refresh32.png" />
+    <None Include="Resources\OpenHTML32.png" />
     <None Include="Resources\StatusGreen16.png" />
     <None Include="Resources\StatusError16.png" />
     <None Include="Resources\StatusRed16.png" />
