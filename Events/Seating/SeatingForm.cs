@@ -257,9 +257,12 @@ namespace ShomreiTorah.Billing.Events.Seating {
 						else
 							seatGroups.Clear();
 
-						gridView.RefreshData();
 						showChartInfo.Enabled = true;
-					} finally { LoadingCaption = null; colChartStatus.ColumnEdit = null; }
+					} finally {
+						LoadingCaption = null;
+						colChartStatus.ColumnEdit = null;
+						gridView.RefreshData();
+					}
 				}));
 			});
 		}
