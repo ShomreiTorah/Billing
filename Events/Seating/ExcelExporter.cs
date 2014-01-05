@@ -17,6 +17,9 @@ CREATE TABLE [SeatingReservations] (
 	[Her Name]		NVARCHAR(128),
 	[Full Name]		NVARCHAR(128),
 	[Address]		NVARCHAR(128),
+	[City]	    	NVARCHAR(128),
+	[State]	    	NVARCHAR(128),
+	[Zip]	    	NVARCHAR(128),
 	[Phone]			NVARCHAR(128),
 
 	[Men's Seats]	INT,
@@ -32,7 +35,7 @@ CREATE TABLE [SeatingReservations] (
 						@"INSERT INTO [SeatingReservations]
 		([Last Name],	[His Name],	[Her Name],	[Full Name],	[Address],	[Phone],	[Men's Seats],	[Boys' Seats], 	[Women's Seats],	[Girls' Seats], [Notes])
 VALUES	(@LastName,		@HisName,	@HerName,	@FullName,		@Address,	@Phone,		@MensSeats,		@BoysSeats,		@WomensSeats,		@GirlsSeats,	@Notes);",
-		new { person.LastName, person.HisName, person.HerName, person.FullName, person.Address, person.Phone, seat.MensSeats, seat.BoysSeats, seat.WomensSeats, seat.GirlsSeats, seat.Notes }
+        new { person.LastName, person.HisName, person.HerName, person.FullName, person.Address, person.Phone, person.City, person.State, person.Zip, seat.MensSeats, seat.BoysSeats, seat.WomensSeats, seat.GirlsSeats, seat.Notes }
 	);
 				}
 			}
