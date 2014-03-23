@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -20,19 +21,24 @@ CREATE TABLE [Invitations] (
 	[State]			NVARCHAR(128),
 	[Zip]			NVARCHAR(128),
 	[Phone]			NVARCHAR(128),
-	[Source]		NVARCHAR(128)
+	[Source]		NVARCHAR(128),
+	[DateAdded]		DATETIME
 );");
 
 				foreach (var invite in invites.OrderBy(s => s.Person.LastName)) {
 					var person = invite.Person;
 					connection.ExecuteNonQuery(
 						@"INSERT INTO [Invitations]
-		([Last Name],	[His Name],	[Her Name],	[Full Name],	[Address],	[City],	[State],	[Zip], 	[Phone],	[Source])
-VALUES	(@LastName,		@HisName,	@HerName,	@FullName,		@Address,	@City,	@State,		@Zip,	@Phone,		@Source);",
-		new { person.LastName, person.HisName, person.HerName, person.FullName, person.Address, person.City, person.State, person.Zip, person.Phone, invite.Source }
+		([Last Name],	[His Name],	[Her Name],	[Full Name],	[Address],	[City],	[State],	[Zip], 	[Phone],	[Source], [DateAdded])
+VALUES	(@LastName,		@HisName,	@HerName,	@FullName,		@Address,	@City,	@State,		@Zip,	@Phone,		@Source,  @DateAdded );",
+		new { person.LastName, person.HisName, person.HerName, person.FullName, person.Address, person.City, person.State, person.Zip, person.Phone, invite.Source, DateAdded = TruncateTime(invite.DateAdded) }
 	);
 				}
 			}
+		}
+		static DateTime TruncateTime(DateTime time) {
+			// OleDB chokes on milliseconds
+			return new DateTime(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
 		}
 
 		#region Call List
@@ -83,26 +89,26 @@ CREATE TABLE [" + sheetName + @"] (
 		([Last Name],	[His Name],	[Her Name],	[Address],	[Phone],	[Caller],	[Last Year],	[Seats])
 VALUES	(@LastName,		@HisName,	@HerName,	@Address,	@Phone,		@Caller,	@LastAds,		@LastSeats);",
 					new {
-						person.LastName,
-						person.HisName,
-						person.HerName,
+					person.LastName,
+					person.HisName,
+					person.HerName,
 
-						person.Address,
-						person.Phone,
+					person.Address,
+					person.Phone,
 
-						Caller = (callee.Caller == null) ? "(none)" : callee.Caller.ToString(),
-						LastAds = person.Pledges
+					Caller = (callee.Caller == null) ? "(none)" : callee.Caller.ToString(),
+					LastAds = person.Pledges
 										.Where(p => p.ExternalSource == "Journal " + (callee.Year - 1))
 										.Select(p => Names.AdTypes.FirstOrDefault(a => a.PledgeSubType == p.SubType))
-										.Select(t => t == null ? "(other)" : t.Name)	// Handle custom pledges with unrecognized subtypes
+										.Select(t => t == null ? "(other)" : t.Name)    // Handle custom pledges with unrecognized subtypes
 										.DefaultIfEmpty(person.Invitees.Any(i => i.Year == callee.Year - 1) ? "(no ad)" : "(not invited)")
 										.Join(", "),
 
-						LastSeats = person.MelaveMalkaSeats
+					LastSeats = person.MelaveMalkaSeats
 										.Where(s => s.Year == callee.Year - 1)
 										.Select(s => "M: " + s.MensSeats + ", " + "W: " + s.WomensSeats)
 										.FirstOrDefault() ?? ""
-					}
+				}
 				);
 			}
 		}
