@@ -206,12 +206,12 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 				Person = HostPayment.Person,
 				Type = "Donation"
 			};
+			Program.Table<Pledge>().Rows.Add(pledge);
 			Links.Add(new PledgeLink {
 				Amount = paymentRemaining,
 				Payment = HostPayment,
 				Pledge = pledge,
 			});
-			Program.Table<Pledge>().Rows.Add(pledge);
 		}
 
 		private void migratePledges_ItemClick(object sender, ItemClickEventArgs e) {
