@@ -72,20 +72,20 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		}
 
 
-		const int MembershipFee = 600;
+		const int MembershipFee = 750;
 		///<summary>Calculates the default price of the current seating reservation.</summary>
 		decimal? CalculatePrice() {
 			switch (pledgeTypeEditor.Text) {
 				case "ימים נוראים Seating":
 					var price = (MensSeatsSpinEdit.Value + WomensSeatsSpinEdit.Value) * 150
-							  + (BoysSeatsSpinEdit.Value + GirlsSeatsSpinEdit.Value) * 75;
+							  + (BoysSeatsSpinEdit.Value + GirlsSeatsSpinEdit.Value) * 100;
 					if (price == 0) return null;
 
 					return Math.Min(MembershipFee, price);
 				case "Membership":
 					return MembershipFee;
 				case "Associate Membership":
-					return 400;
+					return 375;
 				default:
 					return null;
 			}
