@@ -20,7 +20,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 	using Email = ShomreiTorah.Common.Email;//Force the name to not refer to this namespace
 
 	partial class EmailExporter : XtraForm {
-		static readonly StatementBuilder PageBuilder = new StatementBuilder(Path.Combine(Program.AppDirectory, @"Email Templates\Statements"), Path.Combine(Program.AppDirectory, @"Email Templates\Images"));
+		readonly StatementBuilder PageBuilder;
 
 		readonly Person[] people;
 		readonly EditorButton sendPreviewButton, showPreviewButton;
@@ -41,16 +41,19 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			}
 			Program.Current.RefreshDatabase();
 
-			var fileNames = PageBuilder.Templates.ToArray();
-			if (fileNames.Length == 0) {
+			var pageBuilder = new StatementBuilder(
+				Path.Combine(Program.AppDirectory, @"Email Templates\Statements"),
+				Path.Combine(Program.AppDirectory, @"Email Templates\Images")
+			);
+			if (!pageBuilder.Templates.Any()) {
 				XtraMessageBox.Show("There are no email templates.\r\nPlese contact Schabse.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			new EmailExporter(people, fileNames).Show(parent);
+			new EmailExporter(people, pageBuilder).Show(parent);
 		}
 
-		EmailExporter(Person[] people, string[] fileNames) {
+		EmailExporter(Person[] people, StatementBuilder pageBuilder) {
 			InitializeComponent();
 			this.people = people;
 
@@ -68,9 +71,21 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			grid.DataSource = new RowListBinder(Program.Table<Person>(), (Row[])people);
 			gridView.BestFitColumns();
 
-			emailTemplate.Properties.Items.AddRange(fileNames);
+			PageBuilder = pageBuilder;
+			emailTemplate.Properties.Items.AddRange(pageBuilder.Templates.ToList());
 			emailTemplate.Properties.DropDownRows = Math.Max(emailTemplate.Properties.Items.Count, 7);
 			SetEnabled();
+		}
+
+
+		///<summary>Releases the unmanaged resources used by the EmailExporter and optionally releases the managed resources.</summary>
+		///<param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+		protected override void Dispose(bool disposing) {
+			if (disposing) {
+				PageBuilder.Dispose();
+				if (components != null) components.Dispose();
+			}
+			base.Dispose(disposing);
 		}
 
 		private void EditValueChanged(object sender, EventArgs e) { SetEnabled(); }
