@@ -85,7 +85,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				case "Membership":
 					return MembershipFee;
 				case "Associate Membership":
-					return 375;
+					return 400;
 				default:
 					return null;
 			}
