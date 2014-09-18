@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 
@@ -33,8 +31,8 @@ CREATE TABLE [SeatingReservations] (
 					var person = seat.Person;
 					connection.ExecuteNonQuery(
 						@"INSERT INTO [SeatingReservations]
-		([Last Name],	[His Name],	[Her Name],	[Full Name],	[Address],	[Phone],	[Men's Seats],	[Boys' Seats], 	[Women's Seats],	[Girls' Seats], [Notes])
-VALUES	(@LastName,		@HisName,	@HerName,	@FullName,		@Address,	@Phone,		@MensSeats,		@BoysSeats,		@WomensSeats,		@GirlsSeats,	@Notes);",
+		([Last Name],	[His Name],	[Her Name],	[Full Name],	[Address],	[Phone],	[City],	[State],	[Zip],	[Men's Seats],	[Boys' Seats], 	[Women's Seats],	[Girls' Seats], [Notes])
+VALUES	(@LastName,		@HisName,	@HerName,	@FullName,		@Address,	@Phone,		@City,	@State,		@Zip,	@MensSeats,		@BoysSeats,		@WomensSeats,		@GirlsSeats,	@Notes);",
         new { person.LastName, person.HisName, person.HerName, person.FullName, person.Address, person.Phone, person.City, person.State, person.Zip, seat.MensSeats, seat.BoysSeats, seat.WomensSeats, seat.GirlsSeats, seat.Notes }
 	);
 				}
