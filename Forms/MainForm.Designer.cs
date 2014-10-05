@@ -23,6 +23,7 @@ namespace ShomreiTorah.Billing.Forms {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
@@ -120,7 +121,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
 			this.lookup = new ShomreiTorah.WinForms.Controls.Lookup.ItemSelector();
-			this.dockManager = new DevExpress.XtraBars.Docking.DockManager();
+			this.dockManager = new DevExpress.XtraBars.Docking.DockManager(this.components);
 			this.addPledgePanel = new DevExpress.XtraBars.Docking.DockPanel();
 			this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
 			this.modifiedPledgesGrid = new ShomreiTorah.Billing.Controls.ModifiedPledgesGrid();
@@ -129,7 +130,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.controlContainer1 = new DevExpress.XtraBars.Docking.ControlContainer();
 			this.modifiedPaymentsGrid = new ShomreiTorah.Billing.Controls.ModifiedPaymentsGrid();
 			this.paymentEdit = new ShomreiTorah.Billing.Controls.PaymentEdit();
-			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager();
+			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.shalachManosColumnsEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lookup.Properties)).BeginInit();
@@ -784,7 +785,9 @@ namespace ShomreiTorah.Billing.Forms {
 			// mdiManager
 			// 
 			this.mdiManager.ClosePageButtonShowMode = DevExpress.XtraTab.ClosePageButtonShowMode.InAllTabPagesAndTabControlHeader;
+			this.mdiManager.FloatOnDrag = DevExpress.Utils.DefaultBoolean.True;
 			this.mdiManager.MdiParent = this;
+			this.mdiManager.ShowFloatingDropHint = DevExpress.Utils.DefaultBoolean.True;
 			// 
 			// MainForm
 			// 
