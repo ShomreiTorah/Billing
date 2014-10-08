@@ -5,6 +5,8 @@ using DevExpress.XtraEditors;
 using ShomreiTorah.Data;
 using ShomreiTorah.Singularity;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraTab;
+using System.Linq;
 
 namespace ShomreiTorah.Billing.Forms {
 	partial class PersonDetails : XtraForm {
@@ -32,18 +34,20 @@ namespace ShomreiTorah.Billing.Forms {
 		}
 		private void personBindingSource_CurrentItemChanged(object sender, EventArgs e) { UpdateDetails(); }
 		void UpdateDetails() {
-			if (person == null) return;
+			if (person == null)
+				return;
 			map.Text = person.FullName;
 			map.AddressString = person.Address + Environment.NewLine + person.City + ", " + person.State + "  " + person.Zip;
 			details.Text = new PersonData(person).ToFullString()
 						 + "\r\n\r\nBalance Due: " + person.Field<decimal>("BalanceDue").ToString("c", CultureInfo.CurrentCulture);
+			SetTransactionsLog();
 		}
 
 		private void exportEmail_ItemClick(object sender, ItemClickEventArgs e) { Statements.Email.EmailExporter.Execute(this, person); }
 		private void exportWord_ItemClick(object sender, ItemClickEventArgs e) { Statements.Word.WordExporter.Execute(this, person); }
 
 		#region Relatives
-		private void addRLAsMember_ItemClick(object sender, ItemClickEventArgs e) { RelationCreator.Execute(member: person); relativesView.BestFitColumns();}
+		private void addRLAsMember_ItemClick(object sender, ItemClickEventArgs e) { RelationCreator.Execute(member: person); relativesView.BestFitColumns(); }
 		private void addRLAsRelative_ItemClick(object sender, ItemClickEventArgs e) { RelationCreator.Execute(relative: person); relativesView.BestFitColumns(); }
 
 		private void relativesView_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e) {
@@ -77,6 +81,24 @@ namespace ShomreiTorah.Billing.Forms {
 				details.Show();
 				AcceptButton = null;
 			}
+		}
+
+		private void xtraTabControl1_SelectedPageChanging(object sender, TabPageChangingEventArgs e) {
+			if (e.Page == transactionsTab) {
+				SetTransactionsLog();
+			}
+		}
+		protected override void OnActivated(EventArgs e) {
+			base.OnActivated(e);
+			SetTransactionsLog();
+        }
+
+		void SetTransactionsLog() {
+			transactionsControl.SetData(
+				person.Transactions,
+				person.LoggedStatements.Where(s => s.StatementKind.Contains("Bill"))
+									   .Select(s => Tuple.Create(s.DateGenerated, s.StatementKind))
+			);
 		}
 	}
 }

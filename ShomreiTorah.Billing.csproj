@@ -70,6 +70,7 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.Charts.v12.1.Core, Version=12.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Printing.v12.1.Core, Version=12.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -88,6 +89,8 @@
     <Reference Include="DevExpress.XtraBars.v12.1, Version=12.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
+    <Reference Include="DevExpress.XtraCharts.v12.1, Version=12.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v12.1.UI, Version=12.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v12.1, Version=12.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -177,6 +180,12 @@
     </Compile>
     <Compile Include="Controls\PledgeEdit.Designer.cs">
       <DependentUpon>PledgeEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TransactionLog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TransactionLog.Designer.cs">
+      <DependentUpon>TransactionLog.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\Auctions\AuctionGroupSelector.cs">
       <SubType>UserControl</SubType>
@@ -346,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PledgeEdit.resx">
       <DependentUpon>PledgeEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TransactionLog.resx">
+      <DependentUpon>TransactionLog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Events\Auctions\AuctionGroupSelector.resx">
       <DependentUpon>AuctionGroupSelector.cs</DependentUpon>
