@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -9,7 +10,6 @@ using DevExpress.XtraBars;
 using DevExpress.XtraBars.Docking;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
-using DevExpress.XtraTabbedMdi;
 using ShomreiTorah.Billing.Events.Purim;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI;
@@ -41,7 +41,7 @@ namespace ShomreiTorah.Billing.Forms {
 		#region Yearly Buttons
 		void SetupYearlyButtons() {
 			showShalachManos.SetupYearlyButton<Pledge>(
-				p => p.Type == ShalachManosForm.PledgeType ? p.Date.Year : new int?(),	//Only count Shalach Manos pledges; don't show years that only have other types
+				p => p.Type == ShalachManosForm.PledgeType ? p.Date.Year : new int?(),  //Only count Shalach Manos pledges; don't show years that only have other types
 				year => new ShalachManosForm(year) { MdiParent = this }.Show()
 			);
 			shalachManosExport.SetupYearlyButton<Pledge>(
@@ -112,7 +112,7 @@ namespace ShomreiTorah.Billing.Forms {
 
 		private void lookup_EditValueChanged(object sender, EventArgs e) {
 			var row = lookup.EditValue as Row;
-			if (row == null) return;	//eg, DBNull
+			if (row == null) return;    //eg, DBNull
 			lookup.EditValue = null;
 			Program.Current.ShowDetails(row);
 		}
@@ -203,6 +203,16 @@ namespace ShomreiTorah.Billing.Forms {
 			if (addPaymentPanel.Visibility == DockVisibility.Hidden) {
 				//If the user closes the add popup, cancel the new payment.
 				paymentEdit.AddNew();
+			}
+		}
+
+		private void saveXmlDb_ItemClick(object sender, ItemClickEventArgs e) {
+			using (var dialog = new SaveFileDialog {
+				Filter = "XML Files (*.xml)|*.xml",
+				FileName = "Data - " + Environment.UserName + " - " + DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
+			}) {
+				if (dialog.ShowDialog(this) == DialogResult.OK)
+					File.WriteAllText(dialog.FileName, Program.Current.DataContext.ToXml().ToString());
 			}
 		}
 	}

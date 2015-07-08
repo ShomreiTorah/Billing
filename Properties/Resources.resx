@@ -142,8 +142,8 @@
   <data name="ShalachManosList32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ShalachManosList32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="SendMail16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SendMail16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StatusError16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StatusError16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Open16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Open16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -156,6 +156,12 @@
   </data>
   <data name="SendPreview1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SendPreview.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Phone16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Phone16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SendMail16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SendMail16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WebPreview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WebPreview.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -181,9 +187,6 @@
   <data name="Seating32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Seating32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ImportExcel32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ImportExcel32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ExportExcel16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ExportExcel16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -193,17 +196,14 @@
   <data name="CallList32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CallList32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="StatusError16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\StatusError16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="WordWarning32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WordWarning32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SendMails32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SendMails32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="EmailList32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EmailList32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Close" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Close.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="StatusYellow16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StatusYellow16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -223,11 +223,11 @@
   <data name="ShowPreview16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ShowPreview16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Close" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Close.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="EmailList32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EmailList32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Phone16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Phone16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ImportExcel32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ImportExcel32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="StatusGreen16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StatusGreen16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -244,6 +244,9 @@
   <data name="Add32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Add32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Refresh32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Refresh32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="OpenHTML32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OpenHTML32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -253,7 +256,7 @@
   <data name="ExportWord32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ExportWord32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Refresh32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Refresh32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SaveAs32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SaveAs32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
