@@ -72,7 +72,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		}
 
 
-		const int MembershipFee = 750;
+		const int MembershipFee = 850;
 		///<summary>Calculates the default price of the current seating reservation.</summary>
 		decimal? CalculatePrice() {
 			switch (pledgeTypeEditor.Text) {
