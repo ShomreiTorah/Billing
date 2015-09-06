@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
@@ -26,11 +27,11 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		readonly int year;
 		readonly FilteredTable<SeatingReservation> seats;
 		public SeatingForm(int year) {
-			Program.LoadTable<SeatingReservation>();	//Before setting DataMember
+			Program.LoadTable<SeatingReservation>();    //Before setting DataMember
 			InitializeComponent();
 
 			loadingIconItem.EditValue = LoadingImage;
-			colPledgeType.ColumnEdit = SeatingInfo.PledgeTypeEdit;	//TODO: IEditorSettings?
+			colPledgeType.ColumnEdit = SeatingInfo.PledgeTypeEdit;  //TODO: IEditorSettings?
 			this.year = year;
 
 			grid.DataMember = null;
@@ -136,7 +137,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		#endregion
 
 		private void gridView_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
-			if (seats == null) return;	//Still initializing
+			if (seats == null) return;  //Still initializing
 
 			if (e.Column.FieldName.StartsWith("Pledge/", StringComparison.OrdinalIgnoreCase)) {
 				var columnName = Path.GetFileName(e.Column.FieldName);
@@ -157,9 +158,9 @@ namespace ShomreiTorah.Billing.Events.Seating {
 					var chartCount = FindChartCount(row.Person);
 					if (chartCount == 0) {
 						if (row.MensSeats + row.BoysSeats == 0)
-							e.Value = 0;	//Not in chart, but has no seats
+							e.Value = 0;    //Not in chart, but has no seats
 						else
-							e.Value = null;	//Missing
+							e.Value = null; //Missing
 					} else {
 						var reservedSeats = row.MensSeats + row.BoysSeats;
 						e.Value = reservedSeats - chartCount;
@@ -218,7 +219,49 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				if (openDialog.ShowDialog() == DialogResult.Cancel) return;
 				fileName = openDialog.FileName;
 			}
-			BeginLoadChart(Path.GetFileNameWithoutExtension(fileName), () => HtmlChartParser.ParseChart(fileName));
+
+			BeginLoadChart(Path.GetFileNameWithoutExtension(fileName), () => {
+				var doc = XDocument.Load(fileName, LoadOptions.PreserveWhitespace);
+				var group = doc.Descendants("aside").FirstOrDefault(elem => elem.Attribute("id").Value == "IntelliSense");
+				if (group == null) {
+					Dialog.Warn("Document does not contain <aside id=\"IntelliSense\">; not updating IntelliSense data");
+				} else {
+					var prefix = group
+						.Elements()
+						.Select(elem => elem.PreviousNode as XText)
+						.FirstOrDefault()
+					 ?? new XText("\r\n\t\t");
+
+					var lastWhitespace = group.Nodes().OfType<XText>().LastOrDefault();
+					group.Nodes().Remove();
+					group.Add(seats.Rows.OrderBy(row => row.Person.LastName).SelectMany(row => new XNode[] {
+						prefix,
+						new XElement("input",
+							new XAttribute("type", "hidden"), new XAttribute("class", "IntelliSense-Primer"),
+							new XAttribute("data-person", row.Person.LastName + ", " + row.Person.HisName + " # " + SeatCount(row)
+													   + (string.IsNullOrWhiteSpace(row.Notes) ? "" : "; " + Truncate(row.Notes, 30))))
+					}));
+					group.Add(lastWhitespace);
+					doc.Save(fileName);
+				}
+				return HtmlChartParser.ParseChart(doc.Root);
+			});
+		}
+
+
+		static string SeatCount(SeatingReservation row) {
+			var count = row.MensSeats + row.BoysSeats;
+			return count + " Seat" + (count == 1 ? "" : "s");
+		}
+
+		static string Truncate(string text, int max) {
+			text = text.Replace("\r", "").Replace("\n", " ").Trim();
+			if (text.Length <= max)
+				return text;
+			max = Math.Max(max, text.IndexOf(' ', max));
+			if (text.Length <= max)
+				return text;
+			return text.Remove(max).Trim() + "…";
 		}
 
 		#region SeatingChart

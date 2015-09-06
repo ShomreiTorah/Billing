@@ -9,12 +9,11 @@ using System.Media;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	static class HtmlChartParser {
-		public static ParsedSeatingChart ParseChart(string filename) {
-			return new ParsedSeatingChart(
-				XDocument.Load(filename)
-					.Descendants()
-					.Where(e => ((string)e.Attribute("class") ?? "").Contains("Table"))
-					.Select(ParseTable)
+		public static ParsedSeatingChart ParseChart(XElement document) {
+			return new ParsedSeatingChart(document
+				.Descendants()
+				.Where(e => ((string)e.Attribute("class") ?? "").Contains("Table"))
+				.Select(ParseTable)
 			);
 		}
 
