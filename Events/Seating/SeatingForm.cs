@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Linq;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
@@ -242,7 +243,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 													   + (string.IsNullOrWhiteSpace(row.Notes) ? "" : "; " + Truncate(row.Notes, 30))))
 					}));
 					group.Add(lastWhitespace);
-					doc.Save(fileName);
+					using (var writer = XmlWriter.Create(fileName, new XmlWriterSettings() { OmitXmlDeclaration = true }))
+						doc.Save(writer);
 				}
 				return HtmlChartParser.ParseChart(doc.Root);
 			});
