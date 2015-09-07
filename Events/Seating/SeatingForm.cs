@@ -317,13 +317,16 @@ namespace ShomreiTorah.Billing.Events.Seating {
 				}
 				BeginInvoke(new Action(delegate {
 					try {
+						refreshChart.Enabled = showChartInfo.Enabled = chart != null;
+						if (chart == null) {
+							colChartStatus.Visible = colChartStatus.OptionsColumn.ShowInCustomizationForm = false;
+							return;
+						}
 						if (seatGroups == null)
 							seatGroups = new Dictionary<Person, int>();
 						else
 							seatGroups.Clear();
 
-						refreshChart.Enabled = true;
-						showChartInfo.Enabled = true;
 					} finally {
 						LoadingCaption = null;
 						colChartStatus.ColumnEdit = null;
