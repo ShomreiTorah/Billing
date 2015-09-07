@@ -10,33 +10,44 @@ using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	partial class SeatingChartInfo : XtraForm {
-		public static void Show(IWin32Window parent, ParsedSeatingChart chart, IEnumerable<SeatingReservation> seats) {
-			var data =
-				//CS means Chart Seat; RS means Reserved Seat.
-				new[]{
-					//Extra seats
-					chart.AllSeats.Where(cs => seats.All( rs => !cs.Matches(rs.Person)))
-								  .Select(cs => new SeatInfo(cs, message: "No matching reservation")),
-
-					//Seats with wrong widths
-					chart.AllSeats.Where(cs => !cs.CheckWidth())
-								  .Select(cs => new SeatInfo(cs, message: "Width is wrong")),
-
-				}.SelectMany(s => s).ToArray();
+		public static SeatingChartInfo Show(IWin32Window parent, ParsedSeatingChart chart, IEnumerable<SeatingReservation> seats) {
+			SeatInfo[] data = CreateDataSource(chart, seats);
 
 			if (!data.Any()) {
 				XtraMessageBox.Show("This seating chart has no issues!",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				return;
-			} else
-				new SeatingChartInfo(data).Show(parent);
+				return null;
+			} else {
+				var form = new SeatingChartInfo(data);
+				form.Show(parent);
+				return form;
+			}
 		}
+
+		private static SeatInfo[] CreateDataSource(ParsedSeatingChart chart, IEnumerable<SeatingReservation> seats) {
+			//CS means Chart Seat; RS means Reserved Seat.
+			var data = new[] {
+				//Extra seats
+				chart.AllSeats.Where(cs => seats.All(rs => !cs.Matches(rs.Person)))
+							  .Select(cs => new SeatInfo(cs, message: "No matching reservation")),
+
+				//Seats with wrong widths
+				chart.AllSeats.Where(cs => !cs.CheckWidth())
+							  .Select(cs => new SeatInfo(cs, message: "Width is wrong")),
+
+			}.SelectMany(s => s).ToArray();
+			return data;
+		}
+		public void UpdateData(ParsedSeatingChart chart, IEnumerable<SeatingReservation> seats) {
+			grid.DataSource = CreateDataSource(chart, seats);
+		}
+
 		class SeatInfo {
 			readonly SeatGroup seat;
 
 			public SeatInfo(SeatGroup seat, string message) { this.seat = seat; Message = message; }
 
-			[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",Justification= "Used with data-binding")]
+			[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Used with data-binding")]
 			public string Name { get { return seat.Name; } }
 			[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Used with data-binding")]
 			public int SeatCount { get { return seat.SeatCount; } }

@@ -377,8 +377,16 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			}
 		}
 
+		SeatingChartInfo infoForm;
 		private void showChartInfo_ItemClick(object sender, ItemClickEventArgs e) {
-			SeatingChartInfo.Show(MdiParent, chart, seats.Rows);
+			BeginLoadChart(lastChartName, lastChartLoader);
+
+			if (infoForm != null && infoForm.Visible) {
+				infoForm.UpdateData(chart, seats.Rows);
+				infoForm.Activate();
+			} else {
+				infoForm = SeatingChartInfo.Show(MdiParent, chart, seats.Rows);
+			}
 		}
 
 		ParsedSeatingChart chart;
