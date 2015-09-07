@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Globalization;
 using System.Xml.Linq;
 using System.Media;
+using System.Text.RegularExpressions;
 
 namespace ShomreiTorah.Billing.Events.Seating {
 	static class HtmlChartParser {
@@ -25,6 +26,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 					.Select(ParseSeatGroup).Where(s => s != null)
 			);
 		}
+		static readonly Regex CommentTrimmer = new Regex(@"\s*#.*$");
 		static SeatGroup ParseSeatGroup(this XElement cell) {
 			return new HtmlSeatGroup(
 				(string)cell.Attribute("data-person"),
@@ -33,7 +35,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		}
 
 		class HtmlSeatGroup : SeatGroup {
-			public HtmlSeatGroup(string name, int seatCount) : base(name, seatCount, seatCount) { }
+			public HtmlSeatGroup(string name, int seatCount) : base(CommentTrimmer.Replace(name, ""), seatCount, seatCount) { }
 
 			public override void Select() { SystemSounds.Beep.Play(); }
 
