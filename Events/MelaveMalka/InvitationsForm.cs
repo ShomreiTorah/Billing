@@ -58,7 +58,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		}
 		private void personSelector_PersonSelecting(object sender, PersonSelectingEventArgs e) {
 			if (e.Method == PersonSelectionReason.Created)
-				e.Person.Source = "Melave Malka " + year;
+				e.Person.Source = Names.JournalPledgeType.Name + " " + year;
 			else {
 				var otherInvite = e.Person.Invitees.FirstOrDefault(i => i.Year == year);
 				if (otherInvite != null) {

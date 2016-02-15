@@ -29,10 +29,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		}
 
 		private void ok_Click(object sender, EventArgs e) {
-			if (melaveMalkaDate.DateTime.DayOfWeek != DayOfWeek.Saturday) {
-				Dialog.ShowError("The Melave Malka must be on שבת");
-				return;
-			}
 			if (Program.Table<MelaveMalkaInfo>().Rows.Any(m => m.Year == year.Value)) {
 				Dialog.ShowError("Melave Malka info has already been added for " + year.Value);
 				return;

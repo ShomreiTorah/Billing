@@ -23,7 +23,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			var pledge = (Pledge)pledgesBindingSource.AddNew();
 			var seatRes = (SeatingReservation)seatingReservationsBindingSource.AddNew();
 
-			pledge.Account = "Operating Fund";
+			pledge.Account = Names.DefaultAccount;
 			pledge.Date = DateTime.Now;
 			pledge.Person = person;
 			seatRes.Pledge = pledge;

@@ -130,8 +130,11 @@ namespace ShomreiTorah.Billing.Controls {
 		}
 		private void typeText_Leave(object sender, EventArgs e) { BeginInvoke(new Action(SetAccount)); }
 		void SetAccount() {
-			if (String.IsNullOrWhiteSpace(account.Text) || Names.AccountNames.Contains(account.Text))
-				CurrentPledge.Account = account.Text = (typeText.Text == "Building Fund" ? "Building Fund" : "Operating Fund");
+			if (Names.AccountNames.Contains(typeText.Text))
+				CurrentPledge.Account = account.Text = typeText.Text;
+			// If the account has not been customized, reset to the default.
+			else if (String.IsNullOrWhiteSpace(account.Text) || Names.AccountNames.Contains(account.Text))
+				CurrentPledge.Account = account.Text = Names.DefaultAccount;
 		}
 		private void typeTree_AfterSelect(object sender, TreeViewEventArgs e) {
 			if (e.Action == TreeViewAction.Collapse || e.Action == TreeViewAction.Expand || e.Action == TreeViewAction.Unknown) return;

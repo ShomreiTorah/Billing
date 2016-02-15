@@ -69,7 +69,7 @@ namespace ShomreiTorah.Billing.Import.Raffle {
 			public ImportedTicket(IList<RaffleTicket> originals) {
 				this.originals = originals;
 				Person = originals.First().Person;
-				Account = "Operating Fund";
+				Account = Names.DefaultAccount;
 				Type = "Melave Malka Raffle";
 
 				Tickets = ((IListSource)new RowListBinder(Program.Table<RaffleTicket>(), originals.Cast<Row>().ToList())).GetList();
