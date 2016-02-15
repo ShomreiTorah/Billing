@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22310.1
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShomreiTorah.Billing", "ShomreiTorah.Billing.csproj", "{C81B5ED2-22CB-4BD9-A1E4-C839FA974F1D}"
 EndProject
@@ -29,7 +29,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Email Templates", "http://l
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "true"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		ProjectReferences = "{C81B5ED2-22CB-4BD9-A1E4-C839FA974F1D}|ShomreiTorah.Billing.exe;{1308a6e1-7787-49f6-a19c-8af327daf9b5}|ShomreiTorah.Common.dll;{416cb9c4-dccc-47a2-ab58-a7f066c16462}|ShomreiTorah.Statements.dll;{88d62ef0-7a6c-403e-80ef-6cefe734dd53}|ShomreiTorah.Data.dll;{53c1a3a0-b443-4c28-895b-5e4dfe803a1c}|ShomreiTorah.Singularity.dll;"
+		ProjectReferences = "{C81B5ED2-22CB-4BD9-A1E4-C839FA974F1D}|ShomreiTorah.Billing.exe;{1308a6e1-7787-49f6-a19c-8af327daf9b5}|ShomreiTorah.Common.dll;{416cb9c4-dccc-47a2-ab58-a7f066c16462}|ShomreiTorah.Statements.dll;{88d62ef0-7a6c-403e-80ef-6cefe734dd53}|ShomreiTorah.Data.dll;{53c1a3a0-b443-4c28-895b-5e4dfe803a1c}|ShomreiTorah.Singularity.dll;{43AD72A0-F262-4561-B5C4-2686AE0B5E03}|ShomreiTorah.Data.UI.dll;{0B927F97-8CDD-47CB-B775-CA1E0AB2409C}|ShomreiTorah.WinForms.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_56918"
 		Debug.AspNetCompiler.PhysicalPath = "..\..\Config\Email Templates\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56918\"
