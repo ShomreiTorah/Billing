@@ -40,7 +40,7 @@ namespace ShomreiTorah.Billing {
 			//These columns cannot be added in the strongly-typed row
 			//because the People table must be usable without pledges
 			//or payments.  (eg, ListMaker or Rafflizer)
-			if (!Person.Schema.Columns.Contains("TotalPaid")) {	//This can be called multiple times in the designer AppDomain
+			if (!Person.Schema.Columns.Contains("TotalPaid")) { //This can be called multiple times in the designer AppDomain
 				Person.Schema.Columns.AddCalculatedColumn<Person, decimal>("TotalPaid", person => person.Payments.Sum(p => p.Amount));
 				Person.Schema.Columns.AddCalculatedColumn<Person, decimal>("TotalPledged", person => person.Pledges.Sum(p => p.Amount));
 				Person.Schema.Columns.AddCalculatedColumn<decimal>("BalanceDue", person => person.Field<decimal>("TotalPledged") - person.Field<decimal>("TotalPaid"));
@@ -132,7 +132,7 @@ namespace ShomreiTorah.Billing {
 				var ps = properties as RepositoryItemPersonSelector;
 				if (ps != null) {
 					ps.PersonSelecting += (sender, e) => {
-						if (e.Cancel || ps.Tag == (object)SuppressValidate) return;	//SuppressValidation will be called after EndInit
+						if (e.Cancel || ps.Tag == (object)SuppressValidate) return; //SuppressValidation will be called after EndInit
 
 						if (e.Method == PersonSelectionReason.ResultClick) {
 							if (!e.Person.Pledges.Any() && !e.Person.Payments.Any())
@@ -187,7 +187,9 @@ namespace ShomreiTorah.Billing {
 		internal static void LoadConfig() {
 			Debug.Assert(!Config.Loaded, "ShomreiTorahConfig was already loaded!");
 
-			var configPath = Path.Combine(AppDirectory, "ShomreiTorah.Billing.Config.xml");
+			// Delete old name for config file.
+			File.Delete(Path.Combine(AppDirectory, "ShomreiTorah.Billing.Config.xml"));
+			var configPath = Path.Combine(AppDirectory, "ShomreiTorahConfig.xml");
 			if (File.Exists(configPath)) {
 				try {
 					File.Encrypt(configPath);

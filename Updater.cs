@@ -75,7 +75,7 @@ namespace ShomreiTorah.Billing {
 			try {
 				if (!ProgressWorker.Execute(parent, ui => {
 					ui.Caption = "Downloading update...";
-					updatePath = update.DownloadFiles(existingFiles: Program.AppDirectory, ui: ui);
+					updatePath = update.DownloadFiles(existingFiles: Program.AppDirectory, organizationId: Config.ReadAttribute("Updates", "OrganizationId"), ui: ui);
 					if (!ui.WasCanceled)
 						ui.Caption = "Applying update";
 				}, true))
