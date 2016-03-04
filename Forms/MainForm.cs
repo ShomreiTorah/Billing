@@ -11,6 +11,7 @@ using DevExpress.XtraBars.Docking;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using ShomreiTorah.Billing.Events.Purim;
+using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI;
 using ShomreiTorah.Data.UI.DisplaySettings;
@@ -21,6 +22,7 @@ namespace ShomreiTorah.Billing.Forms {
 	partial class MainForm : RibbonForm {
 		public MainForm() {
 			InitializeComponent();
+			ribbon.ApplicationCaption = Config.OrgName + " – Billing";
 
 			checkUpdate.Visibility = Updater.Checker == null ? BarItemVisibility.Never : BarItemVisibility.Always;
 
