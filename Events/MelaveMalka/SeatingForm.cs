@@ -30,6 +30,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			grid.DataMember = null;
 			grid.DataSource = searchLookup.Properties.DataSource = dataSource;
 
+			mensSeatsItem.Text = MelaveMalkaSeat.MensSeatsCaption + ":";
+			womensSeatsItem.Text = MelaveMalkaSeat.WomensSeatsCaption + ":";
+
 			Program.SuppressValidation(personSelector.Properties);
 
 			EditorRepository.OptionalSeatEditor.Apply(addWomensSeats.Properties);
@@ -38,10 +41,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			EditorRepository.PersonOwnedLookup.Apply(searchLookup.Properties);
 			searchLookup.Properties.Columns.Add(new CustomColumn<MelaveMalkaSeat>(
 				s => s.MensSeats == null ? "Not Sure" : s.MensSeats.Value.ToString(CultureInfo.CurrentCulture)
-			) { Caption = "Men's Seats", Width = 50 });
+			) { Caption = MelaveMalkaSeat.MensSeatsCaption, Width = 50 });
 			searchLookup.Properties.Columns.Add(new CustomColumn<MelaveMalkaSeat>(
 				s => s.WomensSeats == null ? "Not Sure" : s.WomensSeats.Value.ToString(CultureInfo.CurrentCulture)
-			) { Caption = "Women's Seats", Width = 50 });
+			) { Caption = MelaveMalkaSeat.WomensSeatsCaption, Width = 50 });
 		}
 
 		///<summary>Releases the unmanaged resources used by the SeatingForm and optionally releases the managed resources.</summary>

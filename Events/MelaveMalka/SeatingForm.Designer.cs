@@ -23,13 +23,18 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
 			this.personSelector = new ShomreiTorah.Data.UI.Controls.PersonSelector();
 			this.searchLookup = new ShomreiTorah.WinForms.Controls.Lookup.ItemSelector();
-			this.addPanel = new DevExpress.XtraEditors.GroupControl();
 			this.addButton = new DevExpress.XtraEditors.SimpleButton();
-			this.addWomensSeats = new DevExpress.XtraEditors.SpinEdit();
-			this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
+			this.addPanel = new DevExpress.XtraLayout.LayoutControl();
 			this.addMensSeats = new DevExpress.XtraEditors.SpinEdit();
-			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
 			this.cancelAdd = new DevExpress.XtraEditors.SimpleButton();
+			this.addWomensSeats = new DevExpress.XtraEditors.SpinEdit();
+			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.mensSeatsItem = new DevExpress.XtraLayout.LayoutControlItem();
+			this.womensSeatsItem = new DevExpress.XtraLayout.LayoutControlItem();
+			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.grid = new ShomreiTorah.Data.UI.Grid.SmartGrid(this.components);
 			this.gridView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colPerson = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -41,8 +46,15 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.searchLookup.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.addPanel)).BeginInit();
 			this.addPanel.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.addWomensSeats.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.addMensSeats.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.addWomensSeats.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.mensSeatsItem)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.womensSeatsItem)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
 			this.SuspendLayout();
@@ -62,7 +74,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, superToolTip1, true),
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("personSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, superToolTip2, true)});
 			this.personSelector.Properties.NullValuePrompt = "Click here to add a reservation";
-			this.personSelector.Size = new System.Drawing.Size(716, 20);
+			this.personSelector.Size = new System.Drawing.Size(791, 20);
 			this.personSelector.TabIndex = 0;
 			this.personSelector.PersonSelecting += new System.EventHandler<ShomreiTorah.Data.UI.Controls.PersonSelectingEventArgs>(this.personSelector_PersonSelecting);
 			this.personSelector.EditValueChanged += new System.EventHandler(this.personSelector_EditValueChanged);
@@ -75,59 +87,39 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.searchLookup.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.searchLookup.Properties.NullValuePrompt = "Click here to search the list";
-			this.searchLookup.Size = new System.Drawing.Size(716, 20);
+			this.searchLookup.Size = new System.Drawing.Size(791, 20);
 			this.searchLookup.TabIndex = 1;
 			this.searchLookup.EditValueChanged += new System.EventHandler(this.searchLookup_EditValueChanged);
-			// 
-			// addPanel
-			// 
-			this.addPanel.Controls.Add(this.addButton);
-			this.addPanel.Controls.Add(this.addWomensSeats);
-			this.addPanel.Controls.Add(this.labelControl2);
-			this.addPanel.Controls.Add(this.addMensSeats);
-			this.addPanel.Controls.Add(this.labelControl1);
-			this.addPanel.Controls.Add(this.cancelAdd);
-			this.addPanel.Dock = System.Windows.Forms.DockStyle.Top;
-			this.addPanel.Location = new System.Drawing.Point(0, 20);
-			this.addPanel.Name = "addPanel";
-			this.addPanel.Size = new System.Drawing.Size(716, 51);
-			this.addPanel.TabIndex = 2;
-			this.addPanel.Text = "Add Reservation";
-			this.addPanel.Visible = false;
 			// 
 			// addButton
 			// 
 			this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.addButton.Image = global::ShomreiTorah.Billing.Properties.Resources.Add16;
-			this.addButton.Location = new System.Drawing.Point(636, 24);
+			this.addButton.Location = new System.Drawing.Point(719, 31);
 			this.addButton.Name = "addButton";
-			this.addButton.Size = new System.Drawing.Size(75, 23);
+			this.addButton.Size = new System.Drawing.Size(60, 22);
+			this.addButton.StyleController = this.addPanel;
 			this.addButton.TabIndex = 8;
 			this.addButton.Text = "Add";
 			this.addButton.Click += new System.EventHandler(this.addButton_Click);
 			// 
-			// addWomensSeats
+			// addPanel
 			// 
-			this.addWomensSeats.EditValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.addWomensSeats.Location = new System.Drawing.Point(199, 25);
-			this.addWomensSeats.Name = "addWomensSeats";
-			this.addWomensSeats.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.addWomensSeats.Size = new System.Drawing.Size(80, 20);
-			this.addWomensSeats.TabIndex = 7;
-			this.addWomensSeats.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AddEditor_KeyDown);
-			// 
-			// labelControl2
-			// 
-			this.labelControl2.Location = new System.Drawing.Point(153, 28);
-			this.labelControl2.Name = "labelControl2";
-			this.labelControl2.Size = new System.Drawing.Size(40, 13);
-			this.labelControl2.TabIndex = 6;
-			this.labelControl2.Text = "Women:";
+			this.addPanel.AllowCustomizationMenu = false;
+			this.addPanel.AutoScroll = false;
+			this.addPanel.Controls.Add(this.addButton);
+			this.addPanel.Controls.Add(this.addMensSeats);
+			this.addPanel.Controls.Add(this.cancelAdd);
+			this.addPanel.Controls.Add(this.addWomensSeats);
+			this.addPanel.Dock = System.Windows.Forms.DockStyle.Top;
+			this.addPanel.Location = new System.Drawing.Point(0, 20);
+			this.addPanel.Name = "addPanel";
+			this.addPanel.OptionsView.AutoSizeModeInLayoutControl = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.addPanel.Root = this.layoutControlGroup1;
+			this.addPanel.Size = new System.Drawing.Size(791, 65);
+			this.addPanel.TabIndex = 4;
+			this.addPanel.Text = "layoutControl1";
+			this.addPanel.Visible = false;
 			// 
 			// addMensSeats
 			// 
@@ -136,48 +128,149 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
             0,
             0,
             0});
-			this.addMensSeats.Location = new System.Drawing.Point(42, 25);
+			this.addMensSeats.Location = new System.Drawing.Point(103, 31);
 			this.addMensSeats.Name = "addMensSeats";
 			this.addMensSeats.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.addMensSeats.Size = new System.Drawing.Size(80, 20);
+			this.addMensSeats.Size = new System.Drawing.Size(103, 20);
+			this.addMensSeats.StyleController = this.addPanel;
 			this.addMensSeats.TabIndex = 5;
 			this.addMensSeats.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AddEditor_KeyDown);
 			// 
-			// labelControl1
-			// 
-			this.labelControl1.Location = new System.Drawing.Point(12, 28);
-			this.labelControl1.Name = "labelControl1";
-			this.labelControl1.Size = new System.Drawing.Size(24, 13);
-			this.labelControl1.TabIndex = 4;
-			this.labelControl1.Text = "Men:";
-			// 
 			// cancelAdd
 			// 
-			this.cancelAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.cancelAdd.Appearance.BackColor = System.Drawing.Color.Transparent;
 			this.cancelAdd.Appearance.Options.UseBackColor = true;
-			this.cancelAdd.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat;
 			this.cancelAdd.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.cancelAdd.Image = global::ShomreiTorah.Billing.Properties.Resources.Close;
 			this.cancelAdd.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-			this.cancelAdd.Location = new System.Drawing.Point(703, 0);
+			this.cancelAdd.Location = new System.Drawing.Point(693, 31);
 			this.cancelAdd.Name = "cancelAdd";
-			this.cancelAdd.Size = new System.Drawing.Size(13, 13);
+			this.cancelAdd.Size = new System.Drawing.Size(22, 22);
+			this.cancelAdd.StyleController = this.addPanel;
 			this.cancelAdd.TabIndex = 3;
 			this.cancelAdd.Text = "Close";
 			this.cancelAdd.ToolTip = "Close";
 			this.cancelAdd.Click += new System.EventHandler(this.cancelAdd_Click);
 			// 
+			// addWomensSeats
+			// 
+			this.addWomensSeats.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.addWomensSeats.Location = new System.Drawing.Point(301, 31);
+			this.addWomensSeats.Name = "addWomensSeats";
+			this.addWomensSeats.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.addWomensSeats.Size = new System.Drawing.Size(100, 20);
+			this.addWomensSeats.StyleController = this.addPanel;
+			this.addWomensSeats.TabIndex = 7;
+			this.addWomensSeats.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AddEditor_KeyDown);
+			// 
+			// layoutControlGroup1
+			// 
+			this.layoutControlGroup1.CustomizationFormText = "layoutControlGroup1";
+			this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+			this.layoutControlGroup1.GroupBordersVisible = false;
+			this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlGroup2});
+			this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlGroup1.Name = "layoutControlGroup1";
+			this.layoutControlGroup1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+			this.layoutControlGroup1.Size = new System.Drawing.Size(791, 65);
+			this.layoutControlGroup1.Text = "layoutControlGroup1";
+			this.layoutControlGroup1.TextVisible = false;
+			// 
+			// layoutControlGroup2
+			// 
+			this.layoutControlGroup2.CustomizationFormText = "Add Reservation";
+			this.layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem3,
+            this.mensSeatsItem,
+            this.womensSeatsItem,
+            this.emptySpaceItem1,
+            this.layoutControlItem1});
+			this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlGroup2.Name = "layoutControlGroup2";
+			this.layoutControlGroup2.Size = new System.Drawing.Size(791, 65);
+			this.layoutControlGroup2.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+			this.layoutControlGroup2.Text = "Add Reservation";
+			// 
+			// layoutControlItem3
+			// 
+			this.layoutControlItem3.Control = this.addButton;
+			this.layoutControlItem3.CustomizationFormText = "layoutControlItem3";
+			this.layoutControlItem3.Location = new System.Drawing.Point(707, 0);
+			this.layoutControlItem3.MaxSize = new System.Drawing.Size(64, 26);
+			this.layoutControlItem3.MinSize = new System.Drawing.Size(64, 26);
+			this.layoutControlItem3.Name = "layoutControlItem3";
+			this.layoutControlItem3.Size = new System.Drawing.Size(64, 26);
+			this.layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.layoutControlItem3.Text = "layoutControlItem3";
+			this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem3.TextToControlDistance = 0;
+			this.layoutControlItem3.TextVisible = false;
+			// 
+			// mensSeatsItem
+			// 
+			this.mensSeatsItem.BestFitWeight = 50;
+			this.mensSeatsItem.Control = this.addMensSeats;
+			this.mensSeatsItem.CustomizationFormText = "mensSeatsItem";
+			this.mensSeatsItem.Location = new System.Drawing.Point(0, 0);
+			this.mensSeatsItem.Name = "mensSeatsItem";
+			this.mensSeatsItem.Size = new System.Drawing.Size(198, 26);
+			this.mensSeatsItem.Text = "mensSeatsItem";
+			this.mensSeatsItem.TextSize = new System.Drawing.Size(88, 13);
+			// 
+			// womensSeatsItem
+			// 
+			this.womensSeatsItem.BestFitWeight = 50;
+			this.womensSeatsItem.Control = this.addWomensSeats;
+			this.womensSeatsItem.CustomizationFormText = "womensSeatsItem";
+			this.womensSeatsItem.Location = new System.Drawing.Point(198, 0);
+			this.womensSeatsItem.Name = "womensSeatsItem";
+			this.womensSeatsItem.Size = new System.Drawing.Size(195, 26);
+			this.womensSeatsItem.Text = "womensSeatsItem";
+			this.womensSeatsItem.TextSize = new System.Drawing.Size(88, 13);
+			// 
+			// emptySpaceItem1
+			// 
+			this.emptySpaceItem1.AllowHotTrack = false;
+			this.emptySpaceItem1.BestFitWeight = 800;
+			this.emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
+			this.emptySpaceItem1.Location = new System.Drawing.Point(393, 0);
+			this.emptySpaceItem1.Name = "emptySpaceItem1";
+			this.emptySpaceItem1.Size = new System.Drawing.Size(288, 26);
+			this.emptySpaceItem1.Text = "emptySpaceItem1";
+			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+			// 
+			// layoutControlItem1
+			// 
+			this.layoutControlItem1.Control = this.cancelAdd;
+			this.layoutControlItem1.ControlAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+			this.layoutControlItem1.CustomizationFormText = "layoutControlItem1";
+			this.layoutControlItem1.Location = new System.Drawing.Point(681, 0);
+			this.layoutControlItem1.MaxSize = new System.Drawing.Size(26, 26);
+			this.layoutControlItem1.MinSize = new System.Drawing.Size(26, 26);
+			this.layoutControlItem1.Name = "layoutControlItem1";
+			this.layoutControlItem1.Size = new System.Drawing.Size(26, 26);
+			this.layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.layoutControlItem1.Text = "layoutControlItem1";
+			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem1.TextToControlDistance = 0;
+			this.layoutControlItem1.TextVisible = false;
+			// 
 			// grid
 			// 
 			this.grid.DataMember = "SeatReservations";
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.grid.Location = new System.Drawing.Point(0, 71);
+			this.grid.Location = new System.Drawing.Point(0, 85);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 44;
-			this.grid.Size = new System.Drawing.Size(716, 327);
+			this.grid.RegistrationCount = 56;
+			this.grid.Size = new System.Drawing.Size(791, 313);
 			this.grid.TabIndex = 3;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -200,6 +293,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// colPerson
 			// 
+			this.colPerson.AllowKeyboardActivation = false;
 			this.colPerson.Caption = "Full Name";
 			this.colPerson.FieldName = "Person";
 			this.colPerson.Name = "colPerson";
@@ -208,8 +302,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colPerson.OptionsColumn.ReadOnly = true;
 			this.colPerson.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
 			this.colPerson.ShowEditorOnMouseDown = true;
-			this.colPerson.SummaryItem.DisplayFormat = "{0} Families";
-			this.colPerson.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
+			this.colPerson.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, "Person", "{0} Families")});
 			this.colPerson.Visible = true;
 			this.colPerson.VisibleIndex = 0;
 			this.colPerson.Width = 78;
@@ -226,23 +320,25 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// colMensSeats
 			// 
+			this.colMensSeats.Caption = "Journals";
 			this.colMensSeats.FieldName = "MensSeats";
 			this.colMensSeats.Name = "colMensSeats";
-			this.colMensSeats.SummaryItem.DisplayFormat = "{0} Men";
-			this.colMensSeats.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+			this.colMensSeats.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MensSeats", "{0} Men")});
 			this.colMensSeats.Visible = true;
 			this.colMensSeats.VisibleIndex = 2;
-			this.colMensSeats.Width = 74;
+			this.colMensSeats.Width = 59;
 			// 
 			// colWomensSeats
 			// 
+			this.colWomensSeats.Caption = "Dinners";
 			this.colWomensSeats.FieldName = "WomensSeats";
 			this.colWomensSeats.Name = "colWomensSeats";
-			this.colWomensSeats.SummaryItem.DisplayFormat = "{0} Women";
-			this.colWomensSeats.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+			this.colWomensSeats.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "WomensSeats", "{0} Women")});
 			this.colWomensSeats.Visible = true;
 			this.colWomensSeats.VisibleIndex = 3;
-			this.colWomensSeats.Width = 90;
+			this.colWomensSeats.Width = 64;
 			// 
 			// colRowId
 			// 
@@ -255,7 +351,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(716, 418);
+			this.ClientSize = new System.Drawing.Size(791, 418);
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.addPanel);
 			this.Controls.Add(this.searchLookup);
@@ -266,9 +362,15 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.searchLookup.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.addPanel)).EndInit();
 			this.addPanel.ResumeLayout(false);
-			this.addPanel.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.addWomensSeats.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.addMensSeats.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.addWomensSeats.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.mensSeatsItem)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.womensSeatsItem)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
 			this.ResumeLayout(false);
@@ -279,7 +381,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 
 		private Data.UI.Controls.PersonSelector personSelector;
 		private WinForms.Controls.Lookup.ItemSelector searchLookup;
-		private DevExpress.XtraEditors.GroupControl addPanel;
 		private Data.UI.Grid.SmartGrid grid;
 		private Data.UI.Grid.SmartGridView gridView;
 		private Data.UI.Grid.SmartGridColumn colPerson;
@@ -290,8 +391,14 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraEditors.SimpleButton cancelAdd;
 		private DevExpress.XtraEditors.SimpleButton addButton;
 		private DevExpress.XtraEditors.SpinEdit addWomensSeats;
-		private DevExpress.XtraEditors.LabelControl labelControl2;
 		private DevExpress.XtraEditors.SpinEdit addMensSeats;
-		private DevExpress.XtraEditors.LabelControl labelControl1;
+		private DevExpress.XtraLayout.LayoutControl addPanel;
+		private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+		private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup2;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
+		private DevExpress.XtraLayout.LayoutControlItem mensSeatsItem;
+		private DevExpress.XtraLayout.LayoutControlItem womensSeatsItem;
+		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
+		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
 	}
 }
