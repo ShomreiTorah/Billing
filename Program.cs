@@ -193,7 +193,7 @@ namespace ShomreiTorah.Billing {
 			if (File.Exists(configPath)) {
 				try {
 					File.Encrypt(configPath);
-				} catch (PlatformNotSupportedException) { } catch (NotSupportedException) { } catch (IOException) { }
+				} catch (PlatformNotSupportedException) { } catch (NotSupportedException) { } catch (IOException) { } catch (UnauthorizedAccessException) { }
 
 				Config.FilePath = configPath;
 			}
