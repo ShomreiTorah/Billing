@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Composition;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -19,8 +20,11 @@ using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Forms {
-	partial class MainForm : RibbonForm {
-		public MainForm() {
+	[Export]
+	[Shared]
+	public partial class MainForm : RibbonForm {
+		[ImportingConstructor]
+		public MainForm([ImportMany] IEnumerable<RibbonButton> pluginButtons) {
 			InitializeComponent();
 			ribbon.ApplicationCaption = Config.OrgName + " – Billing";
 
@@ -39,6 +43,14 @@ namespace ShomreiTorah.Billing.Forms {
 
 			ribbon.SelectedPage = ribbon.Pages[0];
 			SetupYearlyButtons();
+
+			foreach (var button in pluginButtons) {
+				var page = ribbon.Pages[button.Page] ?? ribbon.Pages.Add(button.Page);
+				var group = page.Groups.Cast<RibbonPageGroup>().FirstOrDefault(g => g.Text == button.Group) ?? page.Groups.Add(button.Group);
+				var item = button.CreateItem();
+				ribbon.Items.Add(item);
+				group.ItemLinks.Add(item, button.BeginGroup);
+			}
 		}
 		#region Yearly Buttons
 		void SetupYearlyButtons() {

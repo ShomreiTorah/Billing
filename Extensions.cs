@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using DevExpress.XtraBars.Ribbon;
 using ShomreiTorah.Data;
 using ShomreiTorah.Singularity;
 
@@ -84,5 +85,17 @@ namespace ShomreiTorah.Billing {
 			person.Phone = data.Phone;
 		}
 		#endregion
+
+		public static RibbonPage Add(this RibbonPageCollection collection, string text) {
+			var page = new RibbonPage(text);
+			collection.Add(page);
+			return page;
+		}
+
+		public static RibbonPageGroup Add(this RibbonPageGroupCollection collection, string text) {
+			var group = new RibbonPageGroup(text);
+			collection.Add(group);
+			return group;
+		}
 	}
 }

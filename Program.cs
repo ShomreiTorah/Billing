@@ -1,11 +1,13 @@
 using System;
 using System.ComponentModel;
+using System.Composition.Hosting;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using DevExpress.Data;
 using DevExpress.LookAndFeel;
@@ -163,6 +165,9 @@ namespace ShomreiTorah.Billing {
 
 		public static ISynchronizeInvoke UIInvoker { get; set; }
 
+		///<summary>Gets the MEF container for the application.  Do not reference this property outside of entry-points.</summary>
+		private CompositionHost MefContainer { get; set; }
+
 		[STAThread]
 		static void Main() {
 			try {
@@ -180,7 +185,10 @@ namespace ShomreiTorah.Billing {
 
 		protected override bool OnBeforeInit() {
 			LoadConfig();
-			return !CheckForUpdate();
+			if (CheckForUpdate())
+				return false;
+			SetupMef();
+			return true;
 		}
 		///<summary>Loads a specific ShomreiTorahConfig.xml, if one is present.</summary>
 		///<remarks>This method must be called before JITing any methods that use ShomreiTorahConfig in static initializers (eg, UpdateChecker).</remarks>
@@ -222,6 +230,14 @@ namespace ShomreiTorah.Billing {
 			UIInvoker = form;
 			return form;
 		}
-		protected override Form CreateMainForm() { return new Forms.MainForm(); }
+		protected override Form CreateMainForm() { return MefContainer.GetExport<Forms.MainForm>(); }
+
+		void SetupMef() {
+			MefContainer = new ContainerConfiguration()
+				.WithAssembly(typeof(Program).Assembly)
+				.WithAssemblies(Directory.EnumerateFiles(AppDirectory, typeof(Program).Assembly.GetName().Name + ".*.dll")
+										 .Select(Assembly.LoadFrom))
+				.CreateContainer();
+		}
 	}
 }
