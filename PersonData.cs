@@ -7,7 +7,7 @@ using System.Text;
 using ShomreiTorah.Singularity;
 
 namespace ShomreiTorah.Billing {
-	struct PersonData {
+	public struct PersonData {
 		[SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
 		public static readonly ReadOnlyCollection<string> FieldNames = new ReadOnlyCollection<string>(new[]{
 			"FullName", "HisName", "HerName", "LastName", "Address", "City", "State", "Zip", "Phone"
@@ -335,7 +335,7 @@ namespace ShomreiTorah.Billing {
 			//{ "WA",	"Washington" },
 			//{ "WV",	"West Virginia" },
 			//{ "WI",	"Wisconsin" },
-			//{ "WY",	"Wyoming" }		
+			//{ "WY",	"Wyoming" }
 		};
 		#endregion
 	}
