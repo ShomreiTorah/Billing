@@ -98,7 +98,7 @@ namespace ShomreiTorah.Billing.Controls {
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			if (!(amount.EditValue is decimal) || amount.Value < 0) {
+			if (!(amount.EditValue is decimal)) {
 				XtraMessageBox.Show("Amount cannot be negative",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;

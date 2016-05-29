@@ -270,7 +270,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			IList<PledgeLink> detachedLinks = new List<PledgeLink>();
 
 			public MyController() {
-				Pledges = Program.Table<Pledge>().Filter(p => p.Person == Person && p.Account == Account);
+				Pledges = Program.Table<Pledge>().Filter(p => p.Person == Person && p.Account == Account && p.Amount > 0);
 
 				Pledges.RowAdded += delegate { OnDataChanged(); };
 				Pledges.RowRemoved += delegate { OnDataChanged(); };
