@@ -297,10 +297,13 @@ namespace ShomreiTorah.Billing.Import {
 			if (e.Column == colMatchState)
 				e.DisplayText = MatchStateNames[(MatchState)e.Value];
 			else if (e.Column == colAction) {
-				if (e.RowHandle < 0)
+				if (e.IsForGroupRow)
 					e.DisplayText = ((ImportAction)e.Value).ToString();
 				else
-					e.DisplayText = GetActionName(gridView.GetDataRow(e.RowHandle).Field<MatchState>("MatchState"), (ImportAction)e.Value);
+					e.DisplayText = GetActionName(
+						(MatchState)gridView.GetListSourceRowCellValue(e.ListSourceRowIndex, colMatchState),
+						(ImportAction)e.Value
+					);
 			}
 		}
 

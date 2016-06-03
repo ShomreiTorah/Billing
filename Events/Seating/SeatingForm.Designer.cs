@@ -15,10 +15,16 @@ namespace ShomreiTorah.Billing.Events.Seating {
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SeatingForm));
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
@@ -78,7 +84,6 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// ribbon
 			// 
 			this.ribbon.ExpandCollapseItem.Id = 0;
-			this.ribbon.ExpandCollapseItem.Name = "";
 			this.ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.wordButton,
             this.openWordDoc,
@@ -92,28 +97,31 @@ namespace ShomreiTorah.Billing.Events.Seating {
             this.exportAllInfo,
             this.openHtmlChart,
             this.refreshChart});
+			this.ribbon.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
 			this.ribbon.MaxItemId = 22;
 			this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
 			this.ribbon.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.loadingIconEdit});
-			this.ribbon.Size = new System.Drawing.Size(1011, 115);
+			this.ribbon.Size = new System.Drawing.Size(1516, 174);
 			this.ribbon.StatusBar = this.statusBar;
 			// 
 			// grid
 			// 
 			this.grid.DataMember = "SeatingReservations";
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.grid.Location = new System.Drawing.Point(0, 207);
+			this.grid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.grid.Location = new System.Drawing.Point(0, 307);
 			this.grid.MainView = this.gridView;
+			this.grid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.grid.MenuManager = this.ribbon;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 54;
+			this.grid.RegistrationCount = 56;
 			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.seatCountEdit,
             this.currencyEditor,
             this.gridLoadingEdit});
-			this.grid.Size = new System.Drawing.Size(1011, 494);
+			this.grid.Size = new System.Drawing.Size(1516, 715);
 			this.grid.TabIndex = 2;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -138,8 +146,8 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.gridView.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
 			this.gridView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.Click;
 			this.gridView.OptionsView.AnimationType = DevExpress.XtraGrid.Views.Base.GridAnimationType.AnimateAllContent;
+			this.gridView.OptionsView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
 			this.gridView.OptionsView.ShowFooter = true;
-			this.gridView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colFullName, DevExpress.Data.ColumnSortOrder.Ascending)});
 			this.gridView.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gridView_CustomUnboundColumnData);
@@ -156,7 +164,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colDate.UnboundType = DevExpress.Data.UnboundColumnType.DateTime;
 			this.colDate.Visible = true;
 			this.colDate.VisibleIndex = 6;
-			this.colDate.Width = 51;
+			this.colDate.Width = 61;
 			// 
 			// colFullName
 			// 
@@ -174,7 +182,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colFullName.UnboundType = DevExpress.Data.UnboundColumnType.Object;
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 0;
-			this.colFullName.Width = 97;
+			this.colFullName.Width = 122;
 			// 
 			// colPledgeType
 			// 
@@ -184,7 +192,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colPledgeType.UnboundType = DevExpress.Data.UnboundColumnType.String;
 			this.colPledgeType.Visible = true;
 			this.colPledgeType.VisibleIndex = 7;
-			this.colPledgeType.Width = 78;
+			this.colPledgeType.Width = 116;
 			// 
 			// colAmount
 			// 
@@ -198,7 +206,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colAmount.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
 			this.colAmount.Visible = true;
 			this.colAmount.VisibleIndex = 8;
-			this.colAmount.Width = 72;
+			this.colAmount.Width = 80;
 			// 
 			// currencyEditor
 			// 
@@ -281,7 +289,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "GirlsSeats", "{0} Girls")});
 			this.colGirlsSeats.Visible = true;
 			this.colGirlsSeats.VisibleIndex = 5;
-			this.colGirlsSeats.Width = 48;
+			this.colGirlsSeats.Width = 50;
 			// 
 			// colNotes
 			// 
@@ -290,7 +298,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colNotes.Name = "colNotes";
 			this.colNotes.Visible = true;
 			this.colNotes.VisibleIndex = 9;
-			this.colNotes.Width = 47;
+			this.colNotes.Width = 69;
 			// 
 			// colChartStatus
 			// 
@@ -303,19 +311,19 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.colChartStatus.UnboundType = DevExpress.Data.UnboundColumnType.Integer;
 			this.colChartStatus.Visible = true;
 			this.colChartStatus.VisibleIndex = 1;
-			this.colChartStatus.Width = 80;
+			this.colChartStatus.Width = 115;
 			// 
 			// gridLoadingEdit
 			// 
 			this.gridLoadingEdit.Name = "gridLoadingEdit";
 			this.gridLoadingEdit.ReadOnly = true;
 			this.gridLoadingEdit.ShowMenu = false;
-			this.gridLoadingEdit.UseParentBackground = true;
 			// 
 			// personSelector
 			// 
 			this.personSelector.Dock = System.Windows.Forms.DockStyle.Top;
-			this.personSelector.Location = new System.Drawing.Point(0, 115);
+			this.personSelector.Location = new System.Drawing.Point(0, 174);
+			this.personSelector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.personSelector.Name = "personSelector";
 			toolTipItem2.Text = "Click to select a person";
 			superToolTip2.Items.Add(toolTipItem2);
@@ -324,9 +332,9 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			superToolTip3.Items.Add(toolTipTitleItem2);
 			superToolTip3.Items.Add(toolTipItem3);
 			this.personSelector.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, superToolTip2, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("personSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, superToolTip3, true)});
-			this.personSelector.Size = new System.Drawing.Size(1011, 20);
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, superToolTip2, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("personSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, superToolTip3, true)});
+			this.personSelector.Size = new System.Drawing.Size(1516, 28);
 			this.personSelector.TabIndex = 0;
 			this.personSelector.PersonSelecting += new System.EventHandler<ShomreiTorah.Data.UI.Controls.PersonSelectingEventArgs>(this.personSelector_PersonSelecting);
 			this.personSelector.EditValueChanged += new System.EventHandler(this.personSelector_EditValueChanged);
@@ -337,9 +345,10 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.addNewPanel.Controls.Add(this.addNewEdit);
 			this.addNewPanel.Controls.Add(this.addEntry);
 			this.addNewPanel.Dock = System.Windows.Forms.DockStyle.Top;
-			this.addNewPanel.Location = new System.Drawing.Point(0, 135);
+			this.addNewPanel.Location = new System.Drawing.Point(0, 202);
+			this.addNewPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.addNewPanel.Name = "addNewPanel";
-			this.addNewPanel.Size = new System.Drawing.Size(1011, 72);
+			this.addNewPanel.Size = new System.Drawing.Size(1516, 105);
 			this.addNewPanel.TabIndex = 1;
 			this.addNewPanel.Visible = false;
 			// 
@@ -352,9 +361,10 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.cancelAddEntry.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.cancelAddEntry.Image = global::ShomreiTorah.Billing.Properties.Resources.Close;
 			this.cancelAddEntry.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-			this.cancelAddEntry.Location = new System.Drawing.Point(913, 0);
+			this.cancelAddEntry.Location = new System.Drawing.Point(1370, 0);
+			this.cancelAddEntry.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.cancelAddEntry.Name = "cancelAddEntry";
-			this.cancelAddEntry.Size = new System.Drawing.Size(13, 13);
+			this.cancelAddEntry.Size = new System.Drawing.Size(20, 19);
 			this.cancelAddEntry.TabIndex = 2;
 			this.cancelAddEntry.Text = "Close";
 			this.cancelAddEntry.ToolTip = "Close";
@@ -363,9 +373,10 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// addNewEdit
 			// 
 			this.addNewEdit.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.addNewEdit.Location = new System.Drawing.Point(2, 2);
+			this.addNewEdit.Location = new System.Drawing.Point(3, 3);
+			this.addNewEdit.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
 			this.addNewEdit.Name = "addNewEdit";
-			this.addNewEdit.Size = new System.Drawing.Size(924, 68);
+			this.addNewEdit.Size = new System.Drawing.Size(1386, 99);
 			this.addNewEdit.TabIndex = 0;
 			this.addNewEdit.EnterPressed += new System.EventHandler(this.addNewEdit_EnterPressed);
 			// 
@@ -376,9 +387,10 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.addEntry.Dock = System.Windows.Forms.DockStyle.Right;
 			this.addEntry.Image = global::ShomreiTorah.Billing.Properties.Resources.Add32;
 			this.addEntry.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter;
-			this.addEntry.Location = new System.Drawing.Point(926, 2);
+			this.addEntry.Location = new System.Drawing.Point(1389, 3);
+			this.addEntry.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.addEntry.Name = "addEntry";
-			this.addEntry.Size = new System.Drawing.Size(83, 68);
+			this.addEntry.Size = new System.Drawing.Size(124, 99);
 			this.addEntry.TabIndex = 1;
 			this.addEntry.Text = "Add Reservation";
 			this.addEntry.Click += new System.EventHandler(this.addEntry_Click);
@@ -497,10 +509,11 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.statusBar.ItemLinks.Add(this.loadingIconItem);
 			this.statusBar.ItemLinks.Add(this.mensTotal);
 			this.statusBar.ItemLinks.Add(this.womensTotal, true);
-			this.statusBar.Location = new System.Drawing.Point(0, 701);
+			this.statusBar.Location = new System.Drawing.Point(0, 1022);
+			this.statusBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.statusBar.Name = "statusBar";
 			this.statusBar.Ribbon = this.ribbon;
-			this.statusBar.Size = new System.Drawing.Size(1011, 25);
+			this.statusBar.Size = new System.Drawing.Size(1516, 39);
 			// 
 			// loadingIconItem
 			// 
@@ -508,10 +521,10 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			this.loadingIconItem.Caption = "Please wait";
 			this.loadingIconItem.CaptionAlignment = DevExpress.Utils.HorzAlignment.Far;
 			this.loadingIconItem.Edit = this.loadingIconEdit;
+			this.loadingIconItem.EditWidth = 16;
 			this.loadingIconItem.Id = 10;
 			this.loadingIconItem.Name = "loadingIconItem";
 			this.loadingIconItem.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
-			this.loadingIconItem.Width = 16;
 			// 
 			// loadingIconEdit
 			// 
@@ -542,14 +555,15 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			// 
 			// SeatingForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1011, 726);
+			this.ClientSize = new System.Drawing.Size(1516, 1061);
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.statusBar);
 			this.Controls.Add(this.addNewPanel);
 			this.Controls.Add(this.personSelector);
 			this.MainView = this.gridView;
+			this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
 			this.Name = "SeatingForm";
 			this.Text = "Seating Reservations";
 			this.Controls.SetChildIndex(this.ribbon, 0);
@@ -569,6 +583,7 @@ namespace ShomreiTorah.Billing.Events.Seating {
 			((System.ComponentModel.ISupportInitialize)(this.wordDocsMenu)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.loadingIconEdit)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 		#endregion
