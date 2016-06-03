@@ -43,8 +43,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		readonly ITemplateService razor;
 		readonly FilteredTable<MelaveMalkaInvitation> dataSource;
 		public ReminderEmailsForm(int year) {
-			AdReminderEmail.Schema.ToString();			//Force static ctor
-			Program.LoadTable<AdReminderEmail>();		//Will load invites as a dependency
+			AdReminderEmail.Schema.ToString();          //Force static ctor
+			Program.LoadTable<AdReminderEmail>();       //Will load invites as a dependency
 			InitializeComponent();
 
 			Text = "Melave Malka " + year + " Reminder Emails";
@@ -61,12 +61,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			razor = new TemplateService(new TemplateServiceConfiguration { Resolver = Resolver });
 			resetSingle.Strings.AddRange(Resolver.Templates.ToArray());
 			resetSelected.Strings.AddRange(Resolver.Templates.ToArray());
-			previewAddressItem.EditValue = PreviewAddressEdit.DefaultAddress;	//It is impossible to have a non-default EditValue for a BarEditItem, so I apply the default manually.
+			previewAddressItem.EditValue = PreviewAddressEdit.DefaultAddress;   //It is impossible to have a non-default EditValue for a BarEditItem, so I apply the default manually.
 		}
 
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
-			ToggleRowsBehavior.Instance.Apply(gridView);	//Must happen after datasource application to handle PersonEditor events
+			ToggleRowsBehavior.Instance.Apply(gridView);    //Must happen after datasource application to handle PersonEditor events
 		}
 
 		///<summary>Releases the unmanaged resources used by the ReminderEmailsForm and optionally releases the managed resources.</summary>
@@ -134,7 +134,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			return allRecipients;
 		}
 		private void sendAll_ItemClick(object sender, ItemClickEventArgs args) {
-			bindingSource.EndEdit();		//Commit any changes in the editor.  (Very important; otherwise, any changes made since the last time it lost focus will not be sent)
+			bindingSource.EndEdit();        //Commit any changes in the editor.  (Very important; otherwise, any changes made since the last time it lost focus will not be sent)
 			var allRecipients = ConfirmSendAll();
 			if (allRecipients == null) return;
 
@@ -149,7 +149,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			}, true);
 		}
 		private void sendSelected_ItemClick(object sender, ItemClickEventArgs args) {
-			bindingSource.EndEdit();		//Commit any changes in the editor.  (Very important; otherwise, any changes made since the last time it lost focus will not be sent)
+			bindingSource.EndEdit();        //Commit any changes in the editor.  (Very important; otherwise, any changes made since the last time it lost focus will not be sent)
 			#region Validation
 			var recipient = SelectedInvitee;
 			if (recipient == null) return;
@@ -186,11 +186,11 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				Body = recipient.EmailSource,
 				IsBodyHtml = true
 			}) {
-				message.To.Add(recipient.EmailAddresses);	//Comma-separated string
+				message.To.Add(recipient.EmailAddresses);   //Comma-separated string
 				Email.Hosted.Send(message);
 			}
 
-			BeginInvoke(new Action(delegate {	//The table can only be updated from the UI thread.
+			BeginInvoke(new Action(delegate {   //The table can only be updated from the UI thread.
 				Program.Table<AdReminderEmail>().Rows.Add(new AdReminderEmail {
 					Recipient = recipient,
 					Date = DateTime.Now,
@@ -203,7 +203,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 
 		#region Email log view
 		private void grid_FocusedViewChanged(object sender, ViewFocusEventArgs e) {
-			if (e.View != null && e.View != gridView) {	//If the user clicked a detail clone,
+			if (e.View != null && e.View != gridView) { //If the user clicked a detail clone,
 				var email = (AdReminderEmail)e.View.GetRow(0);
 				gridView.SetSelection(gridView.GetRowHandle(dataSource.Rows.IndexOf(email.Recipient)), makeVisible: true);
 			}
@@ -260,7 +260,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			e.Handled = true;
 		}
 		private void emailEditor_BeforeExport(object sender, BeforeExportEventArgs e) {
-			if (e.DocumentFormat == DocumentFormat.Html)	//Force inline CSS, since Gmail's web UI ignores <style> elements
+			if (e.DocumentFormat == DocumentFormat.Html)    //Force inline CSS, since Gmail's web UI ignores <style> elements
 				((HtmlDocumentExporterOptions)e.Options).CssPropertiesExportType = CssPropertiesExportType.Inline;
 		}
 
@@ -300,11 +300,16 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 					return;
 			}
 
-			Program.LoadTable<MelaveMalkaInfo>();		//Used by the templates
+			Program.LoadTable<MelaveMalkaInfo>();       //Used by the templates
 			foreach (var recipient in people) {
-				using (var message = razor.CreateMessage(recipient, templateName)) {
-					recipient.EmailSubject = message.Subject;
-					recipient.EmailSource = message.Body;
+				try {
+					using (var message = razor.CreateMessage(recipient, templateName)) {
+						recipient.EmailSubject = message.Subject;
+						recipient.EmailSource = message.Body;
+					}
+				} catch (Exception ex) {
+					Dialog.ShowError($"An error occurred while applying the template to {recipient.Person.VeryFullName}:\n{ex}");
+					return;
 				}
 			}
 		}
