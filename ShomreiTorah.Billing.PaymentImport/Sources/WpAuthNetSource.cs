@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ShomreiTorah.Common;
 
-namespace ShomreiTorah.Billing.PaymentImport {
+namespace ShomreiTorah.Billing.PaymentImport.Sources {
 	///<summary>Imports payments from the MySQL database used by WP AuthNet.</summary>
 	[Export]
 	[ExportMetadata("Name", "WP AuthNet")]
@@ -19,7 +19,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			var db = new DBConnector(Config.GetElement("Databases", "WordPress"));
 
 			using (var reader = db.ExecuteReader(@"
-SELECT p.id, s.name
+SELECT p.id, s.name,
 	us.billingFirstName, us.billingLastName, us.billingCompany,
 	us.billingAddress, us.billingCity, us.billingState, us.billingZip, us.billingCountry, us.billingPhone,
 	us.emailAddress,
