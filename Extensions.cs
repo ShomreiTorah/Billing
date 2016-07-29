@@ -9,7 +9,7 @@ using ShomreiTorah.Data;
 using ShomreiTorah.Singularity;
 
 namespace ShomreiTorah.Billing {
-	static class Extensions {
+	public static class Extensions {
 		static readonly Regex phoneParser = new Regex(@"^\(?(\d{3})\)?\s*-?\s*(\d{3})\s*-?\s*(\d{4})$", RegexOptions.Compiled);
 		//public static bool IsPhoneNumber(this string value) { return phoneParser.IsMatch(value); }
 		public static string FormatPhoneNumber(this string phone) {

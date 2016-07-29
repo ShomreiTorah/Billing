@@ -34,7 +34,7 @@ namespace ShomreiTorah.Billing {
 	//TODO: Map doesn't work on first shown PersonDetails
 
 	[SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
-	class Program : AppFramework {
+	public class Program : AppFramework {
 		#region Config
 		protected override DataSyncContext CreateDataContext() {
 			var context = new DataContext();
