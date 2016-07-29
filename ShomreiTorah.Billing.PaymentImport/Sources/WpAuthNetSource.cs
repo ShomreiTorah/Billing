@@ -10,8 +10,9 @@ using ShomreiTorah.Common;
 namespace ShomreiTorah.Billing.PaymentImport.Sources {
 	///<summary>Imports payments from the MySQL database used by WP AuthNet.</summary>
 	[Export]
-	[ExportMetadata("Name", "WP AuthNet")]
 	public class WpAuthNetSource : IPaymentSource {
+		public string Name => "WP AuthNet";
+
 		public IEnumerable<PaymentInfo> GetPayments(DateTime start) {
 			DB.RegisterFactory("MySql", MySql.Data.MySqlClient.MySqlClientFactory.Instance);
 			DB.RegisterFactory("MySql.Data.MySqlClient", MySql.Data.MySqlClient.MySqlClientFactory.Instance);
@@ -32,7 +33,7 @@ FROM wp_authnet_user_subscription us
 WHERE p.paymentDate > ?start", new { start })) {
 				return reader.Cast<IDataRecord>()
 							 .Select(dr => new PaymentInfo {
-								 Id = dr.GetInt32(dr.GetOrdinal("id")),
+								 Id = dr.GetString(dr.GetOrdinal("id")),
 								 Email = dr.GetString(dr.GetOrdinal("emailAddress")),
 								 FinalFour = dr.GetString(dr.GetOrdinal("lastFourDigitsOfCreditCard")),
 								 CardIssuer = dr.GetString(dr.GetOrdinal("response")).Split('|')[51],
