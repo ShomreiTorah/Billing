@@ -11,19 +11,28 @@ using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.PaymentImport {
-	class ViewModel : INotifyPropertyChanged {
-		///<summary>Payments that are ready to import.</summary>
-		readonly ObservableCollection<PaymentInfo> writablePayments = new ObservableCollection<PaymentInfo>();
-
+	[Export]
+	public class ViewModel : INotifyPropertyChanged {
 		///<summary>All payments from the source (including already-imported payments).</summary>
 		IReadOnlyCollection<PaymentInfo> allPayments;
+		IReadOnlyCollection<Person> directMatches;
 
-		public ReadOnlyObservableCollection<PaymentInfo> AvailablePayments { get; }
 
-		readonly ObservableCollection<Person> matchingPeople = new ObservableCollection<Person>();
+		ReadOnlyCollection<PaymentInfo> availablePayments;
+		///<summary>Gets all payments that are ready to import.</summary>
+		public ReadOnlyCollection<PaymentInfo> AvailablePayments {
+			get { return availablePayments; }
+			private set { availablePayments = value; OnPropertyChanged(); }
+		}
 
-		///<summary>All existing people that may match the current payment.</summary>
-		public ReadOnlyObservableCollection<Person> MatchingPeople { get; }
+
+		ReadOnlyCollection<Person> matchingPeople;
+		///<summary>Gets existing people that may match the current payment.</summary>
+		public ReadOnlyCollection<Person> MatchingPeople {
+			get { return matchingPeople; }
+			private set { matchingPeople = value; OnPropertyChanged(); }
+		}
+
 
 		PaymentInfo currentPayment;
 		///<summary>Gets or sets the payment currently being imported.</summary>
@@ -37,7 +46,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 					PledgeType = null;  // TODO: Infer type from payment comments
 					PledgeSubType = null;
 					PledgeAmount = value.Amount;
-					SetPerson();
+					FindMathingPeople();
 				}
 				OnPropertyChanged();
 			}
@@ -47,7 +56,14 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		///<summary>Gets or sets the person who will own the created payment.</summary>
 		public Person Person {
 			get { return person; }
-			set { person = value; OnPropertyChanged(); }
+			set {
+				person = value;
+				var people = directMatches.ToList();
+				if (value != null && !directMatches.Contains(value))
+					people.Add(value);
+				MatchingPeople = people.AsReadOnly();
+				OnPropertyChanged();
+			}
 		}
 
 
@@ -90,40 +106,36 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		readonly IPaymentSource source;
 
 		[ImportingConstructor]
-		public ViewModel(IEnumerable<IPaymentSource> sources) {
-			AvailablePayments = new ReadOnlyObservableCollection<PaymentInfo>(writablePayments);
-			MatchingPeople = new ReadOnlyObservableCollection<Person>(matchingPeople);
-
+		public ViewModel([ImportMany] IEnumerable<IPaymentSource> sources) {
 			source = sources.Single(s => s.Name == Config.ReadAttribute("Billing", "PaymentImport", "Source", "Name"));
 		}
 
 		///<summary>Loads payments to import from the current source.</summary>
 		public void LoadPayments(DateTime start) {
-			Program.LoadTable<ImportedPayment>();
+			Program.LoadTables(ImportedPayment.Schema);
 			allPayments = source.GetPayments(start).OrderBy(p => p.Date).ToList();
 			RefreshPayments();
 		}
 
 		private void RefreshPayments() {
-			writablePayments.Clear();
-			if (!allPayments.Any())
+			if (!allPayments.Any()) {
+				AvailablePayments = new ReadOnlyCollection<PaymentInfo>(new PaymentInfo[0]);
 				return;
+			}
 			var start = allPayments.First().Date;
 			var alreadyImported = new HashSet<string>(
 				Program.Table<ImportedPayment>().Rows
 					.Where(ip => ip.Source == source
 					.Name && ip.Payment.Date >= start)
 					.Select(ip => ip.ExternalId));
-			foreach (var p in allPayments.Where(p => !alreadyImported.Contains(p.Id)))
-				writablePayments.Add(p);
+			AvailablePayments = allPayments.Where(p => !alreadyImported.Contains(p.Id)).ToList().AsReadOnly();
 		}
 
-		private void SetPerson() {
+		private void FindMathingPeople() {
 			if (CurrentPayment == null)
 				return;
 
-			matchingPeople.Clear();
-			matchingPeople.AddRange(Matcher.FindMatches(CurrentPayment));
+			directMatches = MatchingPeople = Matcher.FindMatches(CurrentPayment).ToList().AsReadOnly();
 		}
 
 
