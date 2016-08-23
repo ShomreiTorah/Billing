@@ -9,7 +9,7 @@ using ShomreiTorah.Common;
 
 namespace ShomreiTorah.Billing.PaymentImport.Sources {
 	///<summary>Imports payments from the MySQL database used by WP AuthNet.</summary>
-	[Export]
+	[Export(typeof(IPaymentSource))]
 	public class WpAuthNetSource : IPaymentSource {
 		public string Name => "WP AuthNet";
 

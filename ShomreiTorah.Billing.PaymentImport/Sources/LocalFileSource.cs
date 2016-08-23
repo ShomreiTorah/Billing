@@ -10,7 +10,7 @@ using ShomreiTorah.Common;
 
 namespace ShomreiTorah.Billing.PaymentImport.Sources {
 	///<summary>Imports payments from a local JSON file, for debugging.</summary>
-	[Export]
+	[Export(typeof(IPaymentSource))]
 	class LocalFileSource : IPaymentSource {
 		public string Name => "Local File";
 

@@ -68,7 +68,8 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 		internal static IEnumerable<Person> FindMatches(PaymentInfo source) {
 			return all.Select(f => f(source).ToList())
-					  .FirstOrDefault(Enumerable.Any);
+					  .FirstOrDefault(Enumerable.Any)
+				   ?? Enumerable.Empty<Person>();
 		}
 	}
 
