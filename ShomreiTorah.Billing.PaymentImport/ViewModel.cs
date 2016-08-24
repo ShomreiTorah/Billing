@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
+using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.PaymentImport {
 	[Export]
@@ -113,7 +114,11 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		///<summary>Loads payments to import from the current source.</summary>
 		public void LoadPayments(DateTime start) {
 			Program.LoadTables(ImportedPayment.Schema);
-			allPayments = source.GetPayments(start).OrderBy(p => p.Date).ToList();
+			if (!ProgressWorker.Execute(p => {
+				p.Caption = "Loading payments after " + start.ToShortDateString();
+				allPayments = source.GetPayments(start).OrderBy(pi => pi.Date).ToList();
+			}, cancellable: true))
+				return;
 			RefreshPayments();
 		}
 
@@ -136,6 +141,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				return;
 
 			directMatches = MatchingPeople = Matcher.FindMatches(CurrentPayment).ToList().AsReadOnly();
+			Person = directMatches.Count == 1 ? directMatches.First() : null;
 		}
 
 

@@ -58,11 +58,9 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			LoadPayments();
 		}
 		void LoadPayments() {
-				var date = (DateTime)startDate.EditValue;
-			ProgressWorker.Execute(MdiParent, p => {
-				p.Caption = "Loading payments after " + date.ToShortDateString();
-				viewModel.LoadPayments(date);
-			}, cancellable: false);
+			var date = (DateTime)startDate.EditValue;
+			viewModel.LoadPayments(date);
+		}
 		}
 	}
 }
