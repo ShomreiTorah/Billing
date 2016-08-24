@@ -13,6 +13,7 @@ using DevExpress.XtraGrid.Views.Base;
 using ShomreiTorah.WinForms.Controls;
 using ShomreiTorah.Data;
 using ShomreiTorah.WinForms.Forms;
+using DevExpress.XtraGrid.Views.Layout.Events;
 
 namespace ShomreiTorah.Billing.PaymentImport {
 	[Export]
@@ -61,6 +62,10 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			var date = (DateTime)startDate.EditValue;
 			viewModel.LoadPayments(date);
 		}
+
+		private void availablePaymentsView_CustomDrawCardCaption(object sender, LayoutViewCustomDrawCardCaptionEventArgs e) {
+			if (e.RowHandle == availablePaymentsView.FocusedRowHandle)
+				e.Appearance.Font = e.Cache.GetFont(e.Appearance.Font, FontStyle.Bold);
 		}
 	}
 }
