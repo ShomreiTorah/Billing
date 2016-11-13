@@ -192,7 +192,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 					Date = payment.Date,
 					Person = payment.Person,
 					Type = PledgeType,
-					SubType = PledgeSubType,
+					SubType = PledgeSubType ?? "",
 					Note = PledgeNote
 				};
 

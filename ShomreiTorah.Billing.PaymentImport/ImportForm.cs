@@ -15,6 +15,7 @@ using ShomreiTorah.Data;
 using ShomreiTorah.WinForms.Forms;
 using DevExpress.XtraGrid.Views.Layout.Events;
 using DevExpress.XtraBars;
+using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.PaymentImport {
 	[Export]
@@ -33,7 +34,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) {
 			switch (e.PropertyName) {
 				case nameof(viewModel.CurrentPayment):
-					availablePaymentsView.VisibleRecordIndex = 
+					availablePaymentsView.VisibleRecordIndex =
 						availablePaymentsView.GetVisibleIndex(
 							availablePaymentsView.GetRowHandle(
 								viewModel.AvailablePayments.IndexOf(
@@ -47,7 +48,8 @@ namespace ShomreiTorah.Billing.PaymentImport {
 						viewModel.MatchingPeople.IndexOf(viewModel.Person));
 					break;
 			}
-			import.Enabled = viewModel.CurrentPayment != null && viewModel.Person != null;
+			import.Enabled = viewModel.CurrentPayment != null && viewModel.Person != null
+				&& !viewModel.CreatePledge || !string.IsNullOrWhiteSpace(viewModel.PledgeType);
 		}
 
 		private void availablePaymentsView_VisibleRecordIndexChanged(Object sender, LayoutViewVisibleRecordIndexChangedEventArgs e) => SetCurrentPayment();
@@ -60,7 +62,11 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		private void startDate_EditValueChanged(Object sender, EventArgs e) => LoadPayments();
 
 		private void import_ItemClick(object sender, ItemClickEventArgs e) {
-			viewModel.Import();
+			try {
+				viewModel.Import();
+			} catch (Exception ex) {
+				Dialog.ShowError("An error occurred while importing the payment:\r\n" + ex.Message);
+			}
 			SetCurrentPayment();
 		}
 
@@ -76,6 +82,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		}
 		void LoadPayments() {
 			viewModel.LoadPayments((DateTime)startDate.EditValue);
+			SetCurrentPayment();
 		}
 
 		private void availablePaymentsView_CustomDrawCardCaption(object sender, LayoutViewCustomDrawCardCaptionEventArgs e) {
