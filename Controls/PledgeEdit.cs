@@ -19,13 +19,6 @@ namespace ShomreiTorah.Billing.Controls {
 			account.Properties.Items.AddRange(Names.AccountNames);
 			account.Properties.DropDownRows = Names.AccountNames.Count;
 
-			typeTree.Nodes.Clear();
-			foreach (var type in Names.PledgeTypes) {
-				var node = typeTree.Nodes.Add(type.Name);
-				foreach (var subtype in type.Subtypes)
-					node.Nodes.Add(subtype);
-			}
-
 			if (Program.Current != null) {	//Bugfix for nested designer
 				pledgesBindingSource.DataSource = Program.Current.DataContext;
 				Program.Table<Pledge>().LoadCompleted += Table_LoadCompleted;
@@ -117,40 +110,16 @@ namespace ShomreiTorah.Billing.Controls {
 			}
 		}
 		#region UI Behavior
-		private void TypeChanged(object sender, EventArgs e) {
-			var node = typeTree.Nodes.Cast<TreeNode>().FirstOrDefault(n => n.Text.Equals(typeText.Text, StringComparison.OrdinalIgnoreCase));
-
-			if (node != null && node.Nodes.Count > 0)
-				node = node.Nodes.Cast<TreeNode>().FirstOrDefault(n => n.Text.Equals(subtypeText.Text, StringComparison.OrdinalIgnoreCase))
-					?? node;
-			else if (!String.IsNullOrEmpty(subtypeText.Text))
-				node = null;
-
-			typeTree.SelectedNode = node;
-		}
 		private void typeText_Leave(object sender, EventArgs e) { BeginInvoke(new Action(SetAccount)); }
+		private void typeTree_AfterSelect(Object sender, TreeViewEventArgs e) {
+			if (e.Node != null) BeginInvoke(new Action(SetAccount));
+		}
 		void SetAccount() {
 			if (Names.AccountNames.Contains(typeText.Text))
 				CurrentPledge.Account = account.Text = typeText.Text;
 			// If the account has not been customized, reset to the default.
 			else if (String.IsNullOrWhiteSpace(account.Text) || Names.AccountNames.Contains(account.Text))
 				CurrentPledge.Account = account.Text = Names.DefaultAccount;
-		}
-		private void typeTree_AfterSelect(object sender, TreeViewEventArgs e) {
-			if (e.Action == TreeViewAction.Collapse || e.Action == TreeViewAction.Expand || e.Action == TreeViewAction.Unknown) return;
-			if (e.Node != null) {
-
-				if (e.Node.Parent == null) {
-					CurrentPledge.Type = typeText.Text = e.Node.Text;
-					CurrentPledge.SubType = subtypeText.Text = "";
-				} else {
-					CurrentPledge.Type = typeText.Text = e.Node.Parent.Text;
-					CurrentPledge.SubType = subtypeText.Text = e.Node.Text;
-				}
-				SetAccount();
-
-				e.Node.Expand();
-			}
 		}
 
 		private void person_EditValueChanged(object sender, EventArgs e) {

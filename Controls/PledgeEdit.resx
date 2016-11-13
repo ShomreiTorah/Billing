@@ -126,14 +126,14 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="person.Properties.Buttons" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAAAZdEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjVJivzg
-        AAABLklEQVQoU2NgQAM8s1j3APF/JLwHXQ0GH6Q47KzN/6TLLv9zr/uBNROlKfGSy3/f82r/E69bEa8J
-        ZEPqTfv/1Q9CsGuyWmyK7H4wu/5+wv/aBxH/+57m/OebxwbHwss4/gPxHgaQoriLjv8zr3n9r7gd+b/9
-        YSZcw6yXVf8Xvmr8v+R1238Qe9XrCSBN/8GaQBoiLhv+z73t/r/5Ufz/ic/y/899VQfGM16U/e94nPK/
-        9J7//55H+QhNlXej/nc/zvk/50X9/5Wv+8AKpzwr/r/mzeT/i162/5/6pOp/+/3s/2U3oiGajOfoYbgb
-        ZFPPkwywBqg/kGnMeAMpAjmn/mH0/8lPyiEmEwIgReX3g/5n33L933g3lXhNfY+KwBryroYSp0ltrtwr
-        NH9g+AEAyrzvPAUi9WwAAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAABl0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuNUmK/OAAAAEvSURBVChTY0AH
+        PLNY9wDxfyS8ByqFG4AUhp21+Z902eV/7nU/sEaoFG4AUpR4yeW/73m1/4nXrYjXBLIh9ab9/+oHIdg1
+        WS02hbkdjuvvJ/yvfRDxv+9pzn++eWxwLLyMA4T3gE2Ou+j4P/Oa1/+K25H/2x9mwjXMeln1f+Grxv9L
+        XreB2ateTwBrBGsCaYi4bPg/97b7/+ZH8f8nPsv/P/dVHRjPeFH2v+Nxyv/Se/7/ex7lIzRV3o363/04
+        5/+cF/X/V77uAyuc8qz4/5o3k/8vetn+f+qTqv/t97P/l92IhmgynqOH4W6QTT1PMsAaQHw0jBlvIAmQ
+        c+ofRv+f/KQcrBAqhRuAFJXfD/qffcv1f+PdVOI19T0qAmvIuxpKnCa1uXKvQAqRMJofGBgAyrzvPC9/
+        gvwAAAAASUVORK5CYII=
 </value>
   </data>
 </root>
