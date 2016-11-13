@@ -24,10 +24,10 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		[ImportingConstructor]
 		public ImportForm(ViewModel viewModel) {
 			InitializeComponent();
-			startDate.EditValue = DateTime.Today.AddDays(-14);
 			this.viewModel = viewModel;
 			viewModelBindingSource.DataSource = viewModel;
 			viewModel.PropertyChanged += ViewModel_PropertyChanged;
+			startDate.EditValue = DateTime.Today.AddDays(-14);
 		}
 
 		private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) {
@@ -52,10 +52,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		}
 
 		private void refresh_ItemClick(object sender, ItemClickEventArgs e) => LoadPayments();
-		private void startDate_EditValueChanged(Object sender, EventArgs e) {
-			if (startDate.EditValue != null)
-				LoadPayments();
-		}
+		private void startDate_EditValueChanged(Object sender, EventArgs e) => LoadPayments();
 
 		private void import_ItemClick(object sender, ItemClickEventArgs e) => viewModel.Import();
 
