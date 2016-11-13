@@ -105,7 +105,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// addPanel
 			// 
-			this.addPanel.AllowCustomizationMenu = false;
+			this.addPanel.AllowCustomization= false;
 			this.addPanel.AutoScroll = false;
 			this.addPanel.Controls.Add(this.addButton);
 			this.addPanel.Controls.Add(this.addMensSeats);
@@ -114,7 +114,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.addPanel.Dock = System.Windows.Forms.DockStyle.Top;
 			this.addPanel.Location = new System.Drawing.Point(0, 20);
 			this.addPanel.Name = "addPanel";
-			this.addPanel.OptionsView.AutoSizeModeInLayoutControl = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.addPanel.OptionsView.AutoSizeInLayoutControl = DevExpress.XtraLayout.AutoSizeModes.UseMinAndMaxSize;
 			this.addPanel.Root = this.layoutControlGroup1;
 			this.addPanel.Size = new System.Drawing.Size(791, 65);
 			this.addPanel.TabIndex = 4;

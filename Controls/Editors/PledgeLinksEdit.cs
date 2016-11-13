@@ -109,7 +109,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 			if (e.ListSourceRowIndex < 0)
 				return;
 			if (e.Column == colAmount)
-				e.DisplayText = controller.GetUnlinkedAmountText(controller.Pledges.Rows[e.ListSourceRowIndex], (decimal)e.Value);
+				e.DisplayText = MyController.GetUnlinkedAmountText(controller.Pledges.Rows[e.ListSourceRowIndex], (decimal)e.Value);
 		}
 
 		private void pledgesView_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e) {
@@ -419,7 +419,7 @@ namespace ShomreiTorah.Billing.Controls.Editors {
 				return pledge.Amount - payments.Sum(p => p.Amount);
 			}
 
-			public string GetUnlinkedAmountText(Pledge pledge, decimal unlinkedAmount) {
+			public static string GetUnlinkedAmountText(Pledge pledge, decimal unlinkedAmount) {
 				return String.Format(CultureInfo.CurrentCulture,
 									 "<color=gray>{0:c} − {1:c} =</color> {2:c}",
 									 pledge.Amount, pledge.Amount - unlinkedAmount, unlinkedAmount);

@@ -26,7 +26,6 @@
 			DevExpress.XtraCharts.XYDiagram xyDiagram1 = new DevExpress.XtraCharts.XYDiagram();
 			DevExpress.XtraCharts.Series series1 = new DevExpress.XtraCharts.Series();
 			DevExpress.XtraCharts.PointSeriesLabel pointSeriesLabel1 = new DevExpress.XtraCharts.PointSeriesLabel();
-			DevExpress.XtraCharts.PointOptions pointOptions1 = new DevExpress.XtraCharts.PointOptions();
 			DevExpress.XtraCharts.AreaSeriesView areaSeriesView1 = new DevExpress.XtraCharts.AreaSeriesView();
 			DevExpress.XtraCharts.PointSeriesLabel pointSeriesLabel2 = new DevExpress.XtraCharts.PointSeriesLabel();
 			DevExpress.XtraCharts.AreaSeriesView areaSeriesView2 = new DevExpress.XtraCharts.AreaSeriesView();
@@ -69,27 +68,24 @@
 			// 
 			// chartControl
 			// 
-			xyDiagram1.AxisX.Range.ScrollingRange.SideMarginsEnabled = false;
-			xyDiagram1.AxisX.Range.SideMarginsEnabled = false;
+			xyDiagram1.AxisX.WholeRange.AutoSideMargins = false;
+			xyDiagram1.AxisX.VisualRange.AutoSideMargins = false;
 			xyDiagram1.AxisX.VisibleInPanesSerializable = "-1";
-			xyDiagram1.AxisY.NumericOptions.Format = DevExpress.XtraCharts.NumericFormat.Currency;
-			xyDiagram1.AxisY.Range.ScrollingRange.SideMarginsEnabled = true;
-			xyDiagram1.AxisY.Range.SideMarginsEnabled = true;
+			xyDiagram1.AxisY.Label.TextPattern = "{V:C}";
+			xyDiagram1.AxisY.WholeRange.AutoSideMargins = true;
+			xyDiagram1.AxisY.VisualRange.AutoSideMargins = true;
 			xyDiagram1.AxisY.VisibleInPanesSerializable = "-1";
 			this.chartControl.Diagram = xyDiagram1;
 			this.chartControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.chartControl.Legend.Visible = false;
+			this.chartControl.Legend.Visibility = DevExpress.Utils.DefaultBoolean.False;
 			this.chartControl.Location = new System.Drawing.Point(0, 0);
 			this.chartControl.Name = "chartControl";
 			series1.ArgumentDataMember = "Date";
 			series1.ArgumentScaleType = DevExpress.XtraCharts.ScaleType.DateTime;
 			series1.CrosshairEnabled = DevExpress.Utils.DefaultBoolean.True;
 			series1.CrosshairLabelPattern = "{A:D} {HINT}\r\nBalance: {V:c}\r\n";
-			pointSeriesLabel1.LineVisible = true;
-			pointOptions1.Pattern = "{A} {V}";
-			pointOptions1.PointView = DevExpress.XtraCharts.PointView.ArgumentAndValues;
-			pointOptions1.ValueNumericOptions.Format = DevExpress.XtraCharts.NumericFormat.Currency;
-			pointSeriesLabel1.PointOptions = pointOptions1;
+			pointSeriesLabel1.LineVisibility = DevExpress.Utils.DefaultBoolean.True;
+			pointSeriesLabel1.TextPattern = "{A} {V:C}";
 			series1.Label = pointSeriesLabel1;
 			series1.Name = "Balance";
 			series1.ToolTipEnabled = DevExpress.Utils.DefaultBoolean.True;
@@ -98,8 +94,8 @@
 			series1.ValueDataMembersSerializable = "RunningBalance";
 			series1.View = areaSeriesView1;
 			this.chartControl.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
-        series1};
-			pointSeriesLabel2.LineVisible = true;
+		series1};
+			pointSeriesLabel2.LineVisibility = DevExpress.Utils.DefaultBoolean.True;
 			this.chartControl.SeriesTemplate.Label = pointSeriesLabel2;
 			areaSeriesView2.Transparency = ((byte)(0));
 			this.chartControl.SeriesTemplate.View = areaSeriesView2;
@@ -115,21 +111,21 @@
 			this.gridControl.Size = new System.Drawing.Size(591, 413);
 			this.gridControl.TabIndex = 0;
 			this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView});
+			this.gridView});
 			// 
 			// gridView
 			// 
 			this.gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.gridColumn1,
-            this.gridColumn2,
-            this.gridColumn3,
-            this.gridColumn4});
+			this.gridColumn1,
+			this.gridColumn2,
+			this.gridColumn3,
+			this.gridColumn4});
 			this.gridView.GridControl = this.gridControl;
 			this.gridView.Name = "gridView";
 			this.gridView.OptionsBehavior.Editable = false;
 			this.gridView.OptionsBehavior.ReadOnly = true;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
-            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gridColumn1, DevExpress.Data.ColumnSortOrder.Ascending)});
+			new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gridColumn1, DevExpress.Data.ColumnSortOrder.Ascending)});
 			// 
 			// gridColumn1
 			// 

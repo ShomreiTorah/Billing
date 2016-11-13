@@ -49,7 +49,9 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 				return;
 			recentMenu.Items.Insert(0,
 				new DXMenuItem(person.FullName, delegate { personSelector.EditValue = person; }) {
-					ShowHotKeyPrefix = false,
+					Appearance = {
+						TextOptions = { HotkeyPrefix = HKeyPrefix.None }
+					},
 					Tag = person
 				}
 			);
@@ -73,7 +75,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		private void personSelector_EditValueChanged(object sender, EventArgs e) {
 			SetGroup();
 			if (personSelector.SelectedPerson != null)
-				entryGrid.Controls[0].Focus();	//To allow easy keyboard entry, focus the grid after selecting a person.
+				entryGrid.Controls[0].Focus();  //To allow easy keyboard entry, focus the grid after selecting a person.
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e) {
@@ -94,7 +96,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 				case DialogResult.Cancel:
 					isReverting = true;
 					groupSelector.SetSelection(currentYear, currentGroup);
-					personSelector.EditValue = entryGrid.CurrentPerson;	//Go back to the current selection.  This won't recurse due to isReverting.
+					personSelector.EditValue = entryGrid.CurrentPerson; //Go back to the current selection.  This won't recurse due to isReverting.
 					isReverting = false;
 					return false;
 
@@ -106,7 +108,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		private int currentYear;
 		private bool isReverting;
 		void SetGroup(bool confirm = true) {
-			if (isReverting)	//Prevent recursion if the user hits Cancel
+			if (isReverting)    //Prevent recursion if the user hits Cancel
 				return;
 			if (confirm && !ConfirmChange())
 				return;
@@ -116,10 +118,10 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 
 			if (personSelector.SelectedPerson == null) {
 				entryGrid.Hide();
-				UpdateSummary();	//Even if no person is selected, we still need to update the summary for the entire group
+				UpdateSummary();    //Even if no person is selected, we still need to update the summary for the entire group
 				return;
 			}
-			AddRecentMenuItem(personSelector.SelectedPerson);	//If the person didn't change, this is a no-op.
+			AddRecentMenuItem(personSelector.SelectedPerson);   //If the person didn't change, this is a no-op.
 
 			entryGrid.BindTo(groupSelector.SelectedGroup.Auctions
 								.SelectMany(a => a.CreateItems(groupSelector.SelectedYear, personSelector.SelectedPerson))
@@ -139,7 +141,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		}
 		private void cancel_Click(object sender, EventArgs e) {
 			if (Dialog.Warn("Are you sure you want to discard your changes?"))
-				SetGroup(confirm: false);	//This will re-bind the grid and discard all changes.
+				SetGroup(confirm: false);   //This will re-bind the grid and discard all changes.
 		}
 
 		#region Summaries
@@ -171,7 +173,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			//without our custom times.
 			#region Everything
 			var allPledges = Program.Table<Pledge>().Rows
-					.Where(p => p.Person != personSelector.SelectedPerson	//These pledges are already in the grid; don't double-count them.
+					.Where(p => p.Person != personSelector.SelectedPerson   //These pledges are already in the grid; don't double-count them.
 							 && (p.Type == "Auction" || p.Type == "מי שברך")
 							 && groupSelector.SelectedGroup.Auctions.Any(
 									g => p.Date.Date == g.Date.GetDate(groupSelector.SelectedYear)

@@ -495,7 +495,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.gridView.OptionsFilter.UseNewCustomFilterDialog = true;
 			this.gridView.OptionsSelection.MultiSelect = true;
 			this.gridView.OptionsView.ShowFooter = true;
-			this.gridView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
+			this.gridView.OptionsView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colLastName, DevExpress.Data.ColumnSortOrder.Ascending)});
 			// 

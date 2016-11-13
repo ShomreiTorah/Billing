@@ -72,7 +72,7 @@ namespace ShomreiTorah.Billing.Controls {
 			this.gridView.OptionsView.ShowFooter = true;
 			this.gridView.OptionsView.ShowGroupPanel = false;
 			this.gridView.OptionsView.ShowIndicator = false;
-			this.gridView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
+			this.gridView.OptionsView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colModified1, DevExpress.Data.ColumnSortOrder.Ascending)});
 			// 
