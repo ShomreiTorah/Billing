@@ -142,7 +142,9 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			if (CurrentPayment == null)
 				return;
 
-			directMatches = MatchingPeople = Matcher.FindMatches(CurrentPayment).ToList().AsReadOnly();
+			var matches = Matcher.FindMatches(CurrentPayment).ToList().AsReadOnly();
+			directMatches = matches;
+			MatchingPeople = matches;
 			Person = directMatches.Count == 1 ? directMatches.First() : null;
 		}
 
