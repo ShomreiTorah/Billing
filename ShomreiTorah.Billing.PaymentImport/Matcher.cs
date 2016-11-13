@@ -6,10 +6,18 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NinjaNye.SearchExtensions;
 using NinjaNye.SearchExtensions.Levenshtein;
+using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 
 namespace ShomreiTorah.Billing.PaymentImport {
 	static class Matcher {
+		static IEnumerable<Person> ByImportedPayments(PaymentInfo source) {
+			return Program.Table<Payment>().Rows
+						  .Where(p => p.Method == "Credit Card" && p.CheckNumber == source.FinalFour)
+						  .Select(p => p.Person)
+						  .Where(p => GetMatchScore(source, p) == 0);
+		}
+
 		static IEnumerable<Person> ByEmail(PaymentInfo source) {
 			var email = Program.Table<EmailAddress>().Rows
 				.FirstOrDefault(e => e.Email.Equals(source.Email, StringComparison.OrdinalIgnoreCase));
@@ -19,7 +27,11 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 		static IEnumerable<Person> ByPhone(PaymentInfo source) {
 			var phone = source.Phone.FormatPhoneNumber();
-			return Program.Table<Person>().Rows.Where(p => p.Phone == phone);
+			if (string.IsNullOrEmpty(phone))
+				yield break;
+			var match = Program.Table<Person>().Rows.FirstOrDefault(p => p.Phone == phone);
+			if (match != null && GetMatchScore(source, match) == 0)
+				yield return match;
 		}
 
 		static IEnumerable<Person> Fuzzy(PaymentInfo source) {
@@ -28,9 +40,13 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			// Filter by each field, but only if that field has any matches.
 
 			var sourceAddress = AddressInfo.Parse(source.Address);
+			var sourceState = UsStates.Abbreviate(source.State);
 			candidates = candidates.Where(p =>
-				 IsMatch(p.Zip, source.Zip) && IsMatch(p.State, source.State)
+				 IsMatch(p.Zip, source.Zip) && IsMatch(p.State, sourceState)
 			  && IsMatch(p.City, source.City) && AddressInfo.Parse(p.Address) == sourceAddress)
+				.DefaultIfEmpty(candidates);
+
+			candidates = candidates.Where(p => p.LastName.Equals(source.LastName, StringComparison.CurrentCultureIgnoreCase))
 				.DefaultIfEmpty(candidates);
 
 			candidates = candidates.LevenshteinDistanceOf(p => p.LastName).ComparedTo(source.LastName)
@@ -41,6 +57,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			candidates = candidates.LevenshteinDistanceOf(p => p.HisName).ComparedTo(source.FirstName)
 				.Union(candidates.LevenshteinDistanceOf(p => p.HerName).ComparedTo(source.FirstName))
 				.BestMatches()
+				.Distinct()
 				.DefaultIfEmpty(candidates);
 
 			// If none of the matches found anything, give up.
@@ -50,7 +67,10 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		}
 
 		static IEnumerable<T> BestMatches<T>(this IEnumerable<ILevenshteinDistance<T>> results)
-			=> results.Where(t => t.Distance <= 3).OrderByDescending(t => t.Distance).Select(t => t.Item);
+			=> results.Where(t => t.Distance <= 3)
+					  .GroupBy(t => t.Distance, t => t.Item)
+					  .FindMin(g => g.Key)
+			?? Enumerable.Empty<T>();
 
 		static bool IsMatch(string a, string b) {
 			return string.IsNullOrWhiteSpace(a) || string.IsNullOrWhiteSpace(b)
@@ -62,6 +82,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 		static readonly IReadOnlyCollection<Func<PaymentInfo, IEnumerable<Person>>> all = new Func<PaymentInfo, IEnumerable<Person>>[] {
 			ByEmail,
+			ByImportedPayments,
 			ByPhone,
 			Fuzzy,
 		};
@@ -70,6 +91,13 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			return all.Select(f => f(source).ToList())
 					  .FirstOrDefault(Enumerable.Any)
 				   ?? Enumerable.Empty<Person>();
+		}
+
+		public static int GetMatchScore(PaymentInfo source, Person match) {
+			if (!AddressInfo.Parse(source.Address).Equals(AddressInfo.Parse(match.Address))
+			 || LevenshteinProcessor.LevenshteinDistance(source.LastName, match.LastName) > 1)
+				return 2;
+			return 0;
 		}
 	}
 
@@ -84,7 +112,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 		readonly static Regex houseNumberMatcher = new Regex(@"^([0-9/]+[A-Z]?|[^NESW])$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		readonly static Regex apartmentMatcher = new Regex(@"^[A-Z]{0,2}([0-9/]+[A-Z]?)?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-		static Regex streetCleaner = new Regex(@"[#.]|(?<=[0-9])FL(O+R)?\b|\b(Ave(nue)?|St(reet)?|R(oa)?d|Pl(ace)?|C(our)?t|Ter(race)?|APT|FL(O+R)?|UNIT)\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+		static Regex streetCleaner = new Regex(@"[#.,]|(?<=[0-9])FL(O+R)?\b|\b(Ave(nue)?|St(reet)?|R(oa)?d|Pl(ace)?|C(our)?t|Ter(race)?|APT|FL(O+R)?|UNIT)\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		public static AddressInfo Parse(string address) {
 			if (String.IsNullOrWhiteSpace(address) || address.Contains("**"))
 				return Invalid;

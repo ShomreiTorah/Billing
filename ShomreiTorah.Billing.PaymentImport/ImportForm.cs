@@ -14,6 +14,7 @@ using ShomreiTorah.WinForms.Controls;
 using ShomreiTorah.Data;
 using ShomreiTorah.WinForms.Forms;
 using DevExpress.XtraGrid.Views.Layout.Events;
+using DevExpress.XtraBars;
 
 namespace ShomreiTorah.Billing.PaymentImport {
 	[Export]
@@ -31,6 +32,9 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 		private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) {
 			switch (e.PropertyName) {
+				case nameof(viewModel.MatchingPeople):
+					peopleView.BestFitColumns();
+					break;
 				case nameof(viewModel.Person):
 					peopleView.FocusedRowHandle = peopleView.GetRowHandle(
 						viewModel.MatchingPeople.IndexOf(viewModel.Person));
@@ -47,25 +51,32 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			viewModel.Person = (Person)e.Row;
 		}
 
-		private void refresh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e) {
-			LoadPayments();
+		private void refresh_ItemClick(object sender, ItemClickEventArgs e) => LoadPayments();
+		private void startDate_EditValueChanged(Object sender, EventArgs e) {
+			if (startDate.EditValue != null)
+				LoadPayments();
 		}
 
-		private void import_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e) {
-			viewModel.Import();
-		}
+		private void import_ItemClick(object sender, ItemClickEventArgs e) => viewModel.Import();
+
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
 			LoadPayments();
 		}
 		void LoadPayments() {
-			var date = (DateTime)startDate.EditValue;
-			viewModel.LoadPayments(date);
+			viewModel.LoadPayments((DateTime)startDate.EditValue);
 		}
 
 		private void availablePaymentsView_CustomDrawCardCaption(object sender, LayoutViewCustomDrawCardCaptionEventArgs e) {
-			if (e.RowHandle == availablePaymentsView.FocusedRowHandle)
-				e.Appearance.Font = e.Cache.GetFont(e.Appearance.Font, FontStyle.Bold);
+			e.Appearance.Font = e.Cache.GetFont(e.Appearance.Font,
+				e.RowHandle == availablePaymentsView.FocusedRowHandle ? FontStyle.Bold : FontStyle.Regular);
+		}
+
+		Color[] matchColors = { Color.LightGreen, Color.Yellow, Color.Red };
+		private void peopleView_CustomDrawCell(object sender, RowCellCustomDrawEventArgs e) {
+			var person = (Person)peopleView.GetRow(e.RowHandle);
+			if (person != null)
+				e.Appearance.BackColor = matchColors[Matcher.GetMatchScore(viewModel.CurrentPayment, person)];
 		}
 	}
 }
