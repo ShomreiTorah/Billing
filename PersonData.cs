@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using ShomreiTorah.Data;
 using ShomreiTorah.Singularity;
 
 namespace ShomreiTorah.Billing {
@@ -36,8 +36,6 @@ namespace ShomreiTorah.Billing {
 			set {
 				if (String.IsNullOrEmpty(value))
 					pState = null;
-				else if (UsStates.IsAbbreviation(value))
-					pState = value;
 				else
 					pState = UsStates.Abbreviate(value);
 			}
@@ -221,124 +219,5 @@ namespace ShomreiTorah.Billing {
 
 			return retVal.ToString().Trim();
 		}
-	}
-	public static class UsStates {
-		public static IEnumerable<string> Abbreviations { get { return values.Keys; } }
-		public static IEnumerable<string> Names { get { return values.Values; } }
-
-		public static bool IsAbbreviation(string value) { return values.ContainsValue(value); }
-		public static bool IsName(string value) { return values.ContainsKey(value); }
-
-		public static string Abbreviate(string name) {
-			string retVal;
-			if (values.TryGetValue(name, out retVal))
-				return retVal;
-			return name;
-		}
-
-		#region Values
-		static Dictionary<string, string> values = new Dictionary<string, string>(50) {
-			{ "Alabama",        "AL" },
-			{ "Alaska",         "AK" },
-			{ "Arizona",        "AZ" },
-			{ "Arkansas",       "AR" },
-			{ "California",     "CA" },
-			{ "Colorado",       "CO" },
-			{ "Connecticut",    "CT" },
-			{ "Delaware",       "DE" },
-			{ "Florida",        "FL" },
-			{ "Georgia",        "GA" },
-			{ "Hawaii",         "HI" },
-			{ "Idaho",          "ID" },
-			{ "Illinois",       "IL" },
-			{ "Indiana",        "IN" },
-			{ "Iowa",           "IA" },
-			{ "Kansas",         "KS" },
-			{ "Kentucky",       "KY" },
-			{ "Louisiana",      "LA" },
-			{ "Maine",          "ME" },
-			{ "Maryland",       "MD" },
-			{ "Massachusetts",  "MA" },
-			{ "Michigan",       "MI" },
-			{ "Minnesota",      "MN" },
-			{ "Mississippi",    "MS" },
-			{ "Missouri",       "MO" },
-			{ "Montana",        "MT" },
-			{ "Nebraska",       "NE" },
-			{ "Nevada",         "NV" },
-			{ "New Hampshire",  "NH" },
-			{ "New Jersey",     "NJ" },
-			{ "New Mexico",     "NM" },
-			{ "New York",       "NY" },
-			{ "North Carolina", "NC" },
-			{ "North Dakota",   "ND" },
-			{ "Ohio",           "OH" },
-			{ "Oklahoma",       "OK" },
-			{ "Oregon",         "OR" },
-			{ "Pennsylvania",   "PA" },
-			{ "Rhode Island",   "RI" },
-			{ "South Carolina", "SC" },
-			{ "South Dakota",   "SD" },
-			{ "Tennessee",      "TN" },
-			{ "Texas",          "TX" },
-			{ "Utah",           "UT" },
-			{ "Vermont",        "VT" },
-			{ "Virginia"    ,   "VA" },
-			{ "Washingto	n", "WA" },
-			{ "West Virginia",  "WV" },
-			{ "Wisconsin",      "WI" },
-			{ "Wyoming",        "WY" }
-			//{ "AL",	"Alabama" },
-			//{ "AK",	"Alaska" },
-			//{ "AZ",	"Arizona" },
-			//{ "AR",	"Arkansas" },
-			//{ "CA",	"California" },
-			//{ "CO",	"Colorado" },
-			//{ "CT",	"Connecticut" },
-			//{ "DE",	"Delaware" },
-			//{ "FL",	"Florida" },
-			//{ "GA",	"Georgia" },
-			//{ "HI",	"Hawaii" },
-			//{ "ID",	"Idaho" },
-			//{ "IL",	"Illinois" },
-			//{ "IN",	"Indiana" },
-			//{ "IA",	"Iowa" },
-			//{ "KS",	"Kansas" },
-			//{ "KY",	"Kentucky" },
-			//{ "LA",	"Louisiana" },
-			//{ "ME",	"Maine" },
-			//{ "MD",	"Maryland" },
-			//{ "MA",	"Massachusetts" },
-			//{ "MI",	"Michigan" },
-			//{ "MN",	"Minnesota" },
-			//{ "MS",	"Mississippi" },
-			//{ "MO",	"Missouri" },
-			//{ "MT",	"Montana" },
-			//{ "NE",	"Nebraska" },
-			//{ "NV",	"Nevada" },
-			//{ "NH",	"New Hampshire" },
-			//{ "NJ",	"New Jersey" },
-			//{ "NM",	"New Mexico" },
-			//{ "NY",	"New York" },
-			//{ "NC",	"North Carolina" },
-			//{ "ND",	"North Dakota" },
-			//{ "OH",	"Ohio" },
-			//{ "OK",	"Oklahoma" },
-			//{ "OR",	"Oregon" },
-			//{ "PA",	"Pennsylvania" },
-			//{ "RI",	"Rhode Island" },
-			//{ "SC",	"South Carolina" },
-			//{ "SD",	"South Dakota" },
-			//{ "TN",	"Tennessee" },
-			//{ "TX",	"Texas" },
-			//{ "UT",	"Utah" },
-			//{ "VT",	"Vermont" },
-			//{ "VA",	"Virginia" },
-			//{ "WA",	"Washington" },
-			//{ "WV",	"West Virginia" },
-			//{ "WI",	"Wisconsin" },
-			//{ "WY",	"Wyoming" }
-		};
-		#endregion
 	}
 }
