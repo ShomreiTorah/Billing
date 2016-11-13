@@ -32,6 +32,13 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 		private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) {
 			switch (e.PropertyName) {
+				case nameof(viewModel.CurrentPayment):
+					availablePaymentsView.VisibleRecordIndex = 
+						availablePaymentsView.GetVisibleIndex(
+							availablePaymentsView.GetRowHandle(
+								viewModel.AvailablePayments.IndexOf(
+									viewModel.CurrentPayment)));
+					break;
 				case nameof(viewModel.MatchingPeople):
 					peopleView.BestFitColumns();
 					break;
@@ -43,9 +50,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			import.Enabled = viewModel.CurrentPayment != null && viewModel.Person != null;
 		}
 
-		private void availablePaymentsView_FocusedRowObjectChanged(object sender, FocusedRowObjectChangedEventArgs e) {
-			viewModel.CurrentPayment = (PaymentInfo)e.Row;
-		}
+		private void availablePaymentsView_VisibleRecordIndexChanged(Object sender, LayoutViewVisibleRecordIndexChangedEventArgs e) => SetCurrentPayment();
 
 		private void peopleView_FocusedRowObjectChanged(object sender, FocusedRowObjectChangedEventArgs e) {
 			viewModel.Person = (Person)e.Row;
@@ -54,7 +59,16 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		private void refresh_ItemClick(object sender, ItemClickEventArgs e) => LoadPayments();
 		private void startDate_EditValueChanged(Object sender, EventArgs e) => LoadPayments();
 
-		private void import_ItemClick(object sender, ItemClickEventArgs e) => viewModel.Import();
+		private void import_ItemClick(object sender, ItemClickEventArgs e) {
+			viewModel.Import();
+			SetCurrentPayment();
+		}
+
+		private void SetCurrentPayment() {
+			viewModel.CurrentPayment = (PaymentInfo)availablePaymentsView.GetRow(
+				availablePaymentsView.GetVisibleRowHandle(
+					availablePaymentsView.VisibleRecordIndex));
+		}
 
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
