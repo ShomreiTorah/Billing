@@ -12,6 +12,7 @@ using ShomreiTorah.Data;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.PaymentImport {
+    // TODO: Split into Dictionary<string, ImportingPayment> to preserve data with scroll or refresh.
 	[Export]
 	public class ViewModel : INotifyPropertyChanged {
 		///<summary>All payments from the source (including already-imported payments).</summary>
@@ -44,7 +45,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				if (value != null) {
 					Comments = "\n" + value.Comments;
 					CreatePledge = false;
-					PledgeType = null;  // TODO: Infer type from payment comments
+					PledgeType = null;  // TODO: Infer type from payment comments & amount
 					PledgeSubType = null;
 					PledgeAmount = value.Amount;
 					FindMathingPeople();
@@ -146,6 +147,16 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 
 		public void Import() {
+			if (!Program.Table<EmailAddress>().Rows
+					.Any(r => r.Email.Equals(CurrentPayment.Email, StringComparison.OrdinalIgnoreCase))) {
+				Program.Table<EmailAddress>().Rows.Add(new EmailAddress {
+					Email = CurrentPayment.Email,
+					Name = CurrentPayment.FirstName + " " + CurrentPayment.LastName,
+					DateAdded = CurrentPayment.Date,
+					Person = Person
+				});
+			}
+
 			var payment = new Payment {
 				Account = Names.DefaultAccount,
 				CheckNumber = CurrentPayment.FinalFour,
