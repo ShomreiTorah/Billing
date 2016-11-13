@@ -8,6 +8,7 @@ using NinjaNye.SearchExtensions;
 using NinjaNye.SearchExtensions.Levenshtein;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI;
 
 namespace ShomreiTorah.Billing.PaymentImport {
 	static class Matcher {

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.PaymentImport {

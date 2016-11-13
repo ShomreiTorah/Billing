@@ -15,6 +15,7 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Base;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
