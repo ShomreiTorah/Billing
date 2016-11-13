@@ -16,6 +16,7 @@ using ShomreiTorah.WinForms.Forms;
 using DevExpress.XtraGrid.Views.Layout.Events;
 using DevExpress.XtraBars;
 using ShomreiTorah.WinForms;
+using DevExpress.XtraGrid.Views.Grid;
 
 namespace ShomreiTorah.Billing.PaymentImport {
 	[Export]
@@ -29,6 +30,17 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			viewModelBindingSource.DataSource = viewModel;
 			viewModel.PropertyChanged += ViewModel_PropertyChanged;
 			startDate.EditValue = DateTime.Today.AddDays(-14);
+			personSelector.Properties.NewPersonTemplate = e => new Person {
+				Address = viewModel.CurrentPayment.Address,
+				City = viewModel.CurrentPayment.City,
+				FullName = viewModel.CurrentPayment.FirstName + " " + viewModel.CurrentPayment.LastName,
+				LastName = viewModel.CurrentPayment.LastName,
+				HisName = viewModel.CurrentPayment.FirstName,
+				Phone = viewModel.CurrentPayment.Phone,
+				Source = "Credit Card Import",
+				State = viewModel.CurrentPayment.State,
+				Zip = viewModel.CurrentPayment.Zip
+			};
 		}
 
 		private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) {
@@ -56,6 +68,12 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 		private void peopleView_FocusedRowObjectChanged(object sender, FocusedRowObjectChangedEventArgs e) {
 			viewModel.Person = (Person)e.Row;
+		}
+
+		private void peopleView_RowClick(Object sender, RowClickEventArgs e) {
+			// This is necessary if the user selects null via the Lookup
+			// when the grid only has one row; no other event will fire.
+			viewModel.Person = (Person)peopleView.GetRow(e.RowHandle);
 		}
 
 		private void refresh_ItemClick(object sender, ItemClickEventArgs e) => LoadPayments();
@@ -94,7 +112,8 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		private void peopleView_CustomDrawCell(object sender, RowCellCustomDrawEventArgs e) {
 			var person = (Person)peopleView.GetRow(e.RowHandle);
 			if (person != null)
-				e.Appearance.BackColor = matchColors[Matcher.GetMatchScore(viewModel.CurrentPayment, person)];
+				e.Appearance.BackColor = Color.FromArgb(128, 
+					matchColors[Matcher.GetMatchScore(viewModel.CurrentPayment, person)]);
 		}
 	}
 }

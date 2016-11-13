@@ -362,8 +362,10 @@ namespace ShomreiTorah.Billing.PaymentImport {
             this.colSource});
 			this.peopleView.GridControl = this.peopleGrid;
 			this.peopleView.Name = "peopleView";
+			this.peopleView.OptionsBehavior.Editable = false;
 			this.peopleView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colLastName1, DevExpress.Data.ColumnSortOrder.Ascending)});
+			this.peopleView.RowClick += new DevExpress.XtraGrid.Views.Grid.RowClickEventHandler(this.peopleView_RowClick);
 			this.peopleView.CustomDrawCell += new DevExpress.XtraGrid.Views.Base.RowCellCustomDrawEventHandler(this.peopleView_CustomDrawCell);
 			this.peopleView.FocusedRowObjectChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowObjectChangedEventHandler(this.peopleView_FocusedRowObjectChanged);
 			// 
@@ -373,7 +375,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.colLastName1.Name = "colLastName1";
 			this.colLastName1.Visible = true;
 			this.colLastName1.VisibleIndex = 0;
-			this.colLastName1.Width = 121;
+			this.colLastName1.Width = 83;
 			// 
 			// colHisName
 			// 
@@ -381,7 +383,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.colHisName.Name = "colHisName";
 			this.colHisName.Visible = true;
 			this.colHisName.VisibleIndex = 1;
-			this.colHisName.Width = 97;
+			this.colHisName.Width = 64;
 			// 
 			// colHerName
 			// 
@@ -389,7 +391,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.colHerName.Name = "colHerName";
 			this.colHerName.Visible = true;
 			this.colHerName.VisibleIndex = 2;
-			this.colHerName.Width = 100;
+			this.colHerName.Width = 67;
 			// 
 			// colFullName
 			// 
@@ -397,7 +399,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.colFullName.Name = "colFullName";
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 3;
-			this.colFullName.Width = 100;
+			this.colFullName.Width = 66;
 			// 
 			// colAddress1
 			// 
@@ -405,7 +407,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.colAddress1.Name = "colAddress1";
 			this.colAddress1.Visible = true;
 			this.colAddress1.VisibleIndex = 4;
-			this.colAddress1.Width = 86;
+			this.colAddress1.Width = 59;
 			// 
 			// colCity1
 			// 
@@ -413,6 +415,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.colCity1.Name = "colCity1";
 			this.colCity1.Visible = true;
 			this.colCity1.VisibleIndex = 5;
+			this.colCity1.Width = 39;
 			// 
 			// colState1
 			// 
@@ -420,6 +423,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.colState1.Name = "colState1";
 			this.colState1.Visible = true;
 			this.colState1.VisibleIndex = 6;
+			this.colState1.Width = 46;
 			// 
 			// colZip1
 			// 
@@ -427,6 +431,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.colZip1.Name = "colZip1";
 			this.colZip1.Visible = true;
 			this.colZip1.VisibleIndex = 7;
+			this.colZip1.Width = 39;
 			// 
 			// colPhone1
 			// 
@@ -434,6 +439,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.colPhone1.Name = "colPhone1";
 			this.colPhone1.Visible = true;
 			this.colPhone1.VisibleIndex = 8;
+			this.colPhone1.Width = 50;
 			// 
 			// colSource
 			// 
@@ -441,7 +447,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.colSource.Name = "colSource";
 			this.colSource.Visible = true;
 			this.colSource.VisibleIndex = 9;
-			this.colSource.Width = 77;
+			this.colSource.Width = 53;
 			// 
 			// availablePayments
 			// 
@@ -851,6 +857,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.personSelector.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, superToolTip3, true),
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("personSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, superToolTip4, true)});
+			this.personSelector.Properties.NewPersonTemplate = null;
 			this.personSelector.Size = new System.Drawing.Size(520, 20);
 			this.personSelector.StyleController = this.dataLayoutControl1;
 			this.personSelector.TabIndex = 12;
