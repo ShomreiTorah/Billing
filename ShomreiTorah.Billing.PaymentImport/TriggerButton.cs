@@ -4,6 +4,7 @@ using System.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using DevExpress.XtraBars;
 using ShomreiTorah.WinForms;
 
@@ -11,7 +12,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 	[Export(typeof(RibbonButton))]
 	public class TriggerButton : RibbonButton {
 		[Import]
-		public Forms.MainForm MainForm { get; set; }
+		public IMainForm MainForm { get; set; }
 
 		[Import]
 		public ExportFactory<ImportForm> ImportFactory { get; set; }
@@ -24,7 +25,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			var item = new BarButtonItem { Caption = "Import Credit Card Payments" };
 			item.ItemClick += delegate {
 				var form = ImportFactory.CreateExport().Value;
-				form.MdiParent = MainForm;
+				form.MdiParent = (Form)MainForm;
 				form.Show();
 			};
 			return item;

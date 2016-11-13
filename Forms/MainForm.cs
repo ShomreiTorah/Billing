@@ -20,9 +20,9 @@ using ShomreiTorah.Singularity;
 using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Forms {
-	[Export]
+	[Export(typeof(IMainForm))]
 	[Shared]
-	public partial class MainForm : RibbonForm {
+	partial class MainForm : RibbonForm, IMainForm {
 		[ImportingConstructor]
 		public MainForm([ImportMany] IEnumerable<RibbonButton> pluginButtons) {
 			InitializeComponent();

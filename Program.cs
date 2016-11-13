@@ -230,7 +230,7 @@ namespace ShomreiTorah.Billing {
 			UIInvoker = form;
 			return form;
 		}
-		protected override Form CreateMainForm() { return MefContainer.GetExport<Forms.MainForm>(); }
+		protected override Form CreateMainForm() { return (Form)MefContainer.GetExport<IMainForm>(); }
 
 		void SetupMef() {
 			MefContainer = new ContainerConfiguration()

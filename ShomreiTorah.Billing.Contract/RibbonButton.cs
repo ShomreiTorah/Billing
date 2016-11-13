@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DevExpress.XtraBars;
+﻿using DevExpress.XtraBars;
 
 namespace ShomreiTorah.Billing {
 	///<summary>A permanent button in the main form's ribbon, supplied by a plugin.</summary>
