@@ -115,7 +115,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 		///<summary>Loads payments to import from the current source.</summary>
 		public void LoadPayments(DateTime start) {
-			Program.LoadTables(ImportedPayment.Schema);
+			AppFramework.LoadTables(ImportedPayment.Schema);
 			if (!ProgressWorker.Execute(p => {
 				p.Caption = "Loading payments after " + start.ToShortDateString();
 				allPayments = source.GetPayments(start).OrderBy(pi => pi.Date).ToList();
@@ -131,7 +131,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			}
 			var start = allPayments.First().Date;
 			var alreadyImported = new HashSet<string>(
-				Program.Table<ImportedPayment>().Rows
+				AppFramework.Table<ImportedPayment>().Rows
 					.Where(ip => ip.Source == source
 					.Name && ip.Payment.Date >= start)
 					.Select(ip => ip.ExternalId));
@@ -148,9 +148,9 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 
 		public void Import() {
-			if (!Program.Table<EmailAddress>().Rows
+			if (!AppFramework.Table<EmailAddress>().Rows
 					.Any(r => r.Email.Equals(CurrentPayment.Email, StringComparison.OrdinalIgnoreCase))) {
-				Program.Table<EmailAddress>().Rows.Add(new EmailAddress {
+				AppFramework.Table<EmailAddress>().Rows.Add(new EmailAddress {
 					Email = CurrentPayment.Email,
 					Name = CurrentPayment.FirstName + " " + CurrentPayment.LastName,
 					DateAdded = CurrentPayment.Date,
@@ -167,8 +167,8 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				Method = "Credit Card",
 				Person = Person,
 			};
-			Program.Table<Payment>().Rows.Add(payment);
-			Program.Table<ImportedPayment>().Rows.Add(new ImportedPayment {
+			AppFramework.Table<Payment>().Rows.Add(payment);
+			AppFramework.Table<ImportedPayment>().Rows.Add(new ImportedPayment {
 				DateImported = DateTime.Now,
 				ExternalId = CurrentPayment.Id,
 				ImportingUser = Environment.UserName,
@@ -186,12 +186,12 @@ namespace ShomreiTorah.Billing.PaymentImport {
 					SubType = PledgeSubType
 				};
 
-				Program.Table<PledgeLink>().Rows.Add(new PledgeLink {
+				AppFramework.Table<PledgeLink>().Rows.Add(new PledgeLink {
 					Amount = pledge.Amount,
 					Pledge = pledge,
 					Payment = payment
 				});
-				Program.Table<Pledge>().Rows.Add(pledge);
+				AppFramework.Table<Pledge>().Rows.Add(pledge);
 			}
 			RefreshPayments();
 		}

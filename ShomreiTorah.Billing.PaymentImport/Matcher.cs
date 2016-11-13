@@ -13,14 +13,14 @@ using ShomreiTorah.Data.UI;
 namespace ShomreiTorah.Billing.PaymentImport {
 	static class Matcher {
 		static IEnumerable<Person> ByImportedPayments(PaymentInfo source) {
-			return Program.Table<Payment>().Rows
+			return AppFramework.Table<Payment>().Rows
 						  .Where(p => p.Method == "Credit Card" && p.CheckNumber == source.FinalFour)
 						  .Select(p => p.Person)
 						  .Where(p => GetMatchScore(source, p) == 0);
 		}
 
 		static IEnumerable<Person> ByEmail(PaymentInfo source) {
-			var email = Program.Table<EmailAddress>().Rows
+			var email = AppFramework.Table<EmailAddress>().Rows
 				.FirstOrDefault(e => e.Email.Equals(source.Email, StringComparison.OrdinalIgnoreCase));
 			if (email != null)
 				yield return email.Person;
@@ -30,13 +30,13 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			var phone = source.Phone.FormatPhoneNumber();
 			if (string.IsNullOrEmpty(phone))
 				yield break;
-			var match = Program.Table<Person>().Rows.FirstOrDefault(p => p.Phone == phone);
+			var match = AppFramework.Table<Person>().Rows.FirstOrDefault(p => p.Phone == phone);
 			if (match != null && GetMatchScore(source, match) == 0)
 				yield return match;
 		}
 
 		static IEnumerable<Person> Fuzzy(PaymentInfo source) {
-			IEnumerable<Person> candidates = Program.Table<Person>().Rows;
+			IEnumerable<Person> candidates = AppFramework.Table<Person>().Rows;
 
 			// Filter by each field, but only if that field has any matches.
 
@@ -62,7 +62,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				.DefaultIfEmpty(candidates);
 
 			// If none of the matches found anything, give up.
-			if (candidates == Program.Table<Person>().Rows)
+			if (candidates == AppFramework.Table<Person>().Rows)
 				return Enumerable.Empty<Person>();
 			return candidates;
 		}
