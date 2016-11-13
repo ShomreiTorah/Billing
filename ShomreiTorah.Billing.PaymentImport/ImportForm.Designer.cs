@@ -28,29 +28,38 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.Utils.SuperToolTip superToolTip9 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipItem toolTipItem9 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImportForm));
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.Utils.SuperToolTip superToolTip10 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem8 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem10 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
 			this.refresh = new DevExpress.XtraBars.BarButtonItem();
 			this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
 			this.pledgeTypeTree = new ShomreiTorah.Data.UI.Controls.PledgeTypeTree();
+			this.viewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.PledgeSubTypeTextEdit = new DevExpress.XtraEditors.TextEdit();
+			this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
+			this.startDate = new DevExpress.XtraBars.BarEditItem();
+			this.repositoryItemDateEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
+			this.import = new DevExpress.XtraBars.BarButtonItem();
+			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+			this.PledgeTypeTextEdit = new DevExpress.XtraEditors.TextEdit();
 			this.peopleGrid = new ShomreiTorah.Data.UI.Grid.SmartGrid(this.components);
 			this.peopleView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colLastName1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -63,13 +72,6 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.colZip1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colPhone1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colSource = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
-			this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-			this.startDate = new DevExpress.XtraBars.BarEditItem();
-			this.repositoryItemDateEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
-			this.import = new DevExpress.XtraBars.BarButtonItem();
-			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-			this.viewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.availablePayments = new DevExpress.XtraGrid.GridControl();
 			this.availablePaymentsView = new DevExpress.XtraGrid.Views.Layout.LayoutView();
 			this.colFirstName = new DevExpress.XtraGrid.Columns.LayoutViewColumn();
@@ -110,8 +112,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.CommentsMemoEdit = new DevExpress.XtraEditors.MemoEdit();
 			this.CreatePledgeCheckEdit = new DevExpress.XtraEditors.CheckEdit();
 			this.PledgeAmountSpinEdit = new DevExpress.XtraEditors.SpinEdit();
-			this.PledgeTypeTextEdit = new DevExpress.XtraEditors.TextEdit();
-			this.PledgeSubTypeTextEdit = new DevExpress.XtraEditors.TextEdit();
+			this.pledgeNote = new DevExpress.XtraEditors.TextEdit();
 			this.personSelector = new ShomreiTorah.Data.UI.Controls.PersonSelector();
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -123,6 +124,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.ItemForPledgeSubType = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.pledgeNoteItem = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlGroup4 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.ItemForPerson = new DevExpress.XtraLayout.LayoutControlItem();
@@ -130,16 +132,16 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.ItemForComments = new DevExpress.XtraLayout.LayoutControlItem();
 			this.splitterItem3 = new DevExpress.XtraLayout.SplitterItem();
 			this.splitterItem2 = new DevExpress.XtraLayout.SplitterItem();
-			this.pledgeNote = new DevExpress.XtraEditors.TextEdit();
-			this.pledgeNoteItem = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
 			this.dataLayoutControl1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.peopleGrid)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.peopleView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.viewModelBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.PledgeSubTypeTextEdit.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1.CalendarTimeProperties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.viewModelBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.PledgeTypeTextEdit.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.peopleGrid)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.peopleView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.availablePayments)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.availablePaymentsView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoEdit1)).BeginInit();
@@ -164,8 +166,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			((System.ComponentModel.ISupportInitialize)(this.CommentsMemoEdit.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.CreatePledgeCheckEdit.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.PledgeAmountSpinEdit.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.PledgeTypeTextEdit.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.PledgeSubTypeTextEdit.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pledgeNote.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.personSelector.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
@@ -177,6 +178,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			((System.ComponentModel.ISupportInitialize)(this.ItemForPledgeSubType)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pledgeNoteItem)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ItemForPerson)).BeginInit();
@@ -184,8 +186,6 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			((System.ComponentModel.ISupportInitialize)(this.ItemForComments)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitterItem3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitterItem2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.pledgeNote.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.pledgeNoteItem)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// refresh
@@ -194,12 +194,12 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.refresh.Glyph = global::ShomreiTorah.Billing.PaymentImport.Properties.Resources.Refresh16;
 			this.refresh.Id = 2;
 			this.refresh.Name = "refresh";
-			toolTipTitleItem3.Text = "Refresh";
-			toolTipItem3.LeftIndent = 6;
-			toolTipItem3.Text = "Loads all available payments from the external source.";
-			superToolTip3.Items.Add(toolTipTitleItem3);
-			superToolTip3.Items.Add(toolTipItem3);
-			this.refresh.SuperTip = superToolTip3;
+			toolTipTitleItem1.Text = "Refresh";
+			toolTipItem1.LeftIndent = 6;
+			toolTipItem1.Text = "Loads all available payments from the external source.";
+			superToolTip1.Items.Add(toolTipTitleItem1);
+			superToolTip1.Items.Add(toolTipItem1);
+			this.refresh.SuperTip = superToolTip1;
 			this.refresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.refresh_ItemClick);
 			// 
 			// dataLayoutControl1
@@ -235,6 +235,101 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.pledgeTypeTree.SubTypeField = this.PledgeSubTypeTextEdit;
 			this.pledgeTypeTree.TabIndex = 13;
 			this.pledgeTypeTree.TypeField = this.PledgeTypeTextEdit;
+			// 
+			// viewModelBindingSource
+			// 
+			this.viewModelBindingSource.DataSource = typeof(ShomreiTorah.Billing.PaymentImport.ViewModel);
+			// 
+			// PledgeSubTypeTextEdit
+			// 
+			this.PledgeSubTypeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.viewModelBindingSource, "PledgeSubType", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.PledgeSubTypeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.viewModelBindingSource, "CreatePledge", true));
+			this.PledgeSubTypeTextEdit.Location = new System.Drawing.Point(926, 379);
+			this.PledgeSubTypeTextEdit.Margin = new System.Windows.Forms.Padding(2);
+			this.PledgeSubTypeTextEdit.MenuManager = this.ribbonControl1;
+			this.PledgeSubTypeTextEdit.Name = "PledgeSubTypeTextEdit";
+			this.PledgeSubTypeTextEdit.Size = new System.Drawing.Size(112, 20);
+			this.PledgeSubTypeTextEdit.StyleController = this.dataLayoutControl1;
+			this.PledgeSubTypeTextEdit.TabIndex = 8;
+			// 
+			// ribbonControl1
+			// 
+			this.ribbonControl1.ExpandCollapseItem.Id = 0;
+			this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.ribbonControl1.ExpandCollapseItem,
+            this.startDate,
+            this.refresh,
+            this.import});
+			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
+			this.ribbonControl1.Margin = new System.Windows.Forms.Padding(2);
+			this.ribbonControl1.MaxItemId = 4;
+			this.ribbonControl1.Name = "ribbonControl1";
+			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.ribbonPage1});
+			this.ribbonControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemDateEdit1});
+			this.ribbonControl1.Size = new System.Drawing.Size(1062, 139);
+			// 
+			// startDate
+			// 
+			this.startDate.Caption = "Import payments after:";
+			this.startDate.Edit = this.repositoryItemDateEdit1;
+			this.startDate.EditWidth = 150;
+			this.startDate.Id = 1;
+			this.startDate.Name = "startDate";
+			this.startDate.EditValueChanged += new System.EventHandler(this.startDate_EditValueChanged);
+			// 
+			// repositoryItemDateEdit1
+			// 
+			this.repositoryItemDateEdit1.AutoHeight = false;
+			this.repositoryItemDateEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.repositoryItemDateEdit1.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.repositoryItemDateEdit1.Name = "repositoryItemDateEdit1";
+			// 
+			// import
+			// 
+			this.import.Caption = "Import";
+			this.import.Enabled = false;
+			this.import.Id = 3;
+			this.import.LargeGlyph = global::ShomreiTorah.Billing.PaymentImport.Properties.Resources.ImportRaffle32;
+			this.import.Name = "import";
+			toolTipTitleItem2.Text = "Import";
+			toolTipItem2.LeftIndent = 6;
+			toolTipItem2.Text = "Imports this payment into the database.";
+			superToolTip2.Items.Add(toolTipTitleItem2);
+			superToolTip2.Items.Add(toolTipItem2);
+			this.import.SuperTip = superToolTip2;
+			this.import.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.import_ItemClick);
+			// 
+			// ribbonPage1
+			// 
+			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup1});
+			this.ribbonPage1.Name = "ribbonPage1";
+			this.ribbonPage1.Text = "Data";
+			// 
+			// ribbonPageGroup1
+			// 
+			this.ribbonPageGroup1.ItemLinks.Add(this.startDate);
+			this.ribbonPageGroup1.ItemLinks.Add(this.refresh);
+			this.ribbonPageGroup1.ItemLinks.Add(this.import, true);
+			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+			this.ribbonPageGroup1.ShowCaptionButton = false;
+			this.ribbonPageGroup1.Text = "Payments";
+			// 
+			// PledgeTypeTextEdit
+			// 
+			this.PledgeTypeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.viewModelBindingSource, "PledgeType", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.PledgeTypeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.viewModelBindingSource, "CreatePledge", true));
+			this.PledgeTypeTextEdit.Location = new System.Drawing.Point(926, 355);
+			this.PledgeTypeTextEdit.Margin = new System.Windows.Forms.Padding(2);
+			this.PledgeTypeTextEdit.MenuManager = this.ribbonControl1;
+			this.PledgeTypeTextEdit.Name = "PledgeTypeTextEdit";
+			this.PledgeTypeTextEdit.Size = new System.Drawing.Size(112, 20);
+			this.PledgeTypeTextEdit.StyleController = this.dataLayoutControl1;
+			this.PledgeTypeTextEdit.TabIndex = 7;
 			// 
 			// peopleGrid
 			// 
@@ -347,77 +442,6 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.colSource.Visible = true;
 			this.colSource.VisibleIndex = 9;
 			this.colSource.Width = 77;
-			// 
-			// ribbonControl1
-			// 
-			this.ribbonControl1.ExpandCollapseItem.Id = 0;
-			this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.ribbonControl1.ExpandCollapseItem,
-            this.startDate,
-            this.refresh,
-            this.import});
-			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl1.Margin = new System.Windows.Forms.Padding(2);
-			this.ribbonControl1.MaxItemId = 4;
-			this.ribbonControl1.Name = "ribbonControl1";
-			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
-            this.ribbonPage1});
-			this.ribbonControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repositoryItemDateEdit1});
-			this.ribbonControl1.Size = new System.Drawing.Size(1062, 139);
-			// 
-			// startDate
-			// 
-			this.startDate.Caption = "Import payments after:";
-			this.startDate.Edit = this.repositoryItemDateEdit1;
-			this.startDate.EditWidth = 150;
-			this.startDate.Id = 1;
-			this.startDate.Name = "startDate";
-			this.startDate.EditValueChanged += new System.EventHandler(this.startDate_EditValueChanged);
-			// 
-			// repositoryItemDateEdit1
-			// 
-			this.repositoryItemDateEdit1.AutoHeight = false;
-			this.repositoryItemDateEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.repositoryItemDateEdit1.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.repositoryItemDateEdit1.Name = "repositoryItemDateEdit1";
-			// 
-			// import
-			// 
-			this.import.Caption = "Import";
-			this.import.Enabled = false;
-			this.import.Id = 3;
-			this.import.LargeGlyph = global::ShomreiTorah.Billing.PaymentImport.Properties.Resources.ImportRaffle32;
-			this.import.Name = "import";
-			toolTipTitleItem7.Text = "Import";
-			toolTipItem4.LeftIndent = 6;
-			toolTipItem4.Text = "Imports this payment into the database.";
-			superToolTip4.Items.Add(toolTipTitleItem7);
-			superToolTip4.Items.Add(toolTipItem4);
-			this.import.SuperTip = superToolTip4;
-			this.import.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.import_ItemClick);
-			// 
-			// ribbonPage1
-			// 
-			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1});
-			this.ribbonPage1.Name = "ribbonPage1";
-			this.ribbonPage1.Text = "Data";
-			// 
-			// ribbonPageGroup1
-			// 
-			this.ribbonPageGroup1.ItemLinks.Add(this.startDate);
-			this.ribbonPageGroup1.ItemLinks.Add(this.refresh);
-			this.ribbonPageGroup1.ItemLinks.Add(this.import, true);
-			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-			this.ribbonPageGroup1.ShowCaptionButton = false;
-			this.ribbonPageGroup1.Text = "Payments";
-			// 
-			// viewModelBindingSource
-			// 
-			this.viewModelBindingSource.DataSource = typeof(ShomreiTorah.Billing.PaymentImport.ViewModel);
 			// 
 			// availablePayments
 			// 
@@ -752,7 +776,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			// 
 			// CommentsMemoEdit
 			// 
-			this.CommentsMemoEdit.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.viewModelBindingSource, "Comments", true));
+			this.CommentsMemoEdit.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.viewModelBindingSource, "Comments", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.CommentsMemoEdit.Location = new System.Drawing.Point(398, 316);
 			this.CommentsMemoEdit.Margin = new System.Windows.Forms.Padding(2);
 			this.CommentsMemoEdit.MenuManager = this.ribbonControl1;
@@ -763,7 +787,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			// 
 			// CreatePledgeCheckEdit
 			// 
-			this.CreatePledgeCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.viewModelBindingSource, "CreatePledge", true));
+			this.CreatePledgeCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.viewModelBindingSource, "CreatePledge", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.CreatePledgeCheckEdit.Location = new System.Drawing.Point(926, 298);
 			this.CreatePledgeCheckEdit.Margin = new System.Windows.Forms.Padding(2);
 			this.CreatePledgeCheckEdit.MenuManager = this.ribbonControl1;
@@ -776,7 +800,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			// 
 			// PledgeAmountSpinEdit
 			// 
-			this.PledgeAmountSpinEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.viewModelBindingSource, "PledgeAmount", true));
+			this.PledgeAmountSpinEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.viewModelBindingSource, "PledgeAmount", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.PledgeAmountSpinEdit.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.viewModelBindingSource, "CreatePledge", true));
 			this.PledgeAmountSpinEdit.EditValue = new decimal(new int[] {
             0,
@@ -798,29 +822,18 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.PledgeAmountSpinEdit.StyleController = this.dataLayoutControl1;
 			this.PledgeAmountSpinEdit.TabIndex = 6;
 			// 
-			// PledgeTypeTextEdit
+			// pledgeNote
 			// 
-			this.PledgeTypeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.viewModelBindingSource, "PledgeType", true));
-			this.PledgeTypeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.viewModelBindingSource, "CreatePledge", true));
-			this.PledgeTypeTextEdit.Location = new System.Drawing.Point(926, 355);
-			this.PledgeTypeTextEdit.Margin = new System.Windows.Forms.Padding(2);
-			this.PledgeTypeTextEdit.MenuManager = this.ribbonControl1;
-			this.PledgeTypeTextEdit.Name = "PledgeTypeTextEdit";
-			this.PledgeTypeTextEdit.Size = new System.Drawing.Size(112, 20);
-			this.PledgeTypeTextEdit.StyleController = this.dataLayoutControl1;
-			this.PledgeTypeTextEdit.TabIndex = 7;
-			// 
-			// PledgeSubTypeTextEdit
-			// 
-			this.PledgeSubTypeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.viewModelBindingSource, "PledgeSubType", true));
-			this.PledgeSubTypeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.viewModelBindingSource, "CreatePledge", true));
-			this.PledgeSubTypeTextEdit.Location = new System.Drawing.Point(926, 379);
-			this.PledgeSubTypeTextEdit.Margin = new System.Windows.Forms.Padding(2);
-			this.PledgeSubTypeTextEdit.MenuManager = this.ribbonControl1;
-			this.PledgeSubTypeTextEdit.Name = "PledgeSubTypeTextEdit";
-			this.PledgeSubTypeTextEdit.Size = new System.Drawing.Size(112, 20);
-			this.PledgeSubTypeTextEdit.StyleController = this.dataLayoutControl1;
-			this.PledgeSubTypeTextEdit.TabIndex = 8;
+			this.pledgeNote.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.viewModelBindingSource, "PledgeNote", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.pledgeNote.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.viewModelBindingSource, "CreatePledge", true));
+			this.pledgeNote.Location = new System.Drawing.Point(926, 403);
+			this.pledgeNote.Margin = new System.Windows.Forms.Padding(2);
+			this.pledgeNote.Name = "pledgeNote";
+			this.pledgeNote.Properties.NullValuePrompt = "(will show on invoice)";
+			this.pledgeNote.Properties.NullValuePromptShowForEmptyValue = true;
+			this.pledgeNote.Size = new System.Drawing.Size(112, 20);
+			this.pledgeNote.StyleController = this.dataLayoutControl1;
+			this.pledgeNote.TabIndex = 7;
 			// 
 			// personSelector
 			// 
@@ -829,15 +842,15 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.personSelector.Margin = new System.Windows.Forms.Padding(2);
 			this.personSelector.MenuManager = this.ribbonControl1;
 			this.personSelector.Name = "personSelector";
-			toolTipItem9.Text = "Click to select a person";
-			superToolTip9.Items.Add(toolTipItem9);
-			toolTipTitleItem8.Text = "New Person...";
-			toolTipItem10.Text = "Adds a new person to the master directory";
-			superToolTip10.Items.Add(toolTipTitleItem8);
-			superToolTip10.Items.Add(toolTipItem10);
+			toolTipItem3.Text = "Click to select a person";
+			superToolTip3.Items.Add(toolTipItem3);
+			toolTipTitleItem3.Text = "New Person...";
+			toolTipItem4.Text = "Adds a new person to the master directory";
+			superToolTip4.Items.Add(toolTipTitleItem3);
+			superToolTip4.Items.Add(toolTipItem4);
 			this.personSelector.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, superToolTip9, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("personSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, superToolTip10, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, superToolTip3, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "New person...", 90, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleLeft, ((System.Drawing.Image)(resources.GetObject("personSelector.Properties.Buttons"))), new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, superToolTip4, true)});
 			this.personSelector.Size = new System.Drawing.Size(520, 20);
 			this.personSelector.StyleController = this.dataLayoutControl1;
 			this.personSelector.TabIndex = 12;
@@ -948,6 +961,15 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.emptySpaceItem1.Size = new System.Drawing.Size(236, 10);
 			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
 			// 
+			// pledgeNoteItem
+			// 
+			this.pledgeNoteItem.Control = this.pledgeNote;
+			this.pledgeNoteItem.Location = new System.Drawing.Point(172, 105);
+			this.pledgeNoteItem.Name = "pledgeNoteItem";
+			this.pledgeNoteItem.Size = new System.Drawing.Size(236, 24);
+			this.pledgeNoteItem.Text = "Pledge Note";
+			this.pledgeNoteItem.TextSize = new System.Drawing.Size(115, 13);
+			// 
 			// layoutControlGroup4
 			// 
 			this.layoutControlGroup4.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
@@ -1017,28 +1039,6 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.splitterItem2.ResizeMode = DevExpress.XtraLayout.SplitterItemResizeMode.AllSiblings;
 			this.splitterItem2.Size = new System.Drawing.Size(668, 6);
 			// 
-			// pledgeNote
-			// 
-			this.pledgeNote.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.viewModelBindingSource, "PledgeNote", true));
-			this.pledgeNote.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.viewModelBindingSource, "CreatePledge", true));
-			this.pledgeNote.Location = new System.Drawing.Point(926, 403);
-			this.pledgeNote.Margin = new System.Windows.Forms.Padding(2);
-			this.pledgeNote.Name = "pledgeNote";
-			this.pledgeNote.Properties.NullValuePrompt = "(will show on invoice)";
-			this.pledgeNote.Properties.NullValuePromptShowForEmptyValue = true;
-			this.pledgeNote.Size = new System.Drawing.Size(112, 20);
-			this.pledgeNote.StyleController = this.dataLayoutControl1;
-			this.pledgeNote.TabIndex = 7;
-			// 
-			// pledgeNoteItem
-			// 
-			this.pledgeNoteItem.Control = this.pledgeNote;
-			this.pledgeNoteItem.Location = new System.Drawing.Point(172, 105);
-			this.pledgeNoteItem.Name = "pledgeNoteItem";
-			this.pledgeNoteItem.Size = new System.Drawing.Size(236, 24);
-			this.pledgeNoteItem.Text = "Pledge Note";
-			this.pledgeNoteItem.TextSize = new System.Drawing.Size(115, 13);
-			// 
 			// ImportForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1051,12 +1051,14 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.Text = "Import Payments";
 			((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
 			this.dataLayoutControl1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.peopleGrid)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.peopleView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.viewModelBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.PledgeSubTypeTextEdit.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1.CalendarTimeProperties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.viewModelBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.PledgeTypeTextEdit.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.peopleGrid)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.peopleView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.availablePayments)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.availablePaymentsView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoEdit1)).EndInit();
@@ -1081,8 +1083,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			((System.ComponentModel.ISupportInitialize)(this.CommentsMemoEdit.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.CreatePledgeCheckEdit.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.PledgeAmountSpinEdit.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.PledgeTypeTextEdit.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.PledgeSubTypeTextEdit.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pledgeNote.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.personSelector.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
@@ -1094,6 +1095,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			((System.ComponentModel.ISupportInitialize)(this.ItemForPledgeSubType)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pledgeNoteItem)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.ItemForPerson)).EndInit();
@@ -1101,8 +1103,6 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			((System.ComponentModel.ISupportInitialize)(this.ItemForComments)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitterItem3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitterItem2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.pledgeNote.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.pledgeNoteItem)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

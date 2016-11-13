@@ -14,7 +14,6 @@ namespace ShomreiTorah.Billing.Controls {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.components = new System.ComponentModel.Container();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
@@ -31,9 +30,14 @@ namespace ShomreiTorah.Billing.Controls {
 			DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
 			this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
 			this.account = new DevExpress.XtraEditors.ComboBoxEdit();
+			this.pledgesBindingSource = new System.Windows.Forms.BindingSource();
+			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource();
 			this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
 			this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
+			this.date = new ShomreiTorah.Billing.Controls.HebrewCalendarEdit();
+			this.commit = new ShomreiTorah.Billing.Controls.CommitButton();
 			this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
+			this.note = new ShomreiTorah.Billing.Controls.Editors.AliyahNoteEdit();
 			this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
 			this.subtypeText = new DevExpress.XtraEditors.TextEdit();
 			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
@@ -41,24 +45,19 @@ namespace ShomreiTorah.Billing.Controls {
 			this.comments = new DevExpress.XtraEditors.MemoEdit();
 			this.amount = new DevExpress.XtraEditors.SpinEdit();
 			this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
-			this.pledgesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource(this.components);
-			this.date = new ShomreiTorah.Billing.Controls.HebrewCalendarEdit();
-			this.commit = new ShomreiTorah.Billing.Controls.CommitButton();
-			this.note = new ShomreiTorah.Billing.Controls.Editors.AliyahNoteEdit();
 			this.typeTree = new ShomreiTorah.Data.UI.Controls.PledgeTypeTree();
 			this.person = new ShomreiTorah.Data.UI.Controls.PersonSelector();
 			((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
 			this.groupControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.account.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.subtypeText.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.typeText.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.comments.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.amount.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.date.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.note.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.subtypeText.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.typeText.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.comments.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.amount.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.person.Properties)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -99,6 +98,16 @@ namespace ShomreiTorah.Billing.Controls {
 			this.account.TabIndex = 4;
 			this.account.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
 			// 
+			// pledgesBindingSource
+			// 
+			this.pledgesBindingSource.DataMember = "Pledges";
+			this.pledgesBindingSource.DataSource = this.billingData;
+			this.pledgesBindingSource.Position = 0;
+			// 
+			// billingData
+			// 
+			this.billingData.Position = 0;
+			// 
 			// labelControl6
 			// 
 			this.labelControl6.Location = new System.Drawing.Point(6, 132);
@@ -115,6 +124,33 @@ namespace ShomreiTorah.Billing.Controls {
 			this.labelControl5.TabIndex = 10;
 			this.labelControl5.Text = "Date:";
 			// 
+			// date
+			// 
+			this.date.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.pledgesBindingSource, "Date", true));
+			this.date.Location = new System.Drawing.Point(56, 25);
+			this.date.Name = "date";
+			this.date.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.date.Properties.DisplayFormat.FormatString = "d";
+			this.date.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+			this.date.Properties.EditFormat.FormatString = "d";
+			this.date.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+			this.date.Properties.Mask.EditMask = "d";
+			this.date.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.DateTime;
+			this.date.Size = new System.Drawing.Size(137, 20);
+			this.date.TabIndex = 0;
+			this.date.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
+			// 
+			// commit
+			// 
+			this.commit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.commit.Location = new System.Drawing.Point(249, 154);
+			this.commit.Name = "commit";
+			this.commit.Size = new System.Drawing.Size(80, 23);
+			this.commit.TabIndex = 7;
+			this.commit.VisibleChanged += new System.EventHandler(this.commit_VisibleChanged);
+			this.commit.Click += new System.EventHandler(this.commit_Click);
+			// 
 			// labelControl4
 			// 
 			this.labelControl4.Location = new System.Drawing.Point(6, 158);
@@ -122,6 +158,21 @@ namespace ShomreiTorah.Billing.Controls {
 			this.labelControl4.Size = new System.Drawing.Size(27, 13);
 			this.labelControl4.TabIndex = 8;
 			this.labelControl4.Text = "Note:";
+			// 
+			// note
+			// 
+			this.note.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.pledgesBindingSource, "Note", true));
+			this.note.EditValue = "";
+			this.note.Location = new System.Drawing.Point(56, 155);
+			this.note.Name = "note";
+			this.note.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+			this.note.Properties.NullValuePrompt = "(will show on invoice)";
+			this.note.Properties.NullValuePromptShowForEmptyValue = true;
+			this.note.Size = new System.Drawing.Size(137, 20);
+			this.note.TabIndex = 5;
+			this.note.EditValueChanged += new System.EventHandler(this.note_EditValueChanged);
+			this.note.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
 			// 
 			// labelControl3
 			// 
@@ -133,7 +184,7 @@ namespace ShomreiTorah.Billing.Controls {
 			// 
 			// subtypeText
 			// 
-			this.subtypeText.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.pledgesBindingSource, "SubType", true));
+			this.subtypeText.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.pledgesBindingSource, "SubType", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.subtypeText.EditValue = "";
 			this.subtypeText.Location = new System.Drawing.Point(56, 103);
 			this.subtypeText.Name = "subtypeText";
@@ -151,7 +202,7 @@ namespace ShomreiTorah.Billing.Controls {
 			// 
 			// typeText
 			// 
-			this.typeText.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.pledgesBindingSource, "Type", true));
+			this.typeText.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.pledgesBindingSource, "Type", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.typeText.Location = new System.Drawing.Point(56, 77);
 			this.typeText.Name = "typeText";
 			this.typeText.Size = new System.Drawing.Size(137, 20);
@@ -202,61 +253,10 @@ namespace ShomreiTorah.Billing.Controls {
 			this.labelControl2.TabIndex = 2;
 			this.labelControl2.Text = "Amount:";
 			// 
-			// pledgesBindingSource
-			// 
-			this.pledgesBindingSource.DataMember = "Pledges";
-			this.pledgesBindingSource.DataSource = this.billingData;
-			this.pledgesBindingSource.Position = 0;
-			// 
-			// billingData
-			// 
-			this.billingData.Position = 0;
-			// 
-			// date
-			// 
-			this.date.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.pledgesBindingSource, "Date", true));
-			this.date.Location = new System.Drawing.Point(56, 25);
-			this.date.Name = "date";
-			this.date.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.date.Properties.DisplayFormat.FormatString = "d";
-			this.date.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-			this.date.Properties.EditFormat.FormatString = "d";
-			this.date.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-			this.date.Properties.Mask.EditMask = "d";
-			this.date.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.DateTime;
-			this.date.Size = new System.Drawing.Size(137, 20);
-			this.date.TabIndex = 0;
-			this.date.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
-			// 
-			// commit
-			// 
-			this.commit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.commit.Location = new System.Drawing.Point(249, 154);
-			this.commit.Name = "commit";
-			this.commit.Size = new System.Drawing.Size(80, 23);
-			this.commit.TabIndex = 7;
-			this.commit.VisibleChanged += new System.EventHandler(this.commit_VisibleChanged);
-			this.commit.Click += new System.EventHandler(this.commit_Click);
-			// 
-			// note
-			// 
-			this.note.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.pledgesBindingSource, "Note", true));
-			this.note.EditValue = "";
-			this.note.Location = new System.Drawing.Point(56, 155);
-			this.note.Name = "note";
-			this.note.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-			this.note.Properties.NullValuePrompt = "(will show on invoice)";
-			this.note.Properties.NullValuePromptShowForEmptyValue = true;
-			this.note.Size = new System.Drawing.Size(137, 20);
-			this.note.TabIndex = 5;
-			this.note.EditValueChanged += new System.EventHandler(this.note_EditValueChanged);
-			this.note.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
-			// 
 			// typeTree
 			// 
 			this.typeTree.Dock = System.Windows.Forms.DockStyle.Left;
+			this.typeTree.HideSelection = false;
 			this.typeTree.Location = new System.Drawing.Point(0, 20);
 			this.typeTree.Name = "typeTree";
 			this.typeTree.Size = new System.Drawing.Size(146, 183);
@@ -299,14 +299,14 @@ namespace ShomreiTorah.Billing.Controls {
 			this.groupControl1.ResumeLayout(false);
 			this.groupControl1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.account.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.subtypeText.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.typeText.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.comments.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.amount.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgesBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.date.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.note.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.subtypeText.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.typeText.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.comments.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.amount.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.person.Properties)).EndInit();
 			this.ResumeLayout(false);
 
