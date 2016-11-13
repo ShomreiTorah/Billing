@@ -13,7 +13,7 @@ using ShomreiTorah.Data.UI;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.PaymentImport {
-    // TODO: Split into Dictionary<string, ImportingPayment> to preserve data with scroll or refresh.
+	// TODO: Split into Dictionary<string, ImportingPayment> to preserve data with scroll or refresh.
 	[Export]
 	public class ViewModel : INotifyPropertyChanged {
 		///<summary>All payments from the source (including already-imported payments).</summary>
@@ -48,6 +48,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 					CreatePledge = false;
 					PledgeType = null;  // TODO: Infer type from payment comments & amount
 					PledgeSubType = null;
+					PledgeNote = null;
 					PledgeAmount = value.Amount;
 					FindMathingPeople();
 				}
@@ -102,6 +103,12 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		public string PledgeSubType {
 			get { return pledgeSubType; }
 			set { pledgeSubType = value; OnPropertyChanged(); }
+		}
+		string pledgeNote;
+		///<summary>Gets or sets the Note field of the pledge to create.</summary>
+		public string PledgeNote {
+			get { return pledgeNote; }
+			set { pledgeNote = value; OnPropertyChanged(); }
 		}
 
 
@@ -185,7 +192,8 @@ namespace ShomreiTorah.Billing.PaymentImport {
 					Date = payment.Date,
 					Person = payment.Person,
 					Type = PledgeType,
-					SubType = PledgeSubType
+					SubType = PledgeSubType,
+					Note = PledgeNote
 				};
 
 				AppFramework.Table<PledgeLink>().Rows.Add(new PledgeLink {
