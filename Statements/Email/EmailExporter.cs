@@ -121,8 +121,8 @@ namespace ShomreiTorah.Billing.Statements.Email {
 				info.LogStatement();
 
 			if (exceptions.Any())
-				XtraMessageBox.Show("The following errors occurred while sending the emails:\r\n\r\n  • "
-					+ exceptions.Join("\r\n\r\n  • ", kvp => kvp.Key.FullName + ": " + kvp.Value.Message),
+				XtraMessageBox.Show("The following errors occurred while sending the emails:\r\n\r\n  â€¢ "
+					+ exceptions.Join("\r\n\r\n  â€¢ ", kvp => kvp.Key.FullName + ": " + kvp.Value.Message),
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 		private void buttonEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
