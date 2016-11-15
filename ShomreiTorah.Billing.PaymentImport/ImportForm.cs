@@ -78,8 +78,8 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			viewModel.Person = (Person)peopleView.GetRow(e.RowHandle);
 		}
 
-		private void refresh_ItemClick(object sender, ItemClickEventArgs e) => LoadPayments();
-		private void startDate_EditValueChanged(Object sender, EventArgs e) => LoadPayments();
+		private async void refresh_ItemClick(object sender, ItemClickEventArgs e) => await LoadPaymentsAsync();
+		private async void startDate_EditValueChanged(Object sender, EventArgs e) => await LoadPaymentsAsync();
 
 		private void import_ItemClick(object sender, ItemClickEventArgs e) {
 			try {
@@ -96,12 +96,12 @@ namespace ShomreiTorah.Billing.PaymentImport {
 					availablePaymentsView.VisibleRecordIndex));
 		}
 
-		protected override void OnShown(EventArgs e) {
+		protected override async void OnShown(EventArgs e) {
 			base.OnShown(e);
-			LoadPayments();
+			await LoadPaymentsAsync();
 		}
-		void LoadPayments() {
-			viewModel.LoadPayments((DateTime)startDate.EditValue);
+		async Task LoadPaymentsAsync() {
+			await viewModel.LoadPayments((DateTime)startDate.EditValue);
 			SetCurrentPayment();
 		}
 
@@ -114,7 +114,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		private void peopleView_CustomDrawCell(object sender, RowCellCustomDrawEventArgs e) {
 			var person = (Person)peopleView.GetRow(e.RowHandle);
 			if (person != null)
-				e.Appearance.BackColor = Color.FromArgb(128, 
+				e.Appearance.BackColor = Color.FromArgb(128,
 					matchColors[Matcher.GetMatchScore(viewModel.CurrentPayment, person)]);
 		}
 	}

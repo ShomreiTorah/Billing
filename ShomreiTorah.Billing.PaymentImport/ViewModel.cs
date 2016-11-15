@@ -17,7 +17,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 	public class ViewModel : INotifyPropertyChanged {
 		///<summary>All payments from the source (including already-imported payments).</summary>
 		IReadOnlyCollection<PaymentInfo> allPayments;
-		
+
 		Dictionary<string, ImportingPayment> importingPayments = new Dictionary<string, ImportingPayment>();
 		ImportingPayment currentImport;
 
@@ -42,12 +42,12 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				comments = "\n" + payment.Comments;
 				// TODO: Infer type from payment comments & amount
 				pledgeAmount = payment.Amount;
-				
+
 				directMatches = matchingPeople = Matcher.FindMatches(payment).ToList().AsReadOnly();
 				person = directMatches.Count == 1 ? directMatches.First() : null;
 			}
 		}
-		
+
 
 		ReadOnlyCollection<PaymentInfo> availablePayments;
 		///<summary>Gets all payments that are ready to import.</summary>
@@ -84,7 +84,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 					OnPropertyChanged(nameof(PledgeAmount));
 					OnPropertyChanged(nameof(Person));
 					OnPropertyChanged(nameof(MatchingPeople));
-				} 
+				}
 				OnPropertyChanged();
 			}
 		}
@@ -147,13 +147,12 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		}
 
 		///<summary>Loads payments to import from the current source.</summary>
-		public void LoadPayments(DateTime start) {
+		public async Task LoadPayments(DateTime start) {
 			AppFramework.LoadTables(ImportedPayment.Schema);
-			if (!ProgressWorker.Execute(p => {
+			await ProgressWorker.ExecuteAsync(async (p, token) => {
 				p.Caption = "Loading payments after " + start.ToShortDateString();
-				allPayments = source.GetPayments(start).OrderBy(pi => pi.Date).ToList();
-			}, cancellable: true))
-				return;
+				allPayments = (await source.GetPaymentsAsync(start, token)).OrderBy(pi => pi.Date).ToList();
+			});
 			RefreshPayments();
 		}
 

@@ -4,6 +4,7 @@ using System.Composition;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ShomreiTorah.Common;
 
@@ -13,7 +14,7 @@ namespace ShomreiTorah.Billing.PaymentImport.Sources {
 	public class WpAuthNetSource : IPaymentSource {
 		public string Name => "WP AuthNet";
 
-		public IEnumerable<PaymentInfo> GetPayments(DateTime start) {
+		public Task<IEnumerable<PaymentInfo>> GetPaymentsAsync(DateTime start, CancellationToken cancellationToken) {
 			DB.RegisterFactory("MySql", MySql.Data.MySqlClient.MySqlClientFactory.Instance);
 			DB.RegisterFactory("MySql.Data.MySqlClient", MySql.Data.MySqlClient.MySqlClientFactory.Instance);
 
@@ -31,7 +32,7 @@ FROM wp_authnet_user_subscription us
 	JOIN wp_authnet_payment p ON us.ID = p.user_subscription_id
 	LEFT JOIN wp_authnet_subscription s ON s.ID = p.xSubscriptionId
 WHERE p.paymentDate > ?start", new { start })) {
-				return reader.Cast<IDataRecord>()
+				return Task.FromResult<IEnumerable<PaymentInfo>>(reader.Cast<IDataRecord>()
 							 .Select(dr => new PaymentInfo {
 								 Id = dr.GetString(dr.GetOrdinal("id")),
 								 Email = dr.GetString(dr.GetOrdinal("emailAddress")),
@@ -43,7 +44,7 @@ WHERE p.paymentDate > ?start", new { start })) {
 								 Comments = dr.GetString(dr.GetOrdinal("subscriptionNotes"))
 										  + "\nIP Address: " + dr.GetString(dr.GetOrdinal("userIP"))
 							 })
-							 .ToList();
+							 .ToList());
 			}
 		}
 	}

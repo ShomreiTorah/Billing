@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ShomreiTorah.Billing.PaymentImport {
@@ -32,6 +33,6 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		string Name { get; }
 
 		///<summary>Gets all payments made after the given date that have not yet been imported.</summary>
-		IEnumerable<PaymentInfo> GetPayments(DateTime start);
+		Task<IEnumerable<PaymentInfo>> GetPaymentsAsync(DateTime start, CancellationToken cancellationToken);
 	}
 }
