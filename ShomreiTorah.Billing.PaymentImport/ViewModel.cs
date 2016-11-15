@@ -13,13 +13,41 @@ using ShomreiTorah.Data.UI;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.PaymentImport {
-	// TODO: Split into Dictionary<string, ImportingPayment> to preserve data with scroll or refresh.
 	[Export]
 	public class ViewModel : INotifyPropertyChanged {
 		///<summary>All payments from the source (including already-imported payments).</summary>
 		IReadOnlyCollection<PaymentInfo> allPayments;
-		IReadOnlyCollection<Person> directMatches;
+		
+		Dictionary<string, ImportingPayment> importingPayments = new Dictionary<string, ImportingPayment>();
+		ImportingPayment currentImport;
 
+		///<summary>Stores user input for a single payment that is in the process of being imported.</summary>
+		class ImportingPayment {
+			// All properties of the current import must be stored here.
+			// They must only be mutated through the wrapper properties,
+			// so that we always raise PropertyChanged for data-binding.
+			public ReadOnlyCollection<Person> matchingPeople;
+			public Person person;
+			public string comments;
+			public bool createPledge;
+			public decimal pledgeAmount;
+			public string pledgeType;
+			public string pledgeSubType;
+			public string pledgeNote;
+
+			///<summary>Matches found directly from the master directory.  User-selected people are concatenated to this.</summary>
+			public readonly IReadOnlyCollection<Person> directMatches;
+
+			public ImportingPayment(PaymentInfo payment) {
+				comments = "\n" + payment.Comments;
+				// TODO: Infer type from payment comments & amount
+				pledgeAmount = payment.Amount;
+				
+				directMatches = matchingPeople = Matcher.FindMatches(payment).ToList().AsReadOnly();
+				person = directMatches.Count == 1 ? directMatches.First() : null;
+			}
+		}
+		
 
 		ReadOnlyCollection<PaymentInfo> availablePayments;
 		///<summary>Gets all payments that are ready to import.</summary>
@@ -29,11 +57,10 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		}
 
 
-		ReadOnlyCollection<Person> matchingPeople;
 		///<summary>Gets existing people that may match the current payment.</summary>
 		public ReadOnlyCollection<Person> MatchingPeople {
-			get { return matchingPeople; }
-			private set { matchingPeople = value; OnPropertyChanged(); }
+			get { return currentImport?.matchingPeople; }
+			private set { currentImport.matchingPeople = value; OnPropertyChanged(); }
 		}
 
 
@@ -44,26 +71,31 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			set {
 				currentPayment = value;
 				if (value != null) {
-					Comments = "\n" + value.Comments;
-					CreatePledge = false;
-					PledgeType = null;  // TODO: Infer type from payment comments & amount
-					PledgeSubType = null;
-					PledgeNote = null;
-					PledgeAmount = value.Amount;
-					FindMathingPeople();
-				}
+					// If we haven't started importing this payment already, initialize its backing object.
+					if (!importingPayments.TryGetValue(value.Id, out currentImport)) {
+						currentImport = new ImportingPayment(value);
+						importingPayments.Add(value.Id, currentImport);
+					}
+					OnPropertyChanged(nameof(Comments));
+					OnPropertyChanged(nameof(CreatePledge));
+					OnPropertyChanged(nameof(PledgeType));
+					OnPropertyChanged(nameof(PledgeSubType));
+					OnPropertyChanged(nameof(PledgeNote));
+					OnPropertyChanged(nameof(PledgeAmount));
+					OnPropertyChanged(nameof(Person));
+					OnPropertyChanged(nameof(MatchingPeople));
+				} 
 				OnPropertyChanged();
 			}
 		}
 
-		Person person;
 		///<summary>Gets or sets the person who will own the created payment.</summary>
 		public Person Person {
-			get { return person; }
+			get { return currentImport?.person; }
 			set {
-				person = value;
-				var people = directMatches.ToList();
-				if (value != null && !directMatches.Contains(value))
+				currentImport.person = value;
+				var people = currentImport.directMatches.ToList();
+				if (value != null && !currentImport.directMatches.Contains(value))
 					people.Add(value);
 				MatchingPeople = people.AsReadOnly();
 				OnPropertyChanged();
@@ -71,44 +103,38 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		}
 
 
-		string comments;
 		///<summary>Gets or sets the comments field of the payment to create.</summary>
 		public string Comments {
-			get { return comments; }
-			set { comments = value; OnPropertyChanged(); }
+			get { return currentImport?.comments; }
+			set { currentImport.comments = value; OnPropertyChanged(); }
 		}
 
-		bool createPledge;
 		///<summary>Gets or sets whether to also create a linked pledge when importing the payment.</summary>
 		public bool CreatePledge {
-			get { return createPledge; }
-			set { createPledge = value; OnPropertyChanged(); }
+			get { return currentImport?.createPledge ?? false; }
+			set { currentImport.createPledge = value; OnPropertyChanged(); }
 		}
-		decimal pledgeAmount;
 		///<summary>Gets or sets the amount of the pledge to create.</summary>
 		public decimal PledgeAmount {
-			get { return pledgeAmount; }
-			set { pledgeAmount = value; OnPropertyChanged(); }
+			get { return currentImport?.pledgeAmount ?? 0; }
+			set { currentImport.pledgeAmount = value; OnPropertyChanged(); }
 		}
 
-		string pledgeType;
 		///<summary>Gets or sets the Type field of the pledge to create.</summary>
 		public string PledgeType {
-			get { return pledgeType; }
-			set { pledgeType = value; OnPropertyChanged(); }
+			get { return currentImport?.pledgeType; }
+			set { currentImport.pledgeType = value; OnPropertyChanged(); }
 		}
 
-		string pledgeSubType;
 		///<summary>Gets or sets the SubType field of the pledge to create.</summary>
 		public string PledgeSubType {
-			get { return pledgeSubType; }
-			set { pledgeSubType = value; OnPropertyChanged(); }
+			get { return currentImport?.pledgeSubType; }
+			set { currentImport.pledgeSubType = value; OnPropertyChanged(); }
 		}
-		string pledgeNote;
 		///<summary>Gets or sets the Note field of the pledge to create.</summary>
 		public string PledgeNote {
-			get { return pledgeNote; }
-			set { pledgeNote = value; OnPropertyChanged(); }
+			get { return currentImport?.pledgeNote; }
+			set { currentImport.pledgeNote = value; OnPropertyChanged(); }
 		}
 
 
@@ -145,15 +171,6 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			AvailablePayments = allPayments.Where(p => !alreadyImported.Contains(p.Id)).ToList().AsReadOnly();
 		}
 
-		private void FindMathingPeople() {
-			if (CurrentPayment == null)
-				return;
-
-			var matches = Matcher.FindMatches(CurrentPayment).ToList().AsReadOnly();
-			directMatches = matches;
-			MatchingPeople = matches;
-			Person = directMatches.Count == 1 ? directMatches.First() : null;
-		}
 
 
 		public void Import() {

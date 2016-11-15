@@ -27,6 +27,8 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		public ImportForm(ViewModel viewModel) {
 			InitializeComponent();
 			this.viewModel = viewModel;
+			// Don't reset focused row when list changes.  We bind FocusedRow ourselves.
+			peopleView.DataController.AllowCurrentControllerRow = false;
 			viewModelBindingSource.DataSource = viewModel;
 			viewModel.PropertyChanged += ViewModel_PropertyChanged;
 			startDate.EditValue = DateTime.Today.AddDays(-14);
