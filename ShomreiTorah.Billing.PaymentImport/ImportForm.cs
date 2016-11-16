@@ -17,6 +17,7 @@ using DevExpress.XtraGrid.Views.Layout.Events;
 using DevExpress.XtraBars;
 using ShomreiTorah.WinForms;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraLayout.Utils;
 
 namespace ShomreiTorah.Billing.PaymentImport {
 	[Export]
@@ -43,6 +44,37 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				State = viewModel.CurrentPayment.State,
 				Zip = viewModel.CurrentPayment.Zip
 			};
+		}
+
+		///<summary>Filters the PledgeTypeTree to allow a limited set of pledge types.  Also disables the textboxes to force the user to pick one of those.</summary>
+		public ImportForm SetPledgeTypes(params PledgeType[] types) => SetPledgeTypes((IReadOnlyCollection<PledgeType>)types);
+		///<summary>Filters the PledgeTypeTree to allow a limited set of pledge types.  Also disables the textboxes to force the user to pick one of those.</summary>
+		public ImportForm SetPledgeTypes(IReadOnlyCollection<PledgeType> types) {
+			if (types == null) throw new ArgumentNullException(nameof(types));
+			// TODO: Filter the ViewModel inference.
+			pledgeTypeTree.PledgeTypes = types;
+			PledgeTypeTextEdit.Enabled = false;
+			PledgeSubTypeTextEdit.Enabled = false;
+			return this;
+		}
+
+		///<summary>Forces created pledges (if any) to use a specific type and subtype, disabling textboxes and hiding the tree.</summary>
+		public ImportForm FixPledgeType(string type, string subType) {
+			viewModel.NewPaymentSelected += delegate {
+				viewModel.PledgeType = type;
+				viewModel.PledgeSubType = subType;
+			};
+			PledgeTypeTextEdit.Enabled = false;
+			PledgeSubTypeTextEdit.Enabled = false;
+			pledgeTypeTreeItem.Visibility = LayoutVisibility.Never;
+			return this;
+		}
+
+		///<summary>Forces the UI to always create a pledge.</summary>
+		public ImportForm RequirePledge() {
+			CreatePledgeCheckEdit.Enabled = false;
+			viewModel.NewPaymentSelected += (s, e) => viewModel.CreatePledge = true;
+			return this;
 		}
 
 		private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) {
@@ -114,7 +146,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		private void peopleView_CustomDrawCell(object sender, RowCellCustomDrawEventArgs e) {
 			var person = (Person)peopleView.GetRow(e.RowHandle);
 			if (person != null)
-				e.Appearance.BackColor = Color.FromArgb(128, 
+				e.Appearance.BackColor = Color.FromArgb(128,
 					matchColors[Matcher.GetMatchScore(viewModel.CurrentPayment, person)]);
 		}
 	}

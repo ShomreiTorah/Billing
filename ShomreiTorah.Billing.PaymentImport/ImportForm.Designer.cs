@@ -122,7 +122,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			this.ItemForPledgeAmount = new DevExpress.XtraLayout.LayoutControlItem();
 			this.ItemForPledgeType = new DevExpress.XtraLayout.LayoutControlItem();
 			this.ItemForPledgeSubType = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.pledgeTypeTreeItem = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.pledgeNoteItem = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlGroup4 = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -176,7 +176,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			((System.ComponentModel.ISupportInitialize)(this.ItemForPledgeAmount)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ItemForPledgeType)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ItemForPledgeSubType)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pledgeTypeTreeItem)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgeNoteItem)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).BeginInit();
@@ -904,7 +904,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
             this.ItemForPledgeAmount,
             this.ItemForPledgeType,
             this.ItemForPledgeSubType,
-            this.layoutControlItem1,
+            this.pledgeTypeTreeItem,
             this.emptySpaceItem1,
             this.pledgeNoteItem});
 			this.layoutControlGroup3.Location = new System.Drawing.Point(610, 255);
@@ -951,12 +951,12 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			// 
 			// layoutControlItem1
 			// 
-			this.layoutControlItem1.Control = this.pledgeTypeTree;
-			this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
-			this.layoutControlItem1.Name = "layoutControlItem1";
-			this.layoutControlItem1.Size = new System.Drawing.Size(172, 129);
-			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-			this.layoutControlItem1.TextVisible = false;
+			this.pledgeTypeTreeItem.Control = this.pledgeTypeTree;
+			this.pledgeTypeTreeItem.Location = new System.Drawing.Point(0, 0);
+			this.pledgeTypeTreeItem.Name = "layoutControlItem1";
+			this.pledgeTypeTreeItem.Size = new System.Drawing.Size(172, 129);
+			this.pledgeTypeTreeItem.TextSize = new System.Drawing.Size(0, 0);
+			this.pledgeTypeTreeItem.TextVisible = false;
 			// 
 			// emptySpaceItem1
 			// 
@@ -1100,7 +1100,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			((System.ComponentModel.ISupportInitialize)(this.ItemForPledgeAmount)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.ItemForPledgeType)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.ItemForPledgeSubType)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pledgeTypeTreeItem)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pledgeNoteItem)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup4)).EndInit();
@@ -1196,7 +1196,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		private DevExpress.XtraGrid.Views.Layout.LayoutViewCard layoutViewCard1;
 		private DevExpress.XtraLayout.LayoutControlGroup Group1;
 		private PledgeTypeTree pledgeTypeTree;
-		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+		private DevExpress.XtraLayout.LayoutControlItem pledgeTypeTreeItem;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
 		private DevExpress.XtraEditors.TextEdit pledgeNote;
 		private DevExpress.XtraLayout.LayoutControlItem pledgeNoteItem;

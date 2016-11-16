@@ -17,7 +17,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 	public class ViewModel : INotifyPropertyChanged {
 		///<summary>All payments from the source (including already-imported payments).</summary>
 		IReadOnlyCollection<PaymentInfo> allPayments;
-		
+
 		Dictionary<string, ImportingPayment> importingPayments = new Dictionary<string, ImportingPayment>();
 		ImportingPayment currentImport;
 
@@ -42,12 +42,12 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				comments = "\n" + payment.Comments;
 				// TODO: Infer type from payment comments & amount
 				pledgeAmount = payment.Amount;
-				
+
 				directMatches = matchingPeople = Matcher.FindMatches(payment).ToList().AsReadOnly();
 				person = directMatches.Count == 1 ? directMatches.First() : null;
 			}
 		}
-		
+
 
 		ReadOnlyCollection<PaymentInfo> availablePayments;
 		///<summary>Gets all payments that are ready to import.</summary>
@@ -75,6 +75,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 					if (!importingPayments.TryGetValue(value.Id, out currentImport)) {
 						currentImport = new ImportingPayment(value);
 						importingPayments.Add(value.Id, currentImport);
+						OnNewPaymentSelected();
 					}
 					OnPropertyChanged(nameof(Comments));
 					OnPropertyChanged(nameof(CreatePledge));
@@ -84,10 +85,18 @@ namespace ShomreiTorah.Billing.PaymentImport {
 					OnPropertyChanged(nameof(PledgeAmount));
 					OnPropertyChanged(nameof(Person));
 					OnPropertyChanged(nameof(MatchingPeople));
-				} 
+				}
 				OnPropertyChanged();
 			}
 		}
+		///<summary>Occurs when a new payment is selected for import, allowing the caller to preset properties.</summary>
+		public event EventHandler NewPaymentSelected;
+		///<summary>Raises the NewPaymentSelected event.</summary>
+		internal protected virtual void OnNewPaymentSelected() => OnNewPaymentSelected(EventArgs.Empty);
+		///<summary>Raises the NewPaymentSelected event.</summary>
+		///<param name="e">An EventArgs object that provides the event data.</param>
+		protected internal virtual void OnNewPaymentSelected(EventArgs e) => NewPaymentSelected?.Invoke(this, e);
+
 
 		///<summary>Gets or sets the person who will own the created payment.</summary>
 		public Person Person {
