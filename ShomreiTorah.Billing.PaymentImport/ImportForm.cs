@@ -96,6 +96,17 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			}
 			import.Enabled = viewModel.CurrentPayment != null && viewModel.Person != null
 				&& !viewModel.CreatePledge || !string.IsNullOrWhiteSpace(viewModel.PledgeType);
+
+			if (viewModel.CurrentPayment == null && viewModel.AvailablePayments.Any()) {
+				viewModel.CurrentPayment = viewModel.AvailablePayments.First();
+			}
+			importUI.Visible = viewModel.CurrentPayment != null;
+			if (viewModel.CurrentPayment == null) {
+				var date = ((DateTime)startDate.EditValue).ToLongDateString();
+				emptyState.Text =
+					viewModel.PaymentsExist ? "Congratulations!\r\nYou've already imported every payment since " + date
+											: "There were no payments since " + date + ".\r\nTry selecting an earlier date";
+			}
 		}
 
 		private void availablePaymentsView_VisibleRecordIndexChanged(Object sender, LayoutViewVisibleRecordIndexChangedEventArgs e) => SetCurrentPayment();

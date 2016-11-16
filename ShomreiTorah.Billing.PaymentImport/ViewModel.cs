@@ -48,6 +48,8 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			}
 		}
 
+		///<summary>Indicates whether the data source returned any payments at all (including already-imported payments).</summary>
+		public bool PaymentsExist => allPayments.Any();
 
 		ReadOnlyCollection<PaymentInfo> availablePayments;
 		///<summary>Gets all payments that are ready to import.</summary>
