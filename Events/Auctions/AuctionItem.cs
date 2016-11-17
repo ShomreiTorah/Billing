@@ -7,11 +7,17 @@ using System.Text;
 using ShomreiTorah.Data;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using ShomreiTorah.Common;
 
 namespace ShomreiTorah.Billing.Events.Auctions {
 	///<summary>Describes a single item in an auction, optionally including a מי שברך.</summary>
 	class AuctionItem : INotifyPropertyChanged {
-		static readonly ReadOnlyCollection<string> SortedOrder = Names.PledgeTypes.Single(p => p.Name == "Auction").Subtypes;
+		static readonly ReadOnlyCollection<string> SortedOrder = Names
+			.PledgeTypes
+			.Single(p => p.Name == "Auction")
+			.Subtypes
+			.Select(s => s.Name)
+			.ReadOnlyCopy();
 
 		internal AuctionItem(Person person, DateTime date, string auctionName, string itemName, bool includeמישברך) {
 			Person = person;
@@ -141,11 +147,11 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 		public bool HasChanges() {
 			var existingPledge = FindPledge();
 			if (existingPledge == null && Amount == null)
-				return false;		//Neither this pledge nor the corresponding DB pledge exist.
+				return false;       //Neither this pledge nor the corresponding DB pledge exist.
 
 			if (existingPledge != null && Amount != null) {
 				if (Amount == existingPledge.Amount && Note == existingPledge.Note)
-					return false;	//Both pledges exist and their contents match exactly.
+					return false;   //Both pledges exist and their contents match exactly.
 			}
 			return true;
 		}
@@ -155,8 +161,8 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 			var existingPledge = FindPledge();
 			if (existingPledge == null) {
 				if (Amount == null)
-					return;	 //The pledge already doesn't exist.
-				//The pledge doesn't exist, so we need to add it
+					return;  //The pledge already doesn't exist.
+							 //The pledge doesn't exist, so we need to add it
 				Program.Table<Pledge>().Rows.Add(new Pledge {
 					Person = Item.Person,
 					Date = Item.Date,
@@ -166,9 +172,9 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 					Amount = Amount.Value,
 					Note = Note
 				});
-			} else if (Amount == null) {	//The pledge already exists, but we're deleting it.
+			} else if (Amount == null) {    //The pledge already exists, but we're deleting it.
 				existingPledge.RemoveRow();
-			} else {						//The pledge already exists
+			} else {                        //The pledge already exists
 				existingPledge.Amount = amount.Value;
 				existingPledge.Note = Note;
 			}
@@ -187,7 +193,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 				} else {
 					if (note == null)
 						note = new AliyahNote();
-					note.Isמתנה = value == 0;	//Don't call the property setter; we don't need its logic or event
+					note.Isמתנה = value == 0;   //Don't call the property setter; we don't need its logic or event
 				}
 				OnPropertyChanged("Amount");
 				OnPropertyChanged("Note");
@@ -207,7 +213,7 @@ namespace ShomreiTorah.Billing.Events.Auctions {
 
 					note.Text = value;
 					if (note.Isמתנה) {
-						amount = 0;	//Don't call the property setter; we don't need its logic or event
+						amount = 0; //Don't call the property setter; we don't need its logic or event
 						OnPropertyChanged("Amount");
 					} else if (Amount == 0 || Amount == null) {
 						amount = 18;

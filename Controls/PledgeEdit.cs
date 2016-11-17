@@ -19,7 +19,7 @@ namespace ShomreiTorah.Billing.Controls {
 			account.Properties.Items.AddRange(Names.AccountNames);
 			account.Properties.DropDownRows = Names.AccountNames.Count;
 
-			if (Program.Current != null) {	//Bugfix for nested designer
+			if (Program.Current != null) {  //Bugfix for nested designer
 				pledgesBindingSource.DataSource = Program.Current.DataContext;
 				Program.Table<Pledge>().LoadCompleted += Table_LoadCompleted;
 			}
@@ -59,7 +59,7 @@ namespace ShomreiTorah.Billing.Controls {
 				if (value == null) return;
 				pledgesBindingSource.Position = pledgesBindingSource.IndexOf(value);
 				commit.Hide();
-				SetCommentsHeight();	//For some reason, VisibleChanged doesn't fire.
+				SetCommentsHeight();    //For some reason, VisibleChanged doesn't fire.
 			}
 		}
 
@@ -130,13 +130,29 @@ namespace ShomreiTorah.Billing.Controls {
 			if (e.KeyCode == Keys.Enter && commit.Visible)
 				commit.PerformClick();
 		}
+
+		private void TypesText_EditValueChanged(Object sender, EventArgs e) {
+			if (!commit.Visible)    // Don't adjust amounts for existing pledges.
+				return;
+			var type = Names.PledgeTypes.FirstOrDefault(p => p.Name == typeText.Text);
+			if (type == null)
+				return;
+			if (string.IsNullOrWhiteSpace(subtypeText.Text)) {
+				if (type.DefaultPrice != null)
+					amount.EditValue = type.DefaultPrice;
+			} else {
+				var subtype = type.Subtypes.FirstOrDefault(p => p.Name == subtypeText.Text);
+				if (subtype?.DefaultPrice != null)
+					amount.EditValue = subtype.DefaultPrice;
+			}
+		}
 		#endregion
 
 		//TODO: Remove
 		private void person_PersonSelecting(object sender, PersonSelectingEventArgs e) {
 			if (e.Person != person.SelectedPerson
 			 && person.SelectedPerson != null
-				//&& !commit.Visible	//Abba wants to always confirm
+			 //&& !commit.Visible	//Abba wants to always confirm
 			 && DialogResult.No == XtraMessageBox.Show("Are you sure you want to change this pledge to be associated with " + e.Person.VeryFullName + "?",
 													   "Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
 				e.Cancel = true;
