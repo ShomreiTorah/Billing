@@ -51,7 +51,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		///<summary>Filters the PledgeTypeTree to allow a limited set of pledge types.  Also disables the textboxes to force the user to pick one of those.</summary>
 		public ImportForm SetPledgeTypes(IReadOnlyCollection<PledgeType> types) {
 			if (types == null) throw new ArgumentNullException(nameof(types));
-			// TODO: Filter the ViewModel inference.
+			viewModel.PledgeTypes = types;
 			pledgeTypeTree.PledgeTypes = types;
 			PledgeTypeTextEdit.Enabled = false;
 			PledgeSubTypeTextEdit.Enabled = false;

@@ -40,7 +40,6 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 			public ImportingPayment(PaymentInfo payment) {
 				comments = "\n" + payment.Comments;
-				// TODO: Infer type from payment comments & amount
 				pledgeAmount = payment.Amount;
 
 				directMatches = matchingPeople = Matcher.FindMatches(payment).ToList().AsReadOnly();
@@ -77,6 +76,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 					if (!importingPayments.TryGetValue(value.Id, out currentImport)) {
 						currentImport = new ImportingPayment(value);
 						importingPayments.Add(value.Id, currentImport);
+						InferType();
 						OnNewPaymentSelected();
 					}
 					OnPropertyChanged(nameof(Comments));
@@ -91,6 +91,23 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				OnPropertyChanged();
 			}
 		}
+
+		///<summary>Gets or sets the collection of pledge types to infer from based on the amount.</summary>
+		public IReadOnlyCollection<PledgeType> PledgeTypes { get; set; }
+		void InferType() {
+			foreach (var type in PledgeTypes ?? Names.PledgeTypes) {
+				var subtype = type.Subtypes.FirstOrDefault(st => st.DefaultPrice == CurrentPayment.Amount);
+				if (subtype != null) {
+					PledgeType = type.Name;
+					PledgeSubType = subtype.Name;
+					return;
+				} else if (type.DefaultPrice == CurrentPayment.Amount) {
+					PledgeType = type.Name;
+					return;
+				}
+			}
+		}
+
 		///<summary>Occurs when a new payment is selected for import, allowing the caller to preset properties.</summary>
 		public event EventHandler NewPaymentSelected;
 		///<summary>Raises the NewPaymentSelected event.</summary>
