@@ -26,7 +26,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			// All properties of the current import must be stored here.
 			// They must only be mutated through the wrapper properties,
 			// so that we always raise PropertyChanged for data-binding.
-			public ReadOnlyCollection<Person> matchingPeople;
+			public readonly ReadOnlyObservableCollection<Person> matchingPeople;
 			public Person person;
 			public string comments;
 			public bool createPledge;
@@ -35,16 +35,18 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			public string pledgeSubType;
 			public string pledgeNote;
 
-			///<summary>Matches found directly from the master directory.  User-selected people are concatenated to this.</summary>
-			public readonly IReadOnlyCollection<Person> directMatches;
+			readonly ObservableCollection<Person> writableMatches;
 
 			public ImportingPayment(PaymentInfo payment) {
 				comments = "\n" + payment.Comments;
 				pledgeAmount = payment.Amount;
 
-				directMatches = matchingPeople = Matcher.FindMatches(payment).ToList().AsReadOnly();
-				person = directMatches.Count == 1 ? directMatches.First() : null;
+				writableMatches = new ObservableCollection<Person>(Matcher.FindMatches(payment));
+				matchingPeople = new ReadOnlyObservableCollection<Person>(writableMatches);
+				person = writableMatches.Count == 1 ? writableMatches.First() : null;
 			}
+
+			public void AppendPerson(Person person) => writableMatches.Add(person);
 		}
 
 		///<summary>Indicates whether the data source returned any payments at all (including already-imported payments).</summary>
@@ -56,14 +58,6 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			get { return availablePayments; }
 			private set { availablePayments = value; OnPropertyChanged(); }
 		}
-
-
-		///<summary>Gets existing people that may match the current payment.</summary>
-		public ReadOnlyCollection<Person> MatchingPeople {
-			get { return currentImport?.matchingPeople; }
-			private set { currentImport.matchingPeople = value; OnPropertyChanged(); }
-		}
-
 
 		PaymentInfo currentPayment;
 		///<summary>Gets or sets the payment currently being imported.</summary>
@@ -117,15 +111,16 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		protected internal virtual void OnNewPaymentSelected(EventArgs e) => NewPaymentSelected?.Invoke(this, e);
 
 
+		///<summary>Gets existing people that may match the current payment.</summary>
+		public ReadOnlyObservableCollection<Person> MatchingPeople => currentImport?.matchingPeople;
+
 		///<summary>Gets or sets the person who will own the created payment.</summary>
 		public Person Person {
 			get { return currentImport?.person; }
 			set {
 				currentImport.person = value;
-				var people = currentImport.directMatches.ToList();
-				if (value != null && !currentImport.directMatches.Contains(value))
-					people.Add(value);
-				MatchingPeople = people.AsReadOnly();
+				if (value != null && !MatchingPeople.Contains(value))
+					currentImport?.AppendPerson(value);
 				OnPropertyChanged();
 			}
 		}
