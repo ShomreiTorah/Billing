@@ -145,7 +145,6 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		}
 		async Task LoadPaymentsAsync() {
 			await viewModel.LoadPayments((DateTime)startDate.EditValue);
-			SetCurrentPayment();
 		}
 
 		private void availablePaymentsView_CustomDrawCardCaption(object sender, LayoutViewCustomDrawCardCaptionEventArgs e) {

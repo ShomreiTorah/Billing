@@ -174,7 +174,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			AppFramework.LoadTables(ImportedPayment.Schema);
 			await ProgressWorker.ExecuteAsync(async (p, token) => {
 				p.Caption = "Loading payments after " + start.ToShortDateString();
-				allPayments = (await source.GetPaymentsAsync(start, token)).OrderBy(pi => pi.Date).ToList();
+				allPayments = (await source.GetPaymentsAsync(start, token)).OrderByDescending(pi => pi.Date).ToList();
 			});
 			RefreshPayments();
 		}
@@ -184,15 +184,13 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				AvailablePayments = new ReadOnlyCollection<PaymentInfo>(new PaymentInfo[0]);
 				return;
 			}
-			var start = allPayments.First().Date;
+			var start = allPayments.Last().Date;
 			var alreadyImported = new HashSet<string>(
 				AppFramework.Table<ImportedPayment>().Rows
-					.Where(ip => ip.Source == source
-					.Name && ip.Payment.Date >= start)
+					.Where(ip => ip.Source == source.Name && ip.Payment.Date >= start)
 					.Select(ip => ip.ExternalId));
 			AvailablePayments = allPayments.Where(p => !alreadyImported.Contains(p.Id)).ToList().AsReadOnly();
 		}
-
 
 
 		public void Import() {
