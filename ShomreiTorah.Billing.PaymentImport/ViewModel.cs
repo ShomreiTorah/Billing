@@ -242,6 +242,15 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				});
 				AppFramework.Table<Pledge>().Rows.Add(pledge);
 			}
+
+			if (CurrentPayment.JournalInfo?.MensSeats != null || CurrentPayment.JournalInfo?.WomensSeats != null) {
+				AppFramework.Table<MelaveMalkaSeat>().Rows.Add(new MelaveMalkaSeat {
+					MensSeats = CurrentPayment.JournalInfo.MensSeats,
+					WomensSeats = CurrentPayment.JournalInfo.WomensSeats,
+					Person = payment.Person,
+					DateAdded = DateTime.Now
+				});
+			}
 			ImportCallback(CurrentPayment, payment, pledge);
 			RefreshPayments();
 		}
