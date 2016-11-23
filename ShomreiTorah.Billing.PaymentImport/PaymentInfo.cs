@@ -26,6 +26,16 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		public string Country { get; set; }
 		public string Phone { get; set; }
 		public string Email { get; set; }
+
+		public PaymentJournalInfo JournalInfo { get; set; }
+	}
+
+
+	///<summary>Stores journal-specific information about a payment from an external source.</summary>
+	public class PaymentJournalInfo {
+		public string AdText { get; set; }
+		public int? MensSeats { get; set; }
+		public int? WomensSeats { get; set; }
 	}
 
 	///<summary>A source of external payments to import.</summary>

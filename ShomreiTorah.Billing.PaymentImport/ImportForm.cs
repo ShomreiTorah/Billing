@@ -77,6 +77,12 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			return this;
 		}
 
+		///<summary>Sets a single callback to run after each payment is imported.</summary>
+		public ImportForm SetCreationCallback(Action<PaymentInfo, Payment, Pledge> callback) {
+			viewModel.ImportCallback = callback;
+			return this;
+		}
+
 		private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) {
 			switch (e.PropertyName) {
 				case nameof(viewModel.CurrentPayment):

@@ -160,7 +160,8 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			set { currentImport.pledgeNote = value; OnPropertyChanged(); }
 		}
 
-
+		///<summary>Called after each payment is imported.</summary>
+		public Action<PaymentInfo, Payment, Pledge> ImportCallback { get; set; }
 
 		readonly IPaymentSource source;
 
@@ -221,8 +222,9 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				Payment = payment,
 				Source = source.Name
 			});
+			Pledge pledge = null;
 			if (CreatePledge) {
-				var pledge = new Pledge {
+				pledge = new Pledge {
 					Account = payment.Account,
 					Amount = PledgeAmount,
 					Comments = "Created for credit card payment:\n" + payment.Comments,
@@ -240,6 +242,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				});
 				AppFramework.Table<Pledge>().Rows.Add(pledge);
 			}
+			ImportCallback(CurrentPayment, payment, pledge);
 			RefreshPayments();
 		}
 
