@@ -150,7 +150,11 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			await LoadPaymentsAsync();
 		}
 		async Task LoadPaymentsAsync() {
-			await viewModel.LoadPayments((DateTime)startDate.EditValue);
+			try {
+				await viewModel.LoadPayments((DateTime)startDate.EditValue);
+			} catch (Exception ex) {
+				Dialog.ShowError("An error occurred while loading payments.\r\n" + ex.GetBaseException().Message);
+			}
 		}
 
 		private void availablePaymentsView_CustomDrawCardCaption(object sender, LayoutViewCustomDrawCardCaptionEventArgs e) {

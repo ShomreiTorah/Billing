@@ -40,12 +40,14 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 			// Filter by each field, but only if that field has any matches.
 
-			var sourceAddress = AddressInfo.Parse(source.Address);
-			var sourceState = UsStates.Abbreviate(source.State);
-			candidates = candidates.Where(p =>
-				 IsMatch(p.Zip, source.Zip) && IsMatch(p.State, sourceState)
-			  && IsMatch(p.City, source.City) && AddressInfo.Parse(p.Address) == sourceAddress)
-				.DefaultIfEmpty(candidates);
+			if (!string.IsNullOrEmpty(source.Address)) {
+				var sourceAddress = AddressInfo.Parse(source.Address);
+				var sourceState = UsStates.Abbreviate(source.State);
+				candidates = candidates.Where(p =>
+					 IsMatch(p.Zip, source.Zip) && IsMatch(p.State, sourceState)
+				  && IsMatch(p.City, source.City) && AddressInfo.Parse(p.Address) == sourceAddress)
+					.DefaultIfEmpty(candidates);
+			}
 
 			candidates = candidates.Where(p => p.LastName.Equals(source.LastName, StringComparison.CurrentCultureIgnoreCase))
 				.DefaultIfEmpty(candidates);
@@ -95,6 +97,10 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		}
 
 		public static int GetMatchScore(PaymentInfo source, Person match) {
+			if (string.IsNullOrWhiteSpace(source.Address))
+				return source.LastName.Equals(match.LastName, StringComparison.CurrentCultureIgnoreCase)
+					&& source.FirstName.Equals(match.HisName, StringComparison.CurrentCultureIgnoreCase)
+					 ? 1 : 2;
 			if (!AddressInfo.Parse(source.Address).Equals(AddressInfo.Parse(match.Address))
 			 || LevenshteinProcessor.LevenshteinDistance(source.LastName, match.LastName) > 1)
 				return 2;

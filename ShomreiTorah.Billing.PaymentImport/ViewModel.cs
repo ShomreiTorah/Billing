@@ -195,7 +195,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 
 		public void Import() {
-			if (!AppFramework.Table<EmailAddress>().Rows
+			if (!string.IsNullOrWhiteSpace(CurrentPayment.Email) && !AppFramework.Table<EmailAddress>().Rows
 					.Any(r => r.Email.Equals(CurrentPayment.Email, StringComparison.OrdinalIgnoreCase))) {
 				AppFramework.Table<EmailAddress>().Rows.Add(new EmailAddress {
 					Email = CurrentPayment.Email,
@@ -251,7 +251,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 					DateAdded = DateTime.Now
 				});
 			}
-			ImportCallback(CurrentPayment, payment, pledge);
+			ImportCallback?.Invoke(CurrentPayment, payment, pledge);
 			RefreshPayments();
 		}
 
