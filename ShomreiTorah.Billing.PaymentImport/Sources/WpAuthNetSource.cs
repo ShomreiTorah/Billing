@@ -38,7 +38,6 @@ WHERE p.paymentDate > ?start", new { start })) {
 								 Email = dr.GetString(dr.GetOrdinal("emailAddress")),
 								 FinalFour = dr.GetString(dr.GetOrdinal("lastFourDigitsOfCreditCard")),
 								 CardIssuer = dr.GetString(dr.GetOrdinal("response")).Split('|')[51],
-								 PledgeType = dr.GetString(dr.GetOrdinal("name")),
 								 Date = dr.GetDateTime(dr.GetOrdinal("paymentDate")),
 								 Amount = dr.GetDecimal(dr.GetOrdinal("xAmount")),
 								 Comments = dr.GetString(dr.GetOrdinal("subscriptionNotes"))

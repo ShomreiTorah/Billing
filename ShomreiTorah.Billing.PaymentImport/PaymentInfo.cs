@@ -13,7 +13,6 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		public decimal Amount { get; set; }
 		public string FinalFour { get; set; }
 		public string CardIssuer { get; set; }
-		public string PledgeType { get; set; }
 		public string Comments { get; set; }
 
 		public string FirstName { get; set; }
