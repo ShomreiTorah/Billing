@@ -12,7 +12,7 @@ namespace ShomreiTorah.Billing.PaymentImport.Sources {
 	///<summary>Imports payments from the MySQL database used by WP AuthNet.</summary>
 	[Export(typeof(IPaymentSource))]
 	public class WpAuthNetSource : IPaymentSource {
-		public string Name => "WP AuthNet";
+		public string Name => "WpAuthNet";
 
 		public Task<IEnumerable<PaymentInfo>> GetPaymentsAsync(DateTime start, CancellationToken cancellationToken) {
 			DB.RegisterFactory("MySql", MySql.Data.MySqlClient.MySqlClientFactory.Instance);

@@ -96,6 +96,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Sources\AggregatingSource.cs" />
     <Compile Include="Sources\AuthNetSource.cs" />
     <Compile Include="Sources\LocalFileSource.cs" />
     <Compile Include="Sources\RemoteJsonSource.cs" />

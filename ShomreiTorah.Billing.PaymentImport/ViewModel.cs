@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using ShomreiTorah.Billing.PaymentImport.Sources;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI;
@@ -163,11 +164,11 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		///<summary>Called after each payment is imported.</summary>
 		public Action<PaymentInfo, Payment, Pledge> ImportCallback { get; set; }
 
-		readonly IPaymentSource source;
+		readonly AggregatingSource source;
 
 		[ImportingConstructor]
-		public ViewModel([ImportMany] IEnumerable<IPaymentSource> sources) {
-			source = sources.Single(s => s.Name == Config.ReadAttribute("Billing", "PaymentImport", "Source", "Name"));
+		public ViewModel(AggregatingSource source) {
+			this.source = source;
 		}
 
 		///<summary>Loads payments to import from the current source.</summary>
@@ -175,7 +176,10 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			AppFramework.LoadTables(ImportedPayment.Schema);
 			await ProgressWorker.ExecuteAsync(async (p, token) => {
 				p.Caption = "Loading payments after " + start.ToShortDateString();
-				allPayments = (await source.GetPaymentsAsync(start, token)).OrderByDescending(pi => pi.Date).ToList();
+				allPayments = (await source.GetPaymentsAsync(start, token))
+					.Where(pi => pi.Amount > 0)
+					.OrderByDescending(pi => pi.Date)
+					.ToList();
 			});
 			RefreshPayments();
 		}
@@ -186,11 +190,14 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				return;
 			}
 			var start = allPayments.Last().Date;
-			var alreadyImported = new HashSet<string>(
+			var alreadyImported = new HashSet<Tuple<string, string>>(
 				AppFramework.Table<ImportedPayment>().Rows
-					.Where(ip => ip.Source == source.Name && ip.Payment.Date >= start)
-					.Select(ip => ip.ExternalId));
-			AvailablePayments = allPayments.Where(p => !alreadyImported.Contains(p.Id)).ToList().AsReadOnly();
+					.Where(ip => ip.Payment.Date >= start)
+					.Select(ip => Tuple.Create(ip.Source, ip.ExternalId)));
+			AvailablePayments = allPayments
+				.Where(p => !alreadyImported.Contains(Tuple.Create(p.SourceName, p.Id)))
+				.ToList()
+				.AsReadOnly();
 		}
 
 
@@ -220,7 +227,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				ExternalId = CurrentPayment.Id,
 				ImportingUser = Environment.UserName,
 				Payment = payment,
-				Source = source.Name
+				Source = CurrentPayment.SourceName
 			});
 			Pledge pledge = null;
 			if (CreatePledge) {

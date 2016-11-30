@@ -19,8 +19,8 @@ namespace ShomreiTorah.Billing.PaymentImport.Sources {
 
 		public async Task<IEnumerable<PaymentInfo>> GetPaymentsAsync(DateTime start, CancellationToken cancellationToken) {
 			Configuration.RegisterConfiguration(GatewayUrl.Production, new Authentication {
-				ApiLogin = Config.ReadAttribute("Billing", "PaymentImport", "Source", "ApiLogin"),
-				TransactionKey = Config.ReadAttribute("Billing", "PaymentImport", "Source", "TransactionKey"),
+				ApiLogin = Config.ReadAttribute("Billing", "PaymentImport", "Sources", "AuthorizeNet", "ApiLogin"),
+				TransactionKey = Config.ReadAttribute("Billing", "PaymentImport", "Sources", "AuthorizeNet", "TransactionKey"),
 			});
 
 			var details = await Task.WhenAll(

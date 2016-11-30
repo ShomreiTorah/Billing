@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace ShomreiTorah.Billing.PaymentImport {
 	///<summary>A payment from an external source that can be imported.</summary>
@@ -25,6 +26,13 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		public string Country { get; set; }
 		public string Phone { get; set; }
 		public string Email { get; set; }
+
+		[JsonIgnore]
+		public string SourceName { get;private set; }
+		public PaymentInfo WithSource(string source) {
+			SourceName = source;
+			return this;
+		}
 
 		public PaymentJournalInfo JournalInfo { get; set; }
 	}

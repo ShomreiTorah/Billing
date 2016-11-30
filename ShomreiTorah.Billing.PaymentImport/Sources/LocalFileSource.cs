@@ -13,10 +13,10 @@ namespace ShomreiTorah.Billing.PaymentImport.Sources {
 	///<summary>Imports payments from a local JSON file, for debugging.</summary>
 	[Export(typeof(IPaymentSource))]
 	class LocalFileSource : IPaymentSource {
-		public string Name => "Local File";
+		public string Name => "LocalJson";
 
 		public Task<IEnumerable<PaymentInfo>> GetPaymentsAsync(DateTime start, CancellationToken cancellationToken) {
-			var path = Config.ReadAttribute("Billing", "PaymentImport", "Source", "LocalPath");
+			var path = Config.ReadAttribute("Billing", "PaymentImport", "Sources", "LocalJson", "Path");
 			return Task.FromResult(JsonConvert.DeserializeObject<List<PaymentInfo>>(File.ReadAllText(path))
 				.Where(p => p.Date >= start));
 		}
