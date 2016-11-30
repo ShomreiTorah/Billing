@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
+using System.Composition;
 using System.Drawing;
-using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
-using System.Composition;
-using DevExpress.XtraGrid.Views.Base;
-using ShomreiTorah.WinForms.Controls;
-using ShomreiTorah.Data;
-using ShomreiTorah.WinForms.Forms;
-using DevExpress.XtraGrid.Views.Layout.Events;
 using DevExpress.XtraBars;
-using ShomreiTorah.WinForms;
+using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Layout.Events;
 using DevExpress.XtraLayout.Utils;
+using ShomreiTorah.Data;
+using ShomreiTorah.WinForms;
+using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.PaymentImport {
 	[Export]
@@ -43,6 +39,11 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				Source = "Credit Card Import",
 				State = viewModel.CurrentPayment.State,
 				Zip = viewModel.CurrentPayment.Zip
+			};
+
+			viewModel.ImportCallback = (info, payment, pledge) => {
+				var pledgeMessage = pledge == null ? "" : $"and {pledge.Type} pledge ";
+				InfoMessage.Show($"A {payment.Amount:C} payment {pledgeMessage}has been imported to {payment.Person.FullName}.");
 			};
 		}
 
@@ -77,7 +78,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			return this;
 		}
 
-		///<summary>Sets a single callback to run after each payment is imported.</summary>
+		///<summary>Sets a single callback to run after each payment is imported.  This should call <see cref="InfoMessage.Show(string)"/>.</summary>
 		public ImportForm SetCreationCallback(Action<PaymentInfo, Payment, Pledge> callback) {
 			viewModel.ImportCallback = callback;
 			return this;
