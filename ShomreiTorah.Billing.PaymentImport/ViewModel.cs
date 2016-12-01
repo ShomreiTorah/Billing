@@ -259,6 +259,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 					MensSeats = CurrentPayment.JournalInfo.MensSeats,
 					WomensSeats = CurrentPayment.JournalInfo.WomensSeats,
 					Person = payment.Person,
+					Year = JournalAd.InferYear(payment.Date),
 					DateAdded = DateTime.Now
 				});
 			}
