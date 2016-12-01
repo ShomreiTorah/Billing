@@ -9,6 +9,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Layout;
 using DevExpress.XtraGrid.Views.Layout.Events;
 using DevExpress.XtraLayout.Utils;
 using ShomreiTorah.Data;
@@ -180,6 +181,14 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			if (person != null)
 				e.Appearance.BackColor = Color.FromArgb(128,
 					matchColors[Matcher.GetMatchScore(viewModel.CurrentPayment, person)]);
+		}
+
+		private void availablePaymentsView_CustomCardLayout(object sender, LayoutViewCustomCardLayoutEventArgs e) {
+			var payment = (PaymentInfo)availablePaymentsView.GetRow(e.RowHandle);
+			e.CardDifferences.AddItemDifference(fieldWarning.Name,
+				LayoutItemDifferenceType.ItemVisibility,
+				!isJournalMode && payment.JournalInfo != null
+			);
 		}
 	}
 }
