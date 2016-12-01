@@ -19,7 +19,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		///<summary>All payments from the source (including already-imported payments).</summary>
 		IReadOnlyCollection<PaymentInfo> allPayments;
 
-		Dictionary<string, ImportingPayment> importingPayments = new Dictionary<string, ImportingPayment>();
+		readonly Dictionary<string, ImportingPayment> importingPayments = new Dictionary<string, ImportingPayment>();
 		ImportingPayment currentImport;
 
 		///<summary>Stores user input for a single payment that is in the process of being imported.</summary>
@@ -87,6 +87,9 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			}
 		}
 
+		///<summary>Gets or sets a delegate to filter all payments from the data source.</summary>
+		public Func<PaymentInfo, bool> PaymentFilter { get; set; } = _ => true;
+
 		///<summary>Gets or sets the collection of pledge types to infer from based on the amount.</summary>
 		public IReadOnlyCollection<PledgeType> PledgeTypes { get; set; }
 		void InferType() {
@@ -106,10 +109,10 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		///<summary>Occurs when a new payment is selected for import, allowing the caller to preset properties.</summary>
 		public event EventHandler NewPaymentSelected;
 		///<summary>Raises the NewPaymentSelected event.</summary>
-		internal protected virtual void OnNewPaymentSelected() => OnNewPaymentSelected(EventArgs.Empty);
+		void OnNewPaymentSelected() => OnNewPaymentSelected(EventArgs.Empty);
 		///<summary>Raises the NewPaymentSelected event.</summary>
 		///<param name="e">An EventArgs object that provides the event data.</param>
-		protected internal virtual void OnNewPaymentSelected(EventArgs e) => NewPaymentSelected?.Invoke(this, e);
+		void OnNewPaymentSelected(EventArgs e) => NewPaymentSelected?.Invoke(this, e);
 
 
 		///<summary>Gets existing people that may match the current payment.</summary>
@@ -177,6 +180,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			await ProgressWorker.ExecuteAsync(async (p, token) => {
 				p.Caption = "Loading payments after " + start.ToShortDateString();
 				allPayments = (await source.GetPaymentsAsync(start, token))
+					.Where(PaymentFilter)
 					.Where(pi => pi.Amount > 0)
 					.OrderByDescending(pi => pi.Date)
 					.ToList();

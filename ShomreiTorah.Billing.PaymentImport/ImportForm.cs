@@ -19,6 +19,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 	[Export]
 	public partial class ImportForm : XtraForm {
 		readonly ViewModel viewModel;
+		bool isJournalMode;
 
 		[ImportingConstructor]
 		public ImportForm(ViewModel viewModel) {
@@ -68,6 +69,16 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			PledgeTypeTextEdit.Enabled = false;
 			PledgeSubTypeTextEdit.Enabled = false;
 			pledgeTypeTreeItem.Visibility = LayoutVisibility.Never;
+			return this;
+		}
+
+		///<summary>Filters the payments grid to only show journal payments, and hides the warning for them.</summary>
+		public ImportForm SetJournalMode(int year) {
+			Text = "Import Ads";
+			import.Caption = "Create Ad";
+			isJournalMode = true;
+			viewModel.PaymentFilter = payment => JournalAd.InferYear(payment.Date) == year
+											  && !string.IsNullOrWhiteSpace(payment.JournalInfo?.AdText);
 			return this;
 		}
 
