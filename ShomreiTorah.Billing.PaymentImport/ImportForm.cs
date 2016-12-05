@@ -56,6 +56,8 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			if (types == null) throw new ArgumentNullException(nameof(types));
 			viewModel.PledgeTypes = types;
 			pledgeTypeTree.PledgeTypes = types;
+			PledgeTypeTextEdit.DataBindings.Remove(PledgeTypeTextEdit.DataBindings[nameof(PledgeTypeTextEdit.Enabled)]);
+			PledgeSubTypeTextEdit.DataBindings.Remove(PledgeSubTypeTextEdit.DataBindings[nameof(PledgeSubTypeTextEdit.Enabled)]);
 			PledgeTypeTextEdit.Enabled = false;
 			PledgeSubTypeTextEdit.Enabled = false;
 			return this;
@@ -67,6 +69,8 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				viewModel.PledgeType = type;
 				viewModel.PledgeSubType = subType;
 			};
+			PledgeTypeTextEdit.DataBindings.Remove(PledgeTypeTextEdit.DataBindings[nameof(PledgeTypeTextEdit.Enabled)]);
+			PledgeSubTypeTextEdit.DataBindings.Remove(PledgeSubTypeTextEdit.DataBindings[nameof(PledgeSubTypeTextEdit.Enabled)]);
 			PledgeTypeTextEdit.Enabled = false;
 			PledgeSubTypeTextEdit.Enabled = false;
 			pledgeTypeTreeItem.Visibility = LayoutVisibility.Never;
@@ -122,9 +126,12 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			importUI.Visible = viewModel.CurrentPayment != null;
 			if (viewModel.CurrentPayment == null) {
 				var date = ((DateTime)startDate.EditValue).ToLongDateString();
+				var importType = isJournalMode ? "journal ad payment" : "payment";
 				emptyState.Text =
-					viewModel.PaymentsExist ? "Congratulations!\r\nYou've already imported every payment since " + date
-											: "There were no payments since " + date + ".\r\nTry selecting an earlier date";
+					viewModel.PaymentsExist ? $"Congratulations!\r\nYou've already imported every {importType} since {date}."
+											: $"There were no {importType}s since {date}.\r\nTry selecting an earlier date.";
+				if (isJournalMode)
+					emptyState.Text += "\n\nOr use the billing to see & import non-journal payments.";
 			}
 		}
 

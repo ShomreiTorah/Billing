@@ -1084,6 +1084,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			// 
 			this.emptyState.Appearance.Font = new System.Drawing.Font("Tahoma", 12F);
 			this.emptyState.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+			this.emptyState.UseMnemonic = false;
 			this.emptyState.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
 			this.emptyState.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.emptyState.LineLocation = DevExpress.XtraEditors.LineLocation.Center;
