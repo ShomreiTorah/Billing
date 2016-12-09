@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataContext Name="PaymentImport" Namespace="ShomreiTorah.Billing.PaymentImport" CodePath="Tables.cs">
+  <Import Path="../../../Libraries/ShomreiTorah.Data/Singularity Designer.xml" />
+  <Schema Name="ImportedPayments" RowClassDescription="Links a payment imported from an external source." RowClassName="ImportedPayment" RowClassVisibility="Public" SqlName="ImportedPayments" SqlSchemaName="Billing" PrimaryKeyName="ImportedPaymentId">
+    <Column Name="ImportedPaymentId" AllowNulls="false" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets a unique ID for this row." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="true" PropertyName="ImportedPaymentId" PropertyVisibility="Public" SqlName="ImportedPaymentId">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="Payment" AllowNulls="false" DataType="ShomreiTorah.Singularity.Row, ShomreiTorah.Singularity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Description="Gets or sets the payment that was imported." Expression="" ForeignRelationName="ImportedPayments" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="true" PropertyName="Payment" PropertyVisibility="Public" SqlName="PaymentId" ForeignSchemaName="Payments">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="Source" AllowNulls="false" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the source that the payment was imported from." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="Source" PropertyVisibility="Public" SqlName="Source">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="ExternalId" AllowNulls="false" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the payment's ID within the external source.  This is an opaque value, and must be unique within the source." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="ExternalId" PropertyVisibility="Public" SqlName="ExternalId">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="DateImported" AllowNulls="false" DataType="System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the date that the payment was imported on." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="DateImported" PropertyVisibility="Public" SqlName="DateImported">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="ImportingUser" AllowNulls="false" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the user that imported the payment." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="ImportingUser" PropertyVisibility="Public" SqlName="ImportingUser">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+  </Schema>
+</DataContext>
