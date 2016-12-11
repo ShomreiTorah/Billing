@@ -30,21 +30,21 @@ namespace ShomreiTorah.Billing.PaymentImport.Sources {
 			return (await Task.WhenAll(details.Select(Task.WhenAll)))
 				.SelectMany(a => a)
 				.Select(t => new PaymentInfo {
-					Address = t.BillingAddress.Street,
+					Address = t.BillingAddress?.Street,
 					Amount = t.Status == "voided" ? 0 : t.AuthorizedAmount,
-					CardIssuer = (t.Payment[0] as CreditCard)?.CardType,
-					City = t.BillingAddress.City,
-					Company = t.BillingAddress.Company,
-					Country = t.BillingAddress.Country,
+					CardIssuer = (t.Payment?[0] as CreditCard)?.CardType,
+					City = t.BillingAddress?.City,
+					Company = t.BillingAddress?.Company,
+					Country = t.BillingAddress?.Country,
 					Date = t.SubmittedLocal,
 					Email = t.Customer?.EMail,
-					FinalFour = (t.Payment[0] as CreditCard)?.CardNumber?.Trim('X'),
-					FirstName = t.BillingAddress.FirstName,
+					FinalFour = (t.Payment?[0] as CreditCard)?.CardNumber?.Trim('X'),
+					FirstName = t.BillingAddress?.FirstName,
 					Id = t.TransactionID.ToString(),
-					LastName = t.BillingAddress.LastName,
-					Phone = t.BillingAddress.PhoneNumber,
-					State = t.BillingAddress.State,
-					Zip = t.BillingAddress.ZipCode
+					LastName = t.BillingAddress?.LastName,
+					Phone = t.BillingAddress?.PhoneNumber,
+					State = t.BillingAddress?.State,
+					Zip = t.BillingAddress?.ZipCode
 				});
 		}
 
