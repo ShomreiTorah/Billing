@@ -40,7 +40,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
             #region Create Schema
             Schema = new TypedSchema<ImportedPayment>("ImportedPayments");
             
-            Schema.PrimaryKey = ImportedPaymentIdColumn = Schema.Columns.AddValueColumn("ImportedPaymentId", typeof(String), null);
+            Schema.PrimaryKey = ImportedPaymentIdColumn = Schema.Columns.AddValueColumn("ImportedPaymentId", typeof(Guid), null);
             ImportedPaymentIdColumn.Unique = true;
             ImportedPaymentIdColumn.AllowNulls = false;
             
@@ -84,8 +84,8 @@ namespace ShomreiTorah.Billing.PaymentImport {
         ///<summary>Gets or sets a unique ID for this row.</summary>
         [DebuggerNonUserCode]
         [GeneratedCode("ShomreiTorah.Singularity.Designer", "1.0")]
-        public String ImportedPaymentId {
-            get { return base.Field<String>(ImportedPaymentIdColumn); }
+        public Guid ImportedPaymentId {
+            get { return base.Field<Guid>(ImportedPaymentIdColumn); }
             set { base[ImportedPaymentIdColumn] = value; }
         }
         ///<summary>Gets or sets the payment that was imported.</summary>
@@ -128,8 +128,8 @@ namespace ShomreiTorah.Billing.PaymentImport {
         #region Partial Methods
         partial void OnColumnChanged(Column column, object oldValue, object newValue);
         
-        partial void ValidateImportedPaymentId(String newValue, Action<string> error);
-        partial void OnImportedPaymentIdChanged(String oldValue, String newValue);
+        partial void ValidateImportedPaymentId(Guid newValue, Action<string> error);
+        partial void OnImportedPaymentIdChanged(Guid? oldValue, Guid? newValue);
         
         partial void ValidatePayment(Payment newValue, Action<string> error);
         partial void OnPaymentChanged(Payment oldValue, Payment newValue);
@@ -161,7 +161,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
             Action<string> reporter = s => error = s;
             
             if (column == ImportedPaymentIdColumn) {
-                ValidateImportedPaymentId((String)newValue, reporter);
+                ValidateImportedPaymentId((Guid)newValue, reporter);
                 if (!String.IsNullOrEmpty(error)) return error;
             } else if (column == PaymentColumn) {
                 ValidatePayment((Payment)newValue, reporter);
@@ -188,7 +188,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
             base.OnValueChanged(column, oldValue, newValue);
             OnColumnChanged(column, oldValue, newValue);
             if (column == ImportedPaymentIdColumn)
-            	OnImportedPaymentIdChanged((String)oldValue, (String)newValue);
+            	OnImportedPaymentIdChanged((Guid?)oldValue, (Guid?)newValue);
             else if (column == PaymentColumn)
             	OnPaymentChanged((Payment)oldValue, (Payment)newValue);
             else if (column == SourceColumn)

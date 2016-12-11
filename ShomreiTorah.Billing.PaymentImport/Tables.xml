@@ -2,7 +2,7 @@
 <DataContext Name="PaymentImport" Namespace="ShomreiTorah.Billing.PaymentImport" CodePath="Tables.cs">
   <Import Path="../../../Libraries/ShomreiTorah.Data/Singularity Designer.xml" />
   <Schema Name="ImportedPayments" RowClassDescription="Links a payment imported from an external source." RowClassName="ImportedPayment" RowClassVisibility="Public" SqlName="ImportedPayments" SqlSchemaName="Billing" PrimaryKeyName="ImportedPaymentId">
-    <Column Name="ImportedPaymentId" AllowNulls="false" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets a unique ID for this row." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="true" PropertyName="ImportedPaymentId" PropertyVisibility="Public" SqlName="ImportedPaymentId">
+    <Column Name="ImportedPaymentId" AllowNulls="false" DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets a unique ID for this row." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="true" PropertyName="ImportedPaymentId" PropertyVisibility="Public" SqlName="ImportedPaymentId">
       <DefaultValue>
         <Null />
       </DefaultValue>
