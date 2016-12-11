@@ -48,6 +48,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			}
 
 			public void AppendPerson(Person person) => writableMatches.Add(person);
+			public void AppendPeople(IEnumerable<Person> people) => writableMatches.AddRange(people);
 		}
 
 		///<summary>Indicates whether the data source returned any payments at all (including already-imported payments).</summary>
@@ -67,8 +68,16 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			set {
 				currentPayment = value;
 				if (value != null) {
-					// If we haven't started importing this payment already, initialize its backing object.
-					if (!importingPayments.TryGetValue(value.Id, out currentImport)) {
+					if (importingPayments.TryGetValue(value.Id, out currentImport)) {
+						// Add any matches that were created since this was first selected.
+						IEnumerable<Person> newMatches = Matcher.FindMatches(value).Except(MatchingPeople).ToList();
+						currentImport.AppendPeople(newMatches);
+						// If we discovered an exact match, prefer it. This happpens if the
+						// user selects this payment, then goes back to a different payment
+						// from the same person and creates a matching Person for it.
+						Person = newMatches.FirstOrDefault(p => Matcher.GetMatchScore(value, p) == 0) ?? Person;
+					} else {
+						// If we haven't started importing this payment already, initialize its backing object.
 						currentImport = new ImportingPayment(value);
 						importingPayments.Add(value.Id, currentImport);
 						InferType();
