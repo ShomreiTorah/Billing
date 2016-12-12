@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{150ACC32-D0E3-4761-B254-51131E5129B9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ShomreiTorah.Billing.Migrator</RootNamespace>
+    <AssemblyName>ShomreiTorah.Billing.Migrator</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Utils.v15.2, Version=15.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraBars.v15.2, Version=15.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Composition.AttributedModel, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Composition.Convention, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Convention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Composition.Hosting, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Hosting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Composition.Runtime, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Composition.TypedParts, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Importers\IImporter.cs" />
+    <Compile Include="Importers\QuickBooksImporter.cs" />
+    <Compile Include="Tables.cs" />
+    <Compile Include="TriggerButton.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\ShomreiTorah.Common\ShomreiTorah.Common.csproj">
+      <Project>{1308a6e1-7787-49f6-a19c-8af327daf9b5}</Project>
+      <Name>ShomreiTorah.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\ShomreiTorah.Data.UI\ShomreiTorah.Data.UI.csproj">
+      <Project>{43ad72a0-f262-4561-b5c4-2686ae0b5e03}</Project>
+      <Name>ShomreiTorah.Data.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\ShomreiTorah.Data\ShomreiTorah.Data.csproj">
+      <Project>{88d62ef0-7a6c-403e-80ef-6cefe734dd53}</Project>
+      <Name>ShomreiTorah.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\ShomreiTorah.Singularity\ShomreiTorah.Singularity.csproj">
+      <Project>{53c1a3a0-b443-4c28-895b-5e4dfe803a1c}</Project>
+      <Name>ShomreiTorah.Singularity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\ShomreiTorah.WinForms\ShomreiTorah.WinForms.csproj">
+      <Project>{0b927f97-8cdd-47cb-b775-ca1e0ab2409c}</Project>
+      <Name>ShomreiTorah.WinForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShomreiTorah.Billing.Contract\ShomreiTorah.Billing.Contract.csproj">
+      <Project>{0fd81dcb-ccb0-4625-94bd-a8e4a541d2ba}</Project>
+      <Name>ShomreiTorah.Billing.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShomreiTorah.Billing.PaymentImport\ShomreiTorah.Billing.PaymentImport.csproj">
+      <Project>{54ec8743-10f2-4be0-9eb4-e8523185c269}</Project>
+      <Name>ShomreiTorah.Billing.PaymentImport</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tables.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

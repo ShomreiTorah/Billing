@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataContext Name="Billing.Migrator" Namespace="ShomreiTorah.Billing.Migrator" CodePath="Tables.cs">
+  <Import Path="../../../Libraries/ShomreiTorah.Data/Singularity Designer.xml" />
+  <Schema Name="StagedPerson" RowClassDescription="Holds a person staged to import into the database." RowClassName="StagedPerson" RowClassVisibility="Public" SqlName="StagedPerson" SqlSchemaName="BillingMigration" PrimaryKeyName="StagedPersonId">
+    <Column Name="StagedPersonId" AllowNulls="false" DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the staged person id of the staged people." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="true" PropertyName="StagedPersonId" PropertyVisibility="Public" SqlName="StagedPersonId">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="Person" AllowNulls="true" DataType="ShomreiTorah.Singularity.Row, ShomreiTorah.Singularity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Description="Gets or sets the person to merge into." Expression="" ForeignRelationName="StagedPeople" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="Person" PropertyVisibility="Public" SqlName="PersonId" ForeignSchemaName="MasterDirectory">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+	  <Column Name="HisName" AllowNulls="true" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the male name of the person being imported." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="HisName" PropertyVisibility="Public" SqlName="HisName">
+		  <DefaultValue>
+			  <Null />
+		  </DefaultValue>
+	  </Column>
+	  <Column Name="HerName" AllowNulls="true" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the female name of the person being imported." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="HerName" PropertyVisibility="Public" SqlName="HerName">
+		  <DefaultValue>
+			  <Null />
+		  </DefaultValue>
+	  </Column>
+	  <Column Name="LastName" AllowNulls="false" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the last name of the staged people." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="LastName" PropertyVisibility="Public" SqlName="LastName">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="FullName" AllowNulls="false" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the full name of the staged people." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="FullName" PropertyVisibility="Public" SqlName="FullName">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="Address" AllowNulls="false" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the address of the staged people." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="Address" PropertyVisibility="Public" SqlName="Address">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="City" AllowNulls="true" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the city of the staged people." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="City" PropertyVisibility="Public" SqlName="City">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="State" AllowNulls="true" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the state of the staged people." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="State" PropertyVisibility="Public" SqlName="State">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="Zip" AllowNulls="true" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the zip of the staged people." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="Zip" PropertyVisibility="Public" SqlName="Zip">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="Phone" AllowNulls="false" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the phone of the staged people." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="Phone" PropertyVisibility="Public" SqlName="Phone">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+  </Schema>
+  <Schema Name="StagedPayments" RowClassDescription="Holds a payment pending migration." RowClassName="StagedPayment" RowClassVisibility="Public" SqlName="StagedPayments" SqlSchemaName="BillingMigration" PrimaryKeyName="StagedPaymentId">
+    <Column Name="StagedPaymentId" AllowNulls="false" DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the staged payment id of the staged payment." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="true" PropertyName="StagedPaymentId" PropertyVisibility="Public" SqlName="StagedPaymentId">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="StagedPerson" AllowNulls="false" DataType="ShomreiTorah.Singularity.Row, ShomreiTorah.Singularity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Description="Gets or sets the person who made this payment." Expression="" ForeignRelationName="StagedPayments" ForeignRelationPropertyDescription="Gets the payments that will be imported for this person." ForeignRelationPropertyName="StagedPayments" GenerateSqlMapping="true" IsUnique="false" PropertyName="StagedPerson" PropertyVisibility="Public" SqlName="StagedPersonId" ForeignSchemaName="StagedPerson">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="Date" AllowNulls="false" DataType="System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the date of the staged payment." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="Date" PropertyVisibility="Public" SqlName="Date">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="Method" AllowNulls="false" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the method of the staged payment." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="Method" PropertyVisibility="Public" SqlName="Method">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="CheckNumber" AllowNulls="true" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the check number of the staged payment." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="CheckNumber" PropertyVisibility="Public" SqlName="CheckNumber">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="Account" AllowNulls="false" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the account of the staged payment." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="Account" PropertyVisibility="Public" SqlName="Account">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="Amount" AllowNulls="false" DataType="System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the amount of the staged payment." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="Amount" PropertyVisibility="Public" SqlName="Amount">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="Comments" AllowNulls="true" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the comments of the staged payment." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="Comments" PropertyVisibility="Public" SqlName="Comments">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+    <Column Name="ExternalId" AllowNulls="false" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the external id of the staged payment." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="ExternalId" PropertyVisibility="Public" SqlName="ExternalId">
+      <DefaultValue>
+        <Null />
+      </DefaultValue>
+    </Column>
+  </Schema>
+</DataContext>
