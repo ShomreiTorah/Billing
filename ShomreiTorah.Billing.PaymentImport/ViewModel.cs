@@ -229,7 +229,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				Account = Names.DefaultAccount,
 				CheckNumber = CurrentPayment.FinalFour,
 				Amount = CurrentPayment.Amount,
-				Comments = Comments.Trim(),
+				Comments = TrimComments(Comments.Trim()),
 				Date = CurrentPayment.Date,
 				Method = "Credit Card",
 				Person = Person,
@@ -247,7 +247,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				pledge = new Pledge {
 					Account = payment.Account,
 					Amount = PledgeAmount,
-					Comments = "Created for credit card payment:\n" + payment.Comments,
+					Comments = TrimComments("Created for credit card payment:\n" + Comments.Trim()),
 					Date = payment.Date,
 					Person = payment.Person,
 					Type = PledgeType,
@@ -274,6 +274,13 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			}
 			ImportCallback?.Invoke(CurrentPayment, payment, pledge);
 			RefreshPayments();
+		}
+
+		///<summary>Trims Comments fields to fit in the database.</summary>
+		static string TrimComments(string text) {
+			if (text.Length <= 512)
+				return text;
+			return text.Remove(511) + "…";
 		}
 
 		///<summary>Occurs when a property value is changed.</summary>
