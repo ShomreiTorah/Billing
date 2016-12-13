@@ -31,17 +31,16 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			viewModelBindingSource.DataSource = viewModel;
 			viewModel.PropertyChanged += ViewModel_PropertyChanged;
 			startDate.EditValue = DateTime.Today.AddDays(-14);
-			personSelector.Properties.NewPersonTemplate = e => new Person {
+			personSelector.Properties.NewPersonTemplate = e => Genderizer.Create().SetFirstName(viewModel.CurrentPayment.FirstName, new Person {
 				Address = viewModel.CurrentPayment.Address,
 				City = viewModel.CurrentPayment.City,
 				FullName = viewModel.CurrentPayment.FirstName + " " + viewModel.CurrentPayment.LastName,
 				LastName = viewModel.CurrentPayment.LastName,
-				HisName = viewModel.CurrentPayment.FirstName,
 				Phone = viewModel.CurrentPayment.Phone,
 				Source = "Credit Card Import",
 				State = viewModel.CurrentPayment.State,
 				Zip = viewModel.CurrentPayment.Zip
-			};
+			});
 
 			viewModel.ImportCallback = (info, payment, pledge) => {
 				var pledgeMessage = pledge == null ? "" : $"and {pledge.Type} pledge ";
