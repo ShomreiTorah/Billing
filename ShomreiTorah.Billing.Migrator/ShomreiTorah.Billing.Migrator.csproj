@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Importers\IImporter.cs" />
     <Compile Include="Importers\QuickBooksImporter.cs" />
+    <Compile Include="Partials.cs" />
     <Compile Include="Tables.cs" />
     <Compile Include="TriggerButton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

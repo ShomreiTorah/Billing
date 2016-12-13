@@ -6,6 +6,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShomreiTorah.Billing.PaymentImport;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI;
@@ -18,6 +19,12 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 		public String Name => "QuickBooks Exported Transactions";
 
 		public void Import(String fileName) {
+			var methodMap = Names.PaymentMethods.ToDictionary(k => k, StringComparer.CurrentCultureIgnoreCase);
+			methodMap.Add("American Express", "Credit Card");
+			methodMap.Add("MasterCard", "Credit Card");
+			methodMap.Add("Visa", "Credit Card");
+
+			var genderizer = Genderizer.Create();
 			var connector = DB.OpenFile(fileName);
 			using (var connection = connector.OpenConnection())
 			using (var reader = connector.ExecuteReader("SELECT * FROM [Sheet1$]")) {
@@ -34,39 +41,46 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 						continue;
 					}
 
-					// Only add the person to the table if we actually have a payment
-					// too (as opposed to the second boundary row).
-					if (person.Table == null)
-						AppFramework.Table<StagedPerson>().Rows.Add(person);
-
 					// Stores columns that have been used for actual properties.  All
 					// other non-empty columns will be added to Comments.
-					var usedValues = new Dictionary<string, string>();
+					var usedValues = new Dictionary<int, string>();
 
 					// Gets the ordinal of a named column, and suppresses that column
 					// from being listed in the Comments field.
 					Func<string, int> GetField = (string name) => {
 						Int32 ordinal = reader.GetOrdinal(name);
-						usedValues[name] = reader.GetNullableString(ordinal);
+						usedValues[ordinal] = reader.GetNullableString(ordinal);
 						return ordinal;
 					};
 
 					var fullName = reader.GetString(GetField("Name"));
-					var firstName = fullName.Substring(fullName.IndexOf(',')).Trim();
-					// TODO: Genderize
+					genderizer.SetFirstName(fullName.Substring(fullName.IndexOf(',')).Trim(), person);
 					person.LastName = fullName.Remove(fullName.IndexOf(','));
 					// TODO: Set address.  If Street1 is a company name, use Street2.
 
-					AppFramework.Table<StagedPayment>().Rows.Add(new StagedPayment {
+					// Only add the person to the table if we actually have a payment
+					// too (as opposed to the second boundary row).
+					if (person.Table == null) {
+						AppFramework.Table<StagedPerson>().Rows.Add(person);
+						// TODO: Infer matching person.
+					}
+
+					StagedPayment payment = new StagedPayment {
 						Date = reader.GetNullableDateTime(GetField("Date of Check")) ?? reader.GetDateTime(GetField("Date")),
-						Method = reader.GetString(GetField("Pay Meth")),  // TODO: Normalize case & card types
+						Method = reader.GetString(GetField("Pay Meth")),
 						Amount = reader.GetDecimal(GetField("Amount")),
 						CheckNumber = reader.GetNullableString(GetField("Check #")),
 						Account = Names.DefaultAccount,
 						ExternalId = reader.GetString(GetField("Num")),
 						StagedPerson = person,
-						// TODO: Pull all other non-empty fields into comments.
-					});
+						Comments = Enumerable
+							.Range(0, reader.FieldCount)
+							.Where(i => !usedValues.ContainsKey(i))
+							.Select(i => reader.GetName(i) + ": " + reader.GetString(i))
+							.Join("\n")
+					};
+					payment.Method = methodMap.GetOrNull(payment.Method) ?? payment.Method;
+					AppFramework.Table<StagedPayment>().Rows.Add(payment);
 				}
 			}
 		}
