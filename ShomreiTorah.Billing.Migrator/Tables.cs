@@ -34,6 +34,8 @@ namespace ShomreiTorah.Billing.Migrator {
         public static ValueColumn CommentsColumn { get; private set; }
         ///<summary>Gets the schema's ExternalId column.</summary>
         public static ValueColumn ExternalIdColumn { get; private set; }
+        ///<summary>Gets the schema's Company column.</summary>
+        public static ValueColumn CompanyColumn { get; private set; }
         
         ///<summary>Gets the StagedPayments schema instance.</summary>
         public static new TypedSchema<StagedPayment> Schema { get; private set; }
@@ -73,6 +75,9 @@ namespace ShomreiTorah.Billing.Migrator {
             
             ExternalIdColumn = Schema.Columns.AddValueColumn("ExternalId", typeof(String), null);
             ExternalIdColumn.AllowNulls = false;
+            
+            CompanyColumn = Schema.Columns.AddValueColumn("Company", typeof(String), null);
+            CompanyColumn.AllowNulls = true;
             #endregion
             
             #region Create SchemaMapping
@@ -89,6 +94,7 @@ namespace ShomreiTorah.Billing.Migrator {
             SchemaMapping.Columns.AddMapping(AmountColumn, "Amount");
             SchemaMapping.Columns.AddMapping(CommentsColumn, "Comments");
             SchemaMapping.Columns.AddMapping(ExternalIdColumn, "ExternalId");
+            SchemaMapping.Columns.AddMapping(CompanyColumn, "Company");
             #endregion
             SchemaMapping.SetPrimaryMapping(SchemaMapping);
         }
@@ -161,6 +167,13 @@ namespace ShomreiTorah.Billing.Migrator {
             get { return base.Field<String>(ExternalIdColumn); }
             set { base[ExternalIdColumn] = value; }
         }
+        ///<summary>Gets or sets the company that the payment was made through.</summary>
+        [DebuggerNonUserCode]
+        [GeneratedCode("ShomreiTorah.Singularity.Designer", "1.0")]
+        public String Company {
+            get { return base.Field<String>(CompanyColumn); }
+            set { base[CompanyColumn] = value; }
+        }
         #endregion
         
         #region Partial Methods
@@ -192,6 +205,9 @@ namespace ShomreiTorah.Billing.Migrator {
         
         partial void ValidateExternalId(String newValue, Action<string> error);
         partial void OnExternalIdChanged(String oldValue, String newValue);
+        
+        partial void ValidateCompany(String newValue, Action<string> error);
+        partial void OnCompanyChanged(String oldValue, String newValue);
         #endregion
         
         #region Column Callbacks
@@ -234,6 +250,9 @@ namespace ShomreiTorah.Billing.Migrator {
             } else if (column == ExternalIdColumn) {
                 ValidateExternalId((String)newValue, reporter);
                 if (!String.IsNullOrEmpty(error)) return error;
+            } else if (column == CompanyColumn) {
+                ValidateCompany((String)newValue, reporter);
+                if (!String.IsNullOrEmpty(error)) return error;
             }
             return null;
         }
@@ -261,6 +280,8 @@ namespace ShomreiTorah.Billing.Migrator {
             	OnCommentsChanged((String)oldValue, (String)newValue);
             else if (column == ExternalIdColumn)
             	OnExternalIdChanged((String)oldValue, (String)newValue);
+            else if (column == CompanyColumn)
+            	OnCompanyChanged((String)oldValue, (String)newValue);
         }
         #endregion
     }

@@ -116,6 +116,7 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 						Account = Names.DefaultAccount,
 						ExternalId = reader.GetString(GetField("Num")),
 						StagedPerson = person,
+						Company = company,
 						Comments = Enumerable
 							.Range(0, reader.FieldCount)
 							.Where(i => !usedValues.ContainsKey(i))

@@ -229,6 +229,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				Account = Names.DefaultAccount,
 				CheckNumber = CurrentPayment.FinalFour,
 				Amount = CurrentPayment.Amount,
+				Company = CurrentPayment.Company,
 				Comments = TrimComments(Comments.Trim()),
 				Date = CurrentPayment.Date,
 				Method = "Credit Card",
