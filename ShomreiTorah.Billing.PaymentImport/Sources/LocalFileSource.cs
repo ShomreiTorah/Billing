@@ -12,7 +12,7 @@ using ShomreiTorah.Common;
 namespace ShomreiTorah.Billing.PaymentImport.Sources {
 	///<summary>Imports payments from a local JSON file, for debugging.</summary>
 	[Export(typeof(IPaymentSource))]
-	class LocalFileSource : IPaymentSource {
+	public class LocalFileSource : IPaymentSource {
 		public string Name => "LocalJson";
 
 		public Task<IEnumerable<PaymentInfo>> GetPaymentsAsync(DateTime start, CancellationToken cancellationToken) {

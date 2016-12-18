@@ -14,7 +14,7 @@ using ShomreiTorah.Common;
 namespace ShomreiTorah.Billing.PaymentImport.Sources {
 	///<summary>Imports payments from the Authorize.Net API.</summary>
 	[Export(typeof(IPaymentSource))]
-	class AuthNetSource : IPaymentSource {
+	public class AuthNetSource : IPaymentSource {
 		public String Name => "AuthorizeNet";
 
 		public async Task<IEnumerable<PaymentInfo>> GetPaymentsAsync(DateTime start, CancellationToken cancellationToken) {

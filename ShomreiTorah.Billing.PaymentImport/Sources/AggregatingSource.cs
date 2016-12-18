@@ -38,7 +38,7 @@ namespace ShomreiTorah.Billing.PaymentImport.Sources {
 				}
 				seen.Add(p.Id, p);
 				return true;
-			})).ToList();	// Process all sources immediately to merge in later duplicates.
+			})).ToList();   // Process all sources immediately to merge in later duplicates.
 		}
 	}
 }
