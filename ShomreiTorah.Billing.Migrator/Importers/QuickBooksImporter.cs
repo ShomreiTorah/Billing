@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ShomreiTorah.Billing.PaymentImport;
 using ShomreiTorah.Common;
@@ -17,6 +18,42 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 		public String Filter => "Exported Excel Files|*.xlsx|All Files|*.*";
 
 		public String Name => "QuickBooks Exported Transactions";
+
+		///<summary>Detects whether an address line is a continuation of the previous address line.</summary>
+		static readonly Regex addressPartDetector = new Regex(@"^(\d+th Floor|Apt\b.*|PO Box\b.*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+		///<summary>Parses the last line of an address into 'city, state zip'.</summary>
+		static readonly Regex addressParser = new Regex(@"^([A-Z .]+)[,<]? ([A-Z.]{2,})(?: (\d+))?(?:-\d{4})?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+		static void SetAddress(StagedPerson person, string fullAddress, string address1, string address2, out string company) {
+			if (fullAddress == null) {
+				company = null;
+				return;
+			}
+			fullAddress = fullAddress.Replace(",", ", ").NormalizeSpaces().Trim();
+			address1 = address1?.Trim().NormalizeSpaces();
+			address2 = address2?.Trim().NormalizeSpaces();
+
+			if (address2 == null || addressPartDetector.IsMatch(address2 ?? "") || address1.StartsWith("PO Box")) {
+				// If the second field is a continuation of the first, combine them.
+				person.Address = (address1 + " " + address2).Trim();
+				company = null;
+			} else {
+				// Otherwise, assume it's 'Company Address'.
+				if (!char.IsNumber(address2[0]))
+					throw new InvalidOperationException($"Weird address for {person.FullName}: '{address1}', '{address2}' ({fullAddress})");
+				company = address1;
+				person.Address = address2;
+			}
+
+			var firstParts = (address1 + " " + address2).Trim();
+			if (!fullAddress.StartsWith(firstParts))
+				throw new InvalidOperationException($"Unrecognized address format for {person.FullName}: '{fullAddress}' expected to start with '{firstParts}'");
+			var parsed = addressParser.Match(fullAddress.Substring(firstParts.Length).Trim());
+
+			person.City = parsed.Groups[1].Value;
+			person.State = UsStates.Abbreviate(parsed.Groups[2].Value.Replace(".", ""));
+			person.Zip = parsed.Groups[3].Value;
+		}
 
 		public void Import(String fileName) {
 			var methodMap = Names.PaymentMethods.ToDictionary(k => k, StringComparer.CurrentCultureIgnoreCase);
@@ -53,17 +90,23 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 						return ordinal;
 					};
 
+					string company;
 					var fullName = reader.GetString(GetField("Name"));
 					genderizer.SetFirstName(fullName.Substring(fullName.IndexOf(',')).Trim(), person);
 					person.LastName = fullName.Remove(fullName.IndexOf(','));
-					// TODO: Set address.  If Street1 is a company name, use Street2.
-
+					person.FullName = (person.HisName ?? person.HerName) + " " + person.LastName;
+					SetAddress(person, reader.GetString(
+						GetField("Name Address")), reader.GetString(GetField("Name Street1")),
+						reader.GetString(GetField("Name Street2")), out company
+					);
 					// Only add the person to the table if we actually have a payment
 					// too (as opposed to the second boundary row).
 					if (person.Table == null) {
 						AppFramework.Table<StagedPerson>().Rows.Add(person);
 						// TODO: Infer matching person.
 					}
+
+					// TODO: Warn on bad zip
 
 					StagedPayment payment = new StagedPayment {
 						Date = reader.GetNullableDateTime(GetField("Date of Check")) ?? reader.GetDateTime(GetField("Date")),
@@ -87,6 +130,10 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 	}
 
 	static class Extensions {
+		static readonly Regex normalizer = new Regex(@"\s+");
+
+		public static string NormalizeSpaces(this string str) => str == null ? null : normalizer.Replace(str, " ");
+
 		public static DateTime? GetNullableDateTime(this DbDataReader reader, int ordinal) {
 			return reader.IsDBNull(ordinal) ? new DateTime?() : reader.GetDateTime(ordinal);
 		}
