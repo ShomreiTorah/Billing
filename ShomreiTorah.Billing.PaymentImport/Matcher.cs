@@ -11,22 +11,26 @@ using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI;
 
 namespace ShomreiTorah.Billing.PaymentImport {
-	static class Matcher {
-		static IEnumerable<Person> ByImportedPayments(PaymentInfo source) {
+	public static class Matcher {
+		static IEnumerable<Person> ByImportedPayments(IImportingPerson source) {
+			if (string.IsNullOrEmpty(source.FinalFour))
+				return Enumerable.Empty<Person>();
 			return AppFramework.Table<Payment>().Rows
 						  .Where(p => p.Method == "Credit Card" && p.CheckNumber == source.FinalFour)
 						  .Select(p => p.Person)
 						  .Where(p => GetMatchScore(source, p) == 0);
 		}
 
-		static IEnumerable<Person> ByEmail(PaymentInfo source) {
+		static IEnumerable<Person> ByEmail(IImportingPerson source) {
+			if (string.IsNullOrEmpty(source.Email))
+				yield break;
 			var email = AppFramework.Table<EmailAddress>().Rows
 				.FirstOrDefault(e => e.Email.Equals(source.Email, StringComparison.OrdinalIgnoreCase));
 			if (email != null)
 				yield return email.Person;
 		}
 
-		static IEnumerable<Person> ByPhone(PaymentInfo source) {
+		static IEnumerable<Person> ByPhone(IImportingPerson source) {
 			var phone = source.Phone.FormatPhoneNumber();
 			if (string.IsNullOrEmpty(phone))
 				yield break;
@@ -35,7 +39,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				yield return match;
 		}
 
-		static IEnumerable<Person> Fuzzy(PaymentInfo source) {
+		static IEnumerable<Person> Fuzzy(IImportingPerson source) {
 			IEnumerable<Person> candidates = AppFramework.Table<Person>().Rows;
 
 			// Filter by each field, but only if that field has any matches.
@@ -83,20 +87,20 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			=> sequence.Any() ? sequence : defaultValue;
 
 
-		static readonly IReadOnlyCollection<Func<PaymentInfo, IEnumerable<Person>>> all = new Func<PaymentInfo, IEnumerable<Person>>[] {
+		static readonly IReadOnlyCollection<Func<IImportingPerson, IEnumerable<Person>>> all = new Func<IImportingPerson, IEnumerable<Person>>[] {
 			ByEmail,
 			ByImportedPayments,
 			ByPhone,
 			Fuzzy,
 		};
 
-		internal static IEnumerable<Person> FindMatches(PaymentInfo source) {
+		public static IEnumerable<Person> FindMatches(IImportingPerson source) {
 			return all.Select(f => f(source).ToList())
 					  .FirstOrDefault(Enumerable.Any)
 				   ?? Enumerable.Empty<Person>();
 		}
 
-		public static int GetMatchScore(PaymentInfo source, Person match) {
+		public static int GetMatchScore(IImportingPerson source, Person match) {
 			if (string.IsNullOrWhiteSpace(source.Address))
 				return source.LastName.Equals(match.LastName, StringComparison.CurrentCultureIgnoreCase)
 					&& source.FirstName.Equals(match.HisName, StringComparison.CurrentCultureIgnoreCase)
@@ -106,6 +110,32 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				return 2;
 			return 0;
 		}
+
+		public static Person FindBestMatch(IImportingPerson source) {
+			var matches = FindMatches(source).ToList();
+			// If there is exactly one match, ignore the score.
+			if (matches.Count < 2)
+				return matches.FirstOrDefault();
+			return (from match in matches
+					let score = GetMatchScore(source, match)
+					where score < 2
+					orderby score
+					select match).FirstOrDefault();
+		}
+	}
+
+	public interface IImportingPerson {
+		string FirstName { get; }
+		string LastName { get; }
+		string Address { get; }
+		string City { get; }
+		string State { get; }
+		string Zip { get; }
+		string Phone { get; }
+		string Email { get; }
+
+		///<summary>Gets the last four digits of the person's credit card number, if present.</summary>
+		string FinalFour { get; }
 	}
 
 	struct AddressInfo {

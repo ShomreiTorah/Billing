@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace ShomreiTorah.Billing.PaymentImport {
 	///<summary>A payment from an external source that can be imported.</summary>
-	public class PaymentInfo {
+	public class PaymentInfo : IImportingPerson {
 		public string Id { get; set; }
 		public DateTime Date { get; set; }
 		public decimal Amount { get; set; }
@@ -28,7 +28,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		public string Email { get; set; }
 
 		[JsonIgnore]
-		public string SourceName { get;private set; }
+		public string SourceName { get; private set; }
 		public PaymentInfo WithSource(string source) {
 			SourceName = source;
 			return this;

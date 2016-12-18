@@ -103,7 +103,7 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 					// too (as opposed to the second boundary row).
 					if (person.Table == null) {
 						AppFramework.Table<StagedPerson>().Rows.Add(person);
-						// TODO: Infer matching person.
+						person.Person = Matcher.FindBestMatch(person);
 					}
 
 					// TODO: Warn on bad zip
