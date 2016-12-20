@@ -23,15 +23,14 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.components = new System.ComponentModel.Container();
-			this.grid = new ShomreiTorah.Data.UI.Grid.SmartGrid(this.components);
+			this.grid = new ShomreiTorah.Data.UI.Grid.SmartGrid();
 			this.gridView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colFullName = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colMethod = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.paymentMethodEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.colCheckNumber = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
-			this.checkNumberEdit = new Data.UI.Controls.RepositoryItemCheckNumberEdit();
+			this.checkNumberEdit = new ShomreiTorah.Data.UI.Controls.RepositoryItemCheckNumberEdit();
 			this.colAccount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.accountEdit = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
 			this.colAmount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -41,8 +40,9 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colComments = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colModified = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colModifier = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
-			this.paymentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource(this.components);
+			this.paymentsBindingSource = new System.Windows.Forms.BindingSource();
+			this.billingData = new ShomreiTorah.Data.UI.FrameworkBindingSource();
+			this.colCompany = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
@@ -57,12 +57,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			// ribbon
 			// 
-			// 
-			// 
-			// 
 			this.ribbon.ExpandCollapseItem.Id = 0;
-			this.ribbon.ExpandCollapseItem.Name = "";
-			this.ribbon.ExpandCollapseItem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
 			this.ribbon.Size = new System.Drawing.Size(695, 114);
 			// 
 			// grid
@@ -72,7 +67,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.grid.Location = new System.Drawing.Point(0, 114);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 38;
+			this.grid.RegistrationCount = 56;
 			this.grid.Size = new System.Drawing.Size(695, 323);
 			this.grid.TabIndex = 0;
 			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -88,6 +83,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
             this.colAccount,
             this.colAmount,
             this.colDepositDate,
+            this.colCompany,
             this.colComments,
             this.colModified,
             this.colModifier});
@@ -99,13 +95,14 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.gridView.Name = "gridView";
 			this.gridView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.Click;
 			this.gridView.OptionsSelection.MultiSelect = true;
-			this.gridView.OptionsView.ShowFooter = true;
 			this.gridView.OptionsView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowOnlyInEditor;
+			this.gridView.OptionsView.ShowFooter = true;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
-            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colModified, DevExpress.Data.ColumnSortOrder.Descending)});
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colDate, DevExpress.Data.ColumnSortOrder.Descending)});
 			// 
 			// colFullName
 			// 
+			this.colFullName.AllowKeyboardActivation = false;
 			this.colFullName.Caption = "Full Name";
 			this.colFullName.FieldName = "Person";
 			this.colFullName.Name = "colFullName";
@@ -113,12 +110,13 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colFullName.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
 			this.colFullName.OptionsColumn.ReadOnly = true;
 			this.colFullName.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+			this.colFullName.ShowEditorOnMouseDown = true;
 			this.colFullName.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
-			this.colFullName.SummaryItem.DisplayFormat = "{0:#,0} Payments";
-			this.colFullName.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count;
+			this.colFullName.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, "Person", "{0:#,0} Payments")});
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 0;
-			this.colFullName.Width = 81;
+			this.colFullName.Width = 183;
 			// 
 			// colDate
 			// 
@@ -126,7 +124,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colDate.Name = "colDate";
 			this.colDate.Visible = true;
 			this.colDate.VisibleIndex = 1;
-			this.colDate.Width = 63;
+			this.colDate.Width = 65;
 			// 
 			// colMethod
 			// 
@@ -136,7 +134,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colMethod.Name = "colMethod";
 			this.colMethod.Visible = true;
 			this.colMethod.VisibleIndex = 3;
-			this.colMethod.Width = 55;
+			this.colMethod.Width = 70;
 			// 
 			// paymentMethodEdit
 			// 
@@ -156,7 +154,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colCheckNumber.Name = "colCheckNumber";
 			this.colCheckNumber.Visible = true;
 			this.colCheckNumber.VisibleIndex = 4;
-			this.colCheckNumber.Width = 88;
+			this.colCheckNumber.Width = 96;
 			// 
 			// checkNumberEdit
 			// 
@@ -170,7 +168,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colAccount.Name = "colAccount";
 			this.colAccount.Visible = true;
 			this.colAccount.VisibleIndex = 2;
-			this.colAccount.Width = 58;
+			this.colAccount.Width = 84;
 			// 
 			// accountEdit
 			// 
@@ -192,8 +190,8 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colAmount.FieldName = "Amount";
 			this.colAmount.MaxWidth = 85;
 			this.colAmount.Name = "colAmount";
-			this.colAmount.SummaryItem.DisplayFormat = "{0:c} Total Paid";
-			this.colAmount.SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+			this.colAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Amount", "{0:c} Total Paid")});
 			this.colAmount.Visible = true;
 			this.colAmount.VisibleIndex = 5;
 			this.colAmount.Width = 85;
@@ -228,7 +226,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colDepositDate.UnboundType = DevExpress.Data.UnboundColumnType.Object;
 			this.colDepositDate.Visible = true;
 			this.colDepositDate.VisibleIndex = 6;
-			this.colDepositDate.Width = 67;
+			this.colDepositDate.Width = 69;
 			// 
 			// depositEdit
 			// 
@@ -242,8 +240,8 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			this.colComments.FieldName = "Comments";
 			this.colComments.Name = "colComments";
 			this.colComments.Visible = true;
-			this.colComments.VisibleIndex = 7;
-			this.colComments.Width = 69;
+			this.colComments.VisibleIndex = 8;
+			this.colComments.Width = 70;
 			// 
 			// colModified
 			// 
@@ -275,6 +273,14 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			// 
 			this.billingData.Position = 0;
 			// 
+			// colCompany
+			// 
+			this.colCompany.FieldName = "Company";
+			this.colCompany.Name = "colCompany";
+			this.colCompany.Visible = true;
+			this.colCompany.VisibleIndex = 7;
+			this.colCompany.Width = 65;
+			// 
 			// PaymentViewer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -297,6 +303,7 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 			((System.ComponentModel.ISupportInitialize)(this.paymentsBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.billingData)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -322,5 +329,6 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		private Data.UI.Grid.SmartGridColumn colDepositDate;
 		private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit depositEdit;
 		private Data.UI.Controls.RepositoryItemCheckNumberEdit checkNumberEdit;
+		private Data.UI.Grid.SmartGridColumn colCompany;
 	}
 }
