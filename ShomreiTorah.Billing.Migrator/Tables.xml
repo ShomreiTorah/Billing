@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DataContext Name="Billing.Migrator" Namespace="ShomreiTorah.Billing.Migrator" CodePath="Tables.cs">
   <Import Path="../../../Libraries/ShomreiTorah.Data/Singularity Designer.xml" />
-  <Schema Name="StagedPerson" RowClassDescription="Holds a person staged to import into the database." RowClassName="StagedPerson" RowClassVisibility="Public" SqlName="StagedPerson" SqlSchemaName="BillingMigration" PrimaryKeyName="StagedPersonId">
+  <Schema Name="StagedPeople" RowClassDescription="Holds a person staged to import into the database." RowClassName="StagedPerson" RowClassVisibility="Public" SqlName="StagedPeople" SqlSchemaName="BillingMigration" PrimaryKeyName="StagedPersonId">
     <Column Name="StagedPersonId" AllowNulls="false" DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the staged person id of the staged people." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="true" PropertyName="StagedPersonId" PropertyVisibility="Public" SqlName="StagedPersonId">
       <DefaultValue>
         <Null />
@@ -64,7 +64,7 @@
         <Null />
       </DefaultValue>
     </Column>
-    <Column Name="StagedPerson" AllowNulls="false" DataType="ShomreiTorah.Singularity.Row, ShomreiTorah.Singularity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Description="Gets or sets the person who made this payment." Expression="" ForeignRelationName="StagedPayments" ForeignRelationPropertyDescription="Gets the payments that will be imported for this person." ForeignRelationPropertyName="StagedPayments" GenerateSqlMapping="true" IsUnique="false" PropertyName="StagedPerson" PropertyVisibility="Public" SqlName="StagedPersonId" ForeignSchemaName="StagedPerson">
+    <Column Name="StagedPerson" AllowNulls="false" DataType="ShomreiTorah.Singularity.Row, ShomreiTorah.Singularity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Description="Gets or sets the person who made this payment." Expression="" ForeignRelationName="StagedPayments" ForeignRelationPropertyDescription="Gets the payments that will be imported for this person." ForeignRelationPropertyName="StagedPayments" GenerateSqlMapping="true" IsUnique="false" PropertyName="StagedPerson" PropertyVisibility="Public" SqlName="StagedPersonId" ForeignSchemaName="StagedPeople">
       <DefaultValue>
         <Null />
       </DefaultValue>

@@ -292,7 +292,7 @@ namespace ShomreiTorah.Billing.Migrator {
         public StagedPerson () : base(Schema) { Initialize(); }
         partial void Initialize();
         
-        ///<summary>Creates a strongly-typed StagedPerson table.</summary>
+        ///<summary>Creates a strongly-typed StagedPeople table.</summary>
         public static TypedTable<StagedPerson> CreateTable() { return new TypedTable<StagedPerson>(Schema, () => new StagedPerson()); }
         
         ///<summary>Gets the schema's StagedPersonId column.</summary>
@@ -318,16 +318,16 @@ namespace ShomreiTorah.Billing.Migrator {
         ///<summary>Gets the schema's Phone column.</summary>
         public static ValueColumn PhoneColumn { get; private set; }
         
-        ///<summary>Gets the StagedPerson schema instance.</summary>
+        ///<summary>Gets the StagedPeople schema instance.</summary>
         public static new TypedSchema<StagedPerson> Schema { get; private set; }
-        ///<summary>Gets the SchemaMapping that maps this schema to the SQL Server StagedPerson table.</summary>
+        ///<summary>Gets the SchemaMapping that maps this schema to the SQL Server StagedPeople table.</summary>
         public static SchemaMapping SchemaMapping { get; private set; }
         
         [DebuggerNonUserCode]
         [GeneratedCode("ShomreiTorah.Singularity.Designer", "1.0")]
         static StagedPerson() {
             #region Create Schema
-            Schema = new TypedSchema<StagedPerson>("StagedPerson");
+            Schema = new TypedSchema<StagedPerson>("StagedPeople");
             
             Schema.PrimaryKey = StagedPersonIdColumn = Schema.Columns.AddValueColumn("StagedPersonId", typeof(Guid), null);
             StagedPersonIdColumn.Unique = true;
@@ -366,7 +366,7 @@ namespace ShomreiTorah.Billing.Migrator {
             
             #region Create SchemaMapping
             SchemaMapping = new SchemaMapping(Schema, false);
-            SchemaMapping.SqlName = "StagedPerson";
+            SchemaMapping.SqlName = "StagedPeople";
             SchemaMapping.SqlSchemaName = "BillingMigration";
             
             SchemaMapping.Columns.AddMapping(StagedPersonIdColumn, "StagedPersonId");

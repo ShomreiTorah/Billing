@@ -83,7 +83,7 @@
 			// 
 			// smartGrid1
 			// 
-			this.smartGrid1.DataMember = "StagedPerson";
+			this.smartGrid1.DataMember = "StagedPeople";
 			this.smartGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
 			gridLevelNode1.LevelTemplate = this.paymentsView;
 			gridLevelNode1.RelationName = "StagedPayments";
