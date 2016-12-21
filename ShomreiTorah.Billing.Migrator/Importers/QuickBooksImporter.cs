@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Data;
 using System.Data.Common;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -14,7 +15,7 @@ using ShomreiTorah.Data.UI;
 
 namespace ShomreiTorah.Billing.Migrator.Importers {
 	[Export(typeof(IImporter))]
-	class QuickBooksImporter : IImporter {
+	public class QuickBooksImporter : IImporter {
 		public String Filter => "Exported Excel Files|*.xlsx|All Files|*.*";
 
 		public String Name => "QuickBooks Exported Transactions";
@@ -55,15 +56,18 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 			person.Zip = parsed.Groups[3].Value;
 		}
 
-		public void Import(String fileName) {
+		public void Import(string fileName, IProgressReporter progress) {
 			var methodMap = Names.PaymentMethods.ToDictionary(k => k, StringComparer.CurrentCultureIgnoreCase);
 			methodMap.Add("American Express", "Credit Card");
 			methodMap.Add("MasterCard", "Credit Card");
 			methodMap.Add("Visa", "Credit Card");
 
+			progress.Caption = "Reading " + Path.GetFileName(fileName);
+
 			var genderizer = Genderizer.Create();
 			var connector = DB.OpenFile(fileName);
-			using (var connection = connector.OpenConnection())
+
+			progress.Maximum = connector.ExecuteScalar<int>("SELECT COUNT(*) FROM [Sheet1$]");
 			using (var reader = connector.ExecuteReader("SELECT * FROM [Sheet1$]")) {
 				StagedPerson person = new StagedPerson();
 
@@ -71,6 +75,9 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 				// with columns describing the person as part of the payment.  People
 				// are separated by rows with values in the second column.
 				while (reader.Read()) {
+					if (progress.WasCanceled)
+						return;
+					progress.Progress++;
 					// If we're at a boundary between people, skip the row, and start
 					// a new person.  The second row in the boundary will noop.
 					if (!reader.IsDBNull(2)) {
