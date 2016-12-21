@@ -17,8 +17,8 @@ namespace ShomreiTorah.Billing.Migrator {
 		[Import]
 		public ExportFactory<Forms.ImportForm> ImportFactory { get; set; }
 
-		public override string Page => "Data";
-		public override string Group => "Payments";
+		public override string Page => "Admin";
+		public override string Group => "Import";
 		public override bool BeginGroup => true;
 
 		public override BarItem CreateItem() {

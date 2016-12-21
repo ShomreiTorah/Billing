@@ -1,20 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Composition;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DevExpress.XtraBars;
+using DevExpress.XtraEditors;
+using ShomreiTorah.Billing.Migrator.Importers;
+using ShomreiTorah.Common;
 using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.Singularity.DataBinding;
+using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Migrator.Forms {
-	public partial class ImportForm : Form {
-		public ImportForm() {
+	[Export]
+	public partial class ImportForm : XtraForm {
+		private readonly IReadOnlyList<IImporter> importers;
+
+		[ImportingConstructor]
+		public ImportForm([ImportMany] IEnumerable<IImporter> importers) {
+			AppFramework.LoadTables(StagedPerson.Schema, StagedPayment.Schema);
 			InitializeComponent();
+			this.importers = importers.ReadOnlyCopy();
+
+			importSources.Strings.AddRange(importers.Select(s => s.Name).ToArray());
+		}
+
+		private void importSources_ListItemClick(object sender, ListItemClickEventArgs e) {
+			var source = importers[e.Index];
+			using (var openDialog = new OpenFileDialog {
+				Filter = source.Filter,
+				Title = "Load " + source.Name
+			}) {
+				if (openDialog.ShowDialog(MdiParent) == DialogResult.Cancel)
+					return;
+				using (AppFramework.Table<StagedPerson>().BeginLoadData(SynchronizationContext.Current))
+				using (AppFramework.Table<StagedPayment>().BeginLoadData(SynchronizationContext.Current))
+					ProgressWorker.Execute(
+						MdiParent,
+						progress => source.Import(openDialog.FileName, progress),
+						cancellable: true
+					);
+			}
+		}
+
+		private void clearStaging_ItemClick(object sender, ItemClickEventArgs e) {
+			// TODO: Use SQL delete statement for efficiency?
+			AppFramework.Table<StagedPerson>().Rows.Clear();
 		}
 	}
 	///<summary>A component that binds to a dummy DataContext for use in designers in libraries.</summary>
@@ -36,6 +75,11 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 		}
 
 		protected override DataContext FindDataContext() {
+			if (AppFramework.Table<StagedPerson>() != null)
+				return AppFramework.Current.DataContext;
+
+			// At design time, we will have the main Billing AppFramework, which doesn't have our tables.
+
 			var context = new DataContext();
 			context.Tables.AddTable(PledgeLink.CreateTable());
 			context.Tables.AddTable(Payment.CreateTable());
