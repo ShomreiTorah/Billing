@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Data;
 using System.Data.Common;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,9 +26,15 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 		///<summary>Parses the last line of an address into 'city, state zip'.</summary>
 		static readonly Regex addressParser = new Regex(@"^([A-Z .]+)[,<]? ([A-Z.]{2,})(?: (\d+))?(?:-\d{4})?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-		static void SetAddress(StagedPerson person, string fullAddress, string address1, string address2, out string company) {
+		static void SetAddress(StagedPerson person, string fullAddress, string address1, string address2, ref string company) {
+			// If we already parsed an address, skip all of the work.
+			// We check this here to make sure the address fields are
+			// still added to usedValues to avoid duplicate comments.
+			if (person.Address != null)
+				return;
 			if (fullAddress == null) {
 				company = null;
+				person.Address = "";
 				return;
 			}
 			fullAddress = fullAddress.Replace(",", ", ").NormalizeSpaces().Trim();
@@ -70,6 +77,7 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 			progress.Maximum = connector.ExecuteScalar<int>("SELECT COUNT(*) FROM [Sheet1$]");
 			using (var reader = connector.ExecuteReader("SELECT * FROM [Sheet1$]")) {
 				StagedPerson person = new StagedPerson();
+				string company = null;
 
 				// The source file is denormalized, and contains one row per payment,
 				// with columns describing the person as part of the payment.  People
@@ -80,7 +88,7 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 					progress.Progress++;
 					// If we're at a boundary between people, skip the row, and start
 					// a new person.  The second row in the boundary will noop.
-					if (!reader.IsDBNull(2)) {
+					if (!reader.IsDBNull(1)) {
 						person = new StagedPerson();
 						continue;
 					}
@@ -93,18 +101,28 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 					// from being listed in the Comments field.
 					Func<string, int> GetField = (string name) => {
 						Int32 ordinal = reader.GetOrdinal(name);
-						usedValues[ordinal] = reader.GetNullableString(ordinal);
+						usedValues[ordinal] = reader[ordinal].ToString();
 						return ordinal;
 					};
 
-					string company;
-					var fullName = reader.GetString(GetField("Name"));
-					genderizer.SetFirstName(fullName.Substring(fullName.IndexOf(',')).Trim(), person);
-					person.LastName = fullName.Remove(fullName.IndexOf(','));
-					person.FullName = (person.HisName ?? person.HerName) + " " + person.LastName;
-					SetAddress(person, reader.GetString(
-						GetField("Name Address")), reader.GetString(GetField("Name Street1")),
-						reader.GetString(GetField("Name Street2")), out company
+					var fullName = reader.GetNullableString(GetField("Name"));
+					if (fullName == null)
+						continue;   // Bad data; ignore.
+					progress.Caption = "Reading payments for " + fullName;
+
+					int comma = fullName.IndexOf(',');
+					if (comma < 0 || fullName.EndsWith(", LLC"))
+						person.LastName = person.FullName = fullName;
+					else {
+						genderizer.SetFirstName(fullName.Substring(comma + 1).Trim(), person);
+						person.LastName = fullName.Remove(comma).Trim();
+						person.FullName = (person.HisName ?? person.HerName) + " " + person.LastName;
+					}
+					SetAddress(person,
+						reader.GetNullableString(GetField("Name Address")),
+						reader.GetNullableString(GetField("Name Street1")),
+						reader.GetNullableString(GetField("Name Street2")),
+						ref company
 					);
 					// Only add the person to the table if we actually have a payment
 					// too (as opposed to the second boundary row).
@@ -115,19 +133,20 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 
 					// TODO: Warn on bad zip
 
+					GetField("Date"); // Exclude Date from Comments, even if we don't fetch it below.
 					StagedPayment payment = new StagedPayment {
 						Date = reader.GetNullableDateTime(GetField("Date of Check")) ?? reader.GetDateTime(GetField("Date")),
-						Method = reader.GetString(GetField("Pay Meth")),
-						Amount = reader.GetDecimal(GetField("Amount")),
+						Method = reader.GetNullableString(GetField("Pay Meth")) ?? "Donation",
+						Amount = (decimal)reader.GetDouble(GetField("Amount")),
 						CheckNumber = reader.GetNullableString(GetField("Check #")),
 						Account = Names.DefaultAccount,
-						ExternalId = reader.GetString(GetField("Num")),
+						ExternalId = reader.GetNullableString(GetField("Num")) ?? Guid.NewGuid().ToString(),
 						StagedPerson = person,
 						Company = company,
 						Comments = Enumerable
 							.Range(0, reader.FieldCount)
-							.Where(i => !usedValues.ContainsKey(i))
-							.Select(i => reader.GetName(i) + ": " + reader.GetString(i))
+							.Where(i => !usedValues.ContainsKey(i) && !reader.IsDBNull(i) && !usedValues.ContainsValue(reader[i].ToString()))
+							.Select(i => reader.GetName(i) + ": " + reader[i])
 							.Join("\n")
 					};
 					payment.Method = methodMap.GetOrNull(payment.Method) ?? payment.Method;
@@ -143,7 +162,10 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 		public static string NormalizeSpaces(this string str) => str == null ? null : normalizer.Replace(str, " ");
 
 		public static DateTime? GetNullableDateTime(this DbDataReader reader, int ordinal) {
-			return reader.IsDBNull(ordinal) ? new DateTime?() : reader.GetDateTime(ordinal);
+			if (reader.IsDBNull(ordinal))
+				return null;
+			DateTime.TryParse(reader.GetString(ordinal), CultureInfo.CurrentCulture, DateTimeStyles.AllowWhiteSpaces, out var date);
+			return date;
 		}
 		public static string GetNullableString(this DbDataReader reader, int ordinal) {
 			return reader.IsDBNull(ordinal) ? null : reader.GetString(ordinal);

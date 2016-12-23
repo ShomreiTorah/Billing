@@ -360,7 +360,7 @@ namespace ShomreiTorah.Billing.Migrator {
             ZipColumn = Schema.Columns.AddValueColumn("Zip", typeof(String), null);
             ZipColumn.AllowNulls = true;
             
-            PhoneColumn = Schema.Columns.AddValueColumn("Phone", typeof(String), null);
+            PhoneColumn = Schema.Columns.AddValueColumn("Phone", typeof(String), "");
             PhoneColumn.AllowNulls = false;
             #endregion
             

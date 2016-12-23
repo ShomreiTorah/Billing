@@ -53,9 +53,7 @@
       </DefaultValue>
     </Column>
     <Column Name="Phone" AllowNulls="false" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the phone of the staged people." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="Phone" PropertyVisibility="Public" SqlName="Phone">
-      <DefaultValue>
-        <Null />
-      </DefaultValue>
+      <DefaultValue>""</DefaultValue>
     </Column>
   </Schema>
   <Schema Name="StagedPayments" RowClassDescription="Holds a payment pending migration." RowClassName="StagedPayment" RowClassVisibility="Public" SqlName="StagedPayments" SqlSchemaName="BillingMigration" PrimaryKeyName="StagedPaymentId">

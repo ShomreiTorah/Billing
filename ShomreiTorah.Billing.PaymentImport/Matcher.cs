@@ -61,11 +61,13 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				.DefaultIfEmpty(candidates);
 
 			// Match the imported first name against either HisName or HerName.
-			candidates = candidates.LevenshteinDistanceOf(p => p.HisName).ComparedTo(source.FirstName)
-				.Union(candidates.LevenshteinDistanceOf(p => p.HerName).ComparedTo(source.FirstName))
-				.BestMatches()
-				.Distinct()
-				.DefaultIfEmpty(candidates);
+			if (!string.IsNullOrWhiteSpace(source.FirstName)) {
+				candidates = candidates.LevenshteinDistanceOf(p => p.HisName).ComparedTo(source.FirstName)
+					.Union(candidates.LevenshteinDistanceOf(p => p.HerName).ComparedTo(source.FirstName))
+					.BestMatches()
+					.Distinct()
+					.DefaultIfEmpty(candidates);
+			}
 
 			// If none of the matches found anything, give up.
 			if (candidates == AppFramework.Table<Person>().Rows)
