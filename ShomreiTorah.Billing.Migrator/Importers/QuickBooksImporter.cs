@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using ShomreiTorah.Billing.PaymentImport;
 using ShomreiTorah.Common;
@@ -128,7 +129,9 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 					// too (as opposed to the second boundary row).
 					if (person.Table == null) {
 						AppFramework.Table<StagedPerson>().Rows.Add(person);
-						person.Person = Matcher.FindBestMatch(person);
+						var thisPerson = person;
+						// Do the CPU-intensive part on separate threads so it can utilize all cores.
+						ThreadPool.QueueUserWorkItem(_ => thisPerson.Person = Matcher.FindBestMatch(thisPerson));
 					}
 
 					// TODO: Warn on bad zip
