@@ -107,6 +107,9 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				return source.LastName.Equals(match.LastName, StringComparison.CurrentCultureIgnoreCase)
 					&& source.FirstName.Equals(match.HisName, StringComparison.CurrentCultureIgnoreCase)
 					 ? 1 : 2;
+			if (!string.IsNullOrWhiteSpace(source.City) && !string.IsNullOrWhiteSpace(match.City) &&
+				!source.City.Equals(match.City, StringComparison.CurrentCultureIgnoreCase))
+				return 2;
 			if (!AddressInfo.Parse(source.Address).Equals(AddressInfo.Parse(match.Address))
 			 || LevenshteinProcessor.LevenshteinDistance(source.LastName, match.LastName) > 1)
 				return 2;
@@ -115,9 +118,6 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 		public static Person FindBestMatch(IImportingPerson source) {
 			var matches = FindMatches(source).ToList();
-			// If there is exactly one match, ignore the score.
-			if (matches.Count < 2)
-				return matches.FirstOrDefault();
 			return (from match in matches
 					let score = GetMatchScore(source, match)
 					where score < 2
