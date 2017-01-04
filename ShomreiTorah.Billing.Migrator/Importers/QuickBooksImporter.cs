@@ -167,7 +167,8 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 		public static DateTime? GetNullableDateTime(this DbDataReader reader, int ordinal) {
 			if (reader.IsDBNull(ordinal))
 				return null;
-			DateTime.TryParse(reader.GetString(ordinal), CultureInfo.CurrentCulture, DateTimeStyles.AllowWhiteSpaces, out var date);
+			if (!DateTime.TryParse(reader.GetString(ordinal), CultureInfo.CurrentCulture, DateTimeStyles.AllowWhiteSpaces, out var date))
+				return null;
 			return date;
 		}
 		public static string GetNullableString(this DbDataReader reader, int ordinal) {
