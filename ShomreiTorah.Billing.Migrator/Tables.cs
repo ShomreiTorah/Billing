@@ -349,7 +349,7 @@ namespace ShomreiTorah.Billing.Migrator {
             FullNameColumn.AllowNulls = false;
             
             AddressColumn = Schema.Columns.AddValueColumn("Address", typeof(String), null);
-            AddressColumn.AllowNulls = false;
+            AddressColumn.AllowNulls = true;
             
             CityColumn = Schema.Columns.AddValueColumn("City", typeof(String), null);
             CityColumn.AllowNulls = true;

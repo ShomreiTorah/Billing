@@ -32,7 +32,7 @@
         <Null />
       </DefaultValue>
     </Column>
-    <Column Name="Address" AllowNulls="false" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the address of the staged people." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="Address" PropertyVisibility="Public" SqlName="Address">
+    <Column Name="Address" AllowNulls="true" DataType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Description="Gets or sets the address of the staged people." Expression="" ForeignRelationName="" ForeignRelationPropertyDescription="" ForeignRelationPropertyName="" GenerateSqlMapping="true" IsUnique="false" PropertyName="Address" PropertyVisibility="Public" SqlName="Address">
       <DefaultValue>
         <Null />
       </DefaultValue>
