@@ -56,6 +56,29 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 			// TODO: Use SQL delete statement for efficiency?
 			AppFramework.Table<StagedPerson>().Rows.Clear();
 		}
+
+		private void doImport_ItemClick(object sender, ItemClickEventArgs e) {
+
+		}
+
+		private void createPledges_ItemClick(object sender, ItemClickEventArgs e) {
+
+		}
+
+		#region Grid View Buttons
+		private void sortByPersonCount_ItemClick(object sender, ItemClickEventArgs e) {
+
+		}
+
+		private void filterByNonMatch_ItemClick(object sender, ItemClickEventArgs e) {
+
+		}
+
+		private void filterByScore_CheckedChanged(object sender, ItemClickEventArgs e) {
+
+		}
+		#endregion
+
 	}
 	///<summary>A component that binds to a dummy DataContext for use in designers in libraries.</summary>
 	class DesignerBinder : BindableDataContextBase {
