@@ -64,7 +64,7 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 			person.Zip = parsed.Groups[3].Value;
 		}
 
-		public void Import(string fileName, IProgressReporter progress) {
+		public void Import(string fileName, SynchronizationContext uiThread, IProgressReporter progress) {
 			var methodMap = Names.PaymentMethods.ToDictionary(k => k, StringComparer.CurrentCultureIgnoreCase);
 			methodMap.Add("American Express", "Credit Card");
 			methodMap.Add("MasterCard", "Credit Card");
@@ -75,6 +75,7 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 			var genderizer = Genderizer.Create();
 			var connector = DB.OpenFile(fileName);
 
+			var matchTasks = new LinkedList<Task>();
 			progress.Maximum = connector.ExecuteScalar<int>("SELECT COUNT(*) FROM [Sheet1$]");
 			using (var reader = connector.ExecuteReader("SELECT * FROM [Sheet1$]")) {
 				StagedPerson person = new StagedPerson();
@@ -129,9 +130,18 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 					// too (as opposed to the second boundary row).
 					if (person.Table == null) {
 						AppFramework.Table<StagedPerson>().Rows.Add(person);
-						var thisPerson = person;
+
 						// Do the CPU-intensive part on separate threads so it can utilize all cores.
-						ThreadPool.QueueUserWorkItem(_ => thisPerson.Person = Matcher.FindBestMatch(thisPerson));
+						// But only set the result on the UI thread to avoid threading bugs, both for
+						// change events in the grid (after the caller re-enables them) and since the
+						// child collection is not thread-safe.
+						async void SetPerson(StagedPerson thisPerson)
+						{
+							Person inferredTarget = await Task.Run(() => Matcher.FindBestMatch(thisPerson));
+							if (inferredTarget != null)
+								uiThread.Post(_ => thisPerson.Person = inferredTarget, null);
+						}
+						SetPerson(person);
 					}
 
 					// TODO: Warn on bad zip

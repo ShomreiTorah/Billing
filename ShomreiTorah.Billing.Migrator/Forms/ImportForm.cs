@@ -41,11 +41,12 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 			}) {
 				if (openDialog.ShowDialog(MdiParent) == DialogResult.Cancel)
 					return;
-				using (AppFramework.Table<StagedPerson>().BeginLoadData(SynchronizationContext.Current))
-				using (AppFramework.Table<StagedPayment>().BeginLoadData(SynchronizationContext.Current))
+				SynchronizationContext uiThread = SynchronizationContext.Current;
+				using (AppFramework.Table<StagedPerson>().BeginLoadData(uiThread))
+				using (AppFramework.Table<StagedPayment>().BeginLoadData(uiThread))
 					ProgressWorker.Execute(
 						MdiParent,
-						progress => source.Import(openDialog.FileName, progress),
+						progress => source.Import(openDialog.FileName, uiThread, progress),
 						cancellable: true
 					);
 			}

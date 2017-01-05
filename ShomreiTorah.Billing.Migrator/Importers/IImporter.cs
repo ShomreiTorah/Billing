@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ShomreiTorah.Common;
 
@@ -10,6 +11,6 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 	public interface IImporter {
 		string Name { get; }
 		string Filter { get; }
-		void Import(string fileName, IProgressReporter progress);
+		void Import(string fileName, SynchronizationContext uiThread, IProgressReporter progress);
 	}
 }
