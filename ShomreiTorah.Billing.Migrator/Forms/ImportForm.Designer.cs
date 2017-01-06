@@ -5,17 +5,6 @@
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing) {
-			if (disposing && (components != null)) {
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		#region Windows Form Designer generated code
 
 		/// <summary>
@@ -65,7 +54,7 @@
 			this.colAmount = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colComments = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colCompany = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
-			this.smartGrid1 = new ShomreiTorah.Data.UI.Grid.SmartGrid(this.components);
+			this.grid = new ShomreiTorah.Data.UI.Grid.SmartGrid(this.components);
 			this.peopleView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colHisName = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colHerName = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -95,15 +84,15 @@
 			this.colStagedPaymentId = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colStagedPerson = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.paymentsView)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.smartGrid1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.peopleView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.matchingPersonEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nullPersonEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
 			this.SuspendLayout();
-			// 
+			//
 			// paymentsView
-			// 
+			//
 			this.paymentsView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colDate,
             this.colMethod,
@@ -112,84 +101,84 @@
             this.colAmount,
             this.colComments,
             this.colCompany});
-			this.paymentsView.GridControl = this.smartGrid1;
+			this.paymentsView.GridControl = this.grid;
 			this.paymentsView.Name = "paymentsView";
-			// 
+			//
 			// colDate
-			// 
+			//
 			this.colDate.FieldName = "Date";
 			this.colDate.Name = "colDate";
 			this.colDate.Visible = true;
 			this.colDate.VisibleIndex = 0;
-			// 
+			//
 			// colMethod
-			// 
+			//
 			this.colMethod.FieldName = "Method";
 			this.colMethod.Name = "colMethod";
 			this.colMethod.Visible = true;
 			this.colMethod.VisibleIndex = 1;
-			// 
+			//
 			// colCheckNumber
-			// 
+			//
 			this.colCheckNumber.FieldName = "CheckNumber";
 			this.colCheckNumber.Name = "colCheckNumber";
 			this.colCheckNumber.Visible = true;
 			this.colCheckNumber.VisibleIndex = 2;
-			// 
+			//
 			// colAccount
-			// 
+			//
 			this.colAccount.FieldName = "Account";
 			this.colAccount.Name = "colAccount";
 			this.colAccount.Visible = true;
 			this.colAccount.VisibleIndex = 3;
-			// 
+			//
 			// colAmount
-			// 
+			//
 			this.colAmount.FieldName = "Amount";
 			this.colAmount.Name = "colAmount";
 			this.colAmount.Visible = true;
 			this.colAmount.VisibleIndex = 4;
-			// 
+			//
 			// colComments
-			// 
+			//
 			this.colComments.FieldName = "Comments";
 			this.colComments.Name = "colComments";
 			this.colComments.Visible = true;
 			this.colComments.VisibleIndex = 5;
-			// 
+			//
 			// colCompany
-			// 
+			//
 			this.colCompany.FieldName = "Company";
 			this.colCompany.Name = "colCompany";
 			this.colCompany.Visible = true;
 			this.colCompany.VisibleIndex = 6;
-			// 
-			// smartGrid1
-			// 
-			this.smartGrid1.DataMember = "StagedPeople";
-			this.smartGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.smartGrid1.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+			//
+			// grid
+			//
+			this.grid.DataMember = "StagedPeople";
+			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.grid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			gridLevelNode1.LevelTemplate = this.paymentsView;
 			gridLevelNode1.RelationName = "StagedPayments";
-			this.smartGrid1.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
+			this.grid.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
             gridLevelNode1});
-			this.smartGrid1.Location = new System.Drawing.Point(0, 213);
-			this.smartGrid1.MainView = this.peopleView;
-			this.smartGrid1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-			this.smartGrid1.Name = "smartGrid1";
-			this.smartGrid1.RegistrationCount = 56;
-			this.smartGrid1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+			this.grid.Location = new System.Drawing.Point(0, 213);
+			this.grid.MainView = this.peopleView;
+			this.grid.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+			this.grid.Name = "grid";
+			this.grid.RegistrationCount = 56;
+			this.grid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.nullPersonEdit,
             this.matchingPersonEdit});
-			this.smartGrid1.Size = new System.Drawing.Size(1268, 477);
-			this.smartGrid1.Source = this.designerBinder1;
-			this.smartGrid1.TabIndex = 3;
-			this.smartGrid1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+			this.grid.Size = new System.Drawing.Size(1268, 477);
+			this.grid.Source = this.designerBinder1;
+			this.grid.TabIndex = 3;
+			this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.peopleView,
             this.paymentsView});
-			// 
+			//
 			// peopleView
-			// 
+			//
 			this.peopleView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colHisName,
             this.colHerName,
@@ -201,7 +190,7 @@
             this.colZip,
             this.colPhone,
             this.colPerson});
-			this.peopleView.GridControl = this.smartGrid1;
+			this.peopleView.GridControl = this.grid;
 			this.peopleView.GroupFormat = "{0}: [#image]{1}: {2}";
 			this.peopleView.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "", null, "{0} Payments"),
@@ -213,77 +202,77 @@
 			this.peopleView.OptionsView.ShowFooter = true;
 			this.peopleView.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.peopleView_RowStyle);
 			this.peopleView.CustomRowCellEdit += new DevExpress.XtraGrid.Views.Grid.CustomRowCellEditEventHandler(this.peopleView_CustomRowCellEdit);
-			// 
+			//
 			// colHisName
-			// 
+			//
 			this.colHisName.FieldName = "HisName";
 			this.colHisName.Name = "colHisName";
 			this.colHisName.Visible = true;
 			this.colHisName.VisibleIndex = 0;
 			this.colHisName.Width = 97;
-			// 
+			//
 			// colHerName
-			// 
+			//
 			this.colHerName.FieldName = "HerName";
 			this.colHerName.Name = "colHerName";
 			this.colHerName.Visible = true;
 			this.colHerName.VisibleIndex = 1;
 			this.colHerName.Width = 100;
-			// 
+			//
 			// colLastName
-			// 
+			//
 			this.colLastName.FieldName = "LastName";
 			this.colLastName.Name = "colLastName";
 			this.colLastName.Visible = true;
 			this.colLastName.VisibleIndex = 2;
 			this.colLastName.Width = 103;
-			// 
+			//
 			// colFullName
-			// 
+			//
 			this.colFullName.FieldName = "FullName";
 			this.colFullName.Name = "colFullName";
 			this.colFullName.Visible = true;
 			this.colFullName.VisibleIndex = 3;
 			this.colFullName.Width = 100;
-			// 
+			//
 			// colAddress
-			// 
+			//
 			this.colAddress.FieldName = "Address";
 			this.colAddress.Name = "colAddress";
 			this.colAddress.Visible = true;
 			this.colAddress.VisibleIndex = 4;
 			this.colAddress.Width = 86;
-			// 
+			//
 			// colCity
-			// 
+			//
 			this.colCity.FieldName = "City";
 			this.colCity.Name = "colCity";
 			this.colCity.Visible = true;
 			this.colCity.VisibleIndex = 5;
-			// 
+			//
 			// colState
-			// 
+			//
 			this.colState.FieldName = "State";
 			this.colState.Name = "colState";
 			this.colState.Visible = true;
 			this.colState.VisibleIndex = 6;
-			// 
+			//
 			// colZip
-			// 
+			//
 			this.colZip.FieldName = "Zip";
 			this.colZip.Name = "colZip";
 			this.colZip.Visible = true;
 			this.colZip.VisibleIndex = 7;
-			// 
+			//
 			// colPhone
-			// 
+			//
 			this.colPhone.FieldName = "Phone";
 			this.colPhone.Name = "colPhone";
 			this.colPhone.Visible = true;
 			this.colPhone.VisibleIndex = 8;
-			// 
+			//
 			// colPerson
-			// 
+			//
 			this.colPerson.AllowKeyboardActivation = false;
 			this.colPerson.ColumnEditor = this.matchingPersonEdit;
 			this.colPerson.FieldName = "Person";
@@ -296,9 +285,9 @@
 			this.colPerson.Visible = true;
 			this.colPerson.VisibleIndex = 9;
 			this.colPerson.Width = 77;
-			// 
+			//
 			// matchingPersonEdit
-			// 
+			//
 			this.matchingPersonEdit.AutoHeight = false;
 			toolTipTitleItem1.Text = "Import as New Person";
 			toolTipItem1.LeftIndent = 6;
@@ -311,17 +300,17 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "Import as New Person", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, superToolTip1, true)});
 			this.matchingPersonEdit.Name = "matchingPersonEdit";
 			this.matchingPersonEdit.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.matchingPersonEdit_ButtonClick);
-			// 
+			//
 			// nullPersonEdit
-			// 
+			//
 			this.nullPersonEdit.AutoHeight = false;
 			this.nullPersonEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.nullPersonEdit.Name = "nullPersonEdit";
 			this.nullPersonEdit.NullValuePrompt = "Will be imported as a new person.  Click to select an existing person instead.";
-			// 
+			//
 			// ribbonControl1
-			// 
+			//
 			this.ribbonControl1.ExpandCollapseItem.Id = 0;
 			this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
@@ -339,9 +328,9 @@
 			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
 			this.ribbonControl1.Size = new System.Drawing.Size(1268, 213);
-			// 
+			//
 			// importSources
-			// 
+			//
 			this.importSources.Caption = "Load Data From";
 			this.importSources.Id = 1;
 			this.importSources.Name = "importSources";
@@ -353,9 +342,9 @@
 			superToolTip2.Items.Add(toolTipItem2);
 			this.importSources.SuperTip = superToolTip2;
 			this.importSources.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.importSources_ListItemClick);
-			// 
+			//
 			// clearStaging
-			// 
+			//
 			this.clearStaging.Caption = "Clear Import";
 			this.clearStaging.Id = 2;
 			this.clearStaging.Name = "clearStaging";
@@ -367,9 +356,9 @@
 			superToolTip3.Items.Add(toolTipItem3);
 			this.clearStaging.SuperTip = superToolTip3;
 			this.clearStaging.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.clearStaging_ItemClick);
-			// 
+			//
 			// sortByPersonCount
-			// 
+			//
 			this.sortByPersonCount.Caption = "Show duplicates";
 			this.sortByPersonCount.Id = 3;
 			this.sortByPersonCount.Name = "sortByPersonCount";
@@ -382,9 +371,9 @@
 			superToolTip4.Items.Add(toolTipItem4);
 			this.sortByPersonCount.SuperTip = superToolTip4;
 			this.sortByPersonCount.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.sortByPersonCount_ItemClick);
-			// 
+			//
 			// filterByNonMatch
-			// 
+			//
 			this.filterByNonMatch.Caption = "Review non-matching people";
 			this.filterByNonMatch.Id = 4;
 			this.filterByNonMatch.Name = "filterByNonMatch";
@@ -395,9 +384,9 @@
 			superToolTip5.Items.Add(toolTipItem5);
 			this.filterByNonMatch.SuperTip = superToolTip5;
 			this.filterByNonMatch.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.filterByNonMatch_ItemClick);
-			// 
+			//
 			// filterByScore
-			// 
+			//
 			this.filterByScore.Caption = "Show bad matches only";
 			this.filterByScore.Id = 5;
 			this.filterByScore.Name = "filterByScore";
@@ -413,9 +402,9 @@
 			superToolTip6.Items.Add(toolTipTitleItem7);
 			this.filterByScore.SuperTip = superToolTip6;
 			this.filterByScore.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.filterByScore_CheckedChanged);
-			// 
+			//
 			// doImport
-			// 
+			//
 			this.doImport.Caption = "Finish Import";
 			this.doImport.Id = 6;
 			this.doImport.Name = "doImport";
@@ -430,9 +419,9 @@
 			superToolTip7.Items.Add(toolTipTitleItem9);
 			this.doImport.SuperTip = superToolTip7;
 			this.doImport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.doImport_ItemClick);
-			// 
+			//
 			// createPledges
-			// 
+			//
 			this.createPledges.Caption = "Create Pledges";
 			this.createPledges.Id = 7;
 			this.createPledges.Name = "createPledges";
@@ -448,17 +437,17 @@
 			superToolTip8.Items.Add(toolTipTitleItem11);
 			this.createPledges.SuperTip = superToolTip8;
 			this.createPledges.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.createPledges_ItemClick);
-			// 
+			//
 			// ribbonPage1
-			// 
+			//
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1,
             this.ribbonPageGroup2});
 			this.ribbonPage1.Name = "ribbonPage1";
 			this.ribbonPage1.Text = "Admin";
-			// 
+			//
 			// ribbonPageGroup1
-			// 
+			//
 			this.ribbonPageGroup1.ItemLinks.Add(this.importSources);
 			this.ribbonPageGroup1.ItemLinks.Add(this.clearStaging);
 			this.ribbonPageGroup1.ItemLinks.Add(this.doImport, true);
@@ -466,43 +455,43 @@
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			this.ribbonPageGroup1.ShowCaptionButton = false;
 			this.ribbonPageGroup1.Text = "Import";
-			// 
+			//
 			// ribbonPageGroup2
-			// 
+			//
 			this.ribbonPageGroup2.ItemLinks.Add(this.sortByPersonCount);
 			this.ribbonPageGroup2.ItemLinks.Add(this.filterByNonMatch);
 			this.ribbonPageGroup2.ItemLinks.Add(this.filterByScore);
 			this.ribbonPageGroup2.Name = "ribbonPageGroup2";
 			this.ribbonPageGroup2.ShowCaptionButton = false;
 			this.ribbonPageGroup2.Text = "Review";
-			// 
+			//
 			// colStagedPersonId
-			// 
+			//
 			this.colStagedPersonId.FieldName = "StagedPersonId";
 			this.colStagedPersonId.Name = "colStagedPersonId";
-			// 
+			//
 			// colStagedPaymentId
-			// 
+			//
 			this.colStagedPaymentId.FieldName = "StagedPaymentId";
 			this.colStagedPaymentId.Name = "colStagedPaymentId";
-			// 
+			//
 			// colStagedPerson
-			// 
+			//
 			this.colStagedPerson.FieldName = "StagedPerson";
 			this.colStagedPerson.Name = "colStagedPerson";
-			// 
+			//
 			// ImportForm
-			// 
+			//
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1268, 690);
-			this.Controls.Add(this.smartGrid1);
+			this.Controls.Add(this.grid);
 			this.Controls.Add(this.ribbonControl1);
 			this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.Name = "ImportForm";
 			this.Text = "ImportForm";
 			((System.ComponentModel.ISupportInitialize)(this.paymentsView)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.smartGrid1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.peopleView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.matchingPersonEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nullPersonEdit)).EndInit();
@@ -517,7 +506,7 @@
 		private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
 		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
-		private Data.UI.Grid.SmartGrid smartGrid1;
+		private Data.UI.Grid.SmartGrid grid;
 		private Data.UI.Grid.SmartGridView peopleView;
 		private DesignerBinder designerBinder1;
 		private Data.UI.Grid.SmartGridColumn colHisName;

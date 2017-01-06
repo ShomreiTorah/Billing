@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DevExpress.Data;
+using DevExpress.Data.Filtering;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
@@ -34,6 +36,15 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 			this.importers = importers.ReadOnlyCopy();
 
 			importSources.Strings.AddRange(importers.Select(s => s.Name).ToArray());
+		}
+
+		RowListBinder filteredTable;
+		protected override void Dispose(bool disposing) {
+			if (disposing) {
+				filteredTable?.Dispose();
+				components?.Dispose();
+			}
+			base.Dispose(disposing);
 		}
 
 		private void importSources_ListItemClick(object sender, ListItemClickEventArgs e) {
@@ -70,15 +81,26 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 
 		#region Grid View Buttons
 		private void sortByPersonCount_ItemClick(object sender, ItemClickEventArgs e) {
-
+			peopleView.ClearGrouping();
+			colPerson.Group();
+			peopleView.GroupSummarySortInfo.Add(new GridSummaryItem(SummaryItemType.Count, "Person", "{0} staged people"), ColumnSortOrder.Descending);
 		}
 
 		private void filterByNonMatch_ItemClick(object sender, ItemClickEventArgs e) {
-
+			peopleView.ActiveFilterCriteria = new OperandProperty(nameof(StagedPerson.Person)) != new OperandValue(null);
+			colCity.Group();
 		}
 
 		private void filterByScore_CheckedChanged(object sender, ItemClickEventArgs e) {
-
+			filteredTable?.Dispose();
+			var table = AppFramework.Table<StagedPerson>();
+			if (!filterByScore.Checked)
+				grid.DataSource = table;
+			else
+				grid.DataSource = new RowListBinder(table, table.Rows
+					.Where(p => p.Person != null && Matcher.GetMatchScore(p, p.Person) > 0)
+					.ToList<Row>()
+				);
 		}
 		#endregion
 
