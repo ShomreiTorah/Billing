@@ -120,7 +120,7 @@
   <metadata name="designerBinder1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="toolTipItem4.Text" xml:space="preserve">
+  <data name="toolTipItem5.Text" xml:space="preserve">
     <value>Filters the grid to only show people who were not matched to any existing rows in the master directory, and will therefore be created as new people by the import.
 
 These people are either entirely new, or have typos that prevented a match.</value>

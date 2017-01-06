@@ -11,7 +11,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Grid;
 using ShomreiTorah.Billing.Migrator.Importers;
+using ShomreiTorah.Billing.PaymentImport;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI;
@@ -79,6 +82,24 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 		}
 		#endregion
 
+		static readonly Color[] matchColors = { Color.LightGreen, Color.Yellow, Color.Red };
+		private void peopleView_RowStyle(object sender, RowStyleEventArgs e) {
+			var person = (StagedPerson)peopleView.GetRow(e.RowHandle);
+			if (person == null)
+				e.Appearance.BackColor = Color.LightPink;
+			else
+				e.Appearance.BackColor = matchColors[Matcher.GetMatchScore(person, person.Person)];
+		}
+
+		private void peopleView_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e) {
+			if (e.Column == colPerson)
+				e.RepositoryItem = e.CellValue == null ? nullPersonEdit : matchingPersonEdit;
+		}
+
+		private void matchingPersonEdit_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e) {
+			if (e.Button.Index == 1)
+				((StagedPerson)peopleView.GetFocusedRow()).Person = null;
+		}
 	}
 	///<summary>A component that binds to a dummy DataContext for use in designers in libraries.</summary>
 	class DesignerBinder : BindableDataContextBase {
