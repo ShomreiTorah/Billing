@@ -104,8 +104,8 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 		public static int GetMatchScore(IImportingPerson source, Person match) {
 			if (string.IsNullOrWhiteSpace(source.Address))
-				return source.LastName.Equals(match.LastName, StringComparison.CurrentCultureIgnoreCase)
-					&& source.FirstName.Equals(match.HisName, StringComparison.CurrentCultureIgnoreCase)
+				return String.Equals(source.LastName, match.LastName, StringComparison.CurrentCultureIgnoreCase)
+					&& String.Equals(source.FirstName, match.HisName, StringComparison.CurrentCultureIgnoreCase)
 					 ? 1 : 2;
 			if (!string.IsNullOrWhiteSpace(source.City) && !string.IsNullOrWhiteSpace(match.City) &&
 				!source.City.Equals(match.City, StringComparison.CurrentCultureIgnoreCase))
