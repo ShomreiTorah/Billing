@@ -199,8 +199,7 @@
 			this.peopleView.GridControl = this.grid;
 			this.peopleView.GroupFormat = "{0}: [#image]{1}: {2}";
 			this.peopleView.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "", null, "{0} Payments"),
-            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Amount", null, "{0:c}")});
+            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "", null, "{0} Staged people")});
 			this.peopleView.Name = "peopleView";
 			this.peopleView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.Click;
 			this.peopleView.OptionsSelection.MultiSelect = true;
@@ -496,7 +495,7 @@
 			this.Controls.Add(this.ribbonControl1);
 			this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.Name = "ImportForm";
-			this.Text = "ImportForm";
+			this.Text = "Migrate Payments";
 			((System.ComponentModel.ISupportInitialize)(this.paymentsView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.peopleView)).EndInit();

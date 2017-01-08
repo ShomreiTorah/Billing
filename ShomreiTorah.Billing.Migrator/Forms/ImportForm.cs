@@ -14,12 +14,14 @@ using DevExpress.Data.Filtering;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using ShomreiTorah.Billing.Migrator.Importers;
 using ShomreiTorah.Billing.PaymentImport;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
 using ShomreiTorah.Data.UI;
+using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.Singularity.DataBinding;
 using ShomreiTorah.WinForms.Forms;
@@ -36,6 +38,17 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 			this.importers = importers.ReadOnlyCopy();
 
 			importSources.Strings.AddRange(importers.Select(s => s.Name).ToArray());
+			EditorRepository.PersonLookup.Apply(matchingPersonEdit);
+			EditorRepository.PersonLookup.Apply(nullPersonEdit);
+		}
+
+		protected override void OnShown(EventArgs e) {
+			base.OnShown(e);
+
+			// Override PersonColumnController:
+			colPerson.AllowKeyboardActivation = true;
+			colPerson.OptionsColumn.ReadOnly = false;
+			colPerson.OptionsColumn.AllowEdit = true;
 		}
 
 		private void importSources_ListItemClick(object sender, ListItemClickEventArgs e) {
@@ -54,6 +67,7 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 						progress => source.Import(openDialog.FileName, uiThread, progress),
 						cancellable: true
 					);
+				peopleView.BestFitColumns();
 			}
 		}
 
@@ -74,16 +88,20 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 		private void sortByPersonCount_ItemClick(object sender, ItemClickEventArgs e) {
 			peopleView.ClearGrouping();
 			colPerson.Group();
-			peopleView.GroupSummarySortInfo.Add(new GridSummaryItem(SummaryItemType.Count, "Person", "{0} staged people"), ColumnSortOrder.Descending);
+			peopleView.ActiveFilterCriteria = new OperandProperty(nameof(StagedPerson.Person)) != new OperandValue(null);
+			peopleView.GroupSummarySortInfo.Add(peopleView.GroupSummary[0], ColumnSortOrder.Descending);
 		}
 
 		private void filterByNonMatch_ItemClick(object sender, ItemClickEventArgs e) {
-			peopleView.ActiveFilterCriteria = new OperandProperty(nameof(StagedPerson.Person)) != new OperandValue(null);
+			peopleView.ClearGrouping();
+			peopleView.ActiveFilterCriteria = new OperandProperty(nameof(StagedPerson.Person)) == new OperandValue(null);
 			colCity.Group();
+			peopleView.GroupSummarySortInfo.Add(peopleView.GroupSummary[0], ColumnSortOrder.Descending);
 		}
 
 		private void filterByScore_CheckedChanged(object sender, ItemClickEventArgs e) {
 			peopleView.RefreshData();
+			peopleView.ActiveFilterCriteria = null;
 		}
 
 		private void peopleView_CustomRowFilter(object sender, RowFilterEventArgs e) {
@@ -95,13 +113,16 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 			e.Handled = person.Person == null || Matcher.GetMatchScore(person, person.Person) == 0;
 			e.Visible = false;
 		}
+
 		#endregion
 
-		static readonly Color[] matchColors = { Color.LightGreen, Color.Yellow, Color.Red };
+		static readonly Color[] matchColors = { Color.LightGreen, Color.Yellow, Color.LightCoral };
 		private void peopleView_RowStyle(object sender, RowStyleEventArgs e) {
 			var person = (StagedPerson)peopleView.GetRow(e.RowHandle);
 			if (person == null)
-				e.Appearance.BackColor = Color.LightPink;
+				return;
+			if (person.Person == null)
+				e.Appearance.BackColor = Color.LightSkyBlue;
 			else
 				e.Appearance.BackColor = matchColors[Matcher.GetMatchScore(person, person.Person)];
 		}
@@ -112,8 +133,10 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 		}
 
 		private void matchingPersonEdit_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e) {
-			if (e.Button.Index == 1)
+			if (e.Button.Index == 1) {
 				((StagedPerson)peopleView.GetFocusedRow()).Person = null;
+				peopleView.CloseEditor();
+			}
 		}
 	}
 	///<summary>A component that binds to a dummy DataContext for use in designers in libraries.</summary>
