@@ -4,6 +4,12 @@
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
+		protected override void Dispose(bool disposing) {
+			if (disposing) {
+				components?.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
 		#region Windows Form Designer generated code
 
@@ -202,6 +208,7 @@
 			this.peopleView.OptionsView.ShowFooter = true;
 			this.peopleView.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.peopleView_RowStyle);
 			this.peopleView.CustomRowCellEdit += new DevExpress.XtraGrid.Views.Grid.CustomRowCellEditEventHandler(this.peopleView_CustomRowCellEdit);
+			this.peopleView.CustomRowFilter += peopleView_CustomRowFilter;
 			//
 			// colHisName
 			//

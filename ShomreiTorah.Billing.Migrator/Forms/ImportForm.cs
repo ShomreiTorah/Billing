@@ -38,15 +38,6 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 			importSources.Strings.AddRange(importers.Select(s => s.Name).ToArray());
 		}
 
-		RowListBinder filteredTable;
-		protected override void Dispose(bool disposing) {
-			if (disposing) {
-				filteredTable?.Dispose();
-				components?.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		private void importSources_ListItemClick(object sender, ListItemClickEventArgs e) {
 			var source = importers[e.Index];
 			using (var openDialog = new OpenFileDialog {
@@ -92,15 +83,17 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 		}
 
 		private void filterByScore_CheckedChanged(object sender, ItemClickEventArgs e) {
-			filteredTable?.Dispose();
-			var table = AppFramework.Table<StagedPerson>();
+			peopleView.RefreshData();
+		}
+
+		private void peopleView_CustomRowFilter(object sender, RowFilterEventArgs e) {
 			if (!filterByScore.Checked)
-				grid.DataSource = table;
-			else
-				grid.DataSource = new RowListBinder(table, table.Rows
-					.Where(p => p.Person != null && Matcher.GetMatchScore(p, p.Person) > 0)
-					.ToList<Row>()
-				);
+				return;
+			var person = AppFramework.Table<StagedPerson>().Rows[e.ListSourceRow];
+			// If the row should be hidden, handle the event to force-hide the row.
+			// Otherwise, leave it unhandled, to allow the user to further filter.
+			e.Handled = person.Person == null || Matcher.GetMatchScore(person, person.Person) == 0;
+			e.Visible = false;
 		}
 		#endregion
 
