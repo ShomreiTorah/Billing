@@ -173,6 +173,12 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			if (retVal.StreetName.Equals("THECIR", StringComparison.OrdinalIgnoreCase))
 				retVal.StreetName = "TheCircle";
 
+			// Turn 221B Baker St. into 221 Baker St. #B
+			if (char.IsLetter(retVal.HouseNumber.LastOrDefault())) {
+				retVal.Apartment = retVal.HouseNumber.Last() + retVal.Apartment;
+				retVal.HouseNumber = retVal.HouseNumber.Remove(retVal.HouseNumber.Length - 1);
+			}
+
 			return retVal;
 		}
 
