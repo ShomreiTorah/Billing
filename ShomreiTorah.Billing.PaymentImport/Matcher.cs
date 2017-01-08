@@ -110,7 +110,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			if (!string.IsNullOrWhiteSpace(source.City) && !string.IsNullOrWhiteSpace(match.City) &&
 				!source.City.Equals(match.City, StringComparison.CurrentCultureIgnoreCase))
 				return 2;
-			if (!AddressInfo.Parse(source.Address).Equals(AddressInfo.Parse(match.Address))
+			if (AddressInfo.Parse(source.Address) != AddressInfo.Parse(match.Address)
 			 || LevenshteinProcessor.LevenshteinDistance(source.LastName, match.LastName) > 1)
 				return 2;
 			return 0;
@@ -192,15 +192,12 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				return false;
 			}
 			var b = (AddressInfo)obj;
-			return String.Equals(StreetName, b.StreetName, StringComparison.OrdinalIgnoreCase)
-				 && String.Equals(Apartment, b.Apartment, StringComparison.OrdinalIgnoreCase)
-				 && String.Equals(HouseNumber, b.HouseNumber, StringComparison.OrdinalIgnoreCase);
+			return this == b;
 		}
 
 		public override int GetHashCode() {
-			return StringComparer.OrdinalIgnoreCase.GetHashCode(HouseNumber ?? "")
-				 ^ StringComparer.OrdinalIgnoreCase.GetHashCode(StreetName ?? "")
-				 ^ StringComparer.OrdinalIgnoreCase.GetHashCode(Apartment ?? "");
+			return StringComparer.InvariantCultureIgnoreCase.GetHashCode(HouseNumber ?? "")
+				 ^ 17 * StringComparer.InvariantCultureIgnoreCase.GetHashCode(StreetName ?? "");
 		}
 		public override string ToString() { return Original; }
 	}
