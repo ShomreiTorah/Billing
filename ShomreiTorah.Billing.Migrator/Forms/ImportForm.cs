@@ -60,8 +60,7 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 				if (openDialog.ShowDialog(MdiParent) == DialogResult.Cancel)
 					return;
 				SynchronizationContext uiThread = SynchronizationContext.Current;
-				using (AppFramework.Table<StagedPerson>().BeginLoadData(uiThread))
-				using (AppFramework.Table<StagedPayment>().BeginLoadData(uiThread))
+				using (AppFramework.Current.DataContext.BeginLoadData(uiThread))
 					ProgressWorker.Execute(
 						MdiParent,
 						progress => source.Import(openDialog.FileName, uiThread, progress),
@@ -77,11 +76,73 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 		}
 
 		private void doImport_ItemClick(object sender, ItemClickEventArgs e) {
+			using (AppFramework.Current.DataContext.BeginLoadData())
+				ProgressWorker.Execute(MdiParent, progress => {
+					progress.Maximum = AppFramework.Table<StagedPerson>().Rows.Count;
+					foreach (var source in AppFramework.Table<StagedPerson>().Rows) {
+						Person target;
+						progress.Progress++;
+						if (source.Person != null) {
+							target = source.Person;
+							progress.Caption = $"Importing {source.FullName} to {target.FullName}";
+						} else {
+							progress.Caption = $"Importing {source.FullName} as new person";
+							target = new Person {
+								Address = source.Address,
+								City = source.City,
+								FullName = source.FullName,
+								HerName = source.HerName,
+								HisName = source.HisName,
+								LastName = source.LastName,
+								Phone = source.Phone,
+								State = source.State,
+								Zip = source.Zip,
+								Salutation = "",
+								Source = "Migration",
+							};
+							AppFramework.Table<Person>().Rows.Add(target);
+						}
+
+						foreach (var payment in source.StagedPayments) {
+							AppFramework.Table<Payment>().Rows.Add(new Payment {
+								Account = payment.Account,
+								Amount = payment.Amount,
+								CheckNumber = payment.CheckNumber,
+								Comments = payment.Comments,
+								Company = payment.Company,
+								Date = payment.Date,
+								Method = payment.Method,
+								Person = target,
+								Modifier = "Migration"
+							});
+						}
+					}
+				}, cancellable: false);
 
 		}
 
 		private void createPledges_ItemClick(object sender, ItemClickEventArgs e) {
+			using (AppFramework.Current.DataContext.BeginLoadData())
+				ProgressWorker.Execute(MdiParent, progress => {
+					progress.Maximum = AppFramework.Table<Person>().Rows.Count;
+					foreach (var person in AppFramework.Table<Person>().Rows) {
+						if (progress.WasCanceled) return;
+						progress.Progress++;
+						var balanceDue = person.Field<decimal>("BalanceDue");
+						if (balanceDue >= 0)
+							continue;
 
+						progress.Caption = $"Creating {-balanceDue:c} pledge for {person.FullName}";
+						AppFramework.Table<Pledge>().Rows.Add(new Pledge {
+							Account = person.Payments.First().Account,
+							Amount = -balanceDue,
+							Date = DateTime.Now,
+							Person = person,
+							Type = "Adjustment",
+							Modifier = "Migration",
+						});
+					}
+				}, cancellable: true);
 		}
 
 		#region Grid View Buttons
