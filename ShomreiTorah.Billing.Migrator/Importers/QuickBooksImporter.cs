@@ -120,12 +120,19 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 						person.LastName = fullName.Remove(comma).Trim();
 						person.FullName = (person.HisName ?? person.HerName) + " " + person.LastName;
 					}
+					person.FullName = reader.GetNullableString(GetField("Ship To Address 1")) ?? person.FullName;
 					SetAddress(person,
 						reader.GetNullableString(GetField("Name Address")),
 						reader.GetNullableString(GetField("Name Street1")),
 						reader.GetNullableString(GetField("Name Street2")),
 						ref company
 					);
+					// If these values exist discretely in other columns (Ship To),
+					// don't include them in Comments.
+					usedValues.Add(-1, person.City);
+					usedValues.Add(-2, person.State);
+					usedValues.Add(-3, person.Zip);
+
 					// Only add the person to the table if we actually have a payment
 					// too (as opposed to the second boundary row).
 					if (person.Table == null) {
@@ -160,7 +167,7 @@ namespace ShomreiTorah.Billing.Migrator.Importers {
 							.Range(0, reader.FieldCount)
 							.Where(i => !usedValues.ContainsKey(i) && !reader.IsDBNull(i) && !usedValues.ContainsValue(reader[i].ToString()))
 							.Select(i => reader.GetName(i) + ": " + reader[i])
-							.Join("\n")
+							.Join(Environment.NewLine)
 					};
 					payment.Method = methodMap.GetOrNull(payment.Method) ?? payment.Method;
 					AppFramework.Table<StagedPayment>().Rows.Add(payment);
