@@ -208,6 +208,7 @@
 			this.peopleView.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.peopleView_RowStyle);
 			this.peopleView.CustomRowCellEdit += new DevExpress.XtraGrid.Views.Grid.CustomRowCellEditEventHandler(this.peopleView_CustomRowCellEdit);
 			this.peopleView.CustomRowFilter += peopleView_CustomRowFilter;
+			this.peopleView.ShowingEditor += peopleView_ShowingEditor;
 			//
 			// colHisName
 			//

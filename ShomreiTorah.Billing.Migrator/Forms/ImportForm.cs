@@ -132,6 +132,12 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 				e.RepositoryItem = e.CellValue == null ? nullPersonEdit : matchingPersonEdit;
 		}
 
+		private void peopleView_ShowingEditor(object sender, CancelEventArgs e) {
+			// Don't let the user edit fields of a row that matches an existing person.
+			if (peopleView.FocusedColumn != colPerson
+			 && ((StagedPerson)peopleView.GetFocusedRow()).Person != null)
+				e.Cancel = true;
+		}
 		private void matchingPersonEdit_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e) {
 			if (e.Button.Index == 1) {
 				((StagedPerson)peopleView.GetFocusedRow()).Person = null;
