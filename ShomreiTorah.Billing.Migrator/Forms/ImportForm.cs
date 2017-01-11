@@ -24,6 +24,7 @@ using ShomreiTorah.Data.UI;
 using ShomreiTorah.Data.UI.DisplaySettings;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.Singularity.DataBinding;
+using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Migrator.Forms {
@@ -60,12 +61,16 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 				if (openDialog.ShowDialog(MdiParent) == DialogResult.Cancel)
 					return;
 				SynchronizationContext uiThread = SynchronizationContext.Current;
-				using (AppFramework.Current.DataContext.BeginLoadData(uiThread))
-					ProgressWorker.Execute(
-						MdiParent,
-						progress => source.Import(openDialog.FileName, uiThread, progress),
-						cancellable: true
-					);
+				try {
+					using (AppFramework.Current.DataContext.BeginLoadData(uiThread))
+						ProgressWorker.Execute(
+							MdiParent,
+							progress => source.Import(openDialog.FileName, uiThread, progress),
+							cancellable: true
+						);
+				} catch (Exception ex) {
+					Dialog.ShowError("An error occurred while importing payments.\r\n" + ex.GetBaseException().Message);
+				}
 				peopleView.BestFitColumns();
 			}
 		}
