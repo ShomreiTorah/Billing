@@ -118,7 +118,10 @@ namespace ShomreiTorah.Billing.Migrator.Forms {
 								Date = payment.Date,
 								Method = payment.Method,
 								Person = target,
-								Modifier = "Migration"
+								Modifier = "Migration",
+								// TODO: Change ExternalId to string and always set it.
+								ExternalSource = "Migration",
+								ExternalId = int.TryParse(payment.ExternalId, out var id) ? id : new int?()
 							});
 						}
 					}
