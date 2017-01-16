@@ -26,7 +26,7 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				yield break;
 			var email = AppFramework.Table<EmailAddress>().Rows
 				.FirstOrDefault(e => e.Email.Equals(source.Email, StringComparison.OrdinalIgnoreCase));
-			if (email != null)
+			if (email?.Person != null)
 				yield return email.Person;
 		}
 
