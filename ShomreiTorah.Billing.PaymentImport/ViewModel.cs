@@ -115,6 +115,9 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		public IReadOnlyCollection<PledgeType> PledgeTypes { get; set; }
 		void InferType() {
 			foreach (var type in PledgeTypes ?? Names.PledgeTypes) {
+				// Don't infer Melave Malka pledge types for non-journal payments.
+				if (type == Names.JournalPledgeType && CurrentPayment.JournalInfo == null)
+					continue;
 				var subtype = type.Subtypes.FirstOrDefault(st => st.DefaultPrice == CurrentPayment.Amount);
 				if (subtype != null) {
 					PledgeType = type.Name;
