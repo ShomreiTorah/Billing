@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Composition;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
@@ -147,7 +149,9 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		}
 
 		private async void refresh_ItemClick(object sender, ItemClickEventArgs e) => await LoadPaymentsAsync();
-		private async void startDate_EditValueChanged(Object sender, EventArgs e) => await LoadPaymentsAsync();
+		private async void startDate_EditValueChanged(Object sender, EventArgs e) {
+			if (Visible) await LoadPaymentsAsync();
+		}
 
 		private void import_ItemClick(object sender, ItemClickEventArgs e) {
 			try {
@@ -169,6 +173,9 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			await LoadPaymentsAsync();
 		}
 		async Task LoadPaymentsAsync() {
+			// DevExpress bug: Won't exist in PowerPoint addon.
+			SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
+
 			try {
 				await viewModel.LoadPayments((DateTime)startDate.EditValue);
 			} catch (Exception ex) {
