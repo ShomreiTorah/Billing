@@ -151,7 +151,7 @@ namespace ShomreiTorah.Billing.Import {
 			this.gridView.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "", null, "{0} people")});
 			this.gridView.Name = "gridView";
-			this.gridView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.Click;
+			this.gridView.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
 			this.gridView.OptionsView.ShowGroupPanel = false;
 			this.gridView.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colMatchState, DevExpress.Data.ColumnSortOrder.Ascending)});
@@ -372,7 +372,6 @@ namespace ShomreiTorah.Billing.Import {
 			// 
 			// YKImporter
 			// 
-			this.AcceptButton = this.doImport;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancel;
