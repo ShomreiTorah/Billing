@@ -196,5 +196,12 @@ namespace ShomreiTorah.Billing.PaymentImport {
 				!isJournalMode && payment.JournalInfo != null
 			);
 		}
+
+		// I cannot easily make the ViewModel use RowListBinder
+		// so the grid can only provide properties.
+		private void peopleView_CustomUnboundColumnData(Object sender, CustomColumnDataEventArgs e) {
+			if (e.Column == colBalanceDue)
+				e.Value = ((Singularity.Row)e.Row).Field<decimal>("BalanceDue");
+		}
 	}
 }

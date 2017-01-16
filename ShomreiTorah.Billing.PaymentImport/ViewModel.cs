@@ -28,7 +28,6 @@ namespace ShomreiTorah.Billing.PaymentImport {
 			// They must only be mutated through the wrapper properties,
 			// so that we always raise PropertyChanged for data-binding.
 			public readonly ReadOnlyObservableCollection<Person> matchingPeople;
-			public Person person;
 			public string comments;
 			public bool createPledge;
 			public decimal pledgeAmount;
@@ -38,13 +37,26 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 			readonly ObservableCollection<Person> writableMatches;
 
+			private Person person;
+			public Person Person {
+				get => person;
+				set {
+					if (value == Person)
+						return;
+					person = value;
+					// If the user didn't already opt to create a pledge, and this person
+					// doesn't owe anything that the payment might cover, create a pledge
+					createPledge = createPledge || Person.Field<decimal>("BalanceDue") <= 0;
+				}
+			}
+
 			public ImportingPayment(PaymentInfo payment) {
 				comments = "\n" + payment.Comments;
 				pledgeAmount = payment.Amount;
 
 				writableMatches = new ObservableCollection<Person>(Matcher.FindMatches(payment));
 				matchingPeople = new ReadOnlyObservableCollection<Person>(writableMatches);
-				person = writableMatches.Count == 1 ? writableMatches.First() : null;
+				Person = writableMatches.Count == 1 ? writableMatches.First() : null;
 			}
 
 			public void AppendPerson(Person person) => writableMatches.Add(person);
@@ -129,12 +141,14 @@ namespace ShomreiTorah.Billing.PaymentImport {
 
 		///<summary>Gets or sets the person who will own the created payment.</summary>
 		public Person Person {
-			get { return currentImport?.person; }
+			get { return currentImport?.Person; }
 			set {
-				currentImport.person = value;
+				currentImport.Person = value;
 				if (value != null && !MatchingPeople.Contains(value))
 					currentImport?.AppendPerson(value);
 				OnPropertyChanged();
+				// May change automatically in the inner setter.
+				OnPropertyChanged(nameof(CreatePledge));
 			}
 		}
 
