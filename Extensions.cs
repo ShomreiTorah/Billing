@@ -83,7 +83,7 @@ namespace ShomreiTorah.Billing {
 		}
 
 		public static RibbonPageGroup Add(this RibbonPageGroupCollection collection, string text) {
-			var group = new RibbonPageGroup(text);
+			var group = new RibbonPageGroup(text) { ShowCaptionButton = false };
 			collection.Add(group);
 			return group;
 		}
