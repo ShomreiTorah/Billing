@@ -143,6 +143,16 @@ namespace ShomreiTorah.Billing.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DirectoryManager32 {
+            get {
+                object obj = ResourceManager.GetObject("DirectoryManager32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Edit16 {
             get {
                 object obj = ResourceManager.GetObject("Edit16", resourceCulture);

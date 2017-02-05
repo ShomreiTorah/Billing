@@ -565,6 +565,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\DirectoryManager32.png" />
     <None Include="Resources\SaveAs32.png" />
     <None Include="Resources\Refresh32.png" />
     <None Include="Resources\OpenHTML32.png" />

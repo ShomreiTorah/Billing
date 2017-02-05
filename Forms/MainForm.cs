@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Composition;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace ShomreiTorah.Billing.Forms {
 	[Export(typeof(IMainForm))]
 	[Shared]
 	partial class MainForm : RibbonForm, IMainForm {
+
+		static readonly string DirectoryManager = Path.Combine(Program.AppDirectory, "ShomreiTorah.DirectoryManager.exe");
 		[ImportingConstructor]
 		public MainForm([ImportMany] IEnumerable<RibbonButton> pluginButtons) {
 			InitializeComponent();
@@ -51,6 +54,9 @@ namespace ShomreiTorah.Billing.Forms {
 				ribbon.Items.Add(item);
 				group.ItemLinks.Add(item, button.BeginGroup);
 			}
+
+			openDirectoryManager.Visibility =
+				File.Exists(DirectoryManager) ? BarItemVisibility.Always : BarItemVisibility.Never;
 		}
 		#region Yearly Buttons
 		void SetupYearlyButtons() {
@@ -228,6 +234,13 @@ namespace ShomreiTorah.Billing.Forms {
 				if (dialog.ShowDialog(this) == DialogResult.OK)
 					File.WriteAllText(dialog.FileName, Program.Current.DataContext.ToXml().ToString());
 			}
+		}
+
+		private void openDirectoryManager_ItemClick(object sender, ItemClickEventArgs e) {
+			Program.Current.SaveDatabase();
+			if (Dialog.Confirm("This app can have problems when refreshing after deleting or merging people.\n\nDo you want to close the Billing app?"))
+				Application.Exit();
+			Process.Start(DirectoryManager);
 		}
 	}
 }
