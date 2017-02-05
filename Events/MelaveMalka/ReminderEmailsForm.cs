@@ -42,11 +42,13 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 
 		readonly ITemplateService razor;
 		readonly FilteredTable<MelaveMalkaInvitation> dataSource;
+		readonly int year;
 		public ReminderEmailsForm(int year) {
 			AdReminderEmail.Schema.ToString();          //Force static ctor
 			Program.LoadTable<AdReminderEmail>();       //Will load invites as a dependency
 			InitializeComponent();
 
+			this.year = year;
 			Text = "Melave Malka " + year + " Reminder Emails";
 
 			listSearch.Properties.DataSource = bindingSource.DataSource = dataSource
@@ -332,6 +334,20 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				html: true
 			);
 			InfoMessage.Show("Sent preview to " + previewAddressItem.EditValue);
+		}
+
+		private void inviteAllEmails_ItemClick(object sender, ItemClickEventArgs e) {
+			var existingInvites = new HashSet<Person>(dataSource.Rows.Select(mmi => mmi.Person));
+			foreach (var person in Program.Table<EmailAddress>().Rows.Select(ea => ea.Person).Distinct()) {
+				if (person != null && !existingInvites.Contains(person))
+					Program.Table<MelaveMalkaInvitation>().Rows.Add(new MelaveMalkaInvitation {
+						Person = person,
+						DateAdded = DateTime.Now,
+						Year = year,
+						Source = Names.MelaveMalkaSources.First()
+					});
+
+			}
 		}
 	}
 }

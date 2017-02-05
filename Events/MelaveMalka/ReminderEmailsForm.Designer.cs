@@ -26,9 +26,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.XtraSpellChecker.OptionsSpelling optionsSpelling2 = new DevExpress.XtraSpellChecker.OptionsSpelling();
-			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
@@ -38,6 +35,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip8 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem8 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem8 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
 			this.logView = new ShomreiTorah.Data.UI.Grid.SmartGridView();
 			this.colDate = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
 			this.colEmailSubject1 = new ShomreiTorah.Data.UI.Grid.SmartGridColumn();
@@ -63,7 +66,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-			this.spellChecker = new DevExpress.XtraSpellChecker.SpellChecker();
+			this.spellChecker = new DevExpress.XtraSpellChecker.SpellChecker(this.components);
 			this.emailSubject = new DevExpress.XtraEditors.TextEdit();
 			this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
 			this.recipientAddresses = new DevExpress.XtraEditors.HyperLinkEdit();
@@ -121,6 +124,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.sendPreview = new DevExpress.XtraBars.BarButtonItem();
 			this.previewDestinationPopup = new DevExpress.XtraBars.PopupMenu(this.components);
 			this.previewAddressItem = new DevExpress.XtraBars.BarEditItem();
+			this.previewAddressEdit = new ShomreiTorah.Data.UI.Controls.RepositoryItemPreviewAddressEdit();
 			this.resetSingle = new DevExpress.XtraBars.BarListItem();
 			this.bar2 = new DevExpress.XtraBars.Bar();
 			this.findItem1 = new DevExpress.XtraRichEdit.UI.FindItem();
@@ -152,7 +156,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.fileSaveItem1 = new DevExpress.XtraRichEdit.UI.FileSaveItem();
 			this.fileSaveAsItem1 = new DevExpress.XtraRichEdit.UI.FileSaveAsItem();
 			this.richEditBarController1 = new DevExpress.XtraRichEdit.UI.RichEditBarController();
-			this.previewAddressEdit = new ShomreiTorah.Data.UI.Controls.RepositoryItemPreviewAddressEdit();
+			this.inviteAllEmails = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.logView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
@@ -168,8 +172,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.recipientAddresses.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.previewDestinationPopup)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.richEditBarController1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.previewAddressEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.richEditBarController1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// logView
@@ -222,7 +226,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.grid.Location = new System.Drawing.Point(0, 0);
 			this.grid.MainView = this.gridView;
 			this.grid.Name = "grid";
-			this.grid.RegistrationCount = 48;
+			this.grid.RegistrationCount = 56;
 			this.grid.ShowOnlyPredefinedDetails = true;
 			this.grid.Size = new System.Drawing.Size(314, 450);
 			this.grid.Source = this.bindingSource;
@@ -259,7 +263,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colShouldEmail.ToolTip = "Should Email?";
 			this.colShouldEmail.Visible = true;
 			this.colShouldEmail.VisibleIndex = 0;
-			this.colShouldEmail.Width = 33;
+			this.colShouldEmail.Width = 40;
 			// 
 			// colPerson
 			// 
@@ -274,7 +278,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colPerson.ShowEditorOnMouseDown = true;
 			this.colPerson.Visible = true;
 			this.colPerson.VisibleIndex = 1;
-			this.colPerson.Width = 78;
+			this.colPerson.Width = 79;
 			// 
 			// colSource
 			// 
@@ -284,7 +288,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.colSource.OptionsColumn.ReadOnly = true;
 			this.colSource.Visible = true;
 			this.colSource.VisibleIndex = 2;
-			this.colSource.Width = 52;
+			this.colSource.Width = 53;
 			// 
 			// colEmailSubject
 			// 
@@ -368,7 +372,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.emailEditor.Options.DocumentSaveOptions.DefaultFormat = DevExpress.XtraRichEdit.DocumentFormat.Html;
 			this.emailEditor.Options.Export.Html.CssPropertiesExportType = DevExpress.XtraRichEdit.Export.Html.CssPropertiesExportType.Inline;
 			this.emailEditor.Options.Export.Html.UriExportType = DevExpress.XtraRichEdit.Export.Html.UriExportType.Absolute;
-			this.spellChecker.SetShowSpellCheckMenu(this.emailEditor, false);
 			this.emailEditor.Size = new System.Drawing.Size(602, 306);
 			this.emailEditor.SpellChecker = this.spellChecker;
 			this.spellChecker.SetSpellCheckerOptions(this.emailEditor, optionsSpelling1);
@@ -380,25 +383,20 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// ribbonControl1
 			// 
 			this.ribbonControl1.ApplicationButtonText = null;
-			// 
-			// 
-			// 
 			this.ribbonControl1.ExpandCollapseItem.Id = 0;
-			this.ribbonControl1.ExpandCollapseItem.Name = "";
-			this.ribbonControl1.ExpandCollapseItem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
 			this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
             this.sendAll,
             this.zoomItem,
-            this.resetSelected});
+            this.resetSelected,
+            this.inviteAllEmails});
 			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl1.MaxItemId = 5;
+			this.ribbonControl1.MaxItemId = 6;
 			this.ribbonControl1.Name = "ribbonControl1";
 			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
 			this.ribbonControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.zoomBarProperties});
-			this.ribbonControl1.SelectedPage = this.ribbonPage1;
 			this.ribbonControl1.Size = new System.Drawing.Size(922, 114);
 			this.ribbonControl1.StatusBar = this.ribbonStatusBar1;
 			this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
@@ -406,9 +404,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// sendAll
 			// 
 			this.sendAll.Caption = "Email Everyone";
-			this.sendAll.Glyph = global::ShomreiTorah.Billing.Properties.Resources.SendMails16;
 			this.sendAll.Id = 1;
-			this.sendAll.LargeGlyph = global::ShomreiTorah.Billing.Properties.Resources.SendMails32;
+			this.sendAll.ImageOptions.Image = global::ShomreiTorah.Billing.Properties.Resources.SendMails16;
+			this.sendAll.ImageOptions.LargeImage = global::ShomreiTorah.Billing.Properties.Resources.SendMails32;
 			this.sendAll.Name = "sendAll";
 			toolTipTitleItem1.Text = "Email Everyone";
 			toolTipItem1.LeftIndent = 6;
@@ -424,8 +422,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.zoomItem.Caption = "100%";
 			this.zoomItem.Edit = this.zoomBarProperties;
 			this.zoomItem.EditValue = "100";
-			this.zoomItem.Glyph = ((System.Drawing.Image)(resources.GetObject("zoomItem.Glyph")));
+			this.zoomItem.EditWidth = 115;
 			this.zoomItem.Id = 2;
+			this.zoomItem.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("zoomItem.ImageOptions.Image")));
 			this.zoomItem.Name = "zoomItem";
 			toolTipTitleItem2.Text = "Zoom";
 			toolTipItem2.LeftIndent = 6;
@@ -433,7 +432,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			superToolTip2.Items.Add(toolTipTitleItem2);
 			superToolTip2.Items.Add(toolTipItem2);
 			this.zoomItem.SuperTip = superToolTip2;
-			this.zoomItem.Width = 115;
 			// 
 			// zoomBarProperties
 			// 
@@ -471,6 +469,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			this.ribbonPageGroup1.ItemLinks.Add(this.sendAll);
 			this.ribbonPageGroup1.ItemLinks.Add(this.resetSelected);
+			this.ribbonPageGroup1.ItemLinks.Add(this.inviteAllEmails);
 			this.ribbonPageGroup1.Name = "ribbonPageGroup1";
 			this.ribbonPageGroup1.ShowCaptionButton = false;
 			this.ribbonPageGroup1.Text = "Emails";
@@ -490,8 +489,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// emailSubject
 			// 
-			this.emailSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.emailSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.emailSubject.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "EmailSubject", true));
 			this.emailSubject.Location = new System.Drawing.Point(51, 32);
 			this.emailSubject.MenuManager = this.ribbonControl1;
@@ -515,8 +514,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// recipientAddresses
 			// 
-			this.recipientAddresses.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.recipientAddresses.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.recipientAddresses.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "EmailAddresses", true));
 			this.recipientAddresses.Location = new System.Drawing.Point(51, 6);
 			this.recipientAddresses.MenuManager = this.ribbonControl1;
@@ -547,10 +546,12 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// standaloneBarDockControl1
 			// 
 			this.standaloneBarDockControl1.AutoSize = true;
+			this.standaloneBarDockControl1.CausesValidation = false;
 			this.standaloneBarDockControl1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.standaloneBarDockControl1.Location = new System.Drawing.Point(0, 0);
+			this.standaloneBarDockControl1.Manager = this.barManager1;
 			this.standaloneBarDockControl1.Name = "standaloneBarDockControl1";
-			this.standaloneBarDockControl1.Size = new System.Drawing.Size(546, 87);
+			this.standaloneBarDockControl1.Size = new System.Drawing.Size(602, 87);
 			this.standaloneBarDockControl1.Text = "standaloneBarDockControl1";
 			// 
 			// barManager1
@@ -644,6 +645,7 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// mainBar
 			// 
+			this.mainBar.Control = this.emailEditor;
 			this.mainBar.DockCol = 1;
 			this.mainBar.DockRow = 0;
 			this.mainBar.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
@@ -660,41 +662,42 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// cutItem1
 			// 
-			this.cutItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("cutItem1.Glyph")));
 			this.cutItem1.Id = 11;
-			this.cutItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("cutItem1.LargeGlyph")));
+			this.cutItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("cutItem1.ImageOptions.Image")));
+			this.cutItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("cutItem1.ImageOptions.LargeImage")));
 			this.cutItem1.Name = "cutItem1";
 			// 
 			// copyItem1
 			// 
-			this.copyItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("copyItem1.Glyph")));
 			this.copyItem1.Id = 12;
-			this.copyItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("copyItem1.LargeGlyph")));
+			this.copyItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("copyItem1.ImageOptions.Image")));
+			this.copyItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("copyItem1.ImageOptions.LargeImage")));
 			this.copyItem1.Name = "copyItem1";
 			// 
 			// pasteItem1
 			// 
-			this.pasteItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("pasteItem1.Glyph")));
 			this.pasteItem1.Id = 13;
-			this.pasteItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("pasteItem1.LargeGlyph")));
+			this.pasteItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("pasteItem1.ImageOptions.Image")));
+			this.pasteItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("pasteItem1.ImageOptions.LargeImage")));
 			this.pasteItem1.Name = "pasteItem1";
 			// 
 			// undoItem1
 			// 
-			this.undoItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("undoItem1.Glyph")));
 			this.undoItem1.Id = 9;
-			this.undoItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("undoItem1.LargeGlyph")));
+			this.undoItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("undoItem1.ImageOptions.Image")));
+			this.undoItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("undoItem1.ImageOptions.LargeImage")));
 			this.undoItem1.Name = "undoItem1";
 			// 
 			// redoItem1
 			// 
-			this.redoItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("redoItem1.Glyph")));
 			this.redoItem1.Id = 10;
-			this.redoItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("redoItem1.LargeGlyph")));
+			this.redoItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("redoItem1.ImageOptions.Image")));
+			this.redoItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("redoItem1.ImageOptions.LargeImage")));
 			this.redoItem1.Name = "redoItem1";
 			// 
 			// fontBar1
 			// 
+			this.fontBar1.Control = this.emailEditor;
 			this.fontBar1.DockCol = 0;
 			this.fontBar1.DockRow = 1;
 			this.fontBar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
@@ -716,93 +719,92 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// showFontFormItem1
 			// 
-			this.showFontFormItem1.Caption = "Font...";
-			this.showFontFormItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("showFontFormItem1.Glyph")));
 			this.showFontFormItem1.Id = 28;
-			this.showFontFormItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("showFontFormItem1.LargeGlyph")));
+			this.showFontFormItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("showFontFormItem1.ImageOptions.Image")));
+			this.showFontFormItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("showFontFormItem1.ImageOptions.LargeImage")));
 			this.showFontFormItem1.Name = "showFontFormItem1";
 			this.showFontFormItem1.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
 			// 
 			// fontSizeIncreaseItem1
 			// 
-			this.fontSizeIncreaseItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("fontSizeIncreaseItem1.Glyph")));
 			this.fontSizeIncreaseItem1.Id = 17;
-			this.fontSizeIncreaseItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("fontSizeIncreaseItem1.LargeGlyph")));
+			this.fontSizeIncreaseItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("fontSizeIncreaseItem1.ImageOptions.Image")));
+			this.fontSizeIncreaseItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("fontSizeIncreaseItem1.ImageOptions.LargeImage")));
 			this.fontSizeIncreaseItem1.Name = "fontSizeIncreaseItem1";
 			// 
 			// fontSizeDecreaseItem1
 			// 
-			this.fontSizeDecreaseItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("fontSizeDecreaseItem1.Glyph")));
 			this.fontSizeDecreaseItem1.Id = 18;
-			this.fontSizeDecreaseItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("fontSizeDecreaseItem1.LargeGlyph")));
+			this.fontSizeDecreaseItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("fontSizeDecreaseItem1.ImageOptions.Image")));
+			this.fontSizeDecreaseItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("fontSizeDecreaseItem1.ImageOptions.LargeImage")));
 			this.fontSizeDecreaseItem1.Name = "fontSizeDecreaseItem1";
 			// 
 			// toggleFontBoldItem1
 			// 
-			this.toggleFontBoldItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleFontBoldItem1.Glyph")));
 			this.toggleFontBoldItem1.Id = 19;
-			this.toggleFontBoldItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleFontBoldItem1.LargeGlyph")));
+			this.toggleFontBoldItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("toggleFontBoldItem1.ImageOptions.Image")));
+			this.toggleFontBoldItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("toggleFontBoldItem1.ImageOptions.LargeImage")));
 			this.toggleFontBoldItem1.Name = "toggleFontBoldItem1";
 			// 
 			// toggleFontItalicItem1
 			// 
-			this.toggleFontItalicItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleFontItalicItem1.Glyph")));
 			this.toggleFontItalicItem1.Id = 20;
-			this.toggleFontItalicItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleFontItalicItem1.LargeGlyph")));
+			this.toggleFontItalicItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("toggleFontItalicItem1.ImageOptions.Image")));
+			this.toggleFontItalicItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("toggleFontItalicItem1.ImageOptions.LargeImage")));
 			this.toggleFontItalicItem1.Name = "toggleFontItalicItem1";
 			// 
 			// toggleFontUnderlineItem1
 			// 
-			this.toggleFontUnderlineItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleFontUnderlineItem1.Glyph")));
 			this.toggleFontUnderlineItem1.Id = 21;
-			this.toggleFontUnderlineItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleFontUnderlineItem1.LargeGlyph")));
+			this.toggleFontUnderlineItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("toggleFontUnderlineItem1.ImageOptions.Image")));
+			this.toggleFontUnderlineItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("toggleFontUnderlineItem1.ImageOptions.LargeImage")));
 			this.toggleFontUnderlineItem1.Name = "toggleFontUnderlineItem1";
 			// 
 			// toggleFontStrikeoutItem1
 			// 
-			this.toggleFontStrikeoutItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleFontStrikeoutItem1.Glyph")));
 			this.toggleFontStrikeoutItem1.Id = 22;
-			this.toggleFontStrikeoutItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleFontStrikeoutItem1.LargeGlyph")));
+			this.toggleFontStrikeoutItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("toggleFontStrikeoutItem1.ImageOptions.Image")));
+			this.toggleFontStrikeoutItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("toggleFontStrikeoutItem1.ImageOptions.LargeImage")));
 			this.toggleFontStrikeoutItem1.Name = "toggleFontStrikeoutItem1";
 			// 
 			// changeFontColorItem1
 			// 
-			this.changeFontColorItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("changeFontColorItem1.Glyph")));
 			this.changeFontColorItem1.Id = 23;
-			this.changeFontColorItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("changeFontColorItem1.LargeGlyph")));
+			this.changeFontColorItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("changeFontColorItem1.ImageOptions.Image")));
+			this.changeFontColorItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("changeFontColorItem1.ImageOptions.LargeImage")));
 			this.changeFontColorItem1.Name = "changeFontColorItem1";
 			// 
 			// changeFontBackColorItem1
 			// 
-			this.changeFontBackColorItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("changeFontBackColorItem1.Glyph")));
 			this.changeFontBackColorItem1.Id = 24;
-			this.changeFontBackColorItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("changeFontBackColorItem1.LargeGlyph")));
+			this.changeFontBackColorItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("changeFontBackColorItem1.ImageOptions.Image")));
+			this.changeFontBackColorItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("changeFontBackColorItem1.ImageOptions.LargeImage")));
 			this.changeFontBackColorItem1.Name = "changeFontBackColorItem1";
 			// 
 			// toggleFontSuperscriptItem1
 			// 
-			this.toggleFontSuperscriptItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleFontSuperscriptItem1.Glyph")));
 			this.toggleFontSuperscriptItem1.Id = 25;
-			this.toggleFontSuperscriptItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleFontSuperscriptItem1.LargeGlyph")));
+			this.toggleFontSuperscriptItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("toggleFontSuperscriptItem1.ImageOptions.Image")));
+			this.toggleFontSuperscriptItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("toggleFontSuperscriptItem1.ImageOptions.LargeImage")));
 			this.toggleFontSuperscriptItem1.Name = "toggleFontSuperscriptItem1";
 			// 
 			// toggleFontSubscriptItem1
 			// 
-			this.toggleFontSubscriptItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleFontSubscriptItem1.Glyph")));
 			this.toggleFontSubscriptItem1.Id = 26;
-			this.toggleFontSubscriptItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleFontSubscriptItem1.LargeGlyph")));
+			this.toggleFontSubscriptItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("toggleFontSubscriptItem1.ImageOptions.Image")));
+			this.toggleFontSubscriptItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("toggleFontSubscriptItem1.ImageOptions.LargeImage")));
 			this.toggleFontSubscriptItem1.Name = "toggleFontSubscriptItem1";
 			// 
 			// clearFormattingItem1
 			// 
-			this.clearFormattingItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("clearFormattingItem1.Glyph")));
 			this.clearFormattingItem1.Id = 27;
-			this.clearFormattingItem1.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Space));
-			this.clearFormattingItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("clearFormattingItem1.LargeGlyph")));
+			this.clearFormattingItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("clearFormattingItem1.ImageOptions.Image")));
+			this.clearFormattingItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("clearFormattingItem1.ImageOptions.LargeImage")));
 			this.clearFormattingItem1.Name = "clearFormattingItem1";
 			// 
 			// paragraphBar1
 			// 
+			this.paragraphBar1.Control = this.emailEditor;
 			this.paragraphBar1.DockCol = 0;
 			this.paragraphBar1.DockRow = 2;
 			this.paragraphBar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
@@ -824,30 +826,30 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// toggleParagraphAlignmentLeftItem1
 			// 
-			this.toggleParagraphAlignmentLeftItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentLeftItem1.Glyph")));
 			this.toggleParagraphAlignmentLeftItem1.Id = 29;
-			this.toggleParagraphAlignmentLeftItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentLeftItem1.LargeGlyph")));
+			this.toggleParagraphAlignmentLeftItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentLeftItem1.ImageOptions.Image")));
+			this.toggleParagraphAlignmentLeftItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentLeftItem1.ImageOptions.LargeImage")));
 			this.toggleParagraphAlignmentLeftItem1.Name = "toggleParagraphAlignmentLeftItem1";
 			// 
 			// toggleParagraphAlignmentCenterItem1
 			// 
-			this.toggleParagraphAlignmentCenterItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentCenterItem1.Glyph")));
 			this.toggleParagraphAlignmentCenterItem1.Id = 30;
-			this.toggleParagraphAlignmentCenterItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentCenterItem1.LargeGlyph")));
+			this.toggleParagraphAlignmentCenterItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentCenterItem1.ImageOptions.Image")));
+			this.toggleParagraphAlignmentCenterItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentCenterItem1.ImageOptions.LargeImage")));
 			this.toggleParagraphAlignmentCenterItem1.Name = "toggleParagraphAlignmentCenterItem1";
 			// 
 			// toggleParagraphAlignmentRightItem1
 			// 
-			this.toggleParagraphAlignmentRightItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentRightItem1.Glyph")));
 			this.toggleParagraphAlignmentRightItem1.Id = 31;
-			this.toggleParagraphAlignmentRightItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentRightItem1.LargeGlyph")));
+			this.toggleParagraphAlignmentRightItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentRightItem1.ImageOptions.Image")));
+			this.toggleParagraphAlignmentRightItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentRightItem1.ImageOptions.LargeImage")));
 			this.toggleParagraphAlignmentRightItem1.Name = "toggleParagraphAlignmentRightItem1";
 			// 
 			// toggleParagraphAlignmentJustifyItem1
 			// 
-			this.toggleParagraphAlignmentJustifyItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentJustifyItem1.Glyph")));
 			this.toggleParagraphAlignmentJustifyItem1.Id = 32;
-			this.toggleParagraphAlignmentJustifyItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentJustifyItem1.LargeGlyph")));
+			this.toggleParagraphAlignmentJustifyItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentJustifyItem1.ImageOptions.Image")));
+			this.toggleParagraphAlignmentJustifyItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("toggleParagraphAlignmentJustifyItem1.ImageOptions.LargeImage")));
 			this.toggleParagraphAlignmentJustifyItem1.Name = "toggleParagraphAlignmentJustifyItem1";
 			// 
 			// changeParagraphLineSpacingItem1
@@ -906,55 +908,56 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// toggleNumberingListItem1
 			// 
-			this.toggleNumberingListItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleNumberingListItem1.Glyph")));
 			this.toggleNumberingListItem1.Id = 42;
-			this.toggleNumberingListItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleNumberingListItem1.LargeGlyph")));
+			this.toggleNumberingListItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("toggleNumberingListItem1.ImageOptions.Image")));
+			this.toggleNumberingListItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("toggleNumberingListItem1.ImageOptions.LargeImage")));
 			this.toggleNumberingListItem1.Name = "toggleNumberingListItem1";
 			// 
 			// toggleBulletedListItem1
 			// 
-			this.toggleBulletedListItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleBulletedListItem1.Glyph")));
 			this.toggleBulletedListItem1.Id = 43;
-			this.toggleBulletedListItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleBulletedListItem1.LargeGlyph")));
+			this.toggleBulletedListItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("toggleBulletedListItem1.ImageOptions.Image")));
+			this.toggleBulletedListItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("toggleBulletedListItem1.ImageOptions.LargeImage")));
 			this.toggleBulletedListItem1.Name = "toggleBulletedListItem1";
 			// 
 			// toggleMultiLevelListItem1
 			// 
-			this.toggleMultiLevelListItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleMultiLevelListItem1.Glyph")));
 			this.toggleMultiLevelListItem1.Id = 44;
-			this.toggleMultiLevelListItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleMultiLevelListItem1.LargeGlyph")));
+			this.toggleMultiLevelListItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("toggleMultiLevelListItem1.ImageOptions.Image")));
+			this.toggleMultiLevelListItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("toggleMultiLevelListItem1.ImageOptions.LargeImage")));
 			this.toggleMultiLevelListItem1.Name = "toggleMultiLevelListItem1";
 			// 
 			// decreaseIndentItem1
 			// 
-			this.decreaseIndentItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("decreaseIndentItem1.Glyph")));
 			this.decreaseIndentItem1.Id = 45;
-			this.decreaseIndentItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("decreaseIndentItem1.LargeGlyph")));
+			this.decreaseIndentItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("decreaseIndentItem1.ImageOptions.Image")));
+			this.decreaseIndentItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("decreaseIndentItem1.ImageOptions.LargeImage")));
 			this.decreaseIndentItem1.Name = "decreaseIndentItem1";
 			// 
 			// increaseIndentItem1
 			// 
-			this.increaseIndentItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("increaseIndentItem1.Glyph")));
 			this.increaseIndentItem1.Id = 46;
-			this.increaseIndentItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("increaseIndentItem1.LargeGlyph")));
+			this.increaseIndentItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("increaseIndentItem1.ImageOptions.Image")));
+			this.increaseIndentItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("increaseIndentItem1.ImageOptions.LargeImage")));
 			this.increaseIndentItem1.Name = "increaseIndentItem1";
 			// 
 			// toggleShowWhitespaceItem1
 			// 
-			this.toggleShowWhitespaceItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("toggleShowWhitespaceItem1.Glyph")));
 			this.toggleShowWhitespaceItem1.Id = 47;
-			this.toggleShowWhitespaceItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("toggleShowWhitespaceItem1.LargeGlyph")));
+			this.toggleShowWhitespaceItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("toggleShowWhitespaceItem1.ImageOptions.Image")));
+			this.toggleShowWhitespaceItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("toggleShowWhitespaceItem1.ImageOptions.LargeImage")));
 			this.toggleShowWhitespaceItem1.Name = "toggleShowWhitespaceItem1";
 			// 
 			// showParagraphFormItem1
 			// 
-			this.showParagraphFormItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("showParagraphFormItem1.Glyph")));
 			this.showParagraphFormItem1.Id = 48;
-			this.showParagraphFormItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("showParagraphFormItem1.LargeGlyph")));
+			this.showParagraphFormItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("showParagraphFormItem1.ImageOptions.Image")));
+			this.showParagraphFormItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("showParagraphFormItem1.ImageOptions.LargeImage")));
 			this.showParagraphFormItem1.Name = "showParagraphFormItem1";
 			// 
 			// tablesBar1
 			// 
+			this.tablesBar1.Control = this.emailEditor;
 			this.tablesBar1.DockCol = 1;
 			this.tablesBar1.DockRow = 2;
 			this.tablesBar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
@@ -968,23 +971,23 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// insertTableItem1
 			// 
-			this.insertTableItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("insertTableItem1.Glyph")));
 			this.insertTableItem1.Id = 51;
-			this.insertTableItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("insertTableItem1.LargeGlyph")));
+			this.insertTableItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("insertTableItem1.ImageOptions.Image")));
+			this.insertTableItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("insertTableItem1.ImageOptions.LargeImage")));
 			this.insertTableItem1.Name = "insertTableItem1";
 			// 
 			// insertSymbolItem1
 			// 
-			this.insertSymbolItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("insertSymbolItem1.Glyph")));
 			this.insertSymbolItem1.Id = 52;
-			this.insertSymbolItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("insertSymbolItem1.LargeGlyph")));
+			this.insertSymbolItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("insertSymbolItem1.ImageOptions.Image")));
+			this.insertSymbolItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("insertSymbolItem1.ImageOptions.LargeImage")));
 			this.insertSymbolItem1.Name = "insertSymbolItem1";
 			// 
 			// insertHyperlinkItem1
 			// 
-			this.insertHyperlinkItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("insertHyperlinkItem1.Glyph")));
 			this.insertHyperlinkItem1.Id = 53;
-			this.insertHyperlinkItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("insertHyperlinkItem1.LargeGlyph")));
+			this.insertHyperlinkItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("insertHyperlinkItem1.ImageOptions.Image")));
+			this.insertHyperlinkItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("insertHyperlinkItem1.ImageOptions.LargeImage")));
 			this.insertHyperlinkItem1.Name = "insertHyperlinkItem1";
 			// 
 			// bar1
@@ -1005,31 +1008,31 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// sendSelected
 			// 
 			this.sendSelected.Caption = "Send";
-			this.sendSelected.Glyph = global::ShomreiTorah.Billing.Properties.Resources.SendMail16;
 			this.sendSelected.Id = 69;
-			this.sendSelected.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Enter));
+			this.sendSelected.ImageOptions.Image = global::ShomreiTorah.Billing.Properties.Resources.SendMail16;
+			this.sendSelected.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Return));
 			this.sendSelected.Name = "sendSelected";
 			this.sendSelected.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
-			toolTipTitleItem4.Text = "Send";
-			toolTipItem4.LeftIndent = 6;
-			toolTipItem4.Text = "Sends the email to this person.";
-			superToolTip4.Items.Add(toolTipTitleItem4);
-			superToolTip4.Items.Add(toolTipItem4);
-			this.sendSelected.SuperTip = superToolTip4;
+			toolTipTitleItem5.Text = "Send";
+			toolTipItem5.LeftIndent = 6;
+			toolTipItem5.Text = "Sends the email to this person.";
+			superToolTip5.Items.Add(toolTipTitleItem5);
+			superToolTip5.Items.Add(toolTipItem5);
+			this.sendSelected.SuperTip = superToolTip5;
 			this.sendSelected.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.sendSelected_ItemClick);
 			// 
 			// showPreview
 			// 
 			this.showPreview.Caption = "Show Preview";
-			this.showPreview.Glyph = global::ShomreiTorah.Billing.Properties.Resources.ShowPreview16;
 			this.showPreview.Id = 95;
+			this.showPreview.ImageOptions.Image = global::ShomreiTorah.Billing.Properties.Resources.ShowPreview16;
 			this.showPreview.Name = "showPreview";
-			toolTipTitleItem5.Text = "Show Preview";
-			toolTipItem5.LeftIndent = 6;
-			toolTipItem5.Text = "Shows a preview of the message contents as HTML.";
-			superToolTip5.Items.Add(toolTipTitleItem5);
-			superToolTip5.Items.Add(toolTipItem5);
-			this.showPreview.SuperTip = superToolTip5;
+			toolTipTitleItem6.Text = "Show Preview";
+			toolTipItem6.LeftIndent = 6;
+			toolTipItem6.Text = "Shows a preview of the message contents as HTML.";
+			superToolTip6.Items.Add(toolTipTitleItem6);
+			superToolTip6.Items.Add(toolTipItem6);
+			this.showPreview.SuperTip = superToolTip6;
 			this.showPreview.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.showPreview_ItemClick);
 			// 
 			// sendPreview
@@ -1037,16 +1040,16 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.sendPreview.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
 			this.sendPreview.Caption = "Send Preview";
 			this.sendPreview.DropDownControl = this.previewDestinationPopup;
-			this.sendPreview.Glyph = global::ShomreiTorah.Billing.Properties.Resources.SendPreview16;
 			this.sendPreview.Id = 96;
+			this.sendPreview.ImageOptions.Image = global::ShomreiTorah.Billing.Properties.Resources.SendPreview16;
 			this.sendPreview.Name = "sendPreview";
-			toolTipTitleItem6.Text = "Send Preview";
-			toolTipItem6.LeftIndent = 6;
-			toolTipItem6.Text = "Emails a preview of the message.\r\n\r\nTo set the destination address, click the dow" +
-				"n arrow.";
-			superToolTip6.Items.Add(toolTipTitleItem6);
-			superToolTip6.Items.Add(toolTipItem6);
-			this.sendPreview.SuperTip = superToolTip6;
+			toolTipTitleItem7.Text = "Send Preview";
+			toolTipItem7.LeftIndent = 6;
+			toolTipItem7.Text = "Emails a preview of the message.\r\n\r\nTo set the destination address, click the dow" +
+    "n arrow.";
+			superToolTip7.Items.Add(toolTipTitleItem7);
+			superToolTip7.Items.Add(toolTipItem7);
+			this.sendPreview.SuperTip = superToolTip7;
 			this.sendPreview.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.sendPreview_ItemClick);
 			// 
 			// previewDestinationPopup
@@ -1063,17 +1066,24 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.previewAddressItem.Id = 97;
 			this.previewAddressItem.Name = "previewAddressItem";
 			// 
+			// previewAddressEdit
+			// 
+			this.previewAddressEdit.AutoHeight = false;
+			this.previewAddressEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.previewAddressEdit.Name = "previewAddressEdit";
+			// 
 			// resetSingle
 			// 
 			this.resetSingle.Caption = "Use Template";
 			this.resetSingle.Id = 70;
 			this.resetSingle.Name = "resetSingle";
-			toolTipTitleItem7.Text = "Use Template";
-			toolTipItem7.LeftIndent = 6;
-			toolTipItem7.Text = "Resets this person\'s email message to a standard template.";
-			superToolTip7.Items.Add(toolTipTitleItem7);
-			superToolTip7.Items.Add(toolTipItem7);
-			this.resetSingle.SuperTip = superToolTip7;
+			toolTipTitleItem8.Text = "Use Template";
+			toolTipItem8.LeftIndent = 6;
+			toolTipItem8.Text = "Resets this person\'s email message to a standard template.";
+			superToolTip8.Items.Add(toolTipTitleItem8);
+			superToolTip8.Items.Add(toolTipItem8);
+			this.resetSingle.SuperTip = superToolTip8;
 			this.resetSingle.ListItemClick += new DevExpress.XtraBars.ListItemClickEventHandler(this.resetSingle_ListItemClick);
 			// 
 			// bar2
@@ -1092,117 +1102,125 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// findItem1
 			// 
-			this.findItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("findItem1.Glyph")));
 			this.findItem1.Id = 49;
-			this.findItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("findItem1.LargeGlyph")));
+			this.findItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("findItem1.ImageOptions.Image")));
+			this.findItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("findItem1.ImageOptions.LargeImage")));
 			this.findItem1.Name = "findItem1";
 			// 
 			// replaceItem1
 			// 
-			this.replaceItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("replaceItem1.Glyph")));
 			this.replaceItem1.Id = 50;
-			this.replaceItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("replaceItem1.LargeGlyph")));
+			this.replaceItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("replaceItem1.ImageOptions.Image")));
+			this.replaceItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("replaceItem1.ImageOptions.LargeImage")));
 			this.replaceItem1.Name = "replaceItem1";
 			// 
 			// barDockControlTop
 			// 
+			this.barDockControlTop.CausesValidation = false;
 			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
+			this.barDockControlTop.Manager = this.barManager1;
 			this.barDockControlTop.Size = new System.Drawing.Size(922, 0);
 			// 
 			// barDockControlBottom
 			// 
+			this.barDockControlBottom.CausesValidation = false;
 			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.barDockControlBottom.Location = new System.Drawing.Point(0, 609);
+			this.barDockControlBottom.Manager = this.barManager1;
 			this.barDockControlBottom.Size = new System.Drawing.Size(922, 0);
 			// 
 			// barDockControlLeft
 			// 
+			this.barDockControlLeft.CausesValidation = false;
 			this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
 			this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
+			this.barDockControlLeft.Manager = this.barManager1;
 			this.barDockControlLeft.Size = new System.Drawing.Size(0, 609);
 			// 
 			// barDockControlRight
 			// 
+			this.barDockControlRight.CausesValidation = false;
 			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
 			this.barDockControlRight.Location = new System.Drawing.Point(922, 0);
+			this.barDockControlRight.Manager = this.barManager1;
 			this.barDockControlRight.Size = new System.Drawing.Size(0, 609);
 			// 
 			// insertPageBreakItem1
 			// 
-			this.insertPageBreakItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("insertPageBreakItem1.Glyph")));
 			this.insertPageBreakItem1.Id = 54;
-			this.insertPageBreakItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("insertPageBreakItem1.LargeGlyph")));
+			this.insertPageBreakItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("insertPageBreakItem1.ImageOptions.Image")));
+			this.insertPageBreakItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("insertPageBreakItem1.ImageOptions.LargeImage")));
 			this.insertPageBreakItem1.Name = "insertPageBreakItem1";
 			// 
 			// insertPictureItem1
 			// 
-			this.insertPictureItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("insertPictureItem1.Glyph")));
 			this.insertPictureItem1.Id = 55;
-			this.insertPictureItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("insertPictureItem1.LargeGlyph")));
+			this.insertPictureItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("insertPictureItem1.ImageOptions.Image")));
+			this.insertPictureItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("insertPictureItem1.ImageOptions.LargeImage")));
 			this.insertPictureItem1.Name = "insertPictureItem1";
 			// 
 			// insertBookmarkItem1
 			// 
-			this.insertBookmarkItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("insertBookmarkItem1.Glyph")));
 			this.insertBookmarkItem1.Id = 56;
-			this.insertBookmarkItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("insertBookmarkItem1.LargeGlyph")));
+			this.insertBookmarkItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("insertBookmarkItem1.ImageOptions.Image")));
+			this.insertBookmarkItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("insertBookmarkItem1.ImageOptions.LargeImage")));
 			this.insertBookmarkItem1.Name = "insertBookmarkItem1";
 			// 
 			// insertTableRowAboveItem1
 			// 
-			this.insertTableRowAboveItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("insertTableRowAboveItem1.Glyph")));
 			this.insertTableRowAboveItem1.Id = 71;
-			this.insertTableRowAboveItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("insertTableRowAboveItem1.LargeGlyph")));
+			this.insertTableRowAboveItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("insertTableRowAboveItem1.ImageOptions.Image")));
+			this.insertTableRowAboveItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("insertTableRowAboveItem1.ImageOptions.LargeImage")));
 			this.insertTableRowAboveItem1.Name = "insertTableRowAboveItem1";
 			// 
 			// insertTableRowBelowItem1
 			// 
-			this.insertTableRowBelowItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("insertTableRowBelowItem1.Glyph")));
 			this.insertTableRowBelowItem1.Id = 72;
-			this.insertTableRowBelowItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("insertTableRowBelowItem1.LargeGlyph")));
+			this.insertTableRowBelowItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("insertTableRowBelowItem1.ImageOptions.Image")));
+			this.insertTableRowBelowItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("insertTableRowBelowItem1.ImageOptions.LargeImage")));
 			this.insertTableRowBelowItem1.Name = "insertTableRowBelowItem1";
 			// 
 			// switchToSimpleViewItem1
 			// 
-			this.switchToSimpleViewItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("switchToSimpleViewItem1.Glyph")));
 			this.switchToSimpleViewItem1.Id = 75;
-			this.switchToSimpleViewItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("switchToSimpleViewItem1.LargeGlyph")));
+			this.switchToSimpleViewItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("switchToSimpleViewItem1.ImageOptions.Image")));
+			this.switchToSimpleViewItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("switchToSimpleViewItem1.ImageOptions.LargeImage")));
 			this.switchToSimpleViewItem1.Name = "switchToSimpleViewItem1";
 			// 
 			// switchToDraftViewItem1
 			// 
-			this.switchToDraftViewItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("switchToDraftViewItem1.Glyph")));
 			this.switchToDraftViewItem1.Id = 76;
-			this.switchToDraftViewItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("switchToDraftViewItem1.LargeGlyph")));
+			this.switchToDraftViewItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("switchToDraftViewItem1.ImageOptions.Image")));
+			this.switchToDraftViewItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("switchToDraftViewItem1.ImageOptions.LargeImage")));
 			this.switchToDraftViewItem1.Name = "switchToDraftViewItem1";
 			// 
 			// switchToPrintLayoutViewItem1
 			// 
-			this.switchToPrintLayoutViewItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("switchToPrintLayoutViewItem1.Glyph")));
 			this.switchToPrintLayoutViewItem1.Id = 77;
-			this.switchToPrintLayoutViewItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("switchToPrintLayoutViewItem1.LargeGlyph")));
+			this.switchToPrintLayoutViewItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("switchToPrintLayoutViewItem1.ImageOptions.Image")));
+			this.switchToPrintLayoutViewItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("switchToPrintLayoutViewItem1.ImageOptions.LargeImage")));
 			this.switchToPrintLayoutViewItem1.Name = "switchToPrintLayoutViewItem1";
 			// 
 			// zoomOutItem1
 			// 
-			this.zoomOutItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("zoomOutItem1.Glyph")));
 			this.zoomOutItem1.Id = 78;
-			this.zoomOutItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("zoomOutItem1.LargeGlyph")));
+			this.zoomOutItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("zoomOutItem1.ImageOptions.Image")));
+			this.zoomOutItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("zoomOutItem1.ImageOptions.LargeImage")));
 			this.zoomOutItem1.Name = "zoomOutItem1";
 			// 
 			// zoomInItem1
 			// 
-			this.zoomInItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("zoomInItem1.Glyph")));
 			this.zoomInItem1.Id = 79;
-			this.zoomInItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("zoomInItem1.LargeGlyph")));
+			this.zoomInItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("zoomInItem1.ImageOptions.Image")));
+			this.zoomInItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("zoomInItem1.ImageOptions.LargeImage")));
 			this.zoomInItem1.Name = "zoomInItem1";
 			// 
 			// changeSectionPageMarginsItem1
 			// 
-			this.changeSectionPageMarginsItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("changeSectionPageMarginsItem1.Glyph")));
 			this.changeSectionPageMarginsItem1.Id = 80;
-			this.changeSectionPageMarginsItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("changeSectionPageMarginsItem1.LargeGlyph")));
+			this.changeSectionPageMarginsItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("changeSectionPageMarginsItem1.ImageOptions.Image")));
+			this.changeSectionPageMarginsItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("changeSectionPageMarginsItem1.ImageOptions.LargeImage")));
 			this.changeSectionPageMarginsItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.setNormalSectionPageMarginsItem1),
             new DevExpress.XtraBars.LinkPersistInfo(this.setNarrowSectionPageMarginsItem1),
@@ -1232,9 +1250,9 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// changeSectionPageOrientationItem1
 			// 
-			this.changeSectionPageOrientationItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("changeSectionPageOrientationItem1.Glyph")));
 			this.changeSectionPageOrientationItem1.Id = 85;
-			this.changeSectionPageOrientationItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("changeSectionPageOrientationItem1.LargeGlyph")));
+			this.changeSectionPageOrientationItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("changeSectionPageOrientationItem1.ImageOptions.Image")));
+			this.changeSectionPageOrientationItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("changeSectionPageOrientationItem1.ImageOptions.LargeImage")));
 			this.changeSectionPageOrientationItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.setPortraitPageOrientationItem1),
             new DevExpress.XtraBars.LinkPersistInfo(this.setLandscapePageOrientationItem1)});
@@ -1252,30 +1270,30 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			// 
 			// fileNewItem1
 			// 
-			this.fileNewItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("fileNewItem1.Glyph")));
 			this.fileNewItem1.Id = 88;
-			this.fileNewItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("fileNewItem1.LargeGlyph")));
+			this.fileNewItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("fileNewItem1.ImageOptions.Image")));
+			this.fileNewItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("fileNewItem1.ImageOptions.LargeImage")));
 			this.fileNewItem1.Name = "fileNewItem1";
 			// 
 			// fileOpenItem1
 			// 
-			this.fileOpenItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("fileOpenItem1.Glyph")));
 			this.fileOpenItem1.Id = 89;
-			this.fileOpenItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("fileOpenItem1.LargeGlyph")));
+			this.fileOpenItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("fileOpenItem1.ImageOptions.Image")));
+			this.fileOpenItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("fileOpenItem1.ImageOptions.LargeImage")));
 			this.fileOpenItem1.Name = "fileOpenItem1";
 			// 
 			// fileSaveItem1
 			// 
-			this.fileSaveItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("fileSaveItem1.Glyph")));
 			this.fileSaveItem1.Id = 90;
-			this.fileSaveItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("fileSaveItem1.LargeGlyph")));
+			this.fileSaveItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("fileSaveItem1.ImageOptions.Image")));
+			this.fileSaveItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("fileSaveItem1.ImageOptions.LargeImage")));
 			this.fileSaveItem1.Name = "fileSaveItem1";
 			// 
 			// fileSaveAsItem1
 			// 
-			this.fileSaveAsItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("fileSaveAsItem1.Glyph")));
 			this.fileSaveAsItem1.Id = 91;
-			this.fileSaveAsItem1.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("fileSaveAsItem1.LargeGlyph")));
+			this.fileSaveAsItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("fileSaveAsItem1.ImageOptions.Image")));
+			this.fileSaveAsItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("fileSaveAsItem1.ImageOptions.LargeImage")));
 			this.fileSaveAsItem1.Name = "fileSaveAsItem1";
 			// 
 			// richEditBarController1
@@ -1344,14 +1362,21 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			this.richEditBarController1.BarItems.Add(this.fileOpenItem1);
 			this.richEditBarController1.BarItems.Add(this.fileSaveItem1);
 			this.richEditBarController1.BarItems.Add(this.fileSaveAsItem1);
-			this.richEditBarController1.RichEditControl = this.emailEditor;
+			this.richEditBarController1.Control = this.emailEditor;
 			// 
-			// previewAddressEdit
+			// inviteAllEmails
 			// 
-			this.previewAddressEdit.AutoHeight = false;
-			this.previewAddressEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.previewAddressEdit.Name = "previewAddressEdit";
+			this.inviteAllEmails.Caption = "Invite entire list";
+			this.inviteAllEmails.Id = 5;
+			this.inviteAllEmails.Name = "inviteAllEmails";
+			toolTipTitleItem4.Text = "Invite Entire Email List";
+			toolTipItem4.LeftIndent = 6;
+			toolTipItem4.Text = "Invites the every person with an email address to the Melave Malka.\r\n\r\nThis allow" +
+    "s you to send reminder emails to the entire email list.";
+			superToolTip4.Items.Add(toolTipTitleItem4);
+			superToolTip4.Items.Add(toolTipItem4);
+			this.inviteAllEmails.SuperTip = superToolTip4;
+			this.inviteAllEmails.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.inviteAllEmails_ItemClick);
 			// 
 			// ReminderEmailsForm
 			// 
@@ -1384,9 +1409,10 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 			((System.ComponentModel.ISupportInitialize)(this.recipientAddresses.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.previewDestinationPopup)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.richEditBarController1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.previewAddressEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.richEditBarController1)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -1507,5 +1533,6 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 		private DevExpress.XtraBars.PopupMenu previewDestinationPopup;
 		private DevExpress.XtraBars.BarEditItem previewAddressItem;
 		private Data.UI.Controls.RepositoryItemPreviewAddressEdit previewAddressEdit;
+		private DevExpress.XtraBars.BarButtonItem inviteAllEmails;
 	}
 }
