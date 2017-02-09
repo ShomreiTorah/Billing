@@ -294,13 +294,8 @@ namespace ShomreiTorah.Billing.Events.MelaveMalka {
 				Dialog.ShowError("Please select people.");
 				return;
 			}
-			if (people.Length == 1) {
-				if (!Dialog.Confirm("Would you like to set " + people[0].Person.FullName + " to receive the " + templateName + " template?"))
-					return;
-			} else {
-				if (!Dialog.Confirm("Would you like to set " + people.Length + " people to receive the " + templateName + " template?"))
-					return;
-			}
+			if (people.Length > 1 && !Dialog.Confirm($"Would you like to set {people.Length} people to receive the {templateName} template?"))
+				return;
 
 			Program.LoadTable<MelaveMalkaInfo>();       //Used by the templates
 			foreach (var recipient in people) {
