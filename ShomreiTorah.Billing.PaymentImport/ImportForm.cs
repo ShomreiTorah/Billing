@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
@@ -15,6 +16,7 @@ using DevExpress.XtraGrid.Views.Layout;
 using DevExpress.XtraGrid.Views.Layout.Events;
 using DevExpress.XtraLayout.Utils;
 using ShomreiTorah.Data;
+using ShomreiTorah.Data.UI;
 using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
 
@@ -209,6 +211,16 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		private void peopleView_CustomUnboundColumnData(Object sender, CustomColumnDataEventArgs e) {
 			if (e.Column == colBalanceDue)
 				e.Value = ((Singularity.Row)e.Row).Field<decimal>("BalanceDue");
+		}
+
+		private void peopleView_DoubleClick(object sender, EventArgs e) {
+			var info = peopleView.CalcHitInfo(peopleGrid.PointToClient(MousePosition));
+
+			if (info.RowHandle >= 0 && info.InRow) {
+				AppFramework.Current.ShowDetails((Person)peopleView.GetRow(info.RowHandle));
+
+				if (e is DXMouseEventArgs dx) dx.Handled = true;
+			}
 		}
 	}
 }
