@@ -155,13 +155,12 @@ namespace ShomreiTorah.Billing.Forms {
             this.addRLAsMember,
             this.addRLAsRelative});
 			this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-			this.ribbonControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.ribbonControl1.MaxItemId = 4;
 			this.ribbonControl1.Name = "ribbonControl1";
 			this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage2,
             this.ribbonPage1});
-			this.ribbonControl1.Size = new System.Drawing.Size(1431, 174);
+			this.ribbonControl1.Size = new System.Drawing.Size(954, 114);
 			this.ribbonControl1.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
 			// 
 			// exportEmail
@@ -251,8 +250,7 @@ namespace ShomreiTorah.Billing.Forms {
 			// splitContainerControl1
 			// 
 			this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainerControl1.Location = new System.Drawing.Point(0, 174);
-			this.splitContainerControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.splitContainerControl1.Location = new System.Drawing.Point(0, 114);
 			this.splitContainerControl1.Name = "splitContainerControl1";
 			this.splitContainerControl1.Panel1.Controls.Add(this.emailGrid);
 			this.splitContainerControl1.Panel1.Controls.Add(this.personEditPanel);
@@ -263,7 +261,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.splitContainerControl1.Panel1.Text = "Panel1";
 			this.splitContainerControl1.Panel2.Controls.Add(this.xtraTabControl1);
 			this.splitContainerControl1.Panel2.Text = "Panel2";
-			this.splitContainerControl1.Size = new System.Drawing.Size(1431, 963);
+			this.splitContainerControl1.Size = new System.Drawing.Size(954, 664);
 			this.splitContainerControl1.SplitterPosition = 200;
 			this.splitContainerControl1.TabIndex = 2;
 			this.splitContainerControl1.Text = "splitContainerControl1";
@@ -272,14 +270,12 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.emailGrid.DataMember = "EmailAddresses";
 			this.emailGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.emailGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-			this.emailGrid.Location = new System.Drawing.Point(0, 770);
+			this.emailGrid.Location = new System.Drawing.Point(0, 527);
 			this.emailGrid.MainView = this.emailView;
-			this.emailGrid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.emailGrid.MenuManager = this.ribbonControl1;
 			this.emailGrid.Name = "emailGrid";
 			this.emailGrid.RegistrationCount = 56;
-			this.emailGrid.Size = new System.Drawing.Size(300, 193);
+			this.emailGrid.Size = new System.Drawing.Size(200, 137);
 			this.emailGrid.Source = this.personBindingSource;
 			this.emailGrid.TabIndex = 5;
 			this.emailGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -330,34 +326,30 @@ namespace ShomreiTorah.Billing.Forms {
 			this.personEditPanel.Controls.Add(this.closePersonEdit);
 			this.personEditPanel.Controls.Add(this.personEditor);
 			this.personEditPanel.Dock = System.Windows.Forms.DockStyle.Top;
-			this.personEditPanel.Location = new System.Drawing.Point(0, 460);
-			this.personEditPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.personEditPanel.Location = new System.Drawing.Point(0, 315);
 			this.personEditPanel.Name = "personEditPanel";
-			this.personEditPanel.Size = new System.Drawing.Size(300, 310);
+			this.personEditPanel.Size = new System.Drawing.Size(200, 212);
 			this.personEditPanel.TabIndex = 7;
 			this.personEditPanel.Visible = false;
 			// 
 			// closePersonEdit
 			// 
 			this.closePersonEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.closePersonEdit.Location = new System.Drawing.Point(183, 272);
-			this.closePersonEdit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.closePersonEdit.Location = new System.Drawing.Point(122, 183);
 			this.closePersonEdit.Name = "closePersonEdit";
-			this.closePersonEdit.Size = new System.Drawing.Size(112, 34);
+			this.closePersonEdit.Size = new System.Drawing.Size(75, 23);
 			this.closePersonEdit.TabIndex = 1;
 			this.closePersonEdit.Text = "Done";
 			this.closePersonEdit.Click += new System.EventHandler(this.closePersonEdit_Click);
 			// 
 			// personEditor
 			// 
-			this.personEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.personEditor.Dock = System.Windows.Forms.DockStyle.Top;
 			this.personEditor.HeaderVisible = false;
 			this.personEditor.Location = new System.Drawing.Point(0, 0);
-			this.personEditor.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.personEditor.Margin = new System.Windows.Forms.Padding(4);
 			this.personEditor.Name = "personEditor";
-			this.personEditor.Size = new System.Drawing.Size(298, 263);
+			this.personEditor.Size = new System.Drawing.Size(200, 180);
 			this.personEditor.TabIndex = 0;
 			// 
 			// showPersonEdit
@@ -365,10 +357,9 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showPersonEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.showPersonEdit.Image = global::ShomreiTorah.Billing.Properties.Resources.Edit16;
 			this.showPersonEdit.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-			this.showPersonEdit.Location = new System.Drawing.Point(266, 427);
-			this.showPersonEdit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.showPersonEdit.Location = new System.Drawing.Point(177, 292);
 			this.showPersonEdit.Name = "showPersonEdit";
-			this.showPersonEdit.Size = new System.Drawing.Size(34, 34);
+			this.showPersonEdit.Size = new System.Drawing.Size(23, 23);
 			toolTipTitleItem3.Text = "Edit";
 			toolTipItem3.LeftIndent = 6;
 			toolTipItem3.Text = "Edits the person\'s name or address";
@@ -382,13 +373,12 @@ namespace ShomreiTorah.Billing.Forms {
 			// details
 			// 
 			this.details.Dock = System.Windows.Forms.DockStyle.Top;
-			this.details.Location = new System.Drawing.Point(0, 292);
-			this.details.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.details.Location = new System.Drawing.Point(0, 200);
 			this.details.MenuManager = this.ribbonControl1;
 			this.details.Name = "details";
 			this.details.Properties.ReadOnly = true;
 			this.details.Properties.ScrollBars = System.Windows.Forms.ScrollBars.None;
-			this.details.Size = new System.Drawing.Size(300, 168);
+			this.details.Size = new System.Drawing.Size(200, 115);
 			this.details.TabIndex = 4;
 			// 
 			// map
@@ -396,19 +386,18 @@ namespace ShomreiTorah.Billing.Forms {
 			this.map.AddressString = null;
 			this.map.Dock = System.Windows.Forms.DockStyle.Top;
 			this.map.Location = new System.Drawing.Point(0, 0);
-			this.map.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.map.Margin = new System.Windows.Forms.Padding(4);
 			this.map.Name = "map";
-			this.map.Size = new System.Drawing.Size(300, 292);
+			this.map.Size = new System.Drawing.Size(200, 200);
 			this.map.TabIndex = 3;
 			// 
 			// xtraTabControl1
 			// 
 			this.xtraTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.xtraTabControl1.Location = new System.Drawing.Point(0, 0);
-			this.xtraTabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.xtraTabControl1.Name = "xtraTabControl1";
 			this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
-			this.xtraTabControl1.Size = new System.Drawing.Size(1122, 963);
+			this.xtraTabControl1.Size = new System.Drawing.Size(748, 664);
 			this.xtraTabControl1.TabIndex = 0;
 			this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
@@ -420,9 +409,8 @@ namespace ShomreiTorah.Billing.Forms {
 			// xtraTabPage1
 			// 
 			this.xtraTabPage1.Controls.Add(this.splitContainerControl2);
-			this.xtraTabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.xtraTabPage1.Name = "xtraTabPage1";
-			this.xtraTabPage1.Size = new System.Drawing.Size(1112, 921);
+			this.xtraTabPage1.Size = new System.Drawing.Size(742, 636);
 			this.xtraTabPage1.Text = "Payments && Pledges";
 			// 
 			// splitContainerControl2
@@ -431,14 +419,13 @@ namespace ShomreiTorah.Billing.Forms {
 			this.splitContainerControl2.FixedPanel = DevExpress.XtraEditors.SplitFixedPanel.None;
 			this.splitContainerControl2.Horizontal = false;
 			this.splitContainerControl2.Location = new System.Drawing.Point(0, 0);
-			this.splitContainerControl2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.splitContainerControl2.Name = "splitContainerControl2";
 			this.splitContainerControl2.Panel1.Controls.Add(this.pledgeGrid);
 			this.splitContainerControl2.Panel1.Text = "Panel1";
 			this.splitContainerControl2.Panel2.Controls.Add(this.paymentsGrid);
 			this.splitContainerControl2.Panel2.Text = "Panel2";
-			this.splitContainerControl2.Size = new System.Drawing.Size(1112, 921);
-			this.splitContainerControl2.SplitterPosition = 428;
+			this.splitContainerControl2.Size = new System.Drawing.Size(742, 636);
+			this.splitContainerControl2.SplitterPosition = 296;
 			this.splitContainerControl2.TabIndex = 0;
 			this.splitContainerControl2.Text = "splitContainerControl2";
 			// 
@@ -446,17 +433,15 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.pledgeGrid.DataMember = "Pledges";
 			this.pledgeGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pledgeGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.pledgeGrid.Location = new System.Drawing.Point(0, 0);
 			this.pledgeGrid.MainView = this.pledgeView;
-			this.pledgeGrid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.pledgeGrid.MenuManager = this.ribbonControl1;
 			this.pledgeGrid.Name = "pledgeGrid";
 			this.pledgeGrid.RegistrationCount = 56;
 			this.pledgeGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemAliyahNoteEdit1});
 			this.pledgeGrid.ShowOnlyPredefinedDetails = true;
-			this.pledgeGrid.Size = new System.Drawing.Size(1112, 428);
+			this.pledgeGrid.Size = new System.Drawing.Size(742, 296);
 			this.pledgeGrid.Source = this.personBindingSource;
 			this.pledgeGrid.TabIndex = 0;
 			this.pledgeGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -624,14 +609,12 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.paymentsGrid.DataMember = "Payments";
 			this.paymentsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.paymentsGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.paymentsGrid.Location = new System.Drawing.Point(0, 0);
 			this.paymentsGrid.MainView = this.paymentsView;
-			this.paymentsGrid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.paymentsGrid.MenuManager = this.ribbonControl1;
 			this.paymentsGrid.Name = "paymentsGrid";
 			this.paymentsGrid.RegistrationCount = 56;
-			this.paymentsGrid.Size = new System.Drawing.Size(1112, 484);
+			this.paymentsGrid.Size = new System.Drawing.Size(742, 334);
 			this.paymentsGrid.Source = this.personBindingSource;
 			this.paymentsGrid.TabIndex = 0;
 			this.paymentsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -791,25 +774,22 @@ namespace ShomreiTorah.Billing.Forms {
 			// xtraTabPage3
 			// 
 			this.xtraTabPage3.Controls.Add(this.relativesGrid);
-			this.xtraTabPage3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.xtraTabPage3.Name = "xtraTabPage3";
-			this.xtraTabPage3.Size = new System.Drawing.Size(1108, 928);
+			this.xtraTabPage3.Size = new System.Drawing.Size(742, 636);
 			this.xtraTabPage3.Text = "Relatives";
 			// 
 			// relativesGrid
 			// 
 			this.relativesGrid.DataMember = "Relatives";
 			this.relativesGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.relativesGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.relativesGrid.Location = new System.Drawing.Point(0, 0);
 			this.relativesGrid.MainView = this.relativesView;
-			this.relativesGrid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.relativesGrid.MenuManager = this.ribbonControl1;
 			this.relativesGrid.Name = "relativesGrid";
 			this.relativesGrid.RegistrationCount = 56;
 			this.relativesGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.labelLikeEdit});
-			this.relativesGrid.Size = new System.Drawing.Size(1108, 928);
+			this.relativesGrid.Size = new System.Drawing.Size(742, 636);
 			this.relativesGrid.TabIndex = 0;
 			this.relativesGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.relativesView});
@@ -937,23 +917,20 @@ namespace ShomreiTorah.Billing.Forms {
 			// xtraTabPage2
 			// 
 			this.xtraTabPage2.Controls.Add(this.statementsGrid);
-			this.xtraTabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.xtraTabPage2.Name = "xtraTabPage2";
-			this.xtraTabPage2.Size = new System.Drawing.Size(1108, 928);
+			this.xtraTabPage2.Size = new System.Drawing.Size(742, 636);
 			this.xtraTabPage2.Text = "Statements Received";
 			// 
 			// statementsGrid
 			// 
 			this.statementsGrid.DataMember = "LoggedStatements";
 			this.statementsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.statementsGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.statementsGrid.Location = new System.Drawing.Point(0, 0);
 			this.statementsGrid.MainView = this.statementsView;
-			this.statementsGrid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.statementsGrid.MenuManager = this.ribbonControl1;
 			this.statementsGrid.Name = "statementsGrid";
 			this.statementsGrid.RegistrationCount = 56;
-			this.statementsGrid.Size = new System.Drawing.Size(1108, 928);
+			this.statementsGrid.Size = new System.Drawing.Size(742, 636);
 			this.statementsGrid.Source = this.personBindingSource;
 			this.statementsGrid.TabIndex = 0;
 			this.statementsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -1045,18 +1022,17 @@ namespace ShomreiTorah.Billing.Forms {
 			// transactionsTab
 			// 
 			this.transactionsTab.Controls.Add(this.transactionsControl);
-			this.transactionsTab.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.transactionsTab.Name = "transactionsTab";
-			this.transactionsTab.Size = new System.Drawing.Size(1108, 928);
+			this.transactionsTab.Size = new System.Drawing.Size(742, 636);
 			this.transactionsTab.Text = "Transaction History";
 			// 
 			// transactionsControl
 			// 
 			this.transactionsControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.transactionsControl.Location = new System.Drawing.Point(0, 0);
-			this.transactionsControl.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+			this.transactionsControl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.transactionsControl.Name = "transactionsControl";
-			this.transactionsControl.Size = new System.Drawing.Size(1108, 928);
+			this.transactionsControl.Size = new System.Drawing.Size(742, 636);
 			this.transactionsControl.TabIndex = 0;
 			// 
 			// colRowId
@@ -1068,12 +1044,11 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// PersonDetails
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1431, 1137);
+			this.ClientSize = new System.Drawing.Size(954, 778);
 			this.Controls.Add(this.splitContainerControl1);
 			this.Controls.Add(this.ribbonControl1);
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.Name = "PersonDetails";
 			this.Text = "PersonDetails";
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
