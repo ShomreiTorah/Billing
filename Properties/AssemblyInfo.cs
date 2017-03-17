@@ -4,7 +4,7 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using ShomreiTorah.Common.Updates;
 
-[assembly: Updatable("ShomreiTorah.Billing", "9.2.1")]
+[assembly: Updatable("ShomreiTorah.Billing", "9.2.2")]
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
