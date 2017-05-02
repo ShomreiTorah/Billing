@@ -402,6 +402,11 @@
         +gBGOOAICyf/2gAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="toolTipItem15.Text" xml:space="preserve">
+    <value>Sets the path for ShomreiTorahConfig.xml for the current Windows user to the path used by this instance (eg, from the current directory).
+
+Use this to promote a Biling-local config file for use by the Journal (which cannot use a current directory)</value>
+  </data>
   <metadata name="dockManager.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>

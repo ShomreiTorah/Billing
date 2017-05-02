@@ -12,6 +12,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraBars.Docking;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
+using Microsoft.Win32;
 using ShomreiTorah.Billing.Events.Purim;
 using ShomreiTorah.Common;
 using ShomreiTorah.Data;
@@ -241,6 +242,22 @@ namespace ShomreiTorah.Billing.Forms {
 			if (Dialog.Confirm("This app can have problems when refreshing after deleting or merging people.\n\nDo you want to close the Billing app?"))
 				Application.Exit();
 			Process.Start(DirectoryManager);
+		}
+
+		private void setConfigPath_ItemClick(object sender, ItemClickEventArgs e) {
+			var existingRegistryPath = Registry.GetValue(Config.RegistryKey, Config.RegistryValue, null) as string;
+			string message;
+			if (existingRegistryPath == null)
+				message = $"Would you like to set ShomreiTorahConfig.xml in HKEY_CURRENT_USER to {Config.FilePath}?";
+			else if (Path.GetFullPath(existingRegistryPath) != Path.GetFullPath(Config.FilePath))
+				message = $"Would you like to change ShomreiTorahConfig.xml in HKEY_CURRENT_USER from {existingRegistryPath} to {Config.FilePath}?";
+			else {
+				Dialog.Inform($"ShomreiTorahConfig.xml in HKEY_CURRENT_USER already points to {existingRegistryPath}.");
+				return;
+			}
+
+			if (Dialog.Confirm(message))
+				Registry.SetValue(Config.RegistryKey, Config.RegistryValue, Config.FilePath);
 		}
 	}
 }

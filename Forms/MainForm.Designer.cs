@@ -67,15 +67,19 @@ namespace ShomreiTorah.Billing.Forms {
 			DevExpress.Utils.SuperToolTip superToolTip14 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem14 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem14 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip16 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem17 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem16 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip17 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem18 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem17 = new DevExpress.Utils.ToolTipItem();
+			DevExpress.Utils.SuperToolTip superToolTip18 = new DevExpress.Utils.SuperToolTip();
+			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem19 = new DevExpress.Utils.ToolTipTitleItem();
+			DevExpress.Utils.ToolTipItem toolTipItem18 = new DevExpress.Utils.ToolTipItem();
 			DevExpress.Utils.SuperToolTip superToolTip15 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem15 = new DevExpress.Utils.ToolTipTitleItem();
 			DevExpress.Utils.ToolTipItem toolTipItem15 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip16 = new DevExpress.Utils.SuperToolTip();
 			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem16 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem16 = new DevExpress.Utils.ToolTipItem();
-			DevExpress.Utils.SuperToolTip superToolTip17 = new DevExpress.Utils.SuperToolTip();
-			DevExpress.Utils.ToolTipTitleItem toolTipTitleItem17 = new DevExpress.Utils.ToolTipTitleItem();
-			DevExpress.Utils.ToolTipItem toolTipItem17 = new DevExpress.Utils.ToolTipItem();
 			this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.addPledge = new DevExpress.XtraBars.BarButtonItem();
 			this.viewPledges = new DevExpress.XtraBars.BarButtonItem();
@@ -139,6 +143,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.modifiedPaymentsGrid = new ShomreiTorah.Billing.Controls.ModifiedPaymentsGrid();
 			this.paymentEdit = new ShomreiTorah.Billing.Controls.PaymentEdit();
 			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
+			this.setConfigPath = new DevExpress.XtraBars.BarButtonItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.shalachManosColumnsEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lookup.Properties)).BeginInit();
@@ -187,9 +192,11 @@ namespace ShomreiTorah.Billing.Forms {
             this.addRelativeLink,
             this.showAuctionForm,
             this.saveXmlDb,
-            this.openDirectoryManager});
+            this.openDirectoryManager,
+            this.setConfigPath});
 			this.ribbon.Location = new System.Drawing.Point(0, 0);
-			this.ribbon.MaxItemId = 33;
+			this.ribbon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.ribbon.MaxItemId = 34;
 			this.ribbon.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
 			this.ribbon.Name = "ribbon";
 			this.ribbon.PageHeaderItemLinks.Add(this.checkUpdate);
@@ -204,7 +211,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbon.QuickToolbarItemLinks.Add(this.showCalendar, true);
 			this.ribbon.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.shalachManosColumnsEdit});
-			this.ribbon.Size = new System.Drawing.Size(858, 144);
+			this.ribbon.Size = new System.Drawing.Size(1287, 219);
 			this.ribbon.StatusBar = this.ribbonStatusBar;
 			this.ribbon.Merge += new DevExpress.XtraBars.Ribbon.RibbonMergeEventHandler(this.ribbon_Merge);
 			this.ribbon.UnMerge += new DevExpress.XtraBars.Ribbon.RibbonMergeEventHandler(this.ribbon_UnMerge);
@@ -589,12 +596,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.emailGroup.ItemLinks.Add(this.emailAll);
 			this.emailGroup.ItemLinks.Add(this.emailModified);
 			this.emailGroup.Name = "emailGroup";
-			toolTipTitleItem15.Text = "Show Email Statement Log";
-			toolTipItem15.LeftIndent = 6;
-			toolTipItem15.Text = "Shows people who have received email statements.";
-			superToolTip15.Items.Add(toolTipTitleItem15);
-			superToolTip15.Items.Add(toolTipItem15);
-			this.emailGroup.SuperTip = superToolTip15;
+			toolTipTitleItem17.Text = "Show Email Statement Log";
+			toolTipItem16.LeftIndent = 6;
+			toolTipItem16.Text = "Shows people who have received email statements.";
+			superToolTip16.Items.Add(toolTipTitleItem17);
+			superToolTip16.Items.Add(toolTipItem16);
+			this.emailGroup.SuperTip = superToolTip16;
 			this.emailGroup.Text = "Send Emails to";
 			this.emailGroup.CaptionButtonClick += new DevExpress.XtraBars.Ribbon.RibbonPageGroupEventHandler(this.emailGroup_CaptionButtonClick);
 			// 
@@ -604,12 +611,12 @@ namespace ShomreiTorah.Billing.Forms {
 			this.wordGroup.ItemLinks.Add(this.wordAll);
 			this.wordGroup.ItemLinks.Add(this.wordModified);
 			this.wordGroup.Name = "wordGroup";
-			toolTipTitleItem16.Text = "Show Word Statement Log";
-			toolTipItem16.LeftIndent = 6;
-			toolTipItem16.Text = "Shows people who have received Word statements.";
-			superToolTip16.Items.Add(toolTipTitleItem16);
-			superToolTip16.Items.Add(toolTipItem16);
-			this.wordGroup.SuperTip = superToolTip16;
+			toolTipTitleItem18.Text = "Show Word Statement Log";
+			toolTipItem17.LeftIndent = 6;
+			toolTipItem17.Text = "Shows people who have received Word statements.";
+			superToolTip17.Items.Add(toolTipTitleItem18);
+			superToolTip17.Items.Add(toolTipItem17);
+			this.wordGroup.SuperTip = superToolTip17;
 			this.wordGroup.Text = "Create Word Documents for";
 			this.wordGroup.CaptionButtonClick += new DevExpress.XtraBars.Ribbon.RibbonPageGroupEventHandler(this.wordGroup_CaptionButtonClick);
 			// 
@@ -628,12 +635,12 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.ribbonPageGroup7.ItemLinks.Add(this.showInvites);
 			this.ribbonPageGroup7.Name = "ribbonPageGroup7";
-			toolTipTitleItem17.Text = "Melave Malka Info";
-			toolTipItem17.LeftIndent = 6;
-			toolTipItem17.Text = "Displays information about the Melave Malkas.";
-			superToolTip17.Items.Add(toolTipTitleItem17);
-			superToolTip17.Items.Add(toolTipItem17);
-			this.ribbonPageGroup7.SuperTip = superToolTip17;
+			toolTipTitleItem19.Text = "Melave Malka Info";
+			toolTipItem18.LeftIndent = 6;
+			toolTipItem18.Text = "Displays information about the Melave Malkas.";
+			superToolTip18.Items.Add(toolTipTitleItem19);
+			superToolTip18.Items.Add(toolTipItem18);
+			this.ribbonPageGroup7.SuperTip = superToolTip18;
 			this.ribbonPageGroup7.Text = "Invitations";
 			this.ribbonPageGroup7.CaptionButtonClick += new DevExpress.XtraBars.Ribbon.RibbonPageGroupEventHandler(this.ribbonPageGroup7_CaptionButtonClick);
 			// 
@@ -709,26 +716,29 @@ namespace ShomreiTorah.Billing.Forms {
 			this.ribbonPageGroup4.ItemLinks.Add(this.importYK);
 			this.ribbonPageGroup4.ItemLinks.Add(this.openDirectoryManager);
 			this.ribbonPageGroup4.ItemLinks.Add(this.saveXmlDb, true);
+			this.ribbonPageGroup4.ItemLinks.Add(this.setConfigPath);
 			this.ribbonPageGroup4.Name = "ribbonPageGroup4";
 			this.ribbonPageGroup4.ShowCaptionButton = false;
 			this.ribbonPageGroup4.Text = "Data";
 			// 
 			// ribbonStatusBar
 			// 
-			this.ribbonStatusBar.Location = new System.Drawing.Point(0, 594);
+			this.ribbonStatusBar.Location = new System.Drawing.Point(0, 866);
+			this.ribbonStatusBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.ribbonStatusBar.Name = "ribbonStatusBar";
 			this.ribbonStatusBar.Ribbon = this.ribbon;
-			this.ribbonStatusBar.Size = new System.Drawing.Size(858, 32);
+			this.ribbonStatusBar.Size = new System.Drawing.Size(1287, 49);
 			// 
 			// lookup
 			// 
 			this.lookup.Dock = System.Windows.Forms.DockStyle.Top;
-			this.lookup.Location = new System.Drawing.Point(0, 144);
+			this.lookup.Location = new System.Drawing.Point(0, 219);
+			this.lookup.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.lookup.Name = "lookup";
 			this.lookup.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.DropDown)});
 			this.lookup.Properties.NullValuePrompt = "Click here to search the Master Directory";
-			this.lookup.Size = new System.Drawing.Size(858, 20);
+			this.lookup.Size = new System.Drawing.Size(1287, 26);
 			this.lookup.TabIndex = 5;
 			this.lookup.EditValueChanged += new System.EventHandler(this.lookup_EditValueChanged);
 			// 
@@ -763,26 +773,28 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.dockPanel1_Container.Controls.Add(this.modifiedPledgesGrid);
 			this.dockPanel1_Container.Controls.Add(this.pledgeEdit);
-			this.dockPanel1_Container.Location = new System.Drawing.Point(4, 27);
+			this.dockPanel1_Container.Location = new System.Drawing.Point(6, 37);
 			this.dockPanel1_Container.Name = "dockPanel1_Container";
-			this.dockPanel1_Container.Size = new System.Drawing.Size(660, 375);
+			this.dockPanel1_Container.Size = new System.Drawing.Size(656, 363);
 			this.dockPanel1_Container.TabIndex = 0;
 			// 
 			// modifiedPledgesGrid
 			// 
 			this.modifiedPledgesGrid.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.modifiedPledgesGrid.Location = new System.Drawing.Point(0, 203);
+			this.modifiedPledgesGrid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.modifiedPledgesGrid.Name = "modifiedPledgesGrid";
-			this.modifiedPledgesGrid.Size = new System.Drawing.Size(660, 172);
+			this.modifiedPledgesGrid.Size = new System.Drawing.Size(656, 160);
 			this.modifiedPledgesGrid.TabIndex = 1;
 			// 
 			// pledgeEdit
 			// 
 			this.pledgeEdit.Dock = System.Windows.Forms.DockStyle.Top;
 			this.pledgeEdit.Location = new System.Drawing.Point(0, 0);
+			this.pledgeEdit.Margin = new System.Windows.Forms.Padding(4);
 			this.pledgeEdit.MinimumSize = new System.Drawing.Size(480, 123);
 			this.pledgeEdit.Name = "pledgeEdit";
-			this.pledgeEdit.Size = new System.Drawing.Size(660, 203);
+			this.pledgeEdit.Size = new System.Drawing.Size(656, 203);
 			this.pledgeEdit.TabIndex = 0;
 			// 
 			// addPaymentPanel
@@ -803,26 +815,28 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			this.controlContainer1.Controls.Add(this.modifiedPaymentsGrid);
 			this.controlContainer1.Controls.Add(this.paymentEdit);
-			this.controlContainer1.Location = new System.Drawing.Point(4, 27);
+			this.controlContainer1.Location = new System.Drawing.Point(6, 37);
 			this.controlContainer1.Name = "controlContainer1";
-			this.controlContainer1.Size = new System.Drawing.Size(665, 375);
+			this.controlContainer1.Size = new System.Drawing.Size(661, 363);
 			this.controlContainer1.TabIndex = 0;
 			// 
 			// modifiedPaymentsGrid
 			// 
 			this.modifiedPaymentsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.modifiedPaymentsGrid.Location = new System.Drawing.Point(0, 175);
+			this.modifiedPaymentsGrid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.modifiedPaymentsGrid.Name = "modifiedPaymentsGrid";
-			this.modifiedPaymentsGrid.Size = new System.Drawing.Size(665, 200);
+			this.modifiedPaymentsGrid.Size = new System.Drawing.Size(661, 188);
 			this.modifiedPaymentsGrid.TabIndex = 1;
 			// 
 			// paymentEdit
 			// 
 			this.paymentEdit.Dock = System.Windows.Forms.DockStyle.Top;
 			this.paymentEdit.Location = new System.Drawing.Point(0, 0);
+			this.paymentEdit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.paymentEdit.MinimumSize = new System.Drawing.Size(347, 149);
 			this.paymentEdit.Name = "paymentEdit";
-			this.paymentEdit.Size = new System.Drawing.Size(665, 175);
+			this.paymentEdit.Size = new System.Drawing.Size(661, 175);
 			this.paymentEdit.TabIndex = 0;
 			// 
 			// mdiManager
@@ -832,16 +846,33 @@ namespace ShomreiTorah.Billing.Forms {
 			this.mdiManager.MdiParent = this;
 			this.mdiManager.ShowFloatingDropHint = DevExpress.Utils.DefaultBoolean.True;
 			// 
+			// setConfigPath
+			// 
+			this.setConfigPath.Caption = "Set ShomreiTorahConfig Path";
+			this.setConfigPath.Id = 33;
+			this.setConfigPath.Name = "setConfigPath";
+			toolTipTitleItem15.Text = "Set ShomreiTorahConfig.xml Path";
+			toolTipItem15.LeftIndent = 6;
+			toolTipItem15.Text = resources.GetString("toolTipItem15.Text");
+			toolTipTitleItem16.LeftIndent = 6;
+			toolTipTitleItem16.Text = "This is an advanced feature.";
+			superToolTip15.Items.Add(toolTipTitleItem15);
+			superToolTip15.Items.Add(toolTipItem15);
+			superToolTip15.Items.Add(toolTipTitleItem16);
+			this.setConfigPath.SuperTip = superToolTip15;
+			this.setConfigPath.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.setConfigPath_ItemClick);
+			// 
 			// MainForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(858, 626);
+			this.ClientSize = new System.Drawing.Size(1287, 915);
 			this.Controls.Add(this.lookup);
 			this.Controls.Add(this.ribbonStatusBar);
 			this.Controls.Add(this.ribbon);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.IsMdiContainer = true;
+			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.Name = "MainForm";
 			this.Ribbon = this.ribbon;
 			this.StatusBar = this.ribbonStatusBar;
@@ -925,5 +956,6 @@ namespace ShomreiTorah.Billing.Forms {
 		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup12;
         private DevExpress.XtraBars.BarButtonItem saveXmlDb;
 		private DevExpress.XtraBars.BarButtonItem openDirectoryManager;
+		private DevExpress.XtraBars.BarButtonItem setConfigPath;
 	}
 }
