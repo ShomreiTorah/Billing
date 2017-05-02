@@ -129,33 +129,38 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			var row = (Person)gridView.GetFocusedRow();
 			if (row == null) return;
 
-			if (e.Button.Caption == sendPreviewButton.Caption) {
-				using (var message = PageBuilder.CreateMessage(row, emailTemplate.Text, startDate.DateTime)) {
-					if (message == null) {
+			try {
+
+				if (e.Button.Caption == sendPreviewButton.Caption) {
+					using (var message = PageBuilder.CreateMessage(row, emailTemplate.Text, startDate.DateTime)) {
+						if (message == null) {
+							XtraMessageBox.Show(row.FullName + " do not have any relevant data and will not receive an email.",
+												"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
+							return;
+						}
+						message.To.Add(previewAddress.Address);
+						Email.Hosted.Send(message);
+					}
+				} else {
+					var page = (StatementPage)PageBuilder.TemplateService.Resolve(emailTemplate.Text, null);
+					page.SetInfo(row, startDate.DateTime);
+
+					string html = page.RenderPage(new LocalFileImageService(PageBuilder.ImagesPath));
+
+					if (!page.ShouldSend) {
 						XtraMessageBox.Show(row.FullName + " do not have any relevant data and will not receive an email.",
 											"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
 						return;
 					}
-					message.To.Add(previewAddress.Address);
-					Email.Hosted.Send(message);
+
+					string subject = page.EmailSubject;
+
+					var form = CopyableWebBrowser.CreatePreviewForm("Email Preview: " + subject, html);
+					form.Icon = this.Icon;
+					form.Show(this);
 				}
-			} else {
-				var page = (StatementPage)PageBuilder.TemplateService.Resolve(emailTemplate.Text, null);
-				page.SetInfo(row, startDate.DateTime);
-
-				string html = page.RenderPage(new LocalFileImageService(PageBuilder.ImagesPath));
-
-				if (!page.ShouldSend) {
-					XtraMessageBox.Show(row.FullName + " do not have any relevant data and will not receive an email.",
-										"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
-					return;
-				}
-
-				string subject = page.EmailSubject;
-
-				var form = CopyableWebBrowser.CreatePreviewForm("Email Preview: " + subject, html);
-				form.Icon = this.Icon;
-				form.Show(this);
+			} catch (Exception ex) {
+				Dialog.ShowError("An error occurred while generating the email: " + ex);
 			}
 		}
 
