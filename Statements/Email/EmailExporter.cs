@@ -97,6 +97,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 		void SendBills() {
 			var exceptions = new List<KeyValuePair<Person, SmtpException>>();
 			var successes = new List<StatementMessage>(people.Length);
+			PageBuilder.Prepare(emailTemplate.Text, startDate.DateTime);
 			ProgressWorker.Execute(ui => {
 				ui.Maximum = people.Length;
 				foreach (var person in people) {
@@ -130,6 +131,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			if (row == null) return;
 
 			try {
+				PageBuilder.Prepare(emailTemplate.Text, startDate.DateTime);
 
 				if (e.Button.Caption == sendPreviewButton.Caption) {
 					using (var message = PageBuilder.CreateMessage(row, emailTemplate.Text, startDate.DateTime)) {
