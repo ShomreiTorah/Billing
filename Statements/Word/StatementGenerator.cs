@@ -87,6 +87,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			delegate void CustomField(Range range, StatementInfo info);
 			static readonly Dictionary<string, CustomField> CustomFields = new Dictionary<string, CustomField>(StringComparer.CurrentCultureIgnoreCase){
 				{ "BalanceDue",		(range, info) => range.Text = info.Person.Field<decimal>("BalanceDue").ToString("c", Culture) },
+				{ "Paid",			(range, info) => range.Text = info.TotalPaid.ToString("c") },
 				{ "Year",			(range, info) => range.Text = info.StartDate.Year.ToString(CultureInfo.CurrentCulture) },
 				{ "StartDate",		(range, info) => range.Text = info.StartDate.ToShortDateString() },
 				{ "MailingAddress",	(range, info) => range.Text = info.Person.MailingAddress },
