@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -31,6 +32,9 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		internal static Range AppendText(this Range range, string text) {
 			range.InsertAfter(text);
 			return range.Document.Range(range.End - text.Length, range.End);
+		}
+		public static WdColor ToWdColor(this Color color) {
+			return (WdColor)(color.R + 0x100 * color.G + 0x10000 * color.B);
 		}
 	}
 

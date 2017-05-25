@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -86,15 +87,15 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		class StatementPopulator : DataContentPopulator {
 			delegate void CustomField(Range range, StatementInfo info);
 			static readonly Dictionary<string, CustomField> CustomFields = new Dictionary<string, CustomField>(StringComparer.CurrentCultureIgnoreCase){
-				{ "BalanceDue",		(range, info) => range.Text = info.Person.Field<decimal>("BalanceDue").ToString("c", Culture) },
-				{ "Paid",			(range, info) => range.Text = info.TotalPaid.ToString("c") },
-				{ "Year",			(range, info) => range.Text = info.StartDate.Year.ToString(CultureInfo.CurrentCulture) },
-				{ "StartDate",		(range, info) => range.Text = info.StartDate.ToShortDateString() },
-				{ "MailingAddress",	(range, info) => range.Text = info.Person.MailingAddress },
-				{ "Deductibility",	(range, info) => range.Text = info.Deductibility },
-				{ "contributions",	(range, info) => range.Text = info.Accounts.Sum(a => a.Payments.Count) == 1 ? "contribution" : "contributions" },
-				{ "Table",			 CreateTable },
-				{ "PayTo",			 InsertPayTo },
+				{ "BalanceDue",     (range, info) => range.Text = info.Person.Field<decimal>("BalanceDue").ToString("c", Culture) },
+				{ "Paid",           (range, info) => range.Text = info.TotalPaid.ToString("c") },
+				{ "Year",           (range, info) => range.Text = info.StartDate.Year.ToString(CultureInfo.CurrentCulture) },
+				{ "StartDate",      (range, info) => range.Text = info.StartDate.ToShortDateString() },
+				{ "MailingAddress", (range, info) => range.Text = info.Person.MailingAddress },
+				{ "Deductibility",  (range, info) => range.Text = info.Deductibility },
+				{ "contributions",  (range, info) => range.Text = info.Accounts.Sum(a => a.Payments.Count) == 1 ? "contribution" : "contributions" },
+				{ "Table",           CreateTable },
+				{ "PayTo",           InsertPayTo },
 			};
 
 			public StatementInfo Info { get; private set; }
@@ -224,10 +225,13 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		[ThreadStatic]
 		static int shadingIndex;
 
+		static Color? ParseColor(string xmlValue) =>
+			xmlValue == null ? new Color?() : Color.FromArgb(int.Parse(xmlValue.TrimStart('#'), NumberStyles.AllowHexSpecifier));
+		static readonly Color? stripeColor = ParseColor(Config.GetElement("Billing").Element("Statements")?.Attribute("StripeColor").Value);
 		static Row Stripe(this Row row) {
 			shadingIndex++;
 			if (shadingIndex % 2 == 0)
-				row.Shading.BackgroundPatternColor = (WdColor)(-553582797);
+				row.Shading.BackgroundPatternColor = stripeColor?.ToWdColor() ?? (WdColor)(-553582797);
 			return row;
 		}
 
