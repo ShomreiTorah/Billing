@@ -38,8 +38,9 @@ namespace ShomreiTorah.Billing.Statements.Word {
 
 				statements = people
 					.Distinct()
+					.Where(p => !options.SkipEmail || !p.EmailAddresses.Any())
 					.OrderBy(p => p.LastName)
-					.SelectMany(p => kinds.Select(kind => new WordStatementInfo(p, options.StartDate, kind, options.ReceiptLimit)))
+					.SelectMany(p => kinds.Select(kind => new WordStatementInfo(p, options.StartDate, kind, options.ResendExistingReceipts)))
 					.Where(s => s.ShouldSend)
 					.ToArray();
 			}

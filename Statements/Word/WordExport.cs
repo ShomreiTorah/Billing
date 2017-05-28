@@ -8,7 +8,7 @@ using ShomreiTorah.Data;
 using ShomreiTorah.Statements;
 
 namespace ShomreiTorah.Billing.Statements.Word {
-	static partial class WordExport {
+	static class WordExport {
 		static object Missing = Type.Missing;
 		static object dontSave = WdSaveOptions.wdDoNotSaveChanges;
 
@@ -45,8 +45,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 	//In case we need to regenerate a receipt, we can specify
 	//a receiptLimit,
 	class WordStatementInfo : StatementInfo {
-		readonly DateTime receiptLimit;
-		public WordStatementInfo(Person person, DateTime startDate, StatementKind kind, DateTime receiptLimit) : base(person, startDate, kind) { this.receiptLimit = receiptLimit; }
+		readonly bool resendExistingReceipts;
+		public WordStatementInfo(Person person, DateTime startDate, StatementKind kind, bool resendExistingReceipts) : base(person, startDate, kind) { this.resendExistingReceipts = resendExistingReceipts; }
 
 		public override bool ShouldSend {
 			get {
@@ -61,13 +61,13 @@ namespace ShomreiTorah.Billing.Statements.Word {
 					//Find all Word receipts for the year that we're generating.
 					var statements = Person.LoggedStatements.Where(s => s.StatementKind == "Receipt" && s.Media == "Word" && s.StartDate.Year == StartDate.Year);
 
-					if (!statements.Any()) return true;	//If we didn't make any Word receipts, send.
+					if (!statements.Any()) return true; //If we didn't make any Word receipts, send.
 					var lastStatement = statements.Max(s => s.DateGenerated);
 
-					if (lastStatement >= receiptLimit)
-						return true;		//If the last receipt that we generated was after receiptLimit, (re-)send
+					if (resendExistingReceipts)
+						return true;        //If the use wants to resend all receipts, always send.
 					if (lastStatement <= Accounts.SelectMany(a => a.Payments).Max(p => p.Modified))
-						return true;		//If one of the payments on the receipt was modified after the last receipt, send.
+						return true;        //If one of the payments on the receipt was modified after the last receipt, send.
 
 					return false;
 				}
