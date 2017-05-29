@@ -12,7 +12,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		static object Missing = Type.Missing;
 		static object dontSave = WdSaveOptions.wdDoNotSaveChanges;
 
-		public static readonly string TemplateFolder = Path.Combine(Program.AppDirectory, "Word Templates");
+		public static readonly string TemplateFolder = Path.Combine(Program.TemplatesDirectory, "Word Templates");
 		public static readonly string MailingTemplateFolder = Path.Combine(TemplateFolder, "Mailings");
 
 		///<summary>Forces a document to close.</summary>

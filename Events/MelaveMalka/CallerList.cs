@@ -22,7 +22,7 @@ using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	partial class CallerList : XtraForm {
-		static readonly DirectoryTemplateResolver Resolver = new DirectoryTemplateResolver(Path.Combine(Program.AppDirectory, @"Email Templates\Caller Emails"));
+		static readonly DirectoryTemplateResolver Resolver = new DirectoryTemplateResolver(Path.Combine(Program.TemplatesDirectory, @"Email Templates\Caller Emails"));
 
 		readonly ITemplateService razor;
 		readonly FilteredTable<Caller> dataSource;

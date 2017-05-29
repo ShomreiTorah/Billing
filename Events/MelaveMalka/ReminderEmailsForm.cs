@@ -38,7 +38,7 @@ using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Events.MelaveMalka {
 	public partial class ReminderEmailsForm : XtraForm {
-		static readonly DirectoryTemplateResolver Resolver = new DirectoryTemplateResolver(Path.Combine(Program.AppDirectory, @"Email Templates\Ad Reminders"));
+		static readonly DirectoryTemplateResolver Resolver = new DirectoryTemplateResolver(Path.Combine(Program.TemplatesDirectory, @"Email Templates\Ad Reminders"));
 
 		readonly ITemplateService razor;
 		readonly FilteredTable<MelaveMalkaInvitation> dataSource;

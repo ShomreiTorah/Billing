@@ -14,6 +14,7 @@ using ShomreiTorah.Data;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.Singularity.DataBinding;
 using ShomreiTorah.Statements.Email;
+using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Statements.Email {
@@ -42,8 +43,8 @@ namespace ShomreiTorah.Billing.Statements.Email {
 			Program.Current.RefreshDatabase();
 
 			var pageBuilder = new StatementBuilder(
-				Path.Combine(Program.AppDirectory, @"Email Templates\Statements"),
-				Path.Combine(Program.AppDirectory, @"Email Templates\Images")
+				Path.Combine(Program.TemplatesDirectory, @"Email Templates\Statements"),
+				Path.Combine(Program.TemplatesDirectory, @"Email Templates\Images")
 			);
 			if (!pageBuilder.Templates.Any()) {
 				XtraMessageBox.Show("There are no email templates.\r\nPlese contact Schabse.",
@@ -118,7 +119,7 @@ namespace ShomreiTorah.Billing.Statements.Email {
 				}
 			}, true);
 
-			foreach (var info in successes)	//The table can only be modified on the UI thread.
+			foreach (var info in successes) //The table can only be modified on the UI thread.
 				info.LogStatement();
 
 			if (exceptions.Any())

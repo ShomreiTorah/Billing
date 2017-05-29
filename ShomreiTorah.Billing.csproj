@@ -766,7 +766,9 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>CALL "$(SolutionDir)..\..\Config\Billing-Copy-Config.cmd" $(ConfigurationName) "$(TargetDir)"
+    <PostBuildEvent>IF "$(ConfigurationName)" == "Release" CALL "$(SolutionDir)..\..\Config\Billing-Copy-Config.cmd" "$(TargetDir)"
+
+
 
 rmdir /s /q "$(TargetDir)de"
 rmdir /s /q "$(TargetDir)es"

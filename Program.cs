@@ -163,6 +163,15 @@ namespace ShomreiTorah.Billing {
 		public static DateTime LaunchTime { get; private set; }
 		public static string AppDirectory { get; internal set; }
 
+		///<summary>Gets the directory with Emai Templates and Word Templates folders.</summary>
+		public static string TemplatesDirectory
+#if DEBUG
+			// Use templates from the local Config repo, not the deployed bin/ folder.
+			=> Path.Combine(Config.FilePath, @"..\..\");
+#else
+			=> AppDirectory;
+#endif
+
 		public static ISynchronizeInvoke UIInvoker { get; set; }
 
 		///<summary>Gets the MEF container for the application.  Do not reference this property outside of entry-points.</summary>
