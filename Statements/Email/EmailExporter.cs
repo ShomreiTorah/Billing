@@ -14,6 +14,7 @@ using ShomreiTorah.Data;
 using ShomreiTorah.Singularity;
 using ShomreiTorah.Singularity.DataBinding;
 using ShomreiTorah.Statements.Email;
+using ShomreiTorah.WinForms;
 using ShomreiTorah.WinForms.Forms;
 
 namespace ShomreiTorah.Billing.Statements.Email {
