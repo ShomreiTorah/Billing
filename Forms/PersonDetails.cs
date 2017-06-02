@@ -84,21 +84,21 @@ namespace ShomreiTorah.Billing.Forms {
 		}
 
 		private void xtraTabControl1_SelectedPageChanging(object sender, TabPageChangingEventArgs e) {
-			if (e.Page == transactionsTab) {
-				SetTransactionsLog();
-			}
+			SetTransactionsLog();
 		}
 		protected override void OnActivated(EventArgs e) {
 			base.OnActivated(e);
 			SetTransactionsLog();
-        }
+		}
 
 		void SetTransactionsLog() {
+			if (tabs.SelectedTabPage != transactionsTab)
+				return;
 			transactionsControl.SetData(
-				person.Transactions,
-				person.LoggedStatements.Where(s => s.StatementKind.Contains("Bill"))
-									   .Select(s => Tuple.Create(s.DateGenerated, s.StatementKind))
-			);
+			person.Transactions,
+			person.LoggedStatements.Where(s => s.StatementKind.Contains("Bill"))
+								   .Select(s => Tuple.Create(s.DateGenerated, s.StatementKind))
+		);
 		}
 	}
 }
