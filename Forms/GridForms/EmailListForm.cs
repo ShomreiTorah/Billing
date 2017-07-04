@@ -29,14 +29,19 @@ namespace ShomreiTorah.Billing.Forms.GridForms {
 		private void personSelector_EditValueChanged(object sender, EventArgs e) {
 			if (changingRow) return;
 
+			// Unless the current row already has no person (eg, if the
+			// grid is filtered to only show unlinked rows), advance to
+			// the next row.
+			
 			//The grid might be sorted by FullName
 			var nextRow = (gridView.GetNextVisibleRow(gridView.GetVisibleIndex(gridView.FocusedRowHandle)));
 
 			SelectedRow.Person = personSelector.SelectedPerson;
-			if (nextRow > 0 && ModifierKeys == 0) {
+			if (nextRow > 0 && ModifierKeys == 0 && SelectedRow?.Person != null) {
 				gridView.FocusedRowHandle = gridView.GetVisibleRowHandle(nextRow);
 				gridView.TopRowIndex = Math.Max(nextRow - 2, 0);
-			}
+			} else
+				gridView_FocusedRowChanged(null, null);	// Update the lookup on focus change via filter.
 		}
 
 		private void personEdit_ButtonClick(object sender, ButtonPressedEventArgs e) {
