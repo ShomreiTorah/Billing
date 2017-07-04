@@ -4,15 +4,39 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using Microsoft.Office.Interop.Word;
+using RazorEngine.Templating;
 using ShomreiTorah.Common;
+using ShomreiTorah.Data;
 using ShomreiTorah.Statements;
+using ShomreiTorah.Statements.Email;
 using ShomreiTorah.WinForms;
 
 namespace ShomreiTorah.Billing.Statements.Word {
 	static class StatementGenerator {
 		static Application Word { get { return Office<ApplicationClass>.App; } }
+
+		public static void Prepare(IEnumerable<WordStatementInfo> statements) {
+			Program.LoadTables(statements.Select(s => s.Kind).Distinct().SelectMany(GetSchemas));
+		}
+
+		private static IEnumerable<Singularity.TableSchema> GetSchemas(StatementKind kind) {
+			Document sd = null;
+			try {
+				sd = OpenTemplate(kind);
+				var p = (dynamic)sd.CustomDocumentProperties;
+				string[] tableNames = p["Singularity-Tables"]?.Value?.ToString().Split(',') ?? new string[0];
+				return tableNames
+					.Select(typeof(Person).Assembly.GetType)
+					.Select(t => t.InvokeMember("Schema", BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Static, null, null, null))
+					.Cast<Singularity.TableSchema>();
+			} finally {
+				sd?.CloseDoc();
+			}
+		}
 
 		public static Document CreateBills(ICollection<WordStatementInfo> statements, IProgressReporter progress, bool duplexMode) {
 			if (statements == null) throw new ArgumentNullException("statements");
@@ -24,11 +48,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			Dictionary<StatementKind, Range> sourceRanges = new Dictionary<StatementKind, Range>();
 			try {
 				foreach (var kind in statements.Select(s => s.Kind).Distinct()) {
-					var sd = Word.Documents.Open(
-						FileName: Path.Combine(WordExport.TemplateFolder, kind.ToString() + ".docx"),
-						ReadOnly: true,
-						AddToRecentFiles: false
-					);
+					Document sd = OpenTemplate(kind);
 					// Fix Word 2013 bug 
 					// http://blogs.msmvps.com/wordmeister/2013/02/22/word2013bug-not-available-for-reading/
 					sd.ActiveWindow.View.Type = WdViewType.wdPrintView;
@@ -40,9 +60,8 @@ namespace ShomreiTorah.Billing.Statements.Word {
 				Range range = doc.Range();
 
 				bool firstPage = true;
-				using (new ClipboardScope()) {
-					var populator = new StatementPopulator();
-
+				using (new ClipboardScope())
+				using (var populator = new StatementPopulator()) {
 					progress.Maximum = statements.Count;
 					int i = 0;
 					foreach (var info in statements) {
@@ -73,6 +92,15 @@ namespace ShomreiTorah.Billing.Statements.Word {
 				foreach (var sd in sourceRanges.Values) sd.Document.CloseDoc();
 			}
 		}
+
+		private static Document OpenTemplate(StatementKind kind) {
+			return Word.Documents.Open(
+				FileName: Path.Combine(WordExport.TemplateFolder, kind.ToString() + ".docx"),
+				ReadOnly: true,
+				AddToRecentFiles: false
+			);
+		}
+
 		///<summary>Appends a page break to a range, replacing any trailing whitespace.</summary>
 		static void BreakPage(this Range range, bool forceOddPage) {
 			range.Start = range.End - 1;
@@ -84,7 +112,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			range.Collapse(WdCollapseDirection.wdCollapseEnd);
 		}
 
-		class StatementPopulator : DataContentPopulator {
+		sealed class StatementPopulator : DataContentPopulator, IDisposable {
 			delegate void CustomField(Range range, StatementInfo info);
 			static readonly Dictionary<string, CustomField> CustomFields = new Dictionary<string, CustomField>(StringComparer.CurrentCultureIgnoreCase){
 				{ "BalanceDue",     (range, info) => range.Text = info.Person.Field<decimal>("BalanceDue").ToString("c", Culture) },
@@ -100,14 +128,40 @@ namespace ShomreiTorah.Billing.Statements.Word {
 
 			public StatementInfo Info { get; private set; }
 			public void Populate(Range range, StatementInfo info) { Info = info; base.Populate(range, info.Person); }
+			readonly Lazy<RazorRunner> razorRunner = new Lazy<RazorRunner>();
 
+			public void Dispose() {
+				if (razorRunner.IsValueCreated) razorRunner.Value.Dispose();
+			}
+
+			static readonly Regex whitespace = new Regex(@"[\r\n\s]+");
+			const string RazorPrefix = "Razor:";
 			protected override bool PopulateCustomField(Range range, string name) {
-				CustomField customField;
-
-				if (!CustomFields.TryGetValue(name, out customField))
+				if (name.StartsWith(RazorPrefix)) {
+					range.Text = whitespace.Replace(XElement.Parse($"<div>{RenderRazor(name)}</div>").Value, " ");
+					return true;
+				}
+				if (!CustomFields.TryGetValue(name, out CustomField customField))
 					return false;
 				customField(range, Info);
 				return true;
+			}
+
+			private string RenderRazor(string name) {
+				return razorRunner.Value.RenderTemplate(name.Substring(RazorPrefix.Length).Trim(), Info);
+			}
+		}
+
+		sealed class RazorRunner : IDisposable {
+			// We only use StatementBuilder to reuse its Razor config (namespaces).
+			StatementBuilder razor = new StatementBuilder(Path.Combine(Program.TemplatesDirectory, @"Email Templates\Statements"), imagePath: null);
+
+			public void Dispose() => razor.Dispose();
+
+			public string RenderTemplate(string name, StatementInfo info) {
+				return razor.TemplateService.Resolve(name, null).Run(new ExecuteContext {
+					ViewBag = { Info = info }
+				});
 			}
 		}
 

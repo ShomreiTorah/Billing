@@ -116,6 +116,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		void createDoc_Click(object sender, EventArgs e) {
 			DefaultDuplexMode = duplexMode.Checked;
 			var stmts = SelectedStatements;
+			StatementGenerator.Prepare(stmts);
 			ProgressWorker.Execute(ui => StatementGenerator.CreateBills(stmts, ui, duplexMode.Checked), true);
 			if (DialogResult.Yes == XtraMessageBox.Show("Would you like to log these statements?",
 														"Shomrei Torah Billing", MessageBoxButtons.YesNo, MessageBoxIcon.Question)) {
