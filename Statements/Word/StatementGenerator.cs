@@ -91,7 +91,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 				{ "Paid",           (range, info) => range.Text = info.TotalPaid.ToString("c") },
 				{ "Year",           (range, info) => range.Text = info.StartDate.Year.ToString(CultureInfo.CurrentCulture) },
 				{ "StartDate",      (range, info) => range.Text = info.StartDate.ToShortDateString() },
-				{ "MailingAddress", (range, info) => range.Text = info.Person.MailingAddress },
+				{ "MailingAddress", (range, info) => range.Text = addressLiner.Replace(info.Person.MailingAddress, "\v") },
 				{ "Deductibility",  (range, info) => range.Text = info.Deductibility },
 				{ "contributions",  (range, info) => range.Text = info.Accounts.Sum(a => a.Payments.Count) == 1 ? "contribution" : "contributions" },
 				{ "Table",           CreateTable },
@@ -116,7 +116,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 		static readonly Regex addressLiner = new Regex(@"\r?\n\s*");
 		static readonly string mailingAddress = addressCleaner.Replace(
 					addressLiner.Replace(Config.MailingAddress.Trim(), "\v"),
-				 " ");
+					" ");
 
 		static void InsertPayTo(Range range, StatementInfo info) {
 			if (info.TotalBalance == 0)
