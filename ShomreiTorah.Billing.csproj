@@ -772,8 +772,11 @@
 
 
 rmdir /s /q "$(TargetDir)de"
+
 rmdir /s /q "$(TargetDir)es"
+
 rmdir /s /q "$(TargetDir)ja"
+
 rmdir /s /q "$(TargetDir)ru"</PostBuildEvent>
   </PropertyGroup>
 </Project>
