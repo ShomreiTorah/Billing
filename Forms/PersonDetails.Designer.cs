@@ -56,7 +56,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.showPersonEdit = new DevExpress.XtraEditors.SimpleButton();
 			this.details = new DevExpress.XtraEditors.MemoEdit();
 			this.map = new ShomreiTorah.WinForms.Controls.GoogleMapControl();
-			this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
+			this.tabs = new DevExpress.XtraTab.XtraTabControl();
 			this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
 			this.splitContainerControl2 = new DevExpress.XtraEditors.SplitContainerControl();
 			this.pledgeGrid = new ShomreiTorah.Data.UI.Grid.SmartGrid(this.components);
@@ -119,8 +119,8 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.personEditPanel)).BeginInit();
 			this.personEditPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.details.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
-			this.xtraTabControl1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.tabs)).BeginInit();
+			this.tabs.SuspendLayout();
 			this.xtraTabPage1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerControl2)).BeginInit();
 			this.splitContainerControl2.SuspendLayout();
@@ -259,7 +259,7 @@ namespace ShomreiTorah.Billing.Forms {
 			this.splitContainerControl1.Panel1.Controls.Add(this.map);
 			this.splitContainerControl1.Panel1.MinSize = 200;
 			this.splitContainerControl1.Panel1.Text = "Panel1";
-			this.splitContainerControl1.Panel2.Controls.Add(this.xtraTabControl1);
+			this.splitContainerControl1.Panel2.Controls.Add(this.tabs);
 			this.splitContainerControl1.Panel2.Text = "Panel2";
 			this.splitContainerControl1.Size = new System.Drawing.Size(954, 664);
 			this.splitContainerControl1.SplitterPosition = 200;
@@ -393,18 +393,18 @@ namespace ShomreiTorah.Billing.Forms {
 			// 
 			// xtraTabControl1
 			// 
-			this.xtraTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.xtraTabControl1.Location = new System.Drawing.Point(0, 0);
-			this.xtraTabControl1.Name = "xtraTabControl1";
-			this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
-			this.xtraTabControl1.Size = new System.Drawing.Size(748, 664);
-			this.xtraTabControl1.TabIndex = 0;
-			this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
+			this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabs.Location = new System.Drawing.Point(0, 0);
+			this.tabs.Name = "xtraTabControl1";
+			this.tabs.SelectedTabPage = this.xtraTabPage1;
+			this.tabs.Size = new System.Drawing.Size(748, 664);
+			this.tabs.TabIndex = 0;
+			this.tabs.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
             this.xtraTabPage3,
             this.xtraTabPage2,
             this.transactionsTab});
-			this.xtraTabControl1.SelectedPageChanging += new DevExpress.XtraTab.TabPageChangingEventHandler(this.xtraTabControl1_SelectedPageChanging);
+			this.tabs.SelectedPageChanging += new DevExpress.XtraTab.TabPageChangingEventHandler(this.xtraTabControl1_SelectedPageChanging);
 			// 
 			// xtraTabPage1
 			// 
@@ -1060,8 +1060,8 @@ namespace ShomreiTorah.Billing.Forms {
 			((System.ComponentModel.ISupportInitialize)(this.personEditPanel)).EndInit();
 			this.personEditPanel.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.details.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
-			this.xtraTabControl1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.tabs)).EndInit();
+			this.tabs.ResumeLayout(false);
 			this.xtraTabPage1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerControl2)).EndInit();
 			this.splitContainerControl2.ResumeLayout(false);
@@ -1102,7 +1102,7 @@ namespace ShomreiTorah.Billing.Forms {
 		private Data.UI.Grid.SmartGridColumn colEmail;
 		private DevExpress.XtraEditors.MemoEdit details;
 		private ShomreiTorah.WinForms.Controls.GoogleMapControl map;
-		private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
+		private DevExpress.XtraTab.XtraTabControl tabs;
 		private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
 		private DevExpress.XtraEditors.SplitContainerControl splitContainerControl2;
 		private Data.UI.Grid.SmartGrid pledgeGrid;

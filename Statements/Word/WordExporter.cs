@@ -32,7 +32,10 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			Program.Current.RefreshDatabase();
 			WordStatementInfo[] statements;
 
-			using (var options = new ExportOptions()) {
+			using (var options = new ExportOptions() {
+				SkipEmail = people.Length > 1,
+				ResendExistingReceipts = people.Length == 1
+			}) {
 				if (options.ShowDialog() == DialogResult.Cancel) return;
 				var kinds = options.Kinds.OrderBy(k => (int)k).ToArray();
 

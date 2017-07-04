@@ -26,8 +26,14 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			ok.Enabled = docTypes.CheckedItems.Count > 0;
 		}
 
-		public bool SkipEmail => skipEmail.Checked;
-		public bool ResendExistingReceipts => !skipNonStaleReceipts.Checked;
+		public bool SkipEmail {
+			get => skipEmail.Checked;
+			set => skipEmail.Checked = value;
+		}
+		public bool ResendExistingReceipts {
+			get => !skipNonStaleReceipts.Checked;
+			set => skipNonStaleReceipts.Checked = !value;
+		}
 		public DateTime StartDate { get { return startDate.DateTime.Date; } }
 		public IEnumerable<StatementKind> Kinds { get { return docTypes.CheckedItems.Cast<CheckedListBoxItem>().Select(i => (StatementKind)i.Value); } }
 	}

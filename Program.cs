@@ -48,6 +48,12 @@ namespace ShomreiTorah.Billing {
 				Person.Schema.Columns.AddCalculatedColumn<decimal>("BalanceDue", person => person.Field<decimal>("TotalPledged") - person.Field<decimal>("TotalPaid"));
 
 				Pledge.Schema.Columns.AddCalculatedColumn<Pledge, decimal>("UnlinkedAmount", p => p.Amount <= 0 ? 0 : p.Amount - p.LinkedPayments.Sum(o => o.Amount));
+
+				EmailAddress.PersonColumn.AddIndex();
+				Pledge.PersonColumn.AddIndex();
+				Payment.PersonColumn.AddIndex();
+				PledgeLink.PaymentColumn.AddIndex();
+				PledgeLink.PledgeColumn.AddIndex();
 			}
 
 			context.Tables.AddTable(PledgeLink.CreateTable());
