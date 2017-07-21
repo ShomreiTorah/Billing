@@ -15,13 +15,14 @@ namespace ShomreiTorah.Billing.Statements.Word {
 
 			docTypes.Items.Add(StatementKind.Bill);
 			docTypes.Items.Add(StatementKind.Receipt);
+			docTypes_ItemCheck();
 		}
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
 			MinimumSize = Size;
 		}
 
-		private void docTypes_ItemCheck(object sender, ItemCheckEventArgs e) {
+		private void docTypes_ItemCheck(object sender = null, ItemCheckEventArgs e = null) {
 			skipNonStaleReceiptsItem.Visibility = Kinds.Contains(StatementKind.Receipt) ? LayoutVisibility.Always : LayoutVisibility.Never;
 			ok.Enabled = docTypes.CheckedItems.Count > 0;
 		}
