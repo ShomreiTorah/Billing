@@ -33,6 +33,11 @@ namespace ShomreiTorah.Billing.Statements.Word {
 					.Select(typeof(Person).Assembly.GetType)
 					.Select(t => t.InvokeMember("Schema", BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Static, null, null, null))
 					.Cast<Singularity.TableSchema>();
+			} catch {
+				// The CustomDocumentProperties indexer can mysteriously fail.
+				// When that happens, let the user load things by hand instead
+				// of making it impossible to generate statements.
+				return Enumerable.Empty<Singularity.TableSchema>();
 			} finally {
 				sd?.CloseDoc();
 			}
