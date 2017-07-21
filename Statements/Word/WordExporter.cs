@@ -63,15 +63,19 @@ namespace ShomreiTorah.Billing.Statements.Word {
 			InitializeComponent();
 			this.statements = statements;
 
-			var barItems = Array.ConvertAll<string, BarItem>(Directory.GetFiles(WordExport.MailingTemplateFolder, "*.docx"),
-				p => {
-					var retVal = new BarButtonItem(barManager, Path.GetFileNameWithoutExtension(p));
-					retVal.ItemClick += MailingExport_ItemClick;
-					return retVal;
-				}
-			);
-			barManager.Items.AddRange(barItems);
-			mailingDocuments.ItemLinks.AddRange(barItems);
+			if (!Directory.Exists(WordExport.MailingTemplateFolder)) {
+				createDoc.DropDownArrowStyle = DropDownArrowStyle.Hide;
+			} else {
+				var barItems = Array.ConvertAll<string, BarItem>(Directory.GetFiles(WordExport.MailingTemplateFolder, "*.docx"),
+					p => {
+						var retVal = new BarButtonItem(barManager, Path.GetFileNameWithoutExtension(p));
+						retVal.ItemClick += MailingExport_ItemClick;
+						return retVal;
+					}
+				);
+				barManager.Items.AddRange(barItems);
+				mailingDocuments.ItemLinks.AddRange(barItems);
+			}
 
 			people = statements.Select(p => p.Person).Distinct().ToArray();
 
@@ -128,7 +132,7 @@ namespace ShomreiTorah.Billing.Statements.Word {
 				}
 			}
 
-			if (cancel.Text != "Close")
+			if (cancel.Text != "Close" && mailingDocuments.ItemLinks.Any())
 				XtraMessageBox.Show("To create mailing labels or envelopes, click the down arrow next to Create Documents.",
 									"Shomrei Torah Billing", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			cancel.Text = "Close";
