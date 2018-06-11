@@ -31,9 +31,12 @@ namespace ShomreiTorah.Billing.PaymentImport.Sources {
 			return results.SelectMany(list => list.Where(p => {
 				// If we've already seen this payment, update its amount
 				// from the later (refining) source, but do not return a
-				// second copy.
+				// second copy. Also update card-info fields for sources
+				// that don't include them.
 				if (seen.TryGetValue(p.Id, out var match)) {
 					match.Amount = p.Amount;
+					match.FinalFour = p.FinalFour;
+					match.CardIssuer = p.CardIssuer;
 					return false;
 				}
 				seen.Add(p.Id, p);
