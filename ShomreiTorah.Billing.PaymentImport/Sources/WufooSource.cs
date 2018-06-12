@@ -30,20 +30,28 @@ namespace ShomreiTorah.Billing.PaymentImport.Sources {
 			Task<string> entriesTask = client.GetStringAsync(formUrl + "entries.json?system=true");
 			// Fetch both responses in parallel.
 			var fieldsResponse = JsonConvert.DeserializeObject<FieldsResponse>(await fieldsTask);
-			var fields = fieldsResponse
+			var fieldIds = fieldsResponse
 				.Fields
-				.Concat<IFieldInfo>(fieldsResponse.Fields.SelectMany(f => f.SubFields ?? Enumerable.Empty<SubFieldInfo>()))
+				.Concat<IFieldInfo>(fieldsResponse.Fields.SelectMany(f => f.SubFields))
 				.Where(f => !string.IsNullOrEmpty(f.Title))
 				.ToLookup(f => f.Title, f => f.Id);
-			var responses = JObject.Parse(await entriesTask).Value<JArray>("Entries");
+			var fieldAliases = fieldsResponse
+				.Fields
+				.Where(f => f.SubFields.Count == 0) // The first subfield shares an ID with its parent.
+				.Concat<IFieldInfo>(fieldsResponse.Fields.SelectMany(f => f.SubFields))
+				.Where(f => !string.IsNullOrEmpty(f.Title))
+				.ToDictionary(f => f.Id, f => f.Title);
+			var responses = JObject.Parse(await entriesTask).Value<JArray>("Entries").Cast<JObject>();
 
 			var fieldNameMappings = Config.GetElement("Billing", "PaymentImport", "Sources", Name, "FieldNames")
 				.Elements()
-				.ToLookup(e=>e.Name.LocalName, e=>e.Attribute("Alias").Value);
+				.ToLookup(e => e.Name.LocalName, e => e.Attribute("Alias").Value);
 			return responses.Where(o => o.Value<string>("Status") == "Paid").Select(o => {
+				var usedFields = new HashSet<string>();
 				string Field(string name) {
 					var names = fieldNameMappings[name].DefaultIfEmpty(name);
-					return names.SelectMany(n => fields[n].Select(f => o.Value<string>(f))).Join("\r\n").Trim();
+					usedFields.AddRange(names.SelectMany(n => fieldIds[n]));
+					return names.SelectMany(n => fieldIds[n].Select(f => o.Value<string>(f))).Join("\r\n").Trim();
 				}
 
 				int? CoerceNumber(string value) {
@@ -53,7 +61,7 @@ namespace ShomreiTorah.Billing.PaymentImport.Sources {
 					return int.Parse(value);
 				}
 
-				return new PaymentInfo {
+				PaymentInfo payment = new PaymentInfo {
 					// System fields:
 					Amount = o.Value<decimal>("PurchaseTotal"),
 					Date = o.Value<DateTime>("DateCreated"),
@@ -76,6 +84,16 @@ namespace ShomreiTorah.Billing.PaymentImport.Sources {
 						WomensSeats = CoerceNumber(Field("WomensSeats")),
 					}
 				};
+
+				payment.Comments += "\r\n" + o
+					.Properties()
+					.Where(p => !string.IsNullOrEmpty(p.Value.ToString()))
+					.Where(p => !usedFields.Contains(p.Name))
+					.Where(p => p.Name.StartsWith("Field"))
+					.Select(p => $"{fieldAliases[p.Name]}: {p.Value}".Trim().TrimStart(':', ' '))
+					.OrderBy(s => s)
+					.Join("\r\n");
+				return payment;
 			});
 		}
 
@@ -89,7 +107,7 @@ namespace ShomreiTorah.Billing.PaymentImport.Sources {
 		public class FieldInfo : IFieldInfo {
 			public string Id { get; set; }
 			public string Title { get; set; }
-			public List<SubFieldInfo> SubFields { get; set; }
+			public List<SubFieldInfo> SubFields { get; } = new List<SubFieldInfo>();
 		}
 		public class SubFieldInfo : IFieldInfo {
 			public string Id { get; set; }
