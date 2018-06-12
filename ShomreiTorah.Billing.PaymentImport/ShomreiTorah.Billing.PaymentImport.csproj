@@ -103,6 +103,7 @@
     <Compile Include="Sources\AuthNetSource.cs" />
     <Compile Include="Sources\LocalFileSource.cs" />
     <Compile Include="Sources\RemoteJsonSource.cs" />
+    <Compile Include="Sources\WufooSource.cs" />
     <Compile Include="Tables.cs" />
     <Compile Include="TriggerButton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

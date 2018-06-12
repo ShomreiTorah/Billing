@@ -114,18 +114,22 @@ namespace ShomreiTorah.Billing.PaymentImport {
 		///<summary>Gets or sets the collection of pledge types to infer from based on the amount.</summary>
 		public IReadOnlyCollection<PledgeType> PledgeTypes { get; set; }
 		void InferType() {
-			foreach (var type in PledgeTypes ?? Names.PledgeTypes) {
-				// Don't infer Melave Malka pledge types for non-journal payments.
-				if (type == Names.JournalPledgeType && CurrentPayment.JournalInfo == null)
-					continue;
-				var subtype = type.Subtypes.FirstOrDefault(st => st.DefaultPrice == CurrentPayment.Amount);
-				if (subtype != null) {
-					PledgeType = type.Name;
-					PledgeSubType = subtype.Name;
-					return;
-				} else if (type.DefaultPrice == CurrentPayment.Amount) {
-					PledgeType = type.Name;
-					return;
+			foreach (var factor in ("0, " + Config.ReadAttribute("Billing", "PaymentImport", "AdditionalPercentages")).Split(',')) {
+				var fraction = 1 + decimal.Parse(factor.Trim()) / 100m;
+				var actualAmount = CurrentPayment.Amount / fraction;
+				foreach (var type in PledgeTypes ?? Names.PledgeTypes) {
+					// Don't infer Melave Malka pledge types for non-journal payments.
+					if (type == Names.JournalPledgeType && CurrentPayment.JournalInfo == null)
+						continue;
+					var subtype = type.Subtypes.FirstOrDefault(st => st.DefaultPrice == actualAmount);
+					if (subtype != null) {
+						PledgeType = type.Name;
+						PledgeSubType = subtype.Name;
+						return;
+					} else if (type.DefaultPrice == actualAmount) {
+						PledgeType = type.Name;
+						return;
+					}
 				}
 			}
 		}
