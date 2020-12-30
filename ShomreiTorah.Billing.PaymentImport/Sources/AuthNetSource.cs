@@ -31,7 +31,7 @@ namespace ShomreiTorah.Billing.PaymentImport.Sources {
 				.SelectMany(a => a)
 				.Select(t => new PaymentInfo {
 					Address = t.BillingAddress?.Street,
-					Amount = t.Status == "voided" || t.Status == "declined" ? 0 : t.AuthorizedAmount,
+					Amount = t.Status == "voided" || t.Status == "declined" || t.Status == "generalError" ? 0 : t.AuthorizedAmount,
 					CardIssuer = (t.Payment?[0] as CreditCard)?.CardType,
 					City = t.BillingAddress?.City,
 					Company = t.BillingAddress?.Company,
