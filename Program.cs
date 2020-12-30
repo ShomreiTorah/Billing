@@ -248,11 +248,20 @@ namespace ShomreiTorah.Billing {
 		protected override Form CreateMainForm() { return (Form)MefContainer.GetExport<IMainForm>(); }
 
 		void SetupMef() {
-			MefContainer = new ContainerConfiguration()
-				.WithAssembly(typeof(Program).Assembly)
-				.WithAssemblies(Directory.EnumerateFiles(AppDirectory, typeof(Program).Assembly.GetName().Name + ".*.dll")
-										 .Select(Assembly.LoadFrom))
-				.CreateContainer();
+			try 		{
+				MefContainer = new ContainerConfiguration()
+					.WithAssembly(typeof(Program).Assembly)
+					.WithAssemblies(Directory.EnumerateFiles(AppDirectory, typeof(Program).Assembly.GetName().Name + ".*.dll")
+											 .Select(Assembly.LoadFrom))
+					.CreateContainer();
+			} catch(ReflectionTypeLoadException ex) {
+				throw new InvalidOperationException(ex.Message + $@"
+
+Failed assembly: {ex.Types.FirstOrDefault()?.Assembly}
+
+Exceptions: 
+" + ex.LoaderExceptions.Join("\n\n", exi => exi.ToString()), ex);
+			}
 		}
 	}
 }
